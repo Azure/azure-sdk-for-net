@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct AdditionalWorkspaceDataType : IEquatable<AdditionalWorkspaceDataType>
     {
         private readonly string _value;
+        /// <summary> Alerts. </summary>
+        private const string AlertsValue = "Alerts";
+        /// <summary> RawEvents. </summary>
+        private const string RawEventsValue = "RawEvents";
 
         /// <summary> Initializes a new instance of <see cref="AdditionalWorkspaceDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdditionalWorkspaceDataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlertsValue = "Alerts";
-        private const string RawEventsValue = "RawEvents";
+            _value = value;
+        }
 
         /// <summary> Alerts. </summary>
         public static AdditionalWorkspaceDataType Alerts { get; } = new AdditionalWorkspaceDataType(AlertsValue);
+
         /// <summary> RawEvents. </summary>
         public static AdditionalWorkspaceDataType RawEvents { get; } = new AdditionalWorkspaceDataType(RawEventsValue);
+
         /// <summary> Determines if two <see cref="AdditionalWorkspaceDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdditionalWorkspaceDataType left, AdditionalWorkspaceDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AdditionalWorkspaceDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdditionalWorkspaceDataType left, AdditionalWorkspaceDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AdditionalWorkspaceDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AdditionalWorkspaceDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AdditionalWorkspaceDataType(string value) => new AdditionalWorkspaceDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AdditionalWorkspaceDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AdditionalWorkspaceDataType?(string value) => value == null ? null : new AdditionalWorkspaceDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdditionalWorkspaceDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AdditionalWorkspaceDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

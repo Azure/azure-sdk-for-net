@@ -9,34 +9,30 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents an ATA security solution which sends logs to an OMS workspace. </summary>
-    public partial class AtaExternalSecuritySolution : ExternalSecuritySolution
+    public partial class AtaExternalSecuritySolution : ExternalSecuritySolutionData
     {
         /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
-        public AtaExternalSecuritySolution()
+        internal AtaExternalSecuritySolution()
         {
-            Kind = ExternalSecuritySolutionKind.Ata;
+            Kind = ExternalSecuritySolutionKind.ATA;
         }
 
         /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The external security solution properties for ATA solutions. </param>
-        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, AtaSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location, serializedAdditionalRawData)
+        internal AtaExternalSecuritySolution(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind, location)
         {
-            Properties = properties;
-            Kind = kind;
         }
-
-        /// <summary> The external security solution properties for ATA solutions. </summary>
-        public AtaSolutionProperties Properties { get; set; }
     }
 }

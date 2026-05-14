@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Unknown version of AlertSimulatorRequestProperties. </summary>
-    internal partial class UnknownAlertSimulatorRequestProperties : SecurityAlertSimulatorRequestProperties
+    internal partial class UnknownAlertSimulatorRequestProperties : AlertSimulatorRequestProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAlertSimulatorRequestProperties"/>. </summary>
         /// <param name="kind"> The kind of alert simulation. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownAlertSimulatorRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties) : base(kind, additionalProperties)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAlertSimulatorRequestProperties"/> for deserialization. </summary>
-        internal UnknownAlertSimulatorRequestProperties()
+        /// <param name="additionalProperties"></param>
+        internal UnknownAlertSimulatorRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties) : base(kind != default ? kind : "unknown", additionalProperties)
         {
         }
     }

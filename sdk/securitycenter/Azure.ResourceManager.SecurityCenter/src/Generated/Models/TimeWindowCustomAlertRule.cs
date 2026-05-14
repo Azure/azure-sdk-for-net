@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// A custom alert rule that checks if the number of activities (depends on the custom alert type) in a time window is within the given range.
-    /// Please note <see cref="TimeWindowCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
-    /// </summary>
+    /// <summary> A custom alert rule that checks if the number of activities (depends on the custom alert type) in a time window is within the given range. </summary>
     public partial class TimeWindowCustomAlertRule : ThresholdCustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/>. </summary>
@@ -22,10 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
         /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
-        public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(isEnabled, minThreshold, maxThreshold)
+        public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base("TimeWindowCustomAlertRule", isEnabled, minThreshold, maxThreshold)
         {
             TimeWindowSize = timeWindowSize;
-            RuleType = "TimeWindowCustomAlertRule";
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/>. </summary>
@@ -33,19 +28,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
         /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
-        internal TimeWindowCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold)
+        internal TimeWindowCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(displayName, description, isEnabled, ruleType, additionalBinaryDataProperties, minThreshold, maxThreshold)
         {
             TimeWindowSize = timeWindowSize;
-            RuleType = ruleType ?? "TimeWindowCustomAlertRule";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/> for deserialization. </summary>
-        internal TimeWindowCustomAlertRule()
-        {
         }
 
         /// <summary> The time window size in iso8601 format. </summary>

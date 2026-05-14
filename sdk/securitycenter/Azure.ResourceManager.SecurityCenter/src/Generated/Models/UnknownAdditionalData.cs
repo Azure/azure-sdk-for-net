@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Unknown version of AdditionalData. </summary>
-    internal partial class UnknownAdditionalData : SecuritySubAssessmentAdditionalInfo
+    internal partial class UnknownAdditionalData : AdditionalData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAdditionalData"/>. </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAdditionalData(AssessedResourceType assessedResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(assessedResourceType, serializedAdditionalRawData)
-        {
-            AssessedResourceType = assessedResourceType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAdditionalData"/> for deserialization. </summary>
-        internal UnknownAdditionalData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAdditionalData(AssessedResourceType assessedResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(assessedResourceType != default ? assessedResourceType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -6,201 +6,79 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class AdvancedThreatProtectionRestOperations
+    internal partial class AdvancedThreatProtection
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AdvancedThreatProtectionRestOperations. </summary>
+        /// <summary> Initializes a new instance of AdvancedThreatProtection for mocking. </summary>
+        protected AdvancedThreatProtection()
+        {
+        }
+
+        /// <summary> Initializes a new instance of AdvancedThreatProtection. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AdvancedThreatProtectionRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal AdvancedThreatProtection(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-01-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string resourceId)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string resourceId, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string resourceId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/current", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets the Advanced Threat Protection settings for the specified resource. </summary>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<AdvancedThreatProtectionSettingData>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateRequest(string resourceId, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateGetRequest(resourceId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AdvancedThreatProtectionSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AdvancedThreatProtectionSettingData.DeserializeAdvancedThreatProtectionSettingData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AdvancedThreatProtectionSettingData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the Advanced Threat Protection settings for the specified resource. </summary>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<AdvancedThreatProtectionSettingData> Get(string resourceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateGetRequest(resourceId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AdvancedThreatProtectionSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AdvancedThreatProtectionSettingData.DeserializeAdvancedThreatProtectionSettingData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AdvancedThreatProtectionSettingData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateRequestUri(string resourceId, AdvancedThreatProtectionSettingData data)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateRequest(string resourceId, AdvancedThreatProtectionSettingData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/current", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
-            uri.AppendPath("current", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
-        }
-
-        /// <summary> Creates or updates the Advanced Threat Protection settings on a specified resource. </summary>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="data"> Advanced Threat Protection Settings. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response<AdvancedThreatProtectionSettingData>> CreateAsync(string resourceId, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateRequest(resourceId, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AdvancedThreatProtectionSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AdvancedThreatProtectionSettingData.DeserializeAdvancedThreatProtectionSettingData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates the Advanced Threat Protection settings on a specified resource. </summary>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="data"> Advanced Threat Protection Settings. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="data"/> is null. </exception>
-        public Response<AdvancedThreatProtectionSettingData> Create(string resourceId, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateRequest(resourceId, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AdvancedThreatProtectionSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AdvancedThreatProtectionSettingData.DeserializeAdvancedThreatProtectionSettingData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

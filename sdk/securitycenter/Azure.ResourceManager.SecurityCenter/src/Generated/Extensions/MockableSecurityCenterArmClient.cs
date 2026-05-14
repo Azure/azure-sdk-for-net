@@ -8,904 +8,1308 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSecurityCenterArmClient : ArmResource
     {
-        private ClientDiagnostics _informationProtectionPoliciesClientDiagnostics;
-        private InformationProtectionPoliciesRestOperations _informationProtectionPoliciesRestClient;
-        private ClientDiagnostics _securitySubAssessmentSubAssessmentsClientDiagnostics;
-        private SubAssessmentsRestOperations _securitySubAssessmentSubAssessmentsRestClient;
-        private ClientDiagnostics _securityAssessmentAssessmentsClientDiagnostics;
-        private AssessmentsRestOperations _securityAssessmentAssessmentsRestClient;
+        private ClientDiagnostics _subAssessmentsClientDiagnostics;
+        private SubAssessments _subAssessmentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecurityCenterArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSecurityCenterArmClient for mocking. </summary>
         protected MockableSecurityCenterArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecurityCenterArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSecurityCenterArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableSecurityCenterArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableSecurityCenterArmClient(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableSecurityCenterArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        private ClientDiagnostics SubAssessmentsClientDiagnostics => _subAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SubAssessments SubAssessmentsRestClient => _subAssessmentsRestClient ??= new SubAssessments(SubAssessmentsClientDiagnostics, Pipeline, Endpoint, "2019-01-01-preview");
+
+        /// <summary> Gets an object representing a <see cref="SecurityAlertsSuppressionRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource"/> object. </returns>
+        public virtual SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(Core.ResourceIdentifier id)
         {
+            SecurityAlertsSuppressionRuleResource.ValidateResourceId(id);
+            return new SecurityAlertsSuppressionRuleResource(Client, id);
         }
 
-        private ClientDiagnostics InformationProtectionPoliciesClientDiagnostics => _informationProtectionPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private InformationProtectionPoliciesRestOperations InformationProtectionPoliciesRestClient => _informationProtectionPoliciesRestClient ??= new InformationProtectionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecuritySubAssessmentSubAssessmentsClientDiagnostics => _securitySubAssessmentSubAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecuritySubAssessmentResource.ResourceType.Namespace, Diagnostics);
-        private SubAssessmentsRestOperations SecuritySubAssessmentSubAssessmentsRestClient => _securitySubAssessmentSubAssessmentsRestClient ??= new SubAssessmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecuritySubAssessmentResource.ResourceType));
-        private ClientDiagnostics SecurityAssessmentAssessmentsClientDiagnostics => _securityAssessmentAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAssessmentResource.ResourceType.Namespace, Diagnostics);
-        private AssessmentsRestOperations SecurityAssessmentAssessmentsRestClient => _securityAssessmentAssessmentsRestClient ??= new AssessmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityAssessmentResource.ResourceType));
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets an object representing a <see cref="SecurityConnectorApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityConnectorApplicationResource"/> object. </returns>
+        public virtual SecurityConnectorApplicationResource GetSecurityConnectorApplicationResource(Core.ResourceIdentifier id)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            SecurityConnectorApplicationResource.ValidateResourceId(id);
+            return new SecurityConnectorApplicationResource(Client, id);
         }
 
-        /// <summary> Gets a collection of SecurityComplianceResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
-        public virtual SecurityComplianceCollection GetSecurityCompliances(ResourceIdentifier scope)
+        /// <summary> Gets a collection of <see cref="SecurityConnectorApplicationCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SecurityConnectorApplicationResource"/> objects. </returns>
+        public virtual SecurityConnectorApplicationCollection GetSecurityConnectorApplications(Core.ResourceIdentifier scope)
         {
-            return new SecurityComplianceCollection(Client, scope);
+            return new SecurityConnectorApplicationCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Details of a specific Compliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <summary> Get a specific application for the requested scope by applicationId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityConnectorApplicationResource> GetSecurityConnectorApplication(Core.ResourceIdentifier scope, string applicationId, CancellationToken cancellationToken = default)
         {
-            return await GetSecurityCompliances(scope).GetAsync(complianceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+
+            return GetSecurityConnectorApplications(scope).Get(applicationId, cancellationToken);
         }
 
-        /// <summary>
-        /// Details of a specific Compliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <summary> Get a specific application for the requested scope by applicationId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityComplianceResource> GetSecurityCompliance(ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityConnectorApplicationResource>> GetSecurityConnectorApplicationAsync(Core.ResourceIdentifier scope, string applicationId, CancellationToken cancellationToken = default)
         {
-            return GetSecurityCompliances(scope).Get(complianceName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+
+            return await GetSecurityConnectorApplications(scope).GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of GovernanceRuleResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
-        public virtual GovernanceRuleCollection GetGovernanceRules(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="SecurityAutomationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityAutomationResource"/> object. </returns>
+        public virtual SecurityAutomationResource GetSecurityAutomationResource(Core.ResourceIdentifier id)
         {
-            return new GovernanceRuleCollection(Client, scope);
+            SecurityAutomationResource.ValidateResourceId(id);
+            return new SecurityAutomationResource(Client, id);
         }
 
-        /// <summary>
-        /// Get a specific governance rule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GovernanceRuleResource>> GetGovernanceRuleAsync(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a <see cref="SecurityContactResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityContactResource"/> object. </returns>
+        public virtual SecurityContactResource GetSecurityContactResource(Core.ResourceIdentifier id)
         {
-            return await GetGovernanceRules(scope).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+            SecurityContactResource.ValidateResourceId(id);
+            return new SecurityContactResource(Client, id);
         }
 
-        /// <summary>
-        /// Get a specific governance rule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GovernanceRuleResource> GetGovernanceRule(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a <see cref="ComplianceResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComplianceResultResource"/> object. </returns>
+        public virtual ComplianceResultResource GetComplianceResultResource(Core.ResourceIdentifier id)
         {
-            return GetGovernanceRules(scope).Get(ruleId, cancellationToken);
+            ComplianceResultResource.ValidateResourceId(id);
+            return new ComplianceResultResource(Client, id);
         }
 
-        /// <summary> Gets a collection of DefenderForStorageSettingResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DefenderForStorageSettingResources and their operations over a DefenderForStorageSettingResource. </returns>
-        public virtual DefenderForStorageSettingCollection GetDefenderForStorageSettings(ResourceIdentifier scope)
-        {
-            return new DefenderForStorageSettingCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets the Defender for Storage settings for the specified storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(ResourceIdentifier scope, DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
-        {
-            return await GetDefenderForStorageSettings(scope).GetAsync(settingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the Defender for Storage settings for the specified storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(ResourceIdentifier scope, DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
-        {
-            return GetDefenderForStorageSettings(scope).Get(settingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlVulnerabilityAssessmentBaselineRuleResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
-        public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier scope)
-        {
-            return new SqlVulnerabilityAssessmentBaselineRuleCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets the results for a given rule in the Baseline.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, workspaceId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the results for a given rule in the Baseline.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default)
-        {
-            return GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, workspaceId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
-        public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(ResourceIdentifier scope)
-        {
-            return new SqlVulnerabilityAssessmentScanCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets the scan details of a single scan record.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVulnerabilityAssessmentScanResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, workspaceId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the scan details of a single scan record.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVulnerabilityAssessmentScans_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVulnerabilityAssessmentScanResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
-        /// <param name="workspaceId"> The workspace Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default)
-        {
-            return GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, workspaceId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityHealthReportResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SecurityHealthReportResources and their operations over a SecurityHealthReportResource. </returns>
-        public virtual SecurityHealthReportCollection GetSecurityHealthReports(ResourceIdentifier scope)
-        {
-            return new SecurityHealthReportCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get health report of resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/healthReports/{healthReportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthReports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityHealthReportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="healthReportName"> The health report Key - Unique key for the health report type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityHealthReportResource>> GetSecurityHealthReportAsync(ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityHealthReports(scope).GetAsync(healthReportName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get health report of resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/healthReports/{healthReportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthReports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityHealthReportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="healthReportName"> The health report Key - Unique key for the health report type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityHealthReportResource> GetSecurityHealthReport(ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityHealthReports(scope).Get(healthReportName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ComplianceResultResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ComplianceResultResources and their operations over a ComplianceResultResource. </returns>
-        public virtual ComplianceResultCollection GetComplianceResults(ResourceIdentifier scope)
+        /// <summary> Gets a collection of <see cref="ComplianceResultCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ComplianceResultResource"/> objects. </returns>
+        public virtual ComplianceResultCollection GetComplianceResults(Core.ResourceIdentifier scope)
         {
             return new ComplianceResultCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Security Compliance Result
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComplianceResults_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComplianceResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
+        /// <summary> Security Compliance Result. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="complianceResultName"> The compliance result key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
+        public virtual Response<ComplianceResultResource> GetComplianceResult(Core.ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
-            return await GetComplianceResults(scope).GetAsync(complianceResultName, cancellationToken).ConfigureAwait(false);
-        }
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
-        /// <summary>
-        /// Security Compliance Result
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComplianceResults_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComplianceResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ComplianceResultResource> GetComplianceResult(ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
-        {
             return GetComplianceResults(scope).Get(complianceResultName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a AdvancedThreatProtectionSettingResource along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
-        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(ResourceIdentifier scope)
+        /// <summary> Security Compliance Result. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="complianceResultName"> The compliance result key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(Core.ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
-            return new AdvancedThreatProtectionSettingResource(Client, scope.AppendProviderResource("Microsoft.Security", "advancedThreatProtectionSettings", "current"));
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
+
+            return await GetComplianceResults(scope).GetAsync(complianceResultName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DeviceSecurityGroupResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DeviceSecurityGroupResources and their operations over a DeviceSecurityGroupResource. </returns>
-        public virtual DeviceSecurityGroupCollection GetDeviceSecurityGroups(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="GovernanceAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GovernanceAssignmentResource"/> object. </returns>
+        public virtual GovernanceAssignmentResource GetGovernanceAssignmentResource(Core.ResourceIdentifier id)
+        {
+            GovernanceAssignmentResource.ValidateResourceId(id);
+            return new GovernanceAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="GovernanceAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="GovernanceAssignmentResource"/> objects. </returns>
+        public virtual GovernanceAssignmentCollection GetGovernanceAssignments(Core.ResourceIdentifier scope)
+        {
+            return new GovernanceAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="assignmentKey"> The governance assignment key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GovernanceAssignmentResource> GetGovernanceAssignment(Core.ResourceIdentifier scope, string assignmentKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+
+            return GetGovernanceAssignments(scope).Get(assignmentKey, cancellationToken);
+        }
+
+        /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="assignmentKey"> The governance assignment key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GovernanceAssignmentResource>> GetGovernanceAssignmentAsync(Core.ResourceIdentifier scope, string assignmentKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
+
+            return await GetGovernanceAssignments(scope).GetAsync(assignmentKey, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityConnectorGovernanceRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityConnectorGovernanceRuleResource"/> object. </returns>
+        public virtual SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(Core.ResourceIdentifier id)
+        {
+            SecurityConnectorGovernanceRuleResource.ValidateResourceId(id);
+            return new SecurityConnectorGovernanceRuleResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SecurityConnectorGovernanceRuleCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SecurityConnectorGovernanceRuleResource"/> objects. </returns>
+        public virtual SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules(Core.ResourceIdentifier scope)
+        {
+            return new SecurityConnectorGovernanceRuleCollection(Client, scope);
+        }
+
+        /// <summary> Get a specific governance rule for the requested scope by ruleId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(Core.ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
+            return GetSecurityConnectorGovernanceRules(scope).Get(ruleId, cancellationToken);
+        }
+
+        /// <summary> Get a specific governance rule for the requested scope by ruleId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(Core.ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
+            return await GetSecurityConnectorGovernanceRules(scope).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="HealthReportResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HealthReportResource"/> object. </returns>
+        public virtual HealthReportResource GetHealthReportResource(Core.ResourceIdentifier id)
+        {
+            HealthReportResource.ValidateResourceId(id);
+            return new HealthReportResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="HealthReportCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="HealthReportResource"/> objects. </returns>
+        public virtual HealthReportCollection GetHealthReports(Core.ResourceIdentifier scope)
+        {
+            return new HealthReportCollection(Client, scope);
+        }
+
+        /// <summary> Get health report of resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="healthReportName"> The health report key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthReportResource> GetHealthReport(Core.ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
+
+            return GetHealthReports(scope).Get(healthReportName, cancellationToken);
+        }
+
+        /// <summary> Get health report of resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="healthReportName"> The health report key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HealthReportResource>> GetHealthReportAsync(Core.ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
+
+            return await GetHealthReports(scope).GetAsync(healthReportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DeviceSecurityGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceSecurityGroupResource"/> object. </returns>
+        public virtual DeviceSecurityGroupResource GetDeviceSecurityGroupResource(Core.ResourceIdentifier id)
+        {
+            DeviceSecurityGroupResource.ValidateResourceId(id);
+            return new DeviceSecurityGroupResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DeviceSecurityGroupCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DeviceSecurityGroupResource"/> objects. </returns>
+        public virtual DeviceSecurityGroupCollection GetDeviceSecurityGroups(Core.ResourceIdentifier scope)
         {
             return new DeviceSecurityGroupCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Use this method to get the device security group for the specified IoT Hub resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <summary> Use this method to get the device security group for the specified IoT Hub resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(Core.ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetDeviceSecurityGroups(scope).GetAsync(deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
-        }
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
 
-        /// <summary>
-        /// Use this method to get the device security group for the specified IoT Hub resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeviceSecurityGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceSecurityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
-        {
             return GetDeviceSecurityGroups(scope).Get(deviceSecurityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecurityAssessmentResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SecurityAssessmentResources and their operations over a SecurityAssessmentResource. </returns>
-        public virtual SecurityAssessmentCollection GetSecurityAssessments(ResourceIdentifier scope)
+        /// <summary> Use this method to get the device security group for the specified IoT Hub resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="deviceSecurityGroupName"> The name of the device security group. Note that the name of the device security group is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(Core.ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+
+            return await GetDeviceSecurityGroups(scope).GetAsync(deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AutoProvisioningSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoProvisioningSettingResource"/> object. </returns>
+        public virtual AutoProvisioningSettingResource GetAutoProvisioningSettingResource(Core.ResourceIdentifier id)
+        {
+            AutoProvisioningSettingResource.ValidateResourceId(id);
+            return new AutoProvisioningSettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityComplianceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityComplianceResource"/> object. </returns>
+        public virtual SecurityComplianceResource GetSecurityComplianceResource(Core.ResourceIdentifier id)
+        {
+            SecurityComplianceResource.ValidateResourceId(id);
+            return new SecurityComplianceResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SecurityComplianceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SecurityComplianceResource"/> objects. </returns>
+        public virtual SecurityComplianceCollection GetSecurityCompliances(Core.ResourceIdentifier scope)
+        {
+            return new SecurityComplianceCollection(Client, scope);
+        }
+
+        /// <summary> Details of a specific Compliance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityComplianceResource> GetSecurityCompliance(Core.ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
+
+            return GetSecurityCompliances(scope).Get(complianceName, cancellationToken);
+        }
+
+        /// <summary> Details of a specific Compliance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="complianceName"> name of the Compliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(Core.ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
+
+            return await GetSecurityCompliances(scope).GetAsync(complianceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="InformationProtectionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InformationProtectionPolicyResource"/> object. </returns>
+        public virtual InformationProtectionPolicyResource GetInformationProtectionPolicyResource(Core.ResourceIdentifier id)
+        {
+            InformationProtectionPolicyResource.ValidateResourceId(id);
+            return new InformationProtectionPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="InformationProtectionPolicyCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="InformationProtectionPolicyResource"/> objects. </returns>
+        public virtual InformationProtectionPolicyCollection GetInformationProtectionPolicies(Core.ResourceIdentifier scope)
+        {
+            return new InformationProtectionPolicyCollection(Client, scope);
+        }
+
+        /// <summary> Details of the information protection policy. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<InformationProtectionPolicyResource> GetInformationProtectionPolicy(Core.ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetInformationProtectionPolicies(scope).Get(informationProtectionPolicyName, cancellationToken);
+        }
+
+        /// <summary> Details of the information protection policy. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InformationProtectionPolicyResource>> GetInformationProtectionPolicyAsync(Core.ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetInformationProtectionPolicies(scope).GetAsync(informationProtectionPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityWorkspaceSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityWorkspaceSettingResource"/> object. </returns>
+        public virtual SecurityWorkspaceSettingResource GetSecurityWorkspaceSettingResource(Core.ResourceIdentifier id)
+        {
+            SecurityWorkspaceSettingResource.ValidateResourceId(id);
+            return new SecurityWorkspaceSettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MdeOnboardingDataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MdeOnboardingDataResource"/> object. </returns>
+        public virtual MdeOnboardingDataResource GetMdeOnboardingDataResource(Core.ResourceIdentifier id)
+        {
+            MdeOnboardingDataResource.ValidateResourceId(id);
+            return new MdeOnboardingDataResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityCenterPricingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityCenterPricingResource"/> object. </returns>
+        public virtual SecurityCenterPricingResource GetSecurityCenterPricingResource(Core.ResourceIdentifier id)
+        {
+            SecurityCenterPricingResource.ValidateResourceId(id);
+            return new SecurityCenterPricingResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SecurityCenterPricingCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SecurityCenterPricingResource"/> objects. </returns>
+        public virtual SecurityCenterPricingCollection GetSecurityCenterPricings(Core.ResourceIdentifier scope)
+        {
+            return new SecurityCenterPricingCollection(Client, scope);
+        }
+
+        /// <summary> Get the Defender plans pricing configurations of the selected scope (valid scopes are resource id or a subscription id). At the resource level, supported resource types are 'VirtualMachines, VMSS and ARC Machines'. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="pricingName"> name of the pricing configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityCenterPricingResource> GetSecurityCenterPricing(Core.ResourceIdentifier scope, string pricingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+
+            return GetSecurityCenterPricings(scope).Get(pricingName, cancellationToken);
+        }
+
+        /// <summary> Get the Defender plans pricing configurations of the selected scope (valid scopes are resource id or a subscription id). At the resource level, supported resource types are 'VirtualMachines, VMSS and ARC Machines'. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="pricingName"> name of the pricing configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(Core.ResourceIdentifier scope, string pricingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+
+            return await GetSecurityCenterPricings(scope).GetAsync(pricingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PrivateLinkGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateLinkGroupResource"/> object. </returns>
+        public virtual PrivateLinkGroupResource GetPrivateLinkGroupResource(Core.ResourceIdentifier id)
+        {
+            PrivateLinkGroupResource.ValidateResourceId(id);
+            return new PrivateLinkGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(Core.ResourceIdentifier id)
+        {
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RegulatoryComplianceStandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegulatoryComplianceStandardResource"/> object. </returns>
+        public virtual RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(Core.ResourceIdentifier id)
+        {
+            RegulatoryComplianceStandardResource.ValidateResourceId(id);
+            return new RegulatoryComplianceStandardResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RegulatoryComplianceControlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegulatoryComplianceControlResource"/> object. </returns>
+        public virtual RegulatoryComplianceControlResource GetRegulatoryComplianceControlResource(Core.ResourceIdentifier id)
+        {
+            RegulatoryComplianceControlResource.ValidateResourceId(id);
+            return new RegulatoryComplianceControlResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RegulatoryComplianceAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegulatoryComplianceAssessmentResource"/> object. </returns>
+        public virtual RegulatoryComplianceAssessmentResource GetRegulatoryComplianceAssessmentResource(Core.ResourceIdentifier id)
+        {
+            RegulatoryComplianceAssessmentResource.ValidateResourceId(id);
+            return new RegulatoryComplianceAssessmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityConnectorResource"/> object. </returns>
+        public virtual SecurityConnectorResource GetSecurityConnectorResource(Core.ResourceIdentifier id)
+        {
+            SecurityConnectorResource.ValidateResourceId(id);
+            return new SecurityConnectorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AzureDevOpsOrgResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AzureDevOpsOrgResource"/> object. </returns>
+        public virtual AzureDevOpsOrgResource GetAzureDevOpsOrgResource(Core.ResourceIdentifier id)
+        {
+            AzureDevOpsOrgResource.ValidateResourceId(id);
+            return new AzureDevOpsOrgResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GitHubOwnerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GitHubOwnerResource"/> object. </returns>
+        public virtual GitHubOwnerResource GetGitHubOwnerResource(Core.ResourceIdentifier id)
+        {
+            GitHubOwnerResource.ValidateResourceId(id);
+            return new GitHubOwnerResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GitLabGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GitLabGroupResource"/> object. </returns>
+        public virtual GitLabGroupResource GetGitLabGroupResource(Core.ResourceIdentifier id)
+        {
+            GitLabGroupResource.ValidateResourceId(id);
+            return new GitLabGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DevOpsConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DevOpsConfigurationResource"/> object. </returns>
+        public virtual DevOpsConfigurationResource GetDevOpsConfigurationResource(Core.ResourceIdentifier id)
+        {
+            DevOpsConfigurationResource.ValidateResourceId(id);
+            return new DevOpsConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AzureDevOpsProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AzureDevOpsProjectResource"/> object. </returns>
+        public virtual AzureDevOpsProjectResource GetAzureDevOpsProjectResource(Core.ResourceIdentifier id)
+        {
+            AzureDevOpsProjectResource.ValidateResourceId(id);
+            return new AzureDevOpsProjectResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GitLabProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GitLabProjectResource"/> object. </returns>
+        public virtual GitLabProjectResource GetGitLabProjectResource(Core.ResourceIdentifier id)
+        {
+            GitLabProjectResource.ValidateResourceId(id);
+            return new GitLabProjectResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityOperatorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityOperatorResource"/> object. </returns>
+        public virtual SecurityOperatorResource GetSecurityOperatorResource(Core.ResourceIdentifier id)
+        {
+            SecurityOperatorResource.ValidateResourceId(id);
+            return new SecurityOperatorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DiscoveredSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiscoveredSecuritySolutionResource"/> object. </returns>
+        public virtual DiscoveredSecuritySolutionResource GetDiscoveredSecuritySolutionResource(Core.ResourceIdentifier id)
+        {
+            DiscoveredSecuritySolutionResource.ValidateResourceId(id);
+            return new DiscoveredSecuritySolutionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExternalSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExternalSecuritySolutionResource"/> object. </returns>
+        public virtual ExternalSecuritySolutionResource GetExternalSecuritySolutionResource(Core.ResourceIdentifier id)
+        {
+            ExternalSecuritySolutionResource.ValidateResourceId(id);
+            return new ExternalSecuritySolutionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="JitNetworkAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource"/> object. </returns>
+        public virtual JitNetworkAccessPolicyResource GetJitNetworkAccessPolicyResource(Core.ResourceIdentifier id)
+        {
+            JitNetworkAccessPolicyResource.ValidateResourceId(id);
+            return new JitNetworkAccessPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecuritySolutionResource"/> object. </returns>
+        public virtual SecuritySolutionResource GetSecuritySolutionResource(Core.ResourceIdentifier id)
+        {
+            SecuritySolutionResource.ValidateResourceId(id);
+            return new SecuritySolutionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityStandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityStandardResource"/> object. </returns>
+        public virtual SecurityStandardResource GetSecurityStandardResource(Core.ResourceIdentifier id)
+        {
+            SecurityStandardResource.ValidateResourceId(id);
+            return new SecurityStandardResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SecurityStandardCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SecurityStandardResource"/> objects. </returns>
+        public virtual SecurityStandardCollection GetSecurityStandards(Core.ResourceIdentifier scope)
+        {
+            return new SecurityStandardCollection(Client, scope);
+        }
+
+        /// <summary> Get a specific security standard for the requested scope by standardId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="standardId"> The Security Standard key - unique key for the standard type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityStandardResource> GetSecurityStandard(Core.ResourceIdentifier scope, string standardId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
+
+            return GetSecurityStandards(scope).Get(standardId, cancellationToken);
+        }
+
+        /// <summary> Get a specific security standard for the requested scope by standardId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="standardId"> The Security Standard key - unique key for the standard type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityStandardResource>> GetSecurityStandardAsync(Core.ResourceIdentifier scope, string standardId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
+
+            return await GetSecurityStandards(scope).GetAsync(standardId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="StandardAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StandardAssignmentResource"/> object. </returns>
+        public virtual StandardAssignmentResource GetStandardAssignmentResource(Core.ResourceIdentifier id)
+        {
+            StandardAssignmentResource.ValidateResourceId(id);
+            return new StandardAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="StandardAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="StandardAssignmentResource"/> objects. </returns>
+        public virtual StandardAssignmentCollection GetStandardAssignments(Core.ResourceIdentifier scope)
+        {
+            return new StandardAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> This operation retrieves a single standard assignment, given its name and the scope it was created at. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="standardAssignmentName"> The standard assignments assignment key - unique key for the standard assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="standardAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="standardAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StandardAssignmentResource> GetStandardAssignment(Core.ResourceIdentifier scope, string standardAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(standardAssignmentName, nameof(standardAssignmentName));
+
+            return GetStandardAssignments(scope).Get(standardAssignmentName, cancellationToken);
+        }
+
+        /// <summary> This operation retrieves a single standard assignment, given its name and the scope it was created at. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="standardAssignmentName"> The standard assignments assignment key - unique key for the standard assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="standardAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="standardAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StandardAssignmentResource>> GetStandardAssignmentAsync(Core.ResourceIdentifier scope, string standardAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(standardAssignmentName, nameof(standardAssignmentName));
+
+            return await GetStandardAssignments(scope).GetAsync(standardAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CustomRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomRecommendationResource"/> object. </returns>
+        public virtual CustomRecommendationResource GetCustomRecommendationResource(Core.ResourceIdentifier id)
+        {
+            CustomRecommendationResource.ValidateResourceId(id);
+            return new CustomRecommendationResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="CustomRecommendationCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="CustomRecommendationResource"/> objects. </returns>
+        public virtual CustomRecommendationCollection GetCustomRecommendations(Core.ResourceIdentifier scope)
+        {
+            return new CustomRecommendationCollection(Client, scope);
+        }
+
+        /// <summary> Get a specific custom recommendation for the requested scope by customRecommendationName. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="customRecommendationName"> Name of the Custom Recommendation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customRecommendationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CustomRecommendationResource> GetCustomRecommendation(Core.ResourceIdentifier scope, string customRecommendationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customRecommendationName, nameof(customRecommendationName));
+
+            return GetCustomRecommendations(scope).Get(customRecommendationName, cancellationToken);
+        }
+
+        /// <summary> Get a specific custom recommendation for the requested scope by customRecommendationName. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="customRecommendationName"> Name of the Custom Recommendation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customRecommendationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CustomRecommendationResource>> GetCustomRecommendationAsync(Core.ResourceIdentifier scope, string customRecommendationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customRecommendationName, nameof(customRecommendationName));
+
+            return await GetCustomRecommendations(scope).GetAsync(customRecommendationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> object. </returns>
+        public virtual ServerVulnerabilityAssessmentsSettingResource GetServerVulnerabilityAssessmentsSettingResource(Core.ResourceIdentifier id)
+        {
+            ServerVulnerabilityAssessmentsSettingResource.ValidateResourceId(id);
+            return new ServerVulnerabilityAssessmentsSettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecuritySettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecuritySettingResource"/> object. </returns>
+        public virtual SecuritySettingResource GetSecuritySettingResource(Core.ResourceIdentifier id)
+        {
+            SecuritySettingResource.ValidateResourceId(id);
+            return new SecuritySettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(Core.ResourceIdentifier id)
+        {
+            SqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
+            return new SqlVulnerabilityAssessmentBaselineRuleResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SqlVulnerabilityAssessmentBaselineRuleCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> objects. </returns>
+        public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(Core.ResourceIdentifier scope)
+        {
+            return new SqlVulnerabilityAssessmentBaselineRuleCollection(Client, scope);
+        }
+
+        /// <summary> Gets the results for a given rule in the Baseline. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="databaseName"> The name of the database to assess. Required when the API is called on the parent resource (e.g., server level) rather than on a specific database resource, since the database name is not part of the resource URI. This is the only way to assess system databases (e.g., master), which cannot be referenced directly in the resource URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(Core.ResourceIdentifier scope, string ruleId, string databaseName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
+            return GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, databaseName, cancellationToken);
+        }
+
+        /// <summary> Gets the results for a given rule in the Baseline. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="databaseName"> The name of the database to assess. Required when the API is called on the parent resource (e.g., server level) rather than on a specific database resource, since the database name is not part of the resource URI. This is the only way to assess system databases (e.g., master), which cannot be referenced directly in the resource URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(Core.ResourceIdentifier scope, string ruleId, string databaseName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
+            return await GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScanResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScanResultResource"/> object. </returns>
+        public virtual ScanResultResource GetScanResultResource(Core.ResourceIdentifier id)
+        {
+            ScanResultResource.ValidateResourceId(id);
+            return new ScanResultResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ScanResultCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScanResultResource"/> objects. </returns>
+        public virtual ScanResultCollection GetScanResults(Core.ResourceIdentifier scope)
+        {
+            return new ScanResultCollection(Client, scope);
+        }
+
+        /// <summary> Gets the scan results of a single rule in a scan record. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scanResultId"></param>
+        /// <param name="databaseName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScanResultResource> GetScanResult(Core.ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
+
+            return GetScanResults(scope).Get(scanResultId, databaseName, cancellationToken);
+        }
+
+        /// <summary> Gets the scan results of a single rule in a scan record. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scanResultId"></param>
+        /// <param name="databaseName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScanResultResource>> GetScanResultAsync(Core.ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
+
+            return await GetScanResults(scope).GetAsync(scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="StandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StandardResource"/> object. </returns>
+        public virtual StandardResource GetStandardResource(Core.ResourceIdentifier id)
+        {
+            StandardResource.ValidateResourceId(id);
+            return new StandardResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AssignmentResource"/> object. </returns>
+        public virtual AssignmentResource GetAssignmentResource(Core.ResourceIdentifier id)
+        {
+            AssignmentResource.ValidateResourceId(id);
+            return new AssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApiCollectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCollectionResource"/> object. </returns>
+        public virtual ApiCollectionResource GetApiCollectionResource(Core.ResourceIdentifier id)
+        {
+            ApiCollectionResource.ValidateResourceId(id);
+            return new ApiCollectionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ApiCollectionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ApiCollectionResource"/> objects. </returns>
+        public virtual ApiCollectionCollection GetApiCollections(Core.ResourceIdentifier scope)
+        {
+            return new ApiCollectionCollection(Client, scope);
+        }
+
+        /// <summary> Gets an Azure API Management API if it has been onboarded to Microsoft Defender for APIs. If an Azure API Management API is onboarded to Microsoft Defender for APIs, the system will monitor the operations within the Azure API Management API for intrusive behaviors and provide alerts for attacks that have been detected. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiCollectionResource> GetApiCollection(Core.ResourceIdentifier scope, string apiId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+
+            return GetApiCollections(scope).Get(apiId, cancellationToken);
+        }
+
+        /// <summary> Gets an Azure API Management API if it has been onboarded to Microsoft Defender for APIs. If an Azure API Management API is onboarded to Microsoft Defender for APIs, the system will monitor the operations within the Azure API Management API for intrusive behaviors and provide alerts for attacks that have been detected. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiCollectionResource>> GetApiCollectionAsync(Core.ResourceIdentifier scope, string apiId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+
+            return await GetApiCollections(scope).GetAsync(apiId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
+        public virtual ApplicationResource GetApplicationResource(Core.ResourceIdentifier id)
+        {
+            ApplicationResource.ValidateResourceId(id);
+            return new ApplicationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityAssessmentResource"/> object. </returns>
+        public virtual SecurityAssessmentResource GetSecurityAssessmentResource(Core.ResourceIdentifier id)
+        {
+            SecurityAssessmentResource.ValidateResourceId(id);
+            return new SecurityAssessmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SecurityAssessmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SecurityAssessmentResource"/> objects. </returns>
+        public virtual SecurityAssessmentCollection GetSecurityAssessments(Core.ResourceIdentifier scope)
         {
             return new SecurityAssessmentCollection(Client, scope);
         }
 
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assessments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <summary> Get a security assessment on your scanned resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityAssessmentResource> GetSecurityAssessment(Core.ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetSecurityAssessments(scope).GetAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
-        }
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assessments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityAssessmentResource> GetSecurityAssessment(ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
-        {
             return GetSecurityAssessments(scope).Get(assessmentName, expand, cancellationToken);
         }
 
-        /// <summary>
-        /// Details of the information protection policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
-        /// <param name="informationProtectionPolicy"> Information protection policy. </param>
+        /// <summary> Get a security assessment on your scanned resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
-        public virtual async Task<Response<InformationProtectionPolicy>> CreateOrUpdateInformationProtectionPolicyAsync(ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(Core.ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-            using var scope0 = InformationProtectionPoliciesClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.CreateOrUpdateInformationProtectionPolicy");
-            scope0.Start();
-            try
-            {
-                var response = await InformationProtectionPoliciesRestClient.CreateOrUpdateAsync(scope, informationProtectionPolicyName, informationProtectionPolicy, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return await GetSecurityAssessments(scope).GetAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Details of the information protection policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
-        /// <param name="informationProtectionPolicy"> Information protection policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
-        public virtual Response<InformationProtectionPolicy> CreateOrUpdateInformationProtectionPolicy(ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
+        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(Core.ResourceIdentifier id)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
-
-            using var scope0 = InformationProtectionPoliciesClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.CreateOrUpdateInformationProtectionPolicy");
-            scope0.Start();
-            try
-            {
-                var response = InformationProtectionPoliciesRestClient.CreateOrUpdate(scope, informationProtectionPolicyName, informationProtectionPolicy, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            AdvancedThreatProtectionSettingResource.ValidateResourceId(id);
+            return new AdvancedThreatProtectionSettingResource(Client, id);
         }
 
-        /// <summary>
-        /// Information protection policies of a specific management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformationProtectionPolicies_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="InformationProtectionPolicy"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InformationProtectionPolicy> GetInformationProtectionPoliciesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
+        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(Core.ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => InformationProtectionPolicy.DeserializeInformationProtectionPolicy(e), InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+            return new AdvancedThreatProtectionSettingResource(Client, scope.AppendProviderResource("Microsoft.Security", "advancedThreatProtectionSettings", "default"));
         }
 
-        /// <summary>
-        /// Information protection policies of a specific management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformationProtectionPolicies_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="InformationProtectionPolicy"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InformationProtectionPolicy> GetInformationProtectionPolicies(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a <see cref="DefenderForStorageSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DefenderForStorageSettingResource"/> object. </returns>
+        public virtual DefenderForStorageSettingResource GetDefenderForStorageSettingResource(Core.ResourceIdentifier id)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            DefenderForStorageSettingResource.ValidateResourceId(id);
+            return new DefenderForStorageSettingResource(Client, id);
+        }
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InformationProtectionPoliciesRestClient.CreateListRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformationProtectionPoliciesRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => InformationProtectionPolicy.DeserializeInformationProtectionPolicy(e), InformationProtectionPoliciesClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetInformationProtectionPolicies", "value", "nextLink", cancellationToken);
+        /// <summary> Gets a collection of <see cref="DefenderForStorageSettingCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DefenderForStorageSettingResource"/> objects. </returns>
+        public virtual DefenderForStorageSettingCollection GetDefenderForStorageSettings(Core.ResourceIdentifier scope)
+        {
+            return new DefenderForStorageSettingCollection(Client, scope);
+        }
+
+        /// <summary> Gets the Defender for Storage settings for the specified storage account. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(Core.ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return GetDefenderForStorageSettings(scope).Get(settingName, cancellationToken);
+        }
+
+        /// <summary> Gets the Defender for Storage settings for the specified storage account. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(Core.ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
+        {
+            return await GetDefenderForStorageSettings(scope).GetAsync(settingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> object. </returns>
+        public virtual IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(Core.ResourceIdentifier id)
+        {
+            IoTSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
+            return new IoTSecuritySolutionAnalyticsModelResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IotSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IotSecuritySolutionResource"/> object. </returns>
+        public virtual IotSecuritySolutionResource GetIotSecuritySolutionResource(Core.ResourceIdentifier id)
+        {
+            IotSecuritySolutionResource.ValidateResourceId(id);
+            return new IotSecuritySolutionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IotSecurityAggregatedAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IotSecurityAggregatedAlertResource"/> object. </returns>
+        public virtual IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(Core.ResourceIdentifier id)
+        {
+            IotSecurityAggregatedAlertResource.ValidateResourceId(id);
+            return new IotSecurityAggregatedAlertResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IotSecurityAggregatedRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IotSecurityAggregatedRecommendationResource"/> object. </returns>
+        public virtual IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(Core.ResourceIdentifier id)
+        {
+            IotSecurityAggregatedRecommendationResource.ValidateResourceId(id);
+            return new IotSecurityAggregatedRecommendationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityCenterLocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityCenterLocationResource"/> object. </returns>
+        public virtual SecurityCenterLocationResource GetSecurityCenterLocationResource(Core.ResourceIdentifier id)
+        {
+            SecurityCenterLocationResource.ValidateResourceId(id);
+            return new SecurityCenterLocationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
+        public virtual PrivateLinkResource GetPrivateLinkResource(Core.ResourceIdentifier id)
+        {
+            PrivateLinkResource.ValidateResourceId(id);
+            return new PrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecureScoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecureScoreResource"/> object. </returns>
+        public virtual SecureScoreResource GetSecureScoreResource(Core.ResourceIdentifier id)
+        {
+            SecureScoreResource.ValidateResourceId(id);
+            return new SecureScoreResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AzureDevOpsRepositoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AzureDevOpsRepositoryResource"/> object. </returns>
+        public virtual AzureDevOpsRepositoryResource GetAzureDevOpsRepositoryResource(Core.ResourceIdentifier id)
+        {
+            AzureDevOpsRepositoryResource.ValidateResourceId(id);
+            return new AzureDevOpsRepositoryResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GitHubRepositoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GitHubRepositoryResource"/> object. </returns>
+        public virtual GitHubRepositoryResource GetGitHubRepositoryResource(Core.ResourceIdentifier id)
+        {
+            GitHubRepositoryResource.ValidateResourceId(id);
+            return new GitHubRepositoryResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AllowedConnectionsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AllowedConnectionsResource"/> object. </returns>
+        public virtual AllowedConnectionsResource GetAllowedConnectionsResource(Core.ResourceIdentifier id)
+        {
+            AllowedConnectionsResource.ValidateResourceId(id);
+            return new AllowedConnectionsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
+        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(Core.ResourceIdentifier id)
+        {
+            ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
+            return new ServerVulnerabilityAssessmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
+        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessment(Core.ResourceIdentifier scope)
+        {
+            return new ServerVulnerabilityAssessmentResource(Client, scope.AppendProviderResource("Microsoft.Security", "serverVulnerabilityAssessments", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="TopologyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopologyResource"/> object. </returns>
+        public virtual TopologyResource GetTopologyResource(Core.ResourceIdentifier id)
+        {
+            TopologyResource.ValidateResourceId(id);
+            return new TopologyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GetSensitivitySettingsResponseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GetSensitivitySettingsResponseResource"/> object. </returns>
+        public virtual GetSensitivitySettingsResponseResource GetGetSensitivitySettingsResponseResource(Core.ResourceIdentifier id)
+        {
+            GetSensitivitySettingsResponseResource.ValidateResourceId(id);
+            return new GetSensitivitySettingsResponseResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentSettingResource GetSqlVulnerabilityAssessmentSettingResource(Core.ResourceIdentifier id)
+        {
+            SqlVulnerabilityAssessmentSettingResource.ValidateResourceId(id);
+            return new SqlVulnerabilityAssessmentSettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentSettingResource GetSqlVulnerabilityAssessmentSetting(Core.ResourceIdentifier scope)
+        {
+            return new SqlVulnerabilityAssessmentSettingResource(Client, scope.AppendProviderResource("Microsoft.Security", "sqlVulnerabilityAssessments", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScan(Core.ResourceIdentifier scope)
+        {
+            return new SqlVulnerabilityAssessmentScanResource(Client, (Core.ResourceIdentifier)null);
+        }
+
+        /// <summary> Gets a collection of <see cref="SqlVulnerabilityAssessmentScanCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SqlVulnerabilityAssessmentScanResource"/> objects. </returns>
+        public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(Core.ResourceIdentifier scope)
+        {
+            return new SqlVulnerabilityAssessmentScanCollection(Client, scope);
+        }
+
+        /// <summary> Gets the scan details of a single scan record. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scanId"></param>
+        /// <param name="databaseName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(Core.ResourceIdentifier scope, string scanId, string databaseName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
+
+            return GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, databaseName, cancellationToken);
+        }
+
+        /// <summary> Gets the scan details of a single scan record. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scanId"></param>
+        /// <param name="databaseName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(Core.ResourceIdentifier scope, string scanId, string databaseName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
+
+            return await GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecuritySubAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecuritySubAssessmentResource"/> object. </returns>
+        public virtual SecuritySubAssessmentResource GetSecuritySubAssessmentResource(Core.ResourceIdentifier id)
+        {
+            SecuritySubAssessmentResource.ValidateResourceId(id);
+            return new SecuritySubAssessmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SecuritySubAssessmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SecuritySubAssessmentResource"/> objects. </returns>
+        public virtual SecuritySubAssessmentCollection GetSecuritySubAssessments(Core.ResourceIdentifier scope)
+        {
+            return new SecuritySubAssessmentCollection(Client, scope);
+        }
+
+        /// <summary> Get a security sub-assessment on your scanned resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecuritySubAssessmentResource> GetSecuritySubAssessment(Core.ResourceIdentifier scope, string subAssessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
+
+            return GetSecuritySubAssessments(scope).Get(subAssessmentName, cancellationToken);
+        }
+
+        /// <summary> Get a security sub-assessment on your scanned resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecuritySubAssessmentResource>> GetSecuritySubAssessmentAsync(Core.ResourceIdentifier scope, string subAssessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
+
+            return await GetSecuritySubAssessments(scope).GetAsync(subAssessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get security sub-assessments on all your scanned resources inside a subscription scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/subAssessments</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/subAssessments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubAssessments_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubAssessmentsOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecuritySubAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecuritySubAssessmentResource> GetSecuritySubAssessmentsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get security sub-assessments on all your scanned resources inside a subscription scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/subAssessments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubAssessments_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -913,764 +1317,47 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecuritySubAssessmentResource> GetSecuritySubAssessments(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecuritySubAssessmentResource> GetAllAsync(Core.ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecuritySubAssessmentSubAssessmentsRestClient.CreateListAllNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), SecuritySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecuritySubAssessments", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SubAssessmentsListAllAsyncCollectionResultOfT(SubAssessmentsRestClient, scope.ToString(), context, "MockableSecurityCenterArmClient.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
         }
 
         /// <summary>
-        /// Get security assessments on all your scanned resources inside a scope
+        /// Get security sub-assessments on all your scanned resources inside a subscription scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/subAssessments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assessments_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubAssessmentsOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SecurityAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityAssessmentResource> GetSecurityAssessmentsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecuritySubAssessmentResource> GetAll(Core.ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get security assessments on all your scanned resources inside a scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assessments_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAssessmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="SecurityAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityAssessmentResource> GetSecurityAssessments(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAssessmentAssessmentsRestClient.CreateListRequest(scope);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAssessmentAssessmentsRestClient.CreateListNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAssessmentResource(Client, SecurityAssessmentData.DeserializeSecurityAssessmentData(e)), SecurityAssessmentAssessmentsClientDiagnostics, Pipeline, "MockableSecurityCenterArmClient.GetSecurityAssessments", "value", "nextLink", cancellationToken);
-        }
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityCenterLocationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityCenterLocationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityCenterLocationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityCenterLocationResource"/> object. </returns>
-        public virtual SecurityCenterLocationResource GetSecurityCenterLocationResource(ResourceIdentifier id)
-        {
-            SecurityCenterLocationResource.ValidateResourceId(id);
-            return new SecurityCenterLocationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionSecurityTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionSecurityTaskResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionSecurityTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionSecurityTaskResource"/> object. </returns>
-        public virtual SubscriptionSecurityTaskResource GetSubscriptionSecurityTaskResource(ResourceIdentifier id)
-        {
-            SubscriptionSecurityTaskResource.ValidateResourceId(id);
-            return new SubscriptionSecurityTaskResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupSecurityTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupSecurityTaskResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupSecurityTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupSecurityTaskResource"/> object. </returns>
-        public virtual ResourceGroupSecurityTaskResource GetResourceGroupSecurityTaskResource(ResourceIdentifier id)
-        {
-            ResourceGroupSecurityTaskResource.ValidateResourceId(id);
-            return new ResourceGroupSecurityTaskResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutoProvisioningSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoProvisioningSettingResource.CreateResourceIdentifier" /> to create an <see cref="AutoProvisioningSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoProvisioningSettingResource"/> object. </returns>
-        public virtual AutoProvisioningSettingResource GetAutoProvisioningSettingResource(ResourceIdentifier id)
-        {
-            AutoProvisioningSettingResource.ValidateResourceId(id);
-            return new AutoProvisioningSettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityComplianceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityComplianceResource.CreateResourceIdentifier" /> to create a <see cref="SecurityComplianceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityComplianceResource"/> object. </returns>
-        public virtual SecurityComplianceResource GetSecurityComplianceResource(ResourceIdentifier id)
-        {
-            SecurityComplianceResource.ValidateResourceId(id);
-            return new SecurityComplianceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityWorkspaceSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityWorkspaceSettingResource.CreateResourceIdentifier" /> to create a <see cref="SecurityWorkspaceSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityWorkspaceSettingResource"/> object. </returns>
-        public virtual SecurityWorkspaceSettingResource GetSecurityWorkspaceSettingResource(ResourceIdentifier id)
-        {
-            SecurityWorkspaceSettingResource.ValidateResourceId(id);
-            return new SecurityWorkspaceSettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityAlertsSuppressionRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityAlertsSuppressionRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityAlertsSuppressionRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource"/> object. </returns>
-        public virtual SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(ResourceIdentifier id)
-        {
-            SecurityAlertsSuppressionRuleResource.ValidateResourceId(id);
-            return new SecurityAlertsSuppressionRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityAutomationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityAutomationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityAutomationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityAutomationResource"/> object. </returns>
-        public virtual SecurityAutomationResource GetSecurityAutomationResource(ResourceIdentifier id)
-        {
-            SecurityAutomationResource.ValidateResourceId(id);
-            return new SecurityAutomationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RegulatoryComplianceStandardResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegulatoryComplianceStandardResource.CreateResourceIdentifier" /> to create a <see cref="RegulatoryComplianceStandardResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegulatoryComplianceStandardResource"/> object. </returns>
-        public virtual RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(ResourceIdentifier id)
-        {
-            RegulatoryComplianceStandardResource.ValidateResourceId(id);
-            return new RegulatoryComplianceStandardResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RegulatoryComplianceControlResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegulatoryComplianceControlResource.CreateResourceIdentifier" /> to create a <see cref="RegulatoryComplianceControlResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegulatoryComplianceControlResource"/> object. </returns>
-        public virtual RegulatoryComplianceControlResource GetRegulatoryComplianceControlResource(ResourceIdentifier id)
-        {
-            RegulatoryComplianceControlResource.ValidateResourceId(id);
-            return new RegulatoryComplianceControlResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RegulatoryComplianceAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegulatoryComplianceAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="RegulatoryComplianceAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RegulatoryComplianceAssessmentResource"/> object. </returns>
-        public virtual RegulatoryComplianceAssessmentResource GetRegulatoryComplianceAssessmentResource(ResourceIdentifier id)
-        {
-            RegulatoryComplianceAssessmentResource.ValidateResourceId(id);
-            return new RegulatoryComplianceAssessmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecuritySubAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecuritySubAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SecuritySubAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecuritySubAssessmentResource"/> object. </returns>
-        public virtual SecuritySubAssessmentResource GetSecuritySubAssessmentResource(ResourceIdentifier id)
-        {
-            SecuritySubAssessmentResource.ValidateResourceId(id);
-            return new SecuritySubAssessmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityCloudConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityCloudConnectorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityCloudConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityCloudConnectorResource"/> object. </returns>
-        public virtual SecurityCloudConnectorResource GetSecurityCloudConnectorResource(ResourceIdentifier id)
-        {
-            SecurityCloudConnectorResource.ValidateResourceId(id);
-            return new SecurityCloudConnectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityContactResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityContactResource.CreateResourceIdentifier" /> to create a <see cref="SecurityContactResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityContactResource"/> object. </returns>
-        public virtual SecurityContactResource GetSecurityContactResource(ResourceIdentifier id)
-        {
-            SecurityContactResource.ValidateResourceId(id);
-            return new SecurityContactResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SoftwareInventoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SoftwareInventoryResource.CreateResourceIdentifier" /> to create a <see cref="SoftwareInventoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoftwareInventoryResource"/> object. </returns>
-        public virtual SoftwareInventoryResource GetSoftwareInventoryResource(ResourceIdentifier id)
-        {
-            SoftwareInventoryResource.ValidateResourceId(id);
-            return new SoftwareInventoryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CustomAssessmentAutomationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomAssessmentAutomationResource.CreateResourceIdentifier" /> to create a <see cref="CustomAssessmentAutomationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomAssessmentAutomationResource"/> object. </returns>
-        public virtual CustomAssessmentAutomationResource GetCustomAssessmentAutomationResource(ResourceIdentifier id)
-        {
-            CustomAssessmentAutomationResource.ValidateResourceId(id);
-            return new CustomAssessmentAutomationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CustomEntityStoreAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomEntityStoreAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="CustomEntityStoreAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomEntityStoreAssignmentResource"/> object. </returns>
-        public virtual CustomEntityStoreAssignmentResource GetCustomEntityStoreAssignmentResource(ResourceIdentifier id)
-        {
-            CustomEntityStoreAssignmentResource.ValidateResourceId(id);
-            return new CustomEntityStoreAssignmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="GovernanceAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GovernanceAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GovernanceAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GovernanceAssignmentResource"/> object. </returns>
-        public virtual GovernanceAssignmentResource GetGovernanceAssignmentResource(ResourceIdentifier id)
-        {
-            GovernanceAssignmentResource.ValidateResourceId(id);
-            return new GovernanceAssignmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="GovernanceRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GovernanceRuleResource.CreateResourceIdentifier" /> to create a <see cref="GovernanceRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GovernanceRuleResource"/> object. </returns>
-        public virtual GovernanceRuleResource GetGovernanceRuleResource(ResourceIdentifier id)
-        {
-            GovernanceRuleResource.ValidateResourceId(id);
-            return new GovernanceRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionSecurityApplicationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionSecurityApplicationResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionSecurityApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionSecurityApplicationResource"/> object. </returns>
-        public virtual SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(ResourceIdentifier id)
-        {
-            SubscriptionSecurityApplicationResource.ValidateResourceId(id);
-            return new SubscriptionSecurityApplicationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityConnectorApplicationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityConnectorApplicationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorApplicationResource"/> object. </returns>
-        public virtual SecurityConnectorApplicationResource GetSecurityConnectorApplicationResource(ResourceIdentifier id)
-        {
-            SecurityConnectorApplicationResource.ValidateResourceId(id);
-            return new SecurityConnectorApplicationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DefenderForStorageSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DefenderForStorageSettingResource.CreateResourceIdentifier" /> to create a <see cref="DefenderForStorageSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DefenderForStorageSettingResource"/> object. </returns>
-        public virtual DefenderForStorageSettingResource GetDefenderForStorageSettingResource(ResourceIdentifier id)
-        {
-            DefenderForStorageSettingResource.ValidateResourceId(id);
-            return new DefenderForStorageSettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityOperatorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityOperatorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityOperatorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityOperatorResource"/> object. </returns>
-        public virtual SecurityOperatorResource GetSecurityOperatorResource(ResourceIdentifier id)
-        {
-            SecurityOperatorResource.ValidateResourceId(id);
-            return new SecurityOperatorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier id)
-        {
-            SqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
-            return new SqlVulnerabilityAssessmentBaselineRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlVulnerabilityAssessmentScanResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(ResourceIdentifier id)
-        {
-            SqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-            return new SqlVulnerabilityAssessmentScanResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SensitivitySettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SensitivitySettingResource.CreateResourceIdentifier" /> to create a <see cref="SensitivitySettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SensitivitySettingResource"/> object. </returns>
-        public virtual SensitivitySettingResource GetSensitivitySettingResource(ResourceIdentifier id)
-        {
-            SensitivitySettingResource.ValidateResourceId(id);
-            return new SensitivitySettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityHealthReportResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityHealthReportResource.CreateResourceIdentifier" /> to create a <see cref="SecurityHealthReportResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityHealthReportResource"/> object. </returns>
-        public virtual SecurityHealthReportResource GetSecurityHealthReportResource(ResourceIdentifier id)
-        {
-            SecurityHealthReportResource.ValidateResourceId(id);
-            return new SecurityHealthReportResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DevOpsOrgResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevOpsOrgResource.CreateResourceIdentifier" /> to create a <see cref="DevOpsOrgResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevOpsOrgResource"/> object. </returns>
-        public virtual DevOpsOrgResource GetDevOpsOrgResource(ResourceIdentifier id)
-        {
-            DevOpsOrgResource.ValidateResourceId(id);
-            return new DevOpsOrgResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DevOpsProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevOpsProjectResource.CreateResourceIdentifier" /> to create a <see cref="DevOpsProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevOpsProjectResource"/> object. </returns>
-        public virtual DevOpsProjectResource GetDevOpsProjectResource(ResourceIdentifier id)
-        {
-            DevOpsProjectResource.ValidateResourceId(id);
-            return new DevOpsProjectResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DevOpsRepositoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevOpsRepositoryResource.CreateResourceIdentifier" /> to create a <see cref="DevOpsRepositoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevOpsRepositoryResource"/> object. </returns>
-        public virtual DevOpsRepositoryResource GetDevOpsRepositoryResource(ResourceIdentifier id)
-        {
-            DevOpsRepositoryResource.ValidateResourceId(id);
-            return new DevOpsRepositoryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DevOpsConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevOpsConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DevOpsConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevOpsConfigurationResource"/> object. </returns>
-        public virtual DevOpsConfigurationResource GetDevOpsConfigurationResource(ResourceIdentifier id)
-        {
-            DevOpsConfigurationResource.ValidateResourceId(id);
-            return new DevOpsConfigurationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityConnectorGitHubOwnerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityConnectorGitHubOwnerResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorGitHubOwnerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorGitHubOwnerResource"/> object. </returns>
-        public virtual SecurityConnectorGitHubOwnerResource GetSecurityConnectorGitHubOwnerResource(ResourceIdentifier id)
-        {
-            SecurityConnectorGitHubOwnerResource.ValidateResourceId(id);
-            return new SecurityConnectorGitHubOwnerResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityConnectorGitHubRepositoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityConnectorGitHubRepositoryResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorGitHubRepositoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorGitHubRepositoryResource"/> object. </returns>
-        public virtual SecurityConnectorGitHubRepositoryResource GetSecurityConnectorGitHubRepositoryResource(ResourceIdentifier id)
-        {
-            SecurityConnectorGitHubRepositoryResource.ValidateResourceId(id);
-            return new SecurityConnectorGitHubRepositoryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityConnectorGitLabGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityConnectorGitLabGroupResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorGitLabGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorGitLabGroupResource"/> object. </returns>
-        public virtual SecurityConnectorGitLabGroupResource GetSecurityConnectorGitLabGroupResource(ResourceIdentifier id)
-        {
-            SecurityConnectorGitLabGroupResource.ValidateResourceId(id);
-            return new SecurityConnectorGitLabGroupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityConnectorGitLabProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityConnectorGitLabProjectResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorGitLabProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorGitLabProjectResource"/> object. </returns>
-        public virtual SecurityConnectorGitLabProjectResource GetSecurityConnectorGitLabProjectResource(ResourceIdentifier id)
-        {
-            SecurityConnectorGitLabProjectResource.ValidateResourceId(id);
-            return new SecurityConnectorGitLabProjectResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityConnectorResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorResource"/> object. </returns>
-        public virtual SecurityConnectorResource GetSecurityConnectorResource(ResourceIdentifier id)
-        {
-            SecurityConnectorResource.ValidateResourceId(id);
-            return new SecurityConnectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ComplianceResultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComplianceResultResource.CreateResourceIdentifier" /> to create a <see cref="ComplianceResultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComplianceResultResource"/> object. </returns>
-        public virtual ComplianceResultResource GetComplianceResultResource(ResourceIdentifier id)
-        {
-            ComplianceResultResource.ValidateResourceId(id);
-            return new ComplianceResultResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdvancedThreatProtectionSettingResource.CreateResourceIdentifier" /> to create an <see cref="AdvancedThreatProtectionSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
-        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(ResourceIdentifier id)
-        {
-            AdvancedThreatProtectionSettingResource.ValidateResourceId(id);
-            return new AdvancedThreatProtectionSettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DeviceSecurityGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceSecurityGroupResource.CreateResourceIdentifier" /> to create a <see cref="DeviceSecurityGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceSecurityGroupResource"/> object. </returns>
-        public virtual DeviceSecurityGroupResource GetDeviceSecurityGroupResource(ResourceIdentifier id)
-        {
-            DeviceSecurityGroupResource.ValidateResourceId(id);
-            return new DeviceSecurityGroupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IotSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotSecuritySolutionAnalyticsModelResource.CreateResourceIdentifier" /> to create an <see cref="IotSecuritySolutionAnalyticsModelResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
-        public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
-        {
-            IotSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
-            return new IotSecuritySolutionAnalyticsModelResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IotSecurityAggregatedAlertResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotSecurityAggregatedAlertResource.CreateResourceIdentifier" /> to create an <see cref="IotSecurityAggregatedAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecurityAggregatedAlertResource"/> object. </returns>
-        public virtual IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(ResourceIdentifier id)
-        {
-            IotSecurityAggregatedAlertResource.ValidateResourceId(id);
-            return new IotSecurityAggregatedAlertResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IotSecurityAggregatedRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotSecurityAggregatedRecommendationResource.CreateResourceIdentifier" /> to create an <see cref="IotSecurityAggregatedRecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecurityAggregatedRecommendationResource"/> object. </returns>
-        public virtual IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(ResourceIdentifier id)
-        {
-            IotSecurityAggregatedRecommendationResource.ValidateResourceId(id);
-            return new IotSecurityAggregatedRecommendationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="IotSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotSecuritySolutionResource.CreateResourceIdentifier" /> to create an <see cref="IotSecuritySolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotSecuritySolutionResource"/> object. </returns>
-        public virtual IotSecuritySolutionResource GetIotSecuritySolutionResource(ResourceIdentifier id)
-        {
-            IotSecuritySolutionResource.ValidateResourceId(id);
-            return new IotSecuritySolutionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AdaptiveNetworkHardeningResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdaptiveNetworkHardeningResource.CreateResourceIdentifier" /> to create an <see cref="AdaptiveNetworkHardeningResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdaptiveNetworkHardeningResource"/> object. </returns>
-        public virtual AdaptiveNetworkHardeningResource GetAdaptiveNetworkHardeningResource(ResourceIdentifier id)
-        {
-            AdaptiveNetworkHardeningResource.ValidateResourceId(id);
-            return new AdaptiveNetworkHardeningResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AdaptiveApplicationControlGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdaptiveApplicationControlGroupResource.CreateResourceIdentifier" /> to create an <see cref="AdaptiveApplicationControlGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdaptiveApplicationControlGroupResource"/> object. </returns>
-        public virtual AdaptiveApplicationControlGroupResource GetAdaptiveApplicationControlGroupResource(ResourceIdentifier id)
-        {
-            AdaptiveApplicationControlGroupResource.ValidateResourceId(id);
-            return new AdaptiveApplicationControlGroupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="JitNetworkAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JitNetworkAccessPolicyResource.CreateResourceIdentifier" /> to create a <see cref="JitNetworkAccessPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource"/> object. </returns>
-        public virtual JitNetworkAccessPolicyResource GetJitNetworkAccessPolicyResource(ResourceIdentifier id)
-        {
-            JitNetworkAccessPolicyResource.ValidateResourceId(id);
-            return new JitNetworkAccessPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecureScoreResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecureScoreResource.CreateResourceIdentifier" /> to create a <see cref="SecureScoreResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecureScoreResource"/> object. </returns>
-        public virtual SecureScoreResource GetSecureScoreResource(ResourceIdentifier id)
-        {
-            SecureScoreResource.ValidateResourceId(id);
-            return new SecureScoreResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ServerVulnerabilityAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
-        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(ResourceIdentifier id)
-        {
-            ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
-            return new ServerVulnerabilityAssessmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantAssessmentMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantAssessmentMetadataResource.CreateResourceIdentifier" /> to create a <see cref="TenantAssessmentMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantAssessmentMetadataResource"/> object. </returns>
-        public virtual TenantAssessmentMetadataResource GetTenantAssessmentMetadataResource(ResourceIdentifier id)
-        {
-            TenantAssessmentMetadataResource.ValidateResourceId(id);
-            return new TenantAssessmentMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionAssessmentMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionAssessmentMetadataResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAssessmentMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionAssessmentMetadataResource"/> object. </returns>
-        public virtual SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(ResourceIdentifier id)
-        {
-            SubscriptionAssessmentMetadataResource.ValidateResourceId(id);
-            return new SubscriptionAssessmentMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityAssessmentResource"/> object. </returns>
-        public virtual SecurityAssessmentResource GetSecurityAssessmentResource(ResourceIdentifier id)
-        {
-            SecurityAssessmentResource.ValidateResourceId(id);
-            return new SecurityAssessmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionSecurityAlertResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionSecurityAlertResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionSecurityAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionSecurityAlertResource"/> object. </returns>
-        public virtual SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(ResourceIdentifier id)
-        {
-            SubscriptionSecurityAlertResource.ValidateResourceId(id);
-            return new SubscriptionSecurityAlertResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupSecurityAlertResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupSecurityAlertResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupSecurityAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupSecurityAlertResource"/> object. </returns>
-        public virtual ResourceGroupSecurityAlertResource GetResourceGroupSecurityAlertResource(ResourceIdentifier id)
-        {
-            ResourceGroupSecurityAlertResource.ValidateResourceId(id);
-            return new ResourceGroupSecurityAlertResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecuritySettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecuritySettingResource.CreateResourceIdentifier" /> to create a <see cref="SecuritySettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecuritySettingResource"/> object. </returns>
-        public virtual SecuritySettingResource GetSecuritySettingResource(ResourceIdentifier id)
-        {
-            SecuritySettingResource.ValidateResourceId(id);
-            return new SecuritySettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityCenterPricingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityCenterPricingResource.CreateResourceIdentifier" /> to create a <see cref="SecurityCenterPricingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityCenterPricingResource"/> object. </returns>
-        public virtual SecurityCenterPricingResource GetSecurityCenterPricingResource(ResourceIdentifier id)
-        {
-            SecurityCenterPricingResource.ValidateResourceId(id);
-            return new SecurityCenterPricingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerVulnerabilityAssessmentsSettingResource.CreateResourceIdentifier" /> to create a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> object. </returns>
-        public virtual ServerVulnerabilityAssessmentsSettingResource GetServerVulnerabilityAssessmentsSettingResource(ResourceIdentifier id)
-        {
-            ServerVulnerabilityAssessmentsSettingResource.ValidateResourceId(id);
-            return new ServerVulnerabilityAssessmentsSettingResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityCenterApiCollectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityCenterApiCollectionResource.CreateResourceIdentifier" /> to create a <see cref="SecurityCenterApiCollectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityCenterApiCollectionResource"/> object. </returns>
-        public virtual SecurityCenterApiCollectionResource GetSecurityCenterApiCollectionResource(ResourceIdentifier id)
-        {
-            SecurityCenterApiCollectionResource.ValidateResourceId(id);
-            return new SecurityCenterApiCollectionResource(Client, id);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecuritySubAssessmentData, SecuritySubAssessmentResource>(new SubAssessmentsListAllCollectionResultOfT(SubAssessmentsRestClient, scope.ToString(), context, "MockableSecurityCenterArmClient.GetAll"), data => new SecuritySubAssessmentResource(Client, data));
         }
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForContainersAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderForContainersAwsOffering>
+    /// <summary> The Defender for Containers AWS offering. </summary>
+    public partial class DefenderForContainersAwsOffering : CloudOffering, IJsonModel<DefenderForContainersAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersAwsOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CloudOffering PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDefenderForContainersAwsOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DefenderForContainersAwsOffering>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DefenderForContainersAwsOffering IPersistableModel<DefenderForContainersAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options) => (DefenderForContainersAwsOffering)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DefenderForContainersAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DefenderForContainersAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,22 +69,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(KubernetesService))
             {
                 writer.WritePropertyName("kubernetesService"u8);
                 writer.WriteObjectValue(KubernetesService, options);
             }
-            if (Optional.IsDefined(KubernetesScubaReader))
+            if (Optional.IsDefined(KubernetesDataCollection))
             {
-                writer.WritePropertyName("kubernetesScubaReader"u8);
-                writer.WriteObjectValue(KubernetesScubaReader, options);
+                writer.WritePropertyName("kubernetesDataCollection"u8);
+                writer.WriteObjectValue(KubernetesDataCollection, options);
             }
             if (Optional.IsDefined(CloudWatchToKinesis))
             {
@@ -55,35 +95,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("kinesisToS3"u8);
                 writer.WriteObjectValue(KinesisToS3, options);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessment))
+            if (Optional.IsDefined(EnableAuditLogsAutoProvisioning))
             {
-                writer.WritePropertyName("containerVulnerabilityAssessment"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessment, options);
+                writer.WritePropertyName("enableAuditLogsAutoProvisioning"u8);
+                writer.WriteBooleanValue(EnableAuditLogsAutoProvisioning.Value);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
+            if (Optional.IsDefined(EnableDefenderAgentAutoProvisioning))
             {
-                writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask, options);
+                writer.WritePropertyName("enableDefenderAgentAutoProvisioning"u8);
+                writer.WriteBooleanValue(EnableDefenderAgentAutoProvisioning.Value);
             }
-            if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
+            if (Optional.IsDefined(EnablePolicyAgentAutoProvisioning))
             {
-                writer.WritePropertyName("enableContainerVulnerabilityAssessment"u8);
-                writer.WriteBooleanValue(IsContainerVulnerabilityAssessmentEnabled.Value);
-            }
-            if (Optional.IsDefined(IsAutoProvisioningEnabled))
-            {
-                writer.WritePropertyName("autoProvisioning"u8);
-                writer.WriteBooleanValue(IsAutoProvisioningEnabled.Value);
+                writer.WritePropertyName("enablePolicyAgentAutoProvisioning"u8);
+                writer.WriteBooleanValue(EnablePolicyAgentAutoProvisioning.Value);
             }
             if (Optional.IsDefined(KubeAuditRetentionTime))
             {
                 writer.WritePropertyName("kubeAuditRetentionTime"u8);
                 writer.WriteNumberValue(KubeAuditRetentionTime.Value);
             }
-            if (Optional.IsDefined(ScubaExternalId))
+            if (Optional.IsDefined(DataCollectionExternalId))
             {
-                writer.WritePropertyName("scubaExternalId"u8);
-                writer.WriteStringValue(ScubaExternalId);
+                writer.WritePropertyName("dataCollectionExternalId"u8);
+                writer.WriteStringValue(DataCollectionExternalId);
             }
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
@@ -95,213 +130,190 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S, options);
             }
+            if (Optional.IsDefined(VmScanners))
+            {
+                writer.WritePropertyName("vmScanners"u8);
+                writer.WriteObjectValue(VmScanners, options);
+            }
         }
 
-        DefenderForContainersAwsOffering IJsonModel<DefenderForContainersAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DefenderForContainersAwsOffering IJsonModel<DefenderForContainersAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DefenderForContainersAwsOffering)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CloudOffering JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDefenderForContainersAwsOffering(document.RootElement, options);
         }
 
-        internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DefenderForContainersAwsOfferingKubernetesService kubernetesService = default;
-            DefenderForContainersAwsOfferingKubernetesScubaReader kubernetesScubaReader = default;
-            DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis = default;
-            DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3 = default;
-            DefenderForContainersAwsOfferingContainerVulnerabilityAssessment containerVulnerabilityAssessment = default;
-            DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask containerVulnerabilityAssessmentTask = default;
-            bool? enableContainerVulnerabilityAssessment = default;
-            bool? autoProvisioning = default;
-            long? kubeAuditRetentionTime = default;
-            string scubaExternalId = default;
-            DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
-            DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
             string description = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DefenderForContainersAwsOfferingKubernetesService kubernetesService = default;
+            DefenderForContainersAwsOfferingKubernetesDataCollection kubernetesDataCollection = default;
+            DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis = default;
+            DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3 = default;
+            bool? enableAuditLogsAutoProvisioning = default;
+            bool? enableDefenderAgentAutoProvisioning = default;
+            bool? enablePolicyAgentAutoProvisioning = default;
+            long? kubeAuditRetentionTime = default;
+            string dataCollectionExternalId = default;
+            DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderForContainersAwsOfferingVmScanners vmScanners = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kubernetesService"u8))
+                if (prop.NameEquals("offeringType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    offeringType = new OfferingType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kubernetesService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kubernetesService = DefenderForContainersAwsOfferingKubernetesService.DeserializeDefenderForContainersAwsOfferingKubernetesService(property.Value, options);
+                    kubernetesService = DefenderForContainersAwsOfferingKubernetesService.DeserializeDefenderForContainersAwsOfferingKubernetesService(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("kubernetesScubaReader"u8))
+                if (prop.NameEquals("kubernetesDataCollection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kubernetesScubaReader = DefenderForContainersAwsOfferingKubernetesScubaReader.DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(property.Value, options);
+                    kubernetesDataCollection = DefenderForContainersAwsOfferingKubernetesDataCollection.DeserializeDefenderForContainersAwsOfferingKubernetesDataCollection(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("cloudWatchToKinesis"u8))
+                if (prop.NameEquals("cloudWatchToKinesis"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudWatchToKinesis = DefenderForContainersAwsOfferingCloudWatchToKinesis.DeserializeDefenderForContainersAwsOfferingCloudWatchToKinesis(property.Value, options);
+                    cloudWatchToKinesis = DefenderForContainersAwsOfferingCloudWatchToKinesis.DeserializeDefenderForContainersAwsOfferingCloudWatchToKinesis(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("kinesisToS3"u8))
+                if (prop.NameEquals("kinesisToS3"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kinesisToS3 = DefenderForContainersAwsOfferingKinesisToS3.DeserializeDefenderForContainersAwsOfferingKinesisToS3(property.Value, options);
+                    kinesisToS3 = DefenderForContainersAwsOfferingKinesisToS3.DeserializeDefenderForContainersAwsOfferingKinesisToS3(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("containerVulnerabilityAssessment"u8))
+                if (prop.NameEquals("enableAuditLogsAutoProvisioning"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerVulnerabilityAssessment = DefenderForContainersAwsOfferingContainerVulnerabilityAssessment.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessment(property.Value, options);
+                    enableAuditLogsAutoProvisioning = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("containerVulnerabilityAssessmentTask"u8))
+                if (prop.NameEquals("enableDefenderAgentAutoProvisioning"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerVulnerabilityAssessmentTask = DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(property.Value, options);
+                    enableDefenderAgentAutoProvisioning = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableContainerVulnerabilityAssessment"u8))
+                if (prop.NameEquals("enablePolicyAgentAutoProvisioning"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableContainerVulnerabilityAssessment = property.Value.GetBoolean();
+                    enablePolicyAgentAutoProvisioning = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoProvisioning"u8))
+                if (prop.NameEquals("kubeAuditRetentionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoProvisioning = property.Value.GetBoolean();
+                    kubeAuditRetentionTime = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("kubeAuditRetentionTime"u8))
+                if (prop.NameEquals("dataCollectionExternalId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    dataCollectionExternalId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("mdcContainersImageAssessment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kubeAuditRetentionTime = property.Value.GetInt64();
+                    mdcContainersImageAssessment = DefenderForContainersAwsOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersAwsOfferingMdcContainersImageAssessment(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("scubaExternalId"u8))
+                if (prop.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
                 {
-                    scubaExternalId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("mdcContainersImageAssessment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mdcContainersImageAssessment = DefenderForContainersAwsOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersAwsOfferingMdcContainersImageAssessment(property.Value, options);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
+                if (prop.NameEquals("vmScanners"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("offeringType"u8))
-                {
-                    offeringType = new OfferingType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
+                    vmScanners = DefenderForContainersAwsOfferingVmScanners.DeserializeDefenderForContainersAwsOfferingVmScanners(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DefenderForContainersAwsOffering(
                 offeringType,
                 description,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 kubernetesService,
-                kubernetesScubaReader,
+                kubernetesDataCollection,
                 cloudWatchToKinesis,
                 kinesisToS3,
-                containerVulnerabilityAssessment,
-                containerVulnerabilityAssessmentTask,
-                enableContainerVulnerabilityAssessment,
-                autoProvisioning,
+                enableAuditLogsAutoProvisioning,
+                enableDefenderAgentAutoProvisioning,
+                enablePolicyAgentAutoProvisioning,
                 kubeAuditRetentionTime,
-                scubaExternalId,
+                dataCollectionExternalId,
                 mdcContainersImageAssessment,
-                mdcContainersAgentlessDiscoveryK8S);
+                mdcContainersAgentlessDiscoveryK8S,
+                vmScanners);
         }
-
-        BinaryData IPersistableModel<DefenderForContainersAwsOffering>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DefenderForContainersAwsOffering IPersistableModel<DefenderForContainersAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDefenderForContainersAwsOffering(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersAwsOffering)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DefenderForContainersAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,169 +5,178 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableSecurityCenterTenantResource : ArmResource
     {
         private ClientDiagnostics _secureScoreControlDefinitionsClientDiagnostics;
-        private SecureScoreControlDefinitionsRestOperations _secureScoreControlDefinitionsRestClient;
+        private SecureScoreControlDefinitions _secureScoreControlDefinitionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecurityCenterTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSecurityCenterTenantResource for mocking. </summary>
         protected MockableSecurityCenterTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecurityCenterTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSecurityCenterTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableSecurityCenterTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableSecurityCenterTenantResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SecureScoreControlDefinitionsRestOperations SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SecureScoreControlDefinitions SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitions(SecureScoreControlDefinitionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
-        /// <summary> Gets an object representing a SensitivitySettingResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="SensitivitySettingResource"/> object. </returns>
-        public virtual SensitivitySettingResource GetSensitivitySetting()
+        /// <summary> Gets a collection of AssessmentsMetadata in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of AssessmentsMetadata and their operations over a AssessmentsMetadatumResource. </returns>
+        public virtual AssessmentsMetadatumCollection GetAssessmentsMetadata()
         {
-            return new SensitivitySettingResource(Client, Id.AppendProviderResource("Microsoft.Security", "sensitivitySettings", "current"));
-        }
-
-        /// <summary> Gets a collection of TenantAssessmentMetadataResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantAssessmentMetadataResources and their operations over a TenantAssessmentMetadataResource. </returns>
-        public virtual TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata()
-        {
-            return GetCachedClient(client => new TenantAssessmentMetadataCollection(client, Id));
+            return this.GetCachedClient(client => new AssessmentsMetadatumCollection(client, Id));
         }
 
         /// <summary>
         /// Get metadata information on an assessment type
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityAssessmentMetadataResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAssessmentMetadataResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TenantAssessmentMetadataResource>> GetTenantAssessmentMetadataAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AssessmentsMetadatumResource>> GetAssessmentsMetadatumAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            return await GetAllTenantAssessmentMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
+            return await GetAssessmentsMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get metadata information on an assessment type
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityAssessmentMetadataResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAssessmentMetadataResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantAssessmentMetadataResource> GetTenantAssessmentMetadata(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        internal virtual Response<AssessmentsMetadatumResource> GetAssessmentsMetadatum(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            return GetAllTenantAssessmentMetadata().Get(assessmentMetadataName, cancellationToken);
+            return GetAssessmentsMetadata().Get(assessmentMetadataName, cancellationToken);
         }
 
         /// <summary>
-        /// List the available security controls, their assessments, and the max score
+        /// Gets data sensitivity settings for sensitive data discovery
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/sensitivitySettings/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControlDefinitions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetSensitivitySettingsResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-02-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GetSensitivitySettingsResponseResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="GetSensitivitySettingsResponseResource"/> object. </returns>
+        public virtual GetSensitivitySettingsResponseResource GetGetSensitivitySettingsResponse()
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(e), SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
+            return new GetSensitivitySettingsResponseResource(Client, Id.AppendProviderResource("Microsoft.Security", "sensitivitySettings", "current"));
         }
 
         /// <summary>
         /// List the available security controls, their assessments, and the max score
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/secureScoreControlDefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScoreControlDefinitions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreControlDefinitionsOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitions(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecureScoreControlDefinitionItem> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(e), SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SecureScoreControlDefinitionsGetAllAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetAll");
+        }
+
+        /// <summary>
+        /// List the available security controls, their assessments, and the max score
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/secureScoreControlDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreControlDefinitionsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecureScoreControlDefinitionItem> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SecureScoreControlDefinitionsGetAllCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetAll");
         }
     }
 }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -25,65 +26,91 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterLocationCollection : ArmCollection, IEnumerable<SecurityCenterLocationResource>, IAsyncEnumerable<SecurityCenterLocationResource>
     {
-        private readonly ClientDiagnostics _securityCenterLocationLocationsClientDiagnostics;
-        private readonly LocationsRestOperations _securityCenterLocationLocationsRestClient;
+        private readonly ClientDiagnostics _locationsClientDiagnostics;
+        private readonly Locations _locationsRestClient;
+        private readonly ClientDiagnostics _alertsClientDiagnostics;
+        private readonly Alerts _alertsRestClient;
+        private readonly ClientDiagnostics _operationResultsClientDiagnostics;
+        private readonly OperationResults _operationResultsRestClient;
+        private readonly ClientDiagnostics _operationStatusesClientDiagnostics;
+        private readonly OperationStatuses _operationStatusesRestClient;
+        private readonly ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
+        private readonly SecuritySolutionsReferenceData _securitySolutionsReferenceDataRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityCenterLocationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityCenterLocationCollection for mocking. </summary>
         protected SecurityCenterLocationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityCenterLocationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterLocationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityCenterLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityCenterLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityCenterLocationResource.ResourceType, out string securityCenterLocationLocationsApiVersion);
-            _securityCenterLocationLocationsRestClient = new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationLocationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityCenterLocationResource.ResourceType, out string securityCenterLocationApiVersion);
+            _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
+            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2022-01-01");
+            _operationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
+            _operationResultsRestClient = new OperationResults(_operationResultsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
+            _operationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
+            _operationStatusesRestClient = new OperationStatuses(_operationStatusesClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
+            _securitySolutionsReferenceDataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
+            _securitySolutionsReferenceDataRestClient = new SecuritySolutionsReferenceData(_securitySolutionsReferenceDataClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Details of a specific location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecurityCenterLocationResource>> GetAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SecurityCenterLocationResource>> GetAsync(string ascLocation, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Get");
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityCenterLocationLocationsRestClient.GetAsync(Id.SubscriptionId, ascLocation, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), ascLocation, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityCenterLocationData> response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -97,34 +124,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Details of a specific location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityCenterLocationResource> Get(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SecurityCenterLocationResource> Get(string ascLocation, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Get");
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityCenterLocationLocationsRestClient.Get(Id.SubscriptionId, ascLocation, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), ascLocation, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityCenterLocationData> response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,50 +173,44 @@ namespace Azure.ResourceManager.SecurityCenter
         /// The location of the responsible ASC of the specific subscription (home region). For each subscription there is only one responsible location. The location in the response should be used to read or write other resources in ASC according to their ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterLocationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityCenterLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCenterLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCenterLocationLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new LocationsGetAllAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
         }
 
         /// <summary>
         /// The location of the responsible ASC of the specific subscription (home region). For each subscription there is only one responsible location. The location in the response should be used to read or write other resources in ASC according to their ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,41 +218,61 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityCenterLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCenterLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCenterLocationLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityCenterLocationData, SecurityCenterLocationResource>(new LocationsGetAllCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityCenterLocationCollection.GetAll"), data => new SecurityCenterLocationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string ascLocation, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Exists");
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityCenterLocationLocationsRestClient.GetAsync(Id.SubscriptionId, ascLocation, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), ascLocation, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityCenterLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,32 +286,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string ascLocation, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Exists");
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityCenterLocationLocationsRestClient.Get(Id.SubscriptionId, ascLocation, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), ascLocation, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityCenterLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,34 +343,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<SecurityCenterLocationResource>> GetIfExistsAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SecurityCenterLocationResource>> GetIfExistsAsync(string ascLocation, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityCenterLocationLocationsRestClient.GetAsync(Id.SubscriptionId, ascLocation, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), ascLocation, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityCenterLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityCenterLocationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,34 +404,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AscLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<SecurityCenterLocationResource> GetIfExists(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SecurityCenterLocationResource> GetIfExists(string ascLocation, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityCenterLocationLocationsRestClient.Get(Id.SubscriptionId, ascLocation, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), ascLocation, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityCenterLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityCenterLocationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,6 +471,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityCenterLocationResource> IAsyncEnumerable<SecurityCenterLocationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,26 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class AzureServersSetting : ServerVulnerabilityAssessmentsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="AzureServersSetting"/>. </summary>
-        public AzureServersSetting()
+        public AzureServersSetting() : base(ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting)
         {
-            Kind = ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureServersSetting"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the server vulnerability assessments setting. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="selectedProvider"> The selected vulnerability assessments provider on Azure servers in the defined scope. </param>
-        internal AzureServersSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerVulnerabilityAssessmentsSettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? selectedProvider) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        internal AzureServersSetting(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerVulnerabilityAssessmentsSettingProperties properties, ServerVulnerabilityAssessmentsSettingKind kind) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind)
         {
-            SelectedProvider = selectedProvider;
-            Kind = kind;
         }
-
-        /// <summary> The selected vulnerability assessments provider on Azure servers in the defined scope. </summary>
-        public ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? SelectedProvider { get; set; }
     }
 }

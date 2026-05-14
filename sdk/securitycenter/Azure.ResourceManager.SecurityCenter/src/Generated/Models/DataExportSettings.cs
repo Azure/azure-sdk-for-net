@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,26 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class DataExportSettings : SecuritySettingData
     {
         /// <summary> Initializes a new instance of <see cref="DataExportSettings"/>. </summary>
-        public DataExportSettings()
+        public DataExportSettings() : base(SettingKind.DataExportSettings)
         {
-            Kind = SettingKind.DataExportSettings;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataExportSettings"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> the kind of the settings string. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isEnabled"> Is the data export setting enabled. </param>
-        internal DataExportSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isEnabled) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        internal DataExportSettings(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingProperties properties, SettingKind kind) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind)
         {
-            IsEnabled = isEnabled;
-            Kind = kind;
         }
-
-        /// <summary> Is the data export setting enabled. </summary>
-        public bool? IsEnabled { get; set; }
     }
 }

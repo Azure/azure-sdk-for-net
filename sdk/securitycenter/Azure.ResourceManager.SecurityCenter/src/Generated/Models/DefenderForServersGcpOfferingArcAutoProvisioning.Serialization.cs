@@ -9,115 +9,34 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersGcpOfferingArcAutoProvisioning : IUtf8JsonSerializable, IJsonModel<DefenderForServersGcpOfferingArcAutoProvisioning>
+    /// <summary> The ARC autoprovisioning configuration. </summary>
+    public partial class DefenderForServersGcpOfferingArcAutoProvisioning : ArcAutoProvisioningGcp, IJsonModel<DefenderForServersGcpOfferingArcAutoProvisioning>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override ArcAutoProvisioning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                throw new FormatException($"The model {nameof(DefenderForServersGcpOfferingArcAutoProvisioning)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(IsEnabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
-            }
-            if (Optional.IsDefined(Configuration))
-            {
-                writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        return DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(document.RootElement, options);
                     }
-#endif
-                }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersGcpOfferingArcAutoProvisioning)} does not support reading '{options.Format}' format.");
             }
         }
 
-        DefenderForServersGcpOfferingArcAutoProvisioning IJsonModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DefenderForServersGcpOfferingArcAutoProvisioning)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(document.RootElement, options);
-        }
-
-        internal static DefenderForServersGcpOfferingArcAutoProvisioning DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            bool? enabled = default;
-            DefenderForServersGcpOfferingArcAutoProvisioningConfiguration configuration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("enabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("configuration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    configuration = DefenderForServersGcpOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersGcpOfferingArcAutoProvisioningConfiguration(property.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DefenderForServersGcpOfferingArcAutoProvisioning(enabled, configuration, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -127,22 +46,91 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        DefenderForServersGcpOfferingArcAutoProvisioning IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DefenderForServersGcpOfferingArcAutoProvisioning)} does not support reading '{options.Format}' format.");
-            }
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DefenderForServersGcpOfferingArcAutoProvisioning IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Create(BinaryData data, ModelReaderWriterOptions options) => (DefenderForServersGcpOfferingArcAutoProvisioning)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
         }
 
-        string IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersGcpOfferingArcAutoProvisioning)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DefenderForServersGcpOfferingArcAutoProvisioning IJsonModel<DefenderForServersGcpOfferingArcAutoProvisioning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DefenderForServersGcpOfferingArcAutoProvisioning)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ArcAutoProvisioning JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForServersGcpOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersGcpOfferingArcAutoProvisioning)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DefenderForServersGcpOfferingArcAutoProvisioning DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? enabled = default;
+            ArcAutoProvisioningConfiguration configuration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("enabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("configuration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configuration = ArcAutoProvisioningConfiguration.DeserializeArcAutoProvisioningConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new DefenderForServersGcpOfferingArcAutoProvisioning(enabled, configuration, additionalBinaryDataProperties);
+        }
     }
 }

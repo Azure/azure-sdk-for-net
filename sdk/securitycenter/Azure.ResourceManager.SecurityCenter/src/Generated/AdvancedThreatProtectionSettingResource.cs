@@ -6,43 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing an AdvancedThreatProtectionSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AdvancedThreatProtectionSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAdvancedThreatProtectionSettingResource method.
+    /// A class representing a AdvancedThreatProtectionSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AdvancedThreatProtectionSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAdvancedThreatProtectionSetting method.
     /// </summary>
     public partial class AdvancedThreatProtectionSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AdvancedThreatProtectionSettingResource"/> instance. </summary>
-        /// <param name="resourceId"> The resourceId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceId)
-        {
-            var resourceId0 = $"{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current";
-            return new ResourceIdentifier(resourceId0);
-        }
-
-        private readonly ClientDiagnostics _advancedThreatProtectionSettingAdvancedThreatProtectionClientDiagnostics;
-        private readonly AdvancedThreatProtectionRestOperations _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient;
+        private readonly ClientDiagnostics _advancedThreatProtectionClientDiagnostics;
+        private readonly AdvancedThreatProtection _advancedThreatProtectionRestClient;
         private readonly AdvancedThreatProtectionSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/advancedThreatProtectionSettings";
 
-        /// <summary> Initializes a new instance of the <see cref="AdvancedThreatProtectionSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AdvancedThreatProtectionSettingResource for mocking. </summary>
         protected AdvancedThreatProtectionSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AdvancedThreatProtectionSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AdvancedThreatProtectionSettingResource(ArmClient client, AdvancedThreatProtectionSettingData data) : this(client, data.Id)
@@ -51,117 +43,48 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AdvancedThreatProtectionSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AdvancedThreatProtectionSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _advancedThreatProtectionSettingAdvancedThreatProtectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string advancedThreatProtectionSettingAdvancedThreatProtectionApiVersion);
-            _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient = new AdvancedThreatProtectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionSettingAdvancedThreatProtectionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string advancedThreatProtectionSettingApiVersion);
+            _advancedThreatProtectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _advancedThreatProtectionRestClient = new AdvancedThreatProtection(_advancedThreatProtectionClientDiagnostics, Pipeline, Endpoint, advancedThreatProtectionSettingApiVersion ?? "2019-01-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AdvancedThreatProtectionSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceId)
+        {
+            string resourceId0 = $"{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current";
+            return new ResourceIdentifier(resourceId0);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Gets the Advanced Threat Protection settings for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtection_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdvancedThreatProtectionSettingResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _advancedThreatProtectionSettingAdvancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.GetAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the Advanced Threat Protection settings for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtection_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdvancedThreatProtectionSettingResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _advancedThreatProtectionSettingAdvancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.Get(Id.Parent, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -169,20 +92,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Creates or updates the Advanced Threat Protection settings on a specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtection_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +117,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _advancedThreatProtectionSettingAdvancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.CreateAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
-                var uri = _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.CreateCreateRequestUri(Id.Parent, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource> operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +148,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Creates or updates the Advanced Threat Protection settings on a specified resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtection_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,17 +173,121 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _advancedThreatProtectionSettingAdvancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.Create(Id.Parent, data, cancellationToken);
-                var uri = _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.CreateCreateRequestUri(Id.Parent, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource> operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Advanced Threat Protection settings for the specified resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AdvancedThreatProtectionSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Advanced Threat Protection settings for the specified resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AdvancedThreatProtectionSettingResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

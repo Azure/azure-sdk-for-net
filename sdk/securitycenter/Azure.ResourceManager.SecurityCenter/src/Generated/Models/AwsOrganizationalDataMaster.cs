@@ -7,33 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AWS organization data for the master account. </summary>
-    public partial class AwsOrganizationalDataMaster : AwsOrganizationalInfo
+    public partial class AwsOrganizationalDataMaster : AwsOrganizationalData
     {
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalDataMaster"/>. </summary>
-        public AwsOrganizationalDataMaster()
+        public AwsOrganizationalDataMaster() : base(OrganizationMembershipType.Organization)
         {
             ExcludedAccountIds = new ChangeTrackingList<string>();
-            OrganizationMembershipType = OrganizationMembershipType.Organization;
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalDataMaster"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="stacksetName"> If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset. </param>
         /// <param name="excludedAccountIds"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
-        internal AwsOrganizationalDataMaster(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData, string stacksetName, IList<string> excludedAccountIds) : base(organizationMembershipType, serializedAdditionalRawData)
+        internal AwsOrganizationalDataMaster(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string stacksetName, IList<string> excludedAccountIds) : base(organizationMembershipType, additionalBinaryDataProperties)
         {
             StacksetName = stacksetName;
             ExcludedAccountIds = excludedAccountIds;
-            OrganizationMembershipType = organizationMembershipType;
         }
 
         /// <summary> If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset. </summary>
         public string StacksetName { get; set; }
+
         /// <summary> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </summary>
         public IList<string> ExcludedAccountIds { get; }
     }

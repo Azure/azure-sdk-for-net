@@ -9,82 +9,80 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecureScore data model.
-    /// Secure score item data model
-    /// </summary>
+    /// <summary> Secure score item data model. </summary>
     public partial class SecureScoreData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreData"/>. </summary>
-        public SecureScoreData()
+        internal SecureScoreData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> The initiative’s name. </param>
-        /// <param name="weight"> The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions. </param>
-        /// <param name="max"> Maximum score available. </param>
-        /// <param name="current"> Current score. </param>
-        /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecureScoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? weight, int? max, double? current, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Secure score item. </param>
+        internal SecureScoreData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecureScoreItemProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Weight = weight;
-            Max = max;
-            Current = current;
-            Percentage = percentage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> The initiative’s name. </summary>
-        public string DisplayName { get; }
+        /// <summary> Secure score item. </summary>
+        internal SecureScoreItemProperties Properties { get; }
+
+        /// <summary> The initiative's name. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions. </summary>
-        public long? Weight { get; }
+        public long? Weight
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Weight;
+            }
+        }
+
         /// <summary> Maximum score available. </summary>
-        public int? Max { get; }
+        public int? Max
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Max;
+            }
+        }
+
         /// <summary> Current score. </summary>
-        public double? Current { get; }
+        public double? Current
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Current;
+            }
+        }
+
         /// <summary> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </summary>
-        public double? Percentage { get; }
+        public double? Percentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Percentage;
+            }
+        }
     }
 }

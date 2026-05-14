@@ -11,25 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Details of the Azure resource that was assessed. </summary>
-    public partial class AzureResourceDetails : SecurityCenterResourceDetails
+    public partial class AzureResourceDetails : ResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
         public AzureResourceDetails()
         {
-            Source = HealthReportSource.Azure;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
-        /// <param name="source"> The platform where the assessed resource resides. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> Azure resource Id of the assessed resource. </param>
-        internal AzureResourceDetails(HealthReportSource source, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(source, serializedAdditionalRawData)
+        /// <param name="source"> The status of the health report. </param>
+        /// <param name="id"> The azure id of the resource. </param>
+        /// <param name="connectorId"> The id of the connector. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureResourceDetails(Source? source, string id, string connectorId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(source, id, connectorId, additionalBinaryDataProperties)
         {
-            Id = id;
-            Source = source;
         }
-
-        /// <summary> Azure resource Id of the assessed resource. </summary>
-        public string Id { get; }
     }
 }

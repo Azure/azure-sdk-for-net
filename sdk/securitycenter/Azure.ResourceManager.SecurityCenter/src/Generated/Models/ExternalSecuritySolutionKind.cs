@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The kind of the external solution. </summary>
-    public readonly partial struct ExternalSecuritySolutionKind : IEquatable<ExternalSecuritySolutionKind>
+    internal readonly partial struct ExternalSecuritySolutionKind : IEquatable<ExternalSecuritySolutionKind>
     {
         private readonly string _value;
+        /// <summary> CEF. </summary>
+        private const string CEFValue = "CEF";
+        /// <summary> ATA. </summary>
+        private const string ATAValue = "ATA";
+        /// <summary> AAD. </summary>
+        private const string AADValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExternalSecuritySolutionKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CefValue = "CEF";
-        private const string AtaValue = "ATA";
-        private const string AadValue = "AAD";
-
         /// <summary> CEF. </summary>
-        public static ExternalSecuritySolutionKind Cef { get; } = new ExternalSecuritySolutionKind(CefValue);
+        public static ExternalSecuritySolutionKind CEF { get; } = new ExternalSecuritySolutionKind(CEFValue);
+
         /// <summary> ATA. </summary>
-        public static ExternalSecuritySolutionKind Ata { get; } = new ExternalSecuritySolutionKind(AtaValue);
+        public static ExternalSecuritySolutionKind ATA { get; } = new ExternalSecuritySolutionKind(ATAValue);
+
         /// <summary> AAD. </summary>
-        public static ExternalSecuritySolutionKind Aad { get; } = new ExternalSecuritySolutionKind(AadValue);
+        public static ExternalSecuritySolutionKind AAD { get; } = new ExternalSecuritySolutionKind(AADValue);
+
         /// <summary> Determines if two <see cref="ExternalSecuritySolutionKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExternalSecuritySolutionKind left, ExternalSecuritySolutionKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExternalSecuritySolutionKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExternalSecuritySolutionKind left, ExternalSecuritySolutionKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExternalSecuritySolutionKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExternalSecuritySolutionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExternalSecuritySolutionKind(string value) => new ExternalSecuritySolutionKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExternalSecuritySolutionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExternalSecuritySolutionKind?(string value) => value == null ? null : new ExternalSecuritySolutionKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExternalSecuritySolutionKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExternalSecuritySolutionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,46 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityWorkspaceSetting data model.
-    /// Configures where to store the OMS agent data for workspaces under a scope
-    /// </summary>
+    /// <summary> Configures where to store the OMS agent data for workspaces under a scope. </summary>
     public partial class SecurityWorkspaceSettingData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityWorkspaceSettingData"/>. </summary>
         public SecurityWorkspaceSettingData()
@@ -56,23 +25,53 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityWorkspaceSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
-        /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityWorkspaceSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier workspaceId, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Workspace setting data. </param>
+        internal SecurityWorkspaceSettingData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkspaceSettingProperties properties) : base(id, name, resourceType, systemData)
         {
-            WorkspaceId = workspaceId;
-            Scope = scope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Workspace setting data. </summary>
+        internal WorkspaceSettingProperties Properties { get; set; }
+
         /// <summary> The full Azure ID of the workspace to save the data in. </summary>
-        public ResourceIdentifier WorkspaceId { get; set; }
+        public string WorkspaceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceSettingProperties();
+                }
+                Properties.WorkspaceId = value;
+            }
+        }
+
         /// <summary> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </summary>
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceSettingProperties();
+                }
+                Properties.Scope = value;
+            }
+        }
     }
 }

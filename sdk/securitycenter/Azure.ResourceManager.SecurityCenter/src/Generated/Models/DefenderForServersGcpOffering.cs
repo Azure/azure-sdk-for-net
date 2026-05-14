@@ -11,58 +11,66 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Servers GCP offering configurations. </summary>
-    public partial class DefenderForServersGcpOffering : SecurityCenterCloudOffering
+    public partial class DefenderForServersGcpOffering : CloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOffering"/>. </summary>
-        public DefenderForServersGcpOffering()
+        public DefenderForServersGcpOffering() : base(OfferingType.DefenderForServersGcp)
         {
-            OfferingType = OfferingType.DefenderForServersGcp;
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
-        /// <param name="vulnerabilityAssessmentAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
+        /// <param name="vaAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
         /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
         /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
-        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan, DefenderForServersGcpOfferingVmScanners vmScanners) : base(offeringType, description, serializedAdditionalRawData)
+        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVaAutoProvisioning vaAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan, DefenderForServersGcpOfferingVmScanners vmScanners) : base(offeringType, description, additionalBinaryDataProperties)
         {
             DefenderForServers = defenderForServers;
             ArcAutoProvisioning = arcAutoProvisioning;
-            VulnerabilityAssessmentAutoProvisioning = vulnerabilityAssessmentAutoProvisioning;
+            VaAutoProvisioning = vaAutoProvisioning;
             MdeAutoProvisioning = mdeAutoProvisioning;
             SubPlan = subPlan;
             VmScanners = vmScanners;
-            OfferingType = offeringType;
         }
 
         /// <summary> The Defender for servers connection configuration. </summary>
         public GcpDefenderForServersInfo DefenderForServers { get; set; }
+
         /// <summary> The ARC autoprovisioning configuration. </summary>
         public DefenderForServersGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+
         /// <summary> The Vulnerability Assessment autoprovisioning configuration. </summary>
-        public DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning VulnerabilityAssessmentAutoProvisioning { get; set; }
+        public DefenderForServersGcpOfferingVaAutoProvisioning VaAutoProvisioning { get; set; }
+
         /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
         public DefenderForServersGcpOfferingMdeAutoProvisioning MdeAutoProvisioning { get; set; }
+
         /// <summary> configuration for the servers offering subPlan. </summary>
         internal DefenderForServersGcpOfferingSubPlan SubPlan { get; set; }
-        /// <summary> The available sub plans. </summary>
-        public AvailableSubPlanType? AvailableSubPlanType
-        {
-            get => SubPlan is null ? default : SubPlan.AvailableSubPlanType;
-            set
-            {
-                if (SubPlan is null)
-                    SubPlan = new DefenderForServersGcpOfferingSubPlan();
-                SubPlan.AvailableSubPlanType = value;
-            }
-        }
 
         /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
         public DefenderForServersGcpOfferingVmScanners VmScanners { get; set; }
+
+        /// <summary> The available sub plans. </summary>
+        public SubPlan? SubPlanType
+        {
+            get
+            {
+                return SubPlan is null ? default : SubPlan.Type;
+            }
+            set
+            {
+                if (SubPlan is null)
+                {
+                    SubPlan = new DefenderForServersGcpOfferingSubPlan();
+                }
+                SubPlan.Type = value;
+            }
+        }
     }
 }

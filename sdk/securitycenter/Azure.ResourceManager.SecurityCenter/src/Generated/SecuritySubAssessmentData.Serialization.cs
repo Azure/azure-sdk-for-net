@@ -10,16 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecuritySubAssessmentData : IUtf8JsonSerializable, IJsonModel<SecuritySubAssessmentData>
+    /// <summary> Security sub-assessment on a resource. </summary>
+    public partial class SecuritySubAssessmentData : ResourceData, IJsonModel<SecuritySubAssessmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySubAssessmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecuritySubAssessmentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecuritySubAssessmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecuritySubAssessmentData IPersistableModel<SecuritySubAssessmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecuritySubAssessmentData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecuritySubAssessmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SecuritySubAssessmentData"/> from. </param>
+        internal static SecuritySubAssessmentData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSecuritySubAssessmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecuritySubAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,261 +80,105 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VulnerabilityId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(VulnerabilityId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Remediation))
-            {
-                writer.WritePropertyName("remediation"u8);
-                writer.WriteStringValue(Remediation);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Impact))
-            {
-                writer.WritePropertyName("impact"u8);
-                writer.WriteStringValue(Impact);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Category))
-            {
-                writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
-            {
-                writer.WritePropertyName("timeGenerated"u8);
-                writer.WriteStringValue(GeneratedOn.Value, "O");
-            }
-            if (Optional.IsDefined(ResourceDetails))
-            {
-                writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails, options);
-            }
-            if (Optional.IsDefined(AdditionalData))
-            {
-                writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalData, options);
-            }
-            writer.WriteEndObject();
         }
 
-        SecuritySubAssessmentData IJsonModel<SecuritySubAssessmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecuritySubAssessmentData IJsonModel<SecuritySubAssessmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecuritySubAssessmentData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecuritySubAssessmentData(document.RootElement, options);
         }
 
-        internal static SecuritySubAssessmentData DeserializeSecuritySubAssessmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecuritySubAssessmentData DeserializeSecuritySubAssessmentData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            Core.ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string id0 = default;
-            string displayName = default;
-            SubAssessmentStatus status = default;
-            string remediation = default;
-            string impact = default;
-            string category = default;
-            string description = default;
-            DateTimeOffset? timeGenerated = default;
-            SecurityCenterResourceDetails resourceDetails = default;
-            SecuritySubAssessmentAdditionalInfo additionalData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SecuritySubAssessmentProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
+                    id = new Core.ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("id"u8))
-                        {
-                            id0 = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = SubAssessmentStatus.DeserializeSubAssessmentStatus(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("remediation"u8))
-                        {
-                            remediation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("impact"u8))
-                        {
-                            impact = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("category"u8))
-                        {
-                            category = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeGenerated"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeGenerated = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            additionalData = SecuritySubAssessmentAdditionalInfo.DeserializeSecuritySubAssessmentAdditionalInfo(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SecuritySubAssessmentProperties.DeserializeSecuritySubAssessmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SecuritySubAssessmentData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                id0,
-                displayName,
-                status,
-                remediation,
-                impact,
-                category,
-                description,
-                timeGenerated,
-                resourceDetails,
-                additionalData,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        BinaryData IPersistableModel<SecuritySubAssessmentData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecuritySubAssessmentData IPersistableModel<SecuritySubAssessmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecuritySubAssessmentData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecuritySubAssessmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

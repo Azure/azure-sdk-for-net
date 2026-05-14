@@ -7,124 +7,40 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class OnPremiseResourceDetails : IUtf8JsonSerializable, IJsonModel<OnPremiseResourceDetails>
+    /// <summary> Details of the On Premise resource that was assessed. </summary>
+    public partial class OnPremiseResourceDetails : ResourceDetails, IJsonModel<OnPremiseResourceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnPremiseResourceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<OnPremiseResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/> for deserialization. </summary>
+        internal OnPremiseResourceDetails()
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override ResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support writing '{format}' format.");
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOnPremiseResourceDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support reading '{options.Format}' format.");
             }
-
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("workspaceId"u8);
-            writer.WriteStringValue(WorkspaceId);
-            writer.WritePropertyName("vmuuid"u8);
-            writer.WriteStringValue(VmUuid);
-            writer.WritePropertyName("sourceComputerId"u8);
-            writer.WriteStringValue(SourceComputerId);
-            writer.WritePropertyName("machineName"u8);
-            writer.WriteStringValue(MachineName);
         }
 
-        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOnPremiseResourceDetails(document.RootElement, options);
-        }
-
-        internal static OnPremiseResourceDetails DeserializeOnPremiseResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("source", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element, options);
-                }
-            }
-            ResourceIdentifier workspaceId = default;
-            Guid vmuuid = default;
-            string sourceComputerId = default;
-            string machineName = default;
-            HealthReportSource source = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("workspaceId"u8))
-                {
-                    workspaceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("vmuuid"u8))
-                {
-                    vmuuid = property.Value.GetGuid();
-                    continue;
-                }
-                if (property.NameEquals("sourceComputerId"u8))
-                {
-                    sourceComputerId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("machineName"u8))
-                {
-                    machineName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("source"u8))
-                {
-                    source = new HealthReportSource(property.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new OnPremiseResourceDetails(
-                source,
-                serializedAdditionalRawData,
-                workspaceId,
-                vmuuid,
-                sourceComputerId,
-                machineName);
-        }
-
-        BinaryData IPersistableModel<OnPremiseResourceDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -134,22 +50,71 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OnPremiseResourceDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOnPremiseResourceDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support reading '{options.Format}' format.");
-            }
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OnPremiseResourceDetails)this.PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OnPremiseResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<OnPremiseResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            this.JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
         }
 
-        string IPersistableModel<OnPremiseResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("workspaceId"u8);
+            writer.WriteStringValue(WorkspaceId);
+            writer.WritePropertyName("vmuuid"u8);
+            writer.WriteStringValue(Vmuuid);
+            writer.WritePropertyName("sourceComputerId"u8);
+            writer.WriteStringValue(SourceComputerId);
+            writer.WritePropertyName("machineName"u8);
+            writer.WriteStringValue(MachineName);
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OnPremiseResourceDetails)this.JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOnPremiseResourceDetails(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OnPremiseResourceDetails DeserializeOnPremiseResourceDetails(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            return UnknownOnPremiseResourceDetails.DeserializeUnknownOnPremiseResourceDetails(element, options);
+        }
     }
 }

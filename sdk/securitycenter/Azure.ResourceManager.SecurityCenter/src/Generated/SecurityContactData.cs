@@ -13,43 +13,11 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityContact data model.
-    /// Contact details and configurations for notifications coming from Microsoft Defender for Cloud.
-    /// </summary>
+    /// <summary> Contact details and configurations for notifications coming from Microsoft Defender for Cloud. </summary>
     public partial class SecurityContactData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityContactData"/>. </summary>
         public SecurityContactData()
@@ -57,31 +25,100 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityContactData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
-        /// <param name="phone"> The security contact's phone number. </param>
-        /// <param name="alertNotifications"> Defines whether to send email notifications about new security alerts. </param>
-        /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emails, string phone, SecurityContactPropertiesAlertNotifications alertNotifications, SecurityContactPropertiesNotificationsByRole notificationsByRole, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Security contact data. </param>
+        internal SecurityContactData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityContactProperties properties) : base(id, name, resourceType, systemData)
         {
-            Emails = emails;
-            Phone = phone;
-            AlertNotifications = alertNotifications;
-            NotificationsByRole = notificationsByRole;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Security contact data. </summary>
+        internal SecurityContactProperties Properties { get; set; }
+
         /// <summary> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </summary>
-        public string Emails { get; set; }
+        public string Emails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Emails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityContactProperties();
+                }
+                Properties.Emails = value;
+            }
+        }
+
         /// <summary> The security contact's phone number. </summary>
-        public string Phone { get; set; }
-        /// <summary> Defines whether to send email notifications about new security alerts. </summary>
-        public SecurityContactPropertiesAlertNotifications AlertNotifications { get; set; }
+        public string Phone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Phone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityContactProperties();
+                }
+                Properties.Phone = value;
+            }
+        }
+
+        /// <summary> Indicates whether the security contact is enabled. </summary>
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityContactProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
+        /// <summary> A collection of sources types which evaluate the email notification. </summary>
+        public IList<NotificationsSource> NotificationsSources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityContactProperties();
+                }
+                return Properties.NotificationsSources;
+            }
+        }
+
         /// <summary> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
-        public SecurityContactPropertiesNotificationsByRole NotificationsByRole { get; set; }
+        public SecurityContactPropertiesNotificationsByRole NotificationsByRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NotificationsByRole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityContactProperties();
+                }
+                Properties.NotificationsByRole = value;
+            }
+        }
     }
 }

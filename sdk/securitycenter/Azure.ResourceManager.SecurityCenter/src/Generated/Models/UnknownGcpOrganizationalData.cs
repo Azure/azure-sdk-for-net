@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Unknown version of GcpOrganizationalData. </summary>
-    internal partial class UnknownGcpOrganizationalData : GcpOrganizationalInfo
+    internal partial class UnknownGcpOrganizationalData : GcpOrganizationalData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGcpOrganizationalData"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownGcpOrganizationalData(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(organizationMembershipType, serializedAdditionalRawData)
-        {
-            OrganizationMembershipType = organizationMembershipType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownGcpOrganizationalData"/> for deserialization. </summary>
-        internal UnknownGcpOrganizationalData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownGcpOrganizationalData(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(organizationMembershipType != default ? organizationMembershipType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

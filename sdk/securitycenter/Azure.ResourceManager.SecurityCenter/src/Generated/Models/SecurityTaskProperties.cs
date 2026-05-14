@@ -10,56 +10,47 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-    public partial class SecurityTaskProperties
+    /// <summary> Describes properties of a task. </summary>
+    internal partial class SecurityTaskProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
-        public SecurityTaskProperties()
+        internal SecurityTaskProperties()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
-        /// <param name="name"> Name of the task type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SecurityTaskProperties(string name, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="state"> State of the task (Active, Resolved etc.). </param>
+        /// <param name="creationTimeUtc"> The time this task was discovered in UTC. </param>
+        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
+        /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
+        /// <param name="subState"> Additional data on the state of the task. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityTaskProperties(string state, DateTimeOffset? creationTimeUtc, SecurityTaskParameters securityTaskParameters, DateTimeOffset? lastStateChangeTimeUtc, string subState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            AdditionalProperties = additionalProperties;
+            State = state;
+            CreationTimeUtc = creationTimeUtc;
+            SecurityTaskParameters = securityTaskParameters;
+            LastStateChangeTimeUtc = lastStateChangeTimeUtc;
+            SubState = subState;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Name of the task type. </summary>
-        public string Name { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+        /// <summary> State of the task (Active, Resolved etc.). </summary>
+        public string State { get; }
+
+        /// <summary> The time this task was discovered in UTC. </summary>
+        public DateTimeOffset? CreationTimeUtc { get; }
+
+        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
+        public SecurityTaskParameters SecurityTaskParameters { get; }
+
+        /// <summary> The time this task's details were last changed in UTC. </summary>
+        public DateTimeOffset? LastStateChangeTimeUtc { get; }
+
+        /// <summary> Additional data on the state of the task. </summary>
+        public string SubState { get; }
     }
 }

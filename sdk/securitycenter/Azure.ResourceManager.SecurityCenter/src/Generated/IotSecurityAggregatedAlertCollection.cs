@@ -8,85 +8,92 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="IotSecurityAggregatedAlertResource"/> and their operations.
-    /// Each <see cref="IotSecurityAggregatedAlertResource"/> in the collection will belong to the same instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
-    /// To get an <see cref="IotSecurityAggregatedAlertCollection"/> instance call the GetIotSecurityAggregatedAlerts method from an instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
+    /// Each <see cref="IotSecurityAggregatedAlertResource"/> in the collection will belong to the same instance of <see cref="IoTSecuritySolutionAnalyticsModelResource"/>.
+    /// To get a <see cref="IotSecurityAggregatedAlertCollection"/> instance call the GetIotSecurityAggregatedAlerts method from an instance of <see cref="IoTSecuritySolutionAnalyticsModelResource"/>.
     /// </summary>
     public partial class IotSecurityAggregatedAlertCollection : ArmCollection, IEnumerable<IotSecurityAggregatedAlertResource>, IAsyncEnumerable<IotSecurityAggregatedAlertResource>
     {
-        private readonly ClientDiagnostics _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics;
-        private readonly IotSecuritySolutionsAnalyticsAggregatedAlertRestOperations _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient;
+        private readonly ClientDiagnostics _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics;
+        private readonly IotSecuritySolutionsAnalyticsAggregatedAlert _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedAlertCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertCollection for mocking. </summary>
         protected IotSecurityAggregatedAlertCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedAlertCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotSecurityAggregatedAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecurityAggregatedAlertResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IotSecurityAggregatedAlertResource.ResourceType, out string iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertApiVersion);
-            _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient = new IotSecuritySolutionsAnalyticsAggregatedAlertRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(IotSecurityAggregatedAlertResource.ResourceType, out string iotSecurityAggregatedAlertApiVersion);
+            _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", IotSecurityAggregatedAlertResource.ResourceType.Namespace, Diagnostics);
+            _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient = new IotSecuritySolutionsAnalyticsAggregatedAlert(_iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, Endpoint, iotSecurityAggregatedAlertApiVersion ?? "2019-08-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != IotSecuritySolutionAnalyticsModelResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IotSecuritySolutionAnalyticsModelResource.ResourceType), nameof(id));
+            if (id.ResourceType != IoTSecuritySolutionAnalyticsModelResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IoTSecuritySolutionAnalyticsModelResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Use this method to get a single the aggregated alert of yours IoT Security solution. This aggregation is performed by alert name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<IotSecurityAggregatedAlertResource>> GetAsync(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
 
-            using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Get");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = await _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotSecurityAggregatedAlertData> response = Response.FromValue(IotSecurityAggregatedAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Use this method to get a single the aggregated alert of yours IoT Security solution. This aggregation is performed by alert name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<IotSecurityAggregatedAlertResource> Get(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
 
-            using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Get");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotSecurityAggregatedAlertData> response = Response.FromValue(IotSecurityAggregatedAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,98 +156,122 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Use this method to get the aggregated alert list of yours IoT Security solution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> Number of results to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecurityAggregatedAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IotSecurityAggregatedAlertResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Use this method to get the aggregated alert list of yours IoT Security solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Number of results to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IotSecurityAggregatedAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IotSecurityAggregatedAlertResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IotSecurityAggregatedAlertResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IotSecurityAggregatedAlertData, IotSecurityAggregatedAlertResource>(new IotSecuritySolutionsAnalyticsAggregatedAlertGetAllAsyncCollectionResultOfT(
+                _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                top,
+                context,
+                "IotSecurityAggregatedAlertCollection.GetAll"), data => new IotSecurityAggregatedAlertResource(Client, data));
+        }
+
+        /// <summary>
+        /// Use this method to get the aggregated alert list of yours IoT Security solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> Number of results to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IotSecurityAggregatedAlertResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotSecurityAggregatedAlertResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IotSecurityAggregatedAlertData, IotSecurityAggregatedAlertResource>(new IotSecuritySolutionsAnalyticsAggregatedAlertGetAllCollectionResultOfT(
+                _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                top,
+                context,
+                "IotSecurityAggregatedAlertCollection.GetAll"), data => new IotSecurityAggregatedAlertResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
 
-            using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Exists");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotSecurityAggregatedAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotSecurityAggregatedAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotSecurityAggregatedAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,36 +285,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
 
-            using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Exists");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotSecurityAggregatedAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotSecurityAggregatedAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotSecurityAggregatedAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,38 +342,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<IotSecurityAggregatedAlertResource>> GetIfExistsAsync(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
 
-            using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.GetIfExists");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotSecurityAggregatedAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotSecurityAggregatedAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotSecurityAggregatedAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotSecurityAggregatedAlertResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,38 +403,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedAlerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<IotSecurityAggregatedAlertResource> GetIfExists(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
 
-            using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.GetIfExists");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotSecurityAggregatedAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotSecurityAggregatedAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotSecurityAggregatedAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotSecurityAggregatedAlertResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,6 +470,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IotSecurityAggregatedAlertResource> IAsyncEnumerable<IotSecurityAggregatedAlertResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

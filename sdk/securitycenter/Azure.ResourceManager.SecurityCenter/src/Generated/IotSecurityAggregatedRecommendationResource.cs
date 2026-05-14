@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing an IotSecurityAggregatedRecommendation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotSecurityAggregatedRecommendationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetIotSecurityAggregatedRecommendationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionAnalyticsModelResource"/> using the GetIotSecurityAggregatedRecommendation method.
+    /// A class representing a IotSecurityAggregatedRecommendation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotSecurityAggregatedRecommendationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IoTSecuritySolutionAnalyticsModelResource"/> using the GetIotSecurityAggregatedRecommendations method.
     /// </summary>
     public partial class IotSecurityAggregatedRecommendationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="IotSecurityAggregatedRecommendationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="solutionName"> The solutionName. </param>
-        /// <param name="aggregatedRecommendationName"> The aggregatedRecommendationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics;
-        private readonly IotSecuritySolutionsAnalyticsRecommendationRestOperations _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient;
+        private readonly ClientDiagnostics _iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics;
+        private readonly IotSecuritySolutionsAnalyticsRecommendation _iotSecuritySolutionsAnalyticsRecommendationRestClient;
         private readonly IotSecurityAggregatedRecommendationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
 
-        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IotSecurityAggregatedRecommendationResource for mocking. </summary>
         protected IotSecurityAggregatedRecommendationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotSecurityAggregatedRecommendationResource(ArmClient client, IotSecurityAggregatedRecommendationData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotSecurityAggregatedRecommendationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationApiVersion);
-            _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient = new IotSecuritySolutionsAnalyticsRecommendationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string iotSecurityAggregatedRecommendationApiVersion);
+            _iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _iotSecuritySolutionsAnalyticsRecommendationRestClient = new IotSecuritySolutionsAnalyticsRecommendation(_iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, Endpoint, iotSecurityAggregatedRecommendationApiVersion ?? "2019-08-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual IotSecurityAggregatedRecommendationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="solutionName"> The solutionName. </param>
+        /// <param name="aggregatedRecommendationName"> The aggregatedRecommendationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Use this method to get the aggregated security analytics recommendation of yours IoT Security solution. This aggregation is performed by recommendation name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedRecommendations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedRecommendationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotSecurityAggregatedRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IotSecurityAggregatedRecommendationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationResource.Get");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationResource.Get");
             scope.Start();
             try
             {
-                var response = await _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsRecommendationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotSecurityAggregatedRecommendationData> response = Response.FromValue(IotSecurityAggregatedRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Use this method to get the aggregated security analytics recommendation of yours IoT Security solution. This aggregation is performed by recommendation name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IoTSecurityAggregatedRecommendations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotSecurityAggregatedRecommendationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotSecurityAggregatedRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IotSecurityAggregatedRecommendationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationResource.Get");
+            using DiagnosticScope scope = _iotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationResource.Get");
             scope.Start();
             try
             {
-                var response = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotSecuritySolutionsAnalyticsRecommendationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotSecurityAggregatedRecommendationData> response = Response.FromValue(IotSecurityAggregatedRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -6,10 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -19,66 +23,70 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Each <see cref="DefenderForStorageSettingResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="DefenderForStorageSettingCollection"/> instance call the GetDefenderForStorageSettings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class DefenderForStorageSettingCollection : ArmCollection
+    public partial class DefenderForStorageSettingCollection : ArmCollection, IEnumerable<DefenderForStorageSettingResource>, IAsyncEnumerable<DefenderForStorageSettingResource>
     {
-        private readonly ClientDiagnostics _defenderForStorageSettingDefenderForStorageClientDiagnostics;
-        private readonly DefenderForStorageRestOperations _defenderForStorageSettingDefenderForStorageRestClient;
+        private readonly ClientDiagnostics _defenderForStorageClientDiagnostics;
+        private readonly DefenderForStorage _defenderForStorageRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DefenderForStorageSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DefenderForStorageSettingCollection for mocking. </summary>
         protected DefenderForStorageSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DefenderForStorageSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForStorageSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DefenderForStorageSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal DefenderForStorageSettingCollection(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
         {
-            _defenderForStorageSettingDefenderForStorageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DefenderForStorageSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DefenderForStorageSettingResource.ResourceType, out string defenderForStorageSettingDefenderForStorageApiVersion);
-            _defenderForStorageSettingDefenderForStorageRestClient = new DefenderForStorageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForStorageSettingDefenderForStorageApiVersion);
+            TryGetApiVersion(DefenderForStorageSettingResource.ResourceType, out string defenderForStorageSettingApiVersion);
+            _defenderForStorageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DefenderForStorageSettingResource.ResourceType.Namespace, Diagnostics);
+            _defenderForStorageRestClient = new DefenderForStorage(_defenderForStorageClientDiagnostics, Pipeline, Endpoint, defenderForStorageSettingApiVersion ?? "2025-09-01-preview");
         }
 
         /// <summary>
         /// Creates or updates the Defender for Storage settings on a specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="data"> Defender for Storage Settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DefenderForStorageSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DefenderForStorageSettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DefenderForStorageSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _defenderForStorageSettingDefenderForStorageRestClient.CreateAsync(Id, settingName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _defenderForStorageSettingDefenderForStorageRestClient.CreateCreateRequestUri(Id, settingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<DefenderForStorageSettingResource> operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -92,42 +100,46 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Creates or updates the Defender for Storage settings on a specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="data"> Defender for Storage Settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DefenderForStorageSettingResource> CreateOrUpdate(WaitUntil waitUntil, DefenderForStorageSettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DefenderForStorageSettingResource> CreateOrUpdate(WaitUntil waitUntil, SettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _defenderForStorageSettingDefenderForStorageRestClient.Create(Id, settingName, data, cancellationToken);
-                var uri = _defenderForStorageSettingDefenderForStorageRestClient.CreateCreateRequestUri(Id, settingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<DefenderForStorageSettingResource> operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -141,34 +153,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets the Defender for Storage settings for the specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DefenderForStorageSettingResource>> GetAsync(DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefenderForStorageSettingResource>> GetAsync(SettingName settingName, CancellationToken cancellationToken = default)
         {
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Get");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _defenderForStorageSettingDefenderForStorageRestClient.GetAsync(Id, settingName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForStorageSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -182,34 +198,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets the Defender for Storage settings for the specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DefenderForStorageSettingResource> Get(DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        public virtual Response<DefenderForStorageSettingResource> Get(SettingName settingName, CancellationToken cancellationToken = default)
         {
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Get");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _defenderForStorageSettingDefenderForStorageRestClient.Get(Id, settingName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForStorageSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,35 +240,105 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Lists the Defender for Storage settings for the specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DefenderForStorageSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DefenderForStorageSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Exists");
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DefenderForStorageSettingData, DefenderForStorageSettingResource>(new DefenderForStorageGetAllAsyncCollectionResultOfT(_defenderForStorageRestClient, Id.ToString(), context, "DefenderForStorageSettingCollection.GetAll"), data => new DefenderForStorageSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the Defender for Storage settings for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DefenderForStorageSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DefenderForStorageSettingResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DefenderForStorageSettingData, DefenderForStorageSettingResource>(new DefenderForStorageGetAllCollectionResultOfT(_defenderForStorageRestClient, Id.ToString(), context, "DefenderForStorageSettingCollection.GetAll"), data => new DefenderForStorageSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> The defender for storage setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> ExistsAsync(SettingName settingName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _defenderForStorageSettingDefenderForStorageRestClient.GetAsync(Id, settingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DefenderForStorageSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForStorageSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -262,32 +352,46 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SettingName settingName, CancellationToken cancellationToken = default)
         {
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Exists");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _defenderForStorageSettingDefenderForStorageRestClient.Get(Id, settingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DefenderForStorageSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForStorageSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,34 +405,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<DefenderForStorageSettingResource>> GetIfExistsAsync(DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DefenderForStorageSettingResource>> GetIfExistsAsync(SettingName settingName, CancellationToken cancellationToken = default)
         {
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _defenderForStorageSettingDefenderForStorageRestClient.GetAsync(Id, settingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DefenderForStorageSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForStorageSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DefenderForStorageSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForStorageSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,34 +462,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForStorage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForStorageSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForStorageSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> Defender for Storage setting name. </param>
+        /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<DefenderForStorageSettingResource> GetIfExists(DefenderForStorageSettingName settingName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DefenderForStorageSettingResource> GetIfExists(SettingName settingName, CancellationToken cancellationToken = default)
         {
-            using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _defenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _defenderForStorageSettingDefenderForStorageRestClient.Get(Id, settingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DefenderForStorageSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForStorageSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DefenderForStorageSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForStorageSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -377,6 +513,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DefenderForStorageSettingResource> IEnumerable<DefenderForStorageSettingResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DefenderForStorageSettingResource> IAsyncEnumerable<DefenderForStorageSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

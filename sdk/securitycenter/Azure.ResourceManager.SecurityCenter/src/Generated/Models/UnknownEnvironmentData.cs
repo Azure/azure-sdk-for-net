@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Unknown version of EnvironmentData. </summary>
-    internal partial class UnknownEnvironmentData : SecurityConnectorEnvironment
+    internal partial class UnknownEnvironmentData : EnvironmentData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEnvironmentData"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEnvironmentData(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(environmentType, serializedAdditionalRawData)
-        {
-            EnvironmentType = environmentType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownEnvironmentData"/> for deserialization. </summary>
-        internal UnknownEnvironmentData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEnvironmentData(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(environmentType != default ? environmentType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

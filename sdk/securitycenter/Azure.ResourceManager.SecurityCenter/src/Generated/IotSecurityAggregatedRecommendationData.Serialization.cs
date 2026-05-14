@@ -10,16 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecurityAggregatedRecommendationData : IUtf8JsonSerializable, IJsonModel<IotSecurityAggregatedRecommendationData>
+    /// <summary> IoT Security solution recommendation information. </summary>
+    public partial class IotSecurityAggregatedRecommendationData : ResourceData, IJsonModel<IotSecurityAggregatedRecommendationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecurityAggregatedRecommendationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotSecurityAggregatedRecommendationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotSecurityAggregatedRecommendationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotSecurityAggregatedRecommendationData IPersistableModel<IotSecurityAggregatedRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotSecurityAggregatedRecommendationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotSecurityAggregatedRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotSecurityAggregatedRecommendationData"/> from. </param>
+        internal static IotSecurityAggregatedRecommendationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIotSecurityAggregatedRecommendationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotSecurityAggregatedRecommendationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +80,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -45,270 +98,126 @@ namespace Azure.ResourceManager.SecurityCenter
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RecommendationName))
-            {
-                writer.WritePropertyName("recommendationName"u8);
-                writer.WriteStringValue(RecommendationName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(RecommendationDisplayName))
-            {
-                writer.WritePropertyName("recommendationDisplayName"u8);
-                writer.WriteStringValue(RecommendationDisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(RecommendationTypeId))
-            {
-                writer.WritePropertyName("recommendationTypeId"u8);
-                writer.WriteStringValue(RecommendationTypeId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DetectedBy))
-            {
-                writer.WritePropertyName("detectedBy"u8);
-                writer.WriteStringValue(DetectedBy);
-            }
-            if (options.Format != "W" && Optional.IsDefined(RemediationSteps))
-            {
-                writer.WritePropertyName("remediationSteps"u8);
-                writer.WriteStringValue(RemediationSteps);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
-            {
-                writer.WritePropertyName("reportedSeverity"u8);
-                writer.WriteStringValue(ReportedSeverity.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(HealthyDevices))
-            {
-                writer.WritePropertyName("healthyDevices"u8);
-                writer.WriteNumberValue(HealthyDevices.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
-            {
-                writer.WritePropertyName("unhealthyDeviceCount"u8);
-                writer.WriteNumberValue(UnhealthyDeviceCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LogAnalyticsQuery))
-            {
-                writer.WritePropertyName("logAnalyticsQuery"u8);
-                writer.WriteStringValue(LogAnalyticsQuery);
-            }
-            writer.WriteEndObject();
         }
 
-        IotSecurityAggregatedRecommendationData IJsonModel<IotSecurityAggregatedRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotSecurityAggregatedRecommendationData IJsonModel<IotSecurityAggregatedRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IotSecurityAggregatedRecommendationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotSecurityAggregatedRecommendationData(document.RootElement, options);
         }
 
-        internal static IotSecurityAggregatedRecommendationData DeserializeIotSecurityAggregatedRecommendationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotSecurityAggregatedRecommendationData DeserializeIotSecurityAggregatedRecommendationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            ResourceIdentifier id = default;
+            Core.ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string recommendationName = default;
-            string recommendationDisplayName = default;
-            string description = default;
-            string recommendationTypeId = default;
-            string detectedBy = default;
-            string remediationSteps = default;
-            ReportedSeverity? reportedSeverity = default;
-            long? healthyDevices = default;
-            long? unhealthyDeviceCount = default;
-            string logAnalyticsQuery = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IoTSecurityAggregatedRecommendationProperties properties = default;
+            IDictionary<string, string> tags = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new Core.ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = IoTSecurityAggregatedRecommendationProperties.DeserializeIoTSecurityAggregatedRecommendationProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("recommendationName"u8))
-                        {
-                            recommendationName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("recommendationDisplayName"u8))
-                        {
-                            recommendationDisplayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("recommendationTypeId"u8))
-                        {
-                            recommendationTypeId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("detectedBy"u8))
-                        {
-                            detectedBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("remediationSteps"u8))
-                        {
-                            remediationSteps = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("reportedSeverity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reportedSeverity = new ReportedSeverity(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("healthyDevices"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            healthyDevices = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("unhealthyDeviceCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            unhealthyDeviceCount = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("logAnalyticsQuery"u8))
-                        {
-                            logAnalyticsQuery = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IotSecurityAggregatedRecommendationData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                recommendationName,
-                recommendationDisplayName,
-                description,
-                recommendationTypeId,
-                detectedBy,
-                remediationSteps,
-                reportedSeverity,
-                healthyDevices,
-                unhealthyDeviceCount,
-                logAnalyticsQuery,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
-
-        BinaryData IPersistableModel<IotSecurityAggregatedRecommendationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IotSecurityAggregatedRecommendationData IPersistableModel<IotSecurityAggregatedRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIotSecurityAggregatedRecommendationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotSecurityAggregatedRecommendationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IotSecurityAggregatedRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,68 +8,54 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityCenterPricingResource"/> and their operations.
-    /// Each <see cref="SecurityCenterPricingResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="SecurityCenterPricingCollection"/> instance call the GetSecurityCenterPricings method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="SecurityCenterPricingResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityCenterPricingCollection"/> instance call the GetSecurityCenterPricings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityCenterPricingCollection : ArmCollection, IEnumerable<SecurityCenterPricingResource>, IAsyncEnumerable<SecurityCenterPricingResource>
     {
-        private readonly ClientDiagnostics _securityCenterPricingPricingsClientDiagnostics;
-        private readonly PricingsRestOperations _securityCenterPricingPricingsRestClient;
+        private readonly ClientDiagnostics _pricingsClientDiagnostics;
+        private readonly Pricings _pricingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityCenterPricingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityCenterPricingCollection for mocking. </summary>
         protected SecurityCenterPricingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityCenterPricingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPricingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityCenterPricingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityCenterPricingPricingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterPricingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityCenterPricingResource.ResourceType, out string securityCenterPricingPricingsApiVersion);
-            _securityCenterPricingPricingsRestClient = new PricingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterPricingPricingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            TryGetApiVersion(SecurityCenterPricingResource.ResourceType, out string securityCenterPricingApiVersion);
+            _pricingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterPricingResource.ResourceType.Namespace, Diagnostics);
+            _pricingsRestClient = new Pricings(_pricingsClientDiagnostics, Pipeline, Endpoint, securityCenterPricingApiVersion ?? "2024-01-01");
         }
 
         /// <summary>
-        /// Updates a provided Microsoft Defender for Cloud pricing configuration in the subscription.
+        /// Updates a provided Microsoft Defender for Cloud pricing configuration in the scope. Valid scopes are: subscription id or a specific resource id (Supported resources are: 'VirtualMachines, VMSS and ARC Machines' and only for plan='VirtualMachines' and subPlan='P1').
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +63,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="data"> Pricing object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityCenterPricingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityCenterPricingPricingsRestClient.UpdateAsync(Id.SubscriptionId, pricingName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityCenterPricingPricingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, pricingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateUpdateRequest(Id.ToString(), pricingName, SecurityCenterPricingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityCenterPricingResource> operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,23 +98,19 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Updates a provided Microsoft Defender for Cloud pricing configuration in the subscription.
+        /// Updates a provided Microsoft Defender for Cloud pricing configuration in the scope. Valid scopes are: subscription id or a specific resource id (Supported resources are: 'VirtualMachines, VMSS and ARC Machines' and only for plan='VirtualMachines' and subPlan='P1').
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +118,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="data"> Pricing object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityCenterPricingResource> CreateOrUpdate(WaitUntil waitUntil, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityCenterPricingPricingsRestClient.Update(Id.SubscriptionId, pricingName, data, cancellationToken);
-                var uri = _securityCenterPricingPricingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, pricingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateUpdateRequest(Id.ToString(), pricingName, SecurityCenterPricingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityCenterPricingResource> operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -155,41 +153,45 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a provided Microsoft Defender for Cloud pricing configuration in the subscription.
+        /// Get the Defender plans pricing configurations of the selected scope (valid scopes are resource id or a subscription id). At the resource level, supported resource types are 'VirtualMachines, VMSS and ARC Machines'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityCenterPricingResource>> GetAsync(string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Get");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityCenterPricingPricingsRestClient.GetAsync(Id.SubscriptionId, pricingName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.ToString(), pricingName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,41 +202,45 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a provided Microsoft Defender for Cloud pricing configuration in the subscription.
+        /// Get the Defender plans pricing configurations of the selected scope (valid scopes are resource id or a subscription id). At the resource level, supported resource types are 'VirtualMachines, VMSS and ARC Machines'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityCenterPricingResource> Get(string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Get");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityCenterPricingPricingsRestClient.Get(Id.SubscriptionId, pricingName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.ToString(), pricingName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,97 +251,111 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists Microsoft Defender for Cloud pricing configurations in the subscription.
+        /// Lists Microsoft Defender for Cloud pricing configurations of the scopeId, that match the optional given $filter. Valid scopes are: subscription id or a specific resource id (Supported resources are: 'VirtualMachines, VMSS and ARC Machines'). Valid $filter is: 'name in ({planName1},{planName2},...)'. If $filter is not provided, the unfiltered list will be returned. If '$filter=name in (planName1,planName2)' is provided, the returned list includes the pricings set for 'planName1' and 'planName2' only.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterPricingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityCenterPricingResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterPricingResource"/> that may take multiple service requests to iterate over. </returns>
+        internal virtual AsyncPageable<SecurityCenterPricingResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new PricingsGetAllAsyncCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
         }
 
         /// <summary>
-        /// Lists Microsoft Defender for Cloud pricing configurations in the subscription.
+        /// Lists Microsoft Defender for Cloud pricing configurations of the scopeId, that match the optional given $filter. Valid scopes are: subscription id or a specific resource id (Supported resources are: 'VirtualMachines, VMSS and ARC Machines'). Valid $filter is: 'name in ({planName1},{planName2},...)'. If $filter is not provided, the unfiltered list will be returned. If '$filter=name in (planName1,planName2)' is provided, the returned list includes the pricings set for 'planName1' and 'planName2' only.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityCenterPricingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityCenterPricingResource> GetAll(CancellationToken cancellationToken = default)
+        internal virtual Pageable<SecurityCenterPricingResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new PricingsGetAllCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Exists");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityCenterPricingPricingsRestClient.GetAsync(Id.SubscriptionId, pricingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.ToString(), pricingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityCenterPricingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterPricingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -349,36 +369,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Exists");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityCenterPricingPricingsRestClient.Get(Id.SubscriptionId, pricingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.ToString(), pricingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityCenterPricingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterPricingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,38 +426,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityCenterPricingResource>> GetIfExistsAsync(string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.GetIfExists");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityCenterPricingPricingsRestClient.GetAsync(Id.SubscriptionId, pricingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.ToString(), pricingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityCenterPricingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterPricingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityCenterPricingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,38 +487,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scopeId}/providers/Microsoft.Security/pricings/{pricingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pricings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Pricings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pricingName"> name of the pricing configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityCenterPricingResource> GetIfExists(string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
-            using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.GetIfExists");
+            using DiagnosticScope scope = _pricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityCenterPricingPricingsRestClient.Get(Id.SubscriptionId, pricingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.ToString(), pricingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityCenterPricingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityCenterPricingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityCenterPricingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -488,6 +554,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityCenterPricingResource> IAsyncEnumerable<SecurityCenterPricingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -9,87 +9,79 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Information about the security control. </summary>
     public partial class SecureScoreControlDefinitionItem : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>
-        public SecureScoreControlDefinitionItem()
+        internal SecureScoreControlDefinitionItem()
         {
-            AssessmentDefinitions = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User friendly display name of the control. </param>
-        /// <param name="description"> User friendly description of the control. </param>
-        /// <param name="maxScore"> Maximum control score (0..10). </param>
-        /// <param name="source"> Source object from which the control was created. </param>
-        /// <param name="assessmentDefinitions"> Array of assessments metadata IDs that are included in this security control. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecureScoreControlDefinitionItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, int? maxScore, SecureScoreControlDefinitionSource source, IReadOnlyList<SubResource> assessmentDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Security Control Definition Properties. </param>
+        internal SecureScoreControlDefinitionItem(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecureScoreControlDefinitionItemProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Description = description;
-            MaxScore = maxScore;
-            Source = source;
-            AssessmentDefinitions = assessmentDefinitions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Security Control Definition Properties. </summary>
+        internal SecureScoreControlDefinitionItemProperties Properties { get; }
 
         /// <summary> User friendly display name of the control. </summary>
-        public string DisplayName { get; }
-        /// <summary> User friendly description of the control. </summary>
-        public string Description { get; }
-        /// <summary> Maximum control score (0..10). </summary>
-        public int? MaxScore { get; }
-        /// <summary> Source object from which the control was created. </summary>
-        internal SecureScoreControlDefinitionSource Source { get; }
-        /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public SecurityControlType? SourceType
+        public string DisplayName
         {
-            get => Source?.SourceType;
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
+        /// <summary> User friendly description of the control. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
+        /// <summary> Maximum control score (0..10). </summary>
+        public int? MaxScore
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxScore;
+            }
         }
 
         /// <summary> Array of assessments metadata IDs that are included in this security control. </summary>
-        public IReadOnlyList<SubResource> AssessmentDefinitions { get; }
+        public IReadOnlyList<AzureResourceLink> AssessmentDefinitions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssessmentDefinitions;
+            }
+        }
+
+        /// <summary> The type of security control (for example, BuiltIn). </summary>
+        public ControlType? SourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceType;
+            }
+        }
     }
 }

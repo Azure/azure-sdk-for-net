@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityAlertReceivingRole : IEquatable<SecurityAlertReceivingRole>
     {
         private readonly string _value;
+        /// <summary> If enabled, send notification on new alerts to the account admins. </summary>
+        private const string AccountAdminValue = "AccountAdmin";
+        /// <summary> If enabled, send notification on new alerts to the service admins. </summary>
+        private const string ServiceAdminValue = "ServiceAdmin";
+        /// <summary> If enabled, send notification on new alerts to the subscription owners. </summary>
+        private const string OwnerValue = "Owner";
+        /// <summary> If enabled, send notification on new alerts to the subscription contributors. </summary>
+        private const string ContributorValue = "Contributor";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertReceivingRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAlertReceivingRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AccountAdminValue = "AccountAdmin";
-        private const string ServiceAdminValue = "ServiceAdmin";
-        private const string OwnerValue = "Owner";
-        private const string ContributorValue = "Contributor";
+            _value = value;
+        }
 
         /// <summary> If enabled, send notification on new alerts to the account admins. </summary>
         public static SecurityAlertReceivingRole AccountAdmin { get; } = new SecurityAlertReceivingRole(AccountAdminValue);
+
         /// <summary> If enabled, send notification on new alerts to the service admins. </summary>
         public static SecurityAlertReceivingRole ServiceAdmin { get; } = new SecurityAlertReceivingRole(ServiceAdminValue);
+
         /// <summary> If enabled, send notification on new alerts to the subscription owners. </summary>
         public static SecurityAlertReceivingRole Owner { get; } = new SecurityAlertReceivingRole(OwnerValue);
+
         /// <summary> If enabled, send notification on new alerts to the subscription contributors. </summary>
         public static SecurityAlertReceivingRole Contributor { get; } = new SecurityAlertReceivingRole(ContributorValue);
+
         /// <summary> Determines if two <see cref="SecurityAlertReceivingRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAlertReceivingRole left, SecurityAlertReceivingRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAlertReceivingRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAlertReceivingRole left, SecurityAlertReceivingRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertReceivingRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAlertReceivingRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAlertReceivingRole(string value) => new SecurityAlertReceivingRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAlertReceivingRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAlertReceivingRole?(string value) => value == null ? null : new SecurityAlertReceivingRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAlertReceivingRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAlertReceivingRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
