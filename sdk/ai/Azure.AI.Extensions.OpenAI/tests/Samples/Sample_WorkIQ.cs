@@ -23,15 +23,13 @@ public class Sample_WorkIQ : ProjectsOpenAITestBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var workIQConnectionName = System.Environment.GetEnvironmentVariable("WorkIQ_CONNECTION_NAME");
+        var workIQConnectionName = System.Environment.GetEnvironmentVariable("WORKIQ_CONNECTION_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var workIQConnectionName = TestEnvironment.WORKIQ_CONNECTION_NAME;
 #endif
-        AIProjectClientOptions opts = new();
-        opts.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: opts);
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_WorkIQ_Async
         AIProjectConnection workIQConnection = await projectClient.Connections.GetConnectionAsync(workIQConnectionName);
