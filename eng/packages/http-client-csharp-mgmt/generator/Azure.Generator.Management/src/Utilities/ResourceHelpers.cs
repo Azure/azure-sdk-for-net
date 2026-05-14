@@ -134,7 +134,7 @@ namespace Azure.Generator.Management.Utilities
             // any valid Azure resource id.
             return scope.Kind switch
             {
-                ResourceScope.Tenant => $"{lead} The scope must be a tenant resource id, e.g. \"/\".",
+                ResourceScope.Tenant => $"{lead} The scope must be the tenant (root) scope, i.e. \"/\".",
                 ResourceScope.Subscription => $"{lead} The scope must be a subscription resource id, e.g. \"/subscriptions/{{subscriptionId}}\".",
                 ResourceScope.ResourceGroup => $"{lead} The scope must be a resource group resource id, e.g. \"/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}\".",
                 ResourceScope.ManagementGroup => $"{lead} The scope must be a management group resource id, e.g. \"/providers/Microsoft.Management/managementGroups/{{managementGroupId}}\".",
