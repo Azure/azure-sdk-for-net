@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    internal partial class UnknownReservationRecommendation : ConsumptionReservationRecommendation
+    internal partial class UnknownConsumptionReservationRecommendation : ConsumptionReservationRecommendation
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownReservationRecommendation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownConsumptionReservationRecommendation"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        internal UnknownReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, sku, eTag, tags, kind != default ? kind : "unknown")
+        internal UnknownConsumptionReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, sku, eTag, tags, kind != default ? kind : "unknown")
         {
         }
     }

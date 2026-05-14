@@ -17,10 +17,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    internal partial class UnknownChargeSummary : ConsumptionChargeSummary, IJsonModel<ConsumptionChargeSummary>
+    internal partial class UnknownConsumptionChargeSummary : ConsumptionChargeSummary, IJsonModel<ConsumptionChargeSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownChargeSummary"/> for deserialization. </summary>
-        internal UnknownChargeSummary()
+        /// <summary> Initializes a new instance of <see cref="UnknownConsumptionChargeSummary"/> for deserialization. </summary>
+        internal UnknownConsumptionChargeSummary()
         {
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownChargeSummary DeserializeUnknownChargeSummary(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownConsumptionChargeSummary DeserializeUnknownConsumptionChargeSummary(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownChargeSummary(
+            return new UnknownConsumptionChargeSummary(
                 id,
                 name,
                 resourceType,

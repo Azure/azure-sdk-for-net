@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    internal partial class UnknownChargeSummary : ConsumptionChargeSummary
+    internal partial class UnknownConsumptionChargeSummary : ConsumptionChargeSummary
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownChargeSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownConsumptionChargeSummary"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal UnknownChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown", eTag)
+        internal UnknownConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown", eTag)
         {
         }
     }

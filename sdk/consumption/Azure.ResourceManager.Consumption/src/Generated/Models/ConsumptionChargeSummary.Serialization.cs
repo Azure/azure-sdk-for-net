@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// A charge summary resource.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownChargeSummary))]
+    [PersistableModelProxy(typeof(UnknownConsumptionChargeSummary))]
     public abstract partial class ConsumptionChargeSummary : ResourceData, IJsonModel<ConsumptionChargeSummary>
     {
         /// <param name="data"> The data to parse. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return ConsumptionModernChargeSummary.DeserializeConsumptionModernChargeSummary(element, options);
                 }
             }
-            return UnknownChargeSummary.DeserializeUnknownChargeSummary(element, options);
+            return UnknownConsumptionChargeSummary.DeserializeUnknownConsumptionChargeSummary(element, options);
         }
     }
 }

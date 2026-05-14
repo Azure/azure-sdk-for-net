@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownReservationRecommendation(
+            return new UnknownConsumptionReservationRecommendation(
                 id,
                 name,
                 resourceType,
