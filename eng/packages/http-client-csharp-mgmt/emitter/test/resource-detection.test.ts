@@ -256,7 +256,7 @@ interface Employees2 {
     );
   });
 
-  it("uses clientName-adjusted model name as default resource wrapper name", async () => {
+  it("uses clientName-adjusted model name as default resource wrapper name for multi-scope resources", async () => {
     const program = await typeSpecCompile(
       `
 /** Container app job properties */
@@ -268,8 +268,15 @@ model JobProperties {
 /** Container app job resource */
 @@clientName(Job, "ContainerAppJob", "csharp");
 model Job is TrackedResource<JobProperties> {
-  ...ResourceNameParameter<Job>;
+  ...ResourceNameParameter<
+    Resource = Job,
+    KeyName = "jobName",
+    SegmentName = "jobs"
+  >;
 }
+
+/** Container app jobs collection */
+model JobsCollection is Azure.Core.Page<Job>;
 
 interface Operations extends Azure.ResourceManager.Operations {}
 
@@ -278,7 +285,14 @@ interface Jobs {
   get is ArmResourceRead<Job>;
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Job>;
   delete is ArmResourceDeleteWithoutOkAsync<Job>;
-  listByResourceGroup is ArmResourceListByParent<Job>;
+  listByResourceGroup is ArmResourceListByParent<
+    Job,
+    Response = ArmResponse<JobsCollection>
+  >;
+  listBySubscription is ArmListBySubscription<
+    Job,
+    Response = ArmResponse<JobsCollection>
+  >;
 }
 `,
       runner
@@ -288,18 +302,127 @@ interface Jobs {
     const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
-    const jobResource = armProviderSchema.resources.find(
+    const jobResources = armProviderSchema.resources.filter(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/jobs"
+    );
+    strictEqual(jobResources.length, 1);
+    const [jobResource] = jobResources;
+    strictEqual(jobResource.metadata.resourceName, "ContainerAppJob");
+    strictEqual(
+      jobResource.metadata.methods.filter((m) => m.kind === "List").length,
+      2
+    );
+
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    const resolvedJobResources = resolvedSchema.resources.filter(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/jobs"
+    );
+    strictEqual(resolvedJobResources.length, 1);
+    const [resolvedJobResource] = resolvedJobResources;
+    strictEqual(resolvedJobResource.metadata.resourceName, "ContainerAppJob");
+    strictEqual(
+      resolvedJobResource.metadata.methods.filter((m) => m.kind === "List")
+        .length,
+      2
+    );
+  });
+
+  it("keeps clientName-adjusted model name when legacy multi-resource fallback matches the raw model name", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Container app job properties */
+model JobProperties {
+  /** Display name */
+  displayName?: string;
+}
+
+/** Container app job resource shared by multiple resource paths */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
+@@clientName(Job, "ContainerAppJob", "csharp");
+@tenantResource
+model Job is ProxyResource<JobProperties> {
+  ...ResourceNameParameter<
+    Resource = Job,
+    KeyName = "jobName",
+    SegmentName = "jobs"
+  >;
+  ...Azure.ResourceManager.Legacy.ExtendedLocationOptionalProperty;
+}
+
+alias JobOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("jobs")
+    @key
+    @TypeSpec.Http.path
+    jobName: string;
+  }
+>;
+
+alias JobVersionOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("jobs")
+    @key
+    @TypeSpec.Http.path
+    jobName: string;
+  },
+  {
+    @segment("versions")
+    @key
+    @TypeSpec.Http.path
+    versionName: string;
+  }
+>;
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Jobs {
+  get is JobOps.Read<Job>;
+  createOrUpdate is JobOps.CreateOrUpdateSync<Job>;
+  delete is JobOps.DeleteSync<Job>;
+}
+
+@armResourceOperations
+interface JobVersions {
+  get is JobVersionOps.Read<Job>;
+  createOrUpdate is JobVersionOps.CreateOrUpdateSync<Job>;
+  delete is JobVersionOps.DeleteSync<Job>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const jobModel = root.models.find((m) => m.name === "ContainerAppJob");
+    ok(jobModel, "ClientName-adjusted Job model should exist");
+
+    const jobResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === jobModel.crossLanguageDefinitionId
+    );
+    strictEqual(jobResources.length, 2);
+
+    const jobResource = jobResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.path.includes("/jobs/{jobName}") &&
+        !r.metadata.resourceIdPattern.path.includes("/versions")
     );
     ok(jobResource, "Job resource should be detected");
     strictEqual(jobResource.metadata.resourceName, "ContainerAppJob");
 
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    const resolvedJobResource = resolvedSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/jobs"
+    const jobVersionResource = jobResources.find((r) =>
+      r.metadata.resourceIdPattern.path.includes("/versions/{versionName}")
     );
-    ok(resolvedJobResource, "Job resource should be resolved");
-    strictEqual(resolvedJobResource.metadata.resourceName, "ContainerAppJob");
+    ok(jobVersionResource, "Job version resource should be detected");
+    strictEqual(jobVersionResource.metadata.resourceName, "JobVersion");
   });
 
   it("singleton resource", async () => {

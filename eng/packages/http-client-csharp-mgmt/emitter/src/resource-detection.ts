@@ -476,7 +476,12 @@ export function buildArmProviderSchema(
           // Try to derive from client name using pluralize.singular
           const clientName = resourcePathToClientName.get(metadataKey);
           if (clientName) {
-            resource.metadata.resourceName = pluralize.singular(clientName);
+            const sdkModel = models.get(resource.resourceModelId);
+            const typespecModel = sdkModel?.__raw as Model | undefined;
+            const clientResourceName = pluralize.singular(clientName);
+            if (clientResourceName !== typespecModel?.name) {
+              resource.metadata.resourceName = clientResourceName;
+            }
           }
         }
       }
