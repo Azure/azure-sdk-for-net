@@ -219,6 +219,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Set of export policy rules. </summary>
+        /// <param name="rules"> Export policy rule. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeExportPolicy"/> instance for mocking. </returns>
+        public static NetAppVolumeExportPolicy NetAppVolumeExportPolicy(IEnumerable<NetAppVolumeExportPolicyRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
+
+            return new NetAppVolumeExportPolicy(rules.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Mount target properties. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
