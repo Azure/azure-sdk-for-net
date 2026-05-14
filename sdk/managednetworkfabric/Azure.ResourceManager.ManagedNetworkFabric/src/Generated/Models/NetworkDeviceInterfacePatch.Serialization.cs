@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
+            ManagedServiceIdentityPatch identity = default;
             string annotation = default;
             string additionalDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

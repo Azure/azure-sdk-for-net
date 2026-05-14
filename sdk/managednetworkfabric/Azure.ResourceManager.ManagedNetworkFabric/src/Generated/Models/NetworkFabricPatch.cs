@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             ControlPlaneAcls = new ChangeTrackingList<ResourceIdentifier>();
             TrustedIPPrefixes = new ChangeTrackingList<ResourceIdentifier>();
-            FeatureFlags = new ChangeTrackingList<NetworkFabricFeatureFlag>();
+            FeatureFlags = new ChangeTrackingList<FeatureFlagProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="qosConfiguration"> NetworkFabric QoS Configuration. </param>
         /// <param name="featureFlags"> NetworkFabric feature flag configuration information. </param>
         /// <param name="authorizedTransceiver"> Authorized transciever configuration for NetworkFabric. </param>
-        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration, StorageAccountPatchConfiguration storageAccountConfiguration, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration, QosPatchProperties qosConfiguration, IList<NetworkFabricFeatureFlag> featureFlags, AuthorizedTransceiverPatchProperties authorizedTransceiver) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration, StorageAccountPatchConfiguration storageAccountConfiguration, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration, QosPatchProperties qosConfiguration, IList<FeatureFlagProperties> featureFlags, AuthorizedTransceiverPatchProperties authorizedTransceiver) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+        public ManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Number of compute racks associated to Network Fabric. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> NetworkFabric QoS Configuration. </summary>
         internal QosPatchProperties QosConfiguration { get; set; }
         /// <summary> QoS configuration state. Default is Disabled. </summary>
-        public NetworkFabricQosConfigurationState? QosConfigurationState
+        public QosConfigurationState? QosConfigurationState
         {
             get => QosConfiguration is null ? default : QosConfiguration.QosConfigurationState;
             set
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> NetworkFabric feature flag configuration information. </summary>
-        public IList<NetworkFabricFeatureFlag> FeatureFlags { get; }
+        public IList<FeatureFlagProperties> FeatureFlags { get; }
         /// <summary> Authorized transciever configuration for NetworkFabric. </summary>
         public AuthorizedTransceiverPatchProperties AuthorizedTransceiver { get; set; }
     }

@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("internetGatewayRuleId"u8);
                 writer.WriteStringValue(InternetGatewayRuleId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
+            if (options.Format != "W" && Optional.IsDefined(IPV4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(IPv4Address);
+                writer.WriteStringValue(IPV4Address);
             }
             if (options.Format != "W" && Optional.IsDefined(Port))
             {

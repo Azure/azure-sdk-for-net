@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             int? rackCount = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<ResourceIdentifier> trustedIPPrefixes = default;
             UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default;
             QosPatchProperties qosConfiguration = default;
-            IList<NetworkFabricFeatureFlag> featureFlags = default;
+            IList<FeatureFlagProperties> featureFlags = default;
             AuthorizedTransceiverPatchProperties authorizedTransceiver = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<NetworkFabricFeatureFlag> array = new List<NetworkFabricFeatureFlag>();
+                            List<FeatureFlagProperties> array = new List<FeatureFlagProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkFabricFeatureFlag.DeserializeNetworkFabricFeatureFlag(item, options));
+                                array.Add(FeatureFlagProperties.DeserializeFeatureFlagProperties(item, options));
                             }
                             featureFlags = array;
                             continue;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 trustedIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 uniqueRdConfiguration,
                 qosConfiguration,
-                featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>(),
+                featureFlags ?? new ChangeTrackingList<FeatureFlagProperties>(),
                 authorizedTransceiver);
         }
 

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             NetworkFabricSku = networkFabricSku;
             RouterIds = new ChangeTrackingList<string>();
-            FabricLocks = new ChangeTrackingList<NetworkFabricLock>();
+            FabricLocks = new ChangeTrackingList<FabricLockProperties>();
             NetworkFabricControllerId = networkFabricControllerId;
             ServerCountPerRack = serverCountPerRack;
             IPv4Prefix = ipv4Prefix;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             L2IsolationDomains = new ChangeTrackingList<string>();
             L3IsolationDomains = new ChangeTrackingList<string>();
             ControlPlaneAcls = new ChangeTrackingList<ResourceIdentifier>();
-            FeatureFlags = new ChangeTrackingList<NetworkFabricFeatureFlag>();
+            FeatureFlags = new ChangeTrackingList<FeatureFlagProperties>();
             TrustedIPPrefixes = new ChangeTrackingList<ResourceIdentifier>();
             ActiveCommitBatches = new ChangeTrackingList<string>();
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="qosConfiguration"> NetworkFabric QoS Configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string networkFabricSku, string fabricVersion, IReadOnlyList<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IReadOnlyList<NetworkFabricLock> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<NetworkFabricFeatureFlag> featureFlags, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IReadOnlyList<string> activeCommitBatches, SecretRotationSummary secretRotationSummary, LastOperationProperties lastOperation, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, QosProperties qosConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string networkFabricSku, string fabricVersion, IReadOnlyList<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IReadOnlyList<FabricLockProperties> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<FeatureFlagProperties> featureFlags, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IReadOnlyList<string> activeCommitBatches, SecretRotationSummary secretRotationSummary, LastOperationProperties lastOperation, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, QosProperties qosConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Annotation = annotation;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Bring your own storage account configurations for Network Fabric. </summary>
         public StorageAccountConfiguration StorageAccountConfiguration { get; set; }
         /// <summary> Network Fabric Lock details. </summary>
-        public IReadOnlyList<NetworkFabricLock> FabricLocks { get; }
+        public IReadOnlyList<FabricLockProperties> FabricLocks { get; }
         /// <summary> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </summary>
         public ResourceIdentifier NetworkFabricControllerId { get; set; }
         /// <summary> Number of compute racks associated to Network Fabric. </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Control Plane Access Control List ARM resource IDs. </summary>
         public IList<ResourceIdentifier> ControlPlaneAcls { get; }
         /// <summary> NetworkFabric feature flag configuration information. </summary>
-        public IList<NetworkFabricFeatureFlag> FeatureFlags { get; }
+        public IList<FeatureFlagProperties> FeatureFlags { get; }
         /// <summary> Trusted IP Prefixes ARM resource IDs. </summary>
         public IList<ResourceIdentifier> TrustedIPPrefixes { get; }
         /// <summary> Unique Route Distinguisher configuration. </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> NetworkFabric QoS Configuration. </summary>
         internal QosProperties QosConfiguration { get; set; }
         /// <summary> QoS configuration state. Default is Disabled. </summary>
-        public NetworkFabricQosConfigurationState? QosConfigurationState
+        public QosConfigurationState? QosConfigurationState
         {
             get => QosConfiguration is null ? default : QosConfiguration.QosConfigurationState;
             set

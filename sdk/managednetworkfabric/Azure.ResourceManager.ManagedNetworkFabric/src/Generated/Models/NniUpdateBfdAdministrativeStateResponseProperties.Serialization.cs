@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricRouteType? routeType = default;
+            RouteType? routeType = default;
             BfdAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    routeType = new NetworkFabricRouteType(property.Value.GetString());
+                    routeType = new RouteType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("administrativeState"u8))

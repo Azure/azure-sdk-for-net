@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
         /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
         /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
-        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, StaticRoutePolicyPatch staticRoutePolicy, RoutePrefixLimitPatchProperties v4RoutePrefixLimit, RoutePrefixLimitPatchProperties v6RoutePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, StaticRoutePolicyPatch staticRoutePolicy, RoutePrefixLimitPatchProperties v4RoutePrefixLimit, RoutePrefixLimitPatchProperties v6RoutePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+        public ManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>

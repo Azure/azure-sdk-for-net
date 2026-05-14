@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="storageAccountId"> Network Fabric storage account resource identifier. </param>
         /// <param name="storageAccountIdentity"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountConfiguration(ResourceIdentifier storageAccountId, NetworkFabricIdentitySelector storageAccountIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountConfiguration(ResourceIdentifier storageAccountId, IdentitySelector storageAccountIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountId = storageAccountId;
             StorageAccountIdentity = storageAccountIdentity;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Network Fabric storage account resource identifier. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public NetworkFabricIdentitySelector StorageAccountIdentity { get; set; }
+        public IdentitySelector StorageAccountIdentity { get; set; }
     }
 }

@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<NeighborAddress> ipv4NeighborAddress = default;
             IList<NeighborAddress> ipv6NeighborAddress = default;
             InternalNetworkBmpProperties bmpConfiguration = default;
-            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
-            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
             string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(property.Value.GetString());
+                    v4OverV6BgpSession = new V4OverV6BgpSessionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("v6OverV4BgpSession"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(property.Value.GetString());
+                    v6OverV4BgpSession = new V6OverV4BgpSessionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotation"u8))

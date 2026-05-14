@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             UniqueRouteDistinguisherConfigurationState? uniqueRdConfigurationState = default;
             IReadOnlyList<string> uniqueRds = default;
-            NniDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState = default;
+            NNIDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nniDerivedUniqueRdConfigurationState = new NniDerivedUniqueRouteDistinguisherConfigurationState(property.Value.GetString());
+                    nniDerivedUniqueRdConfigurationState = new NNIDerivedUniqueRouteDistinguisherConfigurationState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

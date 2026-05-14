@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Layer2Configuration = layer2Configuration;
             OptionBLayer3Configuration = optionBLayer3Configuration;
@@ -98,6 +98,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
         public ResourceIdentifier IngressAclId { get; set; }
         /// <summary> Micro BFD enabled/disabled state. </summary>
-        public NetworkFabricMicroBfdState? MicroBfdState { get; set; }
+        public MicroBfdState? MicroBfdState { get; set; }
     }
 }

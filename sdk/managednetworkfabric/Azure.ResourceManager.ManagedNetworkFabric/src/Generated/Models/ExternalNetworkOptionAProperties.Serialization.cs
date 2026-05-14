@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier ingressAclId = default;
             ExternalNetworkBmpProperties bmpConfiguration = default;
             ResourceIdentifier egressAclId = default;
-            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
-            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
             NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
             NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
             string primaryIPv4Prefix = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(property.Value.GetString());
+                    v4OverV6BgpSession = new V4OverV6BgpSessionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("v6OverV4BgpSession"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(property.Value.GetString());
+                    v6OverV4BgpSession = new V6OverV4BgpSessionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nativeIpv4PrefixLimit"u8))

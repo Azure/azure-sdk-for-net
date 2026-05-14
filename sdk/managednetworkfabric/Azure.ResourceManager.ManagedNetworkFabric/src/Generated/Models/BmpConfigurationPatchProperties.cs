@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="exportPolicyConfiguration"> Export Policy configuration properties for the BMP. </param>
         /// <param name="monitoredAddressFamilies"> Monitored Address Families for the BMP Configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BmpConfigurationPatchProperties(NetworkFabricStationConfigurationState? stationConfigurationState, ResourceIdentifier scopeResourceId, string stationName, string stationIP, int? stationPort, NetworkFabricStationConnectionMode? stationConnectionMode, StationConnectionPatchProperties stationConnectionProperties, ResourceIdentifier stationNetwork, IList<ResourceIdentifier> monitoredNetworks, BmpExportPolicy? exportPolicy, BmpExportPolicyPatchProperties exportPolicyConfiguration, IList<BmpMonitoredAddressFamily> monitoredAddressFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BmpConfigurationPatchProperties(StationConfigurationState? stationConfigurationState, ResourceIdentifier scopeResourceId, string stationName, string stationIP, int? stationPort, StationConnectionMode? stationConnectionMode, StationConnectionPatchProperties stationConnectionProperties, ResourceIdentifier stationNetwork, IList<ResourceIdentifier> monitoredNetworks, BmpExportPolicy? exportPolicy, BmpExportPolicyPatchProperties exportPolicyConfiguration, IList<BmpMonitoredAddressFamily> monitoredAddressFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StationConfigurationState = stationConfigurationState;
             ScopeResourceId = scopeResourceId;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Enabling a station. Either True/False. </summary>
-        public NetworkFabricStationConfigurationState? StationConfigurationState { get; set; }
+        public StationConfigurationState? StationConfigurationState { get; set; }
         /// <summary> Scope resource ARM Identifier. </summary>
         public ResourceIdentifier ScopeResourceId { get; set; }
         /// <summary> Name of the station. </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Port of the station. Default value is 5000. </summary>
         public int? StationPort { get; set; }
         /// <summary> Station Connection Mode. </summary>
-        public NetworkFabricStationConnectionMode? StationConnectionMode { get; set; }
+        public StationConnectionMode? StationConnectionMode { get; set; }
         /// <summary> Station Connection Properties. </summary>
         public StationConnectionPatchProperties StationConnectionProperties { get; set; }
         /// <summary> Network of the station. </summary>

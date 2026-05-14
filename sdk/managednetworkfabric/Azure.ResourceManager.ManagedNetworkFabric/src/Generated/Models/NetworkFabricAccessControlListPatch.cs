@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="deviceRole"> Device Role. </param>
         /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation) : base(tags, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
             AclsUri = aclsUri;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Access Control List (ACL) configurations. </summary>
         public IList<ControlPlaneAclPatchProperties> ControlPlaneAclConfiguration { get; }
         /// <summary> Access Control List (ACL) Type. </summary>
-        public NetworkFabricAclType? AclType { get; set; }
+        public AclType? AclType { get; set; }
         /// <summary> Device Role. </summary>
-        public NetworkFabricDeviceRole? DeviceRole { get; set; }
+        public DeviceRole? DeviceRole { get; set; }
         /// <summary> Global Access Control List (ACL) actions. </summary>
         internal GlobalAccessControlListActionPatchProperties GlobalAccessControlListActions { get; set; }
         /// <summary> Configuration to enable or disable ACL action count. </summary>

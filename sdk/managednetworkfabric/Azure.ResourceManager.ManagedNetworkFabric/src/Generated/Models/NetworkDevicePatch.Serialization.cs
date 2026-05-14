@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             string hostName = default;
             string serialNumber = default;
-            NetworkFabricIdentitySelectorPatch identitySelector = default;
+            IdentitySelectorPatch identitySelector = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            identitySelector = NetworkFabricIdentitySelectorPatch.DeserializeNetworkFabricIdentitySelectorPatch(property0.Value, options);
+                            identitySelector = IdentitySelectorPatch.DeserializeIdentitySelectorPatch(property0.Value, options);
                             continue;
                         }
                     }

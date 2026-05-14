@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="QosPatchProperties"/>. </summary>
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QosPatchProperties(NetworkFabricQosConfigurationState? qosConfigurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QosPatchProperties(QosConfigurationState? qosConfigurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QosConfigurationState = qosConfigurationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> QoS configuration state. Default is Disabled. </summary>
-        public NetworkFabricQosConfigurationState? QosConfigurationState { get; set; }
+        public QosConfigurationState? QosConfigurationState { get; set; }
     }
 }

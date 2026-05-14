@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             NetworkFabricConfigurationType? configurationType = default;
             Uri tapRulesUrl = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
-            NetworkFabricIdentitySelectorPatch identitySelector = default;
+            IdentitySelectorPatch identitySelector = default;
             GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            identitySelector = NetworkFabricIdentitySelectorPatch.DeserializeNetworkFabricIdentitySelectorPatch(property0.Value, options);
+                            identitySelector = IdentitySelectorPatch.DeserializeIdentitySelectorPatch(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("globalNetworkTapRuleActions"u8))

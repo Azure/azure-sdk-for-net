@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string protocolTypes = default;
-            ControlPlaneAclIPMatchCondition ipCondition = default;
+            ControlPlanAclIPMatchCondition ipCondition = default;
             ControlPlaneAclTtlMatchCondition ttlMatchCondition = default;
             ControlPlaneAclPortMatchCondition portCondition = default;
             IList<string> flags = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = ControlPlaneAclIPMatchCondition.DeserializeControlPlaneAclIPMatchCondition(property.Value, options);
+                    ipCondition = ControlPlanAclIPMatchCondition.DeserializeControlPlanAclIPMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ttlMatchCondition"u8))

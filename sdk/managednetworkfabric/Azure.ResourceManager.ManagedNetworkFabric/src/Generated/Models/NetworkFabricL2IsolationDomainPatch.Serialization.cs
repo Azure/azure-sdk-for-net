@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             int? mtu = default;
-            NetworkFabricExtendedVlan? extendedVlan = default;
+            ExtendedVlan? extendedVlan = default;
             ResourceIdentifier networkToNetworkInterconnectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            extendedVlan = new NetworkFabricExtendedVlan(property0.Value.GetString());
+                            extendedVlan = new ExtendedVlan(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkToNetworkInterconnectId"u8))

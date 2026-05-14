@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             double? percentComplete = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            IReadOnlyList<NetworkFabricOperationStatusResult> operations = default;
+            IReadOnlyList<OperationStatusResult> operations = default;
             ResponseError error = default;
             ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<NetworkFabricOperationStatusResult> array = new List<NetworkFabricOperationStatusResult>();
+                    List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricOperationStatusResult.DeserializeNetworkFabricOperationStatusResult(item, options));
+                        array.Add(OperationStatusResult.DeserializeOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 percentComplete,
                 startTime,
                 endTime,
-                operations ?? new ChangeTrackingList<NetworkFabricOperationStatusResult>(),
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
                 error,
                 resourceId,
                 serializedAdditionalRawData);

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="commitBatchState"> Commit Batch State. </param>
         /// <param name="commitBatchDetails"> Commit Batch Details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommitBatchStatusResponseProperties(string commitBatchId, NetworkFabricCommitBatchState? commitBatchState, CommitBatchDetails commitBatchDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommitBatchStatusResponseProperties(string commitBatchId, CommitBatchState? commitBatchState, CommitBatchDetails commitBatchDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommitBatchId = commitBatchId;
             CommitBatchState = commitBatchState;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Commit Batch Identifier. </summary>
         public string CommitBatchId { get; }
         /// <summary> Commit Batch State. </summary>
-        public NetworkFabricCommitBatchState? CommitBatchState { get; }
+        public CommitBatchState? CommitBatchState { get; }
         /// <summary> Commit Batch Details. </summary>
         internal CommitBatchDetails CommitBatchDetails { get; }
         /// <summary> List of devices for which the commit operation failed. </summary>

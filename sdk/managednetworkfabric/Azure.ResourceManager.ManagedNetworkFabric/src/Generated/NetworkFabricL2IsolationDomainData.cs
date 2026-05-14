@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, ResourceIdentifier networkFabricId, int vlanId, int? mtu, NetworkFabricExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, ResourceIdentifier networkFabricId, int vlanId, int? mtu, ExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Annotation = annotation;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
         /// <summary> Extended VLAN status, default value is Disabled. </summary>
-        public NetworkFabricExtendedVlan? ExtendedVlan { get; set; }
+        public ExtendedVlan? ExtendedVlan { get; set; }
         /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </summary>
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
         /// <summary> Details of the last operation performed on the resource. </summary>

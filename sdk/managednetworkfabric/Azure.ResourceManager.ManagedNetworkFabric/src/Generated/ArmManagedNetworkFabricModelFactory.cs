@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
-        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri aclsUri = null, CommunityActionType? defaultAction = null, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, DateTimeOffset? lastSyncedOn = null, NetworkFabricAclType? aclType = null, NetworkFabricDeviceRole? deviceRole = null, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = null, string lastOperationDetails = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri aclsUri = null, CommunityActionType? defaultAction = null, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, DateTimeOffset? lastSyncedOn = null, AclType? aclType = null, DeviceRole? deviceRole = null, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = null, string lastOperationDetails = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             matchConfigurations ??= new List<AccessControlListMatchConfiguration>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
-        /// <param name="ipv4Address"> IPv4 Address of Internet Gateway. </param>
+        /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
         /// <param name="port"> Port number of Internet Gateway. </param>
         /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
         /// <param name="internetGatewayType"> Gateway Type of the resource. </param>
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ResourceIdentifier internetGatewayRuleId = null, string ipv4Address = null, int? port = null, InternetGatewayType typePropertiesType = default, InternetGatewayType? internetGatewayType = null, ResourceIdentifier networkFabricControllerId = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null)
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ResourceIdentifier internetGatewayRuleId = null, string ipV4Address = null, int? port = null, InternetGatewayType typePropertiesType = default, InternetGatewayType? internetGatewayType = null, ResourceIdentifier networkFabricControllerId = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 location,
                 annotation,
                 internetGatewayRuleId,
-                ipv4Address,
+                ipV4Address,
                 port,
                 typePropertiesType,
                 internetGatewayType,
@@ -286,7 +287,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/> instance for mocking. </returns>
-        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, ResourceIdentifier networkFabricId = null, int vlanId = default, int? mtu = null, NetworkFabricExtendedVlan? extendedVlan = null, ResourceIdentifier networkToNetworkInterconnectId = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, ResourceIdentifier networkFabricId = null, int vlanId = default, int? mtu = null, ExtendedVlan? extendedVlan = null, ResourceIdentifier networkToNetworkInterconnectId = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -521,11 +522,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
-        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, string hostName = null, string serialNumber = null, NetworkFabricIdentitySelector identitySelector = null, string version = null, string networkDeviceSku = null, NetworkDeviceRole? networkDeviceRole = null, ResourceIdentifier networkRackId = null, IPAddress managementIPv4Address = null, string managementIPv6Address = null, string rwDeviceConfig = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = null, IEnumerable<NetworkFabricCertificateRotationStatus> certificateRotationStatus = null, ResourceIdentifier networkFabricId = null)
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, string hostName = null, string serialNumber = null, IdentitySelector identitySelector = null, string version = null, string networkDeviceSku = null, NetworkDeviceRole? networkDeviceRole = null, ResourceIdentifier networkRackId = null, IPAddress managementIPv4Address = null, string managementIPv6Address = null, string rwDeviceConfig = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null, IEnumerable<SecretRotationStatus> secretRotationStatus = null, IEnumerable<CertificateRotationStatus> certificateRotationStatus = null, ResourceIdentifier networkFabricId = null)
         {
             tags ??= new Dictionary<string, string>();
-            secretRotationStatus ??= new List<NetworkFabricSecretRotationStatus>();
-            certificateRotationStatus ??= new List<NetworkFabricCertificateRotationStatus>();
+            secretRotationStatus ??= new List<SecretRotationStatus>();
+            certificateRotationStatus ??= new List<CertificateRotationStatus>();
 
             return new NetworkDeviceData(
                 id,
@@ -556,38 +557,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricSecretRotationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecretRotationStatus"/>. </summary>
         /// <param name="lastRotationOn"> The date and time when the secret was last changed. </param>
         /// <param name="synchronizationStatus"> Whether the device has been configured with the latest version of the secret. </param>
         /// <param name="secretArchiveReference"> Reference to the currently configured version of the secret in a key vault. </param>
         /// <param name="secretType"> Identifies the secret according to its purpose. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricSecretRotationStatus"/> instance for mocking. </returns>
-        public static NetworkFabricSecretRotationStatus NetworkFabricSecretRotationStatus(DateTimeOffset? lastRotationOn = null, NetworkFabricSynchronizationStatus? synchronizationStatus = null, NetworkFabricSecretArchiveReference secretArchiveReference = null, string secretType = null)
+        /// <returns> A new <see cref="Models.SecretRotationStatus"/> instance for mocking. </returns>
+        public static SecretRotationStatus SecretRotationStatus(DateTimeOffset? lastRotationOn = null, SynchronizationStatus? synchronizationStatus = null, SecretArchiveReference secretArchiveReference = null, string secretType = null)
         {
-            return new NetworkFabricSecretRotationStatus(lastRotationOn, synchronizationStatus, secretArchiveReference, secretType, serializedAdditionalRawData: null);
+            return new SecretRotationStatus(lastRotationOn, synchronizationStatus, secretArchiveReference, secretType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricSecretArchiveReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecretArchiveReference"/>. </summary>
         /// <param name="keyVaultUri"> A Uniform Resource Identifier (URI) for the secret in the key vault. </param>
         /// <param name="keyVaultId"> The resource ID of the key vault containing the secret. </param>
         /// <param name="secretName"> The name of the secret in the key vault. </param>
         /// <param name="secretVersion"> The version of the secret in the key vault. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricSecretArchiveReference"/> instance for mocking. </returns>
-        public static NetworkFabricSecretArchiveReference NetworkFabricSecretArchiveReference(Uri keyVaultUri = null, ResourceIdentifier keyVaultId = null, string secretName = null, string secretVersion = null)
+        /// <returns> A new <see cref="Models.SecretArchiveReference"/> instance for mocking. </returns>
+        public static SecretArchiveReference SecretArchiveReference(Uri keyVaultUri = null, ResourceIdentifier keyVaultId = null, string secretName = null, string secretVersion = null)
         {
-            return new NetworkFabricSecretArchiveReference(keyVaultUri, keyVaultId, secretName, secretVersion, serializedAdditionalRawData: null);
+            return new SecretArchiveReference(keyVaultUri, keyVaultId, secretName, secretVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricCertificateRotationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateRotationStatus"/>. </summary>
         /// <param name="expireOn"> Time at which the certificate will expire, for certificates with a limited validity period. </param>
         /// <param name="lastRotationOn"> The date and time when the certificate was last changed. </param>
         /// <param name="synchronizationStatus"> Whether the device has been configured with the latest version of the certificate. </param>
         /// <param name="certificateArchiveReference"> Reference to the currently configured version of the certificate in a key vault. </param>
         /// <param name="certificateType"> Identifies the certificate according to its purpose. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricCertificateRotationStatus"/> instance for mocking. </returns>
-        public static NetworkFabricCertificateRotationStatus NetworkFabricCertificateRotationStatus(DateTimeOffset? expireOn = null, DateTimeOffset? lastRotationOn = null, NetworkFabricSynchronizationStatus? synchronizationStatus = null, NetworkFabricCertificateArchiveReference certificateArchiveReference = null, string certificateType = null)
+        /// <returns> A new <see cref="Models.CertificateRotationStatus"/> instance for mocking. </returns>
+        public static CertificateRotationStatus CertificateRotationStatus(DateTimeOffset? expireOn = null, DateTimeOffset? lastRotationOn = null, SynchronizationStatus? synchronizationStatus = null, CertificateArchiveReference certificateArchiveReference = null, string certificateType = null)
         {
-            return new NetworkFabricCertificateRotationStatus(
+            return new CertificateRotationStatus(
                 expireOn,
                 lastRotationOn,
                 synchronizationStatus,
@@ -596,15 +597,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricCertificateArchiveReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateArchiveReference"/>. </summary>
         /// <param name="keyVaultUri"> A Uniform Resource Identifier (URI) for the certificate in the key vault. </param>
         /// <param name="keyVaultId"> The resource ID of the key vault containing the certificate. </param>
         /// <param name="certificateName"> The name of the certificate in the key vault. </param>
         /// <param name="certificateVersion"> The version of the certificate in the key vault. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricCertificateArchiveReference"/> instance for mocking. </returns>
-        public static NetworkFabricCertificateArchiveReference NetworkFabricCertificateArchiveReference(Uri keyVaultUri = null, ResourceIdentifier keyVaultId = null, string certificateName = null, string certificateVersion = null)
+        /// <returns> A new <see cref="Models.CertificateArchiveReference"/> instance for mocking. </returns>
+        public static CertificateArchiveReference CertificateArchiveReference(Uri keyVaultUri = null, ResourceIdentifier keyVaultId = null, string certificateName = null, string certificateVersion = null)
         {
-            return new NetworkFabricCertificateArchiveReference(keyVaultUri, keyVaultId, certificateName, certificateVersion, serializedAdditionalRawData: null);
+            return new CertificateArchiveReference(keyVaultUri, keyVaultId, certificateName, certificateVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/>. </summary>
@@ -745,16 +746,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="qosConfigurationState"> NetworkFabric QoS Configuration. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricData"/> instance for mocking. </returns>
-        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, string networkFabricSku = null, string fabricVersion = null, IEnumerable<string> routerIds = null, StorageAccountConfiguration storageAccountConfiguration = null, IEnumerable<NetworkFabricLock> fabricLocks = null, ResourceIdentifier networkFabricControllerId = null, int? rackCount = null, int serverCountPerRack = default, string ipv4Prefix = null, string ipv6Prefix = null, long fabricAsn = default, TerminalServerConfiguration terminalServerConfiguration = null, ManagementNetworkConfigurationProperties managementNetworkConfiguration = null, IEnumerable<string> racks = null, IEnumerable<string> l2IsolationDomains = null, IEnumerable<string> l3IsolationDomains = null, int? hardwareAlertThreshold = null, IEnumerable<ResourceIdentifier> controlPlaneAcls = null, IEnumerable<NetworkFabricFeatureFlag> featureFlags = null, IEnumerable<ResourceIdentifier> trustedIPPrefixes = null, UniqueRouteDistinguisherProperties uniqueRdConfiguration = null, int? storageArrayCount = null, IEnumerable<string> activeCommitBatches = null, long? secretRotationSummaryActivePasswordSetCount = null, string lastOperationDetails = null, AuthorizedTransceiverProperties authorizedTransceiver = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null, NetworkFabricQosConfigurationState? qosConfigurationState = null)
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, string networkFabricSku = null, string fabricVersion = null, IEnumerable<string> routerIds = null, StorageAccountConfiguration storageAccountConfiguration = null, IEnumerable<FabricLockProperties> fabricLocks = null, ResourceIdentifier networkFabricControllerId = null, int? rackCount = null, int serverCountPerRack = default, string ipv4Prefix = null, string ipv6Prefix = null, long fabricAsn = default, TerminalServerConfiguration terminalServerConfiguration = null, ManagementNetworkConfigurationProperties managementNetworkConfiguration = null, IEnumerable<string> racks = null, IEnumerable<string> l2IsolationDomains = null, IEnumerable<string> l3IsolationDomains = null, int? hardwareAlertThreshold = null, IEnumerable<ResourceIdentifier> controlPlaneAcls = null, IEnumerable<FeatureFlagProperties> featureFlags = null, IEnumerable<ResourceIdentifier> trustedIPPrefixes = null, UniqueRouteDistinguisherProperties uniqueRdConfiguration = null, int? storageArrayCount = null, IEnumerable<string> activeCommitBatches = null, long? secretRotationSummaryActivePasswordSetCount = null, string lastOperationDetails = null, AuthorizedTransceiverProperties authorizedTransceiver = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null, QosConfigurationState? qosConfigurationState = null)
         {
             tags ??= new Dictionary<string, string>();
             routerIds ??= new List<string>();
-            fabricLocks ??= new List<NetworkFabricLock>();
+            fabricLocks ??= new List<FabricLockProperties>();
             racks ??= new List<string>();
             l2IsolationDomains ??= new List<string>();
             l3IsolationDomains ??= new List<string>();
             controlPlaneAcls ??= new List<ResourceIdentifier>();
-            featureFlags ??= new List<NetworkFabricFeatureFlag>();
+            featureFlags ??= new List<FeatureFlagProperties>();
             trustedIPPrefixes ??= new List<ResourceIdentifier>();
             activeCommitBatches ??= new List<string>();
 
@@ -800,13 +801,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricLock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FabricLockProperties"/>. </summary>
         /// <param name="lockState"> NetworkFabric Lock State. </param>
         /// <param name="lockType"> NetworkFabric Lock Type. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricLock"/> instance for mocking. </returns>
-        public static NetworkFabricLock NetworkFabricLock(NetworkFabricLockConfigurationState? lockState = null, NetworkFabricLockType? lockType = null)
+        /// <returns> A new <see cref="Models.FabricLockProperties"/> instance for mocking. </returns>
+        public static FabricLockProperties FabricLockProperties(LockConfigurationState? lockState = null, NetworkFabricLockType? lockType = null)
         {
-            return new NetworkFabricLock(lockState, lockType, serializedAdditionalRawData: null);
+            return new FabricLockProperties(lockState, lockType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>
@@ -820,9 +821,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
         /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
         /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
-        public static TerminalServerConfiguration TerminalServerConfiguration(string username = null, string password = null, string serialNumber = null, string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, ResourceIdentifier networkDeviceId = null, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = null)
+        public static TerminalServerConfiguration TerminalServerConfiguration(string username = null, string password = null, string serialNumber = null, string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, ResourceIdentifier networkDeviceId = null, IEnumerable<SecretRotationStatus> secretRotationStatus = null)
         {
-            secretRotationStatus ??= new List<NetworkFabricSecretRotationStatus>();
+            secretRotationStatus ??= new List<SecretRotationStatus>();
 
             return new TerminalServerConfiguration(
                 username,
@@ -835,24 +836,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 secondaryIPv6Prefix,
                 networkDeviceId,
                 secretRotationStatus?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VpnConfigurationProperties"/>. </summary>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties. </param>
-        /// <param name="optionAProperties"> option A properties. </param>
-        /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
-        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = null, NetworkFabricAdministrativeState? administrativeState = null, PeeringOption peeringOption = default, OptionBProperties optionBProperties = null, VpnConfigurationOptionAProperties optionAProperties = null)
-        {
-            return new VpnConfigurationProperties(
-                networkToNetworkInterconnectId,
-                administrativeState,
-                peeringOption,
-                optionBProperties,
-                optionAProperties,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BfdConfiguration"/>. </summary>
@@ -870,7 +853,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="uniqueRds"> List of Unique Route Distinguisher addresses. </param>
         /// <param name="nniDerivedUniqueRdConfigurationState"> NNI derived unique Route Distinguisher state. Default is Disabled. </param>
         /// <returns> A new <see cref="Models.UniqueRouteDistinguisherProperties"/> instance for mocking. </returns>
-        public static UniqueRouteDistinguisherProperties UniqueRouteDistinguisherProperties(UniqueRouteDistinguisherConfigurationState? uniqueRdConfigurationState = null, IEnumerable<string> uniqueRds = null, NniDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState = null)
+        public static UniqueRouteDistinguisherProperties UniqueRouteDistinguisherProperties(UniqueRouteDistinguisherConfigurationState? uniqueRdConfigurationState = null, IEnumerable<string> uniqueRds = null, NNIDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState = null)
         {
             uniqueRds ??= new List<string>();
 
@@ -1017,7 +1000,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
-        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri tapRulesUri = null, NetworkFabricIdentitySelector identitySelector = null, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, ResourceIdentifier networkTapId = null, IEnumerable<ResourceIdentifier> networkTapIds = null, PollingIntervalInSecond? pollingIntervalInSeconds = null, DateTimeOffset? lastSyncedOn = null, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = null, string lastOperationDetails = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri tapRulesUri = null, IdentitySelector identitySelector = null, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, ResourceIdentifier networkTapId = null, IEnumerable<ResourceIdentifier> networkTapIds = null, PollingIntervalInSecond? pollingIntervalInSeconds = null, DateTimeOffset? lastSyncedOn = null, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = null, string lastOperationDetails = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             matchConfigurations ??= new List<NetworkTapRuleMatchConfiguration>();
@@ -1160,9 +1143,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Response properties in case of successful administrative state update. </param>
         /// <returns> A new <see cref="Models.UpdateAdministrativeStateResult"/> instance for mocking. </returns>
-        public static UpdateAdministrativeStateResult UpdateAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, UpdateAdministrativeStateResponseProperties properties = null)
+        public static UpdateAdministrativeStateResult UpdateAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, UpdateAdministrativeStateResponseProperties properties = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new UpdateAdministrativeStateResult(
                 id,
@@ -1178,7 +1161,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricOperationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="name"> Name of the async operation. </param>
@@ -1188,12 +1171,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricOperationStatusResult"/> instance for mocking. </returns>
-        public static NetworkFabricOperationStatusResult NetworkFabricOperationStatusResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
+        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
-            return new NetworkFabricOperationStatusResult(
+            return new OperationStatusResult(
                 id,
                 resourceId,
                 name,
@@ -1288,7 +1271,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv4PrefixLimits"> Native IPv4 prefix limits configuration. </param>
         /// <param name="nativeIPv6PrefixLimits"> Native IPv6 prefix limits configuration. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkOptionAProperties"/> instance for mocking. </returns>
-        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, BmpConfigurationState? bmpConfigurationState = null, ResourceIdentifier egressAclId = null, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = null, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = null)
+        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, BmpConfigurationState? bmpConfigurationState = null, ResourceIdentifier egressAclId = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = null)
         {
             nativeIPv4PrefixLimits ??= new List<PrefixLimitProperties>();
             nativeIPv6PrefixLimits ??= new List<PrefixLimitProperties>();
@@ -1331,7 +1314,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv4PrefixLimits"> Native IPv4 prefix limit configuration. </param>
         /// <param name="nativeIPv6PrefixLimits"> Native IPv6 prefix limit configuration. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkPatchOptionAProperties"/> instance for mocking. </returns>
-        public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null, BmpConfigurationState? bmpConfigurationState = null, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = null, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv6PrefixLimits = null)
+        public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null, BmpConfigurationState? bmpConfigurationState = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv6PrefixLimits = null)
         {
             nativeIPv4PrefixLimits ??= new List<PrefixLimitPatchProperties>();
             nativeIPv6PrefixLimits ??= new List<PrefixLimitPatchProperties>();
@@ -1378,9 +1361,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Response properties. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkUpdateBfdAdministrativeStateResult"/> instance for mocking. </returns>
-        public static ExternalNetworkUpdateBfdAdministrativeStateResult ExternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, ExternalNetworkUpdateBfdAdministrativeStateResponseProperties properties = null)
+        public static ExternalNetworkUpdateBfdAdministrativeStateResult ExternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, ExternalNetworkUpdateBfdAdministrativeStateResponseProperties properties = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new ExternalNetworkUpdateBfdAdministrativeStateResult(
                 id,
@@ -1482,7 +1465,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
         /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
         /// <returns> A new <see cref="Models.InternalNetworkBgpConfiguration"/> instance for mocking. </returns>
-        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = null, BfdConfiguration bfdConfiguration = null, NetworkFabricBooleanValue? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, long? fabricAsn = null, long? peerAsn = null, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<NeighborAddress> ipv4NeighborAddress = null, IEnumerable<NeighborAddress> ipv6NeighborAddress = null, InternalNetworkBmpProperties bmpConfiguration = null, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = null, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = null)
+        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = null, BfdConfiguration bfdConfiguration = null, NetworkFabricBooleanValue? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, long? fabricAsn = null, long? peerAsn = null, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<NeighborAddress> ipv4NeighborAddress = null, IEnumerable<NeighborAddress> ipv6NeighborAddress = null, InternalNetworkBmpProperties bmpConfiguration = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null)
         {
             ipv4ListenRangePrefixes ??= new List<string>();
             ipv6ListenRangePrefixes ??= new List<string>();
@@ -1523,7 +1506,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
         /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
         /// <returns> A new <see cref="Models.BgpConfiguration"/> instance for mocking. </returns>
-        public static BgpConfiguration BgpConfiguration(string annotation = null, BfdConfiguration bfdConfiguration = null, NetworkFabricBooleanValue? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, long? fabricAsn = null, long? peerAsn = null, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<NeighborAddress> ipv4NeighborAddress = null, IEnumerable<NeighborAddress> ipv6NeighborAddress = null, InternalNetworkBmpProperties bmpConfiguration = null, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = null, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = null)
+        public static BgpConfiguration BgpConfiguration(string annotation = null, BfdConfiguration bfdConfiguration = null, NetworkFabricBooleanValue? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, long? fabricAsn = null, long? peerAsn = null, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<NeighborAddress> ipv4NeighborAddress = null, IEnumerable<NeighborAddress> ipv6NeighborAddress = null, InternalNetworkBmpProperties bmpConfiguration = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null)
         {
             ipv4ListenRangePrefixes ??= new List<string>();
             ipv6ListenRangePrefixes ??= new List<string>();
@@ -1571,9 +1554,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="neighborAddressAdministrativeStatus"> Internal Network BFD Administrative State response properties. </param>
         /// <returns> A new <see cref="Models.InternalNetworkUpdateBfdAdministrativeStateResult"/> instance for mocking. </returns>
-        public static InternalNetworkUpdateBfdAdministrativeStateResult InternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, IEnumerable<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus = null)
+        public static InternalNetworkUpdateBfdAdministrativeStateResult InternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, IEnumerable<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
             neighborAddressAdministrativeStatus ??= new List<NeighborAddressBfdAdministrativeStatus>();
 
             return new InternalNetworkUpdateBfdAdministrativeStateResult(
@@ -1612,9 +1595,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="neighborAddressAdministrativeStatus"> Internal Network BGP Administrative State response properties. </param>
         /// <returns> A new <see cref="Models.InternalNetworkUpdateBgpAdministrativeStateResult"/> instance for mocking. </returns>
-        public static InternalNetworkUpdateBgpAdministrativeStateResult InternalNetworkUpdateBgpAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, IEnumerable<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = null)
+        public static InternalNetworkUpdateBgpAdministrativeStateResult InternalNetworkUpdateBgpAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, IEnumerable<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
             neighborAddressAdministrativeStatus ??= new List<NeighborAddressBgpAdministrativeStatus>();
 
             return new InternalNetworkUpdateBgpAdministrativeStateResult(
@@ -1652,9 +1635,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NeighborGroupResyncResult"/> instance for mocking. </returns>
-        public static NeighborGroupResyncResult NeighborGroupResyncResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NeighborGroupResyncResult NeighborGroupResyncResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NeighborGroupResyncResult(
                 id,
@@ -1720,9 +1703,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceRebootResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceRebootResult NetworkBootstrapDeviceRebootResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkBootstrapDeviceRebootResult NetworkBootstrapDeviceRebootResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkBootstrapDeviceRebootResult(
                 id,
@@ -1748,9 +1731,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceRefreshConfigurationResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceRefreshConfigurationResult NetworkBootstrapDeviceRefreshConfigurationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkBootstrapDeviceRefreshConfigurationResult NetworkBootstrapDeviceRefreshConfigurationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkBootstrapDeviceRefreshConfigurationResult(
                 id,
@@ -1776,9 +1759,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceResyncPasswordsResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceResyncPasswordsResult NetworkBootstrapDeviceResyncPasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkBootstrapDeviceResyncPasswordsResult NetworkBootstrapDeviceResyncPasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkBootstrapDeviceResyncPasswordsResult(
                 id,
@@ -1804,9 +1787,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceUpdateAdministrativeStateResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceUpdateAdministrativeStateResult NetworkBootstrapDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkBootstrapDeviceUpdateAdministrativeStateResult NetworkBootstrapDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkBootstrapDeviceUpdateAdministrativeStateResult(
                 id,
@@ -1832,9 +1815,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceUpgradeResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceUpgradeResult NetworkBootstrapDeviceUpgradeResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkBootstrapDeviceUpgradeResult NetworkBootstrapDeviceUpgradeResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkBootstrapDeviceUpgradeResult(
                 id,
@@ -1904,9 +1887,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceRefreshConfigurationResult"/> instance for mocking. </returns>
-        public static NetworkDeviceRefreshConfigurationResult NetworkDeviceRefreshConfigurationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkDeviceRefreshConfigurationResult NetworkDeviceRefreshConfigurationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkDeviceRefreshConfigurationResult(
                 id,
@@ -1932,9 +1915,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricResyncCertificatesResult"/> instance for mocking. </returns>
-        public static NetworkFabricResyncCertificatesResult NetworkFabricResyncCertificatesResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkFabricResyncCertificatesResult NetworkFabricResyncCertificatesResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkFabricResyncCertificatesResult(
                 id,
@@ -1960,9 +1943,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceResyncPasswordsResult"/> instance for mocking. </returns>
-        public static NetworkDeviceResyncPasswordsResult NetworkDeviceResyncPasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkDeviceResyncPasswordsResult NetworkDeviceResyncPasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkDeviceResyncPasswordsResult(
                 id,
@@ -2023,9 +2006,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Network Device Run Rw Command Response properties. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceRunRwCommandResult"/> instance for mocking. </returns>
-        public static NetworkDeviceRunRwCommandResult NetworkDeviceRunRwCommandResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, NetworkDeviceRwCommandResponseProperties properties = null)
+        public static NetworkDeviceRunRwCommandResult NetworkDeviceRunRwCommandResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, NetworkDeviceRwCommandResponseProperties properties = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkDeviceRunRwCommandResult(
                 id,
@@ -2061,9 +2044,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceUpdateAdministrativeStateResult"/> instance for mocking. </returns>
-        public static NetworkDeviceUpdateAdministrativeStateResult NetworkDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkDeviceUpdateAdministrativeStateResult NetworkDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkDeviceUpdateAdministrativeStateResult(
                 id,
@@ -2098,9 +2081,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceUpgradeResult"/> instance for mocking. </returns>
-        public static NetworkDeviceUpgradeResult NetworkDeviceUpgradeResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkDeviceUpgradeResult NetworkDeviceUpgradeResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkDeviceUpgradeResult(
                 id,
@@ -2127,9 +2110,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="configurationDiffUri"> Arm Configuration Diff Response Properties. </param>
         /// <returns> A new <see cref="Models.ArmConfigurationDiffOperationResult"/> instance for mocking. </returns>
-        public static ArmConfigurationDiffOperationResult ArmConfigurationDiffOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri configurationDiffUri = null)
+        public static ArmConfigurationDiffOperationResult ArmConfigurationDiffOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri configurationDiffUri = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new ArmConfigurationDiffOperationResult(
                 id,
@@ -2157,9 +2140,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Commit Batch Status Response Properties. </param>
         /// <returns> A new <see cref="Models.CommitBatchStatusOperationResult"/> instance for mocking. </returns>
-        public static CommitBatchStatusOperationResult CommitBatchStatusOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, CommitBatchStatusResponseProperties properties = null)
+        public static CommitBatchStatusOperationResult CommitBatchStatusOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, CommitBatchStatusResponseProperties properties = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new CommitBatchStatusOperationResult(
                 id,
@@ -2180,7 +2163,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="commitBatchState"> Commit Batch State. </param>
         /// <param name="commitBatchDetailsFailedDevices"> Commit Batch Details. </param>
         /// <returns> A new <see cref="Models.CommitBatchStatusResponseProperties"/> instance for mocking. </returns>
-        public static CommitBatchStatusResponseProperties CommitBatchStatusResponseProperties(string commitBatchId = null, NetworkFabricCommitBatchState? commitBatchState = null, IEnumerable<string> commitBatchDetailsFailedDevices = null)
+        public static CommitBatchStatusResponseProperties CommitBatchStatusResponseProperties(string commitBatchId = null, CommitBatchState? commitBatchState = null, IEnumerable<string> commitBatchDetailsFailedDevices = null)
         {
             commitBatchDetailsFailedDevices ??= new List<string>();
 
@@ -2198,9 +2181,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.CommitConfigurationResult"/> instance for mocking. </returns>
-        public static CommitConfigurationResult CommitConfigurationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static CommitConfigurationResult CommitConfigurationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new CommitConfigurationResult(
                 id,
@@ -2227,9 +2210,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="commitBatchId"> Discard commit batch response properties. </param>
         /// <returns> A new <see cref="Models.DiscardCommitBatchOperationResult"/> instance for mocking. </returns>
-        public static DiscardCommitBatchOperationResult DiscardCommitBatchOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, string commitBatchId = null)
+        public static DiscardCommitBatchOperationResult DiscardCommitBatchOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, string commitBatchId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new DiscardCommitBatchOperationResult(
                 id,
@@ -2245,7 +2228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricTopologyResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetTopologyResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2256,12 +2239,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="getTopologyResponseUri"> Properties of the GetTopology Response. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricTopologyResult"/> instance for mocking. </returns>
-        public static NetworkFabricTopologyResult NetworkFabricTopologyResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri getTopologyResponseUri = null)
+        /// <returns> A new <see cref="Models.GetTopologyResult"/> instance for mocking. </returns>
+        public static GetTopologyResult GetTopologyResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri getTopologyResponseUri = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
-            return new NetworkFabricTopologyResult(
+            return new GetTopologyResult(
                 id,
                 name,
                 status,
@@ -2298,7 +2281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NniType? nniType = null, IsManagementType? isManagementType = null, NetworkFabricBooleanValue useOptionB = default, Layer2Configuration layer2Configuration = null, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, NniStaticRouteConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, NetworkFabricMicroBfdState? microBfdState = null, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NniType? nniType = null, IsManagementType? isManagementType = null, NetworkFabricBooleanValue useOptionB = default, Layer2Configuration layer2Configuration = null, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, NniStaticRouteConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, MicroBfdState? microBfdState = null, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             return new NetworkToNetworkInterconnectData(
                 id,
@@ -2402,7 +2385,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Layer2Configuration layer2Configuration = null, OptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, NniStaticRoutePatchConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, NetworkFabricMicroBfdState? microBfdState = null)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Layer2Configuration layer2Configuration = null, OptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, NniStaticRoutePatchConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, MicroBfdState? microBfdState = null)
         {
             return new NetworkToNetworkInterconnectPatch(
                 id,
@@ -2433,9 +2416,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Properties of the NNI BFD Administrative State response. </param>
         /// <returns> A new <see cref="Models.NniUpdateBfdAdministrativeStateResult"/> instance for mocking. </returns>
-        public static NniUpdateBfdAdministrativeStateResult NniUpdateBfdAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, NniUpdateBfdAdministrativeStateResponseProperties properties = null)
+        public static NniUpdateBfdAdministrativeStateResult NniUpdateBfdAdministrativeStateResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, NniUpdateBfdAdministrativeStateResponseProperties properties = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NniUpdateBfdAdministrativeStateResult(
                 id,
@@ -2455,7 +2438,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="routeType"> Route Type. Choose either Static or OptionA. </param>
         /// <param name="administrativeState"> State. Select either enable or disable. </param>
         /// <returns> A new <see cref="Models.NniUpdateBfdAdministrativeStateResponseProperties"/> instance for mocking. </returns>
-        public static NniUpdateBfdAdministrativeStateResponseProperties NniUpdateBfdAdministrativeStateResponseProperties(NetworkFabricRouteType? routeType = null, BfdAdministrativeState? administrativeState = null)
+        public static NniUpdateBfdAdministrativeStateResponseProperties NniUpdateBfdAdministrativeStateResponseProperties(RouteType? routeType = null, BfdAdministrativeState? administrativeState = null)
         {
             return new NniUpdateBfdAdministrativeStateResponseProperties(routeType, administrativeState, serializedAdditionalRawData: null);
         }
@@ -2471,9 +2454,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricResyncPasswordsResult"/> instance for mocking. </returns>
-        public static NetworkFabricResyncPasswordsResult NetworkFabricResyncPasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkFabricResyncPasswordsResult NetworkFabricResyncPasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkFabricResyncPasswordsResult(
                 id,
@@ -2499,9 +2482,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricRotateCertificatesResult"/> instance for mocking. </returns>
-        public static NetworkFabricRotateCertificatesResult NetworkFabricRotateCertificatesResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkFabricRotateCertificatesResult NetworkFabricRotateCertificatesResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkFabricRotateCertificatesResult(
                 id,
@@ -2527,9 +2510,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricRotatePasswordsResult"/> instance for mocking. </returns>
-        public static NetworkFabricRotatePasswordsResult NetworkFabricRotatePasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkFabricRotatePasswordsResult NetworkFabricRotatePasswordsResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkFabricRotatePasswordsResult(
                 id,
@@ -2556,9 +2539,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="deviceConfigurationUri"> View Device Configuration Response Properties. </param>
         /// <returns> A new <see cref="Models.ViewDeviceConfigurationOperationResult"/> instance for mocking. </returns>
-        public static ViewDeviceConfigurationOperationResult ViewDeviceConfigurationOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri deviceConfigurationUri = null)
+        public static ViewDeviceConfigurationOperationResult ViewDeviceConfigurationOperationResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, Uri deviceConfigurationUri = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new ViewDeviceConfigurationOperationResult(
                 id,
@@ -2599,9 +2582,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkTapRuleResyncResult"/> instance for mocking. </returns>
-        public static NetworkTapRuleResyncResult NetworkTapRuleResyncResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkTapRuleResyncResult NetworkTapRuleResyncResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkTapRuleResyncResult(
                 id,
@@ -2627,9 +2610,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkTapResyncResult"/> instance for mocking. </returns>
-        public static NetworkTapResyncResult NetworkTapResyncResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<NetworkFabricOperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
+        public static NetworkTapResyncResult NetworkTapResyncResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null)
         {
-            operations ??= new List<NetworkFabricOperationStatusResult>();
+            operations ??= new List<OperationStatusResult>();
 
             return new NetworkTapResyncResult(
                 id,
@@ -2642,6 +2625,432 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 error,
                 resourceId,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricAccessControlListData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, configurationType: configurationType, aclsUri: aclsUri, defaultAction: defaultAction, matchConfigurations: matchConfigurations, dynamicMatchConfigurations: dynamicMatchConfigurations, lastSyncedOn: lastSyncedOn, aclType: default, deviceRole: default, globalAccessControlListActionsEnableCount: default, lastOperationDetails: default, networkFabricIds: default, controlPlaneAclConfiguration: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
+        /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
+        /// <param name="port"> Port number of Internet Gateway. </param>
+        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
+        /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
+        {
+            return NetworkFabricInternetGatewayData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, internetGatewayRuleId: internetGatewayRuleId, ipV4Address: ipV4Address, port: port, typePropertiesType: typePropertiesType, internetGatewayType: default, networkFabricControllerId: networkFabricControllerId, lastOperationDetails: default, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, NetworkFabricProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> internetGatewayIds)
+        {
+            return NetworkFabricInternetGatewayRuleData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, ruleProperties: ruleProperties, lastOperationDetails: default, provisioningState: provisioningState, internetGatewayIds: internetGatewayIds);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPCommunityRule> ipCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricIPCommunityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, networkFabricId: default, ipCommunityRules: ipCommunityRules, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricIPExtendedCommunityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, ipExtendedCommunityRules: ipExtendedCommunityRules, networkFabricId: default, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPPrefixRule> ipPrefixRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricIPPrefixData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, networkFabricId: default, ipPrefixRules: ipPrefixRules, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, int vlanId, int? mtu, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricL2IsolationDomainData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, annotation: annotation, networkFabricId: networkFabricId, vlanId: vlanId, mtu: mtu, extendedVlan: default, networkToNetworkInterconnectId: default, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration" />. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BgpConfiguration BgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
+        {
+            return BgpConfiguration(annotation: annotation, bfdConfiguration: bfdConfiguration, defaultRouteOriginate: defaultRouteOriginate, allowAS: allowAS, allowASOverride: allowASOverride, fabricAsn: fabricAsn, peerAsn: peerAsn, ipv4ListenRangePrefixes: ipv4ListenRangePrefixes, ipv6ListenRangePrefixes: ipv6ListenRangePrefixes, ipv4NeighborAddress: ipv4NeighborAddress, ipv6NeighborAddress: ipv6NeighborAddress, bmpConfiguration: default, v4OverV6BgpSession: default, v6OverV4BgpSession: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress" />. </summary>
+        /// <param name="address"> IP Address. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NeighborAddress NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)
+        {
+            return NeighborAddress(address: address, bfdAdministrativeState: default, bgpAdministrativeState: default, configurationState: configurationState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties" />. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="mtu"> MTU to use for option A peering. </param>
+        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
+        /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
+        {
+            return ExternalNetworkOptionAProperties(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, mtu: mtu, vlanId: vlanId, fabricAsn: fabricAsn, peerAsn: peerAsn, bfdConfiguration: bfdConfiguration, ingressAclId: ingressAclId, bmpConfigurationState: default, egressAclId: egressAclId, v4OverV6BgpSession: default, v6OverV4BgpSession: default, nativeIPv4PrefixLimits: default, nativeIPv6PrefixLimits: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
+        /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
+        /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NeighborGroupDestination destination, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> networkTapRuleIds, NetworkFabricProvisioningState? provisioningState)
+        {
+            return NetworkFabricNeighborGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, annotation: annotation, destination: destination, networkTapIds: networkTapIds, networkTapRuleIds: networkTapRuleIds, networkFabricIds: default, lastOperationDetails: default, provisioningState: provisioningState, configurationState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="version"> Current version of the device as defined in SKU. </param>
+        /// <param name="networkDeviceSku"> Network Device SKU name. </param>
+        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
+        /// <param name="networkRackId"> Reference to network rack resource id. </param>
+        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
+        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkDeviceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, annotation: annotation, hostName: hostName, serialNumber: serialNumber, identitySelector: default, version: version, networkDeviceSku: networkDeviceSku, networkDeviceRole: networkDeviceRole, networkRackId: networkRackId, managementIPv4Address: managementIPv4Address, managementIPv6Address: managementIPv6Address, rwDeviceConfig: default, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, secretRotationStatus: default, certificateRotationStatus: default, networkFabricId: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
+        /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
+        /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
+        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
+        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkDeviceInterfaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: default, annotation: annotation, physicalIdentifier: physicalIdentifier, connectedTo: connectedTo, interfaceType: interfaceType, ipv4Address: ipv4Address, ipv6Address: ipv6Address, description: default, additionalDescription: default, lastOperationDetails: default, networkFabricId: default, provisioningState: provisioningState, administrativeState: administrativeState, configurationState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
+        /// <param name="fabricVersion"> The version of Network Fabric. </param>
+        /// <param name="routerIds"> Array of router IDs. </param>
+        /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
+        /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
+        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
+        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
+        /// <param name="racks"> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </param>
+        /// <param name="l2IsolationDomains"> List of L2 Isolation Domain resource IDs under the Network Fabric. </param>
+        /// <param name="l3IsolationDomains"> List of L3 Isolation Domain resource IDs under the Network Fabric. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string networkFabricSku, string fabricVersion, IEnumerable<string> routerIds, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IEnumerable<string> racks, IEnumerable<string> l2IsolationDomains, IEnumerable<string> l3IsolationDomains, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, annotation: annotation, networkFabricSku: networkFabricSku, fabricVersion: fabricVersion, routerIds: routerIds, storageAccountConfiguration: default, fabricLocks: default, networkFabricControllerId: networkFabricControllerId, rackCount: rackCount, serverCountPerRack: serverCountPerRack, ipv4Prefix: ipv4Prefix, ipv6Prefix: ipv6Prefix, fabricAsn: fabricAsn, terminalServerConfiguration: terminalServerConfiguration, managementNetworkConfiguration: managementNetworkConfiguration, racks: racks, l2IsolationDomains: l2IsolationDomains, l3IsolationDomains: l3IsolationDomains, hardwareAlertThreshold: default, controlPlaneAcls: default, featureFlags: default, trustedIPPrefixes: default, uniqueRdConfiguration: default, storageArrayCount: default, activeCommitBatches: default, secretRotationSummaryActivePasswordSetCount: default, lastOperationDetails: default, authorizedTransceiver: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, qosConfigurationState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration" />. </summary>
+        /// <param name="username"> Username for the terminal server connection. </param>
+        /// <param name="password"> Password for the terminal server connection. </param>
+        /// <param name="serialNumber"> Serial Number of Terminal server. </param>
+        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TerminalServerConfiguration TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix)
+        {
+            return TerminalServerConfiguration(username: username, password: password, serialNumber: serialNumber, primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, networkDeviceId: networkDeviceId, secretRotationStatus: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration" />. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
+        {
+            return OptionBLayer3Configuration(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, peerAsn: peerAsn, vlanId: vlanId, fabricAsn: fabricAsn, peLoopbackIPAddress: default, bmpConfigurationState: default, prefixLimits: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
+        /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
+        /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
+        /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
+        /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDeviceIds, IEnumerable<ResourceIdentifier> sourceInterfaceIds, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState)
+        {
+            return NetworkPacketBrokerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, networkFabricId: networkFabricId, networkDeviceIds: networkDeviceIds, sourceInterfaceIds: sourceInterfaceIds, networkTapIds: networkTapIds, neighborGroupIds: neighborGroupIds, lastOperationDetails: default, provisioningState: provisioningState, configurationState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkRackType"> Network Rack SKU name. </param>
+        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
+        /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkRackData NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState)
+        {
+            return NetworkRackData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, networkRackType: networkRackType, networkFabricId: networkFabricId, networkDevices: networkDevices, lastOperationDetails: default, provisioningState: provisioningState, configurationState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="statements"> Route Policy statements. </param>
+        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
+        /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? defaultAction, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricRoutePolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, defaultAction: defaultAction, statements: statements, networkFabricId: networkFabricId, addressFamilyType: addressFamilyType, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary>
+        /// This constructor is added for the backward compatibility.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="configurationType"></param>
+        /// <param name="aclsUri"></param>
+        /// <param name="matchConfigurations"></param>
+        /// <param name="dynamicMatchConfigurations"></param>
+        /// <param name="lastSyncedOn"></param>
+        /// <param name="configurationState"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="administrativeState"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricAccessControlListData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, configurationType: configurationType, aclsUri: aclsUri, defaultAction: default, matchConfigurations: matchConfigurations, dynamicMatchConfigurations: dynamicMatchConfigurations, lastSyncedOn: lastSyncedOn, aclType: default, deviceRole: default, globalAccessControlListActionsEnableCount: default, lastOperationDetails: default, networkFabricIds: default, controlPlaneAclConfiguration: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary>
+        /// This constructor is added for the backward compatibility
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="statements"></param>
+        /// <param name="networkFabricId"></param>
+        /// <param name="addressFamilyType"></param>
+        /// <param name="configurationState"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="administrativeState"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricRoutePolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, defaultAction: default, statements: statements, networkFabricId: networkFabricId, addressFamilyType: addressFamilyType, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
         }
     }
 }

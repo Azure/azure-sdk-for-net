@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default;
-            NetworkFabricAclType? aclType = default;
-            NetworkFabricDeviceRole? deviceRole = default;
+            AclType? aclType = default;
+            DeviceRole? deviceRole = default;
             GlobalAccessControlListActionPatchProperties globalAccessControlListActions = default;
             string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            aclType = new NetworkFabricAclType(property0.Value.GetString());
+                            aclType = new AclType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deviceRole"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            deviceRole = new NetworkFabricDeviceRole(property0.Value.GetString());
+                            deviceRole = new DeviceRole(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("globalAccessControlListActions"u8))
