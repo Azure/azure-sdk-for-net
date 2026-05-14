@@ -110,6 +110,29 @@ public partial class ProjectOpenAIClient : OpenAIClient
             defaultConversationId);
     }
 
+    public virtual ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, ProjectOpenAIClientOptions options = null)
+    {
+        Argument.AssertNotNull(agentName, nameof(agentName));
+        options ??= new();
+        options.AgentName = agentName;
+        options.TokenProvider = _options.TokenProvider;
+        string[] responsesPath = _options.Endpoint.LocalPath.Split('/');
+        string project = "_default";
+        if (responsesPath.Length == 6)
+        {
+            project = responsesPath[3];
+        }
+        Uri projectEndpoint = new($"{_options.Endpoint.Scheme}://{_options.Endpoint.Host}/api/projects/{project}");
+        options = GetMergedOptions(projectEndpoint, options);
+        ClientPipeline endpointPipeline = CreatePipeline(CreateAuthenticationPolicy(options.TokenProvider, options), options);
+        return new ProjectResponsesClient(
+            pipeline: endpointPipeline,
+            options: options,
+            defaultAgent: null,
+            defaultConversationId: defaultConversationId
+        );
+    }
+
     public virtual ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null)
     {
         Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));

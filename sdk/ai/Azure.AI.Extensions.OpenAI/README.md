@@ -557,12 +557,7 @@ property as we need to access customized endpoint, for the Agent, we have create
 We set its name in `ProjectOpenAIClientOptions`.
 
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```

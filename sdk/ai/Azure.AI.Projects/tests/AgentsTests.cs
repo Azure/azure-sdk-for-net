@@ -1453,7 +1453,9 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task TestHostedAgentEndpoint()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestHostedAgentEndpoint(bool useNewClient)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
@@ -1492,8 +1494,16 @@ public class AgentsTests : AgentsTestBase
             apiVersion: "v1"
         );
         responsesOptions.AgentName = agentVersion.Name;
-        ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
-        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient;
+        if (useNewClient)
+        {
+            ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
+            responseClient = openAIClient.GetProjectResponsesClient();
+        }
+        else
+        {
+            responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        }
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Assert.That(response.GetOutputText(), Is.Not.Empty);
     }
