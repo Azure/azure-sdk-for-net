@@ -174,14 +174,7 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(type!.FrameworkType.Namespace, Is.EqualTo(typeof(ManagedServiceIdentity).Namespace));
         }
 
-        // TODO: Enable and expand regular generated model coverage after the MTG
-        // ModelProvider constructor virtual-dispatch issue is fixed in the generator dependency.
-        // The Provisioning-TypeSpec regen script is currently blocked by the same upstream issue,
-        // independent of the nullable repro property added in this PR:
-        // https://github.com/microsoft/typespec/issues/10626
-
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void RegularModelTypeIsNotWrappedInBicepValue()
         {
             var input = CreateRegularModel();
@@ -221,7 +214,6 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void ArrayOfRegularModelTypeIsConvertedToBicepListOfModel()
         {
             var input = new InputArrayType("list", "list", CreateRegularModel());
@@ -237,7 +229,6 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void DictionaryOfRegularModelTypeIsConvertedToBicepDictionaryOfModel()
         {
             var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel());
@@ -253,7 +244,6 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        [Ignore("Blocked by MTG ModelProvider constructor virtual-dispatch issue; enable after the generator dependency contains the fix: https://github.com/microsoft/typespec/issues/10626")]
         public void ArrayOfDictionaryOfRegularModelTypePreservesNestedProvisioningType()
         {
             var input = new InputArrayType(
