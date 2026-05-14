@@ -199,7 +199,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 isUpgradeSupported,
                 isDatabaseSoftwareImageSupported,
                 shapeFamily?.ToString(),
-                context), data => new OracleDBVersionResource(Client, data));
+                context,
+                "OracleDBVersionCollection.GetAll"), data => new OracleDBVersionResource(Client, data));
         }
 
         /// <summary>
@@ -243,7 +244,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 isUpgradeSupported,
                 isDatabaseSoftwareImageSupported,
                 shapeFamily?.ToString(),
-                context), data => new OracleDBVersionResource(Client, data));
+                context,
+                "OracleDBVersionCollection.GetAll"), data => new OracleDBVersionResource(Client, data));
         }
 
         /// <summary>

@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ScriptCmdletResource(Client, data));
+                context,
+                "ScriptCmdletCollection.GetAll"), data => new ScriptCmdletResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ScriptCmdletResource(Client, data));
+                context,
+                "ScriptCmdletCollection.GetAll"), data => new ScriptCmdletResource(Client, data));
         }
 
         /// <summary>

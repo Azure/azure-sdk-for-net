@@ -70,7 +70,6 @@ public partial class ReachabilityAnalysisRunProperties : ProvisionableConstruct
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
         get { Initialize(); return _provisioningState!; }
-        set { Initialize(); _provisioningState!.Assign(value); }
     }
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
@@ -93,6 +92,6 @@ public partial class ReachabilityAnalysisRunProperties : ProvisionableConstruct
         _intentContent = DefineModelProperty<AnalysisRunIntentContent>("IntentContent", ["intentContent"], isOutput: true);
         _analysisResult = DefineProperty<string>("AnalysisResult", ["analysisResult"], isOutput: true);
         _errorMessage = DefineProperty<string>("ErrorMessage", ["errorMessage"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
     }
 }

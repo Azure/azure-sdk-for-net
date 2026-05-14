@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceBusQueueAuthorizationRuleResource(Client, data));
+                context,
+                "ServiceBusQueueAuthorizationRuleCollection.GetAll"), data => new ServiceBusQueueAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.ServiceBus
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ServiceBusQueueAuthorizationRuleResource(Client, data));
+                context,
+                "ServiceBusQueueAuthorizationRuleCollection.GetAll"), data => new ServiceBusQueueAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

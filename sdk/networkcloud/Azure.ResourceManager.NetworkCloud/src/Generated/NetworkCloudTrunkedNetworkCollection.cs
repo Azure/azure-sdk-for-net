@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudTrunkedNetworkResource(Client, data));
+                context,
+                "NetworkCloudTrunkedNetworkCollection.GetAll"), data => new NetworkCloudTrunkedNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudTrunkedNetworkResource(Client, data));
+                context,
+                "NetworkCloudTrunkedNetworkCollection.GetAll"), data => new NetworkCloudTrunkedNetworkResource(Client, data));
         }
 
         /// <summary>

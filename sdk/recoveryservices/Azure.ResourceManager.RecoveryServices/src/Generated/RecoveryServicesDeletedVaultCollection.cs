@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new DeletedVaultsGetBySubscriptionIdAsyncCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context), data => new RecoveryServicesDeletedVaultResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new DeletedVaultsGetBySubscriptionIdAsyncCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context, "RecoveryServicesDeletedVaultCollection.GetAll"), data => new RecoveryServicesDeletedVaultResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new DeletedVaultsGetBySubscriptionIdCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context), data => new RecoveryServicesDeletedVaultResource(Client, data));
+            return new PageableWrapper<RecoveryServicesDeletedVaultData, RecoveryServicesDeletedVaultResource>(new DeletedVaultsGetBySubscriptionIdCollectionResultOfT(_deletedVaultsRestClient, Id.SubscriptionId, _location, context, "RecoveryServicesDeletedVaultCollection.GetAll"), data => new RecoveryServicesDeletedVaultResource(Client, data));
         }
 
         /// <summary>

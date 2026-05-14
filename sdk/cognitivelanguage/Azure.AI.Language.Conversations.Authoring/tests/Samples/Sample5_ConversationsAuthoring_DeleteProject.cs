@@ -23,8 +23,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProject
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            Operation operation = client.DeleteProject(
+            Operation operation = projectClient.DeleteProject(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName
             );
@@ -46,8 +48,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            Operation operation = await client.DeleteProjectAsync(
+            Operation operation = await projectClient.DeleteProjectAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName
             );

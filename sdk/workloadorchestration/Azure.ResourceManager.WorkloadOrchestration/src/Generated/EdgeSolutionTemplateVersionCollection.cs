@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateAsyncCollectionResultOfT(_solutionTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSolutionTemplateVersionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateAsyncCollectionResultOfT(
+                _solutionTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSolutionTemplateVersionCollection.GetAll"), data => new EdgeSolutionTemplateVersionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateCollectionResultOfT(_solutionTemplateVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSolutionTemplateVersionResource(Client, data));
+            return new PageableWrapper<EdgeSolutionTemplateVersionData, EdgeSolutionTemplateVersionResource>(new SolutionTemplateVersionsGetBySolutionTemplateCollectionResultOfT(
+                _solutionTemplateVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeSolutionTemplateVersionCollection.GetAll"), data => new EdgeSolutionTemplateVersionResource(Client, data));
         }
 
         /// <summary>

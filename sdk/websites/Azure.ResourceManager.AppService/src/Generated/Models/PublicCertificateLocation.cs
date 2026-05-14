@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Public Certificate Location. </summary>
+    /// <summary>
+    /// Public Certificate Location
+    /// Serialized Name: PublicCertificateLocation
+    /// </summary>
     public enum PublicCertificateLocation
     {
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: PublicCertificateLocation.Unknown
+        /// </summary>
         Unknown,
-        /// <summary> CurrentUserMy. </summary>
+        /// <summary>
+        /// CurrentUserMy
+        /// Serialized Name: PublicCertificateLocation.CurrentUserMy
+        /// </summary>
         CurrentUserMy,
-        /// <summary> LocalMachineMy. </summary>
+        /// <summary>
+        /// LocalMachineMy
+        /// Serialized Name: PublicCertificateLocation.LocalMachineMy
+        /// </summary>
         LocalMachineMy
     }
 }

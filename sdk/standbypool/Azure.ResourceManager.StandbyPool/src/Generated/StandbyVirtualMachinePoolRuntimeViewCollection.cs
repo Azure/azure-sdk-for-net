@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(_standbyVirtualMachinePoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
+            return new AsyncPageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(
+                _standbyVirtualMachinePoolRuntimeViewsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyVirtualMachinePoolRuntimeViewCollection.GetAll"), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(_standbyVirtualMachinePoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
+            return new PageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(
+                _standbyVirtualMachinePoolRuntimeViewsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyVirtualMachinePoolRuntimeViewCollection.GetAll"), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new CollectorPolicyResource(Client, data));
+            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(
+                _collectorPoliciesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CollectorPolicyCollection.GetAll"), data => new CollectorPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new CollectorPolicyResource(Client, data));
+            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(
+                _collectorPoliciesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CollectorPolicyCollection.GetAll"), data => new CollectorPolicyResource(Client, data));
         }
 
         /// <summary>

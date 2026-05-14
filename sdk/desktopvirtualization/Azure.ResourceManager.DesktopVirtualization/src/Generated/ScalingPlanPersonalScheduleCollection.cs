@@ -298,7 +298,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanPersonalScheduleResource(Client, data));
+                context,
+                "ScalingPlanPersonalScheduleCollection.GetAll"), data => new ScalingPlanPersonalScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanPersonalScheduleResource(Client, data));
+                context,
+                "ScalingPlanPersonalScheduleCollection.GetAll"), data => new ScalingPlanPersonalScheduleResource(Client, data));
         }
 
         /// <summary>

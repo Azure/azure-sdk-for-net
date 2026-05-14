@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
-    /// A Class representing a DnsResolverPolicyVirtualNetworkLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDnsResolverPolicyVirtualNetworkLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsResolverPolicyResource"/> using the GetDnsResolverPolicyVirtualNetworkLink method.
+    /// A class representing a DnsResolverPolicyVirtualNetworkLink along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsResolverPolicyResource"/> using the GetDnsResolverPolicyVirtualNetworkLinks method.
     /// </summary>
     public partial class DnsResolverPolicyVirtualNetworkLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="dnsResolverPolicyName"> The dnsResolverPolicyName. </param>
-        /// <param name="dnsResolverPolicyVirtualNetworkLinkName"> The dnsResolverPolicyVirtualNetworkLinkName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dnsResolverPolicyName, string dnsResolverPolicyVirtualNetworkLinkName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics;
-        private readonly DnsResolverPolicyVirtualNetworkLinksRestOperations _dnsResolverPolicyVirtualNetworkLinkRestClient;
+        private readonly ClientDiagnostics _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics;
+        private readonly DnsResolverPolicyVirtualNetworkLinks _dnsResolverPolicyVirtualNetworkLinksRestClient;
         private readonly DnsResolverPolicyVirtualNetworkLinkData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks";
 
-        /// <summary> Initializes a new instance of the <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DnsResolverPolicyVirtualNetworkLinkResource for mocking. </summary>
         protected DnsResolverPolicyVirtualNetworkLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsResolverPolicyVirtualNetworkLinkResource(ArmClient client, DnsResolverPolicyVirtualNetworkLinkData data) : this(client, data.Id)
@@ -56,71 +46,93 @@ namespace Azure.ResourceManager.DnsResolver
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DnsResolverPolicyVirtualNetworkLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dnsResolverPolicyVirtualNetworkLinkApiVersion);
-            _dnsResolverPolicyVirtualNetworkLinkRestClient = new DnsResolverPolicyVirtualNetworkLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
+            _dnsResolverPolicyVirtualNetworkLinksRestClient = new DnsResolverPolicyVirtualNetworkLinks(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DnsResolverPolicyVirtualNetworkLinkData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="dnsResolverPolicyName"> The dnsResolverPolicyName. </param>
+        /// <param name="dnsResolverPolicyVirtualNetworkLinkName"> The dnsResolverPolicyVirtualNetworkLinkName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dnsResolverPolicyName, string dnsResolverPolicyVirtualNetworkLinkName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets properties of a DNS resolver policy virtual network link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicyVirtualNetworkLinks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DnsResolverPolicyVirtualNetworkLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Get");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _dnsResolverPolicyVirtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +146,41 @@ namespace Azure.ResourceManager.DnsResolver
         /// Gets properties of a DNS resolver policy virtual network link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicyVirtualNetworkLinks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DnsResolverPolicyVirtualNetworkLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Get");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _dnsResolverPolicyVirtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,109 +191,23 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary>
-        /// Deletes a DNS resolver policy virtual network link. WARNING: This operation cannot be undone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _dnsResolverPolicyVirtualNetworkLinkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation(_dnsResolverPolicyVirtualNetworkLinkClientDiagnostics, Pipeline, _dnsResolverPolicyVirtualNetworkLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a DNS resolver policy virtual network link. WARNING: This operation cannot be undone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _dnsResolverPolicyVirtualNetworkLinkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation(_dnsResolverPolicyVirtualNetworkLinkClientDiagnostics, Pipeline, _dnsResolverPolicyVirtualNetworkLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Updates a DNS resolver policy virtual network link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicyVirtualNetworkLinks_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,18 +216,31 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>> UpdateAsync(WaitUntil waitUntil, DnsResolverPolicyVirtualNetworkLinkPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>> UpdateAsync(WaitUntil waitUntil, DnsResolverPolicyVirtualNetworkLinkPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Update");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Update");
             scope.Start();
             try
             {
-                var response = await _dnsResolverPolicyVirtualNetworkLinkRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client), _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics, Pipeline, _dnsResolverPolicyVirtualNetworkLinkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverPolicyVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
+                    new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client),
+                    _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -307,20 +254,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// Updates a DNS resolver policy virtual network link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicyVirtualNetworkLinks_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,18 +276,31 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> Update(WaitUntil waitUntil, DnsResolverPolicyVirtualNetworkLinkPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> Update(WaitUntil waitUntil, DnsResolverPolicyVirtualNetworkLinkPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Update");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Update");
             scope.Start();
             try
             {
-                var response = _dnsResolverPolicyVirtualNetworkLinkRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client), _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics, Pipeline, _dnsResolverPolicyVirtualNetworkLinkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverPolicyVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
+                    new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client),
+                    _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -351,26 +311,106 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Deletes a DNS resolver policy virtual network link. WARNING: This operation cannot be undone.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicyVirtualNetworkLinks_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a DNS resolver policy virtual network link. WARNING: This operation cannot be undone.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicyVirtualNetworkLinks_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -380,28 +420,34 @@ namespace Azure.ResourceManager.DnsResolver
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.AddTag");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dnsResolverPolicyVirtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
+                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
-                    foreach (var tag in current.Tags)
+                    DnsResolverPolicyVirtualNetworkLinkData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DnsResolverPolicyVirtualNetworkLinkPatch patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -412,27 +458,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -442,28 +468,34 @@ namespace Azure.ResourceManager.DnsResolver
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.AddTag");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dnsResolverPolicyVirtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
+                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
-                    foreach (var tag in current.Tags)
+                    DnsResolverPolicyVirtualNetworkLinkData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DnsResolverPolicyVirtualNetworkLinkPatch patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -474,53 +506,39 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DnsResolverPolicyVirtualNetworkLinkResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.SetTags");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dnsResolverPolicyVirtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
+                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
+                    DnsResolverPolicyVirtualNetworkLinkData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DnsResolverPolicyVirtualNetworkLinkPatch patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -531,53 +549,39 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DnsResolverPolicyVirtualNetworkLinkResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.SetTags");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dnsResolverPolicyVirtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
+                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
+                    DnsResolverPolicyVirtualNetworkLinkData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DnsResolverPolicyVirtualNetworkLinkPatch patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -588,27 +592,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -616,28 +600,34 @@ namespace Azure.ResourceManager.DnsResolver
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.RemoveTag");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dnsResolverPolicyVirtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
+                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
-                    foreach (var tag in current.Tags)
+                    DnsResolverPolicyVirtualNetworkLinkData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DnsResolverPolicyVirtualNetworkLinkPatch patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -648,27 +638,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyVirtualNetworkLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -676,28 +646,34 @@ namespace Azure.ResourceManager.DnsResolver
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dnsResolverPolicyVirtualNetworkLinkClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.RemoveTag");
+            using DiagnosticScope scope = _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics.CreateScope("DnsResolverPolicyVirtualNetworkLinkResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dnsResolverPolicyVirtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
+                    return Response.FromValue(new DnsResolverPolicyVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
-                    foreach (var tag in current.Tags)
+                    DnsResolverPolicyVirtualNetworkLinkData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DnsResolverPolicyVirtualNetworkLinkPatch patch = new DnsResolverPolicyVirtualNetworkLinkPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

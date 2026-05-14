@@ -21,9 +21,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To retrieve deployment details, call `GetDeployment` on the `ConversationAuthoringDeployment` client. This allows you to access metadata such as the model ID, timestamps, and assigned resource configuration.
 
 ```C# Snippet:Sample15_ConversationsAuthoring_GetDeployment
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
-Response<ConversationAuthoringProjectDeployment> response = client.GetDeployment(projectName, deploymentName);
+Response<ConversationAuthoringProjectDeployment> response = deploymentClient.GetDeployment(projectName, deploymentName);
 
 ConversationAuthoringProjectDeployment deployment = response.Value;
 
@@ -50,9 +52,11 @@ if (deployment.AssignedResources != null)
 To retrieve deployment details asynchronously, call `GetDeploymentAsync` on the `ConversationAuthoringDeployment` client. This allows you to view metadata such as model ID, timestamps, and assigned resource configuration.
 
 ```C# Snippet:Sample15_ConversationsAuthoring_GetDeploymentAsync
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
-Response<ConversationAuthoringProjectDeployment> response = await client.GetDeploymentAsync(projectName, deploymentName);
+Response<ConversationAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync(projectName, deploymentName);
 
 ConversationAuthoringProjectDeployment deployment = response.Value;
 

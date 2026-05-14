@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterAsyncCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterLoadBalancerResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterAsyncCollectionResultOfT(
+                _loadBalancersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterLoadBalancerCollection.GetAll"), data => new ManagedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterCollectionResultOfT(_loadBalancersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterLoadBalancerResource(Client, data));
+            return new PageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterCollectionResultOfT(
+                _loadBalancersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterLoadBalancerCollection.GetAll"), data => new ManagedClusterLoadBalancerResource(Client, data));
         }
 
         /// <summary>

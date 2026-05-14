@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionsGetAllAsyncCollectionResultOfT(_scriptExecutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScriptExecutionResource(Client, data));
+            return new AsyncPageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionsGetAllAsyncCollectionResultOfT(
+                _scriptExecutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScriptExecutionCollection.GetAll"), data => new ScriptExecutionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionsGetAllCollectionResultOfT(_scriptExecutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScriptExecutionResource(Client, data));
+            return new PageableWrapper<ScriptExecutionData, ScriptExecutionResource>(new ScriptExecutionsGetAllCollectionResultOfT(
+                _scriptExecutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScriptExecutionCollection.GetAll"), data => new ScriptExecutionResource(Client, data));
         }
 
         /// <summary>

@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT(_registeredPrefixesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PeeringRegisteredPrefixResource(Client, data));
+            return new AsyncPageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT(
+                _registeredPrefixesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PeeringRegisteredPrefixCollection.GetAll"), data => new PeeringRegisteredPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringCollectionResultOfT(_registeredPrefixesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PeeringRegisteredPrefixResource(Client, data));
+            return new PageableWrapper<PeeringRegisteredPrefixData, PeeringRegisteredPrefixResource>(new RegisteredPrefixesGetByPeeringCollectionResultOfT(
+                _registeredPrefixesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PeeringRegisteredPrefixCollection.GetAll"), data => new PeeringRegisteredPrefixResource(Client, data));
         }
 
         /// <summary>

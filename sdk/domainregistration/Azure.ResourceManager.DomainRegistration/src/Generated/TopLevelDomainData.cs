@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             get
             {
-                return Properties.IsDomainPrivacySupported;
+                return Properties is null ? default : Properties.IsDomainPrivacySupported;
             }
         }
     }

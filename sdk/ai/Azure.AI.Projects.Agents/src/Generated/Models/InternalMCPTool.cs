@@ -43,8 +43,9 @@ namespace OpenAI
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
         /// <param name="requireApproval"></param>
+        /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -54,6 +55,7 @@ namespace OpenAI
             Headers = headers;
             AllowedTools = allowedTools;
             RequireApproval = requireApproval;
+            DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
         }
 
@@ -172,6 +174,9 @@ namespace OpenAI
         /// </para>
         /// </summary>
         public BinaryData RequireApproval { get; set; }
+
+        /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
+        public bool? DeferLoading { get; set; }
 
         /// <summary> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </summary>
         public string ProjectConnectionId { get; set; }

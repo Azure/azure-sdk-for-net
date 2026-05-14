@@ -4,8 +4,8 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.ClientModel.TestFramework;
 using Azure.AI.Projects.Evaluation;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;

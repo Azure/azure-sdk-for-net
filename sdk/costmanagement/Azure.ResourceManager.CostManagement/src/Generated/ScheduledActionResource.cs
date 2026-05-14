@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A Class representing a ScheduledAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetScheduledActionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetScheduledAction method.
+    /// A class representing a ScheduledAction along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetScheduledActions method.
     /// </summary>
     public partial class ScheduledActionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ScheduledActionResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string name)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _scheduledActionClientDiagnostics;
-        private readonly ScheduledActionsRestOperations _scheduledActionRestClient;
+        private readonly ClientDiagnostics _scheduledActionOperationGroupClientDiagnostics;
+        private readonly ScheduledActionOperationGroup _scheduledActionOperationGroupRestClient;
         private readonly ScheduledActionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
 
-        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ScheduledActionResource for mocking. </summary>
         protected ScheduledActionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScheduledActionResource(ArmClient client, ScheduledActionData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.CostManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScheduledActionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scheduledActionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string scheduledActionApiVersion);
-            _scheduledActionRestClient = new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _scheduledActionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
+            _scheduledActionOperationGroupRestClient = new ScheduledActionOperationGroup(_scheduledActionOperationGroupClientDiagnostics, Pipeline, Endpoint, scheduledActionApiVersion ?? "2025-03-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ScheduledActionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string name)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the shared scheduled action from the given scope by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScheduledActionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Get");
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Get");
             scope.Start();
             try
             {
-                var response = await _scheduledActionRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.CostManagement
         /// Get the shared scheduled action from the given scope by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScheduledActionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Get");
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Get");
             scope.Start();
             try
             {
-                var response = _scheduledActionRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.CostManagement
         /// Delete a scheduled action within the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_DeleteByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_DeleteByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,16 +210,23 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _scheduledActionRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _scheduledActionRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CostManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CostManagementArmOperation operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.CostManagement
         /// Delete a scheduled action within the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_DeleteByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_DeleteByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,114 +261,23 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
             scope.Start();
             try
             {
-                var response = _scheduledActionRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var uri = _scheduledActionRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CostManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CostManagementArmOperation operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update a shared scheduled action within the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CreateOrUpdateByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ScheduledActionResource>> UpdateAsync(WaitUntil waitUntil, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _scheduledActionRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _scheduledActionRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update a shared scheduled action within the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CreateOrUpdateByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ScheduledActionResource> Update(WaitUntil waitUntil, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _scheduledActionRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, ifMatch, cancellationToken);
-                var uri = _scheduledActionRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -356,31 +291,36 @@ namespace Azure.ResourceManager.CostManagement
         /// Runs a shared scheduled action within the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_RunByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_RunByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RunByScopeAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.RunByScope");
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.RunByScope");
             scope.Start();
             try
             {
-                var response = await _scheduledActionRestClient.RunByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateRunByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -394,32 +334,151 @@ namespace Azure.ResourceManager.CostManagement
         /// Runs a shared scheduled action within the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_RunByScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_RunByScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RunByScope(CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.RunByScope");
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.RunByScope");
             scope.Start();
             try
             {
-                var response = _scheduledActionRestClient.RunByScope(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateRunByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a ScheduledAction.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_CreateOrUpdateByScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Scheduled action to be created or updated. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ScheduledActionResource>> UpdateAsync(WaitUntil waitUntil, ScheduledActionData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CostManagementArmOperation<ScheduledActionResource> operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a ScheduledAction.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionOperationGroup_CreateOrUpdateByScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Scheduled action to be created or updated. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ScheduledActionResource> Update(WaitUntil waitUntil, ScheduledActionData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CostManagementArmOperation<ScheduledActionResource> operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

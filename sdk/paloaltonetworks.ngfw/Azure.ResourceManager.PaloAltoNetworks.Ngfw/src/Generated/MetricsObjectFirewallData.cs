@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new MetricsObject();
                 }
-                Properties.PanETag = value.Value;
+                Properties.PanETag = value;
             }
         }
 

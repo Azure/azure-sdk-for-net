@@ -20,18 +20,21 @@ namespace Azure.ResourceManager.ContainerService
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TrustedAccessRolesOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT(TrustedAccessRolesOperationGroup client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT(TrustedAccessRolesOperationGroup client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TrustedAccessRolesOperationGroupGetTrustedAccessRolesCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetTrustedAccessRolesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetTrustedAccessRolesRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

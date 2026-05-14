@@ -220,7 +220,13 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementContent.ToRequestContent(content), context);
+            return new TopLevelDomainsGetAgreementsAsyncCollectionResultOfT(
+                _topLevelDomainsRestClient,
+                Id.SubscriptionId,
+                Id.Name,
+                TopLevelDomainAgreementContent.ToRequestContent(content),
+                context,
+                "TopLevelDomainResource.GetAgreements");
         }
 
         /// <summary>
@@ -256,7 +262,13 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementContent.ToRequestContent(content), context);
+            return new TopLevelDomainsGetAgreementsCollectionResultOfT(
+                _topLevelDomainsRestClient,
+                Id.SubscriptionId,
+                Id.Name,
+                TopLevelDomainAgreementContent.ToRequestContent(content),
+                context,
+                "TopLevelDomainResource.GetAgreements");
         }
     }
 }

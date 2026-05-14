@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct SubscriptionNotificationOperation : IEquatable<SubscriptionNotificationOperation>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SubscriptionNotificationOperation"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SubscriptionNotificationOperation(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotDefinedValue = "NotDefined";
         private const string DeleteAllResourcesValue = "DeleteAllResources";
         private const string SoftDeleteAllResourcesValue = "SoftDeleteAllResources";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string BillingCancellationValue = "BillingCancellation";
         private const string UndoSoftDeleteValue = "UndoSoftDelete";
 
-        /// <summary> NotDefined. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionNotificationOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SubscriptionNotificationOperation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotDefined. </summary>
         public static SubscriptionNotificationOperation NotDefined { get; } = new SubscriptionNotificationOperation(NotDefinedValue);
-        /// <summary> DeleteAllResources. </summary>
+
+        /// <summary> Gets the DeleteAllResources. </summary>
         public static SubscriptionNotificationOperation DeleteAllResources { get; } = new SubscriptionNotificationOperation(DeleteAllResourcesValue);
-        /// <summary> SoftDeleteAllResources. </summary>
+
+        /// <summary> Gets the SoftDeleteAllResources. </summary>
         public static SubscriptionNotificationOperation SoftDeleteAllResources { get; } = new SubscriptionNotificationOperation(SoftDeleteAllResourcesValue);
-        /// <summary> NoOp. </summary>
+
+        /// <summary> Gets the NoOp. </summary>
         public static SubscriptionNotificationOperation NoOp { get; } = new SubscriptionNotificationOperation(NoOpValue);
-        /// <summary> BillingCancellation. </summary>
+
+        /// <summary> Gets the BillingCancellation. </summary>
         public static SubscriptionNotificationOperation BillingCancellation { get; } = new SubscriptionNotificationOperation(BillingCancellationValue);
-        /// <summary> UndoSoftDelete. </summary>
+
+        /// <summary> Gets the UndoSoftDelete. </summary>
         public static SubscriptionNotificationOperation UndoSoftDelete { get; } = new SubscriptionNotificationOperation(UndoSoftDeleteValue);
+
         /// <summary> Determines if two <see cref="SubscriptionNotificationOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionNotificationOperation left, SubscriptionNotificationOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionNotificationOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionNotificationOperation left, SubscriptionNotificationOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionNotificationOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionNotificationOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionNotificationOperation(string value) => new SubscriptionNotificationOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionNotificationOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionNotificationOperation?(string value) => value == null ? null : new SubscriptionNotificationOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionNotificationOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionNotificationOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

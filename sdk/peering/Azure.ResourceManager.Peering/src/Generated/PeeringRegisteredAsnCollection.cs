@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringAsyncCollectionResultOfT(_registeredAsnsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PeeringRegisteredAsnResource(Client, data));
+            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringAsyncCollectionResultOfT(
+                _registeredAsnsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PeeringRegisteredAsnCollection.GetAll"), data => new PeeringRegisteredAsnResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringCollectionResultOfT(_registeredAsnsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PeeringRegisteredAsnResource(Client, data));
+            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringCollectionResultOfT(
+                _registeredAsnsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PeeringRegisteredAsnCollection.GetAll"), data => new PeeringRegisteredAsnResource(Client, data));
         }
 
         /// <summary>

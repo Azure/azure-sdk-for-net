@@ -181,7 +181,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new ServersGetByClusterAsyncCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlClusterServerResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new ServersGetByClusterAsyncCollectionResultOfT(
+                _serversRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlClusterServerCollection.GetAll"), data => new CosmosDBForPostgreSqlClusterServerResource(Client, data));
         }
 
         /// <summary>
@@ -209,7 +215,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new ServersGetByClusterCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlClusterServerResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlClusterServerData, CosmosDBForPostgreSqlClusterServerResource>(new ServersGetByClusterCollectionResultOfT(
+                _serversRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlClusterServerCollection.GetAll"), data => new CosmosDBForPostgreSqlClusterServerResource(Client, data));
         }
 
         /// <summary>

@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImpactInsightData, ImpactInsightResource>(new InsightsGetBySubscriptionAsyncCollectionResultOfT(_insightsRestClient, Id.SubscriptionId, Id.Name, context), data => new ImpactInsightResource(Client, data));
+            return new AsyncPageableWrapper<ImpactInsightData, ImpactInsightResource>(new InsightsGetBySubscriptionAsyncCollectionResultOfT(_insightsRestClient, Id.SubscriptionId, Id.Name, context, "ImpactInsightCollection.GetAll"), data => new ImpactInsightResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImpactInsightData, ImpactInsightResource>(new InsightsGetBySubscriptionCollectionResultOfT(_insightsRestClient, Id.SubscriptionId, Id.Name, context), data => new ImpactInsightResource(Client, data));
+            return new PageableWrapper<ImpactInsightData, ImpactInsightResource>(new InsightsGetBySubscriptionCollectionResultOfT(_insightsRestClient, Id.SubscriptionId, Id.Name, context, "ImpactInsightCollection.GetAll"), data => new ImpactInsightResource(Client, data));
         }
 
         /// <summary>

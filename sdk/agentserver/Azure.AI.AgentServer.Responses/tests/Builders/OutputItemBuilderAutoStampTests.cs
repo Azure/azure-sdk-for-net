@@ -39,8 +39,8 @@ public class OutputItemBuilderAutoStampTests
         builder.EmitAdded();
         var text = builder.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Hello");
-        builder.EmitContentDone(text);
+        text.EmitTextDone("Hello");
+        text.EmitDone();
 
         var doneEvt = builder.EmitDone();
 

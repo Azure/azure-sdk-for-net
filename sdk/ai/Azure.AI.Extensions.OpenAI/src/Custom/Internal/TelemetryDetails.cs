@@ -62,10 +62,10 @@ internal class TelemetryDetails
             ? versionAttribute.InformationalVersion
             : versionAttribute.InformationalVersion.Substring(0, hashSeparatorPosition);
 
-    // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
-    // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
-    // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
-    // This was added to support operating systems with non-ascii characters in their release names.
+        // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
+        // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
+        // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
+        // This was added to support operating systems with non-ascii characters in their release names.
 #if NET8_0_OR_GREATER
         string osDescription = Ascii.IsValid(Runtime.OSDescription) ? Runtime.OSDescription : WebUtility.UrlEncode(Runtime.OSDescription);
 #else

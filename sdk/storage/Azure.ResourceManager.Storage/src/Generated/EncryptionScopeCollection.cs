@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new EncryptionScopeResource(Client, data));
+                context,
+                "EncryptionScopeCollection.GetAll"), data => new EncryptionScopeResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +339,8 @@ namespace Azure.ResourceManager.Storage
                 maxpagesize,
                 filter,
                 include?.ToString(),
-                context), data => new EncryptionScopeResource(Client, data));
+                context,
+                "EncryptionScopeCollection.GetAll"), data => new EncryptionScopeResource(Client, data));
         }
 
         /// <summary>

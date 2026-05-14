@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionAsyncCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context), data => new NewRelicMonitorResource(Client, data));
+            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionAsyncCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context), data => new NewRelicMonitorResource(Client, data));
+            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetNewRelicAccountsAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, userEmail, location, context);
+            return new AccountsGetNewRelicAccountsAsyncCollectionResultOfT(
+                AccountsRestClient,
+                Id.SubscriptionId,
+                userEmail,
+                location,
+                context,
+                "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts");
         }
 
         /// <summary>
@@ -185,7 +191,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetNewRelicAccountsCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, userEmail, location, context);
+            return new AccountsGetNewRelicAccountsCollectionResultOfT(
+                AccountsRestClient,
+                Id.SubscriptionId,
+                userEmail,
+                location,
+                context,
+                "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts");
         }
 
         /// <summary>
@@ -219,7 +231,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OrganizationsGetNewRelicOrganizationsAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, userEmail, location, context);
+            return new OrganizationsGetNewRelicOrganizationsAsyncCollectionResultOfT(
+                OrganizationsRestClient,
+                Id.SubscriptionId,
+                userEmail,
+                location,
+                context,
+                "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations");
         }
 
         /// <summary>
@@ -253,7 +271,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OrganizationsGetNewRelicOrganizationsCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, userEmail, location, context);
+            return new OrganizationsGetNewRelicOrganizationsCollectionResultOfT(
+                OrganizationsRestClient,
+                Id.SubscriptionId,
+                userEmail,
+                location,
+                context,
+                "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations");
         }
 
         /// <summary>
@@ -283,7 +307,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PlansGetNewRelicPlansAsyncCollectionResultOfT(PlansRestClient, Id.SubscriptionId, accountId, organizationId, context);
+            return new PlansGetNewRelicPlansAsyncCollectionResultOfT(
+                PlansRestClient,
+                Id.SubscriptionId,
+                accountId,
+                organizationId,
+                context,
+                "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicPlans");
         }
 
         /// <summary>
@@ -313,7 +343,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PlansGetNewRelicPlansCollectionResultOfT(PlansRestClient, Id.SubscriptionId, accountId, organizationId, context);
+            return new PlansGetNewRelicPlansCollectionResultOfT(
+                PlansRestClient,
+                Id.SubscriptionId,
+                accountId,
+                organizationId,
+                context,
+                "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicPlans");
         }
 
         /// <summary>

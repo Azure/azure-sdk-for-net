@@ -303,7 +303,8 @@ namespace Azure.ResourceManager.Resources.Policy
                 filter,
                 expand,
                 top,
-                context), data => new PolicySetDefinitionResource(Client, data));
+                context,
+                "PolicySetDefinitionCollection.GetAll"), data => new PolicySetDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.Resources.Policy
                 filter,
                 expand,
                 top,
-                context), data => new PolicySetDefinitionResource(Client, data));
+                context,
+                "PolicySetDefinitionCollection.GetAll"), data => new PolicySetDefinitionResource(Client, data));
         }
 
         /// <summary>

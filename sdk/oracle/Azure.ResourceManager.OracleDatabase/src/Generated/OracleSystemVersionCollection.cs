@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationAsyncCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleSystemVersionResource(Client, data));
+            return new AsyncPageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationAsyncCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleSystemVersionCollection.GetAll"), data => new OracleSystemVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new OracleSystemVersionResource(Client, data));
+            return new PageableWrapper<OracleSystemVersionData, OracleSystemVersionResource>(new SystemVersionsGetByLocationCollectionResultOfT(_systemVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OracleSystemVersionCollection.GetAll"), data => new OracleSystemVersionResource(Client, data));
         }
 
         /// <summary>

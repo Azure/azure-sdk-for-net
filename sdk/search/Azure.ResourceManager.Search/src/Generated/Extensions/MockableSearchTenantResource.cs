@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Search.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OfferingsGetOfferingsAsyncCollectionResultOfT(OfferingsRestClient, context);
+            return new OfferingsGetOfferingsAsyncCollectionResultOfT(OfferingsRestClient, context, "MockableSearchTenantResource.GetOfferings");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Search.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OfferingsGetOfferingsCollectionResultOfT(OfferingsRestClient, context);
+            return new OfferingsGetOfferingsCollectionResultOfT(OfferingsRestClient, context, "MockableSearchTenantResource.GetOfferings");
         }
     }
 }

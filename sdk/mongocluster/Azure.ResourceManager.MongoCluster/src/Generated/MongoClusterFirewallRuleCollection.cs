@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterAsyncCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterFirewallRuleResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterAsyncCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterFirewallRuleCollection.GetAll"), data => new MongoClusterFirewallRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterCollectionResultOfT(_firewallRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterFirewallRuleResource(Client, data));
+            return new PageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterFirewallRuleCollection.GetAll"), data => new MongoClusterFirewallRuleResource(Client, data));
         }
 
         /// <summary>

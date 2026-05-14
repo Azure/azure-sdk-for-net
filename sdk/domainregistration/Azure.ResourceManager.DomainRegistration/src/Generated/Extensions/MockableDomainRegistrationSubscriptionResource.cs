@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetAllAsyncCollectionResultOfT(DomainsRestClient, Id.SubscriptionId, context), data => new AppServiceDomainResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetAllAsyncCollectionResultOfT(DomainsRestClient, Id.SubscriptionId, context, "MockableDomainRegistrationSubscriptionResource.GetAppServiceDomains"), data => new AppServiceDomainResource(Client, data));
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetAllCollectionResultOfT(DomainsRestClient, Id.SubscriptionId, context), data => new AppServiceDomainResource(Client, data));
+            return new PageableWrapper<AppServiceDomainData, AppServiceDomainResource>(new DomainsGetAllCollectionResultOfT(DomainsRestClient, Id.SubscriptionId, context, "MockableDomainRegistrationSubscriptionResource.GetAppServiceDomains"), data => new AppServiceDomainResource(Client, data));
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DomainsOperationGroupGetRecommendationsAsyncCollectionResultOfT(DomainsOperationGroupRestClient, Id.SubscriptionId, DomainRecommendationSearchContent.ToRequestContent(content), context);
+            return new DomainsOperationGroupGetRecommendationsAsyncCollectionResultOfT(DomainsOperationGroupRestClient, Id.SubscriptionId, DomainRecommendationSearchContent.ToRequestContent(content), context, "MockableDomainRegistrationSubscriptionResource.GetRecommendations");
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DomainsOperationGroupGetRecommendationsCollectionResultOfT(DomainsOperationGroupRestClient, Id.SubscriptionId, DomainRecommendationSearchContent.ToRequestContent(content), context);
+            return new DomainsOperationGroupGetRecommendationsCollectionResultOfT(DomainsOperationGroupRestClient, Id.SubscriptionId, DomainRecommendationSearchContent.ToRequestContent(content), context, "MockableDomainRegistrationSubscriptionResource.GetRecommendations");
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 6 — Cancel Consistency.
-/// Verifies FR-014 (SetCancelled applied exactly once) and
-/// FR-015 (persisted state matches returned state on cancel).
+/// Verifies B11/S-024 (SetCancelled applied exactly once) and
+/// B23 (persisted state matches returned state on cancel).
 /// </summary>
 public class CancelConsistencyTests : IDisposable
 {

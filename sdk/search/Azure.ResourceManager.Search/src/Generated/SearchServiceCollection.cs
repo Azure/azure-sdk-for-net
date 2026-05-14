@@ -312,7 +312,13 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, default, context), data => new SearchServiceResource(Client, data));
+            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(
+                _servicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                default,
+                context,
+                "SearchServiceCollection.GetAll"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +347,13 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, default, context), data => new SearchServiceResource(Client, data));
+            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(
+                _servicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                default,
+                context,
+                "SearchServiceCollection.GetAll"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>

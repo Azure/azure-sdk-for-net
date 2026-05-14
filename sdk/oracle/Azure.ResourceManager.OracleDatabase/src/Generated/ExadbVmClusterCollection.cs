@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupAsyncCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
+            return new AsyncPageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupAsyncCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExadbVmClusterCollection.GetAll"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ExadbVmClusterResource(Client, data));
+            return new PageableWrapper<ExadbVmClusterData, ExadbVmClusterResource>(new ExadbVmClustersGetByResourceGroupCollectionResultOfT(_exadbVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExadbVmClusterCollection.GetAll"), data => new ExadbVmClusterResource(Client, data));
         }
 
         /// <summary>

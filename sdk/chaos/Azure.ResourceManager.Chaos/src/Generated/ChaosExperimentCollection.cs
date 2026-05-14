@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.Chaos
                 Id.ResourceGroupName,
                 running,
                 continuationToken,
-                context), data => new ChaosExperimentResource(Client, data));
+                context,
+                "ChaosExperimentCollection.GetAll"), data => new ChaosExperimentResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +339,8 @@ namespace Azure.ResourceManager.Chaos
                 Id.ResourceGroupName,
                 running,
                 continuationToken,
-                context), data => new ChaosExperimentResource(Client, data));
+                context,
+                "ChaosExperimentCollection.GetAll"), data => new ChaosExperimentResource(Client, data));
         }
 
         /// <summary>

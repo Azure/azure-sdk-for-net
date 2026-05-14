@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupAsyncCollectionResultOfT(_ledgerRestClient, Id.SubscriptionId, Id.ResourceGroupName, filter, context), data => new ConfidentialLedgerResource(Client, data));
+            return new AsyncPageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupAsyncCollectionResultOfT(
+                _ledgerRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "ConfidentialLedgerCollection.GetAll"), data => new ConfidentialLedgerResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupCollectionResultOfT(_ledgerRestClient, Id.SubscriptionId, Id.ResourceGroupName, filter, context), data => new ConfidentialLedgerResource(Client, data));
+            return new PageableWrapper<ConfidentialLedgerData, ConfidentialLedgerResource>(new LedgerGetByResourceGroupCollectionResultOfT(
+                _ledgerRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "ConfidentialLedgerCollection.GetAll"), data => new ConfidentialLedgerResource(Client, data));
         }
 
         /// <summary>

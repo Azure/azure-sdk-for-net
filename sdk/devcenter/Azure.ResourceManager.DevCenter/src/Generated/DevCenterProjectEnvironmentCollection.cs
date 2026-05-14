@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterProjectEnvironmentResource(Client, data));
+                context,
+                "DevCenterProjectEnvironmentCollection.GetAll"), data => new DevCenterProjectEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DevCenterProjectEnvironmentResource(Client, data));
+                context,
+                "DevCenterProjectEnvironmentCollection.GetAll"), data => new DevCenterProjectEnvironmentResource(Client, data));
         }
 
         /// <summary>

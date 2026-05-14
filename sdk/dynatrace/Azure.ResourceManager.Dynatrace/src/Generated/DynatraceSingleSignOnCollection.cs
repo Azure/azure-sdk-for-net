@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllAsyncCollectionResultOfT(_singleSignOnRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DynatraceSingleSignOnResource(Client, data));
+            return new AsyncPageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllAsyncCollectionResultOfT(
+                _singleSignOnRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceSingleSignOnCollection.GetAll"), data => new DynatraceSingleSignOnResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllCollectionResultOfT(_singleSignOnRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DynatraceSingleSignOnResource(Client, data));
+            return new PageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllCollectionResultOfT(
+                _singleSignOnRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DynatraceSingleSignOnCollection.GetAll"), data => new DynatraceSingleSignOnResource(Client, data));
         }
 
         /// <summary>

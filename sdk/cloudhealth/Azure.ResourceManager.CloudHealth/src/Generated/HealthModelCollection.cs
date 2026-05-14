@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetByResourceGroupAsyncCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HealthModelResource(Client, data));
+            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetByResourceGroupAsyncCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HealthModelCollection.GetAll"), data => new HealthModelResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetByResourceGroupCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HealthModelResource(Client, data));
+            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetByResourceGroupCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HealthModelCollection.GetAll"), data => new HealthModelResource(Client, data));
         }
 
         /// <summary>

@@ -61,14 +61,12 @@ public static class FoundryEnvironment
 
     /// <summary>
     /// Indicates whether the process is running in a Foundry hosted environment.
-    /// Returns <c>true</c> when <see cref="ProjectEndpoint"/>,
-    /// <see cref="AgentName"/>, and <see cref="AgentVersion"/> are all set
-    /// <b>and</b> the .NET hosting environment is not <c>Development</c>.
+    /// Returns <c>true</c> when the <c>FOUNDRY_HOSTING_ENVIRONMENT</c> environment variable
+    /// is set to a non-empty value.
     /// </summary>
     /// <remarks>
-    /// The hosting environment is determined from the <c>ASPNETCORE_ENVIRONMENT</c>
-    /// or <c>DOTNET_ENVIRONMENT</c> environment variable (checked in that order).
-    /// When neither is set the environment is assumed to be non-development (i.e. hosted).
+    /// This variable is injected by the Azure AI Foundry hosting infrastructure as a
+    /// non-empty value when the container is running in a Foundry context.
     /// </remarks>
     public static bool IsHosted { get; private set; }
 
@@ -112,16 +110,8 @@ public static class FoundryEnvironment
                 ? TimeSpan.FromSeconds(seconds)
                 : Timeout.InfiniteTimeSpan;
 
-        // IsHosted: true when all three Foundry platform env vars (ProjectEndpoint,
-        // AgentName, AgentVersion) are configured AND the .NET hosting environment
-        // is not "Development". This mirrors the logic used by
-        // Microsoft.Extensions.Hosting.HostEnvironmentEnvExtensions.IsDevelopment().
-        var hostingEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-            ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
-        var isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);
-        var hasFoundryVars = !string.IsNullOrWhiteSpace(ProjectEndpoint)
-            && !string.IsNullOrWhiteSpace(AgentName)
-            && !string.IsNullOrWhiteSpace(AgentVersion);
-        IsHosted = hasFoundryVars && !isDevelopment;
+        // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists
+        // and is non-empty. This variable is injected by the Azure AI Foundry hosting infrastructure.
+        IsHosted = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
     }
 }

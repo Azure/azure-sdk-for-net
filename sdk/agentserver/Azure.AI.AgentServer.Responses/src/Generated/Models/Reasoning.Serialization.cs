@@ -130,9 +130,9 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ReasoningEffort1? effort = default;
-            ReasoningSummary? summary = default;
-            ReasoningGenerateSummary? generateSummary = default;
+            CreateResponseReasoningEffort? effort = default;
+            CreateResponseReasoningSummary? summary = default;
+            CreateResponseReasoningGenerateSummary? generateSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         effort = null;
                         continue;
                     }
-                    effort = prop.Value.GetString().ToReasoningEffort1();
+                    effort = prop.Value.GetString().ToCreateResponseReasoningEffort();
                     continue;
                 }
                 if (prop.NameEquals("summary"u8))
@@ -153,7 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         summary = null;
                         continue;
                     }
-                    summary = prop.Value.GetString().ToReasoningSummary();
+                    summary = prop.Value.GetString().ToCreateResponseReasoningSummary();
                     continue;
                 }
                 if (prop.NameEquals("generate_summary"u8))
@@ -163,7 +163,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         generateSummary = null;
                         continue;
                     }
-                    generateSummary = prop.Value.GetString().ToReasoningGenerateSummary();
+                    generateSummary = prop.Value.GetString().ToCreateResponseReasoningGenerateSummary();
                     continue;
                 }
                 if (options.Format != "W")

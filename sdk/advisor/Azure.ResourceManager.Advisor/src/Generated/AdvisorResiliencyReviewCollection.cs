@@ -187,7 +187,8 @@ namespace Azure.ResourceManager.Advisor
                 top,
                 skip,
                 filter,
-                context), data => new AdvisorResiliencyReviewResource(Client, data));
+                context,
+                "AdvisorResiliencyReviewCollection.GetAll"), data => new AdvisorResiliencyReviewResource(Client, data));
         }
 
         /// <summary>
@@ -224,7 +225,8 @@ namespace Azure.ResourceManager.Advisor
                 top,
                 skip,
                 filter,
-                context), data => new AdvisorResiliencyReviewResource(Client, data));
+                context,
+                "AdvisorResiliencyReviewCollection.GetAll"), data => new AdvisorResiliencyReviewResource(Client, data));
         }
 
         /// <summary>

@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DisconnectedOperationsArtifactResource(Client, data));
+                context,
+                "DisconnectedOperationsArtifactCollection.GetAll"), data => new DisconnectedOperationsArtifactResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DisconnectedOperationsArtifactResource(Client, data));
+                context,
+                "DisconnectedOperationsArtifactCollection.GetAll"), data => new DisconnectedOperationsArtifactResource(Client, data));
         }
 
         /// <summary>

@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PlacementPolicyResource(Client, data));
+                context,
+                "PlacementPolicyCollection.GetAll"), data => new PlacementPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PlacementPolicyResource(Client, data));
+                context,
+                "PlacementPolicyCollection.GetAll"), data => new PlacementPolicyResource(Client, data));
         }
 
         /// <summary>

@@ -1,0 +1,13 @@
+id: basic-trigger
+name: basic-trigger
+description: Should trigger on release plan preparation requests
+inputs:
+  prompt: "I need to prepare a release plan for the new Azure SDK package version"
+expected:
+  skill_activated: true
+graders:
+  - type: text
+    name: mentions-release
+    config:
+      contains:
+        - "release"

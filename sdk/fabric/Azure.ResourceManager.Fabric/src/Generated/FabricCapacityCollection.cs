@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FabricCapacityResource(Client, data));
+            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FabricCapacityResource(Client, data));
+            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(DataProtectionBackupPolicyResource.ResourceType, out string dataProtectionBackupPolicyApiVersion);
             _baseBackupPolicyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupPolicyResource.ResourceType.Namespace, Diagnostics);
-            _baseBackupPolicyResourcesRestClient = new BaseBackupPolicyResources(_baseBackupPolicyResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupPolicyApiVersion ?? "2025-09-01");
+            _baseBackupPolicyResourcesRestClient = new BaseBackupPolicyResources(_baseBackupPolicyResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupPolicyApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllAsyncCollectionResultOfT(_baseBackupPolicyResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllAsyncCollectionResultOfT(
+                _baseBackupPolicyResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupPolicyCollection.GetAll"), data => new DataProtectionBackupPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +309,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllCollectionResultOfT(_baseBackupPolicyResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupPolicyResource(Client, data));
+            return new PageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllCollectionResultOfT(
+                _baseBackupPolicyResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataProtectionBackupPolicyCollection.GetAll"), data => new DataProtectionBackupPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +343,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +400,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,7 +457,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +518,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

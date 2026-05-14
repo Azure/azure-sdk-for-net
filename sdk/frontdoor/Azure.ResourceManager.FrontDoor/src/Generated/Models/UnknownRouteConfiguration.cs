@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Unknown version of RouteConfiguration. </summary>
     internal partial class UnknownRouteConfiguration : RouteConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRouteConfiguration"/>. </summary>
         /// <param name="odataType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRouteConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
-        {
-            OdataType = odataType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRouteConfiguration"/> for deserialization. </summary>
-        internal UnknownRouteConfiguration()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRouteConfiguration(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

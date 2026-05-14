@@ -3,12 +3,11 @@
 Azure Relationships are a resource type used to create links or connections between resources. These relationships enable the grouping and management of resources across different scopes, such as subscriptions and resource groups.
 
 - Relationship = a semantic association between a source and target.
-
 - Resources = physical or logical Azure assets, above or below ARM.
 
 Microsoft.Relationships enables building a knowledge graph that powers:
 
- - Service health triage
+- Service health triage
 - Change management
 - Security and compliance reporting
 - Outage root cause analysis
@@ -44,7 +43,7 @@ To create an authenticated client and start interacting with Microsoft Azure res
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## Documentation
 

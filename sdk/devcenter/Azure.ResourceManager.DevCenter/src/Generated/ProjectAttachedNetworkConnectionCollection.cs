@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new ProjectAttachedNetworkConnectionResource(Client, data));
+                context,
+                "ProjectAttachedNetworkConnectionCollection.GetAll"), data => new ProjectAttachedNetworkConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new ProjectAttachedNetworkConnectionResource(Client, data));
+                context,
+                "ProjectAttachedNetworkConnectionCollection.GetAll"), data => new ProjectAttachedNetworkConnectionResource(Client, data));
         }
 
         /// <summary>

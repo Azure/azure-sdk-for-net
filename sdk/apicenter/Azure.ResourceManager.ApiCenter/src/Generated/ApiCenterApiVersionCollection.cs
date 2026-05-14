@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterApiVersionResource(Client, data));
+                context,
+                "ApiCenterApiVersionCollection.GetAll"), data => new ApiCenterApiVersionResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.ApiCenter
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ApiCenterApiVersionResource(Client, data));
+                context,
+                "ApiCenterApiVersionCollection.GetAll"), data => new ApiCenterApiVersionResource(Client, data));
         }
 
         /// <summary>

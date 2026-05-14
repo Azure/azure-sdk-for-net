@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDeploymentInstanceResource(Client, data));
+                context,
+                "EdgeDeploymentInstanceCollection.GetAll"), data => new EdgeDeploymentInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDeploymentInstanceResource(Client, data));
+                context,
+                "EdgeDeploymentInstanceCollection.GetAll"), data => new EdgeDeploymentInstanceResource(Client, data));
         }
 
         /// <summary>

@@ -13,11 +13,6 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Code-based evaluator definition using python code. </summary>
     public partial class CodeBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<CodeBasedEvaluatorDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/> for deserialization. </summary>
-        internal CodeBasedEvaluatorDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluatorDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -77,8 +72,26 @@ namespace Azure.AI.Projects.Evaluation
                 throw new FormatException($"The model {nameof(CodeBasedEvaluatorDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("code_text"u8);
-            writer.WriteStringValue(CodeText);
+            if (Optional.IsDefined(CodeText))
+            {
+                writer.WritePropertyName("code_text"u8);
+                writer.WriteStringValue(CodeText);
+            }
+            if (Optional.IsDefined(EntryPoint))
+            {
+                writer.WritePropertyName("entry_point"u8);
+                writer.WriteStringValue(EntryPoint);
+            }
+            if (Optional.IsDefined(ImageTag))
+            {
+                writer.WritePropertyName("image_tag"u8);
+                writer.WriteStringValue(ImageTag);
+            }
+            if (Optional.IsDefined(BlobUri))
+            {
+                writer.WritePropertyName("blob_uri"u8);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -112,6 +125,9 @@ namespace Azure.AI.Projects.Evaluation
             IDictionary<string, EvaluatorMetric> metrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string codeText = default;
+            string entryPoint = default;
+            string imageTag = default;
+            Uri blobUri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -156,6 +172,25 @@ namespace Azure.AI.Projects.Evaluation
                     codeText = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("entry_point"u8))
+                {
+                    entryPoint = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("image_tag"u8))
+                {
+                    imageTag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("blob_uri"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -167,7 +202,10 @@ namespace Azure.AI.Projects.Evaluation
                 dataSchema,
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
-                codeText);
+                codeText,
+                entryPoint,
+                imageTag,
+                blobUri);
         }
     }
 }

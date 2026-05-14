@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterImageData, ProjectImageResource>(new ImageOperationGroupGetByProjectAsyncCollectionResultOfT(_imageOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ProjectImageResource(Client, data));
+            return new AsyncPageableWrapper<DevCenterImageData, ProjectImageResource>(new ImageOperationGroupGetByProjectAsyncCollectionResultOfT(
+                _imageOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ProjectImageCollection.GetAll"), data => new ProjectImageResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterImageData, ProjectImageResource>(new ImageOperationGroupGetByProjectCollectionResultOfT(_imageOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ProjectImageResource(Client, data));
+            return new PageableWrapper<DevCenterImageData, ProjectImageResource>(new ImageOperationGroupGetByProjectCollectionResultOfT(
+                _imageOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ProjectImageCollection.GetAll"), data => new ProjectImageResource(Client, data));
         }
 
         /// <summary>

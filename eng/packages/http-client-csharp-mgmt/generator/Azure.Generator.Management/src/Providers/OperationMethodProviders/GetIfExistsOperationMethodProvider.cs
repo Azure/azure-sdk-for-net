@@ -33,6 +33,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         // Use collection's resource if _returnBodyResourceClient is null (handles cases where data type doesn't match exactly)
         private ResourceClientProvider EffectiveResourceClient => _returnBodyResourceClient ?? collection.Resource;
 
+        protected override bool ShouldApplyLroHandling => false;
+
         protected override CSharpType BuildReturnType()
         {
             return new CSharpType(typeof(NullableResponse<>), EffectiveResourceClient.Type).WrapAsync(_isAsync);

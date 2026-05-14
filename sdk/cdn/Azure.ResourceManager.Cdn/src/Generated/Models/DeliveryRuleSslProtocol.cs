@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,34 +15,50 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct DeliveryRuleSslProtocol : IEquatable<DeliveryRuleSslProtocol>
     {
         private readonly string _value;
+        private const string TLSv1Value = "TLSv1";
+        private const string TLSv11Value = "TLSv1.1";
+        private const string TLSv12Value = "TLSv1.2";
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeliveryRuleSslProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Tls1_0Value = "TLSv1";
-        private const string Tls1_1Value = "TLSv1.1";
-        private const string Tls1_2Value = "TLSv1.2";
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeliveryRuleSslProtocol left, DeliveryRuleSslProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeliveryRuleSslProtocol left, DeliveryRuleSslProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeliveryRuleSslProtocol(string value) => new DeliveryRuleSslProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeliveryRuleSslProtocol?(string value) => value == null ? null : new DeliveryRuleSslProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeliveryRuleSslProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeliveryRuleSslProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

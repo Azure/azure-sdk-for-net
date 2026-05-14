@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.AppNetwork
         private readonly string _appLinkName;
         private readonly string _appLinkMemberName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of UpgradeHistoriesGetAppLinkUpgradeHistoriesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UpgradeHistories client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="appLinkName"> The name of the AppLink. </param>
         /// <param name="appLinkMemberName"> The name of the AppLinkMember. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UpgradeHistoriesGetAppLinkUpgradeHistoriesCollectionResultOfT(UpgradeHistories client, Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public UpgradeHistoriesGetAppLinkUpgradeHistoriesCollectionResultOfT(UpgradeHistories client, Guid subscriptionId, string resourceGroupName, string appLinkName, string appLinkMemberName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.AppNetwork
             _appLinkName = appLinkName;
             _appLinkMemberName = appLinkMemberName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of UpgradeHistoriesGetAppLinkUpgradeHistoriesCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.AppNetwork
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAppLinkUpgradeHistoriesRequest(nextLink, _subscriptionId, _resourceGroupName, _appLinkName, _appLinkMemberName, _context) : _client.CreateGetAppLinkUpgradeHistoriesRequest(_subscriptionId, _resourceGroupName, _appLinkName, _appLinkMemberName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppLinkMemberResource.GetAppLinkUpgradeHistories");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

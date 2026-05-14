@@ -338,6 +338,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions> AddQuestionAnsweringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class QuestionAnsweringClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings> configureSettings) { throw null; }
+    }
     public partial class QuestionAnsweringClientOptions : Azure.Core.ClientOptions
     {
         public QuestionAnsweringClientOptions(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions.ServiceVersion.V2025_05_15_Preview) { }

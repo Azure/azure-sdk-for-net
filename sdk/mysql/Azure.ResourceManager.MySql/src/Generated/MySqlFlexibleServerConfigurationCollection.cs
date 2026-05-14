@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -306,7 +306,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 keyword,
                 page,
                 pageSize,
-                context), data => new MySqlFlexibleServerConfigurationResource(Client, data));
+                context,
+                "MySqlFlexibleServerConfigurationCollection.GetAll"), data => new MySqlFlexibleServerConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -347,7 +348,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 keyword,
                 page,
                 pageSize,
-                context), data => new MySqlFlexibleServerConfigurationResource(Client, data));
+                context,
+                "MySqlFlexibleServerConfigurationCollection.GetAll"), data => new MySqlFlexibleServerConfigurationResource(Client, data));
         }
 
         /// <summary>

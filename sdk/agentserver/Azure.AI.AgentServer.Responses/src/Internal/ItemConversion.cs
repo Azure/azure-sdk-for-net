@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -47,33 +48,56 @@ internal static class ItemConversion
 
             // --- Function tool calls ---
             ItemFunctionToolCall funcCall => new OutputItemFunctionToolCall(
-                funcCall.CallId, funcCall.Name, funcCall.Arguments)
-            { Id = id, Status = OutputItemFunctionToolCallStatus.Completed },
+                OutputItemType.FunctionCall,
+                createdBy: null,
+                agentReference: null,
+                responseId: null,
+                additionalBinaryDataProperties: null,
+                id: id,
+                callId: funcCall.CallId,
+                @namespace: null,
+                name: funcCall.Name,
+                arguments: funcCall.Arguments,
+                status: ItemFunctionToolCallStatus.Completed),
 
-            FunctionCallOutputItemParam funcOutput => new FunctionToolCallOutputResource(
-                funcOutput.CallId, funcOutput.Output)
-            { Id = id, Status = FunctionToolCallOutputResourceStatus.Completed },
+            FunctionCallOutputItemParam funcOutput => new OutputItemFunctionToolCallOutput(
+                OutputItemType.FunctionCallOutput,
+                createdBy: null,
+                agentReference: null,
+                responseId: null,
+                additionalBinaryDataProperties: null,
+                id: id,
+                callId: funcOutput.CallId,
+                output: funcOutput.Output,
+                status: OutputItemFunctionToolCallOutputStatus.Completed),
 
             // --- Custom tool calls ---
             ItemCustomToolCall customCall => new OutputItemCustomToolCall(
-                customCall.CallId, customCall.Name, customCall.Input)
+                customCall.CallId, customCall.Name, customCall.Input, FunctionCallStatus.Completed)
             { Id = id },
 
             ItemCustomToolCallOutput customOutput => new OutputItemCustomToolCallOutput(
-                customOutput.CallId, customOutput.Output)
+                customOutput.CallId, customOutput.Output, FunctionCallOutputStatusEnum.Completed)
             { Id = id },
 
             // --- Computer tool calls ---
             ItemComputerToolCall computerCall => new OutputItemComputerToolCall(
                 id,
                 computerCall.CallId,
-                computerCall.Action,
                 computerCall.PendingSafetyChecks ?? [],
-                OutputItemComputerToolCallStatus.Completed),
+                ItemComputerToolCallStatus.Completed),
 
-            ComputerCallOutputItemParam computerOutput => new OutputItemComputerToolCallOutputResource(
-                computerOutput.CallId, computerOutput.Output)
-            { Id = id, Status = OutputItemComputerToolCallOutputResourceStatus.Completed },
+            ComputerCallOutputItemParam computerOutput => new OutputItemComputerToolCallOutput(
+                OutputItemType.ComputerCallOutput,
+                createdBy: null,
+                agentReference: null,
+                responseId: null,
+                additionalBinaryDataProperties: null,
+                id: id,
+                callId: computerOutput.CallId,
+                acknowledgedSafetyChecks: null,
+                output: computerOutput.Output,
+                status: OutputItemComputerToolCallOutputStatus.Completed),
 
             // --- File search ---
             ItemFileSearchToolCall fileSearch => ConvertFileSearchToolCall(fileSearch, id),
@@ -81,19 +105,19 @@ internal static class ItemConversion
             // --- Web search ---
             ItemWebSearchToolCall webSearch => new OutputItemWebSearchToolCall(
                 id,
-                OutputItemWebSearchToolCallStatus.Completed,
+                ItemWebSearchToolCallStatus.Completed,
                 webSearch.Action),
 
             // --- Image generation ---
             ItemImageGenToolCall imageGen => new OutputItemImageGenToolCall(
                 id,
-                OutputItemImageGenToolCallStatus.Completed,
+                ItemImageGenToolCallStatus.Completed,
                 imageGen.Result),
 
             // --- Code interpreter ---
             ItemCodeInterpreterToolCall codeInterpreter => new OutputItemCodeInterpreterToolCall(
                 id,
-                OutputItemCodeInterpreterToolCallStatus.Completed,
+                ItemCodeInterpreterToolCallStatus.Completed,
                 codeInterpreter.ContainerId,
                 codeInterpreter.Code,
                 codeInterpreter.Outputs ?? []),
@@ -103,11 +127,11 @@ internal static class ItemConversion
                 id,
                 localShell.CallId,
                 localShell.Action,
-                OutputItemLocalShellToolCallStatus.Completed),
+                ItemLocalShellToolCallStatus.Completed),
 
             ItemLocalShellToolCallOutput localShellOutput => new OutputItemLocalShellToolCallOutput(
                 id, localShellOutput.Output)
-            { Status = OutputItemLocalShellToolCallOutputStatus.Completed },
+            { Status = ItemLocalShellToolCallOutputStatus.Completed },
 
             // --- Function shell ---
             FunctionShellCallItemParam shellCall => ConvertFunctionShellCall(shellCall, id),
@@ -151,7 +175,7 @@ internal static class ItemConversion
             ItemReasoningItem reasoning => new OutputItemReasoningItem(id, reasoning.Summary)
             {
                 EncryptedContent = reasoning.EncryptedContent,
-                Status = OutputItemReasoningItemStatus.Completed,
+                Status = ItemReasoningItemStatus.Completed,
             },
 
             // --- Compaction ---
@@ -184,6 +208,29 @@ internal static class ItemConversion
             {
                 yield return output;
             }
+        }
+    }
+
+    /// <summary>
+    /// Converts an <see cref="OutputItem"/> to its corresponding <see cref="Item"/> representation
+    /// using JSON round-trip serialization. Both hierarchies share the same <c>"type"</c>
+    /// discriminator values, so serializing an <see cref="OutputItem"/> and deserializing as
+    /// <see cref="Item"/> produces the correct concrete subtype (e.g., <see cref="OutputItemMessage"/>
+    /// → <see cref="ItemMessage"/>). Returns <c>null</c> if the output item has a type that does not
+    /// map to any <see cref="Item"/> subtype.
+    /// </summary>
+    /// <param name="outputItem">The output item to convert.</param>
+    /// <returns>The corresponding input item, or <c>null</c> if conversion is not possible.</returns>
+    internal static Item? ToItem(OutputItem outputItem)
+    {
+        try
+        {
+            var json = ModelReaderWriter.Write(outputItem, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+            return ModelReaderWriter.Read<Item>(json, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        }
+        catch
+        {
+            return null;
         }
     }
 
@@ -221,7 +268,7 @@ internal static class ItemConversion
     {
         var result = new OutputItemFileSearchToolCall(
             id,
-            OutputItemFileSearchToolCallStatus.Completed,
+            ItemFileSearchToolCallStatus.Completed,
             fileSearch.Queries ?? []);
         if (fileSearch.Results is { Count: > 0 })
         {
@@ -300,13 +347,13 @@ internal static class ItemConversion
         };
     }
 
-    private static MessageStatus ConvertStatus(OutputItemOutputMessageStatus status)
+    private static MessageStatus ConvertStatus(ItemOutputMessageStatus status)
     {
         return status switch
         {
-            OutputItemOutputMessageStatus.InProgress => MessageStatus.InProgress,
-            OutputItemOutputMessageStatus.Completed => MessageStatus.Completed,
-            OutputItemOutputMessageStatus.Incomplete => MessageStatus.Incomplete,
+            ItemOutputMessageStatus.InProgress => MessageStatus.InProgress,
+            ItemOutputMessageStatus.Completed => MessageStatus.Completed,
+            ItemOutputMessageStatus.Incomplete => MessageStatus.Incomplete,
             _ => MessageStatus.InProgress,
         };
     }

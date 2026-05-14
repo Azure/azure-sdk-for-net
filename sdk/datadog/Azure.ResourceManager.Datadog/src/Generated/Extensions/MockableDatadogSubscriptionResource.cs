@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorResourcesGetAllAsyncCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context), data => new DatadogMonitorResource(Client, data));
+            return new AsyncPageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorResourcesGetAllAsyncCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetDatadogMonitors"), data => new DatadogMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorResourcesGetAllCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context), data => new DatadogMonitorResource(Client, data));
+            return new PageableWrapper<DatadogMonitorData, DatadogMonitorResource>(new DatadogMonitorResourcesGetAllCollectionResultOfT(DatadogMonitorResourcesRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetDatadogMonitors"), data => new DatadogMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceAgreementsGetMarketplaceAgreementsAsyncCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context);
+            return new MarketplaceAgreementsGetMarketplaceAgreementsAsyncCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceAgreementsGetMarketplaceAgreementsCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context);
+            return new MarketplaceAgreementsGetMarketplaceAgreementsCollectionResultOfT(MarketplaceAgreementsRestClient, Id.SubscriptionId, context, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements");
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CreationSupportedGetSubscriptionStatusesAsyncCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context);
+            return new CreationSupportedGetSubscriptionStatusesAsyncCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses");
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CreationSupportedGetSubscriptionStatusesCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context);
+            return new CreationSupportedGetSubscriptionStatusesCollectionResultOfT(CreationSupportedRestClient, Id.SubscriptionId, datadogOrganizationId, context, "MockableDatadogSubscriptionResource.GetSubscriptionStatuses");
         }
 
         /// <summary>

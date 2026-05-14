@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// Protocol tests for bad handler detection (FR-006 through FR-011).
+/// Protocol tests for bad handler detection (S-031 through S-033, S-015/B32).
 /// Verifies that the SDK correctly surfaces errors to clients when the
 /// handler violates the event stream contract.
 /// </summary>
@@ -122,7 +122,7 @@ public class BadHandlerTests : ProtocolTestBase
 
         var events = await ParseSseAsync(response);
         XAssert.Contains(events, e => e.EventType == "response.created");
-        // SDK should auto-fail (FR-009)
+        // SDK should auto-fail (S-015/B32)
         XAssert.Contains(events, e => e.EventType == "response.failed");
     }
 

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                serviceName is null && resourceId is null && port is null && provisioningState is null ? default : new ServiceConfigurationProperties(serviceName.Value, resourceId, port, provisioningState, null));
+                serviceName is null && resourceId is null && port is null && provisioningState is null ? default : new ServiceConfigurationProperties(serviceName.GetValueOrDefault(), resourceId, port, provisioningState, null));
         }
 
         /// <summary> ConnectorId and SolutionTypes and their properties to Generate AWS CFT Template. </summary>

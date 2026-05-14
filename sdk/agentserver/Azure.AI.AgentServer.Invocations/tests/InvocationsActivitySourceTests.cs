@@ -133,7 +133,7 @@ public class InvocationsActivitySourceTests
         Assert.That(activity.GetTagItem("gen_ai.provider.name"), Is.EqualTo("AzureAI Hosted Agents"));
         Assert.That(activity.GetTagItem("gen_ai.operation.name"), Is.EqualTo("invoke_agent"));
         Assert.That(activity.GetTagItem("gen_ai.response.id"), Is.EqualTo("inv-abc"));
-        Assert.That(activity.GetTagItem("gen_ai.conversation.id"), Is.EqualTo("sess-def"));
+        Assert.That(activity.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-def"));
         Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo("my-agent:2.0.0"));
         Assert.That(activity.GetTagItem("gen_ai.agent.name"), Is.EqualTo("my-agent"));
         Assert.That(activity.GetTagItem("gen_ai.agent.version"), Is.EqualTo("2.0.0"));
@@ -205,7 +205,7 @@ public class InvocationsActivitySourceTests
     }
 
     [Test]
-    public void StartInvocationActivity_ConversationId_SetWhenSessionPresent()
+    public void StartInvocationActivity_SessionId_MapsToMicrosoftSessionId()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
         FoundryEnvironment.Reload();
@@ -227,8 +227,11 @@ public class InvocationsActivitySourceTests
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
         Assert.That(activity, Is.Not.Null);
-        Assert.That(activity!.GetTagItem("gen_ai.conversation.id"), Is.EqualTo("sess-42"));
+        Assert.That(activity!.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-42"));
         Assert.That(activity.GetTagItem("azure.ai.agentserver.invocations.session_id"), Is.EqualTo("sess-42"));
+
+        // Session ID must NOT go to gen_ai.conversation.id
+        Assert.That(activity.GetTagItem("gen_ai.conversation.id"), Is.Null);
     }
 
     [Test]

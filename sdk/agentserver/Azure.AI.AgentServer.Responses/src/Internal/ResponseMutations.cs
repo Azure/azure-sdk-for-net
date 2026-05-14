@@ -49,7 +49,7 @@ internal static class ResponseMutations
     /// </summary>
     internal static void SetFailed(
         this Models.ResponseObject response,
-        ResponseErrorCode code = ResponseErrorCode.ServerError,
+        ResponseErrorCode code,
         string message = ApiErrorFactory.GenericServerErrorMessage,
         ResponseUsage? usage = null)
     {
@@ -60,6 +60,18 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
+    }
+
+    /// <summary>
+    /// Transitions the response to <see cref="ResponseStatus.Failed"/> with
+    /// <see cref="ResponseErrorCode.ServerError"/>.
+    /// </summary>
+    internal static void SetFailed(
+        this Models.ResponseObject response,
+        string message = ApiErrorFactory.GenericServerErrorMessage,
+        ResponseUsage? usage = null)
+    {
+        response.SetFailed(ResponseErrorCode.ServerError, message, usage);
     }
 
     /// <summary>
@@ -187,7 +199,7 @@ internal static class ResponseMutations
     /// <summary>
     /// Stamps the resolved <c>AgentSessionId</c> on the response after a
     /// <see cref="ReplaceResponse"/> call. The session ID is resolved during
-    /// request processing (S-048): request payload → environment variable → generated UUID.
+    /// request processing (B39): request payload → environment variable → generated UUID.
     /// </summary>
     internal static void StampAgentSessionId(ResponseExecution execution, CreateResponse request)
     {
@@ -195,6 +207,25 @@ internal static class ResponseMutations
         {
             execution.Response!.AgentSessionId = request.AgentSessionId;
         }
+    }
+
+    /// <summary>
+    /// Re-stamps the request echo-through fields (<c>Background</c>,
+    /// <c>PreviousResponseId</c>, <c>Conversation</c>) on the response after
+    /// a <see cref="ReplaceResponse"/> call (S-040). The handler's
+    /// <c>ReplaceResponse</c> may construct the response object any way it
+    /// wants, so the SDK must guarantee these fields always reflect the
+    /// original request values.
+    /// </summary>
+    internal static void StampRequestEchoFields(ResponseExecution execution, CreateResponse request)
+    {
+        execution.Response!.Background = request.Background;
+        execution.Response!.PreviousResponseId = request.PreviousResponseId;
+
+        var conversationId = request.GetConversationId();
+        execution.Response!.Conversation = conversationId != null
+            ? new ConversationReference(conversationId)
+            : null;
     }
 
     /// <summary>

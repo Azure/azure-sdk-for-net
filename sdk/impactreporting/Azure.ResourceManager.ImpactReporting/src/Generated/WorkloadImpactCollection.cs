@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionAsyncCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context), data => new WorkloadImpactResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionAsyncCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context, "WorkloadImpactCollection.GetAll"), data => new WorkloadImpactResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context), data => new WorkloadImpactResource(Client, data));
+            return new PageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context, "WorkloadImpactCollection.GetAll"), data => new WorkloadImpactResource(Client, data));
         }
 
         /// <summary>

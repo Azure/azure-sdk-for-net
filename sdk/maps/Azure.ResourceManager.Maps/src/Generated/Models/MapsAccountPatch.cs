@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     Properties = new MapsAccountProperties();
                 }
-                Properties.DisableLocalAuth = value.Value;
+                Properties.DisableLocalAuth = value;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     Properties = new MapsAccountProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
 
         private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Endpoint, "2026-02-01-preview");
 
         /// <summary>
         /// Lists fleets in the specified subscription.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -65,7 +65,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), maxCount, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(
+                FleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                maxCount,
+                skipToken,
+                context,
+                "MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets"), data => new ContainerServiceFleetResource(Client, data));
         }
 
         /// <summary>
@@ -81,7 +87,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,7 +101,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), maxCount, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
+            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(
+                FleetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                maxCount,
+                skipToken,
+                context,
+                "MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets"), data => new ContainerServiceFleetResource(Client, data));
         }
     }
 }

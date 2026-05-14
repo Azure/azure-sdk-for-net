@@ -31,6 +31,13 @@ internal static partial class WebSearchPreviewToolValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: search_content_types
+        if (element.TryGetProperty("search_content_types", out var searchContentTypesProp))
+        {
+            if (searchContentTypesProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.search_content_types", $"Expected array, got {searchContentTypesProp.ValueKind}"));
+        }
+
         // Optional: search_context_size
         if (element.TryGetProperty("search_context_size", out var searchContextSizeProp))
         {

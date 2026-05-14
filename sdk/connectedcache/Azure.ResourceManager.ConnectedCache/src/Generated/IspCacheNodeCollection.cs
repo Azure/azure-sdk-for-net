@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceAsyncCollectionResultOfT(_ispCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IspCacheNodeResource(Client, data));
+            return new AsyncPageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceAsyncCollectionResultOfT(
+                _ispCacheNodesOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IspCacheNodeCollection.GetAll"), data => new IspCacheNodeResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceCollectionResultOfT(_ispCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IspCacheNodeResource(Client, data));
+            return new PageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceCollectionResultOfT(
+                _ispCacheNodesOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IspCacheNodeCollection.GetAll"), data => new IspCacheNodeResource(Client, data));
         }
 
         /// <summary>

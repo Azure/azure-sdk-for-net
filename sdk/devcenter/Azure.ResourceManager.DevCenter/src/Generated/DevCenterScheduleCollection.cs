@@ -303,7 +303,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new DevCenterScheduleResource(Client, data));
+                context,
+                "DevCenterScheduleCollection.GetAll"), data => new DevCenterScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +340,8 @@ namespace Azure.ResourceManager.DevCenter
                 Id.Parent.Name,
                 Id.Name,
                 top,
-                context), data => new DevCenterScheduleResource(Client, data));
+                context,
+                "DevCenterScheduleCollection.GetAll"), data => new DevCenterScheduleResource(Client, data));
         }
 
         /// <summary>

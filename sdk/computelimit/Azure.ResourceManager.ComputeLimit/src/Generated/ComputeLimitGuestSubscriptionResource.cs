@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string computeLimitGuestSubscriptionApiVersion);
             _guestSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _guestSubscriptionsRestClient = new GuestSubscriptions(_guestSubscriptionsClientDiagnostics, Pipeline, Endpoint, computeLimitGuestSubscriptionApiVersion ?? "2025-08-15");
+            _guestSubscriptionsRestClient = new GuestSubscriptions(_guestSubscriptionsClientDiagnostics, Pipeline, Endpoint, computeLimitGuestSubscriptionApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

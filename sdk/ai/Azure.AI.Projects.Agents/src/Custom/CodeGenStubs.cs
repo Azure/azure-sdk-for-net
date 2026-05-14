@@ -7,7 +7,8 @@ namespace Azure.AI.Projects.Agents;
 
 // Public type renames
 
-[CodeGenType("AgentRecord")] public partial class ProjectsAgentRecord
+[CodeGenType("AgentRecord")]
+public partial class ProjectsAgentRecord
 {
     [CodeGenMember("Object")]
     private string Object { get; } = "agent";
@@ -53,3 +54,7 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenType("TopLogProb")] internal partial class InternalTopLogProb { }
 [CodeGenType("VectorStoreFileAttributes")] internal partial class InternalVectorStoreFileAttributes { }
 [CodeGenType("WebSearchPreviewToolSearchContextSize")] internal readonly partial struct WebSearchPreviewToolSearchContextSize { }
+[CodeGenType("ComputerTool")] internal partial class InternalComputerTool { }
+[CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }
+[CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
+[CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }

@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworksGetGatewaysAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkGatewayResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworksGetGatewaysAsyncCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkGatewayCollection.GetAll"), data => new WorkloadNetworkGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworksGetGatewaysCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkGatewayResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworksGetGatewaysCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkGatewayCollection.GetAll"), data => new WorkloadNetworkGatewayResource(Client, data));
         }
 
         /// <summary>

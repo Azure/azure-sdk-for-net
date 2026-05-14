@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupAsyncCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DeviceProvisioningServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupAsyncCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DeviceProvisioningServiceCollection.GetAll"), data => new DeviceProvisioningServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DeviceProvisioningServiceResource(Client, data));
+            return new PageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DeviceProvisioningServiceCollection.GetAll"), data => new DeviceProvisioningServiceResource(Client, data));
         }
 
         /// <summary>

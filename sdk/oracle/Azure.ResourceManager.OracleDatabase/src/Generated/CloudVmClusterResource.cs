@@ -556,13 +556,14 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudVmClusterResourceGetPrivateIPAddressesAsyncCollectionResultOfT(
+            return new OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT(
                 _cloudVmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 PrivateIPAddressesContent.ToRequestContent(content),
-                context);
+                context,
+                "CloudVmClusterResource.GetPrivateIPAddresses");
         }
 
         /// <summary>
@@ -598,13 +599,14 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(
+            return new OracleDatabaseCloudVmClustersListPrivateIpAddressesCollectionResultOfT(
                 _cloudVmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 PrivateIPAddressesContent.ToRequestContent(content),
-                context);
+                context,
+                "CloudVmClusterResource.GetPrivateIPAddresses");
         }
 
         /// <summary>

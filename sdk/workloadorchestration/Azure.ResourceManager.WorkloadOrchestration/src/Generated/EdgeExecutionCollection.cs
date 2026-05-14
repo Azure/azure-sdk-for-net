@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeExecutionResource(Client, data));
+                context,
+                "EdgeExecutionCollection.GetAll"), data => new EdgeExecutionResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeExecutionResource(Client, data));
+                context,
+                "EdgeExecutionCollection.GetAll"), data => new EdgeExecutionResource(Client, data));
         }
 
         /// <summary>

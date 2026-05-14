@@ -32,16 +32,18 @@ internal static partial class ItemMcpListToolsValidator
         }
 
         // Optional: error
-        if (element.TryGetProperty("error", out var errorValProp) && errorValProp.ValueKind != JsonValueKind.Null)
+        if (element.TryGetProperty("error", out var errorValProp))
         {
-            if (errorValProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.error", $"Expected string, got {errorValProp.ValueKind}"));
+            var errorValResult = RealtimeMCPErrorValidator.Validate(errorValProp);
+            if (!errorValResult.IsValid)
+            {
+                foreach (var e in errorValResult.Errors)
+                    errors.Add(new ValidationError("$.error" + e.Path.Substring(1), e.Message));
+            }
         }
 
-        // Required: id
-        if (!element.TryGetProperty("id", out var idProp))
-            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
-        else
+        // Optional: id
+        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));

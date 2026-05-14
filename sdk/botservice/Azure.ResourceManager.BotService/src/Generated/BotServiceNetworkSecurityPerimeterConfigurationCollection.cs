@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotServiceNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new PageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotServiceNetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>

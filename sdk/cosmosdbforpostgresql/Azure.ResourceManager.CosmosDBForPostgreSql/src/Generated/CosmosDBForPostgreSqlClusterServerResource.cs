@@ -226,7 +226,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations");
         }
 
         /// <summary>
@@ -264,7 +265,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations");
         }
     }
 }

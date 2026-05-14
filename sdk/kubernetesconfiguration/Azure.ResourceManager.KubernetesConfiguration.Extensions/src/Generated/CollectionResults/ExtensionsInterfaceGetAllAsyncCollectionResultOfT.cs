@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         private readonly string _clusterResourceName;
         private readonly string _clusterName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExtensionsInterfaceGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ExtensionsInterface client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters, appliances. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ExtensionsInterfaceGetAllAsyncCollectionResultOfT(ExtensionsInterface client, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ExtensionsInterfaceGetAllAsyncCollectionResultOfT(ExtensionsInterface client, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
             _clusterResourceName = clusterResourceName;
             _clusterName = clusterName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ExtensionsInterfaceGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

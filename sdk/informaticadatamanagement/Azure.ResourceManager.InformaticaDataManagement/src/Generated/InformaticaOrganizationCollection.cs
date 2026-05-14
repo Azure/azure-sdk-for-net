@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new InformaticaOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new InformaticaOrganizationResource(Client, data));
+            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "InformaticaOrganizationCollection.GetAll"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>

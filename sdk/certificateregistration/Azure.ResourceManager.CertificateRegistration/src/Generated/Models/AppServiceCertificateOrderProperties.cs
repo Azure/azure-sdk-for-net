@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderProperties"/>. </summary>
-        /// <param name="productType"> Certificate product type. </param>
-        public AppServiceCertificateOrderProperties(CertificateProductType productType)
+        /// <param name="certificateProductType"> Certificate product type. </param>
+        public AppServiceCertificateOrderProperties(CertificateProductType certificateProductType)
         {
             Certificates = new ChangeTrackingDictionary<string, AppServiceCertificateProperties>();
-            ProductType = productType;
+            CertificateProductType = certificateProductType;
             AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="domainVerificationToken"> Domain verification token. </param>
         /// <param name="validityInYears"> Duration in years (must be 1). </param>
         /// <param name="keySize"> Certificate key size. </param>
-        /// <param name="productType"> Certificate product type. </param>
+        /// <param name="certificateProductType"> Certificate product type. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="provisioningState"> Status of certificate order. </param>
         /// <param name="status"> Current order status. </param>
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceCertificateOrderProperties(IDictionary<string, AppServiceCertificateProperties> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType productType, bool? isAutoRenew, CertificateRegistrationProvisioningState? provisioningState, CertificateOrderStatus? status, AppServiceCertificateDetails signedCertificate, string csr, AppServiceCertificateDetails intermediate, AppServiceCertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewOn, CertificateOrderContact contact, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceCertificateOrderProperties(IDictionary<string, AppServiceCertificateProperties> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType certificateProductType, bool? isAutoRenew, CertificateRegistrationProvisioningState? provisioningState, CertificateOrderStatus? status, AppServiceCertificateDetails signedCertificate, string csr, AppServiceCertificateDetails intermediate, AppServiceCertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewOn, CertificateOrderContact contact, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;
             DomainVerificationToken = domainVerificationToken;
             ValidityInYears = validityInYears;
             KeySize = keySize;
-            ProductType = productType;
+            CertificateProductType = certificateProductType;
             IsAutoRenew = isAutoRenew;
             ProvisioningState = provisioningState;
             Status = status;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         public int? KeySize { get; set; }
 
         /// <summary> Certificate product type. </summary>
-        public CertificateProductType ProductType { get; set; }
+        public CertificateProductType CertificateProductType { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAutoRenew { get; set; }

@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayNamespaceAuthorizationRuleResource(Client, data));
+            return new AsyncPageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(
+                _namespacesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayNamespaceAuthorizationRuleCollection.GetAll"), data => new RelayNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(_namespacesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayNamespaceAuthorizationRuleResource(Client, data));
+            return new PageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(
+                _namespacesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayNamespaceAuthorizationRuleCollection.GetAll"), data => new RelayNamespaceAuthorizationRuleResource(Client, data));
         }
 
         /// <summary>

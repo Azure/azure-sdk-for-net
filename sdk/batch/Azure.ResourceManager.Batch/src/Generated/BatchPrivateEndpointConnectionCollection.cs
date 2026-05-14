@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "BatchPrivateEndpointConnectionCollection.GetAll"), data => new BatchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 maxresults,
-                context), data => new BatchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "BatchPrivateEndpointConnectionCollection.GetAll"), data => new BatchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

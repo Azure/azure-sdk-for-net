@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
-                return Properties.Prefix;
+                return Properties is null ? default : Properties.Prefix;
             }
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
-                return Properties.AzureRegion;
+                return Properties is null ? default : Properties.AzureRegion;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
-                return Properties.AzureService;
+                return Properties is null ? default : Properties.AzureService;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
-                return Properties.IsPrimaryRegion;
+                return Properties is null ? default : Properties.IsPrimaryRegion;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
-                return Properties.BgpCommunity;
+                return Properties is null ? default : Properties.BgpCommunity;
             }
         }
     }

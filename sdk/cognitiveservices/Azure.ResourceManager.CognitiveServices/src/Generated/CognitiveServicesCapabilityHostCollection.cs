@@ -6,11 +6,15 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -19,53 +23,51 @@ namespace Azure.ResourceManager.CognitiveServices
     /// Each <see cref="CognitiveServicesCapabilityHostResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
     /// To get a <see cref="CognitiveServicesCapabilityHostCollection"/> instance call the GetCognitiveServicesCapabilityHosts method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
-    public partial class CognitiveServicesCapabilityHostCollection : ArmCollection
+    public partial class CognitiveServicesCapabilityHostCollection : ArmCollection, IEnumerable<CognitiveServicesCapabilityHostResource>, IAsyncEnumerable<CognitiveServicesCapabilityHostResource>
     {
-        private readonly ClientDiagnostics _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics;
-        private readonly AccountCapabilityHostsRestOperations _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient;
+        private readonly ClientDiagnostics _capabilityHostsClientDiagnostics;
+        private readonly CapabilityHosts _capabilityHostsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesCapabilityHostCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesCapabilityHostCollection for mocking. </summary>
         protected CognitiveServicesCapabilityHostCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesCapabilityHostCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesCapabilityHostCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesCapabilityHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesCapabilityHostResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CognitiveServicesCapabilityHostResource.ResourceType, out string cognitiveServicesCapabilityHostAccountCapabilityHostsApiVersion);
-            _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient = new AccountCapabilityHostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesCapabilityHostAccountCapabilityHostsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CognitiveServicesCapabilityHostResource.ResourceType, out string cognitiveServicesCapabilityHostApiVersion);
+            _capabilityHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesCapabilityHostResource.ResourceType.Namespace, Diagnostics);
+            _capabilityHostsRestClient = new CapabilityHosts(_capabilityHostsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCapabilityHostApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update account capabilityHost.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,21 +75,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="data"> CapabilityHost definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CognitiveServicesCapabilityHostResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string capabilityHostName, CognitiveServicesCapabilityHostData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(new CognitiveServicesCapabilityHostOperationSource(Client), _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics, Pipeline, _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(
+                    new CognitiveServicesCapabilityHostOperationSource(Client),
+                    _capabilityHostsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,20 +116,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Create or update account capabilityHost.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,21 +133,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="data"> CapabilityHost definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CognitiveServicesCapabilityHostResource> CreateOrUpdate(WaitUntil waitUntil, string capabilityHostName, CognitiveServicesCapabilityHostData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(new CognitiveServicesCapabilityHostOperationSource(Client), _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics, Pipeline, _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(
+                    new CognitiveServicesCapabilityHostOperationSource(Client),
+                    _capabilityHostsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,38 +174,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Get account capabilityHost.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CognitiveServicesCapabilityHostResource>> GetAsync(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Get");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CognitiveServicesCapabilityHostData> response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesCapabilityHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,38 +223,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Get account capabilityHost.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CognitiveServicesCapabilityHostResource> Get(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Get");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Get");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CognitiveServicesCapabilityHostData> response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesCapabilityHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,39 +269,121 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// List capabilityHost.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesCapabilityHostResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesCapabilityHostResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CognitiveServicesCapabilityHostData, CognitiveServicesCapabilityHostResource>(new CapabilityHostsGetAllAsyncCollectionResultOfT(
+                _capabilityHostsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CognitiveServicesCapabilityHostCollection.GetAll"), data => new CognitiveServicesCapabilityHostResource(Client, data));
+        }
+
+        /// <summary>
+        /// List capabilityHost.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesCapabilityHostResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesCapabilityHostResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CognitiveServicesCapabilityHostData, CognitiveServicesCapabilityHostResource>(new CapabilityHostsGetAllCollectionResultOfT(
+                _capabilityHostsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CognitiveServicesCapabilityHostCollection.GetAll"), data => new CognitiveServicesCapabilityHostResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Exists");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CognitiveServicesCapabilityHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesCapabilityHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,36 +397,50 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Exists");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CognitiveServicesCapabilityHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesCapabilityHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,38 +454,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CognitiveServicesCapabilityHostResource>> GetIfExistsAsync(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.GetIfExists");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CognitiveServicesCapabilityHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesCapabilityHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CognitiveServicesCapabilityHostResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesCapabilityHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,38 +515,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/capabilityHosts/{capabilityHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountCapabilityHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesCapabilityHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CognitiveServicesCapabilityHostResource> GetIfExists(string capabilityHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
 
-            using var scope = _cognitiveServicesCapabilityHostAccountCapabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.GetIfExists");
+            using DiagnosticScope scope = _capabilityHostsClientDiagnostics.CreateScope("CognitiveServicesCapabilityHostCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesCapabilityHostAccountCapabilityHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CognitiveServicesCapabilityHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CognitiveServicesCapabilityHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CognitiveServicesCapabilityHostResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesCapabilityHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,6 +570,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<CognitiveServicesCapabilityHostResource> IEnumerable<CognitiveServicesCapabilityHostResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<CognitiveServicesCapabilityHostResource> IAsyncEnumerable<CognitiveServicesCapabilityHostResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

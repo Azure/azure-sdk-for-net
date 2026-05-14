@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllAsyncCollectionResultOfT(_singleSignOnConfigurationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DatadogSingleSignOnResource(Client, data));
+            return new AsyncPageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllAsyncCollectionResultOfT(
+                _singleSignOnConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogSingleSignOnCollection.GetAll"), data => new DatadogSingleSignOnResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllCollectionResultOfT(_singleSignOnConfigurationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DatadogSingleSignOnResource(Client, data));
+            return new PageableWrapper<DatadogSingleSignOnData, DatadogSingleSignOnResource>(new SingleSignOnConfigurationsGetAllCollectionResultOfT(
+                _singleSignOnConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatadogSingleSignOnCollection.GetAll"), data => new DatadogSingleSignOnResource(Client, data));
         }
 
         /// <summary>

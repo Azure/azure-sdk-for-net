@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.IsEnabled = value.Value;
+                Properties.IsEnabled = value;
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.IsPlanAuthorized = value.Value;
+                Properties.IsPlanAuthorized = value;
             }
         }
     }

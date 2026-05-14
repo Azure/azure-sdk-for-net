@@ -433,7 +433,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualApplicationGroupResource.GetStartMenuItems");
         }
 
         /// <summary>
@@ -476,7 +477,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualApplicationGroupResource.GetStartMenuItems");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

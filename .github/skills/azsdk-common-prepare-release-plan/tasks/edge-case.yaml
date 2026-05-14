@@ -1,0 +1,16 @@
+id: release-plan-edge-001
+name: Invalid Package Name Format
+description: |
+  Test that the skill validates package name formats
+  and auto-corrects invalid names.
+tags:
+  - edge-case
+  - validation
+inputs:
+  prompt: "Update the release plan with these SDK details: JavaScript package 'arm-compute' and Go package 'sdk/armcompute'."
+expected:
+  output_contains:
+    - "@azure/"
+  behavior:
+    max_tool_calls: 3
+    max_response_time_ms: 15000

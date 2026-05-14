@@ -94,12 +94,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private (long MaxMessageSize, long MaxBatchSize) _linkLimits;
 
         /// <summary>
-        ///   The maximum number of messages to allow in a single batch.
-        /// </summary>
-        ///
-        private int MaxMessageCount { get; set; }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
         /// </summary>
         ///
@@ -138,12 +132,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             //   link metadata is not yet available.
             //
             //   Tracked by: https://github.com/Azure/azure-sdk-for-net/issues/44914
-
-            // NOTE:
-            //   This is a temporary work-around until Service Bus exposes a link property for
-            //   the maximum batch size.  The limit for batches differs from the limit for individual
-            //   messages.  Tracked by: https://github.com/Azure/azure-sdk-for-net/issues/44916
-            MaxMessageCount = 4500;
 
             _entityPath = entityPath;
             Identifier = identifier;
@@ -230,7 +218,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // default to the maximum size allowed by the link.
 
             options.MaxSizeInBytes ??= limits.MaxBatchSize;
-            options.MaxMessageCount ??= MaxMessageCount;
 
             Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, limits.MaxBatchSize, nameof(options.MaxSizeInBytes));
             return new AmqpMessageBatch(_messageConverter, options);
@@ -667,15 +654,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Publish both limits as a single tuple assignment so that concurrent
                 // readers observe a consistent pair.
-                //
-                // Update with service metadata when available:
-                //  https://github.com/Azure/azure-sdk-for-net/issues/44914
-                //  https://github.com/Azure/azure-sdk-for-net/issues/44916
 
                 var maxMessageSize = (long)link.Settings.MaxMessageSize;
-                var currentLimits = _linkLimits;
 
-                _linkLimits = (maxMessageSize, Math.Min(maxMessageSize, currentLimits == default ? DefaultMaxBatchSize : currentLimits.MaxBatchSize));
+                // Read the batch size limit from the vendor property if available;
+                // fall back to the default for older service versions.
+                long maxBatchSize = DefaultMaxBatchSize;
+                if (link.Settings?.Properties?.TryGetValue<long>(AmqpClientConstants.MaxMessageBatchSizeName, out var vendorBatchSize) == true
+                    && vendorBatchSize > 0)
+                {
+                    maxBatchSize = vendorBatchSize;
+                }
+
+                _linkLimits = (maxMessageSize, Math.Min(maxMessageSize, maxBatchSize));
 
                 ServiceBusEventSource.Log.CreateSendLinkComplete(Identifier);
                 link.Closed += OnSenderLinkClosed;

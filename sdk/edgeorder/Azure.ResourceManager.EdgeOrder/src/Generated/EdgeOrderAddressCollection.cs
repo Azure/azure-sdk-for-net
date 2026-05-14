@@ -306,7 +306,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 filter,
                 skipToken,
                 top,
-                context), data => new EdgeOrderAddressResource(Client, data));
+                context,
+                "EdgeOrderAddressCollection.GetAll"), data => new EdgeOrderAddressResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +345,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 filter,
                 skipToken,
                 top,
-                context), data => new EdgeOrderAddressResource(Client, data));
+                context,
+                "EdgeOrderAddressCollection.GetAll"), data => new EdgeOrderAddressResource(Client, data));
         }
 
         /// <summary>

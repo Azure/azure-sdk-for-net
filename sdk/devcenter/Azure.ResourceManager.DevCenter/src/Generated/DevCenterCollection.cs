@@ -299,7 +299,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetByResourceGroupAsyncCollectionResultOfT(_devCentersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DevCenterResource(Client, data));
+            return new AsyncPageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetByResourceGroupAsyncCollectionResultOfT(
+                _devCentersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DevCenterCollection.GetAll"), data => new DevCenterResource(Client, data));
         }
 
         /// <summary>
@@ -328,7 +334,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetByResourceGroupCollectionResultOfT(_devCentersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DevCenterResource(Client, data));
+            return new PageableWrapper<DevCenterData, DevCenterResource>(new DevCentersGetByResourceGroupCollectionResultOfT(
+                _devCentersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DevCenterCollection.GetAll"), data => new DevCenterResource(Client, data));
         }
 
         /// <summary>

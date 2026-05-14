@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupAsyncCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new TrafficControllerResource(Client, data));
+            return new AsyncPageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupAsyncCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "TrafficControllerCollection.GetAll"), data => new TrafficControllerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new TrafficControllerResource(Client, data));
+            return new PageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "TrafficControllerCollection.GetAll"), data => new TrafficControllerResource(Client, data));
         }
 
         /// <summary>

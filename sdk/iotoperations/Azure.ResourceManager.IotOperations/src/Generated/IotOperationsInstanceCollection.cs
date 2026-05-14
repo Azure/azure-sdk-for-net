@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupAsyncCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IotOperationsInstanceResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupAsyncCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotOperationsInstanceCollection.GetAll"), data => new IotOperationsInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IotOperationsInstanceResource(Client, data));
+            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotOperationsInstanceCollection.GetAll"), data => new IotOperationsInstanceResource(Client, data));
         }
 
         /// <summary>
