@@ -83,6 +83,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.GreaterOrEqual(allShares.Count, 1);
             Assert.IsTrue(allShares.Any(s => s.Data.Name == dataShareName));
 
+            // TODO: Uncomment and re-record when Location serialization issue is resolved.
+            ////update data share
+            //dataShare.Data.Properties.Description = "Updated data share";
+            //StorageDataShareResource updatedDataShare = (await dataShare.UpdateAsync(WaitUntil.Completed, dataShare.Data)).Value;
+            //Assert.AreEqual("Updated data share", updatedDataShare.Data.Properties.Description);
+
             //delete data share
             await dataShare.DeleteAsync(WaitUntil.Completed);
 
@@ -204,6 +210,12 @@ namespace Azure.ResourceManager.Storage.Tests
             TestConnectionResult testResult = (await connector.TestExistingConnectionAsync(WaitUntil.Completed, testContent)).Value;
             Assert.IsNotNull(testResult.StorageConnectorMethodName);
             Assert.IsNotNull(testResult.StorageConnectorRequestId);
+
+            // TODO: Uncomment and re-record when Location serialization issue is resolved.
+            ////update connector
+            //connector.Data.Properties.Description = "Updated connector";
+            //StorageConnectorResource updatedConnector = (await connector.UpdateAsync(WaitUntil.Completed, connector.Data)).Value;
+            //Assert.AreEqual("Updated connector", updatedConnector.Data.Properties.Description);
 
             //delete connector, then data share
             await connector.DeleteAsync(WaitUntil.Completed);
