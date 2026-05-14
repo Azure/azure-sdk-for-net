@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateResourceChangeDetailsRequest(_content, _context);
+            HttpMessage message = _client.CreateGetResourceChangeDetailsRequest(_content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

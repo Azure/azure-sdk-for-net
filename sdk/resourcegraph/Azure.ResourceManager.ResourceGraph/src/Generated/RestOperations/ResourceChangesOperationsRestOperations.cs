@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateResourceChangesRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetResourceChangesRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceGraph
             return message;
         }
 
-        internal HttpMessage CreateResourceChangeDetailsRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetResourceChangeDetailsRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ResourceChangeList>> ResourceChangesAsync(ResourceChangesRequestParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceChangeList>> GetResourceChangesAsync(ResourceChangesRequestParameters content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ResourceChangesOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.ResourceChanges");
+            using DiagnosticScope scope = ResourceChangesOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResourceChanges");
             scope.Start();
             try
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceChangesOperationsRestClient.CreateResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
+                HttpMessage message = ResourceChangesOperationsRestClient.CreateGetResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceChangeList> response = Response.FromValue(ResourceChangeList.FromResponse(result), result);
                 if (response.Value == null)
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ResourceChangeList> ResourceChanges(ResourceChangesRequestParameters content, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceChangeList> GetResourceChanges(ResourceChangesRequestParameters content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ResourceChangesOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.ResourceChanges");
+            using DiagnosticScope scope = ResourceChangesOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResourceChanges");
             scope.Start();
             try
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceChangesOperationsRestClient.CreateResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
+                HttpMessage message = ResourceChangesOperationsRestClient.CreateGetResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceChangeList> response = Response.FromValue(ResourceChangeList.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceChangeData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceChangeData> ResourceChangeDetailsAsync(ResourceChangeDetailsRequestParameters content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceChangeData> GetResourceChangeDetailsAsync(ResourceChangeDetailsRequestParameters content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceChangesResourceChangeDetailsAsyncCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.ResourceChangeDetails");
+            return new ResourceChangesResourceChangeDetailsAsyncCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.GetResourceChangeDetails");
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceChangeData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceChangeData> ResourceChangeDetails(ResourceChangeDetailsRequestParameters content, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceChangeData> GetResourceChangeDetails(ResourceChangeDetailsRequestParameters content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceChangesResourceChangeDetailsCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.ResourceChangeDetails");
+            return new ResourceChangesResourceChangeDetailsCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.GetResourceChangeDetails");
         }
 
         /// <summary>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IDictionary<string, BinaryData>>> ResourcesHistoryAsync(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IDictionary<string, BinaryData>>> GetResourcesHistoryAsync(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ResourceHistoryOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.ResourcesHistory");
+            using DiagnosticScope scope = ResourceHistoryOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResourcesHistory");
             scope.Start();
             try
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceHistoryOperationsRestClient.CreateResourcesHistoryRequest(ResourcesHistoryRequest.ToRequestContent(content), context);
+                HttpMessage message = ResourceHistoryOperationsRestClient.CreateGetResourcesHistoryRequest(ResourcesHistoryRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IDictionary<string, BinaryData>> response = Response.FromValue(ModelReaderWriter.Read<IDictionary<string, BinaryData>>(result.Content), result);
                 if (response.Value == null)
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IDictionary<string, BinaryData>> ResourcesHistory(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<IDictionary<string, BinaryData>> GetResourcesHistory(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ResourceHistoryOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.ResourcesHistory");
+            using DiagnosticScope scope = ResourceHistoryOperationsClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResourcesHistory");
             scope.Start();
             try
             {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceHistoryOperationsRestClient.CreateResourcesHistoryRequest(ResourcesHistoryRequest.ToRequestContent(content), context);
+                HttpMessage message = ResourceHistoryOperationsRestClient.CreateGetResourcesHistoryRequest(ResourcesHistoryRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IDictionary<string, BinaryData>> response = Response.FromValue(ModelReaderWriter.Read<IDictionary<string, BinaryData>>(result.Content), result);
                 if (response.Value == null)

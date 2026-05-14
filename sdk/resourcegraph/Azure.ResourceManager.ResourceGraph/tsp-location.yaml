@@ -1,4 +1,4 @@
 directory: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/ResourceGraph
-commit: c87875e4734aa74f6dab1db522518fce9244d426
+commit: 474cd375f9013ecca7a0238a6c11634876cf245b
 repo: zedy-wj/azure-rest-api-specs-migration
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
