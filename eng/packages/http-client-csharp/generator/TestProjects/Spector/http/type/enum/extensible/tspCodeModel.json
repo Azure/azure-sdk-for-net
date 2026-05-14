@@ -126,7 +126,7 @@
     {
       "$id": "10",
       "kind": "constant",
-      "name": "getKnownValueContentType",
+      "name": "GetKnownValueResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -142,7 +142,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType",
+      "name": "GetKnownValueResponseContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -158,7 +158,7 @@
     {
       "$id": "14",
       "kind": "constant",
-      "name": "getUnknownValueContentType",
+      "name": "GetKnownValueResponseContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -174,7 +174,7 @@
     {
       "$id": "16",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType1",
+      "name": "GetKnownValueResponseContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -190,7 +190,7 @@
     {
       "$id": "18",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType2",
+      "name": "GetKnownValueResponseContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -206,7 +206,7 @@
     {
       "$id": "20",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType3",
+      "name": "GetKnownValueResponseContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -222,7 +222,7 @@
     {
       "$id": "22",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType4",
+      "name": "GetKnownValueResponseContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -238,7 +238,7 @@
     {
       "$id": "24",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType5",
+      "name": "GetKnownValueResponseContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
