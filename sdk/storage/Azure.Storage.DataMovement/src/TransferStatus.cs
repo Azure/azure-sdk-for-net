@@ -96,7 +96,7 @@ namespace Azure.Storage.DataMovement
         /// Unconditionally resets <see cref="State"/> to <see cref="TransferState.Queued"/>,
         /// bypassing the normal state-machine guards. This is only used during transfer
         /// resume to requeue parts that may have been checkpointed in a transient state
-        /// (e.g. process was interupted without pausing/stopping/completing gracefully)
+        /// (e.g. process was interrupted without pausing/stopping/completing gracefully)
         /// if the process exited before the state could settle.
         /// </summary>
         internal void ResetToQueued()
