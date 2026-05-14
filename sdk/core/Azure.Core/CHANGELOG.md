@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added experimental `TokenRequestCallback` property and `TokenRequestCallbackContext` type to MSAL-backed credential options to allow customizing token request body parameters before they are sent to the identity provider.
+
 ### Breaking Changes
 
 ### Bugs Fixed
