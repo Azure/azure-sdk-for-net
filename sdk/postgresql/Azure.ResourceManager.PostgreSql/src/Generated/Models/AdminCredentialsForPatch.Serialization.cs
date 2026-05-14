@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Credentials of administrator users for source and target servers. </summary>
-    public partial class AdminCredentialsForPatch : IJsonModel<AdminCredentialsForPatch>
+    internal partial class AdminCredentialsForPatch : IJsonModel<AdminCredentialsForPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

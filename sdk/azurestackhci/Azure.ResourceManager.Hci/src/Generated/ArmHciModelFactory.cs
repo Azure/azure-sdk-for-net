@@ -1370,16 +1370,6 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciEdgeDeviceReportedProperties(deviceState, extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), null), lastSyncedOn, confidentialVmProfile, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Extensions details for edge device. </summary>
-        /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
-        /// <returns> A new <see cref="Models.ExtensionProfile"/> instance for mocking. </returns>
-        public static ExtensionProfile ExtensionProfile(IEnumerable<HciEdgeDeviceArcExtension> extensions = default)
-        {
-            extensions ??= new ChangeTrackingList<HciEdgeDeviceArcExtension>();
-
-            return new ExtensionProfile(extensions.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Arc extension installed on edge device. </summary>
         /// <param name="extensionName"> Arc extension name installed on edge device. </param>
         /// <param name="state"> Arc extension state from arc machine extension. </param>

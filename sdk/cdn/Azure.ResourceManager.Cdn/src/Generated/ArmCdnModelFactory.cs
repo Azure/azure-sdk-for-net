@@ -2443,19 +2443,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new IPAddressGroup(deliveryRegion, iPv4Addresses.ToList(), iPv6Addresses.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Properties for a managed rule set definition. </summary>
-        /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
-        /// <param name="ruleSetType"> Type of the managed rule set. </param>
-        /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
-        /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSetDefinitionProperties"/> instance for mocking. </returns>
-        public static ManagedRuleSetDefinitionProperties ManagedRuleSetDefinitionProperties(string provisioningState = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = default)
-        {
-            ruleGroups ??= new ChangeTrackingList<ManagedRuleGroupDefinition>();
-
-            return new ManagedRuleSetDefinitionProperties(provisioningState, ruleSetType, ruleSetVersion, ruleGroups.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Describes a managed rule group. </summary>
         /// <param name="ruleGroupName"> Name of the managed rule group. </param>
         /// <param name="description"> Description of the managed rule group. </param>

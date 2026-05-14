@@ -12,7 +12,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties of the custom domain created on the CDN endpoint. </summary>
-    public partial class DeepCreatedCustomDomainProperties
+    internal partial class DeepCreatedCustomDomainProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

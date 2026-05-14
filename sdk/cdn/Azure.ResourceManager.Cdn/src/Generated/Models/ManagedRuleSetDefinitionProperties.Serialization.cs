@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties for a managed rule set definition. </summary>
-    public partial class ManagedRuleSetDefinitionProperties : IJsonModel<ManagedRuleSetDefinitionProperties>
+    internal partial class ManagedRuleSetDefinitionProperties : IJsonModel<ManagedRuleSetDefinitionProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration secret parameters. </summary>
-    public partial class MigrationSecretParametersForPatch : IJsonModel<MigrationSecretParametersForPatch>
+    internal partial class MigrationSecretParametersForPatch : IJsonModel<MigrationSecretParametersForPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

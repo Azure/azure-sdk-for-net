@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Authentication configuration properties of a server. </summary>
-    public partial class AuthConfigForPatch : IJsonModel<AuthConfigForPatch>
+    internal partial class AuthConfigForPatch : IJsonModel<AuthConfigForPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
