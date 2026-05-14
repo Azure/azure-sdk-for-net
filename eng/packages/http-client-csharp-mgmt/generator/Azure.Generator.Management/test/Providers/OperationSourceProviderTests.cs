@@ -5,6 +5,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -203,6 +204,45 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(exptected));
+        }
+
+        [TestCase]
+        public void Verify_NonResourceFrameworkType_CreateResult_UsesModelReaderWriter()
+        {
+            // Regression test for #58709: for cross-assembly framework result types (e.g. OperationStatusResult,
+            // defined in Azure.ResourceManager), the generated CreateResult must NOT call the inaccessible internal
+            // Deserialize{Name} factory, and must instead use ModelReaderWriter.Read<T> with the SDK's generated
+            // ModelReaderWriterContext.
+            var (createResult, createResultAsync) = GetNonResourceFrameworkOperationSourceMethods();
+
+            foreach (var (method, isAsync) in new[] { (createResult, false), (createResultAsync, true) })
+            {
+                var body = method.BodyStatements?.ToDisplayString();
+                Assert.That(body, Is.Not.Null);
+
+                // Must use ModelReaderWriter.Read with the generated context, not the internal factory.
+                Assert.That(body, Does.Contain("global::System.ClientModel.Primitives.ModelReaderWriter.Read"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should use ModelReaderWriter.Read for framework result types.");
+                Assert.That(body, Does.Contain("Context.Default"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should pass the generated ModelReaderWriterContext to ModelReaderWriter.Read.");
+                Assert.That(body, Does.Contain("ModelSerializationExtensions.WireOptions"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should pass WireOptions to ModelReaderWriter.Read.");
+                Assert.That(body, Does.Not.Contain("DeserializeOperationStatusResult"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} must not call the inaccessible internal Deserialize factory.");
+            }
+        }
+
+        private static (MethodProvider CreateResult, MethodProvider CreateResultAsync) GetNonResourceFrameworkOperationSourceMethods()
+        {
+            // Bootstrap the mock plugin so TypeProvider machinery (ModelReaderWriterContextDefinition, etc.) is available.
+            _ = ManagementMockHelpers.LoadMockPlugin();
+
+            var provider = new OperationSourceProvider(typeof(OperationStatusResult));
+            var createResult = provider.Methods.FirstOrDefault(m => m.Signature.Name == "CreateResult");
+            var createResultAsync = provider.Methods.FirstOrDefault(m => m.Signature.Name == "CreateResultAsync");
+            Assert.That(createResult, Is.Not.Null);
+            Assert.That(createResultAsync, Is.Not.Null);
+            return (createResult!, createResultAsync!);
         }
 
         private static MethodProvider GetOperationSourceProviderMethodByName(string methodName)
