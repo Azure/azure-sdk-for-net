@@ -76,5 +76,3 @@ public readonly struct RedisBuiltInRole(string value) : IEquatable<RedisBuiltInR
     /// <inheritdoc/>
     public override string ToString() => _value;
 }
-
-// Test comment for batching validation - DO NOT MERGE
