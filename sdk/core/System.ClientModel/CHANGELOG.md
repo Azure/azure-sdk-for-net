@@ -4,11 +4,17 @@
 
 ### Features Added
 
+- Added `CredentialSettings.CredentialProvider` to hold the resolved `AuthenticationTokenProvider` for the credential.
+
 ### Breaking Changes
+
+- `IConfiguration.GetCredential(...)` now returns `CredentialSettings?` instead of `AuthenticationTokenProvider?` (experimental `SCME0002`).
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- `ClientSettings.CredentialProvider` will be removed in a future release; migrate to `settings.Credential.CredentialProvider` (experimental `SCME0002`).
 
 ## 1.12.0 (2026-05-12)
 

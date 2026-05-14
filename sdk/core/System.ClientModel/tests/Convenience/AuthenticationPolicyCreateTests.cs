@@ -601,6 +601,39 @@ public class AuthenticationPolicyCreateTests
         Assert.That(GetKeyFromApiKeyPolicy((ApiKeyAuthenticationPolicy)policy), Is.EqualTo("vault-key"));
     }
 
+    // -------- Phase 1.9: legacy ClientSettings.CredentialProvider routes through Credential.CredentialProvider --------
+
+    [Test]
+    public void Create_TokenSource_LegacyCredentialProviderField_RoutesThroughCredential()
+    {
+        // Callers who only know about the legacy ClientSettings.CredentialProvider
+        // continue to produce a working policy — the setter writes through
+        // to Credential.CredentialProvider, which Create reads.
+        TestClientSettings settings = new();
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Credential:CredentialSource"] = "TokenCredential",
+                ["TestClient:Credential:Scope"] = "https://example.com/.default",
+            })
+            .Build();
+        settings.Bind(config.GetSection("TestClient"));
+
+        var provider = new TestTokenProvider("legacy-only");
+        settings.CredentialProvider = provider;
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<BearerTokenPolicy>());
+        Assert.That(GetScopeFromBearerTokenPolicy((BearerTokenPolicy)policy), Is.EqualTo("https://example.com/.default"));
+
+        BearerTokenPolicy bearer = (BearerTokenPolicy)policy;
+        FieldInfo providerField = typeof(BearerTokenPolicy).GetField("_tokenProvider", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        AuthenticationTokenProvider wired = (AuthenticationTokenProvider)providerField.GetValue(bearer)!;
+        Assert.That(wired, Is.SameAs(provider),
+            "Setting ClientSettings.CredentialProvider must wire the policy via Credential.CredentialProvider.");
+    }
+
     private sealed class VaultLikeApiKeyResolver : CredentialResolver
     {
         private readonly string _key;

@@ -23,7 +23,17 @@ public abstract class ClientSettings
     /// <summary>
     /// Gets or sets the credential provider.
     /// </summary>
-    public AuthenticationTokenProvider? CredentialProvider { get; set; }
+    public AuthenticationTokenProvider? CredentialProvider
+    {
+        get => Credential?.CredentialProvider;
+        set
+        {
+            if (Credential is not null)
+            {
+                Credential.CredentialProvider = value;
+            }
+        }
+    }
 
     /// <summary>
     /// Binds the values from the <see cref="IConfigurationSection"/> to the properties of the <see cref="ClientSettings"/>.
@@ -37,9 +47,7 @@ public abstract class ClientSettings
         }
 
         _section = section;
-
         Credential ??= new CredentialSettings(section.GetSection("Credential"));
-
         BindCore(section);
     }
 

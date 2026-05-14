@@ -9,13 +9,23 @@ namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Internal core resolution logic shared by the public
-/// <c>GetCredential</c> overloads, <c>GetClientSettings&lt;T&gt;</c>
-/// overloads, and the DI <c>AddClient</c> auto-resolve hook.
+/// <c>GetCredential</c> overloads, <c>GetCredentialSettings</c> overloads,
+/// <c>GetClientSettings&lt;T&gt;</c> overloads, and the DI <c>AddClient</c>
+/// auto-resolve hook.
 /// </summary>
 [Experimental("SCME0002")]
 internal static class CredentialResolverEngine
 {
-    public static AuthenticationTokenProvider? Resolve(
+    /// <summary>
+    /// Walks the supplied <see cref="CredentialResolver"/> chain (after
+    /// optionally applying <paramref name="configureOverrides"/> to a
+    /// writable overlay of <paramref name="credentialSection"/>) and returns
+    /// a <see cref="CredentialSettings"/> bound to the section the chain
+    /// saw, with <see cref="CredentialSettings.CredentialProvider"/> populated
+    /// when a resolver matches. Returns <see langword="null"/> when the
+    /// section does not exist.
+    /// </summary>
+    public static CredentialSettings? Resolve(
         IConfigurationSection credentialSection,
         IEnumerable<CredentialResolver>? resolvers,
         Action<IConfigurationSection>? configureOverrides)
@@ -51,6 +61,7 @@ internal static class CredentialResolverEngine
         // Reference-identity (RuntimeHelpers.GetHashCode) is used so distinct
         // instances of the same type don't leak providers into each other,
         // and any GetHashCode override on the resolver is bypassed.
+        AuthenticationTokenProvider? provider = null;
         if (resolvers is not null)
         {
             foreach (CredentialResolver resolver in resolvers)
@@ -60,7 +71,7 @@ internal static class CredentialResolverEngine
                     continue;
                 }
 
-                AuthenticationTokenProvider? provider = CredentialCache.GetOrTryCreate(
+                provider = CredentialCache.GetOrTryCreate(
                     workingSection,
                     resolver,
                     static (section, r) =>
@@ -74,11 +85,14 @@ internal static class CredentialResolverEngine
 
                 if (provider is not null)
                 {
-                    return provider;
+                    break;
                 }
             }
         }
 
-        return null;
+        return new CredentialSettings(workingSection)
+        {
+            CredentialProvider = provider,
+        };
     }
 }
