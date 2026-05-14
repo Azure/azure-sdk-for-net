@@ -1188,6 +1188,126 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/57058.
+        ///
+        /// When both the derived model AND its base model have their own flattenable property,
+        /// the derived model's public ctor previously only had its own flatten map applied,
+        /// leaving the inherited (base-flattened) parameter unrewritten. That caused the
+        /// generated derived ctor to declare the unflattened wrapper type and to pass it to
+        /// <c>base(...)</c>, while the base's public ctor expected the flattened scalar
+        /// — producing CS1503.
+        ///
+        /// The fix overlays every flattened-ancestor's map on top of the derived's own
+        /// map before driving the public-ctor rewrite, so inherited ctor parameters and
+        /// the <c>base(...)</c> initializer are rewritten consistently.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenUpdatesDerivedClassCtorWhenBothBaseAndDerivedHaveFlatten()
+        {
+            // BaseWrapper: single required property (triggers safe-flatten in BaseModel).
+            var baseInnerValueProp = InputFactory.Property("baseValue", InputPrimitiveType.String, isRequired: true, serializedName: "baseValue");
+            var baseWrapperModel = InputFactory.Model(
+                "BaseWrapper",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [baseInnerValueProp]);
+
+            // DerivedWrapper: single required property (triggers safe-flatten in DerivedModel).
+            var derivedInnerValueProp = InputFactory.Property("derivedValue", InputPrimitiveType.String, isRequired: true, serializedName: "derivedValue");
+            var derivedWrapperModel = InputFactory.Model(
+                "DerivedWrapper",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [derivedInnerValueProp]);
+
+            // BaseModel has a required wrapper that will be safe-flattened.
+            var baseWrapperProp = InputFactory.Property("baseWrapper", baseWrapperModel, isRequired: true, serializedName: "baseWrapper");
+            var baseModel = InputFactory.Model(
+                "BaseModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [baseWrapperProp]);
+
+            // DerivedModel : BaseModel — also has its own required wrapper to safe-flatten.
+            var derivedWrapperProp = InputFactory.Property("derivedWrapper", derivedWrapperModel, isRequired: true, serializedName: "derivedWrapper");
+            var derivedModel = InputFactory.Model(
+                "DerivedModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                baseModel: baseModel,
+                properties: [derivedWrapperProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseWrapperModel, derivedWrapperModel, baseModel, derivedModel]);
+
+            var baseModelProvider = plugin.Object.TypeFactory.CreateModel(baseModel)!;
+            var derivedModelProvider = plugin.Object.TypeFactory.CreateModel(derivedModel)!;
+            Assert.That(baseModelProvider, Is.Not.Null);
+            Assert.That(derivedModelProvider, Is.Not.Null);
+
+            // Run FlattenPropertyVisitor; base must be processed first so the derived can pick up
+            // the cached ancestor flatten map when its own flatten is applied.
+            var visitor = new FlattenPropertyVisitor();
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            // Precondition snapshot of derived's pre-flatten public ctor.
+            var preDerivedPublicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(preDerivedPublicCtor, Is.Not.Null);
+            Assert.That(
+                preDerivedPublicCtor!.Signature.Parameters.Any(p => p.Type.Name == "BaseWrapper"),
+                Is.True,
+                "Precondition: DerivedModel ctor should have BaseWrapper param before flatten");
+            Assert.That(
+                preDerivedPublicCtor.Signature.Parameters.Any(p => p.Type.Name == "DerivedWrapper"),
+                Is.True,
+                "Precondition: DerivedModel ctor should have DerivedWrapper param before flatten");
+
+            visitTypeCore!.Invoke(visitor, [baseModelProvider]);
+            visitTypeCore!.Invoke(visitor, [derivedModelProvider]);
+
+            var publicCtor = derivedModelProvider.Constructors
+                .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(publicCtor, Is.Not.Null, "DerivedModel should still have a public ctor after flatten");
+
+            // The derived ctor must no longer expose either wrapper type, and must expose both flattened scalars.
+            Assert.That(
+                publicCtor!.Signature.Parameters.Any(p => p.Type.Name == "BaseWrapper"),
+                Is.False,
+                "DerivedModel public ctor should NOT have BaseWrapper param (inherited flatten must propagate)");
+            Assert.That(
+                publicCtor.Signature.Parameters.Any(p => p.Type.Name == "DerivedWrapper"),
+                Is.False,
+                "DerivedModel public ctor should NOT have DerivedWrapper param (own flatten)");
+            Assert.That(
+                publicCtor.Signature.Parameters.Any(p => p.Name == "baseValue"),
+                Is.True,
+                "DerivedModel public ctor should expose the flattened scalar from the base wrapper");
+            Assert.That(
+                publicCtor.Signature.Parameters.Any(p => p.Name == "derivedValue"),
+                Is.True,
+                "DerivedModel public ctor should expose the flattened scalar from the derived wrapper");
+
+            // The base initializer must pass the flattened scalar — NOT the old BaseWrapper variable.
+            var initializer = publicCtor.Signature.Initializer;
+            Assert.That(initializer, Is.Not.Null, "DerivedModel public ctor should have a base initializer");
+            Assert.That(initializer!.IsBase, Is.True, "Initializer should be a base call");
+
+            var initializerArgNames = initializer.Arguments
+                .OfType<VariableExpression>()
+                .Select(v => v.Declaration.RequestedName)
+                .ToList();
+
+            Assert.That(
+                initializerArgNames.Contains("baseWrapper"),
+                Is.False,
+                $"Base initializer must NOT pass the unflattened 'baseWrapper'. Args: [{string.Join(", ", initializerArgNames)}]");
+            Assert.That(
+                initializerArgNames.Contains("baseValue"),
+                Is.True,
+                $"Base initializer must pass the flattened 'baseValue'. Args: [{string.Join(", ", initializerArgNames)}]");
+        }
+
+        /// <summary>
         /// Verifies that <see cref="FlattenPropertyVisitor.FilterAttributesForFlatten"/> drops any
         /// WirePath attribute attached to the inner property while preserving other attributes.
         /// When a property is flattened, its wire path changes (e.g., "left" -> "properties.left"),

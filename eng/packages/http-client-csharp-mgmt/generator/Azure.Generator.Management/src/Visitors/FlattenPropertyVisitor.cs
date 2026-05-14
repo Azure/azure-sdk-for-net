@@ -592,20 +592,40 @@ namespace Azure.Generator.Management.Visitors
 
             var propertyNameMap = propertyMap.ToDictionary(kvp => kvp.Key.Name.ToVariableName(), kvp => kvp.Value);
 
+            // Build the effective map for updating this model's public constructor: start with
+            // this model's own flattened properties, then overlay every already-flattened ancestor's
+            // map. This ensures inherited ctor parameters and base(...) initializer arguments are
+            // rewritten to match the base type's already-flattened public ctor signature, even when
+            // this derived model has flattening of its own.
+            var effectiveMap = new Dictionary<string, List<FlattenPropertyInfo>>(propertyNameMap);
+            for (var ancestor = model.BaseModelProvider as ModelProvider; ancestor is not null; ancestor = ancestor.BaseModelProvider as ModelProvider)
+            {
+                if (_flattenedModelTypes.TryGetValue(ancestor.Type, out var ancestorMap))
+                {
+                    foreach (var kvp in ancestorMap)
+                    {
+                        if (!effectiveMap.ContainsKey(kvp.Key))
+                        {
+                            effectiveMap[kvp.Key] = kvp.Value;
+                        }
+                    }
+                }
+            }
+
             if (isSafeFlatten || isFlattenProperty)
             {
                 var flattenedProperties = propertyMap.Values.SelectMany(x => x.Select(item => item.FlattenedProperty));
                 model.Update(properties: [.. model.Properties, .. flattenedProperties]);
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
-                UpdatePublicConstructor(model, propertyNameMap);
+                UpdatePublicConstructor(model, effectiveMap);
             }
-            else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
+            else if (effectiveMap.Count > 0)
             {
-                // This model has no flattenable properties of its own, but its base model was
-                // safe-flattened. The base's public constructor signature changed (e.g. an
+                // This model has no flattenable properties of its own, but an ancestor model was
+                // flattened. The ancestor's public constructor signature changed (e.g. an
                 // ExportDeliveryInfo param became ExportDeliveryDestination), so update this
                 // model's public constructor params and base initializer call to match.
-                UpdatePublicConstructor(model, basePropertyNameMap);
+                UpdatePublicConstructor(model, effectiveMap);
             }
         }
 
