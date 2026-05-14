@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Utilities;
 using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
@@ -367,21 +368,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual Pageable<string> GetIndexNames(
-            CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
-            {
-                if (continuationToken != null)
-                {
-                    throw new NotSupportedException("A continuation token is unsupported.");
-                }
-
-                // Get only names by specifying the select parameter
-                Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken: cancellationToken);
-                IReadOnlyList<string> names = [.. result.Select(value => value.Name)];
-                return Page<string>.FromValues(names, continuationToken: null, null);
-            });
-        }
+            CancellationToken cancellationToken = default) =>
+            new PageableWrapper<SearchIndexResponse, string>(
+                GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken: cancellationToken),
+                response => response.Name,
+                supportsContinuationToken: true,
+                ClientDiagnostics,
+                "SearchIndexClient.GetIndexNames");
 
         /// <summary>
         /// Gets a list of all index names.
@@ -391,25 +384,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual AsyncPageable<string> GetIndexNamesAsync(
-            CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
-            {
-                if (continuationToken != null)
-                {
-                    throw new NotSupportedException("A continuation token is unsupported.");
-                }
-
-                // Get only names by specifying the select parameter
-                AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken);
-                List<string> names = new List<string>();
-                await foreach (SearchIndexResponse index in result.ConfigureAwait(false))
-                {
-                    names.Add(index.Name);
-                }
-                return Page<string>.FromValues(names, null, null);
-            });
-        }
+            CancellationToken cancellationToken = default) =>
+            new AsyncPageableWrapper<SearchIndexResponse, string>(
+                GetIndexesWithSelectedPropertiesAsync([Constants.NameKey], cancellationToken: cancellationToken),
+                response => response.Name,
+                supportsContinuationToken: true,
+                ClientDiagnostics,
+                "SearchIndexClient.GetIndexNames");
 
         /// <summary>
         /// Gets a list of all indexes.

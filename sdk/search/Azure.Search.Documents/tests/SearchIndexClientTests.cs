@@ -12,7 +12,6 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.KnowledgeBases.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -307,18 +306,23 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [AsyncOnly]
-        public async Task GetIndexesNextPageThrows()
+        public async Task GetIndexesNextPageSucceeds()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchIndexClient client = resources.GetIndexClient();
             AsyncPageable<SearchIndex> pageable = client.GetIndexesAsync(CancellationToken.None);
 
-            string continuationToken = Recording.GenerateId();
-            IAsyncEnumerator<Page<SearchIndex>> e = pageable.AsPages(continuationToken).GetAsyncEnumerator();
+            bool found = false;
+            await foreach (Page<SearchIndex> page in pageable.AsPages())
+            {
+                foreach (SearchIndex index in page.Values)
+                {
+                    found |= string.Equals(resources.IndexName, index.Name, StringComparison.InvariantCultureIgnoreCase);
+                }
+            }
 
-            // Given a continuationToken above, this actually starts with the second page.
-            Assert.ThrowsAsync<NotSupportedException>(async () => await e.MoveNextAsync());
+            Assert.IsTrue(found, "Shared index not found");
         }
 
         [Test]
