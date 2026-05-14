@@ -738,6 +738,9 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            // Keep thread count and iterations low to stay within the 30s CI global timeout
+            // enforced by GlobalTimeoutTearDown in ClientTestBase. The Barrier below ensures
+            // all threads start simultaneously, which is what exercises the race condition surface.
             int threadCount = 4;
             int iterationsPerThread = 2;
 
