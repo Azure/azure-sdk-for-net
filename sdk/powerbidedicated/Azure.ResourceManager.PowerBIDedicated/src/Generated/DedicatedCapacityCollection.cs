@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetByResourceGroupAsyncCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DedicatedCapacityResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetByResourceGroupAsyncCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedCapacityCollection.GetAll"), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetByResourceGroupCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DedicatedCapacityResource(Client, data));
+            return new PageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetByResourceGroupCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DedicatedCapacityCollection.GetAll"), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>

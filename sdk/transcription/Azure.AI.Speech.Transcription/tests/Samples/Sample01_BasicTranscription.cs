@@ -170,10 +170,12 @@ namespace Azure.AI.Speech.Transcription.Samples
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-            string audioFilePath = "path/to/audio.wav";
 #endif
 
             #region Snippet:AccessTranscribedWords
+#if SNIPPET
+            string audioFilePath = "path/to/audio.wav";
+#endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
             TranscriptionOptions options = new TranscriptionOptions(audioStream);

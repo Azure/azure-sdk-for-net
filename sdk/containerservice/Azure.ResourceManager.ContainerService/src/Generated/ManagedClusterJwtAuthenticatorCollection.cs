@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterAsyncCollectionResultOfT(_jwtAuthenticatorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterJwtAuthenticatorResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterAsyncCollectionResultOfT(
+                _jwtAuthenticatorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterJwtAuthenticatorCollection.GetAll"), data => new ManagedClusterJwtAuthenticatorResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterCollectionResultOfT(_jwtAuthenticatorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedClusterJwtAuthenticatorResource(Client, data));
+            return new PageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterCollectionResultOfT(
+                _jwtAuthenticatorsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedClusterJwtAuthenticatorCollection.GetAll"), data => new ManagedClusterJwtAuthenticatorResource(Client, data));
         }
 
         /// <summary>

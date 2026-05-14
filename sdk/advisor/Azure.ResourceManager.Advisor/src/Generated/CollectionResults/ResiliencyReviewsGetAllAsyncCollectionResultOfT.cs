@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Advisor
         private readonly int? _skip;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ResiliencyReviewsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ResiliencyReviews client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="skip"> The number of items to skip before starting to collect the result set. </param>
         /// <param name="filter"> The filter to apply.&lt;br&gt;Filter can be applied to properties ['reviewStatus', 'reviewId'] with operators ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=reviewStatus eq 'New'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ResiliencyReviewsGetAllAsyncCollectionResultOfT(ResiliencyReviews client, Guid subscriptionId, int? top, int? skip, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ResiliencyReviewsGetAllAsyncCollectionResultOfT(ResiliencyReviews client, Guid subscriptionId, int? top, int? skip, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Advisor
             _skip = skip;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ResiliencyReviewsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Advisor
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _top, _skip, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _top, _skip, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AdvisorResiliencyReviewCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

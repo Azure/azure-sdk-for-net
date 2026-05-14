@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.ClientModel.TestFramework;
-using Azure.Identity;
-using NUnit.Framework;
-using OpenAI.Responses;
-using System.ClientModel;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -125,7 +125,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         var agentReference = new AgentReference(name: agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
-            InputItems = { ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")}
+            InputItems = { ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.") }
         };
         ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(agentReference);
         ResponseResult response = responseClient.CreateResponse(responseOptions);

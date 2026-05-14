@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A private link resource. </summary>
+    /// <summary>
+    /// A private link resource
+    /// Serialized Name: PrivateLinkResource
+    /// </summary>
     public partial class AppServicePrivateLinkResourceData : ResourceData
     {
         /// <summary>
@@ -48,7 +51,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="properties"> Properties of a private link resource. </param>
+        /// <param name="properties">
+        /// Properties of a private link resource
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal AppServicePrivateLinkResourceData(AppServicePrivateLinkResourceProperties properties)
         {
@@ -62,7 +68,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of a private link resource. </param>
+        /// <param name="properties">
+        /// Properties of a private link resource
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,7 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Properties of a private link resource. </summary>
+        /// <summary>
+        /// Properties of a private link resource
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </summary>
         [WirePath("properties")]
         public AppServicePrivateLinkResourceProperties Properties { get; }
     }

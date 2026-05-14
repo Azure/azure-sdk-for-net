@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationProtectedItemResource(Client, data));
+                context,
+                "DataReplicationProtectedItemCollection.GetAll"), data => new DataReplicationProtectedItemResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +344,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationProtectedItemResource(Client, data));
+                context,
+                "DataReplicationProtectedItemCollection.GetAll"), data => new DataReplicationProtectedItemResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupAsyncCollectionResultOfT(_securityRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmSecurityRuleResource(Client, data));
+            return new AsyncPageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupAsyncCollectionResultOfT(
+                _securityRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmSecurityRuleCollection.GetAll"), data => new HciVmSecurityRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupCollectionResultOfT(_securityRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmSecurityRuleResource(Client, data));
+            return new PageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupCollectionResultOfT(
+                _securityRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmSecurityRuleCollection.GetAll"), data => new HciVmSecurityRuleResource(Client, data));
         }
 
         /// <summary>

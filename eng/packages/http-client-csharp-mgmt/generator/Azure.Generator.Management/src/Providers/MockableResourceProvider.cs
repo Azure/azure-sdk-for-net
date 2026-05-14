@@ -304,6 +304,19 @@ namespace Azure.Generator.Management.Providers
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
+            // If the user provided a @@clientName(.., "csharp") on the underlying tsp method,
+            // honor it instead of fabricating from (kind, ResourceName). The TCGC name on
+            // resourceMethod.InputMethod.Name already reflects the override.
+            // Scope: only List operations for now. Other kinds (Read/Create/Update/Delete/Action)
+            // can be opted into in a follow-up.
+            if (methodName != null
+                && resourceMethod.Kind == ResourceOperationKind.List
+                && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
+            {
+                var baseName = resourceMethod.InputMethod.Name;
+                methodName = isAsync ? $"{baseName}Async" : baseName;
+            }
+
             // Only fall back to the raw SDK method name when no standard name was generated.
             // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
             // standard CRUD method naming patterns.
@@ -318,24 +331,29 @@ namespace Azure.Generator.Management.Providers
 
         protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
         {
+            return BuildServiceMethodWithContext(method, inputClient, _operationContext, isAsync, methodName, explicitResourceClient);
+        }
+
+        protected MethodProvider BuildServiceMethodWithContext(InputServiceMethod method, InputClient inputClient, OperationContext operationContext, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
+        {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient),
-                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName, explicitResourceClient)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter),
+                _ => BuildNonPagingServiceMethod(method, operationContext, clientInfo, isAsync, methodName, explicitResourceClient, scopeParameter)
             };
         }
 
-        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null)
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, OperationContext operationContext, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient);
+                return new ArrayResponseOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient);
+            return new ResourceOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

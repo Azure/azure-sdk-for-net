@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context), data => new AppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context), data => new AppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>

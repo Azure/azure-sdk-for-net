@@ -301,7 +301,8 @@ namespace Azure.ResourceManager.ContainerService
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerServiceMachineResource(Client, data));
+                context,
+                "ContainerServiceMachineCollection.GetAll"), data => new ContainerServiceMachineResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.ContainerService
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerServiceMachineResource(Client, data));
+                context,
+                "ContainerServiceMachineCollection.GetAll"), data => new ContainerServiceMachineResource(Client, data));
         }
 
         /// <summary>

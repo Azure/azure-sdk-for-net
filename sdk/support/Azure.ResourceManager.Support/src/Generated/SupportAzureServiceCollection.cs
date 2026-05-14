@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportAzureServiceData, SupportAzureServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(_servicesRestClient, context), data => new SupportAzureServiceResource(Client, data));
+            return new AsyncPageableWrapper<SupportAzureServiceData, SupportAzureServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(_servicesRestClient, context, "SupportAzureServiceCollection.GetAll"), data => new SupportAzureServiceResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportAzureServiceData, SupportAzureServiceResource>(new ServicesGetAllCollectionResultOfT(_servicesRestClient, context), data => new SupportAzureServiceResource(Client, data));
+            return new PageableWrapper<SupportAzureServiceData, SupportAzureServiceResource>(new ServicesGetAllCollectionResultOfT(_servicesRestClient, context, "SupportAzureServiceCollection.GetAll"), data => new SupportAzureServiceResource(Client, data));
         }
 
         /// <summary>

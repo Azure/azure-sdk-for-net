@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Search
         private readonly string _resourceGroupName;
         private readonly string _clientRequestId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ServicesGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Services client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Search
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ServicesGetByResourceGroupCollectionResultOfT(Services client, Guid subscriptionId, string resourceGroupName, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ServicesGetByResourceGroupCollectionResultOfT(Services client, Guid subscriptionId, string resourceGroupName, string clientRequestId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _clientRequestId = clientRequestId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ServicesGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Search
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _clientRequestId, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _clientRequestId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SearchServiceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

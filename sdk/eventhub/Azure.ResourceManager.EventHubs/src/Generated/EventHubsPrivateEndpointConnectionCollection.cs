@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsPrivateEndpointConnectionData, EventHubsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<EventHubsPrivateEndpointConnectionData, EventHubsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsPrivateEndpointConnectionCollection.GetAll"), data => new EventHubsPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsPrivateEndpointConnectionData, EventHubsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<EventHubsPrivateEndpointConnectionData, EventHubsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsPrivateEndpointConnectionCollection.GetAll"), data => new EventHubsPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

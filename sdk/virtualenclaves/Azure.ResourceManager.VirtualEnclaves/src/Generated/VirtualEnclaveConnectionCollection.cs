@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetByResourceGroupAsyncCollectionResultOfT(_enclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new VirtualEnclaveConnectionResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetByResourceGroupAsyncCollectionResultOfT(_enclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveConnectionCollection.GetAll"), data => new VirtualEnclaveConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetByResourceGroupCollectionResultOfT(_enclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new VirtualEnclaveConnectionResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetByResourceGroupCollectionResultOfT(_enclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveConnectionCollection.GetAll"), data => new VirtualEnclaveConnectionResource(Client, data));
         }
 
         /// <summary>

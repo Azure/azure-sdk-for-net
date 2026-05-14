@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubReplicaResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubReplicaCollection.GetAll"), data => new WebPubSubReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubReplicaResource(Client, data));
+            return new PageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WebPubSubReplicaCollection.GetAll"), data => new WebPubSubReplicaResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,8 @@ namespace Azure.ResourceManager.Batch
                 Id.Parent.Name,
                 Id.Name,
                 maxresults,
-                context), data => new BatchApplicationPackageResource(Client, data));
+                context,
+                "BatchApplicationPackageCollection.GetAll"), data => new BatchApplicationPackageResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.Batch
                 Id.Parent.Name,
                 Id.Name,
                 maxresults,
-                context), data => new BatchApplicationPackageResource(Client, data));
+                context,
+                "BatchApplicationPackageCollection.GetAll"), data => new BatchApplicationPackageResource(Client, data));
         }
 
         /// <summary>

@@ -1,0 +1,23 @@
+id: sdk-local-hide-operation-001
+name: Hide Internal Operation from SDK
+description: |
+  Test that the skill triggers customization when user requests
+  hiding an internal operation from a specific language SDK.
+tags:
+  - customization
+  - user-prompt
+  - access-control
+inputs:
+  prompt: "Remove the get_create_project_status polling operation from the Python SDK public API. It's an internal operation that shouldn't be exposed to users."
+expected:
+  output_contains:
+    - "access"
+    - "client.tsp"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_customized_code_update
+  behavior:
+    max_tool_calls: 10
+    max_response_time_ms: 60000

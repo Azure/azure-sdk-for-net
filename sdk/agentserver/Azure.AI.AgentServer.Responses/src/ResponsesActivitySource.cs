@@ -37,7 +37,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// services.AddResponsesServer();
 /// </code>
 /// </summary>
-public class ResponsesActivitySource
+internal class ResponsesActivitySource
 {
     /// <summary>
     /// The default <see cref="ActivitySource"/> name: <c>"Azure.AI.AgentServer.Responses"</c>.

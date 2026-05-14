@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Migrated from AutoRest/Swagger to TypeSpec-based generation
+
 ### Breaking Changes
 
 ### Bugs Fixed

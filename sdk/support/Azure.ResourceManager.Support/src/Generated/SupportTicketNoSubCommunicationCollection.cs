@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportTicketCommunicationData, SupportTicketNoSubCommunicationResource>(new SupportTicketNoSubCommunicationGetAllAsyncCollectionResultOfT(_supportTicketNoSubCommunicationRestClient, Id.Name, top, filter, context), data => new SupportTicketNoSubCommunicationResource(Client, data));
+            return new AsyncPageableWrapper<SupportTicketCommunicationData, SupportTicketNoSubCommunicationResource>(new SupportTicketNoSubCommunicationGetAllAsyncCollectionResultOfT(
+                _supportTicketNoSubCommunicationRestClient,
+                Id.Name,
+                top,
+                filter,
+                context,
+                "SupportTicketNoSubCommunicationCollection.GetAll"), data => new SupportTicketNoSubCommunicationResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +331,13 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportTicketCommunicationData, SupportTicketNoSubCommunicationResource>(new SupportTicketNoSubCommunicationGetAllCollectionResultOfT(_supportTicketNoSubCommunicationRestClient, Id.Name, top, filter, context), data => new SupportTicketNoSubCommunicationResource(Client, data));
+            return new PageableWrapper<SupportTicketCommunicationData, SupportTicketNoSubCommunicationResource>(new SupportTicketNoSubCommunicationGetAllCollectionResultOfT(
+                _supportTicketNoSubCommunicationRestClient,
+                Id.Name,
+                top,
+                filter,
+                context,
+                "SupportTicketNoSubCommunicationCollection.GetAll"), data => new SupportTicketNoSubCommunicationResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPureStoragePolicyData, AvsPureStoragePolicyResource>(new PureStoragePoliciesGetAllAsyncCollectionResultOfT(_pureStoragePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsPureStoragePolicyResource(Client, data));
+            return new AsyncPageableWrapper<AvsPureStoragePolicyData, AvsPureStoragePolicyResource>(new PureStoragePoliciesGetAllAsyncCollectionResultOfT(
+                _pureStoragePoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsPureStoragePolicyCollection.GetAll"), data => new AvsPureStoragePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPureStoragePolicyData, AvsPureStoragePolicyResource>(new PureStoragePoliciesGetAllCollectionResultOfT(_pureStoragePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsPureStoragePolicyResource(Client, data));
+            return new PageableWrapper<AvsPureStoragePolicyData, AvsPureStoragePolicyResource>(new PureStoragePoliciesGetAllCollectionResultOfT(
+                _pureStoragePoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsPureStoragePolicyCollection.GetAll"), data => new AvsPureStoragePolicyResource(Client, data));
         }
 
         /// <summary>

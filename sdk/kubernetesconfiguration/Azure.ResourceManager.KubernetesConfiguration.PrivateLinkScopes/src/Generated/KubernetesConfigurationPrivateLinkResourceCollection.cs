@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkResourceData, KubernetesConfigurationPrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new KubernetesConfigurationPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkResourceData, KubernetesConfigurationPrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KubernetesConfigurationPrivateLinkResourceCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateLinkResourceData, KubernetesConfigurationPrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new KubernetesConfigurationPrivateLinkResource(Client, data));
+            return new PageableWrapper<KubernetesConfigurationPrivateLinkResourceData, KubernetesConfigurationPrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KubernetesConfigurationPrivateLinkResourceCollection.GetAll"), data => new KubernetesConfigurationPrivateLinkResource(Client, data));
         }
 
         /// <summary>

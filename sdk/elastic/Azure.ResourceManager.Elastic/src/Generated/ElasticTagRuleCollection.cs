@@ -285,7 +285,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(_tagRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticTagRuleResource(Client, data));
+            return new AsyncPageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+                _tagRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticTagRuleCollection.GetAll"), data => new ElasticTagRuleResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +319,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllCollectionResultOfT(_tagRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticTagRuleResource(Client, data));
+            return new PageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+                _tagRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticTagRuleCollection.GetAll"), data => new ElasticTagRuleResource(Client, data));
         }
 
         /// <summary>

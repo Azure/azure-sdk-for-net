@@ -10,18 +10,18 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// E2E protocol tests for ResponseCreatedEvent validation rules.
-/// Validates FR-006 (Models.ResponseObject.Id must match ResponseContext.ResponseId) and
-/// FR-007 (Models.ResponseObject.Status must be non-terminal on ResponseCreatedEvent).
+/// Validates S-031 (Models.ResponseObject.Id must match ResponseContext.ResponseId) and
+/// B6/B8 (Models.ResponseObject.Status must be non-terminal on ResponseCreatedEvent).
 /// </summary>
 public class ResponseCreatedValidationTests : ProtocolTestBase
 {
-    // ── T025: Mismatched ID — FR-006 ──────────────────────────
+    // ── T025: Mismatched ID — S-031 ──────────────────────────────
 
     [Test]
     public async Task POST_Responses_MismatchedResponseId_ReturnsBadHandlerError()
     {
         // Handler emits ResponseCreatedEvent with a different ID than ResponseContext.ResponseId
-        // → SDK rejects with bad handler error (FR-006)
+        // → SDK rejects with bad handler error (S-031)
         Handler.EventFactory = (req, ctx, ct) => MismatchedIdStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test" });
@@ -50,13 +50,13 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
         XAssert.Contains(events, e => e.EventType == "error");
     }
 
-    // ── T026: Terminal initial status — FR-007 ────────────────
+    // ── T026: Terminal initial status — B6/B8 ────────────────
 
     [Test]
     public async Task POST_Responses_TerminalInitialStatus_ReturnsBadHandlerError()
     {
         // Handler emits ResponseCreatedEvent with Status = Failed (terminal status)
-        // → SDK rejects with bad handler error (FR-007)
+        // → SDK rejects with bad handler error (B6/B8)
         Handler.EventFactory = (req, ctx, ct) => TerminalInitialStatusStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test" });

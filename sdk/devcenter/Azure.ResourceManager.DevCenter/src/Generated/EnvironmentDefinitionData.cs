@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Parameters;
+                return Properties is null ? default : Properties.Parameters;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.TemplatePath;
+                return Properties is null ? default : Properties.TemplatePath;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ValidationStatus;
+                return Properties is null ? default : Properties.ValidationStatus;
             }
         }
     }

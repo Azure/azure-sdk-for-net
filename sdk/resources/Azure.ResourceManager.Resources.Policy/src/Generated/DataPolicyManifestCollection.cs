@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestsGetAllAsyncCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context), data => new DataPolicyManifestResource(Client, data));
+            return new AsyncPageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestsGetAllAsyncCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context, "DataPolicyManifestCollection.GetAll"), data => new DataPolicyManifestResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Resources.Policy
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestsGetAllCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context), data => new DataPolicyManifestResource(Client, data));
+            return new PageableWrapper<DataPolicyManifestData, DataPolicyManifestResource>(new DataPolicyManifestsGetAllCollectionResultOfT(_dataPolicyManifestsRestClient, filter, context, "DataPolicyManifestCollection.GetAll"), data => new DataPolicyManifestResource(Client, data));
         }
 
         /// <summary>

@@ -294,7 +294,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelSignalDefinitionResource(Client, data));
+                context,
+                "HealthModelSignalDefinitionCollection.GetAll"), data => new HealthModelSignalDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +330,8 @@ namespace Azure.ResourceManager.CloudHealth
                 Id.ResourceGroupName,
                 Id.Name,
                 timestamp,
-                context), data => new HealthModelSignalDefinitionResource(Client, data));
+                context,
+                "HealthModelSignalDefinitionCollection.GetAll"), data => new HealthModelSignalDefinitionResource(Client, data));
         }
 
         /// <summary>

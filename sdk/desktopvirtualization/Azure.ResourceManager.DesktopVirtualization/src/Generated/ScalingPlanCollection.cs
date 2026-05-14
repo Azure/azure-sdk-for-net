@@ -298,7 +298,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanResource(Client, data));
+                context,
+                "ScalingPlanCollection.GetAll"), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +337,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanResource(Client, data));
+                context,
+                "ScalingPlanCollection.GetAll"), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.Translation.Document;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

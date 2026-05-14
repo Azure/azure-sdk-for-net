@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new SessionHostPatchProperties();
                 }
-                Properties.AllowNewSession = value.Value;
+                Properties.AllowNewSession = value;
             }
         }
 

@@ -23,9 +23,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To cancel a training job, call CancelTrainingJob on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
 
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 string jobId = "{jobId}";
-Operation<ConversationAuthoringTrainingJobResult> cancelOperation = client.CancelTrainingJob(
+Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     jobId: jobId
@@ -43,9 +45,11 @@ Console.WriteLine($"Training job cancellation completed with status: {cancelOper
 To cancel a training job asynchronously, call CancelTrainingJobAsync on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
 
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 string jobId = "{jobId}";
-Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await client.CancelTrainingJobAsync(
+Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     jobId: jobId

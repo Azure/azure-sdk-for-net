@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAccountAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MapsPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAccountAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MapsPrivateEndpointConnectionCollection.GetAll"), data => new MapsPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAccountCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MapsPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<MapsPrivateEndpointConnectionData, MapsPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByAccountCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MapsPrivateEndpointConnectionCollection.GetAll"), data => new MapsPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

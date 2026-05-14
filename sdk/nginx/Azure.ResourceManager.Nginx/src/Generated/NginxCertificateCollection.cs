@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllAsyncCollectionResultOfT(_nginxCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxCertificateResource(Client, data));
+            return new AsyncPageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllAsyncCollectionResultOfT(
+                _nginxCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxCertificateCollection.GetAll"), data => new NginxCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllCollectionResultOfT(_nginxCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxCertificateResource(Client, data));
+            return new PageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllCollectionResultOfT(
+                _nginxCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxCertificateCollection.GetAll"), data => new NginxCertificateResource(Client, data));
         }
 
         /// <summary>

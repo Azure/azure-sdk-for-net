@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(_fqdnListLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackFqdnResource(Client, data));
+            return new AsyncPageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(
+                _fqdnListLocalRulestackRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackFqdnCollection.GetAll"), data => new LocalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksCollectionResultOfT(_fqdnListLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackFqdnResource(Client, data));
+            return new PageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksCollectionResultOfT(
+                _fqdnListLocalRulestackRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackFqdnCollection.GetAll"), data => new LocalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>

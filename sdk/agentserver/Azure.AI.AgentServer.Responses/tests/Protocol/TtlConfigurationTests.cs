@@ -18,8 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for User Story 4 — In-Memory Provider TTL Configuration.
-/// Verifies FR-016 (default 10-minute TTL), FR-017 (custom response TTL),
-/// FR-018 (separate event stream TTL), FR-019 (custom provider ignores InMemoryProviderOptions).
+/// Verifies S-038/B35 (default 10-minute TTL), S-038 (custom response TTL),
+/// S-038/B35 (separate event stream TTL), and custom provider isolation.
 /// </summary>
 public class TtlConfigurationTests : IDisposable
 {
@@ -61,7 +61,7 @@ public class TtlConfigurationTests : IDisposable
         Assert.That(await provider.GetResponseAsync("resp_default_ttl", IsolationContext.Empty), Is.Not.Null);
 
         // Event stream evicted
-        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        Assert.ThrowsAsync<BadRequestException>(async () =>
         {
             var observer = new CollectingObserver(new List<ResponseStreamEvent>(), new TaskCompletionSource());
             await provider.SubscribeToEventsAsync("resp_default_ttl", observer);
@@ -98,7 +98,7 @@ public class TtlConfigurationTests : IDisposable
         Assert.That(await provider.GetResponseAsync("resp_1s_ttl", IsolationContext.Empty), Is.Not.Null);
 
         // Event stream evicted
-        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        Assert.ThrowsAsync<BadRequestException>(async () =>
         {
             var observer = new CollectingObserver(new List<ResponseStreamEvent>(), new TaskCompletionSource());
             await provider.SubscribeToEventsAsync("resp_1s_ttl", observer);
@@ -150,7 +150,7 @@ public class TtlConfigurationTests : IDisposable
         Assert.That(await provider.GetResponseAsync("resp_split_ttl", IsolationContext.Empty), Is.Not.Null);
 
         // Event stream evicted — subscribing throws
-        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        Assert.ThrowsAsync<BadRequestException>(async () =>
         {
             var observer2 = new CollectingObserver(new List<ResponseStreamEvent>(), new TaskCompletionSource());
             await provider.SubscribeToEventsAsync("resp_split_ttl", observer2);

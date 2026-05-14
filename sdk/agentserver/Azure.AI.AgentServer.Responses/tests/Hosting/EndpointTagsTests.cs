@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
 /// <summary>
-/// Tests for OpenAPI endpoint tags (US6 / FR-018).
+/// Tests for OpenAPI endpoint tags.
 /// Verifies all Responses API endpoints carry the "Responses" tag.
 /// </summary>
 public sealed class EndpointTagsTests
@@ -20,7 +20,7 @@ public sealed class EndpointTagsTests
     [Test]
     public void AllEndpoints_HaveResponsesTag()
     {
-        // T038 / FR-018: all 5 endpoints have tag "Responses"
+        // T038: all 5 endpoints have tag "Responses"
         var builder = new HostBuilder()
             .ConfigureWebHost(webHost =>
             {

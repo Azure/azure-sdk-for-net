@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudVolumeResource(Client, data));
+                context,
+                "NetworkCloudVolumeCollection.GetAll"), data => new NetworkCloudVolumeResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudVolumeResource(Client, data));
+                context,
+                "NetworkCloudVolumeCollection.GetAll"), data => new NetworkCloudVolumeResource(Client, data));
         }
 
         /// <summary>

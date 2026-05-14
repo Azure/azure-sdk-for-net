@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.Peering
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new PeeringServicePrefixResource(Client, data));
+                context,
+                "PeeringServicePrefixCollection.GetAll"), data => new PeeringServicePrefixResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +332,8 @@ namespace Azure.ResourceManager.Peering
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new PeeringServicePrefixResource(Client, data));
+                context,
+                "PeeringServicePrefixCollection.GetAll"), data => new PeeringServicePrefixResource(Client, data));
         }
 
         /// <summary>

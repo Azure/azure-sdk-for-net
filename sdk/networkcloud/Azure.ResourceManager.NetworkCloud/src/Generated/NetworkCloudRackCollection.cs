@@ -186,7 +186,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudRackResource(Client, data));
+                context,
+                "NetworkCloudRackCollection.GetAll"), data => new NetworkCloudRackResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +223,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudRackResource(Client, data));
+                context,
+                "NetworkCloudRackCollection.GetAll"), data => new NetworkCloudRackResource(Client, data));
         }
 
         /// <summary>

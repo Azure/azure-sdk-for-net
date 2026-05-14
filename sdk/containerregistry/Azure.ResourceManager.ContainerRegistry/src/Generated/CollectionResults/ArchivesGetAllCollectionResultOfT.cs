@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly string _registryName;
         private readonly string _packageType;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ArchivesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Archives client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="packageType"> The package type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ArchivesGetAllCollectionResultOfT(Archives client, Guid subscriptionId, string resourceGroupName, string registryName, string packageType, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ArchivesGetAllCollectionResultOfT(Archives client, Guid subscriptionId, string resourceGroupName, string registryName, string packageType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             _registryName = registryName;
             _packageType = packageType;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ArchivesGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _registryName, _packageType, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _registryName, _packageType, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

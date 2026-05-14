@@ -15,28 +15,31 @@ using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    internal partial class OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT : AsyncPageable<OccurrenceExtensionResourceData>
+    internal partial class OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT : AsyncPageable<OccurrenceExtensionData>
     {
         private readonly OccurrenceExtension _client;
         private readonly string _resourceUri;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The OccurrenceExtension client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT(OccurrenceExtension client, string resourceUri, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT(OccurrenceExtension client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<OccurrenceExtensionResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<OccurrenceExtensionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 OccurrenceExtensionResourceListResult result = OccurrenceExtensionResourceListResult.FromResponse(response);
-                yield return Page<OccurrenceExtensionResourceData>.FromValues((IReadOnlyList<OccurrenceExtensionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<OccurrenceExtensionData>.FromValues((IReadOnlyList<OccurrenceExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAssociatedOccurrencesRequest(nextLink, _resourceUri, _context) : _client.CreateGetAssociatedOccurrencesRequest(_resourceUri, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeScheduleArmClient.GetAssociatedOccurrences");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

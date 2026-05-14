@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IndexingResult"/>. </summary>
-        public IndexingResult()
+        internal IndexingResult()
         {
         }
 

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Chaos;
@@ -35,6 +39,42 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosCapabilityResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="ChaosCapabilityCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ChaosCapabilityResource"/> objects. </returns>
+        public virtual ChaosCapabilityCollection GetChaosCapabilities(ResourceIdentifier scope)
+        {
+            return new ChaosCapabilityCollection(Client, scope);
+        }
+
+        /// <summary> Get a Capability resource that extends a Target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosCapabilityResource> GetChaosCapability(ResourceIdentifier scope, string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            return GetChaosCapabilities(scope).Get(capabilityName, cancellationToken);
+        }
+
+        /// <summary> Get a Capability resource that extends a Target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosCapabilityResource>> GetChaosCapabilityAsync(ResourceIdentifier scope, string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            return await GetChaosCapabilities(scope).GetAsync(capabilityName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="ChaosTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
@@ -42,6 +82,42 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosTargetResource.ValidateResourceId(id);
             return new ChaosTargetResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ChaosTargetCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ChaosTargetResource"/> objects. </returns>
+        public virtual ChaosTargetCollection GetChaosTargets(ResourceIdentifier scope)
+        {
+            return new ChaosTargetCollection(Client, scope);
+        }
+
+        /// <summary> Get a Target resource that extends a tracked regional resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosTargetResource> GetChaosTarget(ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return GetChaosTargets(scope).Get(targetName, cancellationToken);
+        }
+
+        /// <summary> Get a Target resource that extends a tracked regional resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosTargetResource>> GetChaosTargetAsync(ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return await GetChaosTargets(scope).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="ChaosCapabilityMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>

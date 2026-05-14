@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OnlineExperimentationPrivateEndpointConnectionCollection.GetAll"), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OnlineExperimentationPrivateEndpointConnectionCollection.GetAll"), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

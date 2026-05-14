@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionAsyncCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AgricultureServiceResource(Client, data));
+            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionAsyncCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices"), data => new AgricultureServiceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AgricultureServiceResource(Client, data));
+            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices"), data => new AgricultureServiceResource(Client, data));
         }
     }
 }

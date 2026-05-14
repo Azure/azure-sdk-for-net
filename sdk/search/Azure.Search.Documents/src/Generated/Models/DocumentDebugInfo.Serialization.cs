@@ -74,36 +74,10 @@ namespace Azure.Search.Documents.Models
             {
                 throw new FormatException($"The model {nameof(DocumentDebugInfo)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Semantic))
-            {
-                writer.WritePropertyName("semantic"u8);
-                writer.WriteObjectValue(Semantic, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(Vectors))
             {
                 writer.WritePropertyName("vectors"u8);
                 writer.WriteObjectValue(Vectors, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InnerHits))
-            {
-                writer.WritePropertyName("innerHits"u8);
-                writer.WriteStartObject();
-                foreach (var item in InnerHits)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (QueryResultDocumentInnerHit item0 in item.Value)
-                    {
-                        writer.WriteObjectValue(item0, options);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,21 +121,10 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            SemanticDebugInfo semantic = default;
             VectorsDebugInfo vectors = default;
-            IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("semantic"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    semantic = SemanticDebugInfo.DeserializeSemanticDebugInfo(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("vectors"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -171,38 +134,12 @@ namespace Azure.Search.Documents.Models
                     vectors = VectorsDebugInfo.DeserializeVectorsDebugInfo(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("innerHits"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, IList<QueryResultDocumentInnerHit>> dictionary = new Dictionary<string, IList<QueryResultDocumentInnerHit>>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            List<QueryResultDocumentInnerHit> array = new List<QueryResultDocumentInnerHit>();
-                            foreach (var item in prop0.Value.EnumerateArray())
-                            {
-                                array.Add(QueryResultDocumentInnerHit.DeserializeQueryResultDocumentInnerHit(item, options));
-                            }
-                            dictionary.Add(prop0.Name, array);
-                        }
-                    }
-                    innerHits = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DocumentDebugInfo(semantic, vectors, innerHits ?? new ChangeTrackingDictionary<string, IList<QueryResultDocumentInnerHit>>(), additionalBinaryDataProperties);
+            return new DocumentDebugInfo(vectors, additionalBinaryDataProperties);
         }
     }
 }

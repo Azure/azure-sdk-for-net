@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -56,16 +55,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IndexerResyncBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="indexerResyncBody"> The <see cref="IndexerResyncBody"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(IndexerResyncBody indexerResyncBody)
-        {
-            if (indexerResyncBody == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(indexerResyncBody, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

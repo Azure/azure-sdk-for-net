@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualApplicationGroupResource(Client, data));
+                context,
+                "VirtualApplicationGroupCollection.GetAll"), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +345,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualApplicationGroupResource(Client, data));
+                context,
+                "VirtualApplicationGroupCollection.GetAll"), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>

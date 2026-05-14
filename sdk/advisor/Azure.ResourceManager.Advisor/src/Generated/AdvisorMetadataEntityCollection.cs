@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new MetadataEntitiesGetAllAsyncCollectionResultOfT(_metadataEntitiesRestClient, context), data => new AdvisorMetadataEntityResource(Client, data));
+            return new AsyncPageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new MetadataEntitiesGetAllAsyncCollectionResultOfT(_metadataEntitiesRestClient, context, "AdvisorMetadataEntityCollection.GetAll"), data => new AdvisorMetadataEntityResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new MetadataEntitiesGetAllCollectionResultOfT(_metadataEntitiesRestClient, context), data => new AdvisorMetadataEntityResource(Client, data));
+            return new PageableWrapper<AdvisorMetadataEntityData, AdvisorMetadataEntityResource>(new MetadataEntitiesGetAllCollectionResultOfT(_metadataEntitiesRestClient, context, "AdvisorMetadataEntityCollection.GetAll"), data => new AdvisorMetadataEntityResource(Client, data));
         }
 
         /// <summary>

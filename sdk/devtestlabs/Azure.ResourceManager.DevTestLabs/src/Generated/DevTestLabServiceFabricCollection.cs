@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabServiceFabricResource(Client, data));
+                context,
+                "DevTestLabServiceFabricCollection.GetAll"), data => new DevTestLabServiceFabricResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +352,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabServiceFabricResource(Client, data));
+                context,
+                "DevTestLabServiceFabricCollection.GetAll"), data => new DevTestLabServiceFabricResource(Client, data));
         }
 
         /// <summary>

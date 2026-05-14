@@ -14,6 +14,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> High. </summary>
         High,
         /// <summary> Auto. </summary>
-        Auto
+        Auto,
+        /// <summary> Original. </summary>
+        Original
     }
 }

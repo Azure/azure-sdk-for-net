@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualWorkspaceResource(Client, data));
+                context,
+                "VirtualWorkspaceCollection.GetAll"), data => new VirtualWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualWorkspaceResource(Client, data));
+                context,
+                "VirtualWorkspaceCollection.GetAll"), data => new VirtualWorkspaceResource(Client, data));
         }
 
         /// <summary>

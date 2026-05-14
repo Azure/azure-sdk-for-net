@@ -18,6 +18,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public static partial class ArmTrafficManagerModelFactory
     {
 
+        /// <summary> The result of the request or operation. </summary>
+        /// <param name="operationResult"> The result of the operation or request. </param>
+        /// <returns> A new <see cref="Models.TrafficManagerDeleteOperationResult"/> instance for mocking. </returns>
+        public static TrafficManagerDeleteOperationResult TrafficManagerDeleteOperationResult(bool? operationResult = default)
+        {
+            return new TrafficManagerDeleteOperationResult(operationResult, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>

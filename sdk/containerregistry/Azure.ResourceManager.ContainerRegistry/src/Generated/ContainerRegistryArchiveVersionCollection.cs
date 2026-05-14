@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerRegistryArchiveVersionResource(Client, data));
+                context,
+                "ContainerRegistryArchiveVersionCollection.GetAll"), data => new ContainerRegistryArchiveVersionResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +332,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ContainerRegistryArchiveVersionResource(Client, data));
+                context,
+                "ContainerRegistryArchiveVersionCollection.GetAll"), data => new ContainerRegistryArchiveVersionResource(Client, data));
         }
 
         /// <summary>

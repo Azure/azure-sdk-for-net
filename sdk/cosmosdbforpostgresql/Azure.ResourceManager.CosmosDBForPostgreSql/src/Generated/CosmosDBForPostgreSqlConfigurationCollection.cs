@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterAsyncCollectionResultOfT(_configurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterAsyncCollectionResultOfT(
+                _configurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlConfigurationCollection.GetAll"), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterCollectionResultOfT(_configurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
+            return new PageableWrapper<CosmosDBForPostgreSqlConfigurationData, CosmosDBForPostgreSqlConfigurationResource>(new ConfigurationsGetByClusterCollectionResultOfT(
+                _configurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlConfigurationCollection.GetAll"), data => new CosmosDBForPostgreSqlConfigurationResource(Client, data));
         }
 
         /// <summary>

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The Deployment data of AzureStackHCI Cluster. </summary>
     public partial class HciClusterDeploymentInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentInfo"/>. </summary>
         public HciClusterDeploymentInfo()
@@ -51,12 +23,14 @@ namespace Azure.ResourceManager.Hci.Models
             InfrastructureNetwork = new ChangeTrackingList<DeploymentSettingInfrastructureNetwork>();
             PhysicalNodes = new ChangeTrackingList<DeploymentSettingPhysicalNodes>();
             Secrets = new ChangeTrackingList<EceDeploymentSecrets>();
+            LocalAvailabilityZones = new ChangeTrackingList<LocalAvailabilityZones>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentInfo"/>. </summary>
         /// <param name="securitySettings"> SecuritySettings to deploy AzureStackHCI Cluster. </param>
         /// <param name="observability"> Observability config to deploy AzureStackHCI Cluster. </param>
         /// <param name="cluster"> Observability config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="storage"> Storage config to deploy AzureStackHCI Cluster. </param>
         /// <param name="namingPrefix"> naming prefix to deploy cluster. </param>
         /// <param name="domainFqdn"> FQDN to deploy cluster. </param>
@@ -64,16 +38,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="physicalNodes"> list of physical nodes config to deploy AzureStackHCI Cluster. </param>
         /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
         /// <param name="sdnIntegration"> SDN Integration config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="isManagementCluster"> Is Management Cluster, when true indicates that the cluster is used for managing other clusters. </param>
         /// <param name="adouPath"> The path to the Active Directory Organizational Unit container object prepared for the deployment. </param>
-        /// <param name="secretsLocation"> Azure keyvault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead. </param>
+        /// <param name="secretsLocation"> Azure key vault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead. </param>
         /// <param name="secrets"> secrets used for cloud deployment. </param>
         /// <param name="optionalServices"> OptionalServices config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, DeploymentSettingObservability observability, HciDeploymentCluster cluster, DeploymentSettingStorage storage, string namingPrefix, string domainFqdn, IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork, IList<DeploymentSettingPhysicalNodes> physicalNodes, DeploymentSettingHostNetwork hostNetwork, SdnIntegration sdnIntegration, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
+        /// <param name="assemblyInfo"> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, DeploymentSettingObservability observability, HciDeploymentCluster cluster, HciIdentityProvider? identityProvider, DeploymentSettingStorage storage, string namingPrefix, string domainFqdn, IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork, IList<DeploymentSettingPhysicalNodes> physicalNodes, DeploymentSettingHostNetwork hostNetwork, SdnIntegration sdnIntegration, bool? isManagementCluster, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IList<LocalAvailabilityZones> localAvailabilityZones, HciAssemblyInfo assemblyInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecuritySettings = securitySettings;
             Observability = observability;
             Cluster = cluster;
+            IdentityProvider = identityProvider;
             Storage = storage;
             NamingPrefix = namingPrefix;
             DomainFqdn = domainFqdn;
@@ -81,87 +59,120 @@ namespace Azure.ResourceManager.Hci.Models
             PhysicalNodes = physicalNodes;
             HostNetwork = hostNetwork;
             SdnIntegration = sdnIntegration;
+            IsManagementCluster = isManagementCluster;
             AdouPath = adouPath;
             SecretsLocation = secretsLocation;
             Secrets = secrets;
             OptionalServices = optionalServices;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LocalAvailabilityZones = localAvailabilityZones;
+            AssemblyInfo = assemblyInfo;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SecuritySettings to deploy AzureStackHCI Cluster. </summary>
         [WirePath("securitySettings")]
         public HciClusterDeploymentSecuritySettings SecuritySettings { get; set; }
+
         /// <summary> Observability config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("observability")]
         public DeploymentSettingObservability Observability { get; set; }
+
         /// <summary> Observability config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("cluster")]
         public HciDeploymentCluster Cluster { get; set; }
+
+        /// <summary> Identity Provider for the cluster. </summary>
+        [WirePath("identityProvider")]
+        public HciIdentityProvider? IdentityProvider { get; set; }
+
         /// <summary> Storage config to deploy AzureStackHCI Cluster. </summary>
-        internal DeploymentSettingStorage Storage { get; set; }
-        /// <summary> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </summary>
-        [WirePath("storage.configurationMode")]
-        public string StorageConfigurationMode
-        {
-            get => Storage is null ? default : Storage.ConfigurationMode;
-            set
-            {
-                if (Storage is null)
-                    Storage = new DeploymentSettingStorage();
-                Storage.ConfigurationMode = value;
-            }
-        }
+        [WirePath("storage")]
+        public DeploymentSettingStorage Storage { get; set; }
 
         /// <summary> naming prefix to deploy cluster. </summary>
         [WirePath("namingPrefix")]
         public string NamingPrefix { get; set; }
+
         /// <summary> FQDN to deploy cluster. </summary>
         [WirePath("domainFqdn")]
         public string DomainFqdn { get; set; }
+
         /// <summary> InfrastructureNetwork config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("infrastructureNetwork")]
         public IList<DeploymentSettingInfrastructureNetwork> InfrastructureNetwork { get; }
+
         /// <summary> list of physical nodes config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("physicalNodes")]
         public IList<DeploymentSettingPhysicalNodes> PhysicalNodes { get; }
+
         /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("hostNetwork")]
         public DeploymentSettingHostNetwork HostNetwork { get; set; }
+
         /// <summary> SDN Integration config to deploy AzureStackHCI Cluster. </summary>
+        [WirePath("sdnIntegration")]
         internal SdnIntegration SdnIntegration { get; set; }
-        /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
-        [WirePath("sdnIntegration.networkController")]
-        public DeploymentSettingNetworkController SdnIntegrationNetworkController
-        {
-            get => SdnIntegration is null ? default : SdnIntegration.NetworkController;
-            set
-            {
-                if (SdnIntegration is null)
-                    SdnIntegration = new SdnIntegration();
-                SdnIntegration.NetworkController = value;
-            }
-        }
+
+        /// <summary> Is Management Cluster, when true indicates that the cluster is used for managing other clusters. </summary>
+        [WirePath("isManagementCluster")]
+        public bool? IsManagementCluster { get; set; }
 
         /// <summary> The path to the Active Directory Organizational Unit container object prepared for the deployment. </summary>
         [WirePath("adouPath")]
         public string AdouPath { get; set; }
-        /// <summary> Azure keyvault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead. </summary>
+
+        /// <summary> Azure key vault endpoint. This property is deprecated from 2023-12-01-preview. Please use secrets property instead. </summary>
         [WirePath("secretsLocation")]
         public string SecretsLocation { get; set; }
+
         /// <summary> secrets used for cloud deployment. </summary>
         [WirePath("secrets")]
         public IList<EceDeploymentSecrets> Secrets { get; }
+
         /// <summary> OptionalServices config to deploy AzureStackHCI Cluster. </summary>
+        [WirePath("optionalServices")]
         internal OptionalServices OptionalServices { get; set; }
+
+        /// <summary> Local Availability Zone information for HCI cluster. </summary>
+        [WirePath("localAvailabilityZones")]
+        public IList<LocalAvailabilityZones> LocalAvailabilityZones { get; }
+
+        /// <summary> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
+        [WirePath("assemblyInfo")]
+        public HciAssemblyInfo AssemblyInfo { get; set; }
+
+        /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
+        [WirePath("sdnIntegration.networkController")]
+        public DeploymentSettingNetworkController SdnIntegrationNetworkController
+        {
+            get
+            {
+                return SdnIntegration is null ? default : SdnIntegration.NetworkController;
+            }
+            set
+            {
+                if (SdnIntegration is null)
+                {
+                    SdnIntegration = new SdnIntegration();
+                }
+                SdnIntegration.NetworkController = value;
+            }
+        }
+
         /// <summary> The name of custom location. </summary>
         [WirePath("optionalServices.customLocation")]
         public string OptionalServicesCustomLocation
         {
-            get => OptionalServices is null ? default : OptionalServices.CustomLocation;
+            get
+            {
+                return OptionalServices is null ? default : OptionalServices.CustomLocation;
+            }
             set
             {
                 if (OptionalServices is null)
+                {
                     OptionalServices = new OptionalServices();
+                }
                 OptionalServices.CustomLocation = value;
             }
         }

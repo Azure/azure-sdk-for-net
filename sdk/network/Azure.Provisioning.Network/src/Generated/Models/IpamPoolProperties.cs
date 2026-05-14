@@ -73,7 +73,6 @@ public partial class IpamPoolProperties : ProvisionableConstruct
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
         get { Initialize(); return _provisioningState!; }
-        set { Initialize(); _provisioningState!.Assign(value); }
     }
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
@@ -95,6 +94,6 @@ public partial class IpamPoolProperties : ProvisionableConstruct
         _iPAddressType = DefineListProperty<IpamIPType>("IPAddressType", ["ipAddressType"], isOutput: true);
         _parentPoolName = DefineProperty<string>("ParentPoolName", ["parentPoolName"]);
         _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["addressPrefixes"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
     }
 }

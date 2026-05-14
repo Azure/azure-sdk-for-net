@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetAllAsyncCollectionResultOfT(KubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, context), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetAllAsyncCollectionResultOfT(KubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, context, "MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource.GetKubernetesConfigurationPrivateLinkScopes"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetAllCollectionResultOfT(KubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, context), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetAllCollectionResultOfT(KubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, context, "MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource.GetKubernetesConfigurationPrivateLinkScopes"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
     }
 }

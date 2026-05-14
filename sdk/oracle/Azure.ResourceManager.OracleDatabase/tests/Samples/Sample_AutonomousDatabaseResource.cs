@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                     LicenseModel = OracleLicenseModel.LicenseIncluded,
                     ScheduledOperationsList = {new ScheduledOperationsTypeUpdate
 {
-DayOfWeekName = OracleDatabaseDayOfWeekName.Monday,
+ScheduledDayName = OracleDatabaseDayOfWeekName.Monday,
 AutoStartOn = DateTimeOffset.Parse("lwwvkazgmfremfwhckfb"),
 AutoStopOn = DateTimeOffset.Parse("hjwagzxijpiaogulmnmbuqakpqxhkjvaypjqnvbvtjddc"),
 }},

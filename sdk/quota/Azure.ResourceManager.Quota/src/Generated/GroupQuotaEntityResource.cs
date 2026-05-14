@@ -441,7 +441,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 filter,
-                context), data => new GroupQuotaRequestStatusResource(Client, data));
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests"), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -486,7 +487,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 filter,
-                context), data => new GroupQuotaRequestStatusResource(Client, data));
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests"), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
         /// <summary>
@@ -530,7 +532,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 location,
-                context);
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaUsages");
         }
 
         /// <summary>
@@ -574,7 +577,8 @@ namespace Azure.ResourceManager.Quota
                 Id.Name,
                 resourceProviderName,
                 location,
-                context);
+                context,
+                "GroupQuotaEntityResource.GetGroupQuotaUsages");
         }
 
         /// <summary> Gets a collection of GroupQuotaSubscriptions in the <see cref="GroupQuotaEntityResource"/>. </summary>

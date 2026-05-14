@@ -298,7 +298,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new MsixPackageResource(Client, data));
+                context,
+                "MsixPackageCollection.GetAll"), data => new MsixPackageResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new MsixPackageResource(Client, data));
+                context,
+                "MsixPackageCollection.GetAll"), data => new MsixPackageResource(Client, data));
         }
 
         /// <summary>

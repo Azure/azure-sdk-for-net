@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetBySubscriptionAsyncCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApiCenterServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetBySubscriptionAsyncCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterServices"), data => new ApiCenterServiceResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetBySubscriptionCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApiCenterServiceResource(Client, data));
+            return new PageableWrapper<ApiCenterServiceData, ApiCenterServiceResource>(new ServicesGetBySubscriptionCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterServices"), data => new ApiCenterServiceResource(Client, data));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApiCenterDeletedServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterDeletedServices"), data => new ApiCenterDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ApiCenterDeletedServiceResource(Client, data));
+            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetBySubscriptionCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiCenterSubscriptionResource.GetApiCenterDeletedServices"), data => new ApiCenterDeletedServiceResource(Client, data));
         }
     }
 }

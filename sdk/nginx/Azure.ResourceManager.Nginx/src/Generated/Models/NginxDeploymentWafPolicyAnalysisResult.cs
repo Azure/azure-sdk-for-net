@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             get
             {
-                return Data.Errors;
+                return Data is null ? default : Data.Errors;
             }
         }
     }

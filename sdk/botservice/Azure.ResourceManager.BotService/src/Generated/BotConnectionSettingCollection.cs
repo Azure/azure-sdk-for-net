@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceAsyncCollectionResultOfT(_connectionSettingsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BotConnectionSettingResource(Client, data));
+            return new AsyncPageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceAsyncCollectionResultOfT(
+                _connectionSettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotConnectionSettingCollection.GetAll"), data => new BotConnectionSettingResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceCollectionResultOfT(_connectionSettingsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BotConnectionSettingResource(Client, data));
+            return new PageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceCollectionResultOfT(
+                _connectionSettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotConnectionSettingCollection.GetAll"), data => new BotConnectionSettingResource(Client, data));
         }
 
         /// <summary>

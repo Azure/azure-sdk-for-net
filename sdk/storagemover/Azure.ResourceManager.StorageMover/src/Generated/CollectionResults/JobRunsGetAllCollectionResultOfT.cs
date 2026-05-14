@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.StorageMover
         private readonly string _projectName;
         private readonly string _jobDefinitionName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of JobRunsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JobRuns client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public JobRunsGetAllCollectionResultOfT(JobRuns client, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public JobRunsGetAllCollectionResultOfT(JobRuns client, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.StorageMover
             _projectName = projectName;
             _jobDefinitionName = jobDefinitionName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of JobRunsGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.StorageMover
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _storageMoverName, _projectName, _jobDefinitionName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _storageMoverName, _projectName, _jobDefinitionName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("JobRunCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

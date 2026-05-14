@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudKubernetesVersionResource(Client, data));
+                context,
+                "NetworkCloudKubernetesVersionCollection.GetAll"), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +341,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 Id.ResourceGroupName,
                 top,
                 skipToken,
-                context), data => new NetworkCloudKubernetesVersionResource(Client, data));
+                context,
+                "NetworkCloudKubernetesVersionCollection.GetAll"), data => new NetworkCloudKubernetesVersionResource(Client, data));
         }
 
         /// <summary>

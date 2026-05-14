@@ -17,13 +17,6 @@ namespace Azure.AI.AgentServer.Invocations
         public virtual System.Threading.Tasks.Task GetOpenApiAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, System.Threading.CancellationToken cancellationToken) { throw null; }
         public abstract System.Threading.Tasks.Task HandleAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken);
     }
-    public partial class InvocationsActivitySource
-    {
-        public const string DefaultName = "Azure.AI.AgentServer.Invocations";
-        public InvocationsActivitySource() { }
-        protected InvocationsActivitySource(string? name) { }
-        public virtual System.Diagnostics.Activity? StartInvocationActivity(Azure.AI.AgentServer.Invocations.InvocationContext context, Microsoft.AspNetCore.Http.IHeaderDictionary headers) { throw null; }
-    }
     public static partial class InvocationsBuilderExtensions
     {
         public static Azure.AI.AgentServer.Core.AgentHostBuilder AddInvocations(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, Azure.AI.AgentServer.Invocations.InvocationHandler handler, System.Action<Azure.AI.AgentServer.Invocations.InvocationsServerOptions>? configure = null) { throw null; }

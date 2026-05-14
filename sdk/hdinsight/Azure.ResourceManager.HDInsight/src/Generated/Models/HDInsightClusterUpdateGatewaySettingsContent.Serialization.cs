@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterUpdateGatewaySettingsContent : IUtf8JsonSerializable, IJsonModel<HDInsightClusterUpdateGatewaySettingsContent>
+    /// <summary> The update gateway settings request parameters. Note either basic or entra user should be provided at a time. </summary>
+    public partial class HDInsightClusterUpdateGatewaySettingsContent : IJsonModel<HDInsightClusterUpdateGatewaySettingsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterUpdateGatewaySettingsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HDInsightClusterUpdateGatewaySettingsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHDInsightClusterUpdateGatewaySettingsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightClusterUpdateGatewaySettingsContent IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="hdInsightClusterUpdateGatewaySettingsContent"> The <see cref="HDInsightClusterUpdateGatewaySettingsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HDInsightClusterUpdateGatewaySettingsContent hdInsightClusterUpdateGatewaySettingsContent)
+        {
+            if (hdInsightClusterUpdateGatewaySettingsContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(hdInsightClusterUpdateGatewaySettingsContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightClusterUpdateGatewaySettingsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsCredentialEnabled))
             {
                 writer.WritePropertyName("restAuthCredential.isEnabled"u8);
@@ -53,21 +104,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("restAuthEntraUsers"u8);
                 writer.WriteStartArray();
-                foreach (var item in RestAuthEntraUsers)
+                foreach (EntraUserInfo item in RestAuthEntraUsers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,61 +127,65 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        HDInsightClusterUpdateGatewaySettingsContent IJsonModel<HDInsightClusterUpdateGatewaySettingsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HDInsightClusterUpdateGatewaySettingsContent IJsonModel<HDInsightClusterUpdateGatewaySettingsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HDInsightClusterUpdateGatewaySettingsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHDInsightClusterUpdateGatewaySettingsContent(document.RootElement, options);
         }
 
-        internal static HDInsightClusterUpdateGatewaySettingsContent DeserializeHDInsightClusterUpdateGatewaySettingsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HDInsightClusterUpdateGatewaySettingsContent DeserializeHDInsightClusterUpdateGatewaySettingsContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? restAuthCredentialIsEnabled = default;
-            string restAuthCredentialUsername = default;
-            string restAuthCredentialPassword = default;
+            bool? isCredentialEnabled = default;
+            string userName = default;
+            string password = default;
             IList<EntraUserInfo> restAuthEntraUsers = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("restAuthCredential.isEnabled"u8))
+                if (prop.NameEquals("restAuthCredential.isEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restAuthCredentialIsEnabled = property.Value.GetBoolean();
+                    isCredentialEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("restAuthCredential.username"u8))
+                if (prop.NameEquals("restAuthCredential.username"u8))
                 {
-                    restAuthCredentialUsername = property.Value.GetString();
+                    userName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restAuthCredential.password"u8))
+                if (prop.NameEquals("restAuthCredential.password"u8))
                 {
-                    restAuthCredentialPassword = property.Value.GetString();
+                    password = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restAuthEntraUsers"u8))
+                if (prop.NameEquals("restAuthEntraUsers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EntraUserInfo> array = new List<EntraUserInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EntraUserInfo.DeserializeEntraUserInfo(item, options));
                     }
@@ -139,42 +194,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HDInsightClusterUpdateGatewaySettingsContent(restAuthCredentialIsEnabled, restAuthCredentialUsername, restAuthCredentialPassword, restAuthEntraUsers ?? new ChangeTrackingList<EntraUserInfo>(), serializedAdditionalRawData);
+            return new HDInsightClusterUpdateGatewaySettingsContent(isCredentialEnabled, userName, password, restAuthEntraUsers ?? new ChangeTrackingList<EntraUserInfo>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HDInsightClusterUpdateGatewaySettingsContent IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHDInsightClusterUpdateGatewaySettingsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
