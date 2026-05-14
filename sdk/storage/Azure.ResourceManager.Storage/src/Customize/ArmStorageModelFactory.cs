@@ -13,8 +13,8 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -179,8 +179,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         private static StorageAccountProvisioningState? ToAccountProvisioningState(StorageProvisioningState? state)
         {
-            if (!state.HasValue)
-                return null;
+            if (!state.HasValue) return null;
             return state.Value switch
             {
                 StorageProvisioningState.Creating => StorageAccountProvisioningState.Creating,
