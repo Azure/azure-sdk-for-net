@@ -187,12 +187,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             options.AddProxy<JsonModel>(proxy1);
             options.AddProxy<JsonModel>(proxy2);
 
-            // First registered should be returned (highest priority, FIFO)
-            Assert.IsTrue(options.TryGetProxy<JsonModel>(out ModelProxy<JsonModel>? resolved));
-            Assert.AreSame(proxy1, resolved);
+            // HasProxy confirms proxies are registered
+            Assert.IsTrue(options.HasProxy<JsonModel>());
 
-            Assert.IsTrue(options.TryGetProxy<JsonModel>(out IJsonModel<JsonModel>? jsonResolved));
-            Assert.AreSame(proxy1, jsonResolved);
+            // ResolveProxy returns first (FIFO)
+            var model = new JsonModel();
+            var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
+            Assert.AreSame(proxy1, resolved);
         }
 
         [Test]
@@ -245,8 +246,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             options.AddProxy<JsonModel>(proxy);
 
-            Assert.IsTrue(options.TryGetProxy<JsonModel>(out ModelProxy<JsonModel>? resolved));
-            Assert.AreSame(proxy, resolved);
+            Assert.IsTrue(options.HasProxy<JsonModel>());
 
             var model = new JsonModel();
             var resolvedFromModel = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
@@ -254,12 +254,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void TryGetProxy_NoProxies_ReturnsFalse()
+        public void HasProxy_NoProxies_ReturnsFalse()
         {
             var options = new ModelReaderWriterOptions("J");
 
-            Assert.IsFalse(options.TryGetProxy<JsonModel>(out ModelProxy<JsonModel>? _));
-            Assert.IsFalse(options.TryGetProxy<JsonModel>(out IJsonModel<JsonModel>? _));
+            Assert.IsFalse(options.HasProxy<JsonModel>());
         }
 
         [Test]
@@ -275,8 +274,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             // Internal copy shares the same proxy chain
             var copied = new ModelReaderWriterOptions(options);
             Assert.IsTrue(copied.HasProxies);
-            Assert.IsTrue(copied.TryGetProxy<JsonModel>(out ModelProxy<JsonModel>? resolved));
-            Assert.AreSame(proxy1, resolved);
+            Assert.IsTrue(copied.HasProxy<JsonModel>());
         }
 
         [TestCase("J")]

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
@@ -76,71 +75,30 @@ public class ModelReaderWriterOptions
     public object? ProxiedModel { get; private set; }
 
     /// <summary>
-    /// Gets the <see cref="ModelProxy{T}"/> proxy for the specified <typeparamref name="T"/> model type.
-    /// Returns the first registered proxy (highest priority in FIFO order).
+    /// Checks whether any proxies are registered for the specified model type <typeparamref name="T"/>.
+    /// Use this to decide whether to route deserialization of nested model properties through
+    /// <see cref="ModelReaderWriter.Read{T}(BinaryData, ModelReaderWriterOptions)"/> (which performs
+    /// full proxy chain resolution) or through the model's own deserialization method.
     /// </summary>
-    /// <param name="proxy"> The <see cref="ModelProxy{T}"/> proxy if one exists. </param>
-    /// <returns> True if a proxy for <typeparamref name="T"/> was found; otherwise, false. </returns>
-    public bool TryGetProxy<T>([NotNullWhen(true)] out ModelProxy<T>? proxy)
+    /// <typeparam name="T">The model type to check for registered proxies.</typeparam>
+    /// <returns> True if one or more proxies are registered for <typeparamref name="T"/>; otherwise, false. </returns>
+    public bool HasProxy<T>()
     {
-        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? chain) || chain.Count == 0)
-        {
-            proxy = default;
-            return false;
-        }
-
-        // First registered = highest priority (FIFO)
-        proxy = (ModelProxy<T>)chain[0];
-        return true;
+        return _proxies is not null
+            && _proxies.TryGetValue(typeof(T), out List<object>? chain)
+            && chain.Count > 0;
     }
 
     /// <summary>
-    /// Gets the <see cref="IJsonModel{T}"/> proxy for the specified <typeparamref name="T"/> model type.
-    /// Returns the first registered proxy (highest priority in FIFO order) that implements <see cref="IJsonModel{T}"/>.
+    /// Checks whether any proxies are registered for the specified model type.
     /// </summary>
-    /// <param name="proxy"> The <see cref="IJsonModel{T}"/> proxy if one exists. </param>
-    /// <returns> True if a proxy for <typeparamref name="T"/> was found; otherwise, false. </returns>
-    public bool TryGetProxy<T>([NotNullWhen(true)] out IJsonModel<T>? proxy)
+    /// <param name="modelType">The model type to check for registered proxies.</param>
+    /// <returns> True if one or more proxies are registered for the specified type; otherwise, false. </returns>
+    public bool HasProxy(Type modelType)
     {
-        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? chain))
-        {
-            proxy = default;
-            return false;
-        }
-
-        // Walk chain first-to-last (FIFO), return the first ModelProxy<T> that is also IJsonModel<T>
-        for (int i = 0; i < chain.Count; i++)
-        {
-            if (chain[i] is ModelProxy<T> and IJsonModel<T> jsonResult)
-            {
-                proxy = jsonResult;
-                return true;
-            }
-        }
-
-        proxy = default;
-        return false;
-    }
-
-    internal bool TryGetProxy(Type modelType, [NotNullWhen(true)] out IJsonModel<object>? proxy)
-    {
-        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<object>? chain))
-        {
-            proxy = default;
-            return false;
-        }
-
-        for (int i = 0; i < chain.Count; i++)
-        {
-            if (chain[i] is IModelProxy and IJsonModel<object> jsonResult)
-            {
-                proxy = jsonResult;
-                return true;
-            }
-        }
-
-        proxy = default;
-        return false;
+        return _proxies is not null
+            && _proxies.TryGetValue(modelType, out List<object>? chain)
+            && chain.Count > 0;
     }
 
     /// <summary>

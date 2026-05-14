@@ -493,8 +493,8 @@ namespace System.ClientModel.Primitives
         public void AddProxy<T>(System.ClientModel.Primitives.ModelProxy<T> proxy) { }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
         public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
-        public bool TryGetProxy<T>(out System.ClientModel.Primitives.IJsonModel<T>? proxy) { throw null; }
-        public bool TryGetProxy<T>(out System.ClientModel.Primitives.ModelProxy<T>? proxy) { throw null; }
+        public bool HasProxy<T>() { throw null; }
+        public bool HasProxy(System.Type modelType) { throw null; }
     }
     public abstract partial class ModelReaderWriterTypeBuilder
     {

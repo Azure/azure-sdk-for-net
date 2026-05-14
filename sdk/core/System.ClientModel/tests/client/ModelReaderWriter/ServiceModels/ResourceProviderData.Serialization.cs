@@ -62,10 +62,10 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (options.TryGetProxy<ProviderResourceType>(out IJsonModel<ProviderResourceType> proxy))
+                        if (options.HasProxy<ProviderResourceType>())
                         {
-                            Utf8JsonReader reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(item.GetRawText()));
-                            array.Add(proxy.Create(ref reader, options));
+                            var data = BinaryData.FromString(item.GetRawText());
+                            array.Add(ModelReaderWriter.Read<ProviderResourceType>(data, options));
                         }
                         else
                         {
