@@ -1,14 +1,10 @@
 # Release History
 
-## 1.56.0-beta.1 (Unreleased)
+## 1.56.0 (2026-05-14)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added experimental `TokenRequestCallback` property and `TokenRequestCallbackContext` type to MSAL-backed credential options to allow customizing token request body parameters before they are sent to the identity provider.
 
 ## 1.55.0 (2026-05-05)
 

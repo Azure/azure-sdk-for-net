@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppCacheResource netAppCache = client.GetNetAppCacheResource(netAppCacheResourceId);
 
             // invoke the operation
-            NetAppCachePatch patch = new NetAppCachePatch
+            CachePatch patch = new CachePatch
             {
                 Properties = new NetAppCachePatchProperties
                 {
@@ -168,14 +168,9 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             NetAppVolumePoolChangeContent content = new NetAppVolumePoolChangeContent(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool2"));
-            ArmOperation<NetAppCacheResource> lro = await netAppCache.PoolChangeAsync(WaitUntil.Completed, content);
-            NetAppCacheResource result = lro.Value;
+            ArmOperation lro = await netAppCache.PoolChangeAsync(WaitUntil.Completed, content);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetAppCacheData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

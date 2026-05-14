@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
         /// <param name="rank"> The rank of this VM size in the priority order. </param>
         /// <returns> A new <see cref="Models.ComputeScheduleVmSizeProfile"/> instance for mocking. </returns>
-        public static ComputeScheduleVmSizeProfile ComputeScheduleVmSizeProfile(string name = default, int rank = default)
+        public static ComputeScheduleVmSizeProfile ComputeScheduleVmSizeProfile(string name = default, int? rank = default)
         {
             return new ComputeScheduleVmSizeProfile(name, rank, additionalBinaryDataProperties: null);
         }
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
         /// <param name="zonePreferences"> The zone preferences for allocation priority. </param>
         /// <returns> A new <see cref="Models.ComputeScheduleZoneAllocationPolicy"/> instance for mocking. </returns>
-        public static ComputeScheduleZoneAllocationPolicy ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy? distributionStrategy = default, IEnumerable<ComputeScheduleZonePreference> zonePreferences = default)
+        public static ComputeScheduleZoneAllocationPolicy ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy distributionStrategy = default, IEnumerable<ComputeScheduleZonePreference> zonePreferences = default)
         {
             zonePreferences ??= new ChangeTrackingList<ComputeScheduleZonePreference>();
 
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="zone"> The zone identifier. </param>
         /// <param name="rank"> The rank of this zone in the priority order. </param>
         /// <returns> A new <see cref="Models.ComputeScheduleZonePreference"/> instance for mocking. </returns>
-        public static ComputeScheduleZonePreference ComputeScheduleZonePreference(string zone = default, int rank = default)
+        public static ComputeScheduleZonePreference ComputeScheduleZonePreference(string zone = default, int? rank = default)
         {
             return new ComputeScheduleZonePreference(zone, rank, additionalBinaryDataProperties: null);
         }
