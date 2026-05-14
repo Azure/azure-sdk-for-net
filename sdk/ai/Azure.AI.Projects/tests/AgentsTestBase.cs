@@ -4,6 +4,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -662,11 +663,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         {
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        try
+        List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT)).ToListAsync();
+        foreach (string hostedAgent in hostedAgents)
         {
-            projectClient.AgentAdministrationClient.DeleteAgent(HOSTED_AGENT);
+            projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
         }
-        catch { }
         await RemoveToolBoxMayBe(projectClient);
     }
     #endregion
