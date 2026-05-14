@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // provision
             TestContext.Out.WriteLine($"POST - Provision started.....");
-            ArmOperation<NetworkFabricOperationStatusResult> triggerProvision = await networkFabric2.ProvisionAsync(WaitUntil.Completed);
-            NetworkFabricOperationStatusResult triggerProvisionResult = triggerProvision.Value;
+            ArmOperation<OperationStatusResult> triggerProvision = await networkFabric2.ActivateAsync(WaitUntil.Completed);
+            OperationStatusResult triggerProvisionResult = triggerProvision.Value;
             TestContext.Out.WriteLine(triggerProvisionResult);
 
             // Deprovision
             TestContext.Out.WriteLine($"POST - Deprovision started.....");
-            ArmOperation<NetworkFabricOperationStatusResult> deProvisionResponse = await networkFabric2.DeprovisionAsync(WaitUntil.Completed);
+            ArmOperation<OperationStatusResult> deProvisionResponse = await networkFabric2.DeactivateAsync(WaitUntil.Completed);
             TestContext.Out.WriteLine(deProvisionResponse);
 
             // Delete
