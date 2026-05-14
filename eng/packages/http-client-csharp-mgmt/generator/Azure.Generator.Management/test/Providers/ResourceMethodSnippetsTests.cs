@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -11,6 +12,12 @@ namespace Azure.Generator.Management.Tests.Providers
 {
     internal class ResourceMethodSnippetsTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+        }
+
         [Test]
         public void CreateGenericResponsePipelineProcessing_WithFrameworkType_DoesNotUseFromResponse()
         {
@@ -35,6 +42,27 @@ namespace Azure.Generator.Management.Tests.Providers
                 "Framework/system types like OperationStatusResult should not use T.FromResponse(result) — they don't have that method.");
             Assert.That(code, Does.Contain("ModelReaderWriter"),
                 "Framework/system types should be deserialized using ModelReaderWriter.Read<T>.");
+        }
+
+        [Test]
+        public void CreateGenericResponsePipelineProcessing_WithStringType_DoesNotUseContextlessModelReaderWriterRead()
+        {
+            var messageVar = new VariableExpression(typeof(Azure.Core.HttpMessage), "message");
+            var contextVar = new VariableExpression(typeof(Azure.RequestContext), "context");
+            CSharpType responseType = typeof(string);
+
+            var statements = ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
+                messageVar,
+                contextVar,
+                responseType,
+                isAsync: false,
+                out _);
+
+            var code = string.Join("\n", statements.Select(s => s.ToDisplayString()));
+            Assert.That(code, Does.Not.Contain("ModelReaderWriter.Read<string>(result.Content)"));
+            Assert.That(code, Does.Contain("JsonDocument.Parse(result.Content"));
+            Assert.That(code, Does.Contain("ModelSerializationExtensions.JsonDocumentOptions"));
+            Assert.That(code, Does.Contain("RootElement.GetString()"));
         }
     }
 }

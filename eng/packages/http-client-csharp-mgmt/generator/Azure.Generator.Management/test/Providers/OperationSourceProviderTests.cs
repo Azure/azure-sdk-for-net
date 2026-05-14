@@ -166,6 +166,112 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_LongRunningPagingMethod_GeneratesOperationSource()
+        {
+            var resourceModel = InputFactory.Model("ManagedNetworkData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+            var listResultModel = InputFactory.Model("OutboundRuleListResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("nextLink", InputPrimitiveType.String),
+                    InputFactory.Property("value", InputFactory.Array(resourceModel)),
+                ],
+                decorators: []);
+
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            var subscriptionIdParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var resourceGroupParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var resourceNameParameter = InputFactory.PathParameter("managedNetworkName", InputPrimitiveType.String, isRequired: true);
+            var subscriptionIdMethodParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupMethodParam = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var resourceNameMethodParam = InputFactory.MethodParameter("managedNetworkName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+
+            var readOperation = InputFactory.Operation(
+                name: "getManagedNetwork",
+                responses: [InputFactory.OperationResponse([200], resourceModel)],
+                parameters: [subscriptionIdParameter, resourceGroupParameter, resourceNameParameter],
+                path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/managedNetworks/{managedNetworkName}");
+            var readMethod = InputFactory.BasicServiceMethod(
+                "getManagedNetwork",
+                readOperation,
+                parameters: [resourceNameMethodParam, subscriptionIdMethodParam, resourceGroupMethodParam],
+                response: InputFactory.ServiceMethodResponse(resourceModel, null));
+
+            var actionOperation = InputFactory.Operation(
+                name: "batchOutboundRules",
+                responses: [InputFactory.OperationResponse([200], listResultModel), InputFactory.OperationResponse([202])],
+                parameters: [subscriptionIdParameter, resourceGroupParameter, resourceNameParameter],
+                path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/managedNetworks/{managedNetworkName}/batchOutboundRules",
+                httpMethod: "POST");
+            var actionMethod = new InputLongRunningPagingServiceMethod(
+                "batchOutboundRules",
+                "public",
+                [],
+                null,
+                null,
+                actionOperation,
+                [resourceNameMethodParam, subscriptionIdMethodParam, resourceGroupMethodParam],
+                InputFactory.ServiceMethodResponse(listResultModel, null),
+                null,
+                false,
+                true,
+                true,
+                "Test.ManagedNetworks.batchOutboundRules",
+                InputFactory.LongRunningServiceMetadata(1, InputFactory.OperationResponse([200], listResultModel), null),
+                InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));
+
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/managedNetworks/{managedNetworkName}";
+            var armProviderDecorator = BuildArmProviderSchema(
+                resourceModel,
+                [
+                    new ResourceMethod(ResourceOperationKind.Read, readMethod, new RequestPathPattern(readOperation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(resourceIdPattern), null), null!),
+                    new ResourceMethod(ResourceOperationKind.Action, actionMethod, new RequestPathPattern(actionOperation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(resourceIdPattern), null), null!)
+                ],
+                resourceIdPattern,
+                "Microsoft.Tests/managedNetworks",
+                null,
+                ResourceScope.ResourceGroup,
+                "ManagedNetwork");
+            var client = InputFactory.Client(
+                "ManagedNetworksClient",
+                methods: [readMethod, actionMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: "Test.ManagedNetworksClient");
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, listResultModel], clients: () => [client]);
+            var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
+
+            Assert.That(outputLibrary, Is.Not.Null);
+            var operationSources = outputLibrary!.OperationSourceDict;
+            Assert.That(operationSources.Keys.Any(type => type.Name == "OutboundRuleListResult"), Is.True);
+            Assert.That(operationSources.Values.Any(source => source.Name == "OutboundRuleListResultOperationSource"), Is.True);
+
+            var resourceProvider = outputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+            var lroPagingMethods = resourceProvider.Methods
+                .Where(method => method.Signature.Name.Contains("BatchOutboundRules"))
+                .ToList();
+            Assert.That(lroPagingMethods, Has.Count.EqualTo(2));
+            Assert.That(lroPagingMethods, Is.All.Matches<MethodProvider>(method =>
+                method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal)
+                && !method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)));
+
+            var readMethods = resourceProvider.Methods
+                .Where(method => method.Signature.Name.Contains("Get"))
+                .ToList();
+            Assert.That(readMethods, Is.Not.Empty);
+            Assert.That(readMethods, Is.All.Matches<MethodProvider>(method =>
+                method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                && !method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal)));
+        }
+
+        [TestCase]
         public void Verify_CreateResult()
         {
             var validateIdMethod = GetOperationSourceProviderMethodByName("CreateResult");
