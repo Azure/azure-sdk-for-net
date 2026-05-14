@@ -39,24 +39,19 @@ enum FooStatusEnum
 
 ### 4. Model Renamed
 
-**Detection:** TypeSpec diff or changelog shows model name changed between versions.
+**Detection:** TypeSpec diff shows model name changed between versions.
 
-**Per-Language Changelog Pattern:**
-- **Python:** `Deleted or renamed model 'ResourceInfo'` / `Added model 'RedisResource'`
-- **Go:** `Struct 'A' has been removed` / `New struct 'B'`
-- **Java/.NET:** Model removal + addition in changelog
+**TypeSpec pattern**
+```
+@renamedFrom(Versions.v2, "OldModelName")
+model NewModelName {
+  prop: string
+}
+```
 
 **Per-Language Impact:**
 - **All languages:** ❌ Breaking — client code references the old name
 - **.NET:** .NET may keep the old model available via customization code (partial classes) rather than `client.tsp`
-
-**Note (Python):** Check legacy `readme.python.md` for Swagger rename directives that need to be preserved:
-```md
-directive:
-  - rename-model:
-      from: 'RedisResource'
-      to: 'ResourceInfo'
-```
 
 **Mitigation:**
 ```typespec
