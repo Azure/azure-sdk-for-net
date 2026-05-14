@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private StorageAccountResource _storageAccount;
         private BlobServiceResource _blobService;
         private BlobContainerCollection _blobContainerCollection;
-        public BlobContainerTests(bool async) : base(async)//, RecordedTestMode.Record)
+        public BlobContainerTests(bool async) : base(async) //, RecordedTestMode.Record)
         {
         }
 
@@ -858,6 +858,57 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(dstPolicy.Data.SourceAccount, srcAccount.Id.ToString());
             Assert.AreEqual(dstPolicy.Data.DestinationAccount, dstAccount.Id.ToString());
             Assert.IsTrue(dstPolicy.Data.TagsReplicationEnabled);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task BlobServiceStaticWebsiteWithDefaultIndexDocumentPath()
+        {
+            //create storage account with StorageV2 (required for static website)
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = Recording.GenerateAssetName("teststoragemgmt");
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation);
+
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+
+            //enable static website with standard properties via round-trip
+            BlobServiceResource blobService = account.GetBlobService();
+            blobService = await blobService.GetAsync();
+            BlobServiceData blobServiceData = blobService.Data;
+            blobServiceData.StaticWebsite = new StaticWebsite(true)
+            {
+                IndexDocument = "index.html",
+                ErrorDocument404Path = "errors/404.html"
+            };
+            blobService = (await account.GetBlobService().CreateOrUpdateAsync(WaitUntil.Completed, blobServiceData)).Value;
+
+            //verify round-trip via GetAsync
+            blobService = await blobService.GetAsync();
+            Assert.IsNotNull(blobService.Data.StaticWebsite);
+            Assert.IsTrue(blobService.Data.StaticWebsite.Enabled);
+            Assert.AreEqual("index.html", blobService.Data.StaticWebsite.IndexDocument);
+            Assert.AreEqual("errors/404.html", blobService.Data.StaticWebsite.ErrorDocument404Path);
+
+            //update static website with DefaultIndexDocumentPath
+            blobServiceData = blobService.Data;
+            blobServiceData.StaticWebsite = new StaticWebsite(true)
+            {
+                DefaultIndexDocumentPath = "site/home.html"
+            };
+            blobService = (await account.GetBlobService().CreateOrUpdateAsync(WaitUntil.Completed, blobServiceData)).Value;
+
+            //verify DefaultIndexDocumentPath round-trip via GetAsync
+            blobService = await blobService.GetAsync();
+            Assert.IsNotNull(blobService.Data.StaticWebsite);
+            Assert.IsTrue(blobService.Data.StaticWebsite.Enabled);
+            Assert.AreEqual("site/home.html", blobService.Data.StaticWebsite.DefaultIndexDocumentPath);
+            //confirm legacy properties are cleared when only DefaultIndexDocumentPath is set
+            Assert.IsNull(blobService.Data.StaticWebsite.IndexDocument);
+            Assert.IsNull(blobService.Data.StaticWebsite.ErrorDocument404Path);
         }
     }
 }
