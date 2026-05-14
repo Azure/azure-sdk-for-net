@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Resources
         WhatIfOperationResult IOperationSource<WhatIfOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WhatIfOperationResult result = WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Resources
         async ValueTask<WhatIfOperationResult> IOperationSource<WhatIfOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WhatIfOperationResult result = WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
