@@ -136,8 +136,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class JsonModelProxy : ModelProxy<JsonModel>, IJsonModel<JsonModel>
         {
-            public override bool CanHandle(JsonModel model) => true;
-
             JsonModel IJsonModel<JsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
@@ -527,8 +525,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 _handleRead = handleRead;
             }
 
-            public override bool CanHandle(SimpleModel model) => true;
-
             public override bool CanHandle(BinaryData data, ModelReaderWriterOptions options)
             {
                 return _handleRead;
@@ -581,8 +577,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 _discriminatorValue = discriminatorValue;
             }
 
-            public override bool CanHandle(SimpleModel model) => true;
-
             public override bool CanHandle(BinaryData data, ModelReaderWriterOptions options)
             {
                 return data.ToString().Contains($"\"type\":\"{_discriminatorValue}\"");
@@ -628,8 +622,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             public object? CapturedOnCreateBinaryData { get; private set; }
             public object? CapturedOnCreateReader { get; private set; }
             public List<object?> AllCapturedOnCreateReader { get; } = new();
-
-            public override bool CanHandle(SimpleModel model) => true;
 
             public void Reset()
             {

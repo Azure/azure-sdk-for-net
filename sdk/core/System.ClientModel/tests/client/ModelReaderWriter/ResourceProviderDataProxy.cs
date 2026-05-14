@@ -15,7 +15,6 @@ namespace System.ClientModel.Tests.Client
     /// </summary>
     public class ResourceProviderDataProxy : ModelProxy<ResourceProviderData>, IJsonModel<ResourceProviderData>
     {
-        public override bool CanHandle(ResourceProviderData model) => true;
         private void Write(ResourceProviderData model, Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();

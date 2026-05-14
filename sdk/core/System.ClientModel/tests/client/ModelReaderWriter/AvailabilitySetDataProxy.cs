@@ -14,8 +14,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetDataProxy : ModelProxy<AvailabilitySetData>, IJsonModel<AvailabilitySetData>
     {
-        public override bool CanHandle(AvailabilitySetData model) => true;
-
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);

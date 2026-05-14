@@ -16,8 +16,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     /// </summary>
     public partial class ProviderResourceTypeProxy : ModelProxy<ProviderResourceType>, IJsonModel<ProviderResourceType>
     {
-        public override bool CanHandle(ProviderResourceType model) => true;
-
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelReaderWriterOptions options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;

@@ -111,8 +111,6 @@ internal class ModelReaderWriterSamples
     public class OutputModelProxy : ModelProxy<OutputModel>, IJsonModel<OutputModel>
     #endregion
     {
-        public override bool CanHandle(OutputModel model) => true;
-
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
@@ -141,8 +139,6 @@ internal class ModelReaderWriterSamples
 
     public class OutputModelProxyOverride : ModelProxy<OutputModel>, IJsonModel<OutputModel>
     {
-        public override bool CanHandle(OutputModel model) => true;
-
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
@@ -173,8 +169,6 @@ internal class ModelReaderWriterSamples
     public class InputModelProxy : ModelProxy<InputModel>, IJsonModel<InputModel>
     #endregion
     {
-        public override bool CanHandle(InputModel model) => true;
-
         void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();

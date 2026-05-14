@@ -15,8 +15,9 @@ internal interface IModelProxy
 
 /// <summary>
 /// Abstract base class for model proxies that participate in the chain-of-responsibility
-/// pattern for reading and writing models. Proxies must implement <see cref="CanHandle(T)"/>
-/// to indicate whether they can handle a given model instance on the write path.
+/// pattern for reading and writing models. Override <see cref="CanHandle(T)"/> or
+/// <see cref="CanHandle(BinaryData, ModelReaderWriterOptions)"/> to selectively decline
+/// handling specific instances or data.
 /// </summary>
 /// <typeparam name="T">The model type this proxy handles.</typeparam>
 public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
@@ -24,10 +25,12 @@ public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
     /// <summary>
     /// Determines whether this proxy can handle the specified model instance.
     /// Used on the write path for per-element proxy selection.
+    /// Override to inspect the model and decline by returning false.
+    /// Default returns true.
     /// </summary>
     /// <param name="model">The model instance to check.</param>
     /// <returns>True if this proxy can handle the model; otherwise, false.</returns>
-    public abstract bool CanHandle(T model);
+    public virtual bool CanHandle(T model) => true;
 
     /// <summary>
     /// Determines whether this proxy can handle reading from the specified data.
