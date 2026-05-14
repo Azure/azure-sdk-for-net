@@ -78,8 +78,8 @@ internal class JsonCollectionReader : CollectionReader
                     }
                     else if (jsonModel is not null)
                     {
-                        // Chain-of-responsibility per element: snapshot reader, try proxies,
-                        // restore on null (decline), fall back to model.
+                        // Chain-of-responsibility per element: snapshot reader, try proxies via CanHandle,
+                        // fall back to model if all decline.
                         collectionWrapper.AddItem(options.ReadWithChain(jsonModel.GetType(), jsonModel, ref reader), propertyName);
                     }
                     else

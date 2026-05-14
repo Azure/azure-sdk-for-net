@@ -41,6 +41,27 @@ namespace System.ClientModel.Tests.Internal.Perf
                 _tenProxiesLastWinsOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: false));
             }
             _tenProxiesLastWinsOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: true));
+
+            // STJ options for Utf8JsonReader snapshot path benchmarks
+            _jsonString = "{\"value\":\"hello\"}";
+
+            _stjNoProxy = new JsonSerializerOptions();
+            _stjNoProxy.Converters.Add(new JsonModelConverter(_noProxyOptions));
+
+            _stjOneProxy = new JsonSerializerOptions();
+            _stjOneProxy.Converters.Add(new JsonModelConverter(_oneProxyOptions));
+
+            _stjTenProxiesLastWins = new JsonSerializerOptions();
+            _stjTenProxiesLastWins.Converters.Add(new JsonModelConverter(_tenProxiesLastWinsOptions));
+
+            // All proxies decline → model handles via snapshot reader (worst case for snapshot cost)
+            var allDeclineOptions = new ModelReaderWriterOptions("J");
+            for (int i = 0; i < 10; i++)
+            {
+                allDeclineOptions.AddProxy<BenchmarkModel>(new BenchmarkProxy(canHandle: false));
+            }
+            _stjAllDecline = new JsonSerializerOptions();
+            _stjAllDecline.Converters.Add(new JsonModelConverter(allDeclineOptions));
         }
 
         // ── Write benchmarks ──
@@ -166,6 +187,42 @@ namespace System.ClientModel.Tests.Internal.Perf
                 => ModelReaderWriter.Write(this, options);
 
             public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
+        // ── STJ Read benchmarks (Utf8JsonReader snapshot path) ──
+
+        private JsonSerializerOptions _stjNoProxy;
+        private JsonSerializerOptions _stjOneProxy;
+        private JsonSerializerOptions _stjTenProxiesLastWins;
+        private JsonSerializerOptions _stjAllDecline;
+        private string _jsonString;
+
+        [Benchmark]
+        [BenchmarkCategory("STJ_Read")]
+        public BenchmarkModel StjRead_NoProxy()
+        {
+            return JsonSerializer.Deserialize<BenchmarkModel>(_jsonString, _stjNoProxy)!;
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("STJ_Read")]
+        public BenchmarkModel StjRead_OneProxy()
+        {
+            return JsonSerializer.Deserialize<BenchmarkModel>(_jsonString, _stjOneProxy)!;
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("STJ_Read")]
+        public BenchmarkModel StjRead_TenProxies_LastWins()
+        {
+            return JsonSerializer.Deserialize<BenchmarkModel>(_jsonString, _stjTenProxiesLastWins)!;
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("STJ_Read")]
+        public BenchmarkModel StjRead_AllDecline_ModelFallback()
+        {
+            return JsonSerializer.Deserialize<BenchmarkModel>(_jsonString, _stjAllDecline)!;
         }
     }
 }
