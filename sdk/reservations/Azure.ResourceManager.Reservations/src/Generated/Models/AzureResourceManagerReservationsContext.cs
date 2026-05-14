@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
 
@@ -13,13 +14,14 @@ namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AppliedReservationData))]
     [ModelReaderWriterBuildable(typeof(AppliedReservationList))]
+    [ModelReaderWriterBuildable(typeof(AppliedReservationsProperties))]
     [ModelReaderWriterBuildable(typeof(AppliedScopeProperties))]
-    [ModelReaderWriterBuildable(typeof(AvailableScopeRequestProperties))]
     [ModelReaderWriterBuildable(typeof(AvailableScopesContent))]
+    [ModelReaderWriterBuildable(typeof(AvailableScopesContentProperties))]
     [ModelReaderWriterBuildable(typeof(AvailableScopesProperties))]
     [ModelReaderWriterBuildable(typeof(BenefitsCommitment))]
     [ModelReaderWriterBuildable(typeof(BillingInformation))]
@@ -43,16 +45,23 @@ namespace Azure.ResourceManager.Reservations
     [ModelReaderWriterBuildable(typeof(ExchangeResultProperties))]
     [ModelReaderWriterBuildable(typeof(ExtendedStatusInfo))]
     [ModelReaderWriterBuildable(typeof(MergeContent))]
+    [ModelReaderWriterBuildable(typeof(MergeProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationDisplay))]
+    [ModelReaderWriterBuildable(typeof(OperationList))]
+    [ModelReaderWriterBuildable(typeof(OperationResponse))]
     [ModelReaderWriterBuildable(typeof(OperationResultError))]
+    [ModelReaderWriterBuildable(typeof(PatchProperties))]
     [ModelReaderWriterBuildable(typeof(PatchPropertiesRenewProperties))]
     [ModelReaderWriterBuildable(typeof(PaymentDetail))]
     [ModelReaderWriterBuildable(typeof(PurchasePrice))]
+    [ModelReaderWriterBuildable(typeof(PurchaseRequestProperties))]
     [ModelReaderWriterBuildable(typeof(PurchaseRequestPropertiesReservedResourceProperties))]
     [ModelReaderWriterBuildable(typeof(QuotaLimits))]
     [ModelReaderWriterBuildable(typeof(QuotaProperties))]
     [ModelReaderWriterBuildable(typeof(QuotaRequestDetailData))]
     [ModelReaderWriterBuildable(typeof(QuotaRequestDetailResource))]
     [ModelReaderWriterBuildable(typeof(QuotaRequestDetailsList))]
+    [ModelReaderWriterBuildable(typeof(QuotaRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RefundPolicyResult))]
     [ModelReaderWriterBuildable(typeof(RenewProperties))]
     [ModelReaderWriterBuildable(typeof(RenewPropertiesBillingCurrencyTotal))]
@@ -70,6 +79,7 @@ namespace Azure.ResourceManager.Reservations
     [ModelReaderWriterBuildable(typeof(ReservationOrderBillingPlanInformation))]
     [ModelReaderWriterBuildable(typeof(ReservationOrderData))]
     [ModelReaderWriterBuildable(typeof(ReservationOrderList))]
+    [ModelReaderWriterBuildable(typeof(ReservationOrderProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationOrderResource))]
     [ModelReaderWriterBuildable(typeof(ReservationProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationPropertiesUtilization))]
@@ -95,7 +105,9 @@ namespace Azure.ResourceManager.Reservations
     [ModelReaderWriterBuildable(typeof(ReservationToReturn))]
     [ModelReaderWriterBuildable(typeof(ReservationToReturnForExchange))]
     [ModelReaderWriterBuildable(typeof(ReservationUtilizationAggregates))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanPurchase))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanPurchaseRequestProperties))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanToPurchaseCalculateExchange))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanToPurchaseExchange))]
     [ModelReaderWriterBuildable(typeof(ScopeProperties))]
@@ -103,11 +115,10 @@ namespace Azure.ResourceManager.Reservations
     [ModelReaderWriterBuildable(typeof(SkuProperty))]
     [ModelReaderWriterBuildable(typeof(SkuRestriction))]
     [ModelReaderWriterBuildable(typeof(SplitContent))]
+    [ModelReaderWriterBuildable(typeof(SplitProperties))]
     [ModelReaderWriterBuildable(typeof(SubContent))]
-    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetCatalogOptions))]
     [ModelReaderWriterBuildable(typeof(SubscriptionScopeProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(TenantResourceGetReservationDetailsOptions))]
     public partial class AzureResourceManagerReservationsContext : ModelReaderWriterContext
     {
     }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal class ReservationQuotaOperationSource : IOperationSource<ReservationQuotaResource>
+    /// <summary></summary>
+    internal partial class ReservationQuotaOperationSource : IOperationSource<ReservationQuotaResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ReservationQuotaOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ReservationQuotaResource IOperationSource<ReservationQuotaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ReservationQuotaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ReservationQuotaData data = ReservationQuotaData.DeserializeReservationQuotaData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ReservationQuotaResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ReservationQuotaResource> IOperationSource<ReservationQuotaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ReservationQuotaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
-            return await Task.FromResult(new ReservationQuotaResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ReservationQuotaData data = ReservationQuotaData.DeserializeReservationQuotaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ReservationQuotaResource(_client, data);
         }
     }
 }

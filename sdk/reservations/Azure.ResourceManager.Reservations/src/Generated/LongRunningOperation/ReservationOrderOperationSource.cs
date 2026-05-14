@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal class ReservationOrderOperationSource : IOperationSource<ReservationOrderResource>
+    /// <summary></summary>
+    internal partial class ReservationOrderOperationSource : IOperationSource<ReservationOrderResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ReservationOrderOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ReservationOrderResource IOperationSource<ReservationOrderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ReservationOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ReservationOrderData data = ReservationOrderData.DeserializeReservationOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ReservationOrderResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ReservationOrderResource> IOperationSource<ReservationOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ReservationOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
-            return await Task.FromResult(new ReservationOrderResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ReservationOrderData data = ReservationOrderData.DeserializeReservationOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ReservationOrderResource(_client, data);
         }
     }
 }

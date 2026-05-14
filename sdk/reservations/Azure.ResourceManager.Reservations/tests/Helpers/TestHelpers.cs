@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Tests.Helper
                 DisplayName = "testVM",
                 AppliedScopeType = new AppliedScopeType(scope),
                 IsRenewEnabled = false,
-                ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On"), null),
+                ReservedResourceInstanceFlexibility = new InstanceFlexibility("On"),
             };
 
             if (scope.Equals("Single"))

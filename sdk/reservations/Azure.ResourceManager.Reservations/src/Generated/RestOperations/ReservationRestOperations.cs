@@ -6,731 +6,294 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal partial class ReservationRestOperations
+    internal partial class Reservation
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ReservationRestOperations. </summary>
+        /// <summary> Initializes a new instance of Reservation for mocking. </summary>
+        protected Reservation()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Reservation. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ReservationRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Reservation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateAvailableScopesRequestUri(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string reservationOrderId, string reservationId, string expand, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
-            uri.AppendPath("/availableScopes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateAvailableScopesRequest(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendPath("/availableScopes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary>
-        /// Check whether the scopes from request is valid for `Reservation`.
-        ///
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="content"> Scopes to be checked for eligibility. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> AvailableScopesAsync(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            if (_apiVersion != null)
             {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-        }
-
-        /// <summary>
-        /// Check whether the scopes from request is valid for `Reservation`.
-        ///
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="content"> Scopes to be checked for eligibility. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response AvailableScopes(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateSplitRequestUri(Guid reservationOrderId, SplitContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/split", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateSplitRequest(Guid reservationOrderId, SplitContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/split", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed to Split a reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> SplitAsync(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateSplitRequest(reservationOrderId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed to Split a reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response Split(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateSplitRequest(reservationOrderId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateMergeRequestUri(Guid reservationOrderId, MergeContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/merge", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateMergeRequest(Guid reservationOrderId, MergeContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/merge", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed for commercial request for a reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> MergeAsync(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateMergeRequest(reservationOrderId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed for commercial request for a reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response Merge(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateMergeRequest(reservationOrderId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(Guid reservationOrderId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(Guid reservationOrderId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReservationList>> ListAsync(Guid reservationOrderId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(reservationOrderId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReservationList> List(Guid reservationOrderId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(reservationOrderId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(Guid reservationOrderId, Guid reservationId, string expand)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(Guid reservationOrderId, Guid reservationId, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get specific `Reservation` details. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="expand"> Supported value of this query is renewProperties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReservationDetailData>> GetAsync(Guid reservationOrderId, Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string reservationOrderId, string reservationId, RequestContent content, RequestContext context)
         {
-            using var message = CreateGetRequest(reservationOrderId, reservationId, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ReservationDetailData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get specific `Reservation` details. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="expand"> Supported value of this query is renewProperties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReservationDetailData> Get(Guid reservationOrderId, Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetRequest(reservationOrderId, reservationId, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ReservationDetailData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Updates the applied scopes of the `Reservation`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="patch"> Information needed to patch a reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public async Task<Response> UpdateAsync(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(string reservationOrderId, RequestContext context)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates the applied scopes of the `Reservation`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="patch"> Information needed to patch a reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public Response Update(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateArchiveRequestUri(Guid reservationOrderId, Guid reservationId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
             uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendPath("/archive", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateArchiveRequest(Guid reservationOrderId, Guid reservationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendPath("/archive", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/reservations", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> ArchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Archiving a `Reservation` moves it to `Archived` state. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Archive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateArchiveRequest(reservationOrderId, reservationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUnarchiveRequestUri(Guid reservationOrderId, Guid reservationId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendPath("/unarchive", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUnarchiveRequest(Guid reservationOrderId, Guid reservationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendPath("/unarchive", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary>
-        /// Restores a `Reservation` to the state it was before archiving.
-        ///
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> UnarchiveAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary>
-        /// Restores a `Reservation` to the state it was before archiving.
-        ///
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Unarchive(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateUnarchiveRequest(reservationOrderId, reservationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRevisionsRequestUri(Guid reservationOrderId, Guid reservationId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendPath("/revisions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRevisionsRequest(Guid reservationOrderId, Guid reservationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string reservationOrderId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAvailableScopesRequest(string reservationOrderId, string reservationId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/availableScopes", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateArchiveRequest(string reservationOrderId, string reservationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/archive", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            return message;
+        }
+
+        internal HttpMessage CreateUnarchiveRequest(string reservationOrderId, string reservationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/unarchive", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            return message;
+        }
+
+        internal HttpMessage CreateGetRevisionsRequest(string reservationOrderId, string reservationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
             uri.AppendPath("/revisions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReservationList>> ListRevisionsAsync(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetRevisionsRequest(Uri nextPage, string reservationOrderId, string reservationId, RequestContext context)
         {
-            using var message = CreateListRevisionsRequest(reservationOrderId, reservationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReservationList> ListRevisions(Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateSplitReservationRequest(string reservationOrderId, RequestContent content, RequestContext context)
         {
-            using var message = CreateListRevisionsRequest(reservationOrderId, reservationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/split", false);
+            if (_apiVersion != null)
             {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
         }
 
-        internal RequestUriBuilder CreateListAllRequestUri(string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
+        internal HttpMessage CreateMergeReservationRequest(string reservationOrderId, RequestContent content, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/merge", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetReservationDetailsRequest(string filter, string @orderby, string refreshSummary, float? skiptoken, string selectedState, float? take, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (orderby != null)
+            if (@orderby != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", @orderby, true);
             }
             if (refreshSummary != null)
             {
@@ -738,7 +301,7 @@ namespace Azure.ResourceManager.Reservations
             }
             if (skiptoken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken.Value, true);
+                uri.AppendQuery("$skiptoken", TypeFormatters.ConvertToString(skiptoken), true);
             }
             if (selectedState != null)
             {
@@ -746,328 +309,37 @@ namespace Azure.ResourceManager.Reservations
             }
             if (take != null)
             {
-                uri.AppendQuery("take", take.Value, true);
+                uri.AppendQuery("take", TypeFormatters.ConvertToString(take), true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListAllRequest(string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Capacity/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            if (refreshSummary != null)
-            {
-                uri.AppendQuery("refreshSummary", refreshSummary, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("$skiptoken", skiptoken.Value, true);
-            }
-            if (selectedState != null)
-            {
-                uri.AppendQuery("selectedState", selectedState, true);
-            }
-            if (take != null)
-            {
-                uri.AppendQuery("take", take.Value, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReservationsListResult>> ListAllAsync(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetReservationDetailsRequest(Uri nextPage, string filter, string @orderby, string refreshSummary, float? skiptoken, string selectedState, float? take, RequestContext context)
         {
-            using var message = CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReservationsListResult> ListAll(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, Guid reservationOrderId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, Guid reservationOrderId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ReservationList>> ListNextPageAsync(string nextLink, Guid reservationOrderId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink, reservationOrderId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List `Reservation`s within a single `ReservationOrder`. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ReservationList> ListNextPage(string nextLink, Guid reservationOrderId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink, reservationOrderId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRevisionsNextPageRequestUri(string nextLink, Guid reservationOrderId, Guid reservationId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRevisionsNextPageRequest(string nextLink, Guid reservationOrderId, Guid reservationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ReservationList>> ListRevisionsNextPageAsync(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListRevisionsNextPageRequest(nextLink, reservationOrderId, reservationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List of all the revisions for the `Reservation`. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ReservationList> ListRevisionsNextPage(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListRevisionsNextPageRequest(nextLink, reservationOrderId, reservationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListAllNextPageRequest(string nextLink, string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ReservationsListResult>> ListAllNextPageAsync(string nextLink, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ReservationsListResult> ListAllNextPage(string nextLink, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

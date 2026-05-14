@@ -8,34 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmReservationsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.AvailableScopesProperties"/>. </summary>
-        /// <param name="scopes"> The scopes checked by the available scope api. </param>
-        /// <returns> A new <see cref="Models.AvailableScopesProperties"/> instance for mocking. </returns>
-        public static AvailableScopesProperties AvailableScopesProperties(IEnumerable<ScopeProperties> scopes = null)
-        {
-            scopes ??= new List<ScopeProperties>();
 
-            return new AvailableScopesProperties(scopes != null ? new SubscriptionScopeProperties(scopes?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScopeProperties"/>. </summary>
-        /// <param name="scope"></param>
-        /// <param name="isValid"></param>
-        /// <returns> A new <see cref="Models.ScopeProperties"/> instance for mocking. </returns>
-        public static ScopeProperties ScopeProperties(string scope = null, bool? isValid = null)
-        {
-            return new ScopeProperties(scope, isValid, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationCatalog"/>. </summary>
+        /// <summary> Product details of a type of resource. </summary>
         /// <param name="appliedResourceType"> The type of resource the sku applies to. </param>
         /// <param name="skuName"> The name of sku. </param>
         /// <param name="billingPlans"> The billing plan options available for this sku. </param>
@@ -48,108 +32,453 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="size"> The size of this sku. </param>
         /// <param name="capabilities"></param>
         /// <returns> A new <see cref="Models.ReservationCatalog"/> instance for mocking. </returns>
-        public static ReservationCatalog ReservationCatalog(string appliedResourceType = null, string skuName = null, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans = null, IEnumerable<ReservationTerm> terms = null, IEnumerable<AzureLocation> locations = null, IEnumerable<SkuProperty> skuProperties = null, ReservationCatalogMsrp msrp = null, IEnumerable<SkuRestriction> restrictions = null, string tier = null, string size = null, IEnumerable<SkuCapability> capabilities = null)
+        public static ReservationCatalog ReservationCatalog(string appliedResourceType = default, string skuName = default, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans = default, IEnumerable<ReservationTerm> terms = default, IEnumerable<AzureLocation> locations = default, IEnumerable<SkuProperty> skuProperties = default, ReservationCatalogMsrp msrp = default, IEnumerable<SkuRestriction> restrictions = default, string tier = default, string size = default, IEnumerable<SkuCapability> capabilities = default)
         {
-            billingPlans ??= new Dictionary<string, IList<ReservationBillingPlan>>();
-            terms ??= new List<ReservationTerm>();
-            locations ??= new List<AzureLocation>();
-            skuProperties ??= new List<SkuProperty>();
-            restrictions ??= new List<SkuRestriction>();
-            capabilities ??= new List<SkuCapability>();
+            billingPlans ??= new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>();
+            terms ??= new ChangeTrackingList<ReservationTerm>();
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            skuProperties ??= new ChangeTrackingList<SkuProperty>();
+            restrictions ??= new ChangeTrackingList<SkuRestriction>();
+            capabilities ??= new ChangeTrackingList<SkuCapability>();
 
             return new ReservationCatalog(
                 appliedResourceType,
                 skuName,
                 billingPlans,
-                terms?.ToList(),
-                locations?.ToList(),
-                skuProperties?.ToList(),
+                terms.ToList(),
+                locations.ToList(),
+                skuProperties.ToList(),
                 msrp,
-                restrictions?.ToList(),
+                restrictions.ToList(),
                 tier,
                 size,
-                capabilities?.ToList(),
-                serializedAdditionalRawData: null);
+                capabilities.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuProperty"/>. </summary>
+        /// <summary> Property of a sku. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.SkuProperty"/> instance for mocking. </returns>
-        public static SkuProperty SkuProperty(string name = null, string value = null)
+        public static SkuProperty SkuProperty(string name = default, string value = default)
         {
-            return new SkuProperty(name, value, serializedAdditionalRawData: null);
+            return new SkuProperty(name, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationCatalogMsrp"/>. </summary>
+        /// <summary> Pricing information about the sku. </summary>
         /// <param name="p1Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p3Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p5Y"> Amount in pricing currency. Tax not included. </param>
         /// <returns> A new <see cref="Models.ReservationCatalogMsrp"/> instance for mocking. </returns>
-        public static ReservationCatalogMsrp ReservationCatalogMsrp(PurchasePrice p1Y = null, PurchasePrice p3Y = null, PurchasePrice p5Y = null)
+        public static ReservationCatalogMsrp ReservationCatalogMsrp(PurchasePrice p1Y = default, PurchasePrice p3Y = default, PurchasePrice p5Y = default)
         {
-            return new ReservationCatalogMsrp(p1Y, p3Y, p5Y, serializedAdditionalRawData: null);
+            return new ReservationCatalogMsrp(p1Y, p3Y, p5Y, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuRestriction"/>. </summary>
+        /// <summary> Restriction of a sku. </summary>
         /// <param name="skuRestrictionType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the sku is restricted. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
         /// <returns> A new <see cref="Models.SkuRestriction"/> instance for mocking. </returns>
-        public static SkuRestriction SkuRestriction(string skuRestrictionType = null, IEnumerable<string> values = null, string reasonCode = null)
+        public static SkuRestriction SkuRestriction(string skuRestrictionType = default, IEnumerable<string> values = default, string reasonCode = default)
         {
-            values ??= new List<string>();
+            values ??= new ChangeTrackingList<string>();
 
-            return new SkuRestriction(skuRestrictionType, values?.ToList(), reasonCode, serializedAdditionalRawData: null);
+            return new SkuRestriction(skuRestrictionType, values.ToList(), reasonCode, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuCapability"/>. </summary>
+        /// <summary> Capability of a sku. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.SkuCapability"/> instance for mocking. </returns>
-        public static SkuCapability SkuCapability(string name = null, string value = null)
+        public static SkuCapability SkuCapability(string name = default, string value = default)
         {
-            return new SkuCapability(name, value, serializedAdditionalRawData: null);
+            return new SkuCapability(name, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppliedReservationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="reservationOrderIds"> Paginated list of applied reservations. </param>
-        /// <returns> A new <see cref="Models.AppliedReservationData"/> instance for mocking. </returns>
-        public static AppliedReservationData AppliedReservationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppliedReservationList reservationOrderIds = null)
+        /// <summary> Paginated list of applied reservations. </summary>
+        /// <param name="value"> Array of reservation resource ids. </param>
+        /// <param name="nextLink"> Url to get the next page of reservations. </param>
+        /// <returns> A new <see cref="Models.AppliedReservationList"/> instance for mocking. </returns>
+        public static AppliedReservationList AppliedReservationList(IEnumerable<string> value = default, string nextLink = default)
         {
-            return new AppliedReservationData(
+            value ??= new ChangeTrackingList<string>();
+
+            return new AppliedReservationList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The quota request status. </param>
+        /// <param name="message"> User friendly status message. </param>
+        /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="quotaRequestValue"> The quotaRequests. </param>
+        /// <returns> A new <see cref="Reservations.QuotaRequestDetailData"/> instance for mocking. </returns>
+        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<SubContent> quotaRequestValue = default)
+        {
+            return new QuotaRequestDetailData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                reservationOrderIds,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                provisioningState is null && message is null && requestSubmitOn is null && quotaRequestValue is null ? default : new QuotaRequestProperties(provisioningState, message, requestSubmitOn, (quotaRequestValue ?? new ChangeTrackingList<SubContent>()).ToList(), null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppliedReservationList"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> Url to get the next page of reservations. </param>
-        /// <returns> A new <see cref="Models.AppliedReservationList"/> instance for mocking. </returns>
-        public static AppliedReservationList AppliedReservationList(IEnumerable<string> value = null, string nextLink = null)
+        /// <summary> The sub-request submitted with the quota request. </summary>
+        /// <param name="limit"> Quota (resource limit). </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> Resource type for which the quota check was made. </param>
+        /// <param name="unit"> The limit units, such as <b>count</b> and <b>bytes</b>. Use the unit field provided in the response of the GET quota operation. </param>
+        /// <param name="provisioningState"> The quota request status. </param>
+        /// <param name="message"> User-friendly status message. </param>
+        /// <param name="subRequestId"> Sub request ID for individual request. </param>
+        /// <returns> A new <see cref="Models.SubContent"/> instance for mocking. </returns>
+        public static SubContent SubContent(int? limit = default, ReservationResourceName name = default, string resourceType = default, string unit = default, QuotaRequestState? provisioningState = default, string message = default, Guid? subRequestId = default)
         {
-            value ??= new List<string>();
-
-            return new AppliedReservationList(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+            return new SubContent(
+                limit,
+                name,
+                resourceType,
+                unit,
+                provisioningState,
+                message,
+                subRequestId,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResult"/>. </summary>
+        /// <summary> Resource name provided by the resource provider. Use this property for quotaRequest parameter. </summary>
+        /// <param name="value"> Resource name. </param>
+        /// <param name="localizedValue"> Resource display localized name. </param>
+        /// <returns> A new <see cref="Models.ReservationResourceName"/> instance for mocking. </returns>
+        public static ReservationResourceName ReservationResourceName(string value = default, string localizedValue = default)
+        {
+            return new ReservationResourceName(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response containing operation information. </summary>
+        /// <param name="name"> Name of the operation. </param>
+        /// <param name="isDataAction"> Indicates whether the operation is a data action. </param>
+        /// <param name="display"> Display of the operation. </param>
+        /// <param name="origin"> Origin of the operation. </param>
+        /// <param name="properties"> Properties of the operation. </param>
+        /// <returns> A new <see cref="Models.OperationResponse"/> instance for mocking. </returns>
+        public static OperationResponse OperationResponse(string name = default, bool? isDataAction = default, OperationDisplay display = default, string origin = default, BinaryData properties = default)
+        {
+            return new OperationResponse(
+                name,
+                isDataAction,
+                display,
+                origin,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about an operation. </summary>
+        /// <param name="provider"></param>
+        /// <param name="resource"></param>
+        /// <param name="operation"></param>
+        /// <param name="description"></param>
+        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
+        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
+        {
+            return new OperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Quota properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Quota properties for the resource. </param>
+        /// <returns> A new <see cref="Reservations.ReservationQuotaData"/> instance for mocking. </returns>
+        public static ReservationQuotaData ReservationQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaProperties properties = default)
+        {
+            return new ReservationQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Quota properties for the resource. </summary>
+        /// <param name="limit"> Quota properties. </param>
+        /// <param name="currentValue"> Current usage value for the resource. </param>
+        /// <param name="unit"> The limit units, such as <b>count</b> and <b>bytes</b>. Use the unit field provided in the response of the GET quota operation. </param>
+        /// <param name="resourceName"> Name of the resource provide by the resource provider. Use this property for quotaRequests resource operations. </param>
+        /// <param name="resourceTypeName"> The name of the resource type. </param>
+        /// <param name="quotaPeriod"> The time period over which the quota usage values are summarized. For example, P1D (per one day), PT1M (per one minute), and PT1S (per one second). This parameter is optional because, for some resources such as compute, the time period is irrelevant. </param>
+        /// <param name="properties"> Additional properties for the specified resource provider. </param>
+        /// <returns> A new <see cref="Models.QuotaProperties"/> instance for mocking. </returns>
+        public static QuotaProperties QuotaProperties(int? limit = default, int? currentValue = default, string unit = default, ReservationResourceName resourceName = default, ResourceTypeName? resourceTypeName = default, string quotaPeriod = default, BinaryData properties = default)
+        {
+            return new QuotaProperties(
+                limit,
+                currentValue,
+                unit,
+                resourceName,
+                resourceTypeName,
+                quotaPeriod,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The properties of the reservations. </summary>
+        /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
+        /// <param name="instanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
+        /// <param name="displayName"> Friendly name for user to easily identify the reservation. </param>
+        /// <param name="appliedScopes"> The list of applied scopes. </param>
+        /// <param name="appliedScopeType"> The applied scope type. </param>
+        /// <param name="isArchived"> Indicates if the reservation is archived. </param>
+        /// <param name="capabilities"> Capabilities of the reservation. </param>
+        /// <param name="quantity"> Quantity of the skus that are part of the reservation. Must be greater than zero. </param>
+        /// <param name="provisioningState"> Current state of the reservation. </param>
+        /// <param name="effectOn"> DateTime of the reservation starting when this version is effective from. </param>
+        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
+        /// <param name="lastUpdatedOn"> DateTime of the last time the reservation was updated. </param>
+        /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
+        /// <param name="expireOn"> This is the date-time when the reservation will expire. </param>
+        /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
+        /// <param name="skuDescription"> Description of the sku in english. </param>
+        /// <param name="extendedStatusInfo"> The message giving detailed information about the status code. </param>
+        /// <param name="billingPlan"> The billing plan options available for this sku. </param>
+        /// <param name="displayProvisioningState"> The provisioning state of the reservation for display, e.g. Succeeded. </param>
+        /// <param name="provisioningSubState"> The provisioning sub-state of the reservation, e.g. Succeeded. </param>
+        /// <param name="reservationPurchaseOn"> This is the date when the reservation was purchased. </param>
+        /// <param name="purchaseOn"> This is the date-time when the reservation was purchased. </param>
+        /// <param name="splitProperties"> Properties of reservation split. </param>
+        /// <param name="mergeProperties"> Properties of reservation merge. </param>
+        /// <param name="swapProperties"> Properties of reservation swap. </param>
+        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing reservation or savings plan. </param>
+        /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
+        /// <param name="renewSource"> Reservation Id of the reservation from which this reservation is renewed. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="renewDestination"> Reservation Id of the reservation which is purchased because of renew. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="renewProperties"> The renew properties for a reservation. </param>
+        /// <param name="term"> Represent the term of reservation. </param>
+        /// <param name="userFriendlyAppliedScopeType"> The applied scope type of the reservation for display, e.g. Shared. </param>
+        /// <param name="userFriendlyRenewState"> The renew state of the reservation for display, e.g. On. </param>
+        /// <param name="utilization"> Reservation utilization. </param>
+        /// <returns> A new <see cref="Models.ReservationProperties"/> instance for mocking. </returns>
+        public static ReservationProperties ReservationProperties(ReservedResourceType? reservedResourceType = default, InstanceFlexibility? instanceFlexibility = default, string displayName = default, IEnumerable<string> appliedScopes = default, AppliedScopeType? appliedScopeType = default, bool? isArchived = default, string capabilities = default, int? quantity = default, ReservationProvisioningState? provisioningState = default, DateTimeOffset? effectOn = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reviewOn = default, string skuDescription = default, ExtendedStatusInfo extendedStatusInfo = default, ReservationBillingPlan? billingPlan = default, string displayProvisioningState = default, string provisioningSubState = default, DateTimeOffset? reservationPurchaseOn = default, DateTimeOffset? purchaseOn = default, ReservationSplitProperties splitProperties = default, ReservationMergeProperties mergeProperties = default, ReservationSwapProperties swapProperties = default, AppliedScopeProperties appliedScopeProperties = default, ResourceIdentifier billingScopeId = default, bool? isRenewEnabled = default, string renewSource = default, string renewDestination = default, RenewProperties renewProperties = default, ReservationTerm? term = default, string userFriendlyAppliedScopeType = default, string userFriendlyRenewState = default, ReservationPropertiesUtilization utilization = default)
+        {
+            appliedScopes ??= new ChangeTrackingList<string>();
+
+            return new ReservationProperties(
+                reservedResourceType,
+                instanceFlexibility,
+                displayName,
+                appliedScopes.ToList(),
+                appliedScopeType,
+                isArchived,
+                capabilities,
+                quantity,
+                provisioningState,
+                effectOn,
+                benefitStartOn,
+                lastUpdatedOn,
+                reservationExpireOn,
+                expireOn,
+                reviewOn,
+                skuDescription,
+                extendedStatusInfo,
+                billingPlan,
+                displayProvisioningState,
+                provisioningSubState,
+                reservationPurchaseOn,
+                purchaseOn,
+                splitProperties,
+                mergeProperties,
+                swapProperties,
+                appliedScopeProperties,
+                billingScopeId,
+                isRenewEnabled,
+                renewSource,
+                renewDestination,
+                renewProperties,
+                term,
+                userFriendlyAppliedScopeType,
+                userFriendlyRenewState,
+                utilization,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ExtendedStatusInfo. </summary>
+        /// <param name="statusCode"></param>
+        /// <param name="message"> The message giving detailed information about the status code. </param>
+        /// <returns> A new <see cref="Models.ExtendedStatusInfo"/> instance for mocking. </returns>
+        public static ExtendedStatusInfo ExtendedStatusInfo(ReservationStatusCode? statusCode = default, string message = default)
+        {
+            return new ExtendedStatusInfo(statusCode, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of reservation split. </summary>
+        /// <param name="splitDestinations"> List of destination resource id that are created due to split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="splitSource"> Resource id of the reservation from which this is split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <returns> A new <see cref="Models.ReservationSplitProperties"/> instance for mocking. </returns>
+        public static ReservationSplitProperties ReservationSplitProperties(IEnumerable<string> splitDestinations = default, string splitSource = default)
+        {
+            splitDestinations ??= new ChangeTrackingList<string>();
+
+            return new ReservationSplitProperties(splitDestinations.ToList(), splitSource, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of reservation merge. </summary>
+        /// <param name="mergeDestination"> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="mergeSources"> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <returns> A new <see cref="Models.ReservationMergeProperties"/> instance for mocking. </returns>
+        public static ReservationMergeProperties ReservationMergeProperties(string mergeDestination = default, IEnumerable<string> mergeSources = default)
+        {
+            mergeSources ??= new ChangeTrackingList<string>();
+
+            return new ReservationMergeProperties(mergeDestination, mergeSources.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of reservation swap. </summary>
+        /// <param name="swapSource"> Resource id of the source reservation that gets swapped. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="swapDestination"> Reservation resource id that the original resource gets swapped to. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <returns> A new <see cref="Models.ReservationSwapProperties"/> instance for mocking. </returns>
+        public static ReservationSwapProperties ReservationSwapProperties(string swapSource = default, string swapDestination = default)
+        {
+            return new ReservationSwapProperties(swapSource, swapDestination, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The renew properties for a reservation. </summary>
+        /// <param name="purchaseProperties"> The request for reservation purchase. </param>
+        /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
+        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </param>
+        /// <returns> A new <see cref="Models.RenewProperties"/> instance for mocking. </returns>
+        public static RenewProperties RenewProperties(ReservationPurchaseContent purchaseProperties = default, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal = default, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal = default)
+        {
+            return new RenewProperties(purchaseProperties, pricingCurrencyTotal, billingCurrencyTotal, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
+        /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
+        /// <param name="amount"></param>
+        /// <returns> A new <see cref="Models.RenewPropertiesPricingCurrencyTotal"/> instance for mocking. </returns>
+        public static RenewPropertiesPricingCurrencyTotal RenewPropertiesPricingCurrencyTotal(string currencyCode = default, float? amount = default)
+        {
+            return new RenewPropertiesPricingCurrencyTotal(currencyCode, amount, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </summary>
+        /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
+        /// <param name="amount"></param>
+        /// <returns> A new <see cref="Models.RenewPropertiesBillingCurrencyTotal"/> instance for mocking. </returns>
+        public static RenewPropertiesBillingCurrencyTotal RenewPropertiesBillingCurrencyTotal(string currencyCode = default, float? amount = default)
+        {
+            return new RenewPropertiesBillingCurrencyTotal(currencyCode, amount, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reservation utilization. </summary>
+        /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
+        /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
+        /// <returns> A new <see cref="Models.ReservationPropertiesUtilization"/> instance for mocking. </returns>
+        public static ReservationPropertiesUtilization ReservationPropertiesUtilization(string trend = default, IEnumerable<ReservationUtilizationAggregates> aggregates = default)
+        {
+            aggregates ??= new ChangeTrackingList<ReservationUtilizationAggregates>();
+
+            return new ReservationPropertiesUtilization(trend, aggregates.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The aggregate values of reservation utilization. </summary>
+        /// <param name="grain"> The grain of the aggregate. </param>
+        /// <param name="grainUnit"> The grain unit of the aggregate. </param>
+        /// <param name="value"> The aggregate value. </param>
+        /// <param name="valueUnit"> The aggregate value unit. </param>
+        /// <returns> A new <see cref="Models.ReservationUtilizationAggregates"/> instance for mocking. </returns>
+        public static ReservationUtilizationAggregates ReservationUtilizationAggregates(float? grain = default, string grainUnit = default, float? value = default, string valueUnit = default)
+        {
+            return new ReservationUtilizationAggregates(grain, grainUnit, value, valueUnit, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="scopes"> Gets the Scopes. </param>
+        /// <returns> A new <see cref="Models.AvailableScopesProperties"/> instance for mocking. </returns>
+        public static AvailableScopesProperties AvailableScopesProperties(IEnumerable<ScopeProperties> scopes = default)
+        {
+            return new AvailableScopesProperties(scopes is null ? default : new SubscriptionScopeProperties((scopes ?? new ChangeTrackingList<ScopeProperties>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The scope and whether it is valid. </summary>
+        /// <param name="scope"></param>
+        /// <param name="isValid"></param>
+        /// <returns> A new <see cref="Models.ScopeProperties"/> instance for mocking. </returns>
+        public static ScopeProperties ScopeProperties(string scope = default, bool? isValid = default)
+        {
+            return new ScopeProperties(scope, isValid, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information describing the type of billing plan for this reservation. </summary>
+        /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
+        /// <param name="startOn"> Date when the billing plan has started. </param>
+        /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
+        /// <param name="transactions"></param>
+        /// <returns> A new <see cref="Models.ReservationOrderBillingPlanInformation"/> instance for mocking. </returns>
+        public static ReservationOrderBillingPlanInformation ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal = default, DateTimeOffset? startOn = default, DateTimeOffset? nextPaymentDueOn = default, IEnumerable<PaymentDetail> transactions = default)
+        {
+            transactions ??= new ChangeTrackingList<PaymentDetail>();
+
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, transactions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about payment related to a reservation order. </summary>
+        /// <param name="dueOn"> Date when the payment needs to be done. </param>
+        /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
+        /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
+        /// <param name="billingCurrencyTotal"> Amount charged in Billing currency. Tax not included. Is null for future payments. </param>
+        /// <param name="billingAccount"> Shows the Account that is charged for this payment. </param>
+        /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
+        /// <param name="extendedStatusInfo"></param>
+        /// <returns> A new <see cref="Models.PaymentDetail"/> instance for mocking. </returns>
+        public static PaymentDetail PaymentDetail(DateTimeOffset? dueOn = default, DateTimeOffset? payOn = default, PurchasePrice pricingCurrencyTotal = default, PurchasePrice billingCurrencyTotal = default, string billingAccount = default, PaymentStatus? status = default, ExtendedStatusInfo extendedStatusInfo = default)
+        {
+            return new PaymentDetail(
+                dueOn,
+                payOn,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                billingAccount,
+                status,
+                extendedStatusInfo,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Change directory response. </summary>
+        /// <param name="reservationOrder"> Change directory result for reservation order or reservation. </param>
+        /// <param name="reservations"></param>
+        /// <returns> A new <see cref="Models.ChangeDirectoryDetail"/> instance for mocking. </returns>
+        public static ChangeDirectoryDetail ChangeDirectoryDetail(ChangeDirectoryResult reservationOrder = default, IEnumerable<ChangeDirectoryResult> reservations = default)
+        {
+            reservations ??= new ChangeTrackingList<ChangeDirectoryResult>();
+
+            return new ChangeDirectoryDetail(reservationOrder, reservations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Change directory result for reservation order or reservation. </summary>
+        /// <param name="id"> Identifier of the reservation order or reservation. </param>
+        /// <param name="name"> Name of the reservation order or reservation. </param>
+        /// <param name="isSucceeded"> True if change directory operation succeeded on this reservation order or reservation. </param>
+        /// <param name="error"> Error reason if operation failed. Null otherwise. </param>
+        /// <returns> A new <see cref="Models.ChangeDirectoryResult"/> instance for mocking. </returns>
+        public static ChangeDirectoryResult ChangeDirectoryResult(Guid? id = default, string name = default, bool? isSucceeded = default, string error = default)
+        {
+            return new ChangeDirectoryResult(id, name, isSucceeded, error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response of calculate price for reservation. </summary>
         /// <param name="properties"> Properties for calculate price response. </param>
         /// <returns> A new <see cref="Models.CalculatePriceResult"/> instance for mocking. </returns>
-        public static CalculatePriceResult CalculatePriceResult(CalculatePriceResultProperties properties = null)
+        public static CalculatePriceResult CalculatePriceResult(CalculatePriceResultProperties properties = default)
         {
-            return new CalculatePriceResult(properties, serializedAdditionalRawData: null);
+            return new CalculatePriceResult(properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResultProperties"/>. </summary>
+        /// <summary> Properties for calculate price response. </summary>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </param>
         /// <param name="netTotal"> Net total amount in pricing currency. </param>
         /// <param name="taxTotal"> Tax amount in pricing currency. </param>
@@ -162,9 +491,9 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. </param>
         /// <param name="paymentSchedule"></param>
         /// <returns> A new <see cref="Models.CalculatePriceResultProperties"/> instance for mocking. </returns>
-        public static CalculatePriceResultProperties CalculatePriceResultProperties(CalculatePriceResultPropertiesBillingCurrencyTotal billingCurrencyTotal = null, double? netTotal = null, double? taxTotal = null, double? grandTotal = null, bool? isTaxIncluded = null, bool? isBillingPartnerManaged = null, Guid? reservationOrderId = null, string skuTitle = null, string skuDescription = null, CalculatePriceResultPropertiesPricingCurrencyTotal pricingCurrencyTotal = null, IEnumerable<PaymentDetail> paymentSchedule = null)
+        public static CalculatePriceResultProperties CalculatePriceResultProperties(CalculatePriceResultPropertiesBillingCurrencyTotal billingCurrencyTotal = default, double? netTotal = default, double? taxTotal = default, double? grandTotal = default, bool? isTaxIncluded = default, bool? isBillingPartnerManaged = default, Guid? reservationOrderId = default, string skuTitle = default, string skuDescription = default, CalculatePriceResultPropertiesPricingCurrencyTotal pricingCurrencyTotal = default, IEnumerable<PaymentDetail> paymentSchedule = default)
         {
-            paymentSchedule ??= new List<PaymentDetail>();
+            paymentSchedule ??= new ChangeTrackingList<PaymentDetail>();
 
             return new CalculatePriceResultProperties(
                 billingCurrencyTotal,
@@ -177,57 +506,328 @@ namespace Azure.ResourceManager.Reservations.Models
                 skuTitle,
                 skuDescription,
                 pricingCurrencyTotal,
-                paymentSchedule?.ToList(),
-                serializedAdditionalRawData: null);
+                paymentSchedule.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResultPropertiesBillingCurrencyTotal"/>. </summary>
+        /// <summary> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"> Amount in pricing currency. Tax is not included. </param>
         /// <returns> A new <see cref="Models.CalculatePriceResultPropertiesBillingCurrencyTotal"/> instance for mocking. </returns>
-        public static CalculatePriceResultPropertiesBillingCurrencyTotal CalculatePriceResultPropertiesBillingCurrencyTotal(string currencyCode = null, double? amount = null)
+        public static CalculatePriceResultPropertiesBillingCurrencyTotal CalculatePriceResultPropertiesBillingCurrencyTotal(string currencyCode = default, double? amount = default)
         {
-            return new CalculatePriceResultPropertiesBillingCurrencyTotal(currencyCode, amount, serializedAdditionalRawData: null);
+            return new CalculatePriceResultPropertiesBillingCurrencyTotal(currencyCode, amount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResultPropertiesPricingCurrencyTotal"/>. </summary>
+        /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         /// <returns> A new <see cref="Models.CalculatePriceResultPropertiesPricingCurrencyTotal"/> instance for mocking. </returns>
-        public static CalculatePriceResultPropertiesPricingCurrencyTotal CalculatePriceResultPropertiesPricingCurrencyTotal(string currencyCode = null, float? amount = null)
+        public static CalculatePriceResultPropertiesPricingCurrencyTotal CalculatePriceResultPropertiesPricingCurrencyTotal(string currencyCode = default, float? amount = default)
         {
-            return new CalculatePriceResultPropertiesPricingCurrencyTotal(currencyCode, amount, serializedAdditionalRawData: null);
+            return new CalculatePriceResultPropertiesPricingCurrencyTotal(currencyCode, amount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PaymentDetail"/>. </summary>
-        /// <param name="dueOn"> Date when the payment needs to be done. </param>
-        /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
-        /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
-        /// <param name="billingCurrencyTotal"> Amount charged in Billing currency. Tax not included. Is null for future payments. </param>
-        /// <param name="billingAccount"> Shows the Account that is charged for this payment. </param>
-        /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
-        /// <param name="extendedStatusInfo"></param>
-        /// <returns> A new <see cref="Models.PaymentDetail"/> instance for mocking. </returns>
-        public static PaymentDetail PaymentDetail(DateTimeOffset? dueOn = null, DateTimeOffset? payOn = null, PurchasePrice pricingCurrencyTotal = null, PurchasePrice billingCurrencyTotal = null, string billingAccount = null, PaymentStatus? status = null, ExtendedStatusInfo extendedStatusInfo = null)
+        /// <summary> The response of calculate refund containing refund information of reservation. </summary>
+        /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
+        /// <param name="properties"> The refund properties of reservation. </param>
+        /// <returns> A new <see cref="Models.ReservationCalculateRefundResult"/> instance for mocking. </returns>
+        public static ReservationCalculateRefundResult ReservationCalculateRefundResult(string id = default, ReservationRefundResponseProperties properties = default)
         {
-            return new PaymentDetail(
-                dueOn,
-                payOn,
-                pricingCurrencyTotal,
-                billingCurrencyTotal,
-                billingAccount,
+            return new ReservationCalculateRefundResult(id, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="sessionId"> Refund session identifier. </param>
+        /// <param name="quantity"> Quantity to be returned. </param>
+        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="pricingRefundAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="policyResultProperties"> Refund policy result property. </param>
+        /// <param name="billingInformation"> billing information. </param>
+        /// <returns> A new <see cref="Models.ReservationRefundResponseProperties"/> instance for mocking. </returns>
+        public static ReservationRefundResponseProperties ReservationRefundResponseProperties(Guid? sessionId = default, int? quantity = default, PurchasePrice billingRefundAmount = default, PurchasePrice pricingRefundAmount = default, ReservationRefundPolicyResultProperty policyResultProperties = default, ReservationRefundBillingInformation billingInformation = default)
+        {
+            return new ReservationRefundResponseProperties(
+                sessionId,
+                quantity,
+                billingRefundAmount,
+                pricingRefundAmount,
+                policyResultProperties is null ? default : new RefundPolicyResult(policyResultProperties, null),
+                billingInformation,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Refund policy result property. </summary>
+        /// <param name="consumedRefundsTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="maxRefundLimit"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="policyErrors"> Refund Policy errors. </param>
+        /// <returns> A new <see cref="Models.ReservationRefundPolicyResultProperty"/> instance for mocking. </returns>
+        public static ReservationRefundPolicyResultProperty ReservationRefundPolicyResultProperty(PurchasePrice consumedRefundsTotal = default, PurchasePrice maxRefundLimit = default, IEnumerable<ReservationRefundPolicyError> policyErrors = default)
+        {
+            policyErrors ??= new ChangeTrackingList<ReservationRefundPolicyError>();
+
+            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal, maxRefundLimit, policyErrors.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> error details. </summary>
+        /// <param name="code"> Error code describing the reason that service is not able to process the incoming request. </param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.ReservationRefundPolicyError"/> instance for mocking. </returns>
+        public static ReservationRefundPolicyError ReservationRefundPolicyError(ReservationErrorResponseCode? code = default, string message = default)
+        {
+            return new ReservationRefundPolicyError(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> billing information. </summary>
+        /// <param name="billingPlan"> Represent the billing plans. </param>
+        /// <param name="completedTransactions"> The number of completed transactions in this reservation's payment. </param>
+        /// <param name="totalTransactions"> The number of total transactions in this reservation's payment. </param>
+        /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <returns> A new <see cref="Models.ReservationRefundBillingInformation"/> instance for mocking. </returns>
+        public static ReservationRefundBillingInformation ReservationRefundBillingInformation(ReservationBillingPlan? billingPlan = default, int? completedTransactions = default, int? totalTransactions = default, PurchasePrice billingCurrencyTotalPaidAmount = default, PurchasePrice billingCurrencyProratedAmount = default, PurchasePrice billingCurrencyRemainingCommitmentAmount = default)
+        {
+            return new ReservationRefundBillingInformation(
+                billingPlan,
+                completedTransactions,
+                totalTransactions,
+                billingCurrencyTotalPaidAmount,
+                billingCurrencyProratedAmount,
+                billingCurrencyRemainingCommitmentAmount,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Calculate exchange request properties. </summary>
+        /// <param name="reservationsToPurchase"> List of reservations that are being purchased in this exchange. </param>
+        /// <param name="savingsPlansToPurchase"> List of savings plans that are being purchased in this exchange. </param>
+        /// <param name="reservationsToExchange"> List of reservations that are being returned in this exchange. </param>
+        /// <returns> A new <see cref="Models.CalculateExchangeContentProperties"/> instance for mocking. </returns>
+        public static CalculateExchangeContentProperties CalculateExchangeContentProperties(IEnumerable<ReservationPurchaseContent> reservationsToPurchase = default, IEnumerable<SavingsPlanPurchase> savingsPlansToPurchase = default, IEnumerable<ReservationToReturn> reservationsToExchange = default)
+        {
+            reservationsToPurchase ??= new ChangeTrackingList<ReservationPurchaseContent>();
+            savingsPlansToPurchase ??= new ChangeTrackingList<SavingsPlanPurchase>();
+            reservationsToExchange ??= new ChangeTrackingList<ReservationToReturn>();
+
+            return new CalculateExchangeContentProperties(reservationsToPurchase.ToList(), savingsPlansToPurchase.ToList(), reservationsToExchange.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> CalculateExchange operation result. </summary>
+        /// <param name="id"> It should match what is used to GET the operation result. </param>
+        /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
+        /// <param name="status"> Status of the operation. </param>
+        /// <param name="properties"> CalculateExchange response properties. </param>
+        /// <param name="error"> Required if status == failed or status == canceled. </param>
+        /// <returns> A new <see cref="Models.CalculateExchangeResult"/> instance for mocking. </returns>
+        public static CalculateExchangeResult CalculateExchangeResult(ResourceIdentifier id = default, string name = default, CalculateExchangeOperationResultStatus? status = default, CalculateExchangeResultProperties properties = default, OperationResultError error = default)
+        {
+            return new CalculateExchangeResult(
+                id,
+                name,
                 status,
-                extendedStatusInfo,
-                serializedAdditionalRawData: null);
+                properties,
+                error,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedStatusInfo"/>. </summary>
-        /// <param name="statusCode"></param>
-        /// <param name="message"> The message giving detailed information about the status code. </param>
-        /// <returns> A new <see cref="Models.ExtendedStatusInfo"/> instance for mocking. </returns>
-        public static ExtendedStatusInfo ExtendedStatusInfo(ReservationStatusCode? statusCode = null, string message = null)
+        /// <param name="sessionId"> Exchange session identifier. </param>
+        /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="purchasesTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="reservationsToPurchase"> Details of the reservations being purchased. </param>
+        /// <param name="savingsPlansToPurchase"> Details of the savings plans being purchased. </param>
+        /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
+        /// <param name="policyErrors"> Exchange Policy errors. </param>
+        /// <returns> A new <see cref="Models.CalculateExchangeResultProperties"/> instance for mocking. </returns>
+        public static CalculateExchangeResultProperties CalculateExchangeResultProperties(Guid? sessionId = default, PurchasePrice netPayable = default, PurchasePrice refundsTotal = default, PurchasePrice purchasesTotal = default, IEnumerable<ReservationToPurchaseCalculateExchange> reservationsToPurchase = default, IEnumerable<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase = default, IEnumerable<ReservationToExchange> reservationsToExchange = default, IEnumerable<ExchangePolicyError> policyErrors = default)
         {
-            return new ExtendedStatusInfo(statusCode, message, serializedAdditionalRawData: null);
+            reservationsToPurchase ??= new ChangeTrackingList<ReservationToPurchaseCalculateExchange>();
+            savingsPlansToPurchase ??= new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>();
+            reservationsToExchange ??= new ChangeTrackingList<ReservationToExchange>();
+
+            return new CalculateExchangeResultProperties(
+                sessionId,
+                netPayable,
+                refundsTotal,
+                purchasesTotal,
+                reservationsToPurchase.ToList(),
+                savingsPlansToPurchase.ToList(),
+                reservationsToExchange.ToList(),
+                policyErrors is null ? default : new ExchangePolicyErrors((policyErrors ?? new ChangeTrackingList<ExchangePolicyError>()).ToList(), null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reservation purchase details. </summary>
+        /// <param name="properties"> The request for reservation purchase. </param>
+        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <returns> A new <see cref="Models.ReservationToPurchaseCalculateExchange"/> instance for mocking. </returns>
+        public static ReservationToPurchaseCalculateExchange ReservationToPurchaseCalculateExchange(ReservationPurchaseContent properties = default, PurchasePrice billingCurrencyTotal = default)
+        {
+            return new ReservationToPurchaseCalculateExchange(properties, billingCurrencyTotal, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Savings plan purchase details. </summary>
+        /// <param name="properties"> Request body for savings plan purchase. </param>
+        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <returns> A new <see cref="Models.SavingsPlanToPurchaseCalculateExchange"/> instance for mocking. </returns>
+        public static SavingsPlanToPurchaseCalculateExchange SavingsPlanToPurchaseCalculateExchange(SavingsPlanPurchase properties = default, PurchasePrice billingCurrencyTotal = default)
+        {
+            return new SavingsPlanToPurchaseCalculateExchange(properties, billingCurrencyTotal, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reservation refund details. </summary>
+        /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
+        /// <param name="quantity"> Quantity to be returned. </param>
+        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingInformation"> billing information. </param>
+        /// <returns> A new <see cref="Models.ReservationToExchange"/> instance for mocking. </returns>
+        public static ReservationToExchange ReservationToExchange(ResourceIdentifier reservationId = default, int? quantity = default, PurchasePrice billingRefundAmount = default, BillingInformation billingInformation = default)
+        {
+            return new ReservationToExchange(reservationId, quantity, billingRefundAmount, billingInformation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> billing information. </summary>
+        /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <returns> A new <see cref="Models.BillingInformation"/> instance for mocking. </returns>
+        public static BillingInformation BillingInformation(PurchasePrice billingCurrencyTotalPaidAmount = default, PurchasePrice billingCurrencyProratedAmount = default, PurchasePrice billingCurrencyRemainingCommitmentAmount = default)
+        {
+            return new BillingInformation(billingCurrencyTotalPaidAmount, billingCurrencyProratedAmount, billingCurrencyRemainingCommitmentAmount, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> error details. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.ExchangePolicyError"/> instance for mocking. </returns>
+        public static ExchangePolicyError ExchangePolicyError(string code = default, string message = default)
+        {
+            return new ExchangePolicyError(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Required if status == failed or status == canceled. </summary>
+        /// <param name="code"> Required if status == failed or status == cancelled. If status == failed, provide an invariant error code used for error troubleshooting, aggregation, and analysis. </param>
+        /// <param name="message"> Required if status == failed. Localized. If status == failed, provide an actionable error message indicating what error occurred, and what the user can do to address the issue. </param>
+        /// <returns> A new <see cref="Models.OperationResultError"/> instance for mocking. </returns>
+        public static OperationResultError OperationResultError(string code = default, string message = default)
+        {
+            return new OperationResultError(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Exchange operation result. </summary>
+        /// <param name="id"> It should match what is used to GET the operation result. </param>
+        /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
+        /// <param name="status"> Status of the operation. </param>
+        /// <param name="properties"> Exchange response properties. </param>
+        /// <param name="error"> Required if status == failed or status == canceled. </param>
+        /// <returns> A new <see cref="Models.ExchangeResult"/> instance for mocking. </returns>
+        public static ExchangeResult ExchangeResult(ResourceIdentifier id = default, string name = default, ExchangeOperationResultStatus? status = default, ExchangeResultProperties properties = default, OperationResultError error = default)
+        {
+            return new ExchangeResult(
+                id,
+                name,
+                status,
+                properties,
+                error,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="sessionId"> Exchange session identifier. </param>
+        /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="purchasesTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="reservationsToPurchase"> Details of the reservations being purchased. </param>
+        /// <param name="savingsPlansToPurchase"> Details of the savings plans being purchased. </param>
+        /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
+        /// <param name="policyErrors"> Exchange Policy errors. </param>
+        /// <returns> A new <see cref="Models.ExchangeResultProperties"/> instance for mocking. </returns>
+        public static ExchangeResultProperties ExchangeResultProperties(Guid? sessionId = default, PurchasePrice netPayable = default, PurchasePrice refundsTotal = default, PurchasePrice purchasesTotal = default, IEnumerable<ReservationToPurchaseExchange> reservationsToPurchase = default, IEnumerable<SavingsPlanToPurchaseExchange> savingsPlansToPurchase = default, IEnumerable<ReservationToReturnForExchange> reservationsToExchange = default, IEnumerable<ExchangePolicyError> policyErrors = default)
+        {
+            reservationsToPurchase ??= new ChangeTrackingList<ReservationToPurchaseExchange>();
+            savingsPlansToPurchase ??= new ChangeTrackingList<SavingsPlanToPurchaseExchange>();
+            reservationsToExchange ??= new ChangeTrackingList<ReservationToReturnForExchange>();
+
+            return new ExchangeResultProperties(
+                sessionId,
+                netPayable,
+                refundsTotal,
+                purchasesTotal,
+                reservationsToPurchase.ToList(),
+                savingsPlansToPurchase.ToList(),
+                reservationsToExchange.ToList(),
+                policyErrors is null ? default : new ExchangePolicyErrors((policyErrors ?? new ChangeTrackingList<ExchangePolicyError>()).ToList(), null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reservation purchase details. </summary>
+        /// <param name="reservationOrderId"> Fully qualified id of the reservationOrder being purchased. </param>
+        /// <param name="reservationId"> Fully qualified id of the reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
+        /// <param name="properties"> The request for reservation purchase. </param>
+        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="status"> Status of the individual operation. </param>
+        /// <returns> A new <see cref="Models.ReservationToPurchaseExchange"/> instance for mocking. </returns>
+        public static ReservationToPurchaseExchange ReservationToPurchaseExchange(ResourceIdentifier reservationOrderId = default, ResourceIdentifier reservationId = default, ReservationPurchaseContent properties = default, PurchasePrice billingCurrencyTotal = default, ReservationOperationStatus? status = default)
+        {
+            return new ReservationToPurchaseExchange(
+                reservationOrderId,
+                reservationId,
+                properties,
+                billingCurrencyTotal,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Savings plan purchase details. </summary>
+        /// <param name="savingsPlanOrderId"> Fully qualified id of the savings plan order being purchased. </param>
+        /// <param name="savingsPlanId"> Fully qualified id of the savings plan being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
+        /// <param name="properties"> Request body for savings plan purchase. </param>
+        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="status"> Status of the individual operation. </param>
+        /// <returns> A new <see cref="Models.SavingsPlanToPurchaseExchange"/> instance for mocking. </returns>
+        public static SavingsPlanToPurchaseExchange SavingsPlanToPurchaseExchange(string savingsPlanOrderId = default, string savingsPlanId = default, SavingsPlanPurchase properties = default, PurchasePrice billingCurrencyTotal = default, ReservationOperationStatus? status = default)
+        {
+            return new SavingsPlanToPurchaseExchange(
+                savingsPlanOrderId,
+                savingsPlanId,
+                properties,
+                billingCurrencyTotal,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reservation refund details. </summary>
+        /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
+        /// <param name="quantity"> Quantity to be returned. </param>
+        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingInformation"> billing information. </param>
+        /// <param name="status"> Status of the individual operation. </param>
+        /// <returns> A new <see cref="Models.ReservationToReturnForExchange"/> instance for mocking. </returns>
+        public static ReservationToReturnForExchange ReservationToReturnForExchange(ResourceIdentifier reservationId = default, int? quantity = default, PurchasePrice billingRefundAmount = default, BillingInformation billingInformation = default, ReservationOperationStatus? status = default)
+        {
+            return new ReservationToReturnForExchange(
+                reservationId,
+                quantity,
+                billingRefundAmount,
+                billingInformation,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AppliedReservationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="reservationOrderIds"> Paginated list of applied reservations. </param>
+        /// <returns> A new <see cref="Models.AppliedReservationData"/> instance for mocking. </returns>
+        public static AppliedReservationData AppliedReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppliedReservationList reservationOrderIds = default)
+        {
+            return new AppliedReservationData(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Reservations.ReservationOrderData"/>. </summary>
@@ -250,43 +850,18 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="reservations"></param>
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <returns> A new <see cref="Reservations.ReservationOrderData"/> instance for mocking. </returns>
-        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? version = null, string displayName = null, DateTimeOffset? requestOn = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? reservationExpireOn = null, DateTimeOffset? benefitStartOn = null, int? originalQuantity = null, ReservationTerm? term = null, ReservationProvisioningState? provisioningState = null, ReservationBillingPlan? billingPlan = null, ReservationOrderBillingPlanInformation planInformation = null, IEnumerable<ReservationDetailData> reservations = null, DateTimeOffset? reviewOn = null)
+        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string displayName = default, DateTimeOffset? requestOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? benefitStartOn = default, int? originalQuantity = default, ReservationTerm? term = default, ReservationProvisioningState? provisioningState = default, ReservationBillingPlan? billingPlan = default, ReservationOrderBillingPlanInformation planInformation = default, IEnumerable<ReservationDetailData> reservations = default, DateTimeOffset? reviewOn = default)
         {
-            reservations ??= new List<ReservationDetailData>();
+            reservations ??= new ChangeTrackingList<ReservationDetailData>();
 
             return new ReservationOrderData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                version,
-                displayName,
-                requestOn,
-                createdOn,
-                expireOn,
-                reservationExpireOn,
-                benefitStartOn,
-                originalQuantity,
-                term,
-                provisioningState,
-                billingPlan,
-                planInformation,
-                reservations?.ToList(),
-                reviewOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationOrderBillingPlanInformation"/>. </summary>
-        /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
-        /// <param name="startOn"> Date when the billing plan has started. </param>
-        /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
-        /// <param name="transactions"></param>
-        /// <returns> A new <see cref="Models.ReservationOrderBillingPlanInformation"/> instance for mocking. </returns>
-        public static ReservationOrderBillingPlanInformation ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal = null, DateTimeOffset? startOn = null, DateTimeOffset? nextPaymentDueOn = null, IEnumerable<PaymentDetail> transactions = null)
-        {
-            transactions ??= new List<PaymentDetail>();
-
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, transactions?.ToList(), serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                version);
         }
 
         /// <summary> Initializes a new instance of <see cref="Reservations.ReservationDetailData"/>. </summary>
@@ -300,583 +875,19 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="properties"> The properties associated to this reservation. </param>
         /// <param name="kind"> Resource Provider type to be reserved. </param>
         /// <returns> A new <see cref="Reservations.ReservationDetailData"/> instance for mocking. </returns>
-        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, int? version = null, string skuName = null, ReservationProperties properties = null, ReservationKind? kind = null)
+        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, int? version = default, string skuName = default, ReservationProperties properties = default, ReservationKind? kind = default)
         {
             return new ReservationDetailData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                properties,
                 location,
                 version,
-                skuName != null ? new ReservationsSkuName(skuName, serializedAdditionalRawData: null) : null,
-                properties,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationProperties"/>. </summary>
-        /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
-        /// <param name="instanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
-        /// <param name="displayName"> Friendly name for user to easily identify the reservation. </param>
-        /// <param name="appliedScopes"> The list of applied scopes. </param>
-        /// <param name="appliedScopeType"> The applied scope type. </param>
-        /// <param name="isArchived"> Indicates if the reservation is archived. </param>
-        /// <param name="capabilities"> Capabilities of the reservation. </param>
-        /// <param name="quantity"> Quantity of the skus that are part of the reservation. </param>
-        /// <param name="provisioningState"> Current state of the reservation. </param>
-        /// <param name="effectOn"> DateTime of the reservation starting when this version is effective from. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
-        /// <param name="lastUpdatedOn"> DateTime of the last time the reservation was updated. </param>
-        /// <param name="expireOn"> This is the date when the reservation will expire. </param>
-        /// <param name="reservationExpireOn"> This is the date-time when the reservation will expire. </param>
-        /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
-        /// <param name="skuDescription"> Description of the sku in english. </param>
-        /// <param name="extendedStatusInfo"> The message giving detailed information about the status code. </param>
-        /// <param name="billingPlan"> The billing plan options available for this sku. </param>
-        /// <param name="displayProvisioningState"> The provisioning state of the reservation for display, e.g. Succeeded. </param>
-        /// <param name="provisioningSubState"> The provisioning sub-state of the reservation, e.g. Succeeded. </param>
-        /// <param name="purchaseOn"> This is the date when the reservation was purchased. </param>
-        /// <param name="reservationPurchaseOn"> This is the date-time when the reservation was purchased. </param>
-        /// <param name="splitProperties"> Properties of reservation split. </param>
-        /// <param name="mergeProperties"> Properties of reservation merge. </param>
-        /// <param name="swapProperties"> Properties of reservation swap. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing reservation or savings plan. </param>
-        /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
-        /// <param name="renewSource"> Reservation Id of the reservation from which this reservation is renewed. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="renewDestination"> Reservation Id of the reservation which is purchased because of renew. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="renewProperties"> The renew properties for a reservation. </param>
-        /// <param name="term"> Represent the term of reservation. </param>
-        /// <param name="userFriendlyAppliedScopeType"> The applied scope type of the reservation for display, e.g. Shared. </param>
-        /// <param name="userFriendlyRenewState"> The renew state of the reservation for display, e.g. On. </param>
-        /// <param name="utilization"> Reservation utilization. </param>
-        /// <returns> A new <see cref="Models.ReservationProperties"/> instance for mocking. </returns>
-        public static ReservationProperties ReservationProperties(ReservedResourceType? reservedResourceType = null, InstanceFlexibility? instanceFlexibility = null, string displayName = null, IEnumerable<string> appliedScopes = null, AppliedScopeType? appliedScopeType = null, bool? isArchived = null, string capabilities = null, int? quantity = null, ReservationProvisioningState? provisioningState = null, DateTimeOffset? effectOn = null, DateTimeOffset? benefitStartOn = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? reservationExpireOn = null, DateTimeOffset? reviewOn = null, string skuDescription = null, ExtendedStatusInfo extendedStatusInfo = null, ReservationBillingPlan? billingPlan = null, string displayProvisioningState = null, string provisioningSubState = null, DateTimeOffset? purchaseOn = null, DateTimeOffset? reservationPurchaseOn = null, ReservationSplitProperties splitProperties = null, ReservationMergeProperties mergeProperties = null, ReservationSwapProperties swapProperties = null, AppliedScopeProperties appliedScopeProperties = null, ResourceIdentifier billingScopeId = null, bool? isRenewEnabled = null, string renewSource = null, string renewDestination = null, RenewProperties renewProperties = null, ReservationTerm? term = null, string userFriendlyAppliedScopeType = null, string userFriendlyRenewState = null, ReservationPropertiesUtilization utilization = null)
-        {
-            appliedScopes ??= new List<string>();
-
-            return new ReservationProperties(
-                reservedResourceType,
-                instanceFlexibility,
-                displayName,
-                appliedScopes?.ToList(),
-                appliedScopeType,
-                isArchived,
-                capabilities,
-                quantity,
-                provisioningState,
-                effectOn,
-                benefitStartOn,
-                lastUpdatedOn,
-                expireOn,
-                reservationExpireOn,
-                reviewOn,
-                skuDescription,
-                extendedStatusInfo,
-                billingPlan,
-                displayProvisioningState,
-                provisioningSubState,
-                purchaseOn,
-                reservationPurchaseOn,
-                splitProperties,
-                mergeProperties,
-                swapProperties,
-                appliedScopeProperties,
-                billingScopeId,
-                isRenewEnabled,
-                renewSource,
-                renewDestination,
-                renewProperties,
-                term,
-                userFriendlyAppliedScopeType,
-                userFriendlyRenewState,
-                utilization,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationSplitProperties"/>. </summary>
-        /// <param name="splitDestinations"> List of destination resource id that are created due to split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="splitSource"> Resource id of the reservation from which this is split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <returns> A new <see cref="Models.ReservationSplitProperties"/> instance for mocking. </returns>
-        public static ReservationSplitProperties ReservationSplitProperties(IEnumerable<string> splitDestinations = null, string splitSource = null)
-        {
-            splitDestinations ??= new List<string>();
-
-            return new ReservationSplitProperties(splitDestinations?.ToList(), splitSource, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationMergeProperties"/>. </summary>
-        /// <param name="mergeDestination"> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="mergeSources"> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <returns> A new <see cref="Models.ReservationMergeProperties"/> instance for mocking. </returns>
-        public static ReservationMergeProperties ReservationMergeProperties(string mergeDestination = null, IEnumerable<string> mergeSources = null)
-        {
-            mergeSources ??= new List<string>();
-
-            return new ReservationMergeProperties(mergeDestination, mergeSources?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationSwapProperties"/>. </summary>
-        /// <param name="swapSource"> Resource id of the source reservation that gets swapped. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="swapDestination"> Reservation resource id that the original resource gets swapped to. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <returns> A new <see cref="Models.ReservationSwapProperties"/> instance for mocking. </returns>
-        public static ReservationSwapProperties ReservationSwapProperties(string swapSource = null, string swapDestination = null)
-        {
-            return new ReservationSwapProperties(swapSource, swapDestination, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RenewProperties"/>. </summary>
-        /// <param name="purchaseProperties"> The request for reservation purchase. </param>
-        /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
-        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </param>
-        /// <returns> A new <see cref="Models.RenewProperties"/> instance for mocking. </returns>
-        public static RenewProperties RenewProperties(ReservationPurchaseContent purchaseProperties = null, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal = null, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal = null)
-        {
-            return new RenewProperties(purchaseProperties, pricingCurrencyTotal, billingCurrencyTotal, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RenewPropertiesPricingCurrencyTotal"/>. </summary>
-        /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
-        /// <param name="amount"></param>
-        /// <returns> A new <see cref="Models.RenewPropertiesPricingCurrencyTotal"/> instance for mocking. </returns>
-        public static RenewPropertiesPricingCurrencyTotal RenewPropertiesPricingCurrencyTotal(string currencyCode = null, float? amount = null)
-        {
-            return new RenewPropertiesPricingCurrencyTotal(currencyCode, amount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RenewPropertiesBillingCurrencyTotal"/>. </summary>
-        /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
-        /// <param name="amount"></param>
-        /// <returns> A new <see cref="Models.RenewPropertiesBillingCurrencyTotal"/> instance for mocking. </returns>
-        public static RenewPropertiesBillingCurrencyTotal RenewPropertiesBillingCurrencyTotal(string currencyCode = null, float? amount = null)
-        {
-            return new RenewPropertiesBillingCurrencyTotal(currencyCode, amount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationPropertiesUtilization"/>. </summary>
-        /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
-        /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
-        /// <returns> A new <see cref="Models.ReservationPropertiesUtilization"/> instance for mocking. </returns>
-        public static ReservationPropertiesUtilization ReservationPropertiesUtilization(string trend = null, IEnumerable<ReservationUtilizationAggregates> aggregates = null)
-        {
-            aggregates ??= new List<ReservationUtilizationAggregates>();
-
-            return new ReservationPropertiesUtilization(trend, aggregates?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationUtilizationAggregates"/>. </summary>
-        /// <param name="grain"> The grain of the aggregate. </param>
-        /// <param name="grainUnit"> The grain unit of the aggregate. </param>
-        /// <param name="value"> The aggregate value. </param>
-        /// <param name="valueUnit"> The aggregate value unit. </param>
-        /// <returns> A new <see cref="Models.ReservationUtilizationAggregates"/> instance for mocking. </returns>
-        public static ReservationUtilizationAggregates ReservationUtilizationAggregates(float? grain = null, string grainUnit = null, float? value = null, string valueUnit = null)
-        {
-            return new ReservationUtilizationAggregates(grain, grainUnit, value, valueUnit, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationCalculateRefundResult"/>. </summary>
-        /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
-        /// <param name="properties"> The refund properties of reservation. </param>
-        /// <returns> A new <see cref="Models.ReservationCalculateRefundResult"/> instance for mocking. </returns>
-        public static ReservationCalculateRefundResult ReservationCalculateRefundResult(string id = null, ReservationRefundResponseProperties properties = null)
-        {
-            return new ReservationCalculateRefundResult(id, properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundResponseProperties"/>. </summary>
-        /// <param name="sessionId"> Refund session identifier. </param>
-        /// <param name="quantity"> Quantity to be returned. </param>
-        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="pricingRefundAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="policyResultProperties"> Refund policy result. </param>
-        /// <param name="billingInformation"> billing information. </param>
-        /// <returns> A new <see cref="Models.ReservationRefundResponseProperties"/> instance for mocking. </returns>
-        public static ReservationRefundResponseProperties ReservationRefundResponseProperties(Guid? sessionId = null, int? quantity = null, PurchasePrice billingRefundAmount = null, PurchasePrice pricingRefundAmount = null, ReservationRefundPolicyResultProperty policyResultProperties = null, ReservationRefundBillingInformation billingInformation = null)
-        {
-            return new ReservationRefundResponseProperties(
-                sessionId,
-                quantity,
-                billingRefundAmount,
-                pricingRefundAmount,
-                policyResultProperties != null ? new RefundPolicyResult(policyResultProperties, serializedAdditionalRawData: null) : null,
-                billingInformation,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundPolicyResultProperty"/>. </summary>
-        /// <param name="consumedRefundsTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="maxRefundLimit"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="policyErrors"> Refund Policy errors. </param>
-        /// <returns> A new <see cref="Models.ReservationRefundPolicyResultProperty"/> instance for mocking. </returns>
-        public static ReservationRefundPolicyResultProperty ReservationRefundPolicyResultProperty(PurchasePrice consumedRefundsTotal = null, PurchasePrice maxRefundLimit = null, IEnumerable<ReservationRefundPolicyError> policyErrors = null)
-        {
-            policyErrors ??= new List<ReservationRefundPolicyError>();
-
-            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal, maxRefundLimit, policyErrors?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundPolicyError"/>. </summary>
-        /// <param name="code"> Error code describing the reason that service is not able to process the incoming request. </param>
-        /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.ReservationRefundPolicyError"/> instance for mocking. </returns>
-        public static ReservationRefundPolicyError ReservationRefundPolicyError(ReservationErrorResponseCode? code = null, string message = null)
-        {
-            return new ReservationRefundPolicyError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundBillingInformation"/>. </summary>
-        /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="completedTransactions"> The number of completed transactions in this reservation's payment. </param>
-        /// <param name="totalTransactions"> The number of total transactions in this reservation's payment. </param>
-        /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <returns> A new <see cref="Models.ReservationRefundBillingInformation"/> instance for mocking. </returns>
-        public static ReservationRefundBillingInformation ReservationRefundBillingInformation(ReservationBillingPlan? billingPlan = null, int? completedTransactions = null, int? totalTransactions = null, PurchasePrice billingCurrencyTotalPaidAmount = null, PurchasePrice billingCurrencyProratedAmount = null, PurchasePrice billingCurrencyRemainingCommitmentAmount = null)
-        {
-            return new ReservationRefundBillingInformation(
-                billingPlan,
-                completedTransactions,
-                totalTransactions,
-                billingCurrencyTotalPaidAmount,
-                billingCurrencyProratedAmount,
-                billingCurrencyRemainingCommitmentAmount,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundResult"/>. </summary>
-        /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
-        /// <param name="properties"> The refund properties of reservation. </param>
-        /// <returns> A new <see cref="Models.ReservationRefundResult"/> instance for mocking. </returns>
-        public static ReservationRefundResult ReservationRefundResult(string id = null, ReservationRefundResponseProperties properties = null)
-        {
-            return new ReservationRefundResult(id, properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CalculateExchangeResult"/>. </summary>
-        /// <param name="id"> It should match what is used to GET the operation result. </param>
-        /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
-        /// <param name="status"> Status of the operation. </param>
-        /// <param name="properties"> CalculateExchange response properties. </param>
-        /// <param name="error"> Required if status == failed or status == canceled. </param>
-        /// <returns> A new <see cref="Models.CalculateExchangeResult"/> instance for mocking. </returns>
-        public static CalculateExchangeResult CalculateExchangeResult(ResourceIdentifier id = null, string name = null, CalculateExchangeOperationResultStatus? status = null, CalculateExchangeResultProperties properties = null, OperationResultError error = null)
-        {
-            return new CalculateExchangeResult(
-                id,
-                name,
-                status,
-                properties,
-                error,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CalculateExchangeResultProperties"/>. </summary>
-        /// <param name="sessionId"> Exchange session identifier. </param>
-        /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="purchasesTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="reservationsToPurchase"> Details of the reservations being purchased. </param>
-        /// <param name="savingsPlansToPurchase"> Details of the savings plans being purchased. </param>
-        /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
-        /// <param name="policyErrors"> Exchange policy errors. </param>
-        /// <returns> A new <see cref="Models.CalculateExchangeResultProperties"/> instance for mocking. </returns>
-        public static CalculateExchangeResultProperties CalculateExchangeResultProperties(Guid? sessionId = null, PurchasePrice netPayable = null, PurchasePrice refundsTotal = null, PurchasePrice purchasesTotal = null, IEnumerable<ReservationToPurchaseCalculateExchange> reservationsToPurchase = null, IEnumerable<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase = null, IEnumerable<ReservationToExchange> reservationsToExchange = null, IEnumerable<ExchangePolicyError> policyErrors = null)
-        {
-            reservationsToPurchase ??= new List<ReservationToPurchaseCalculateExchange>();
-            savingsPlansToPurchase ??= new List<SavingsPlanToPurchaseCalculateExchange>();
-            reservationsToExchange ??= new List<ReservationToExchange>();
-            policyErrors ??= new List<ExchangePolicyError>();
-
-            return new CalculateExchangeResultProperties(
-                sessionId,
-                netPayable,
-                refundsTotal,
-                purchasesTotal,
-                reservationsToPurchase?.ToList(),
-                savingsPlansToPurchase?.ToList(),
-                reservationsToExchange?.ToList(),
-                policyErrors != null ? new ExchangePolicyErrors(policyErrors?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationToPurchaseCalculateExchange"/>. </summary>
-        /// <param name="properties"> The request for reservation purchase. </param>
-        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <returns> A new <see cref="Models.ReservationToPurchaseCalculateExchange"/> instance for mocking. </returns>
-        public static ReservationToPurchaseCalculateExchange ReservationToPurchaseCalculateExchange(ReservationPurchaseContent properties = null, PurchasePrice billingCurrencyTotal = null)
-        {
-            return new ReservationToPurchaseCalculateExchange(properties, billingCurrencyTotal, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanToPurchaseCalculateExchange"/>. </summary>
-        /// <param name="properties"> Request body for savings plan purchase. </param>
-        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanToPurchaseCalculateExchange"/> instance for mocking. </returns>
-        public static SavingsPlanToPurchaseCalculateExchange SavingsPlanToPurchaseCalculateExchange(SavingsPlanPurchase properties = null, PurchasePrice billingCurrencyTotal = null)
-        {
-            return new SavingsPlanToPurchaseCalculateExchange(properties, billingCurrencyTotal, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationToExchange"/>. </summary>
-        /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
-        /// <param name="quantity"> Quantity to be returned. </param>
-        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="billingInformation"> billing information. </param>
-        /// <returns> A new <see cref="Models.ReservationToExchange"/> instance for mocking. </returns>
-        public static ReservationToExchange ReservationToExchange(ResourceIdentifier reservationId = null, int? quantity = null, PurchasePrice billingRefundAmount = null, BillingInformation billingInformation = null)
-        {
-            return new ReservationToExchange(reservationId, quantity, billingRefundAmount, billingInformation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BillingInformation"/>. </summary>
-        /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <returns> A new <see cref="Models.BillingInformation"/> instance for mocking. </returns>
-        public static BillingInformation BillingInformation(PurchasePrice billingCurrencyTotalPaidAmount = null, PurchasePrice billingCurrencyProratedAmount = null, PurchasePrice billingCurrencyRemainingCommitmentAmount = null)
-        {
-            return new BillingInformation(billingCurrencyTotalPaidAmount, billingCurrencyProratedAmount, billingCurrencyRemainingCommitmentAmount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExchangePolicyError"/>. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.ExchangePolicyError"/> instance for mocking. </returns>
-        public static ExchangePolicyError ExchangePolicyError(string code = null, string message = null)
-        {
-            return new ExchangePolicyError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationResultError"/>. </summary>
-        /// <param name="code"> Required if status == failed or status == cancelled. If status == failed, provide an invariant error code used for error troubleshooting, aggregation, and analysis. </param>
-        /// <param name="message"> Required if status == failed. Localized. If status == failed, provide an actionable error message indicating what error occurred, and what the user can do to address the issue. </param>
-        /// <returns> A new <see cref="Models.OperationResultError"/> instance for mocking. </returns>
-        public static OperationResultError OperationResultError(string code = null, string message = null)
-        {
-            return new OperationResultError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExchangeResult"/>. </summary>
-        /// <param name="id"> It should match what is used to GET the operation result. </param>
-        /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
-        /// <param name="status"> Status of the operation. </param>
-        /// <param name="properties"> Exchange response properties. </param>
-        /// <param name="error"> Required if status == failed or status == canceled. </param>
-        /// <returns> A new <see cref="Models.ExchangeResult"/> instance for mocking. </returns>
-        public static ExchangeResult ExchangeResult(ResourceIdentifier id = null, string name = null, ExchangeOperationResultStatus? status = null, ExchangeResultProperties properties = null, OperationResultError error = null)
-        {
-            return new ExchangeResult(
-                id,
-                name,
-                status,
-                properties,
-                error,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExchangeResultProperties"/>. </summary>
-        /// <param name="sessionId"> Exchange session identifier. </param>
-        /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="purchasesTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="reservationsToPurchase"> Details of the reservations being purchased. </param>
-        /// <param name="savingsPlansToPurchase"> Details of the savings plans being purchased. </param>
-        /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
-        /// <param name="policyErrors"> Exchange policy errors. </param>
-        /// <returns> A new <see cref="Models.ExchangeResultProperties"/> instance for mocking. </returns>
-        public static ExchangeResultProperties ExchangeResultProperties(Guid? sessionId = null, PurchasePrice netPayable = null, PurchasePrice refundsTotal = null, PurchasePrice purchasesTotal = null, IEnumerable<ReservationToPurchaseExchange> reservationsToPurchase = null, IEnumerable<SavingsPlanToPurchaseExchange> savingsPlansToPurchase = null, IEnumerable<ReservationToReturnForExchange> reservationsToExchange = null, IEnumerable<ExchangePolicyError> policyErrors = null)
-        {
-            reservationsToPurchase ??= new List<ReservationToPurchaseExchange>();
-            savingsPlansToPurchase ??= new List<SavingsPlanToPurchaseExchange>();
-            reservationsToExchange ??= new List<ReservationToReturnForExchange>();
-            policyErrors ??= new List<ExchangePolicyError>();
-
-            return new ExchangeResultProperties(
-                sessionId,
-                netPayable,
-                refundsTotal,
-                purchasesTotal,
-                reservationsToPurchase?.ToList(),
-                savingsPlansToPurchase?.ToList(),
-                reservationsToExchange?.ToList(),
-                policyErrors != null ? new ExchangePolicyErrors(policyErrors?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationToPurchaseExchange"/>. </summary>
-        /// <param name="reservationOrderId"> Fully qualified id of the reservationOrder being purchased. </param>
-        /// <param name="reservationId"> Fully qualified id of the reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
-        /// <param name="properties"> The request for reservation purchase. </param>
-        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="status"> Status of the individual operation. </param>
-        /// <returns> A new <see cref="Models.ReservationToPurchaseExchange"/> instance for mocking. </returns>
-        public static ReservationToPurchaseExchange ReservationToPurchaseExchange(ResourceIdentifier reservationOrderId = null, ResourceIdentifier reservationId = null, ReservationPurchaseContent properties = null, PurchasePrice billingCurrencyTotal = null, ReservationOperationStatus? status = null)
-        {
-            return new ReservationToPurchaseExchange(
-                reservationOrderId,
-                reservationId,
-                properties,
-                billingCurrencyTotal,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanToPurchaseExchange"/>. </summary>
-        /// <param name="savingsPlanOrderId"> Fully qualified id of the savings plan order being purchased. </param>
-        /// <param name="savingsPlanId"> Fully qualified id of the savings plan being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
-        /// <param name="properties"> Request body for savings plan purchase. </param>
-        /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="status"> Status of the individual operation. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanToPurchaseExchange"/> instance for mocking. </returns>
-        public static SavingsPlanToPurchaseExchange SavingsPlanToPurchaseExchange(string savingsPlanOrderId = null, string savingsPlanId = null, SavingsPlanPurchase properties = null, PurchasePrice billingCurrencyTotal = null, ReservationOperationStatus? status = null)
-        {
-            return new SavingsPlanToPurchaseExchange(
-                savingsPlanOrderId,
-                savingsPlanId,
-                properties,
-                billingCurrencyTotal,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationToReturnForExchange"/>. </summary>
-        /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
-        /// <param name="quantity"> Quantity to be returned. </param>
-        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
-        /// <param name="billingInformation"> billing information. </param>
-        /// <param name="status"> Status of the individual operation. </param>
-        /// <returns> A new <see cref="Models.ReservationToReturnForExchange"/> instance for mocking. </returns>
-        public static ReservationToReturnForExchange ReservationToReturnForExchange(ResourceIdentifier reservationId = null, int? quantity = null, PurchasePrice billingRefundAmount = null, BillingInformation billingInformation = null, ReservationOperationStatus? status = null)
-        {
-            return new ReservationToReturnForExchange(
-                reservationId,
-                quantity,
-                billingRefundAmount,
-                billingInformation,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ChangeDirectoryDetail"/>. </summary>
-        /// <param name="reservationOrder"> Change directory result for reservation order or reservation. </param>
-        /// <param name="reservations"></param>
-        /// <returns> A new <see cref="Models.ChangeDirectoryDetail"/> instance for mocking. </returns>
-        public static ChangeDirectoryDetail ChangeDirectoryDetail(ChangeDirectoryResult reservationOrder = null, IEnumerable<ChangeDirectoryResult> reservations = null)
-        {
-            reservations ??= new List<ChangeDirectoryResult>();
-
-            return new ChangeDirectoryDetail(reservationOrder, reservations?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ChangeDirectoryResult"/>. </summary>
-        /// <param name="id"> Identifier of the reservation order or reservation. </param>
-        /// <param name="name"> Name of the reservation order or reservation. </param>
-        /// <param name="isSucceeded"> True if change directory operation succeeded on this reservation order or reservation. </param>
-        /// <param name="error"> Error reason if operation failed. Null otherwise. </param>
-        /// <returns> A new <see cref="Models.ChangeDirectoryResult"/> instance for mocking. </returns>
-        public static ChangeDirectoryResult ChangeDirectoryResult(Guid? id = null, string name = null, bool? isSucceeded = null, string error = null)
-        {
-            return new ChangeDirectoryResult(id, name, isSucceeded, error, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Reservations.ReservationQuotaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Quota properties for the resource. </param>
-        /// <returns> A new <see cref="Reservations.ReservationQuotaData"/> instance for mocking. </returns>
-        public static ReservationQuotaData ReservationQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaProperties properties = null)
-        {
-            return new ReservationQuotaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.QuotaProperties"/>. </summary>
-        /// <param name="limit"> Quota properties. </param>
-        /// <param name="currentValue"> Current usage value for the resource. </param>
-        /// <param name="unit"> The limit units, such as **count** and **bytes**. Use the unit field provided in the response of the GET quota operation. </param>
-        /// <param name="resourceName"> Name of the resource provide by the resource provider. Use this property for quotaRequests resource operations. </param>
-        /// <param name="resourceTypeName"> The name of the resource type. </param>
-        /// <param name="quotaPeriod"> The time period over which the quota usage values are summarized. For example, P1D (per one day), PT1M (per one minute), and PT1S (per one second). This parameter is optional because, for some resources such as compute, the time period is irrelevant. </param>
-        /// <param name="properties"> Additional properties for the specified resource provider. </param>
-        /// <returns> A new <see cref="Models.QuotaProperties"/> instance for mocking. </returns>
-        public static QuotaProperties QuotaProperties(int? limit = null, int? currentValue = null, string unit = null, ReservationResourceName resourceName = null, ResourceTypeName? resourceTypeName = null, string quotaPeriod = null, BinaryData properties = null)
-        {
-            return new QuotaProperties(
-                limit,
-                currentValue,
-                unit,
-                resourceName,
-                resourceTypeName,
-                quotaPeriod,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReservationResourceName"/>. </summary>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display localized name. </param>
-        /// <returns> A new <see cref="Models.ReservationResourceName"/> instance for mocking. </returns>
-        public static ReservationResourceName ReservationResourceName(string value = null, string localizedValue = null)
-        {
-            return new ReservationResourceName(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Reservations.QuotaRequestDetailData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The quota request status. </param>
-        /// <param name="message"> User friendly status message. </param>
-        /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="quotaRequestValue"> The quotaRequests. </param>
-        /// <returns> A new <see cref="Reservations.QuotaRequestDetailData"/> instance for mocking. </returns>
-        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaRequestState? provisioningState = null, string message = null, DateTimeOffset? requestSubmitOn = null, IEnumerable<SubContent> quotaRequestValue = null)
-        {
-            quotaRequestValue ??= new List<SubContent>();
-
-            return new QuotaRequestDetailData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                message,
-                requestSubmitOn,
-                quotaRequestValue?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SubContent"/>. </summary>
-        /// <param name="limit"> Quota (resource limit). </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="resourceType"> Resource type for which the quota check was made. </param>
-        /// <param name="unit"> The limit units, such as **count** and **bytes**. Use the unit field provided in the response of the GET quota operation. </param>
-        /// <param name="provisioningState"> The quota request status. </param>
-        /// <param name="message"> User-friendly status message. </param>
-        /// <param name="subRequestId"> Sub request ID for individual request. </param>
-        /// <returns> A new <see cref="Models.SubContent"/> instance for mocking. </returns>
-        public static SubContent SubContent(int? limit = null, ReservationResourceName name = null, string resourceType = null, string unit = null, QuotaRequestState? provisioningState = null, string message = null, Guid? subRequestId = null)
-        {
-            return new SubContent(
-                limit,
-                name,
-                resourceType,
-                unit,
-                provisioningState,
-                message,
-                subRequestId,
-                serializedAdditionalRawData: null);
+                default,
+                kind);
         }
     }
 }
