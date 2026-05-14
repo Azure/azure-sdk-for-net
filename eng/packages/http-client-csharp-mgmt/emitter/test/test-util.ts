@@ -165,6 +165,9 @@ export function normalizeSchemaForComparison(
   // Normalize resourceModelId on non-resource methods (known discrepancy between the two paths)
   for (const method of normalizedSchema.nonResourceMethods) {
     delete (method as any).resourceModelId;
+    // isCollectionAction is only set by buildArmProviderSchema (which inspects
+    // decorators), not by resolveArmResources (which uses ARM library data).
+    delete (method as any).isCollectionAction;
   }
 
   return normalizedSchema;

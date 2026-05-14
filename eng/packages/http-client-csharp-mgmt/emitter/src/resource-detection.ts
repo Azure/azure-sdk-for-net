@@ -39,6 +39,7 @@ import pluralize from "pluralize";
 import {
   armProviderSchema,
   armResourceActionName,
+  armResourceCollectionActionName,
   armResourceCreateOrUpdateName,
   armResourceDeleteName,
   armResourceInternal,
@@ -315,10 +316,17 @@ export function buildArmProviderSchema(
     } else {
       // we treat this method as a non-resource method when it does not have a kind or an associated resource model
       const operationPath = new RequestPath(method.operation.path);
+      const hasCollectionActionDecorator =
+        serviceMethod?.__raw?.decorators?.some(
+          (d) => d.definition?.name === armResourceCollectionActionName
+        ) ?? false;
       nonResourceMethods.set(method.crossLanguageDefinitionId, {
         methodId: method.crossLanguageDefinitionId,
         operationPath: operationPath,
-        scope: buildScopeInfoFromPath(operationPath)
+        scope: buildScopeInfoFromPath(operationPath),
+        ...(hasCollectionActionDecorator
+          ? { isCollectionAction: true }
+          : {})
       });
     }
   };
@@ -614,6 +622,22 @@ function parseResourceOperation(
             ? ResourceOperationKind.List
             : ResourceOperationKind.Action,
           modelId: getResourceModelId(sdkContext, decorator),
+          explicitResourceName: undefined
+        };
+      case armResourceCollectionActionName:
+        // @armResourceCollectionAction is applied by ArmProviderAction[Sync|Async]
+        // for POST actions whose path stops at the collection segment (no
+        // `{resourceName}`). Unlike @armResourceAction, this decorator takes no
+        // resource-model argument, so there is no modelId to attach. Without an
+        // explicit case here the operation would fall through to the type-match
+        // fallback in assignNonResourceMethodsToResources, which hard-codes
+        // kind=List on any non-resource method whose path resourceType matches a
+        // known resource — clobbering the resource's real paginated list.
+        // Returning kind=Action with no modelId routes the op into
+        // nonResourceMethods AND prevents the List misclassification downstream.
+        return {
+          kind: ResourceOperationKind.Action,
+          modelId: undefined,
           explicitResourceName: undefined
         };
       case extensionResourceOperationName:

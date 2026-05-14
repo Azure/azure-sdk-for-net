@@ -1266,6 +1266,99 @@ interface ScheduledActionExtension {
     );
   });
 
+  it("ArmProviderAction with @armResourceCollectionAction does not clobber resource list", async () => {
+    // Regression test for: when a POST action on a resource collection is modeled via
+    // ArmProviderAction[Sync|Async] (which applies @armResourceCollectionAction), the
+    // operation must NOT be misclassified as List on the type-matching resource. If it
+    // were, the real paginated list method would be overwritten downstream.
+    const program = await typeSpecCompile(
+      `
+interface Operations extends Azure.ResourceManager.Operations {}
+
+/** Job resource */
+model Job is TrackedResource<JobProperties> {
+  ...ResourceNameParameter<Job>;
+}
+
+/** Job properties */
+model JobProperties {
+  /** State */
+  state?: string;
+}
+
+/** Export request */
+model JobQuery {
+  /** Filter */
+  filter: string;
+}
+
+@armResourceOperations
+interface Jobs {
+  get is ArmResourceRead<Job>;
+  list is ArmResourceListByParent<Job>;
+}
+
+@armResourceOperations
+interface JobOps {
+  @action("jobs/export")
+  export is ArmProviderActionAsync<
+    Request = JobQuery,
+    Response = Job,
+    Scope = Extension.ResourceGroup
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    const jobResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/jobs"
+    );
+    ok(jobResource, "Job resource should be detected");
+
+    // The Job resource must have EXACTLY ONE List method (the real Jobs.list),
+    // not two. Before the fix, the @armResourceCollectionAction-decorated export
+    // op was falling through to a fallback that hard-coded kind=List on the Job
+    // resource, producing two List methods and overwriting the real one in the
+    // downstream C# collection generator.
+    const listMethods = jobResource.metadata.methods.filter(
+      (m: any) => m.kind === "List"
+    );
+    strictEqual(
+      listMethods.length,
+      1,
+      "Job resource must have exactly one List method (the real Jobs.list); the collection action must not be misclassified as List"
+    );
+    ok(
+      listMethods[0].methodId.endsWith(".list"),
+      `expected the surviving List method to be Jobs.list, got ${listMethods[0].methodId}`
+    );
+
+    // The export action must NOT be present on the Job resource as a List method.
+    const exportOnResource = jobResource.metadata.methods.find((m: any) =>
+      m.methodId.endsWith(".export")
+    );
+    strictEqual(
+      exportOnResource,
+      undefined,
+      "export must not be attached to the Job resource (its path has no {jobName}; it belongs at the provider/RG scope)"
+    );
+
+    // The export op should land in nonResourceMethods (RG-scoped provider action).
+    ok(armProviderSchema.nonResourceMethods);
+    const exportEntry = armProviderSchema.nonResourceMethods.find((m: any) =>
+      m.methodId.endsWith(".export")
+    );
+    ok(exportEntry, "export should be classified as a non-resource method");
+  });
+
   it("multiple resources sharing same model", async () => {
     // This test validates the scenario where the SAME model is used by two different
     // resource interfaces operating at different paths using LegacyOperations (similar to the legacy-operations example)

@@ -47,6 +47,18 @@ export const armResourceAction = "Azure.ResourceManager.@armResourceAction";
 export const armResourceActionName = "@armResourceAction";
 const armResourceActionRegex = "Azure\\.ResourceManager\\.@armResourceAction";
 
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceCollectionAction
+// Applied by ArmProviderAction[Sync|Async] templates for POST actions scoped to a
+// resource collection (path has no `{resourceName}` segment). Without this case the
+// emitter would drop such operations into nonResourceMethods and the type-match
+// fallback in resource-metadata.ts would misclassify them as List, clobbering the
+// real paginated list method on the resource.
+export const armResourceCollectionAction =
+  "Azure.ResourceManager.@armResourceCollectionAction";
+export const armResourceCollectionActionName = "@armResourceCollectionAction";
+const armResourceCollectionActionRegex =
+  "Azure\\.ResourceManager\\.@armResourceCollectionAction";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceList
 export const armResourceList = "Azure.ResourceManager.@armResourceList";
 export const armResourceListName = "@armResourceList";
@@ -147,6 +159,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     nonResourceMethodMetadataRegex,
     armProviderNamespaceRegex,
     armResourceActionRegex,
+    armResourceCollectionActionRegex,
     armResourceCreateOrUpdateRegex,
     armResourceDeleteRegex,
     armResourceInternalRegex,

@@ -429,6 +429,16 @@ export interface NonResourceMethod {
   scope: ArmScopeInfo;
   /** The cross-language definition ID of the resource model this method originally belonged to */
   resourceModelId?: string;
+  /**
+   * True when the method carries the `@armResourceCollectionAction` decorator
+   * (typically via `ArmProviderAction[Sync|Async]`). Such operations are POST
+   * actions whose path stops at a collection segment (no `{resourceName}`).
+   * They must NOT be coerced into List by the type-match fallback in
+   * `assignNonResourceMethodsToResources`, since doing so would create a
+   * second List on the type-matching resource and clobber its real paginated
+   * list in the downstream C# collection generator.
+   */
+  isCollectionAction?: boolean;
 }
 
 export function convertMethodMetadataToArguments(
@@ -1016,6 +1026,13 @@ export function assignNonResourceMethodsToResources(
       }
     } else {
       // Both prefix and model ID matching failed — try matching by resource type.
+      // Skip this fallback for collection actions (POST ops with
+      // @armResourceCollectionAction whose path stops at the collection segment):
+      // coercing them to List here would create a second List on the type-matching
+      // resource and clobber its real paginated list downstream.
+      if (method.isCollectionAction) {
+        continue;
+      }
       const operationType = method.operationPath.resourceType;
       if (operationType !== undefined) {
         const match = resources.find((r) => {
