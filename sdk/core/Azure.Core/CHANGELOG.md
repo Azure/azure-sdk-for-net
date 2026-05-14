@@ -1,19 +1,27 @@
 # Release History
 
-## 1.55.0-beta.1 (Unreleased)
+## 1.56.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added experimental `TokenRequestCallback` property and `TokenRequestCallbackContext` type to MSAL-backed credential options to allow customizing token request body parameters before they are sent to the identity provider.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.55.0 (2026-05-05)
 
 ### Features Added
 
 - Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
 - Added experimental `AdditionalQueryParameters` property to `TokenCredentialOptions` to enable forwarding extra query string parameters to MSAL during authentication.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed `AzureDeveloperCliCredential` to correctly parse error messages from Azure Developer CLI v1.23.7 and later, which previously caused raw JSON to surface in `AuthenticationFailedException` instead of the underlying error text.
-
-### Other Changes
 
 ## 1.54.0 (2026-04-23)
 

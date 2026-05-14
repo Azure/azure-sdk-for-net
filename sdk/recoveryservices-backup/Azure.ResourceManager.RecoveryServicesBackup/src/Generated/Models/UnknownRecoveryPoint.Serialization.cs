@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string objectType = "unknown";
-            RecoveryPointThreatStatus? threatStatus = default;
-            IList<RecoveryPointThreatInformation> threatInfo = default;
+            BackupThreatStatus? threatStatus = default;
+            IList<BackupThreatInfo> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatStatus = new RecoveryPointThreatStatus(prop.Value.GetString());
+                    threatStatus = new BackupThreatStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatInfo"u8))
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<RecoveryPointThreatInformation> array = new List<RecoveryPointThreatInformation>();
+                    List<BackupThreatInfo> array = new List<BackupThreatInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointThreatInformation.DeserializeRecoveryPointThreatInformation(item, options));
+                        array.Add(BackupThreatInfo.DeserializeBackupThreatInfo(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownRecoveryPoint(objectType, threatStatus, threatInfo ?? new ChangeTrackingList<RecoveryPointThreatInformation>(), additionalBinaryDataProperties);
+            return new UnknownRecoveryPoint(objectType, threatStatus, threatInfo ?? new ChangeTrackingList<BackupThreatInfo>(), additionalBinaryDataProperties);
         }
     }
 }

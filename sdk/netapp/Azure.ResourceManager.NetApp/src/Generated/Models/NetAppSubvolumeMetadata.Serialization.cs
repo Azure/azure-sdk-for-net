@@ -10,15 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppSubvolumeMetadata : IUtf8JsonSerializable, IJsonModel<NetAppSubvolumeMetadata>
+    /// <summary> Result of the post subvolume and action is to get metadata of the subvolume. </summary>
+    public partial class NetAppSubvolumeMetadata : ResourceData, IJsonModel<NetAppSubvolumeMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppSubvolumeMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetAppSubvolumeMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetAppSubvolumeMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppSubvolumeMetadata IPersistableModel<NetAppSubvolumeMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppSubvolumeMetadata)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppSubvolumeMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetAppSubvolumeMetadata"/> from. </param>
+        internal static NetAppSubvolumeMetadata FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNetAppSubvolumeMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppSubvolumeMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,269 +80,105 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ParentPath))
-            {
-                writer.WritePropertyName("parentPath"u8);
-                writer.WriteStringValue(ParentPath);
-            }
-            if (Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size"u8);
-                writer.WriteNumberValue(Size.Value);
-            }
-            if (Optional.IsDefined(BytesUsed))
-            {
-                writer.WritePropertyName("bytesUsed"u8);
-                writer.WriteNumberValue(BytesUsed.Value);
-            }
-            if (Optional.IsDefined(Permissions))
-            {
-                writer.WritePropertyName("permissions"u8);
-                writer.WriteStringValue(Permissions);
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("creationTimeStamp"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(AccessedOn))
-            {
-                writer.WritePropertyName("accessedTimeStamp"u8);
-                writer.WriteStringValue(AccessedOn.Value, "O");
-            }
-            if (Optional.IsDefined(ModifiedOn))
-            {
-                writer.WritePropertyName("modifiedTimeStamp"u8);
-                writer.WriteStringValue(ModifiedOn.Value, "O");
-            }
-            if (Optional.IsDefined(ChangedOn))
-            {
-                writer.WritePropertyName("changedTimeStamp"u8);
-                writer.WriteStringValue(ChangedOn.Value, "O");
-            }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            writer.WriteEndObject();
         }
 
-        NetAppSubvolumeMetadata IJsonModel<NetAppSubvolumeMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppSubvolumeMetadata IJsonModel<NetAppSubvolumeMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetAppSubvolumeMetadata)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetAppSubvolumeMetadata(document.RootElement, options);
         }
 
-        internal static NetAppSubvolumeMetadata DeserializeNetAppSubvolumeMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetAppSubvolumeMetadata DeserializeNetAppSubvolumeMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string path = default;
-            string parentPath = default;
-            long? size = default;
-            long? bytesUsed = default;
-            string permissions = default;
-            DateTimeOffset? creationTimeStamp = default;
-            DateTimeOffset? accessedTimeStamp = default;
-            DateTimeOffset? modifiedTimeStamp = default;
-            DateTimeOffset? changedTimeStamp = default;
-            string provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            SubvolumeModelProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("path"u8))
-                        {
-                            path = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("parentPath"u8))
-                        {
-                            parentPath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("size"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            size = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesUsed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesUsed = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("permissions"u8))
-                        {
-                            permissions = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("creationTimeStamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            creationTimeStamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("accessedTimeStamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            accessedTimeStamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("modifiedTimeStamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            modifiedTimeStamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("changedTimeStamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            changedTimeStamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SubvolumeModelProperties.DeserializeSubvolumeModelProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppSubvolumeMetadata(
                 id,
-                name,
-                type,
+                resourceType,
                 systemData,
-                path,
-                parentPath,
-                size,
-                bytesUsed,
-                permissions,
-                creationTimeStamp,
-                accessedTimeStamp,
-                modifiedTimeStamp,
-                changedTimeStamp,
-                provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                name,
+                properties);
         }
-
-        BinaryData IPersistableModel<NetAppSubvolumeMetadata>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetAppSubvolumeMetadata IPersistableModel<NetAppSubvolumeMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetAppSubvolumeMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetAppSubvolumeMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
