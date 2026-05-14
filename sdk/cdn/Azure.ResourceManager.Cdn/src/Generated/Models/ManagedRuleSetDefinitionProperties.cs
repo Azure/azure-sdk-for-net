@@ -12,7 +12,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties for a managed rule set definition. </summary>
-    internal partial class ManagedRuleSetDefinitionProperties
+    public partial class ManagedRuleSetDefinitionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

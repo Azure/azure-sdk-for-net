@@ -12,7 +12,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Compute information of a server. </summary>
-    internal partial class SkuForPatch
+    public partial class SkuForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
