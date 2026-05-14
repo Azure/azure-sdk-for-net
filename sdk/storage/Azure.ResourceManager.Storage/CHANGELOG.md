@@ -9,6 +9,12 @@
     - Supported new `AllowedCopyScope.All` value.
     - Supported new property `TagsReplicationEnabled` on `ObjectReplicationPolicyData`.
     - Supported new `StaticWebsite` property on `BlobServiceData` with `DefaultIndexDocumentPath`.
+    - Supported new `StorageConnectorResource` for managing storage connectors.
+    - Supported new `StorageDataShareResource` for managing storage data shares.
+    - Supported new `StopAssignment` operation on `StorageTaskAssignmentResource`.
+    - Supported new `AllowSharedKeyAccessForServices` property on storage account create/update.
+    - Supported new `DataCollaborationPolicyProperties` property on storage account create/update.
+    - Supported new `TaskExecutionTriggerType.MockRun` trigger type.
 
 ## 1.6.2 (2026-04-02)
 
