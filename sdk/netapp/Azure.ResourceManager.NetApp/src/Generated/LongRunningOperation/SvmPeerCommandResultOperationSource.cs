@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.NetApp
         SvmPeerCommandResult IOperationSource<SvmPeerCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SvmPeerCommandResult result = SvmPeerCommandResult.DeserializeSvmPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SvmPeerCommandResult.DeserializeSvmPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.NetApp
         async ValueTask<SvmPeerCommandResult> IOperationSource<SvmPeerCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SvmPeerCommandResult result = SvmPeerCommandResult.DeserializeSvmPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SvmPeerCommandResult.DeserializeSvmPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

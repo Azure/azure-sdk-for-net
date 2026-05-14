@@ -553,17 +553,10 @@ ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.Patc
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-In this scenario we cannot use the `ProjectOpenAIClient` from `projectClient.ProjectOpenAIClient`
-property as we need to access customized endpoint, for the Agent, we have created.
-We set its name in `ProjectOpenAIClientOptions`.
+To use the `ProjectResponsesClient` with the endpoint, we need to get it using `GetProjectResponsesClientForAgentEndpoint` method.
 
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
