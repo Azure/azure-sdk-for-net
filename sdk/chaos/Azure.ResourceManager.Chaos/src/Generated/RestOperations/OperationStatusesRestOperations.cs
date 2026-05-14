@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetChaosOperationStatusRequest(Guid subscriptionId, string location, string operationId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string location, string operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

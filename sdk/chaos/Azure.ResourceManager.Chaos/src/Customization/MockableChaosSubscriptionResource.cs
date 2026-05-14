@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Azure.Response<Azure.ResourceManager.Models.OperationStatusResult>> GetChaosOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            return await GetChaosOperationStatusAsync(location.Name, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetAsync(location.Name, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         [ForwardsClientCalls]
         public virtual Azure.Response<Azure.ResourceManager.Models.OperationStatusResult> GetChaosOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            return GetChaosOperationStatus(location.Name, operationId, cancellationToken);
+            return Get(location.Name, operationId, cancellationToken);
         }
     }
 }

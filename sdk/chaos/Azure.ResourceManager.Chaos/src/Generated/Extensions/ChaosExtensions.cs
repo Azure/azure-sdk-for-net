@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Chaos
         /// Returns the current status of an async operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosOperationStatusAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -793,18 +793,18 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<OperationStatusResult>> GetChaosOperationStatusAsync(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<OperationStatusResult>> GetAsync(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableChaosSubscriptionResource(subscriptionResource).GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the current status of an async operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetChaosOperationStatus(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.Get(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -812,11 +812,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<OperationStatusResult> GetChaosOperationStatus(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
+        public static Response<OperationStatusResult> Get(this SubscriptionResource subscriptionResource, string location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosOperationStatus(location, operationId, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
         }
     }
 }
