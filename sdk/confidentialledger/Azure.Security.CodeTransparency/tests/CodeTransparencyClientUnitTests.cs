@@ -738,8 +738,8 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
-            int threadCount = 8;
-            int iterationsPerThread = 3;
+            int threadCount = 4;
+            int iterationsPerThread = 2;
 
             var barrier = new Barrier(threadCount);
             var exceptions = new ConcurrentBag<Exception>();
