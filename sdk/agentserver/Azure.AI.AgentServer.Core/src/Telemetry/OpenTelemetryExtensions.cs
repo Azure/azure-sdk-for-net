@@ -7,6 +7,8 @@ using Microsoft.Agents.A365.Observability.Runtime.Tracing.Exporters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenTelemetry;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -56,6 +58,17 @@ internal static class OpenTelemetryExtensions
         // exporters from environment variables. It registers ASP.NET Core, HttpClient,
         // SQL, Azure SDK, and AI instrumentation automatically.
         var otelBuilder = services.AddOpenTelemetry();
+
+        // Ensure W3C Trace Context and Baggage propagators are active on all TFMs.
+        // On net9+, ASP.NET Core natively respects OTel's propagator for incoming
+        // requests. On net8.0, the W3CBaggagePropagator middleware handles extraction.
+        // This call ensures outgoing requests also propagate baggage correctly.
+        Sdk.SetDefaultTextMapPropagator(new CompositeTextMapPropagator(new TextMapPropagator[]
+        {
+            new TraceContextPropagator(),
+            new BaggagePropagator(),
+        }));
+
         otelBuilder.UseMicrosoftOpenTelemetry(options =>
         {
             var exporters = ExportTarget.None;
