@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Extensions details for edge device. </summary>
-    internal partial class ExtensionProfile : IJsonModel<ExtensionProfile>
+    public partial class ExtensionProfile : IJsonModel<ExtensionProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

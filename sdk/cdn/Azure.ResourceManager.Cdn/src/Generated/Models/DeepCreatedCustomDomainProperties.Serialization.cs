@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties of the custom domain created on the CDN endpoint. </summary>
-    internal partial class DeepCreatedCustomDomainProperties : IJsonModel<DeepCreatedCustomDomainProperties>
+    public partial class DeepCreatedCustomDomainProperties : IJsonModel<DeepCreatedCustomDomainProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DeepCreatedCustomDomainProperties"/> for deserialization. </summary>
         internal DeepCreatedCustomDomainProperties()
