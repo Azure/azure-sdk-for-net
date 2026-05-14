@@ -122,7 +122,6 @@ The `TokenRequestCallback` property on MSAL-backed credential options types allo
   - `Azure.Identity.AuthorizationCodeCredentialOptions`
   - `Azure.Identity.DeviceCodeCredentialOptions`
   - `Azure.Identity.InteractiveBrowserCredentialOptions`
-  - `Azure.Identity.UsernamePasswordCredentialOptions`
 
 ### Example Usage
 
@@ -134,7 +133,6 @@ var credential = new ClientSecretCredential(tenantId, clientId, clientSecret, ne
     TokenRequestCallback = data =>
     {
         data.BodyParameters["custom_param"] = "value";
-        return Task.CompletedTask;
     }
 });
 

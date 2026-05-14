@@ -251,7 +251,7 @@ namespace Azure.Core.Tests.Identity
             public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
 #pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
-            public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
+            public Action<TokenRequestCallbackContext> TokenRequestCallback { get; set; }
 #pragma warning restore AZID0003
 
             public static T CreatePopulatedOptions<T>(bool setTransport)
@@ -275,7 +275,6 @@ namespace Azure.Core.Tests.Identity
                     TokenRequestCallback = data =>
                     {
                         data.BodyParameters["test"] = "value";
-                        return Task.CompletedTask;
                     },
 #pragma warning restore AZID0003
                     Retry =

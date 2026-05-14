@@ -203,7 +203,6 @@ namespace Azure.Core.Tests.Identity
                 TokenRequestCallback = data =>
                 {
                     data.BodyParameters["custom_param"] = "custom_value";
-                    return Task.CompletedTask;
                 }
             };
 

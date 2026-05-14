@@ -35,7 +35,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [Experimental("AZID0003")]
-        public Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
+        public Action<TokenRequestCallbackContext> TokenRequestCallback { get; set; }
     }
 #pragma warning restore AZC0034
 }

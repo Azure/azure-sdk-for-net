@@ -1240,7 +1240,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static partial class AzureAuthorityHosts
@@ -1355,7 +1355,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -1380,7 +1380,7 @@ namespace Azure.Identity
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -1401,7 +1401,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
@@ -1495,7 +1495,7 @@ namespace Azure.Identity
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1564,7 +1564,7 @@ namespace Azure.Identity
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -1618,7 +1618,7 @@ namespace Azure.Identity
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
-        public System.Func<Azure.Identity.TokenRequestCallbackContext, System.Threading.Tasks.Task> TokenRequestCallback { get { throw null; } set { } }
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.ObsoleteAttribute("This credential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]

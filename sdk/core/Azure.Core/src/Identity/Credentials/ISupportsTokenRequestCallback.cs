@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
@@ -15,7 +14,7 @@ namespace Azure.Identity
         /// This callback can be used to customize the token request.
         /// </summary>
 #pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
-        Func<TokenRequestCallbackContext, Task> TokenRequestCallback { get; set; }
+        Action<TokenRequestCallbackContext> TokenRequestCallback { get; set; }
 #pragma warning restore AZID0003
     }
 }

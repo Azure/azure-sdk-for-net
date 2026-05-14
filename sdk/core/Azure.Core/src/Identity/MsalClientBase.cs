@@ -24,7 +24,7 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         private readonly TokenCachePersistenceOptions _tokenCachePersistenceOptions;
 #pragma warning disable AZID0003 // TokenRequestCallback is experimental
-        private readonly Func<TokenRequestCallbackContext, Task> _onBeforeTokenRequestCallback;
+        private readonly Action<TokenRequestCallbackContext> _onBeforeTokenRequestCallback;
 #pragma warning restore AZID0003
         protected internal bool IsSupportLoggingEnabled { get; }
         protected internal bool DisableInstanceDiscovery { get; }
@@ -126,7 +126,11 @@ namespace Azure.Identity
             {
                 var callback = _onBeforeTokenRequestCallback;
 #pragma warning disable AZID0003 // TokenRequestCallback is experimental
-                builder.OnBeforeTokenRequest(data => callback(new TokenRequestCallbackContext(data)));
+                builder.OnBeforeTokenRequest(data =>
+                {
+                    callback(new TokenRequestCallbackContext(data));
+                    return Task.CompletedTask;
+                });
 #pragma warning restore AZID0003
             }
         }
