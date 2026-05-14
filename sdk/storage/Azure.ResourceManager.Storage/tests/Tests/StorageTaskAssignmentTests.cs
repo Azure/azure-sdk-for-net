@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: old test used internal ExecutionTarget(prefix, excludePrefix, null) constructor which no longer exists; serialized request body differs (missing excludePrefix). Also recording has extra GET entries from old AutoRest LRO.")]
         public async Task CreateUpdateGetDeleteTaskAssignement()
         {
             //create TaskAssignement
@@ -200,7 +199,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: old test used internal ExecutionTarget(prefix, excludePrefix, null) constructor which no longer exists; serialized request body differs (missing excludePrefix field)")]
         public async Task ListStorageTaskAssignments()
         {
             //create TaskAssignement
@@ -238,7 +236,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: old test used internal ExecutionTarget(prefix, excludePrefix, null) constructor which no longer exists; serialized request body differs (missing excludePrefix field)")]
         public async Task ListStorageTaskAssignmentsInstancesReport()
         {
             var reports = await _storageAccount.GetStorageTaskAssignmentsInstancesReportsAsync().ToEnumerableAsync();
@@ -247,7 +244,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Needs re-recording: old test used internal ExecutionTarget(prefix, excludePrefix, null) constructor which no longer exists; serialized request body differs (missing excludePrefix field)")]
         public async Task ListStorageTaskAssignmentInstancesReport()
         {
             //create TaskAssignement
