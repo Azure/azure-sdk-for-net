@@ -46,7 +46,7 @@ foreach ($file in $packageFiles) {
 
   $loc = 0
   Get-ChildItem $srcPath -Filter "*.cs" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $loc += (Get-Content $_.FullName -ErrorAction SilentlyContinue).Count
+    $loc += @(Get-Content $_.FullName -ErrorAction SilentlyContinue).Count
   }
 
   $weights[$name] = [math]::Max($loc, 1)
