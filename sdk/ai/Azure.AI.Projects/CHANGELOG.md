@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0-beta.2 (Unreleased)
+## 2.1.0-beta.2 (2026-05-14)
 
 ### Features Added
 - Added `DataGenerationJobs` client for synthetic data generation, accessible via `AIProjectClient`.
@@ -9,12 +9,8 @@
 - Added data generation source types: `AgentDataGenerationJobSource`, `DatasetDataGenerationJobSource`, `FileDataGenerationJobSource`, `PromptDataGenerationJobSource`, `TracesDataGenerationJobSource`.
 - Added data generation output types: `DatasetDataGenerationJobOutput`, `FileDataGenerationJobOutput`.
 
-### Breaking Changes
-
 ### Bugs Fixed
 - Fixed missing header required by `ProjectInsights`.
-
-### Other Changes
 
 ### Sample Updates
 - Added evaluation cluster insight sample and documentation.
@@ -23,6 +19,7 @@
 - Added built-in evaluators with inline data sample demonstrating violence, F1 score, and coherence evaluations.
 - Added built-in evaluators with inline data using OpenAI client sample and documentation.
 - Added sample for grading images.
+- Added sample for Toolbox search.
 
 ## 2.1.0-beta.1 (2026-04-21)
 

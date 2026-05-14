@@ -1,10 +1,11 @@
 # Release History
 
-## 2.1.0-beta.2 (Unreleased)
+## 2.1.0-beta.2 (2026-05-14)
 
 ### Features Added
 - Added `FabricIQPreviewTool`.
 - Added `ToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
+- Added `WorkIQPreviewTool`.
 - Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
 
 ### Breaking Changes
@@ -13,10 +14,6 @@
 - `TelemetryEndpoint` property `Auth` was renamed to `Authentication`.
 - `TelemetryEndpoint` property `Data` was renamed to `ExportedDataTypes`.
 - `isolationKey` was removed from `CreateSession` and `DeleteSession` operations.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 2.1.0-beta.1 (2026-04-21)
 
