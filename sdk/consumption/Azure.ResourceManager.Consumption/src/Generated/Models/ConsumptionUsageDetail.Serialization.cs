@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// An usage detail resource.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownUsageDetail))]
+    [PersistableModelProxy(typeof(UnknownConsumptionUsageDetail))]
     public abstract partial class ConsumptionUsageDetail : ResourceData, IJsonModel<ConsumptionUsageDetail>
     {
         /// <param name="data"> The data to parse. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element, options);
                 }
             }
-            return UnknownUsageDetail.DeserializeUnknownUsageDetail(element, options);
+            return UnknownConsumptionUsageDetail.DeserializeUnknownConsumptionUsageDetail(element, options);
         }
     }
 }

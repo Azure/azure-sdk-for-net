@@ -12,10 +12,11 @@ using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    // The wrapper resource class was removed during TypeSpec migration because the new
-    // generator no longer emits a resource type for the underlying action operation
-    // (getForBillingPeriodByManagementGroup). The operation itself is still available
-    // and is now exposed as the extension method
+    // The wrapper resource class was removed during TypeSpec migration. The previous
+    // Swagger shape used x-ms-azure-resource metadata, but the TypeSpec model is not
+    // bound to an @armResourceOperations resource. MPG only emits resource classes for
+    // @armResourceOperations-bound resources, so the underlying operation is generated
+    // as the action-style extension method
     // ArmClient.GetForBillingPeriodByManagementGroup(ResourceIdentifier scope).
     // Stub retained only to keep the v1.1.0 type signature for source/binary compatibility.
     /// <summary> Obsolete. Use <see cref="ConsumptionExtensions.GetForBillingPeriodByManagementGroup(Azure.ResourceManager.ArmClient, ResourceIdentifier, CancellationToken)"/> instead. </summary>

@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    internal partial class UnknownUsageDetail : ConsumptionUsageDetail
+    internal partial class UnknownConsumptionUsageDetail : ConsumptionUsageDetail
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownUsageDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownConsumptionUsageDetail"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of usage details. </param>
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal UnknownUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown", eTag, tags)
+        internal UnknownConsumptionUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown", eTag, tags)
         {
         }
     }
