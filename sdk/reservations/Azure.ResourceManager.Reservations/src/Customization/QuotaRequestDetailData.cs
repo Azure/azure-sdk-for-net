@@ -6,8 +6,8 @@
 // QuotaRequestProperties; this shim restores the read-only collection surface.
 
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.ResourceManager.Reservations.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable CS1591
 
