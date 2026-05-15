@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new HealthProbeSettingsProperties();
                 }
-                Properties.Protocol = value.Value;
+                Properties.Protocol = value;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new HealthProbeSettingsProperties();
                 }
-                Properties.IntervalInSeconds = value.Value;
+                Properties.IntervalInSeconds = value;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new HealthProbeSettingsProperties();
                 }
-                Properties.HealthProbeMethod = value.Value;
+                Properties.HealthProbeMethod = value;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new HealthProbeSettingsProperties();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ExtendedLocations
 {
+    /// <summary></summary>
     public partial class CustomLocationResource : IJsonModel<CustomLocationData>
     {
-        private static CustomLocationData s_dataDeserializationInstance;
-        private static CustomLocationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CustomLocationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CustomLocationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CustomLocationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomLocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomLocationData>)Data).Write(writer, options);
 
-        CustomLocationData IJsonModel<CustomLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomLocationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomLocationData IJsonModel<CustomLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CustomLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomLocationData>(Data, options, AzureResourceManagerExtendedLocationsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CustomLocationData IPersistableModel<CustomLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomLocationData>(data, options, AzureResourceManagerExtendedLocationsContext.Default);
 
-        string IPersistableModel<CustomLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomLocationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

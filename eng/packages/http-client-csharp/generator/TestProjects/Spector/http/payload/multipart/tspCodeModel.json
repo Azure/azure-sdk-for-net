@@ -654,7 +654,6 @@
             "$id": "79",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -729,7 +728,6 @@
             "$id": "84",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -804,7 +802,6 @@
             "$id": "89",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -940,7 +937,6 @@
             "$id": "98",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -976,7 +972,6 @@
               "$id": "101",
               "kind": "bytes",
               "name": "bytes",
-              "encode": "base64",
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             },
@@ -1053,7 +1048,6 @@
             "$id": "105",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -1132,7 +1126,6 @@
               "$id": "111",
               "kind": "bytes",
               "name": "bytes",
-              "encode": "base64",
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             },
@@ -1179,7 +1172,6 @@
             "$id": "114",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -1211,7 +1203,6 @@
             "$id": "116",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -1255,7 +1246,6 @@
             "$id": "119",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },

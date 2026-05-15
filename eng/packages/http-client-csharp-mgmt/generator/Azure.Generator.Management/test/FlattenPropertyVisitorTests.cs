@@ -15,6 +15,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -111,7 +112,7 @@ namespace Azure.Generator.Mgmt.Tests
                 null,
                 []);
             var primaryMethod = new MethodProvider(primarySignature, MethodBodyStatement.Empty, enclosingType);
-            Assert.That(FlattenPropertyVisitor.IsBackwardCompatMethod(primaryMethod), Is.False);
+            Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(primaryMethod), Is.False);
 
             // Create a method WITH the EditorBrowsable(Never) attribute
             var backCompatSignature = new MethodSignature(
@@ -123,7 +124,7 @@ namespace Azure.Generator.Mgmt.Tests
                 [],
                 Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
             var backCompatMethod = new MethodProvider(backCompatSignature, MethodBodyStatement.Empty, enclosingType);
-            Assert.That(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod), Is.True);
+            Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(backCompatMethod), Is.True);
         }
 
         [Test]
@@ -166,12 +167,12 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
-        /// Verifies that FixBackwardCompatOverloads correctly reorders arguments in
+        /// Verifies that FixModelFactoryBackwardCompatOverloads correctly reorders arguments in
         /// backward-compat overloads when the primary method's parameter order has changed
         /// after property flattening.
         /// </summary>
         [Test]
-        public void TestFixBackwardCompatOverloadsReordersArguments()
+        public void TestFixModelFactoryBackwardCompatOverloadsReordersArguments()
         {
             // Set up the mock plugin (required for ManagementClientGenerator.Instance)
             var propertiesModel = InputFactory.Model(
@@ -234,7 +235,7 @@ namespace Azure.Generator.Mgmt.Tests
             var backCompatMethod = new MethodProvider(oldSignature, backCompatBody, enclosingType);
 
             // Act: Run the fix
-            FlattenPropertyVisitor.FixBackwardCompatOverloads([primaryMethod, backCompatMethod]);
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads([primaryMethod, backCompatMethod]);
 
             // Assert: The backward-compat overload's body should now have arguments
             // in the PRIMARY method's current parameter order
@@ -260,10 +261,496 @@ namespace Azure.Generator.Mgmt.Tests
             AssertArgIsParameter(args[4], "etag", "position 4");
         }
 
+        [Test]
+        public void TestBackwardCompatNewInstanceConstructsDroppedModelArgument()
+        {
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var isRestoreProperty = InputFactory.Property("isRestore", InputPrimitiveType.Boolean, serializedName: "isRestore");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty, isRestoreProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldProvisioningStateParam = new ParameterProvider("testProvisioningState", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("testProvisioningState"));
+            Assert.That(propertiesArgument, Does.Contain("TestProperties"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNewInstanceUnwrapsNullableValueTypeForNestedRequiredValue()
+        {
+            var keyExpirationProperty = InputFactory.Property("keyExpirationPeriodInDays", InputPrimitiveType.Int32, isRequired: true, serializedName: "keyExpirationPeriodInDays");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [keyExpirationProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldKeyExpirationParam = new ParameterProvider("keyExpirationPeriodInDays", $"", new CSharpType(typeof(int)).WithNullable(true));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldKeyExpirationParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("keyExpirationPeriodInDays is null"));
+            Assert.That(propertiesArgument, Does.Contain("keyExpirationPeriodInDays.GetValueOrDefault()"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNewInstanceSkipsNamedConstructorMismatch()
+        {
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldProvisioningStateParam = new ParameterProvider("testProvisioningState", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var additionalDataIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "additionalBinaryDataProperties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.DefaultValue ?? Default)
+                .ToArray();
+            constructorArguments[propertiesIndex] = Default;
+            constructorArguments[additionalDataIndex] = Snippet.PositionalReference(new ParameterProvider("serializedAdditionalRawData", $"", constructorParameters[additionalDataIndex].Type), Null);
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            Assert.That(newInstance!.Parameters[propertiesIndex].ToDisplayString(), Is.EqualTo("default"));
+            Assert.That(newInstance.Parameters[additionalDataIndex].ToDisplayString(), Does.Contain("serializedAdditionalRawData"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNewInstanceUsesCombinedNestedParameterNameBeforeResourceName()
+        {
+            var policySettingsProperty = InputFactory.Property("policySettings", InputPrimitiveType.String, serializedName: "policySettings");
+            var rulesProperty = InputFactory.Property("rules", InputFactory.Array(InputPrimitiveType.String), serializedName: "rules");
+            var ruleListModel = InputFactory.Model(
+                "TestRuleList",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [rulesProperty]);
+            var rulesListProperty = InputFactory.Property("rulesList", ruleListModel, serializedName: "customRules");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [policySettingsProperty, rulesListProperty]);
+            var skuNameProperty = InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name");
+            var skuModel = InputFactory.Model(
+                "TestSku",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [skuNameProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var eTagProperty = InputFactory.Property("eTag", InputPrimitiveType.String, serializedName: "etag");
+            var skuProperty = InputFactory.Property("sku", skuModel, isRequired: false, serializedName: "sku");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty, eTagProperty, skuProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, ruleListModel, skuModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var ruleListProvider = plugin.Object.TypeFactory.CreateModel(ruleListModel)!;
+            var skuProvider = plugin.Object.TypeFactory.CreateModel(skuModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var policySettingsParam = propertiesProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "policySettings");
+            var rulesParam = ruleListProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "rules");
+            var eTagParam = parentProvider.FullConstructor.Signature.Parameters.Single(p => string.Equals(p.Name, "eTag", StringComparison.OrdinalIgnoreCase));
+            var skuNameParam = skuProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "name");
+            var oldResourceNameParam = new ParameterProvider("name", $"", typeof(string));
+            var oldPolicySettingsParam = new ParameterProvider("policySettings", $"", policySettingsParam.Type);
+            var oldRulesParam = new ParameterProvider("rules", $"", rulesParam.Type.InputType);
+            var oldETagParam = new ParameterProvider("etag", $"", eTagParam.Type);
+            var oldSkuNameParam = new ParameterProvider("skuName", $"", skuNameParam.Type);
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldResourceNameParam, oldETagParam, oldSkuNameParam, oldPolicySettingsParam, oldRulesParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var eTagIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => string.Equals(p.Name, "eTag", StringComparison.OrdinalIgnoreCase)).i;
+            var skuIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "sku").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name is "properties" or "sku" || string.Equals(p.Name, "eTag", StringComparison.OrdinalIgnoreCase) ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            var eTagArgument = newInstance.Parameters[eTagIndex].ToDisplayString();
+            var skuArgument = newInstance.Parameters[skuIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("policySettings"));
+            Assert.That(propertiesArgument, Does.Contain("rules"));
+            Assert.That(propertiesArgument, Does.Contain("ToList"));
+            Assert.That(eTagArgument, Is.EqualTo("etag"));
+            Assert.That(skuArgument, Does.Contain("skuName"));
+            Assert.That(skuArgument, Does.Not.Contain("new TestSku(name"));
+        }
+
+        [Test]
+        public void TestWriterFixesSynthesizedLastContractBackwardCompatNewInstance()
+        {
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var previousSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [new ParameterProvider("testProvisioningState", $"", typeof(string))]);
+
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            SetLastContractView(modelFactory, lastContractView);
+
+            ProcessTypeForBackCompatibility(modelFactory);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("testProvisioningState is null) ? default : new global::Samples.Models.TestProperties(testProvisioningState"));
+            Assert.That(rendered, Does.Not.Contain("return new global::Samples.Models.TestResource(\r\n                default"));
+        }
+
+        [Test]
+        public void TestBackwardCompatDirectListArgumentIsNullCoalesced()
+        {
+            var requiredFeaturesProperty = InputFactory.Property("requiredFeatures", InputFactory.Array(InputPrimitiveType.String), serializedName: "requiredFeatures");
+            var parentModel = InputFactory.Model(
+                "TestResourceWithList",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [requiredFeaturesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var requiredFeaturesConstructorParam = parentProvider.FullConstructor.Signature.Parameters.Single(p => p.Name == "requiredFeatures");
+            var oldRequiredFeaturesParam = new ParameterProvider("requiredFeatures", $"", requiredFeaturesConstructorParam.Type.InputType);
+            var oldSignature = new MethodSignature(
+                "TestResourceWithList",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldRequiredFeaturesParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var requiredFeaturesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "requiredFeatures").i;
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorParameters.Select(p => p.DefaultValue ?? Default).ToArray())), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var requiredFeaturesArgument = newInstance!.Parameters[requiredFeaturesIndex].ToDisplayString();
+            Assert.That(requiredFeaturesArgument, Does.Contain("requiredFeatures ??"));
+            Assert.That(requiredFeaturesArgument, Does.Contain("ChangeTrackingList<string>"));
+            Assert.That(requiredFeaturesArgument, Does.Contain("ToList()"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNestedArgumentUsesContextualNameBeforeResourceName()
+        {
+            var stepNameProperty = InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name");
+            var stepDescriptionProperty = InputFactory.Property("description", InputPrimitiveType.String, serializedName: "description");
+            var stepModel = InputFactory.Model(
+                "TestStep",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [stepNameProperty, stepDescriptionProperty]);
+            var progressProperty = InputFactory.Property("progress", stepModel, isRequired: false, serializedName: "progress");
+            var propertiesModel = InputFactory.Model(
+                "TestUpdateRunProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [progressProperty]);
+            var resourceNameProperty = InputFactory.Property("name", InputPrimitiveType.String, serializedName: "name");
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestUpdateRunData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [resourceNameProperty, propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, stepModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(stepModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var oldResourceNameParam = new ParameterProvider("name", $"", typeof(string));
+            var oldStepNameParam = new ParameterProvider("namePropertiesProgressName", $"", typeof(string));
+            var oldDescriptionParam = new ParameterProvider("description", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestUpdateRunData",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldResourceNameParam, oldStepNameParam, oldDescriptionParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("namePropertiesProgressName"));
+            Assert.That(propertiesArgument, Does.Contain("description"));
+            Assert.That(propertiesArgument, Does.Not.Match(@"new\s+[\w\.:]*TestStep\s*\(\s*name\s*,"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNestedArgumentDoesNotUseResourceIdForNestedId()
+        {
+            var profileIdProperty = InputFactory.Property("id", InputPrimitiveType.String, serializedName: "id");
+            var profileModel = InputFactory.Model(
+                "TestProfileReference",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [profileIdProperty]);
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var profileProperty = InputFactory.Property("containerGroupProfile", profileModel, isRequired: false, serializedName: "containerGroupProfile");
+            var propertiesModel = InputFactory.Model(
+                "TestContainerProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty, profileProperty]);
+            var resourceIdProperty = InputFactory.Property("id", InputPrimitiveType.String, serializedName: "id");
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestContainerGroupData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [resourceIdProperty, propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, profileModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(profileModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var oldResourceIdParam = new ParameterProvider("id", $"", typeof(string));
+            var oldProvisioningStateParam = new ParameterProvider("provisioningState", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestContainerGroupData",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldResourceIdParam, oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var constructorArguments = constructorParameters
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            var propertiesArgument = newInstance!.Parameters[propertiesIndex].ToDisplayString();
+            Assert.That(propertiesArgument, Does.Contain("provisioningState"));
+            Assert.That(propertiesArgument, Does.Not.Match(@"new\s+[\w\.:]*TestProfileReference\s*\(\s*id\s*,"));
+        }
+
+        [Test]
+        public void TestBackwardCompatDictionaryArgumentUsesConcreteDictionaryForInterfaceMismatch()
+        {
+            var oldIconFileUrisParam = new ParameterProvider("iconFileUris", $"", typeof(IDictionary<string, string>));
+            var expectedType = new CSharpType(typeof(IReadOnlyDictionary<string, string>));
+            var buildParameterArgument = typeof(ModelFactoryBackwardCompatHelper).GetMethod(
+                "BuildParameterArgument",
+                BindingFlags.NonPublic | BindingFlags.Static)!;
+
+            var argument = (ValueExpression)buildParameterArgument.Invoke(null, [oldIconFileUrisParam, expectedType])!;
+
+            Assert.That(argument.ToDisplayString(), Does.Contain("new global::Samples.ChangeTrackingDictionary<string, string>((iconFileUris ?? new global::Samples.ChangeTrackingDictionary<string, string>()))"));
+        }
+
         private static void AssertArgIsParameter(ValueExpression arg, string expectedName, string context)
         {
             string? actualName = arg is VariableExpression v ? v.Declaration.RequestedName : null;
             Assert.That(actualName, Is.EqualTo(expectedName), $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
+        }
+
+        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
+        {
+            typeof(TypeProvider).GetField(
+                    "_lastContractView",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
+        }
+
+        private static void ProcessTypeForBackCompatibility(TypeProvider typeProvider)
+        {
+            typeof(TypeProvider).GetMethod(
+                    "ProcessTypeForBackCompatibility",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .Invoke(typeProvider, null);
+        }
+
+        private class TestModelFactoryView : TypeProvider
+        {
+            private readonly string _name;
+
+            public TestModelFactoryView(string name)
+            {
+                _name = name;
+            }
+
+            public MethodProvider[] MethodsToBuild { get; set; } = [];
+
+            protected override string BuildName() => _name;
+
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+
+            protected override MethodProvider[] BuildMethods() => MethodsToBuild;
         }
 
         private static void ApplyFlattenDecorator(InputModelProperty property)
@@ -734,6 +1221,341 @@ namespace Azure.Generator.Mgmt.Tests
                 "Filtered list should contain no WirePath attribute");
         }
 
+        /// <summary>
+        /// Verifies the fix for https://github.com/microsoft/typespec/issues/7380.
+        ///
+        /// When SafeFlatten chains across 3+ levels of single-property models the immediate
+        /// `innerProperty` on a parent is itself a <see cref="FlattenedPropertyProvider"/>.
+        /// Previously the generator emitted `internalProperty = new InnerModel(value)` for the
+        /// flattened setter, but the value's type does not match any constructor on InnerModel
+        /// (its only ctor takes the deeper inner model). The fix detects the chained case and
+        /// emits the safe `if (internal == null) internal = new InnerModel(); internal.X = value;`
+        /// pattern instead, delegating through the inner flattened setter.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenChainedThreeLevelsEmitsSafeSetter()
+        {
+            // Level 3: leaf model with a single required string property.
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var levelThreeModel = InputFactory.Model(
+                "LevelThreeModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp]);
+
+            // Level 2: single required property of LevelThreeModel — triggers SafeFlatten.
+            // Required ensures LevelTwoModel has no public parameterless constructor.
+            var levelThreeProp = InputFactory.Property("levelThree", levelThreeModel, isRequired: true, serializedName: "levelThree");
+            var levelTwoModel = InputFactory.Model(
+                "LevelTwoModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [levelThreeProp]);
+
+            // Level 1: single required property of LevelTwoModel — triggers SafeFlatten again.
+            // After Level 2 is flattened, its single public property is itself a
+            // FlattenedPropertyProvider (Value), so flattening Level 1 hits the chained case.
+            var levelTwoProp = InputFactory.Property("levelTwo", levelTwoModel, isRequired: true, serializedName: "levelTwo");
+            var levelOneModel = InputFactory.Model(
+                "LevelOneModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [levelTwoProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [levelOneModel, levelTwoModel, levelThreeModel]);
+
+            var levelOne = plugin.Object.TypeFactory.CreateModel(levelOneModel);
+            var levelTwo = plugin.Object.TypeFactory.CreateModel(levelTwoModel);
+            var levelThree = plugin.Object.TypeFactory.CreateModel(levelThreeModel);
+            Assert.That(levelOne, Is.Not.Null);
+            Assert.That(levelTwo, Is.Not.Null);
+            Assert.That(levelThree, Is.Not.Null);
+
+            // Precondition: LevelTwoModel has no public parameterless ctor (required prop).
+            Assert.That(
+                levelTwo!.Constructors.Any(c =>
+                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                    !c.Signature.Parameters.Any()),
+                Is.False,
+                "Precondition: LevelTwoModel should have no public parameterless constructor");
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            // Visit child models first so SafeFlatten on LevelOneModel sees the already-flattened
+            // FlattenedPropertyProvider as the inner property.
+            foreach (var model in new[] { levelThree, levelTwo, levelOne })
+            {
+                foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+                {
+                    visitTypeCore!.Invoke(visitor, [model!]);
+                }
+            }
+
+            var rendered = new TypeProviderWriter(levelOne!).Write().Content;
+
+            // The buggy form would be: `LevelTwo = new LevelTwoModel(value);` — which doesn't
+            // compile because LevelTwoModel only has a (LevelThreeModel) constructor.
+            Assert.That(
+                rendered,
+                Does.Not.Match(@"LevelTwo\s*=\s*new\s+[\w\.:]*LevelTwoModel\s*\(\s*value\s*\)"),
+                "Chained safe-flatten setter must not call a non-existent `new LevelTwoModel(value)` constructor");
+
+            // The fixed form delegates through the flattened inner setter, with a parameterless
+            // construction of the intermediate model.
+            Assert.That(
+                rendered,
+                Does.Match(@"LevelTwo\s*=\s*new\s+[\w\.:]*LevelTwoModel\s*\(\s*\)"),
+                "Chained safe-flatten setter should construct the intermediate model with the parameterless ctor");
+            Assert.That(
+                rendered,
+                Does.Match(@"LevelTwo\.LevelThreeValue\s*=\s*value"),
+                "Chained safe-flatten setter should delegate assignment through the inner flattened property");
+        }
+
+        /// <summary>
+        /// Baseline for the disable-safe-flatten opt-out tests: when a wrapper inner model has
+        /// exactly one public property, the parent's wrapper property is normally safe-flattened
+        /// (the wrapper property becomes internal and a new public property mirroring the inner
+        /// one is added to the parent). This test pins that baseline behavior so the opt-out
+        /// tests below can clearly demonstrate the difference.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenAppliedByDefaultForSinglePropertyWrapper()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: null,
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "baseline (no decorator)");
+        }
+
+        /// <summary>
+        /// Verifies the new opt-out: when the wrapper inner model carries
+        /// <c>@@clientOption(WrapperModel, "disable-safe-flatten", true, "csharp")</c>,
+        /// safe-flatten is skipped for that wrapper. The parent's wrapper property remains
+        /// public and no flattened mirror property is promoted onto the parent.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenSkippedWhenDisableSafeFlattenDecoratorIsTrue()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true))],
+                runVisitors: true);
+
+            AssertSafeFlattenSkipped(parentModelProvider, "disable-safe-flatten=true");
+        }
+
+        /// <summary>
+        /// Only a JSON boolean <c>true</c> is honored. A boolean <c>false</c> must be ignored and
+        /// the wrapper must still be safe-flattened normally.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedWhenDisableSafeFlattenDecoratorIsFalse()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(false))],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "disable-safe-flatten=false (must be ignored)");
+        }
+
+        /// <summary>
+        /// Only a JSON boolean <c>true</c> is honored. A non-boolean value (e.g. the string
+        /// <c>"true"</c>) must be ignored and safe-flatten must still apply. This pins the
+        /// "strictly boolean true" contract from the PR description.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedWhenDisableSafeFlattenValueIsStringTrue()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson("true"))],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "disable-safe-flatten=\"true\" (string, must be ignored)");
+        }
+
+        /// <summary>
+        /// A different clientOption key (e.g. <c>resource-rbac-roles</c>) must not be misinterpreted
+        /// as the disable-safe-flatten opt-out. Safe-flatten should still apply when only an
+        /// unrelated clientOption decorator is present on the wrapper model.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedForUnrelatedClientOptionDecorator()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("some-other-option", BinaryData.FromObjectAsJson(true))],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "unrelated clientOption key");
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="ManagementInputLibrary.SafeFlattenDisabledModels"/> exposes
+        /// the wrapper input model when the decorator is present with a JSON boolean true.
+        /// </summary>
+        [Test]
+        public void TestInputLibraryExposesSafeFlattenDisabledModels()
+        {
+            var (_, wrapperInputModel) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true))],
+                runVisitors: false);
+
+            Assert.That(
+                ManagementClientGenerator.Instance.InputLibrary.SafeFlattenDisabledModels,
+                Has.Member(wrapperInputModel),
+                "InputLibrary.SafeFlattenDisabledModels should contain the wrapper model when the decorator opts it out");
+
+            var wrapperOutput = ManagementClientGenerator.Instance.TypeFactory.CreateModel(wrapperInputModel);
+            Assert.That(wrapperOutput, Is.Not.Null);
+            Assert.That(
+                ManagementClientGenerator.Instance.OutputLibrary.SafeFlattenDisabledModels,
+                Has.Member(wrapperOutput!),
+                "OutputLibrary.SafeFlattenDisabledModels should mirror the input library's set");
+        }
+
+        // After safe-flatten on a wrapper-shape parent (`Wrapper -> WrapperModel { value }`):
+        //  - The original "Wrapper" property is internalized.
+        //  - A new public flattened property is promoted onto the parent.
+        // The exact promoted name is computed by PropertyHelpers.GetCombinedPropertyName and is
+        // not part of the disable-safe-flatten contract, so we assert structural signals (the
+        // wrapper's modifier change + the gain of an extra public property) rather than a
+        // hard-coded name.
+        private static void AssertSafeFlattenApplied(ModelProvider parent, string scenario)
+        {
+            var wrapperProp = parent.Properties.SingleOrDefault(p => p.Name == "Wrapper");
+            Assert.That(wrapperProp, Is.Not.Null, $"[{scenario}] Wrapper property should still exist on the parent");
+            Assert.That(
+                wrapperProp!.Modifiers.HasFlag(MethodSignatureModifiers.Internal),
+                Is.True,
+                $"[{scenario}] Wrapper property should be internalized when safe-flatten is applied");
+            Assert.That(
+                wrapperProp.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.False,
+                $"[{scenario}] Wrapper property should not be public after safe-flatten");
+
+            var promotedPublic = parent.Properties
+                .Where(p => p.Name != "Wrapper" && p.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .ToList();
+            Assert.That(
+                promotedPublic,
+                Has.Count.EqualTo(1),
+                $"[{scenario}] Exactly one new public property should be promoted onto the parent by safe-flatten");
+        }
+
+        private static void AssertSafeFlattenSkipped(ModelProvider parent, string scenario)
+        {
+            var wrapperProp = parent.Properties.SingleOrDefault(p => p.Name == "Wrapper");
+            Assert.That(wrapperProp, Is.Not.Null, $"[{scenario}] Wrapper property must still exist on the parent");
+            Assert.That(
+                wrapperProp!.Modifiers.HasFlag(MethodSignatureModifiers.Public),
+                Is.True,
+                $"[{scenario}] Wrapper property should remain public when safe-flatten is disabled");
+            Assert.That(
+                wrapperProp.Modifiers.HasFlag(MethodSignatureModifiers.Internal),
+                Is.False,
+                $"[{scenario}] Wrapper property should not be internalized when safe-flatten is disabled");
+
+            var promotedPublic = parent.Properties
+                .Where(p => p.Name != "Wrapper" && p.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                .ToList();
+            Assert.That(
+                promotedPublic,
+                Is.Empty,
+                $"[{scenario}] No flattened mirror property should be promoted when safe-flatten is disabled");
+        }
+
+        /// <summary>
+        /// A decorator scoped to a different language (e.g. <c>"java"</c>) must be ignored
+        /// by the C# generator, even when the key and value match.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenStillAppliedWhenDisableSafeFlattenScopeIsNotCSharp()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true), scope: "java")],
+                runVisitors: true);
+
+            AssertSafeFlattenApplied(parentModelProvider, "disable-safe-flatten=true scoped to \"java\"");
+        }
+
+        /// <summary>
+        /// A decorator with no scope argument is treated by TCGC as "all languages" and must
+        /// be honored by the C# generator.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenSkippedWhenDisableSafeFlattenHasNoScope()
+        {
+            var (parentModelProvider, _) = SetupSafeFlattenScenario(
+                wrapperDecorators: [BuildClientOptionDecorator("disable-safe-flatten", BinaryData.FromObjectAsJson(true), scope: null)],
+                runVisitors: true);
+
+            AssertSafeFlattenSkipped(parentModelProvider, "disable-safe-flatten=true with no scope (all languages)");
+        }
+
+        private static InputDecoratorInfo BuildClientOptionDecorator(string optionName, BinaryData value, string? scope = "csharp")
+        {
+            // Mirrors the shape that TCGC propagates for @@clientOption: positional-named
+            // parameters surface as a Dictionary<string, BinaryData>. The second positional
+            // parameter is named "name" in TCGC's decorator definition (even though our docs
+            // refer to it as a "key").
+            var arguments = new Dictionary<string, BinaryData>
+            {
+                ["name"] = BinaryData.FromObjectAsJson(optionName),
+                ["value"] = value,
+            };
+            if (scope is not null)
+            {
+                arguments["scope"] = BinaryData.FromObjectAsJson(scope);
+            }
+            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@clientOption", arguments);
+        }
+
+        /// <summary>
+        /// Builds a wrapper-style scenario: a parent model with a single property whose type is
+        /// a wrapper model that itself has a single public property — the canonical safe-flatten
+        /// trigger. Optionally attaches decorators to the wrapper model and runs all visitors so
+        /// callers can inspect the post-visit state of the parent.
+        /// </summary>
+        private static (ModelProvider Parent, InputModelType WrapperInput) SetupSafeFlattenScenario(
+            IReadOnlyList<InputDecoratorInfo>? wrapperDecorators,
+            bool runVisitors)
+        {
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp],
+                decorators: wrapperDecorators);
+
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentInputModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentInputModel, wrapperModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentInputModel)!;
+            Assert.That(parentProvider, Is.Not.Null);
+
+            if (runVisitors)
+            {
+                var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                    "VisitTypeCore",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                Assert.That(visitTypeCore, Is.Not.Null);
+
+                foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+                {
+                    visitTypeCore!.Invoke(visitor, [parentProvider]);
+                }
+            }
+
+            return (parentProvider, wrapperModel);
+        }
+
         private class ObsoletePropertyCustomCodeView : TypeProvider
         {
             private readonly TypeProvider _enclosingType;
@@ -760,6 +1582,53 @@ namespace Azure.Generator.Mgmt.Tests
                         attributes: [new AttributeStatement(typeof(ObsoleteAttribute), Literal("Use StartTimeUtc instead."))])
                 ];
             }
+        }
+
+        /// <summary>
+        /// Verifies that when a required value-type inner property is flattened from an optional
+        /// "properties?:" parent, the generated flattened property is wrapped in Nullable&lt;T&gt;.
+        /// Regression test for issue #58288: the public getter returns the inner value unguarded,
+        /// but the backing "Properties" reference can be null at runtime (e.g. output-only models
+        /// deserialized without a properties bag). Exposing it as non-nullable masks the NRE risk
+        /// and diverges from the corresponding ModelFactory parameter shape.
+        /// </summary>
+        [Test]
+        public void TestFlattenMakesRequiredValueTypeNullable()
+        {
+            var requiredIntProp = InputFactory.Property("count", InputPrimitiveType.Int32, isRequired: true, serializedName: "count");
+            var propertiesModel = InputFactory.Model(
+                "TestValueTypeProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [requiredIntProp]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+
+            var parentModel = InputFactory.Model(
+                "TestResourceWithValueType",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.That(model, Is.Not.Null);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var flattened = model!.Properties.SingleOrDefault(p => p.Name == "Count");
+            Assert.That(flattened, Is.Not.Null, "Expected flattened 'Count' property on parent model");
+            Assert.That(flattened!.Type.IsNullable, Is.True,
+                "Required value-type property flattened from an optional parent should be exposed as Nullable<T>");
         }
     }
 }

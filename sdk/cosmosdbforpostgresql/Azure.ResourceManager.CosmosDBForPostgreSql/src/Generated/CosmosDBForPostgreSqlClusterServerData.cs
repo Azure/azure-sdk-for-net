@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterServerProperties();
                 }
-                Properties.StorageQuotaInMb = value.Value;
+                Properties.StorageQuotaInMb = value;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterServerProperties();
                 }
-                Properties.VCores = value.Value;
+                Properties.VCores = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterServerProperties();
                 }
-                Properties.IsHAEnabled = value.Value;
+                Properties.IsHAEnabled = value;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     Properties = new ClusterServerProperties();
                 }
-                Properties.Role = value.Value;
+                Properties.Role = value;
             }
         }
 

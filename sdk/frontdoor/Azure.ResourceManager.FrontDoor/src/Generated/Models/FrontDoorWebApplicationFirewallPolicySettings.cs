@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     LogScrubbing = new PolicySettingsLogScrubbing();
                 }
-                LogScrubbing.State = value.Value;
+                LogScrubbing.State = value;
             }
         }
 

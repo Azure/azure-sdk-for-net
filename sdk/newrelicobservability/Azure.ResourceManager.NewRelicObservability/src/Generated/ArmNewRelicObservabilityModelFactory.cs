@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && logRules is null && metricRules is null ? default : new NewRelicMonitoringTagRules(provisioningState, logRules, metricRules, null));
+                new NewRelicMonitoringTagRules(provisioningState, logRules, metricRules, null));
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSubscriptionId is null && newRelicAccountProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && orgCreationSource is null && accountCreationSource is null && subscriptionState is null && saaSAzureSubscriptionStatus is null && saaSResourceId is null ? default : new MonitorProperties(
+                new MonitorProperties(
                     provisioningState,
                     monitoringStatus,
                     marketplaceSubscriptionStatus,

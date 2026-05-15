@@ -49,8 +49,19 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
 3. **Fresh migration only / before the very first generation**: remove existing SDK custom code that predates the migration (`src/Custom/`, `src/Customization/`, `src/Customized/`, hand-written partials, backward-compat shims) so stale customizations do not hide real migration problems. When resuming, preserve minimal compatibility shims that were intentionally reintroduced during earlier migration work.
 4. Do **not** spend time porting old custom code during the initial build-fix loop. Only add back the pieces that are still required, and do that later during breaking-change mitigation.
 5. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
-6. Generate: `dotnet build /t:GenerateCode` in `src/`, or `pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
-7. Build — expect errors, proceed to Phase 2.
+6. Generate with `SaveInputs=true` so `tspCodeModel.json` is preserved for the next step: `pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path> -SaveInputs` (or `dotnet build /t:GenerateCode /p:SaveInputs=true` in `src/`).
+7. **Verify resource-hierarchy parity with the previous GA SDK** before entering the build-fix loop. The previous GA DLL is restored automatically by ApiCompat from `<ApiCompatVersion>` in the .csproj.
+   ```pwsh
+   $scripts = "eng/packages/http-client-csharp-mgmt/eng/scripts"
+   pwsh $scripts/Get-PreviousGaResourceHierarchy.ps1   -ProjectPath sdk/<svc>/Azure.ResourceManager.<Svc>/src -OutFile ga-hierarchy.json
+   pwsh $scripts/Get-ResourceHierarchyFromTspCodeModel.ps1 -TspCodeModelPath sdk/<svc>/Azure.ResourceManager.<Svc>/src -GeneratedDir sdk/<svc>/Azure.ResourceManager.<Svc>/src/Generated -OutFile new-hierarchy.json
+   pwsh $scripts/Compare-ResourceHierarchy.ps1 -GAJson ga-hierarchy.json -NewJson new-hierarchy.json
+   ```
+   Verification semantics — every GA resource must exist in the new SDK with the same `ResourceType`, parent set, scope, and singleton flag. Class-name renames are reported but not blocking.
+   - Exit `0` → hierarchy matches; continue.
+   - Exit `1` → **structural drift** (missing resource / parent / scope / singleton flip). Block and fix spec-side first (typespec-azure decorators such as `@parentResource`, `@singleton`, `@@hierarchyBuilding`, scope-defining templates) **before** entering the Phase 2 build-fix loop, otherwise downstream ApiCompat work will compound.
+   - Exit `2` → **class-name renames only**, structural hierarchy is intact. Non-blocking; record the renames in the migration status and address them during Phase 2 alongside other surface-level fixes.
+8. Build — expect errors, proceed to Phase 2.
 
 ## Phase 2 — Build-Fix Loop
 
@@ -91,7 +102,7 @@ Treat deleted custom code as **suspect by default**. Re-add only the smallest co
 | Wrong property type | `@@alternateType(Model.prop, targetType, "csharp")` |
 | Wrong name | `@@clientName(target, "NewName", "csharp")` |
 | Type should be public | `@@access(Model, Access.public, "csharp")` |
-| Model should be input and output | `@@usage(Model, Usage.input \| Usage.output, "csharp")` |
+| Model should be input and output | `@@usage(Model, Usage.input, "csharp")` (decorator appends; only specify the missing flag) |
 | Needs pageable return type | `@@markAsPageable(Interface.op, "csharp")` |
 | Flatten properties envelope | `@@flattenProperty(Model.properties, "csharp")` |
 | Change base type | `@@hierarchyBuilding(Model, TargetBase, "csharp")` |
@@ -101,6 +112,12 @@ Treat deleted custom code as **suspect by default**. Re-add only the smallest co
 ### SDK-side customization (when decorators can't help)
 
 Every file needs a justification comment.
+
+#### Model factory compatibility overloads
+
+For `Arm<Package>ModelFactory` overloads added only for backward compatibility, prefer delegating to a generated public model-factory overload. The compatibility overload should translate renamed parameters or enum/value types, then call the generated overload rather than constructing generated models, internal `Properties` bags, or internal constructors directly.
+
+This preserves the purpose of model factories: callers can provide arbitrary values for both read-write and read-only properties. Avoid adding SDK customizations or constructors for internal members just to support a custom factory overload; first look for a public generated factory overload or public model surface that can receive the same values.
 
 | Problem | Fix |
 |---------|-----|
@@ -114,9 +131,27 @@ Every file needs a justification comment.
 2. Diff with `origin/main` API file.
 3. Categorize each break (shape issue vs compatibility gap vs generator bug), then fix it using the same **build/classify → fix → regenerate/export API → re-diff** loop from Phase 2 — **never** suppress with `ApiCompatBaseline.txt`.
 
+### New API triage
+
+After the API diff is clean for missing/changed members, review every **new public API** introduced by the migration before treating it as acceptable. New APIs require explicit classification:
+
+| Category | How to identify it | Required action |
+|----------|--------------------|-----------------|
+| **Real service/API-version addition** | Operation/model/property exists only in the newer TypeSpec input/API version and has no equivalent in the previous GA swagger/API surface | Keep it. Note in the migration status/PR discussion that it comes from an API-version bump or newly onboarded operation. |
+| **Rename of an existing API** | New method/type/property has the same operation id, route, resource type, or model semantics as an API that existed in the previous GA SDK | Prefer spec-side `@@clientName`/decorators so the generated name stays compatible. If decorators cannot express it, suppress the generated renamed member and add the smallest SDK-side compatibility implementation using the GA name. Do not keep both names unless there is a deliberate approved reason. |
+| **Generator convenience/drift** | New convenience overload, operation grouping, or pageable shape appears only because the TypeSpec generator names or groups the same REST operation differently | Treat as a potential rename/compat issue. Investigate against previous GA API listings and operation ids before keeping it. |
+
+For every new member, compare against:
+- Previous GA public API listing (`origin/main` API file or restored ApiCompat assembly).
+- Operation id and request path in generated XML docs/source.
+- Resource type/parent hierarchy for resource and collection methods.
+- TypeSpec or Swagger API version where the operation/model first appears.
+
+If a new API is actually a rename of an existing method, fix the rename instead of documenting it as additive. This is especially important for operation methods: method names should remain verb-style and compatible with the GA SDK unless the old name was wrong and reviewers explicitly accept the new name.
+
 ## Phase 4 — Self-Review
 
-Review changes against the `mpg-migration-pr-review` skill rules locally — check customization quality rules and decorator preference rules. Fix issues before proceeding.
+Review changes against the `mpg-migration-pr-review` skill rules locally — check customization quality rules, decorator preference rules, and the Phase 3 new API triage. Fix issues before proceeding.
 
 Before opening the SDK PR:
 - Ensure `CHANGELOG.md` has a short migration note.

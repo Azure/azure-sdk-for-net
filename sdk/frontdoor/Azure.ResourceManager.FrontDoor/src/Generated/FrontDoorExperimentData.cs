@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     Properties = new ExperimentProperties();
                 }
-                Properties.EnabledState = value.Value;
+                Properties.EnabledState = value;
             }
         }
 

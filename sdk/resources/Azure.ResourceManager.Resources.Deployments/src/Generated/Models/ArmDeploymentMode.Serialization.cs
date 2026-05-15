@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal static partial class ArmDeploymentModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ArmDeploymentMode value) => value switch
         {
             ArmDeploymentMode.Incremental => "Incremental",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Resources.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmDeploymentMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ArmDeploymentMode ToArmDeploymentMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Incremental")) return ArmDeploymentMode.Incremental;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Complete")) return ArmDeploymentMode.Complete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Incremental"))
+            {
+                return ArmDeploymentMode.Incremental;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Complete"))
+            {
+                return ArmDeploymentMode.Complete;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmDeploymentMode value.");
         }
     }

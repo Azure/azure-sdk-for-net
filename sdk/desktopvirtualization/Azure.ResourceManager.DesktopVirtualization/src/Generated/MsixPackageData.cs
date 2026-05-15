@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new MSIXPackageProperties();
                 }
-                Properties.IsRegularRegistration = value.Value;
+                Properties.IsRegularRegistration = value;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new MSIXPackageProperties();
                 }
-                Properties.IsActive = value.Value;
+                Properties.IsActive = value;
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new MSIXPackageProperties();
                 }
-                Properties.LastUpdatedOn = value.Value;
+                Properties.LastUpdatedOn = value;
             }
         }
 

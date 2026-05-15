@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class Representing Detector Evidence used for analysis. </summary>
+    /// <summary>
+    /// Class Representing Detector Evidence used for analysis
+    /// Serialized Name: AnalysisData
+    /// </summary>
     public partial class AnalysisDetectorEvidences
     {
         /// <summary>
@@ -53,11 +56,26 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalysisDetectorEvidences"/>. </summary>
-        /// <param name="source"> Name of the Detector. </param>
-        /// <param name="detectorDefinition"> Detector Definition. </param>
-        /// <param name="metrics"> Source Metrics. </param>
-        /// <param name="data"> Additional Source Data. </param>
-        /// <param name="detectorMetaData"> Detector Meta Data. </param>
+        /// <param name="source">
+        /// Name of the Detector
+        /// Serialized Name: AnalysisData.source
+        /// </param>
+        /// <param name="detectorDefinition">
+        /// Detector Definition
+        /// Serialized Name: AnalysisData.detectorDefinition
+        /// </param>
+        /// <param name="metrics">
+        /// Source Metrics
+        /// Serialized Name: AnalysisData.metrics
+        /// </param>
+        /// <param name="data">
+        /// Additional Source Data
+        /// Serialized Name: AnalysisData.data
+        /// </param>
+        /// <param name="detectorMetaData">
+        /// Detector Meta Data
+        /// Serialized Name: AnalysisData.detectorMetaData
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AnalysisDetectorEvidences(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata detectorMetaData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,21 +87,39 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the Detector. </summary>
+        /// <summary>
+        /// Name of the Detector
+        /// Serialized Name: AnalysisData.source
+        /// </summary>
         [WirePath("source")]
         public string Source { get; set; }
-        /// <summary> Detector Definition. </summary>
+        /// <summary>
+        /// Detector Definition
+        /// Serialized Name: AnalysisData.detectorDefinition
+        /// </summary>
         [WirePath("detectorDefinition")]
         public DetectorDefinition DetectorDefinition { get; set; }
-        /// <summary> Source Metrics. </summary>
+        /// <summary>
+        /// Source Metrics
+        /// Serialized Name: AnalysisData.metrics
+        /// </summary>
         [WirePath("metrics")]
         public IList<DiagnosticMetricSet> Metrics { get; }
-        /// <summary> Additional Source Data. </summary>
+        /// <summary>
+        /// Additional Source Data
+        /// Serialized Name: AnalysisData.data
+        /// </summary>
         [WirePath("data")]
         public IList<IList<AppServiceNameValuePair>> Data { get; }
-        /// <summary> Detector Meta Data. </summary>
+        /// <summary>
+        /// Detector Meta Data
+        /// Serialized Name: AnalysisData.detectorMetaData
+        /// </summary>
         internal DetectorMetadata DetectorMetaData { get; set; }
-        /// <summary> Source of the Data. </summary>
+        /// <summary>
+        /// Source of the Data
+        /// Serialized Name: ResponseMetaData.dataSource
+        /// </summary>
         [WirePath("detectorMetaData.dataSource")]
         public DetectorDataSource DataSource
         {

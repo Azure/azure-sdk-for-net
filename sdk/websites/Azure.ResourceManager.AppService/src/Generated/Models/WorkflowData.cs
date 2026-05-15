@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The workflow type. </summary>
+    /// <summary>
+    /// The workflow type.
+    /// Serialized Name: Workflow
+    /// </summary>
     public partial class WorkflowData : TrackedResourceData
     {
         /// <summary>
@@ -61,21 +64,66 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity. </param>
-        /// <param name="provisioningState"> Gets the provisioning state. </param>
-        /// <param name="createdOn"> Gets the created time. </param>
-        /// <param name="changedOn"> Gets the changed time. </param>
-        /// <param name="state"> The state. </param>
-        /// <param name="version"> Gets the version. </param>
-        /// <param name="accessEndpoint"> Gets the access endpoint. </param>
-        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
-        /// <param name="accessControl"> The access control configuration. </param>
-        /// <param name="sku"> The sku. </param>
-        /// <param name="integrationAccount"> The integration account. </param>
-        /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
-        /// <param name="definition"> The definition. </param>
-        /// <param name="parameters"> The parameters. </param>
-        /// <param name="kind"> The workflow kind. </param>
+        /// <param name="identity">
+        /// Managed service identity.
+        /// Serialized Name: Workflow.identity
+        /// </param>
+        /// <param name="provisioningState">
+        /// Gets the provisioning state.
+        /// Serialized Name: Workflow.properties.provisioningState
+        /// </param>
+        /// <param name="createdOn">
+        /// Gets the created time.
+        /// Serialized Name: Workflow.properties.createdTime
+        /// </param>
+        /// <param name="changedOn">
+        /// Gets the changed time.
+        /// Serialized Name: Workflow.properties.changedTime
+        /// </param>
+        /// <param name="state">
+        /// The state.
+        /// Serialized Name: Workflow.properties.state
+        /// </param>
+        /// <param name="version">
+        /// Gets the version.
+        /// Serialized Name: Workflow.properties.version
+        /// </param>
+        /// <param name="accessEndpoint">
+        /// Gets the access endpoint.
+        /// Serialized Name: Workflow.properties.accessEndpoint
+        /// </param>
+        /// <param name="endpointsConfiguration">
+        /// The endpoints configuration.
+        /// Serialized Name: Workflow.properties.endpointsConfiguration
+        /// </param>
+        /// <param name="accessControl">
+        /// The access control configuration.
+        /// Serialized Name: Workflow.properties.accessControl
+        /// </param>
+        /// <param name="sku">
+        /// The sku.
+        /// Serialized Name: Workflow.properties.sku
+        /// </param>
+        /// <param name="integrationAccount">
+        /// The integration account.
+        /// Serialized Name: Workflow.properties.integrationAccount
+        /// </param>
+        /// <param name="integrationServiceEnvironment">
+        /// The integration service environment.
+        /// Serialized Name: Workflow.properties.integrationServiceEnvironment
+        /// </param>
+        /// <param name="definition">
+        /// The definition.
+        /// Serialized Name: Workflow.properties.definition
+        /// </param>
+        /// <param name="parameters">
+        /// The parameters.
+        /// Serialized Name: Workflow.properties.parameters
+        /// </param>
+        /// <param name="kind">
+        /// The workflow kind.
+        /// Serialized Name: Workflow.properties.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, WorkflowResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowContent> parameters, AppServiceKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -102,44 +150,81 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Managed service identity. </summary>
+        /// <summary>
+        /// Managed service identity.
+        /// Serialized Name: Workflow.identity
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary>
+        /// Gets the provisioning state.
+        /// Serialized Name: Workflow.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public WorkflowProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets the created time. </summary>
+        /// <summary>
+        /// Gets the created time.
+        /// Serialized Name: Workflow.properties.createdTime
+        /// </summary>
         [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Gets the changed time. </summary>
+        /// <summary>
+        /// Gets the changed time.
+        /// Serialized Name: Workflow.properties.changedTime
+        /// </summary>
         [WirePath("properties.changedTime")]
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary> The state. </summary>
+        /// <summary>
+        /// The state.
+        /// Serialized Name: Workflow.properties.state
+        /// </summary>
         [WirePath("properties.state")]
         public WorkflowState? State { get; set; }
-        /// <summary> Gets the version. </summary>
+        /// <summary>
+        /// Gets the version.
+        /// Serialized Name: Workflow.properties.version
+        /// </summary>
         [WirePath("properties.version")]
         public string Version { get; }
-        /// <summary> Gets the access endpoint. </summary>
+        /// <summary>
+        /// Gets the access endpoint.
+        /// Serialized Name: Workflow.properties.accessEndpoint
+        /// </summary>
         [WirePath("properties.accessEndpoint")]
         public string AccessEndpoint { get; }
-        /// <summary> The endpoints configuration. </summary>
+        /// <summary>
+        /// The endpoints configuration.
+        /// Serialized Name: Workflow.properties.endpointsConfiguration
+        /// </summary>
         [WirePath("properties.endpointsConfiguration")]
         public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
-        /// <summary> The access control configuration. </summary>
+        /// <summary>
+        /// The access control configuration.
+        /// Serialized Name: Workflow.properties.accessControl
+        /// </summary>
         [WirePath("properties.accessControl")]
         public FlowAccessControlConfiguration AccessControl { get; set; }
-        /// <summary> The sku. </summary>
+        /// <summary>
+        /// The sku.
+        /// Serialized Name: Workflow.properties.sku
+        /// </summary>
         [WirePath("properties.sku")]
         public WorkflowSku Sku { get; }
-        /// <summary> The integration account. </summary>
+        /// <summary>
+        /// The integration account.
+        /// Serialized Name: Workflow.properties.integrationAccount
+        /// </summary>
         [WirePath("properties.integrationAccount")]
         public WorkflowResourceReference IntegrationAccount { get; set; }
-        /// <summary> The integration service environment. </summary>
+        /// <summary>
+        /// The integration service environment.
+        /// Serialized Name: Workflow.properties.integrationServiceEnvironment
+        /// </summary>
         [WirePath("properties.integrationServiceEnvironment")]
         public WorkflowResourceReference IntegrationServiceEnvironment { get; set; }
         /// <summary>
         /// The definition.
+        /// Serialized Name: Workflow.properties.definition
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -170,10 +255,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("properties.definition")]
         public BinaryData Definition { get; set; }
-        /// <summary> The parameters. </summary>
+        /// <summary>
+        /// The parameters.
+        /// Serialized Name: Workflow.properties.parameters
+        /// </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, WorkflowContent> Parameters { get; }
-        /// <summary> The workflow kind. </summary>
+        /// <summary>
+        /// The workflow kind.
+        /// Serialized Name: Workflow.properties.kind
+        /// </summary>
         [WirePath("properties.kind")]
         public AppServiceKind? Kind { get; set; }
     }

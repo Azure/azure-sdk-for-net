@@ -8,6 +8,8 @@
   (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
   `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.
 
+- Replaced `Azure.Monitor.OpenTelemetry.AspNetCore` with the unified `Microsoft.OpenTelemetry` distro for telemetry. The new distro auto-detects Azure Monitor and OTLP exporters from environment variables and eliminates the need for duplicate-instrumentation guards.
+
 ## 1.0.0-beta.23 (2026-04-22)
 
 ### Features Added

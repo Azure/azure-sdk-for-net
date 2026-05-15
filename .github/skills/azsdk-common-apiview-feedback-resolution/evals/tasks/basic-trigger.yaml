@@ -1,0 +1,13 @@
+id: basic-trigger
+name: basic-trigger
+description: Should trigger on APIView feedback resolution requests
+inputs:
+  prompt: "I have APIView comments on my SDK PR that need to be resolved. Can you help?"
+expected:
+  skill_activated: true
+graders:
+  - type: text
+    name: mentions-apiview
+    config:
+      contains:
+        - "APIView"

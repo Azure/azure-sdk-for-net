@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new PreconfiguredEndpointProperties();
                 }
-                Properties.EndpointType = value.Value;
+                Properties.EndpointType = value;
             }
         }
 

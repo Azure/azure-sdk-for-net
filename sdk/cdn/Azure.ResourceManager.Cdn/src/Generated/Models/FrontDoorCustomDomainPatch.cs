@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The domain JSON object required for domain creation or update. </summary>
     public partial class FrontDoorCustomDomainPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
         public FrontDoorCustomDomainPatch()
@@ -53,53 +24,97 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainPatch"/>. </summary>
-        /// <param name="profileName"> The name of the profile which holds the domain. </param>
-        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
-        /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
-        /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainPatch(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, WritableSubResource preValidatedCustomDomainResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The JSON object that contains the properties of the domain to create. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorCustomDomainPatch(FrontDoorCustomDomainUpdatePropertiesParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProfileName = profileName;
-            TlsSettings = tlsSettings;
-            DnsZone = dnsZone;
-            PreValidatedCustomDomainResource = preValidatedCustomDomainResource;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The JSON object that contains the properties of the domain to create. </summary>
+        [WirePath("properties")]
+        internal FrontDoorCustomDomainUpdatePropertiesParameters Properties { get; set; }
 
         /// <summary> The name of the profile which holds the domain. </summary>
         [WirePath("properties.profileName")]
-        public string ProfileName { get; }
-        /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
-        [WirePath("properties.tlsSettings")]
-        public FrontDoorCustomDomainHttpsContent TlsSettings { get; set; }
-        /// <summary> Resource reference to the Azure DNS zone. </summary>
-        internal WritableSubResource DnsZone { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.azureDnsZone.id")]
-        public ResourceIdentifier DnsZoneId
+        public string ProfileName
         {
-            get => DnsZone is null ? default : DnsZone.Id;
-            set
+            get
             {
-                if (DnsZone is null)
-                    DnsZone = new WritableSubResource();
-                DnsZone.Id = value;
+                return Properties is null ? default : Properties.ProfileName;
             }
         }
 
-        /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal WritableSubResource PreValidatedCustomDomainResource { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
+        [WirePath("properties.tlsSettings")]
+        public FrontDoorCustomDomainHttpsContent TlsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TlsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorCustomDomainUpdatePropertiesParameters();
+                }
+                Properties.TlsSettings = value;
+            }
+        }
+
+        /// <summary> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </summary>
+        [WirePath("properties.mtlsSettings")]
+        public FrontDoorCustomDomainMtlsSettings MtlsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MtlsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorCustomDomainUpdatePropertiesParameters();
+                }
+                Properties.MtlsSettings = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.azureDnsZone.id")]
+        public ResourceIdentifier DnsZoneId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsZoneId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorCustomDomainUpdatePropertiesParameters();
+                }
+                Properties.DnsZoneId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.preValidatedCustomDomainResourceId.id")]
         public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
-            get => PreValidatedCustomDomainResource is null ? default : PreValidatedCustomDomainResource.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PreValidatedCustomDomainResourceId;
+            }
             set
             {
-                if (PreValidatedCustomDomainResource is null)
-                    PreValidatedCustomDomainResource = new WritableSubResource();
-                PreValidatedCustomDomainResource.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorCustomDomainUpdatePropertiesParameters();
+                }
+                Properties.PreValidatedCustomDomainResourceId = value;
             }
         }
     }

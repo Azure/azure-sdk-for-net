@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Deployment status response payload. </summary>
+    /// <summary>
+    /// Deployment status response payload.
+    /// Serialized Name: CsmDeploymentStatus
+    /// </summary>
     public partial class CsmDeploymentStatus : ResourceData
     {
         /// <summary>
@@ -59,17 +62,42 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deploymentId"> Deployment operation id. </param>
-        /// <param name="status"> Deployment build status. </param>
-        /// <param name="numberOfInstancesInProgress"> Number of site instances currently being provisioned. </param>
-        /// <param name="numberOfInstancesSuccessful"> Number of site instances provisioned successfully. </param>
-        /// <param name="numberOfInstancesFailed"> Number of site instances failed to provision. </param>
-        /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
-        /// <param name="errors"> List of errors. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: CsmDeploymentStatus.kind
+        /// </param>
+        /// <param name="deploymentId">
+        /// Deployment operation id.
+        /// Serialized Name: CsmDeploymentStatus.properties.deploymentId
+        /// </param>
+        /// <param name="status">
+        /// Deployment build status.
+        /// Serialized Name: CsmDeploymentStatus.properties.status
+        /// </param>
+        /// <param name="numberOfInstancesInProgress">
+        /// Number of site instances currently being provisioned.
+        /// Serialized Name: CsmDeploymentStatus.properties.numberOfInstancesInProgress
+        /// </param>
+        /// <param name="numberOfInstancesSuccessful">
+        /// Number of site instances provisioned successfully.
+        /// Serialized Name: CsmDeploymentStatus.properties.numberOfInstancesSuccessful
+        /// </param>
+        /// <param name="numberOfInstancesFailed">
+        /// Number of site instances failed to provision.
+        /// Serialized Name: CsmDeploymentStatus.properties.numberOfInstancesFailed
+        /// </param>
+        /// <param name="failedInstancesLogs">
+        /// List of URLs pointing to logs for instances which failed to provision.
+        /// Serialized Name: CsmDeploymentStatus.properties.failedInstancesLogs
+        /// </param>
+        /// <param name="errors">
+        /// List of errors.
+        /// Serialized Name: CsmDeploymentStatus.properties.errors
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CsmDeploymentStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, IList<ResponseError> errors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CsmDeploymentStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, IList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             DeploymentId = deploymentId;
             Status = status;
             NumberOfInstancesInProgress = numberOfInstancesInProgress;
@@ -77,30 +105,50 @@ namespace Azure.ResourceManager.AppService.Models
             NumberOfInstancesFailed = numberOfInstancesFailed;
             FailedInstancesLogs = failedInstancesLogs;
             Errors = errors;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Deployment operation id. </summary>
-        [WirePath("properties.deploymentId")]
-        public string DeploymentId { get; set; }
-        /// <summary> Deployment build status. </summary>
-        [WirePath("properties.status")]
-        public DeploymentBuildStatus? Status { get; set; }
-        /// <summary> Number of site instances currently being provisioned. </summary>
-        [WirePath("properties.numberOfInstancesInProgress")]
-        public int? NumberOfInstancesInProgress { get; set; }
-        /// <summary> Number of site instances provisioned successfully. </summary>
-        [WirePath("properties.numberOfInstancesSuccessful")]
-        public int? NumberOfInstancesSuccessful { get; set; }
-        /// <summary> Number of site instances failed to provision. </summary>
-        [WirePath("properties.numberOfInstancesFailed")]
-        public int? NumberOfInstancesFailed { get; set; }
-        /// <summary> List of URLs pointing to logs for instances which failed to provision. </summary>
-        [WirePath("properties.failedInstancesLogs")]
-        public IList<string> FailedInstancesLogs { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: CsmDeploymentStatus.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// Deployment operation id.
+        /// Serialized Name: CsmDeploymentStatus.properties.deploymentId
+        /// </summary>
+        [WirePath("properties.deploymentId")]
+        public string DeploymentId { get; set; }
+        /// <summary>
+        /// Deployment build status.
+        /// Serialized Name: CsmDeploymentStatus.properties.status
+        /// </summary>
+        [WirePath("properties.status")]
+        public DeploymentBuildStatus? Status { get; set; }
+        /// <summary>
+        /// Number of site instances currently being provisioned.
+        /// Serialized Name: CsmDeploymentStatus.properties.numberOfInstancesInProgress
+        /// </summary>
+        [WirePath("properties.numberOfInstancesInProgress")]
+        public int? NumberOfInstancesInProgress { get; set; }
+        /// <summary>
+        /// Number of site instances provisioned successfully.
+        /// Serialized Name: CsmDeploymentStatus.properties.numberOfInstancesSuccessful
+        /// </summary>
+        [WirePath("properties.numberOfInstancesSuccessful")]
+        public int? NumberOfInstancesSuccessful { get; set; }
+        /// <summary>
+        /// Number of site instances failed to provision.
+        /// Serialized Name: CsmDeploymentStatus.properties.numberOfInstancesFailed
+        /// </summary>
+        [WirePath("properties.numberOfInstancesFailed")]
+        public int? NumberOfInstancesFailed { get; set; }
+        /// <summary>
+        /// List of URLs pointing to logs for instances which failed to provision.
+        /// Serialized Name: CsmDeploymentStatus.properties.failedInstancesLogs
+        /// </summary>
+        [WirePath("properties.failedInstancesLogs")]
+        public IList<string> FailedInstancesLogs { get; }
     }
 }

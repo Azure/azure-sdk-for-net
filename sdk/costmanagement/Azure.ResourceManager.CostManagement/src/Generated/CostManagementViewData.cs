@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.ModifiedOn = value.Value;
+                Properties.ModifiedOn = value;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Chart = value.Value;
+                Properties.Chart = value;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Accumulated = value.Value;
+                Properties.Accumulated = value;
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Metric = value.Value;
+                Properties.Metric = value;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.TypePropertiesQueryType = value.Value;
+                Properties.TypePropertiesQueryType = value;
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Timeframe = value.Value;
+                Properties.Timeframe = value;
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.IncludeMonetaryCommitment = value.Value;
+                Properties.IncludeMonetaryCommitment = value;
             }
         }
     }

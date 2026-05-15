@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
+    /// <summary>
+    /// The configuration settings that determines the validation flow of users using App Service Authentication/Authorization.
+    /// Serialized Name: GlobalValidation
+    /// </summary>
     public partial class GlobalValidation
     {
         /// <summary>
@@ -52,14 +55,24 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GlobalValidation"/>. </summary>
-        /// <param name="isAuthenticationRequired"> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
+        /// <param name="isAuthenticationRequired">
+        /// &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: GlobalValidation.requireAuthentication
+        /// </param>
+        /// <param name="unauthenticatedClientAction">
+        /// The action to take when an unauthenticated client attempts to access the app.
+        /// Serialized Name: GlobalValidation.unauthenticatedClientAction
+        /// </param>
         /// <param name="redirectToProvider">
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage".
+        /// Serialized Name: GlobalValidation.redirectToProvider
         /// </param>
-        /// <param name="excludedPaths"> The paths for which unauthenticated flow would not be redirected to the login page. </param>
+        /// <param name="excludedPaths">
+        /// The paths for which unauthenticated flow would not be redirected to the login page.
+        /// Serialized Name: GlobalValidation.excludedPaths
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GlobalValidation(bool? isAuthenticationRequired, UnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,20 +83,30 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: GlobalValidation.requireAuthentication
+        /// </summary>
         [WirePath("requireAuthentication")]
         public bool? IsAuthenticationRequired { get; set; }
-        /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
+        /// <summary>
+        /// The action to take when an unauthenticated client attempts to access the app.
+        /// Serialized Name: GlobalValidation.unauthenticatedClientAction
+        /// </summary>
         [WirePath("unauthenticatedClientAction")]
         public UnauthenticatedClientActionV2? UnauthenticatedClientAction { get; set; }
         /// <summary>
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage".
+        /// Serialized Name: GlobalValidation.redirectToProvider
         /// </summary>
         [WirePath("redirectToProvider")]
         public string RedirectToProvider { get; set; }
-        /// <summary> The paths for which unauthenticated flow would not be redirected to the login page. </summary>
+        /// <summary>
+        /// The paths for which unauthenticated flow would not be redirected to the login page.
+        /// Serialized Name: GlobalValidation.excludedPaths
+        /// </summary>
         [WirePath("excludedPaths")]
         public IList<string> ExcludedPaths { get; }
     }

@@ -1742,21 +1742,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="chatCompletionModel"> Optional chat completion model for image verbalization or context extraction. </param>
         /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. Default is false. </param>
         /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
-        /// <param name="ingestionPermissionOptions"> Optional list of permission types to ingest together with document content. If specified, it will set the indexer permission options for the data source. </param>
         /// <param name="contentExtractionMode"> Optional content extraction mode. Default is 'minimal'. </param>
         /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/> instance for mocking. </returns>
-        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default)
+        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default)
         {
-            ingestionPermissionOptions ??= new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>();
-
             return new KnowledgeSourceIngestionParameters(
                 identity,
                 embeddingModel,
                 chatCompletionModel,
                 disableImageVerbalization,
                 ingestionSchedule,
-                ingestionPermissionOptions.ToList(),
                 contentExtractionMode,
                 aiServices,
                 additionalBinaryDataProperties: null);
@@ -3382,7 +3378,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
         /// </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
@@ -3424,6 +3420,25 @@ namespace Azure.Search.Documents.Models
             info ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new KnowledgeBaseErrorAdditionalInfo(@type, info, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents an LLM web summarization activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
+        /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? inputTokensCount = default, int? outputTokensCount = default)
+        {
+            return new KnowledgeBaseModelWebSummarizationActivityRecord(
+                id,
+                KnowledgeBaseActivityRecordType.ModelWebSummarization,
+                elapsedMs,
+                error,
+                additionalBinaryDataProperties: null,
+                inputTokensCount,
+                outputTokensCount);
         }
 
         /// <summary> Represents an agentic reasoning activity record. </summary>
@@ -3570,6 +3585,45 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties: null,
                 url,
                 title);
+        }
+
+        /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
+        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
+        public static DebugInfo DebugInfo()
+        {
+            return new DebugInfo(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for resync indexer operation. </summary>
+        /// <param name="options"> Re-sync options that have been pre-defined from data source. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexerResyncBody"/> instance for mocking. </returns>
+        public static IndexerResyncBody IndexerResyncBody(IEnumerable<IndexerResyncOption> options = default)
+        {
+            options ??= new ChangeTrackingList<IndexerResyncOption>();
+
+            return new IndexerResyncBody(options.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type of the keysOrIds. </summary>
+        /// <param name="documentKeys"> document keys to be reset. </param>
+        /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
+        /// <returns> A new <see cref="Indexes.Models.ResetDocumentOptions"/> instance for mocking. </returns>
+        public static ResetDocumentOptions ResetDocumentOptions(IEnumerable<string> documentKeys = default, IEnumerable<string> dataSourceDocumentIds = default)
+        {
+            documentKeys ??= new ChangeTrackingList<string>();
+            dataSourceDocumentIds ??= new ChangeTrackingList<string>();
+
+            return new ResetDocumentOptions(documentKeys.ToList(), dataSourceDocumentIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type of the skill names. </summary>
+        /// <param name="skillNameList"> the names of skills to be reset. </param>
+        /// <returns> A new <see cref="Indexes.Models.ResetSkillsOptions"/> instance for mocking. </returns>
+        public static ResetSkillsOptions ResetSkillsOptions(IEnumerable<string> skillNameList = default)
+        {
+            skillNameList ??= new ChangeTrackingList<string>();
+
+            return new ResetSkillsOptions(skillNameList.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchModelFactory.SearchIndexer(string,string,string,string,string,Indexes.Models.IndexingSchedule,Indexes.Models.IndexingParameters,IList{Indexes.Models.FieldMapping},IList{Indexes.Models.FieldMapping},bool?,string,SearchResourceEncryptionKey,IDictionary{string,BinaryData})"/>. </summary>
