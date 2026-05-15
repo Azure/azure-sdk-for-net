@@ -93,6 +93,24 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetAppVolumeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetAppVolumeResource"/> object. </returns>
+        public static NetAppVolumeResource GetNetAppVolumeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetAppVolumeSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -396,6 +414,24 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetAppArmClient(client).GetNetAppActiveDirectoryConfigResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppSubscriptionQuotaItemResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetAppSubscriptionQuotaItemResource"/> object. </returns>
+        public static NetAppSubscriptionQuotaItemResource GetNetAppSubscriptionQuotaItemResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetNetAppSubscriptionQuotaItemResource(id);
         }
 
         /// <summary>

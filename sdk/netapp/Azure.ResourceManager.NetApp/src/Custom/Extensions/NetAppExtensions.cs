@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.NetApp
         //
         // These public ArmClient extensions are the static counterparts to the virtual methods
         // in MockableNetAppArmClient. Keep this block aligned 1:1 with that mockable surface.
-        // The generated resource types do not always get ArmClient ID-based extension methods;
-        // keep these shims until https://github.com/Azure/azure-sdk-for-net/issues/59143 is fixed.
 
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
@@ -49,33 +47,6 @@ namespace Azure.ResourceManager.NetApp
         public static NetAppVolumeBackupResource GetNetAppVolumeBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMockableNetAppArmClient(client).GetNetAppVolumeBackupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppVolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetAppVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppVolumeResource" /> object. </returns>
-        // TODO: Remove when the generator emits this id-based getter.
-        // https://github.com/Azure/azure-sdk-for-net/issues/59143
-        public static NetAppVolumeResource GetNetAppVolumeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return GetMockableNetAppArmClient(client).GetNetAppVolumeResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppSubscriptionQuotaItemResource" /> object. </returns>
-        // TODO: Remove when the generator emits this id-based getter.
-        // https://github.com/Azure/azure-sdk-for-net/issues/59143
-        public static NetAppSubscriptionQuotaItemResource GetNetAppSubscriptionQuotaItemResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return GetMockableNetAppArmClient(client).GetNetAppSubscriptionQuotaItemResource(id);
         }
 
         /// <summary> Gets the region info resources for a subscription and location. </summary>
