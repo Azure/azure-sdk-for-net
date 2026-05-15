@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name, options);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ParameterType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> name = default;
-            ScriptActivityParameterType? @type = default;
+            ScriptActivityParameterType? parameterType = default;
             DataFactoryElement<string> value = default;
             ScriptActivityParameterDirection? direction = default;
             int? size = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @type = new ScriptActivityParameterType(prop.Value.GetString());
+                    parameterType = new ScriptActivityParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new ScriptActivityParameter(
                 name,
-                @type,
+                parameterType,
                 value,
                 direction,
                 size,

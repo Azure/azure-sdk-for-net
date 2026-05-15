@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PipelineVariableSpecification"/>. </summary>
-        /// <param name="type"> Variable type. </param>
-        public PipelineVariableSpecification(PipelineVariableType @type)
+        /// <param name="variableType"> Variable type. </param>
+        public PipelineVariableSpecification(PipelineVariableType variableType)
         {
-            Type = @type;
+            VariableType = variableType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineVariableSpecification"/>. </summary>
-        /// <param name="type"> Variable type. </param>
+        /// <param name="variableType"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineVariableSpecification(PipelineVariableType @type, BinaryData defaultValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PipelineVariableSpecification(PipelineVariableType variableType, BinaryData defaultValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            VariableType = variableType;
             DefaultValue = defaultValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Variable type. </summary>
-        public PipelineVariableType Type { get; set; }
+        public PipelineVariableType VariableType { get; set; }
 
         /// <summary>
         /// Default value of variable.

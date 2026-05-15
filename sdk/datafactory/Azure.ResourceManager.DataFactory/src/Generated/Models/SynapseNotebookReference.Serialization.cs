@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SynapseNotebookReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(NotebookReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteObjectValue(ReferenceName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            NotebookReferenceType @type = default;
+            NotebookReferenceType notebookReferenceType = default;
             DataFactoryElement<string> referenceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new NotebookReferenceType(prop.Value.GetString());
+                    notebookReferenceType = new NotebookReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SynapseNotebookReference(@type, referenceName, additionalBinaryDataProperties);
+            return new SynapseNotebookReference(notebookReferenceType, referenceName, additionalBinaryDataProperties);
         }
     }
 }

@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
-        /// <param name="type"> Credential reference type. </param>
+        /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public DataFactoryCredentialReference(DataFactoryCredentialReferenceType @type, string referenceName)
+        public DataFactoryCredentialReference(DataFactoryCredentialReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
-        /// <param name="type"> Credential reference type. </param>
+        /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <param name="additionalProperties"></param>
-        internal DataFactoryCredentialReference(DataFactoryCredentialReferenceType @type, string referenceName, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryCredentialReference(DataFactoryCredentialReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Credential reference type. </summary>
-        public DataFactoryCredentialReferenceType Type { get; set; }
+        public DataFactoryCredentialReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference credential name. </summary>
         public string ReferenceName { get; set; }

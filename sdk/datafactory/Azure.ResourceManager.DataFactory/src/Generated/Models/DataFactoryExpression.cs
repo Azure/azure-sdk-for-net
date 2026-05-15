@@ -18,30 +18,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryExpression"/>. </summary>
-        /// <param name="type"> Expression type. </param>
+        /// <param name="expressionType"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataFactoryExpression(DataFactoryExpressionType @type, string value)
+        public DataFactoryExpression(DataFactoryExpressionType expressionType, string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
-            Type = @type;
+            ExpressionType = expressionType;
             Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryExpression"/>. </summary>
-        /// <param name="type"> Expression type. </param>
+        /// <param name="expressionType"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryExpression(DataFactoryExpressionType @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryExpression(DataFactoryExpressionType expressionType, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ExpressionType = expressionType;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Expression type. </summary>
-        public DataFactoryExpressionType Type { get; set; }
+        public DataFactoryExpressionType ExpressionType { get; set; }
 
         /// <summary> Expression value. </summary>
         public string Value { get; set; }

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(MappingType.Value.ToString());
             }
             if (Optional.IsDefined(FunctionName))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string name = default;
-            MappingType? @type = default;
+            MappingType? mappingType = default;
             string functionName = default;
             string expression = default;
             MapperAttributeReference attributeReference = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @type = new MappingType(prop.Value.GetString());
+                    mappingType = new MappingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("functionName"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new MapperAttributeMapping(
                 name,
-                @type,
+                mappingType,
                 functionName,
                 expression,
                 attributeReference,

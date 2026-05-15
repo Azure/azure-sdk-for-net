@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/>. </summary>
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
-        /// <param name="type"> The type of SSIS log location. </param>
+        /// <param name="locationType"> The type of SSIS log location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
-        public SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType @type)
+        public SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType locationType)
         {
             Argument.AssertNotNull(logPath, nameof(logPath));
 
             LogPath = logPath;
-            Type = @type;
+            LocationType = locationType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/>. </summary>
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
-        /// <param name="type"> The type of SSIS log location. </param>
+        /// <param name="locationType"> The type of SSIS log location. </param>
         /// <param name="typeProperties"> SSIS package execution log location properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType @type, SSISLogLocationTypeProperties typeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType locationType, SSISLogLocationTypeProperties typeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogPath = logPath;
-            Type = @type;
+            LocationType = locationType;
             TypeProperties = typeProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> LogPath { get; set; }
 
         /// <summary> The type of SSIS log location. </summary>
-        public SsisLogLocationType Type { get; set; }
+        public SsisLogLocationType LocationType { get; set; }
 
         /// <summary> SSIS package execution log location properties. </summary>
         internal SSISLogLocationTypeProperties TypeProperties { get; set; }

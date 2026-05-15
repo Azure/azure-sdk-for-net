@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
-        /// <param name="type"> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </param>
+        /// <param name="webActivityAuthenticationType"> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </param>
         /// <param name="username"> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </param>
         /// <param name="resource"> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userTenant"> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebActivityAuthentication(string @type, DataFactoryElement<string> username, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebActivityAuthentication(string webActivityAuthenticationType, DataFactoryElement<string> username, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            WebActivityAuthenticationType = webActivityAuthenticationType;
             Username = username;
             Resource = resource;
             UserTenant = userTenant;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </summary>
-        public string Type { get; set; }
+        public string WebActivityAuthenticationType { get; set; }
 
         /// <summary> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }

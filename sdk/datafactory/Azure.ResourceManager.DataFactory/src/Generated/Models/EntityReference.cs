@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityReference"/>. </summary>
-        /// <param name="type"> The type of this referenced entity. </param>
+        /// <param name="integrationRuntimeEntityReferenceType"> The type of this referenced entity. </param>
         /// <param name="referenceName"> The name of this referenced entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityReference(IntegrationRuntimeEntityReferenceType? @type, string referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityReference(IntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            IntegrationRuntimeEntityReferenceType = integrationRuntimeEntityReferenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of this referenced entity. </summary>
-        public IntegrationRuntimeEntityReferenceType? Type { get; set; }
+        public IntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get; set; }
 
         /// <summary> The name of this referenced entity. </summary>
         public string ReferenceName { get; set; }

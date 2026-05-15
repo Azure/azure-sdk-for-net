@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(PipelineVariableSpecification)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(VariableType.ToString());
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            PipelineVariableType @type = default;
+            PipelineVariableType variableType = default;
             BinaryData defaultValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new PipelineVariableType(prop.Value.GetString());
+                    variableType = new PipelineVariableType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("defaultValue"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PipelineVariableSpecification(@type, defaultValue, additionalBinaryDataProperties);
+            return new PipelineVariableSpecification(variableType, defaultValue, additionalBinaryDataProperties);
         }
     }
 }

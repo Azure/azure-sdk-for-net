@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="purviewResourceId"> Purview resource id. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed service identity of the factory. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, string purviewResourceId = default, ETag? eTag = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, string purviewResourceId = default, IDictionary<string, string> tags = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encryption,
                     publicNetworkAccess,
                     null),
-                eTag,
                 tags,
+                eTag,
                 identity);
         }
 
@@ -832,15 +832,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Credential reference type. </summary>
-        /// <param name="type"> Credential reference type. </param>
+        /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DataFactoryCredentialReference"/> instance for mocking. </returns>
-        public static DataFactoryCredentialReference DataFactoryCredentialReference(DataFactoryCredentialReferenceType @type = default, string referenceName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DataFactoryCredentialReference DataFactoryCredentialReference(DataFactoryCredentialReferenceType referenceType = default, string referenceName = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new DataFactoryCredentialReference(@type, referenceName, additionalProperties);
+            return new DataFactoryCredentialReference(referenceType, referenceName, additionalProperties);
         }
 
         /// <summary> Interactive authoring capability type properties. </summary>
@@ -979,30 +979,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Dataset reference type. </summary>
-        /// <param name="type"> Dataset reference type. </param>
+        /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>
         /// <returns> A new <see cref="Models.DatasetReference"/> instance for mocking. </returns>
-        public static DatasetReference DatasetReference(DatasetReferenceType @type = default, string referenceName = default, IDictionary<string, BinaryData> parameters = default)
+        public static DatasetReference DatasetReference(DatasetReferenceType referenceType = default, string referenceName = default, IDictionary<string, BinaryData> parameters = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new DatasetReference(@type, referenceName, parameters, additionalBinaryDataProperties: null);
+            return new DatasetReference(referenceType, referenceName, parameters, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Data flow reference type. </summary>
-        /// <param name="type"> Data flow reference type. </param>
+        /// <param name="referenceType"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
         /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DataFlowReference"/> instance for mocking. </returns>
-        public static DataFlowReference DataFlowReference(DataFlowReferenceType @type = default, string referenceName = default, BinaryData datasetParameters = default, IDictionary<string, BinaryData> parameters = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DataFlowReference DataFlowReference(DataFlowReferenceType referenceType = default, string referenceName = default, BinaryData datasetParameters = default, IDictionary<string, BinaryData> parameters = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new DataFlowReference(@type, referenceName, datasetParameters, parameters, additionalProperties);
+            return new DataFlowReference(referenceType, referenceName, datasetParameters, parameters, additionalProperties);
         }
 
         /// <param name="description"> The description of the data flow. </param>
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDatasetDebugInfo(name, additionalBinaryDataProperties: null, properties);
         }
 
-        /// <param name="type"> Type of dataset. </param>
+        /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
@@ -1071,14 +1071,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DataFactoryDatasetProperties"/> instance for mocking. </returns>
-        public static DataFactoryDatasetProperties DataFactoryDatasetProperties(string @type = default, string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DataFactoryDatasetProperties DataFactoryDatasetProperties(string datasetType = default, string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new UnknownDataFactoryDatasetProperties(
-                @type,
+                datasetType,
                 description,
                 structure,
                 schema,
@@ -4504,15 +4504,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Integration runtime reference type. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <param name="parameters"> Arguments for integration runtime. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeReference"/> instance for mocking. </returns>
-        public static IntegrationRuntimeReference IntegrationRuntimeReference(IntegrationRuntimeReferenceType @type = default, string referenceName = default, IDictionary<string, BinaryData> parameters = default)
+        public static IntegrationRuntimeReference IntegrationRuntimeReference(IntegrationRuntimeReferenceType referenceType = default, string referenceName = default, IDictionary<string, BinaryData> parameters = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new IntegrationRuntimeReference(@type, referenceName, parameters, additionalBinaryDataProperties: null);
+            return new IntegrationRuntimeReference(referenceType, referenceName, parameters, additionalBinaryDataProperties: null);
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -17363,15 +17363,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Source connection details. </summary>
         /// <param name="linkedServiceType"> Type of the linked service e.g.: AzureBlobFS. </param>
-        /// <param name="type"> Type of connection via linked service or dataset. </param>
+        /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         /// <param name="isInlineDataset"> A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets are supported. </param>
         /// <param name="commonDslConnectorProperties"> List of name/value pairs for connection properties. </param>
         /// <returns> A new <see cref="Models.MapperConnection"/> instance for mocking. </returns>
-        public static MapperConnection MapperConnection(string linkedServiceType = default, MapperConnectionType @type = default, bool? isInlineDataset = default, IEnumerable<MapperDslConnectorProperties> commonDslConnectorProperties = default)
+        public static MapperConnection MapperConnection(string linkedServiceType = default, MapperConnectionType connectionType = default, bool? isInlineDataset = default, IEnumerable<MapperDslConnectorProperties> commonDslConnectorProperties = default)
         {
             commonDslConnectorProperties ??= new ChangeTrackingList<MapperDslConnectorProperties>();
 
-            return new MapperConnection(linkedServiceType, @type, isInlineDataset, commonDslConnectorProperties.ToList(), additionalBinaryDataProperties: null);
+            return new MapperConnection(linkedServiceType, connectionType, isInlineDataset, commonDslConnectorProperties.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A object which contains list of tables and connection details for a target connection. </summary>
@@ -17391,19 +17391,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Source and target column mapping details. </summary>
         /// <param name="name"> Name of the target column. </param>
-        /// <param name="type"> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </param>
+        /// <param name="mappingType"> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </param>
         /// <param name="functionName"> Name of the function used for 'Aggregate' and 'Derived' (except 'Advanced') type mapping. </param>
         /// <param name="expression"> Expression used for 'Aggregate' and 'Derived' type mapping. </param>
         /// <param name="attributeReference"> Reference of the source column used in the mapping. It is used for 'Direct' mapping type only. </param>
         /// <param name="attributeReferences"> List of references for source columns. It is used for 'Derived' and 'Aggregate' type mappings only. </param>
         /// <returns> A new <see cref="Models.MapperAttributeMapping"/> instance for mocking. </returns>
-        public static MapperAttributeMapping MapperAttributeMapping(string name = default, MappingType? @type = default, string functionName = default, string expression = default, MapperAttributeReference attributeReference = default, IEnumerable<MapperAttributeReference> attributeReferences = default)
+        public static MapperAttributeMapping MapperAttributeMapping(string name = default, MappingType? mappingType = default, string functionName = default, string expression = default, MapperAttributeReference attributeReference = default, IEnumerable<MapperAttributeReference> attributeReferences = default)
         {
             attributeReferences ??= new ChangeTrackingList<MapperAttributeReference>();
 
             return new MapperAttributeMapping(
                 name,
-                @type,
+                mappingType,
                 functionName,
                 expression,
                 attributeReference,
@@ -17457,8 +17457,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encryption,
                     publicNetworkAccess,
                     default),
-                eTag,
                 tags,
+                eTag,
                 identity);
         }
 

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFlowReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             if (Optional.IsDefined(DatasetParameters))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFlowReferenceType @type = default;
+            DataFlowReferenceType referenceType = default;
             string referenceName = default;
             BinaryData datasetParameters = default;
             IDictionary<string, BinaryData> parameters = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DataFlowReferenceType(prop.Value.GetString());
+                    referenceType = new DataFlowReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new DataFlowReference(@type, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties);
+            return new DataFlowReference(referenceType, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties);
         }
     }
 }

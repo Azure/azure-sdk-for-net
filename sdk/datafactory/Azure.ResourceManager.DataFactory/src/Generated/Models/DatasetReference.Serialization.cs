@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DatasetReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             if (Optional.IsCollectionDefined(Parameters))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DatasetReferenceType @type = default;
+            DatasetReferenceType referenceType = default;
             string referenceName = default;
             IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DatasetReferenceType(prop.Value.GetString());
+                    referenceType = new DatasetReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatasetReference(@type, referenceName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
+            return new DatasetReference(referenceType, referenceName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(EntityParameterSpecification)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ParameterType.ToString());
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            EntityParameterType @type = default;
+            EntityParameterType parameterType = default;
             BinaryData defaultValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new EntityParameterType(prop.Value.GetString());
+                    parameterType = new EntityParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("defaultValue"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityParameterSpecification(@type, defaultValue, additionalBinaryDataProperties);
+            return new EntityParameterSpecification(parameterType, defaultValue, additionalBinaryDataProperties);
         }
     }
 }

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="MapperConnectionReference"/>. </summary>
         /// <param name="connectionName"> Name of the connection. </param>
-        /// <param name="type"> Type of connection via linked service or dataset. </param>
+        /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapperConnectionReference(string connectionName, MapperConnectionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapperConnectionReference(string connectionName, MapperConnectionType? connectionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionName = connectionName;
-            Type = @type;
+            ConnectionType = connectionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string ConnectionName { get; set; }
 
         /// <summary> Type of connection via linked service or dataset. </summary>
-        public MapperConnectionType? Type { get; set; }
+        public MapperConnectionType? ConnectionType { get; set; }
     }
 }

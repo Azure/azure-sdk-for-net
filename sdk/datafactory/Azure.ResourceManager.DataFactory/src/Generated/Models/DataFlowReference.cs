@@ -19,28 +19,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFlowReference"/>. </summary>
-        /// <param name="type"> Data flow reference type. </param>
+        /// <param name="referenceType"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public DataFlowReference(DataFlowReferenceType @type, string referenceName)
+        public DataFlowReference(DataFlowReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFlowReference"/>. </summary>
-        /// <param name="type"> Data flow reference type. </param>
+        /// <param name="referenceType"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
         /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="additionalProperties"></param>
-        internal DataFlowReference(DataFlowReferenceType @type, string referenceName, BinaryData datasetParameters, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFlowReference(DataFlowReferenceType referenceType, string referenceName, BinaryData datasetParameters, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             DatasetParameters = datasetParameters;
             Parameters = parameters;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Data flow reference type. </summary>
-        public DataFlowReferenceType Type { get; set; }
+        public DataFlowReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference data flow name. </summary>
         public string ReferenceName { get; set; }

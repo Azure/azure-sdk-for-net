@@ -18,30 +18,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerReference"/>. </summary>
-        /// <param name="type"> Trigger reference type. </param>
+        /// <param name="referenceType"> Trigger reference type. </param>
         /// <param name="referenceName"> Reference trigger name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public DataFactoryTriggerReference(DataFactoryTriggerReferenceType @type, string referenceName)
+        public DataFactoryTriggerReference(DataFactoryTriggerReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerReference"/>. </summary>
-        /// <param name="type"> Trigger reference type. </param>
+        /// <param name="referenceType"> Trigger reference type. </param>
         /// <param name="referenceName"> Reference trigger name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryTriggerReference(DataFactoryTriggerReferenceType @type, string referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryTriggerReference(DataFactoryTriggerReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Trigger reference type. </summary>
-        public DataFactoryTriggerReferenceType Type { get; set; }
+        public DataFactoryTriggerReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference trigger name. </summary>
         public string ReferenceName { get; set; }

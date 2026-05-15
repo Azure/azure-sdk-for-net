@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("logPath"u8);
             writer.WriteObjectValue(LogPath, options);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteObjectValue(TypeProperties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> logPath = default;
-            SsisLogLocationType @type = default;
+            SsisLogLocationType locationType = default;
             SSISLogLocationTypeProperties typeProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SsisLogLocationType(prop.Value.GetString());
+                    locationType = new SsisLogLocationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("typeProperties"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SsisLogLocation(logPath, @type, typeProperties, additionalBinaryDataProperties);
+            return new SsisLogLocation(logPath, locationType, typeProperties, additionalBinaryDataProperties);
         }
     }
 }

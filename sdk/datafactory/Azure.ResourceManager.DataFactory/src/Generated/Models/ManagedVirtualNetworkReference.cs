@@ -18,30 +18,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkReference"/>. </summary>
-        /// <param name="type"> Managed Virtual Network reference type. </param>
+        /// <param name="referenceType"> Managed Virtual Network reference type. </param>
         /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType @type, string referenceName)
+        public ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkReference"/>. </summary>
-        /// <param name="type"> Managed Virtual Network reference type. </param>
+        /// <param name="referenceType"> Managed Virtual Network reference type. </param>
         /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType @type, string referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Managed Virtual Network reference type. </summary>
-        public ManagedVirtualNetworkReferenceType Type { get; set; }
+        public ManagedVirtualNetworkReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference ManagedVirtualNetwork name. </summary>
         public string ReferenceName { get; set; }

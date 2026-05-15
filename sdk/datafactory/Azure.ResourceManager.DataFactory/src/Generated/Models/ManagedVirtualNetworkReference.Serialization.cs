@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(ManagedVirtualNetworkReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            ManagedVirtualNetworkReferenceType @type = default;
+            ManagedVirtualNetworkReferenceType referenceType = default;
             string referenceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ManagedVirtualNetworkReferenceType(prop.Value.GetString());
+                    referenceType = new ManagedVirtualNetworkReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedVirtualNetworkReference(@type, referenceName, additionalBinaryDataProperties);
+            return new ManagedVirtualNetworkReference(referenceType, referenceName, additionalBinaryDataProperties);
         }
     }
 }

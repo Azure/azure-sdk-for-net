@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SsisPackageLocation"/>. </summary>
         /// <param name="packagePath"> The SSIS package path. Type: string (or Expression with resultType string). </param>
-        /// <param name="type"> The type of SSIS package location. </param>
+        /// <param name="locationType"> The type of SSIS package location. </param>
         /// <param name="typeProperties"> SSIS package location properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SsisPackageLocation(DataFactoryElement<string> packagePath, SsisPackageLocationType? @type, SSISPackageLocationTypeProperties typeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SsisPackageLocation(DataFactoryElement<string> packagePath, SsisPackageLocationType? locationType, SSISPackageLocationTypeProperties typeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackagePath = packagePath;
-            Type = @type;
+            LocationType = locationType;
             TypeProperties = typeProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> PackagePath { get; set; }
 
         /// <summary> The type of SSIS package location. </summary>
-        public SsisPackageLocationType? Type { get; set; }
+        public SsisPackageLocationType? LocationType { get; set; }
 
         /// <summary> SSIS package location properties. </summary>
         internal SSISPackageLocationTypeProperties TypeProperties { get; set; }

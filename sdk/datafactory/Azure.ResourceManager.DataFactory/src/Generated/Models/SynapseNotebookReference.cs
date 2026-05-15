@@ -19,30 +19,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SynapseNotebookReference"/>. </summary>
-        /// <param name="type"> Synapse notebook reference type. </param>
+        /// <param name="notebookReferenceType"> Synapse notebook reference type. </param>
         /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public SynapseNotebookReference(NotebookReferenceType @type, DataFactoryElement<string> referenceName)
+        public SynapseNotebookReference(NotebookReferenceType notebookReferenceType, DataFactoryElement<string> referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            NotebookReferenceType = notebookReferenceType;
             ReferenceName = referenceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="SynapseNotebookReference"/>. </summary>
-        /// <param name="type"> Synapse notebook reference type. </param>
+        /// <param name="notebookReferenceType"> Synapse notebook reference type. </param>
         /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SynapseNotebookReference(NotebookReferenceType @type, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SynapseNotebookReference(NotebookReferenceType notebookReferenceType, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            NotebookReferenceType = notebookReferenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Synapse notebook reference type. </summary>
-        public NotebookReferenceType Type { get; set; }
+        public NotebookReferenceType NotebookReferenceType { get; set; }
 
         /// <summary> Reference notebook name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ReferenceName { get; set; }

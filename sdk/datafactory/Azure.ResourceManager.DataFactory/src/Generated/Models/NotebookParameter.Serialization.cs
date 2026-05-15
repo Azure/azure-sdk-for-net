@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value, options);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ParameterType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> value = default;
-            NotebookParameterType? @type = default;
+            NotebookParameterType? parameterType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @type = new NotebookParameterType(prop.Value.GetString());
+                    parameterType = new NotebookParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NotebookParameter(value, @type, additionalBinaryDataProperties);
+            return new NotebookParameter(value, parameterType, additionalBinaryDataProperties);
         }
     }
 }

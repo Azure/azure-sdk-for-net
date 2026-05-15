@@ -19,30 +19,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SparkConfigurationParametrizationReference"/>. </summary>
-        /// <param name="type"> Spark configuration reference type. </param>
+        /// <param name="referenceType"> Spark configuration reference type. </param>
         /// <param name="referenceName"> Reference spark configuration name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public SparkConfigurationParametrizationReference(SparkConfigurationReferenceType @type, DataFactoryElement<string> referenceName)
+        public SparkConfigurationParametrizationReference(SparkConfigurationReferenceType referenceType, DataFactoryElement<string> referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="SparkConfigurationParametrizationReference"/>. </summary>
-        /// <param name="type"> Spark configuration reference type. </param>
+        /// <param name="referenceType"> Spark configuration reference type. </param>
         /// <param name="referenceName"> Reference spark configuration name. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SparkConfigurationParametrizationReference(SparkConfigurationReferenceType @type, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SparkConfigurationParametrizationReference(SparkConfigurationReferenceType referenceType, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Spark configuration reference type. </summary>
-        public SparkConfigurationReferenceType Type { get; set; }
+        public SparkConfigurationReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference spark configuration name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ReferenceName { get; set; }

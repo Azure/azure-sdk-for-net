@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="MapperAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the target column. </param>
-        /// <param name="type"> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </param>
+        /// <param name="mappingType"> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </param>
         /// <param name="functionName"> Name of the function used for 'Aggregate' and 'Derived' (except 'Advanced') type mapping. </param>
         /// <param name="expression"> Expression used for 'Aggregate' and 'Derived' type mapping. </param>
         /// <param name="attributeReference"> Reference of the source column used in the mapping. It is used for 'Direct' mapping type only. </param>
         /// <param name="attributeReferences"> List of references for source columns. It is used for 'Derived' and 'Aggregate' type mappings only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapperAttributeMapping(string name, MappingType? @type, string functionName, string expression, MapperAttributeReference attributeReference, IList<MapperAttributeReference> attributeReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapperAttributeMapping(string name, MappingType? mappingType, string functionName, string expression, MapperAttributeReference attributeReference, IList<MapperAttributeReference> attributeReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            MappingType = mappingType;
             FunctionName = functionName;
             Expression = expression;
             AttributeReference = attributeReference;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Name { get; set; }
 
         /// <summary> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </summary>
-        public MappingType? Type { get; set; }
+        public MappingType? MappingType { get; set; }
 
         /// <summary> Name of the function used for 'Aggregate' and 'Derived' (except 'Advanced') type mapping. </summary>
         public string FunctionName { get; set; }

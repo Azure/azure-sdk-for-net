@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(IntegrationRuntimeReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             if (Optional.IsCollectionDefined(Parameters))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IntegrationRuntimeReferenceType @type = default;
+            IntegrationRuntimeReferenceType referenceType = default;
             string referenceName = default;
             IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new IntegrationRuntimeReferenceType(prop.Value.GetString());
+                    referenceType = new IntegrationRuntimeReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IntegrationRuntimeReference(@type, referenceName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
+            return new IntegrationRuntimeReference(referenceType, referenceName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

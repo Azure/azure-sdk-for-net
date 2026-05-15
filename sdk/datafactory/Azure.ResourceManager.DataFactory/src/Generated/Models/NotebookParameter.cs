@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="NotebookParameter"/>. </summary>
         /// <param name="value"> Notebook parameter value. Type: string (or Expression with resultType string). </param>
-        /// <param name="type"> Notebook parameter type. </param>
+        /// <param name="parameterType"> Notebook parameter type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotebookParameter(DataFactoryElement<string> value, NotebookParameterType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NotebookParameter(DataFactoryElement<string> value, NotebookParameterType? parameterType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            Type = @type;
+            ParameterType = parameterType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Value { get; set; }
 
         /// <summary> Notebook parameter type. </summary>
-        public NotebookParameterType? Type { get; set; }
+        public NotebookParameterType? ParameterType { get; set; }
     }
 }

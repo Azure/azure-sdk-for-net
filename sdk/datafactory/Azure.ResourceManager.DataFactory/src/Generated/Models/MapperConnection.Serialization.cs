@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(LinkedServiceType);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ConnectionType.ToString());
             if (Optional.IsDefined(IsInlineDataset))
             {
                 writer.WritePropertyName("isInlineDataset"u8);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string linkedServiceType = default;
-            MapperConnectionType @type = default;
+            MapperConnectionType connectionType = default;
             bool? isInlineDataset = default;
             IList<MapperDslConnectorProperties> commonDslConnectorProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new MapperConnectionType(prop.Value.GetString());
+                    connectionType = new MapperConnectionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isInlineDataset"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MapperConnection(linkedServiceType, @type, isInlineDataset, commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), additionalBinaryDataProperties);
+            return new MapperConnection(linkedServiceType, connectionType, isInlineDataset, commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), additionalBinaryDataProperties);
         }
     }
 }

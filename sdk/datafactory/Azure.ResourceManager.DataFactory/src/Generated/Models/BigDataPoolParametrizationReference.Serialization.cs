@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(BigDataPoolParametrizationReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteObjectValue(ReferenceName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            BigDataPoolReferenceType @type = default;
+            BigDataPoolReferenceType referenceType = default;
             DataFactoryElement<string> referenceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new BigDataPoolReferenceType(prop.Value.GetString());
+                    referenceType = new BigDataPoolReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BigDataPoolParametrizationReference(@type, referenceName, additionalBinaryDataProperties);
+            return new BigDataPoolParametrizationReference(referenceType, referenceName, additionalBinaryDataProperties);
         }
     }
 }

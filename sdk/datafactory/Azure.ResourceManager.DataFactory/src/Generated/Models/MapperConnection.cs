@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MapperConnection"/>. </summary>
-        /// <param name="type"> Type of connection via linked service or dataset. </param>
-        public MapperConnection(MapperConnectionType @type)
+        /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
+        public MapperConnection(MapperConnectionType connectionType)
         {
-            Type = @type;
+            ConnectionType = connectionType;
             CommonDslConnectorProperties = new ChangeTrackingList<MapperDslConnectorProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MapperConnection"/>. </summary>
         /// <param name="linkedServiceType"> Type of the linked service e.g.: AzureBlobFS. </param>
-        /// <param name="type"> Type of connection via linked service or dataset. </param>
+        /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         /// <param name="isInlineDataset"> A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets are supported. </param>
         /// <param name="commonDslConnectorProperties"> List of name/value pairs for connection properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapperConnection(string linkedServiceType, MapperConnectionType @type, bool? isInlineDataset, IList<MapperDslConnectorProperties> commonDslConnectorProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapperConnection(string linkedServiceType, MapperConnectionType connectionType, bool? isInlineDataset, IList<MapperDslConnectorProperties> commonDslConnectorProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkedServiceType = linkedServiceType;
-            Type = @type;
+            ConnectionType = connectionType;
             IsInlineDataset = isInlineDataset;
             CommonDslConnectorProperties = commonDslConnectorProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string LinkedServiceType { get; set; }
 
         /// <summary> Type of connection via linked service or dataset. </summary>
-        public MapperConnectionType Type { get; set; }
+        public MapperConnectionType ConnectionType { get; set; }
 
         /// <summary> A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets are supported. </summary>
         public bool? IsInlineDataset { get; set; }

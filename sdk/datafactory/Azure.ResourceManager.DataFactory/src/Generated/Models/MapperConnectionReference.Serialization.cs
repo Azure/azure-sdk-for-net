@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionName"u8);
                 writer.WriteStringValue(ConnectionName);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ConnectionType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string connectionName = default;
-            MapperConnectionType? @type = default;
+            MapperConnectionType? connectionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @type = new MapperConnectionType(prop.Value.GetString());
+                    connectionType = new MapperConnectionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MapperConnectionReference(connectionName, @type, additionalBinaryDataProperties);
+            return new MapperConnectionReference(connectionName, connectionType, additionalBinaryDataProperties);
         }
     }
 }

@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("packagePath"u8);
                 writer.WriteObjectValue(PackagePath, options);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(LocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(LocationType.Value.ToString());
             }
             if (Optional.IsDefined(TypeProperties))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> packagePath = default;
-            SsisPackageLocationType? @type = default;
+            SsisPackageLocationType? locationType = default;
             SSISPackageLocationTypeProperties typeProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @type = new SsisPackageLocationType(prop.Value.GetString());
+                    locationType = new SsisPackageLocationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("typeProperties"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SsisPackageLocation(packagePath, @type, typeProperties, additionalBinaryDataProperties);
+            return new SsisPackageLocation(packagePath, locationType, typeProperties, additionalBinaryDataProperties);
         }
     }
 }

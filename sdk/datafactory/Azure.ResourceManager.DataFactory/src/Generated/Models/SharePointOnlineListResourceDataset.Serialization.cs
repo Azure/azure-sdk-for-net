@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "SharePointOnlineListResource";
+            string datasetType = "SharePointOnlineListResource";
             string description = default;
             DataFactoryElement<IList<DatasetDataElement>> structure = default;
             DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    datasetType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new SharePointOnlineListResourceDataset(
-                @type,
+                datasetType,
                 description,
                 structure,
                 schema,

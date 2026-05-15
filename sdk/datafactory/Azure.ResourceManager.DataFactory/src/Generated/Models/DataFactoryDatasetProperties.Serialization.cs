@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(DatasetType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

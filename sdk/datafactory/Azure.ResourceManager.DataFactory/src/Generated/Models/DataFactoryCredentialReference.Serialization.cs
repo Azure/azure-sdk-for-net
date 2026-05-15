@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryCredentialReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             foreach (var item in AdditionalProperties)
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryCredentialReferenceType @type = default;
+            DataFactoryCredentialReferenceType referenceType = default;
             string referenceName = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DataFactoryCredentialReferenceType(prop.Value.GetString());
+                    referenceType = new DataFactoryCredentialReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new DataFactoryCredentialReference(@type, referenceName, additionalProperties);
+            return new DataFactoryCredentialReference(referenceType, referenceName, additionalProperties);
         }
     }
 }

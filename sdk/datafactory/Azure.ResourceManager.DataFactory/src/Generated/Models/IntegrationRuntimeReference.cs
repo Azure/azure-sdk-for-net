@@ -19,33 +19,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public IntegrationRuntimeReference(IntegrationRuntimeReferenceType @type, string referenceName)
+        public IntegrationRuntimeReference(IntegrationRuntimeReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <param name="parameters"> Arguments for integration runtime. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IntegrationRuntimeReference(IntegrationRuntimeReferenceType @type, string referenceName, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IntegrationRuntimeReference(IntegrationRuntimeReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             Parameters = parameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of integration runtime. </summary>
-        public IntegrationRuntimeReferenceType Type { get; set; }
+        public IntegrationRuntimeReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference integration runtime name. </summary>
         public string ReferenceName { get; set; }

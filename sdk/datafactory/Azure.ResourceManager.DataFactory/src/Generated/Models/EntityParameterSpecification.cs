@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntityParameterSpecification"/>. </summary>
-        /// <param name="type"> Parameter type. </param>
-        public EntityParameterSpecification(EntityParameterType @type)
+        /// <param name="parameterType"> Parameter type. </param>
+        public EntityParameterSpecification(EntityParameterType parameterType)
         {
-            Type = @type;
+            ParameterType = parameterType;
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityParameterSpecification"/>. </summary>
-        /// <param name="type"> Parameter type. </param>
+        /// <param name="parameterType"> Parameter type. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityParameterSpecification(EntityParameterType @type, BinaryData defaultValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityParameterSpecification(EntityParameterType parameterType, BinaryData defaultValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ParameterType = parameterType;
             DefaultValue = defaultValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Parameter type. </summary>
-        public EntityParameterType Type { get; set; }
+        public EntityParameterType ParameterType { get; set; }
 
         /// <summary>
         /// Default value of parameter.

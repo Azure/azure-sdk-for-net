@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(WebActivityAuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(WebActivityAuthenticationType);
             }
             if (Optional.IsDefined(Username))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = default;
+            string webActivityAuthenticationType = default;
             DataFactoryElement<string> username = default;
             DataFactoryElement<string> resource = default;
             DataFactoryElement<string> userTenant = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    webActivityAuthenticationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("username"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new WebActivityAuthentication(
-                @type,
+                webActivityAuthenticationType,
                 username,
                 resource,
                 userTenant,

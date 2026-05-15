@@ -19,33 +19,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
-        /// <param name="type"> Dataset reference type. </param>
+        /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public DatasetReference(DatasetReferenceType @type, string referenceName)
+        public DatasetReference(DatasetReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
-        /// <param name="type"> Dataset reference type. </param>
+        /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetReference(DatasetReferenceType @type, string referenceName, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatasetReference(DatasetReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             Parameters = parameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Dataset reference type. </summary>
-        public DatasetReferenceType Type { get; set; }
+        public DatasetReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference dataset name. </summary>
         public string ReferenceName { get; set; }

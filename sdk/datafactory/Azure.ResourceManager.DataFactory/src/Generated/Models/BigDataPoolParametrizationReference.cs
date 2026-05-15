@@ -19,30 +19,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BigDataPoolParametrizationReference"/>. </summary>
-        /// <param name="type"> Big data pool reference type. </param>
+        /// <param name="referenceType"> Big data pool reference type. </param>
         /// <param name="referenceName"> Reference big data pool name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public BigDataPoolParametrizationReference(BigDataPoolReferenceType @type, DataFactoryElement<string> referenceName)
+        public BigDataPoolParametrizationReference(BigDataPoolReferenceType referenceType, DataFactoryElement<string> referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="BigDataPoolParametrizationReference"/>. </summary>
-        /// <param name="type"> Big data pool reference type. </param>
+        /// <param name="referenceType"> Big data pool reference type. </param>
         /// <param name="referenceName"> Reference big data pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BigDataPoolParametrizationReference(BigDataPoolReferenceType @type, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BigDataPoolParametrizationReference(BigDataPoolReferenceType referenceType, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Big data pool reference type. </summary>
-        public BigDataPoolReferenceType Type { get; set; }
+        public BigDataPoolReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference big data pool name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ReferenceName { get; set; }

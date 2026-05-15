@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryPipelineReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             if (Optional.IsDefined(Name))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryPipelineReferenceType @type = default;
+            DataFactoryPipelineReferenceType referenceType = default;
             string referenceName = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DataFactoryPipelineReferenceType(prop.Value.GetString());
+                    referenceType = new DataFactoryPipelineReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFactoryPipelineReference(@type, referenceName, name, additionalBinaryDataProperties);
+            return new DataFactoryPipelineReference(referenceType, referenceName, name, additionalBinaryDataProperties);
         }
     }
 }

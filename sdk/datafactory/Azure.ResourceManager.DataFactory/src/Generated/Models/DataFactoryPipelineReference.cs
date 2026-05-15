@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/>. </summary>
-        /// <param name="type"> Pipeline reference type. </param>
+        /// <param name="referenceType"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public DataFactoryPipelineReference(DataFactoryPipelineReferenceType @type, string referenceName)
+        public DataFactoryPipelineReference(DataFactoryPipelineReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/>. </summary>
-        /// <param name="type"> Pipeline reference type. </param>
+        /// <param name="referenceType"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryPipelineReference(DataFactoryPipelineReferenceType @type, string referenceName, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryPipelineReference(DataFactoryPipelineReferenceType referenceType, string referenceName, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ReferenceType = referenceType;
             ReferenceName = referenceName;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Pipeline reference type. </summary>
-        public DataFactoryPipelineReferenceType Type { get; set; }
+        public DataFactoryPipelineReferenceType ReferenceType { get; set; }
 
         /// <summary> Reference pipeline name. </summary>
         public string ReferenceName { get; set; }

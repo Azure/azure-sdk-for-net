@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryExpression)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ExpressionType.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryExpressionType @type = default;
+            DataFactoryExpressionType expressionType = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DataFactoryExpressionType(prop.Value.GetString());
+                    expressionType = new DataFactoryExpressionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFactoryExpression(@type, value, additionalBinaryDataProperties);
+            return new DataFactoryExpression(expressionType, value, additionalBinaryDataProperties);
         }
     }
 }

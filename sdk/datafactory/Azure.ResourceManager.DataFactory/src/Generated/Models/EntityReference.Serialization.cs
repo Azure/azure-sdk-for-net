@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(EntityReference)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
             if (Optional.IsDefined(ReferenceName))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IntegrationRuntimeEntityReferenceType? @type = default;
+            IntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType = default;
             string referenceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @type = new IntegrationRuntimeEntityReferenceType(prop.Value.GetString());
+                    integrationRuntimeEntityReferenceType = new IntegrationRuntimeEntityReferenceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("referenceName"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityReference(@type, referenceName, additionalBinaryDataProperties);
+            return new EntityReference(integrationRuntimeEntityReferenceType, referenceName, additionalBinaryDataProperties);
         }
     }
 }
