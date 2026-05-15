@@ -16,11 +16,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest, such as indexes and synonym maps. </summary>
     public partial class SearchResourceEncryptionKey : IJsonModel<SearchResourceEncryptionKey>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/> for deserialization. </summary>
-        internal SearchResourceEncryptionKey()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SearchResourceEncryptionKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

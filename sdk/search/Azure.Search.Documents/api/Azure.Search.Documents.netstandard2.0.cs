@@ -5098,15 +5098,16 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class SearchResourceEncryptionKey : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey>
     {
+        public SearchResourceEncryptionKey() { }
         public SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri) { }
         public SearchResourceEncryptionKey(System.Uri vaultUri, string keyName, string keyVersion) { }
         public string ApplicationId { get { throw null; } set { } }
         public string ApplicationSecret { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity Identity { get { throw null; } set { } }
         public bool? IsServiceLevelKey { get { throw null; } set { } }
-        public string KeyName { get { throw null; } }
-        public string KeyVersion { get { throw null; } }
-        public System.Uri VaultUri { get { throw null; } }
+        public string KeyName { get { throw null; } set { } }
+        public string KeyVersion { get { throw null; } set { } }
+        public System.Uri VaultUri { get { throw null; } set { } }
         protected virtual Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

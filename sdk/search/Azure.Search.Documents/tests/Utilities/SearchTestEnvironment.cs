@@ -106,6 +106,27 @@ namespace Azure.Search.Documents.Tests
         public string OpenAIEndpoint => GetRecordedOptionalVariable("OPENAI_ENDPOINT");
 
         /// <summary>
+        /// Gets the optional query source authorization token for external knowledge sources
+        /// (e.g. Work IQ, Fabric Ontology, Fabric Data Agent).
+        /// </summary>
+        public string QuerySourceAuthorization => GetRecordedOptionalVariable("SEARCH_QUERY_SOURCE_AUTH", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the optional Microsoft Fabric workspace ID.
+        /// </summary>
+        public string FabricWorkspaceId => GetRecordedOptionalVariable("SEARCH_FABRIC_WORKSPACE_ID");
+
+        /// <summary>
+        /// Gets the optional Fabric Ontology ID.
+        /// </summary>
+        public string FabricOntologyId => GetRecordedOptionalVariable("SEARCH_FABRIC_ONTOLOGY_ID");
+
+        /// <summary>
+        /// Gets the optional Fabric Data Agent ID.
+        /// </summary>
+        public string FabricDataAgentId => GetRecordedOptionalVariable("SEARCH_FABRIC_DATA_AGENT_ID");
+
+        /// <summary>
         /// Gets the environment of the Azure resource group to be used for Live tests (e.g. AzureCloud).
         /// Returns "AzureCloud" as default if the ENVIRONMENT variable is not set.
         /// </summary>

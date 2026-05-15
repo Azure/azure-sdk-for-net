@@ -69,6 +69,7 @@ namespace Azure.Search.Documents.Tests
             JsonPathSanitizers.Add("$..storageConnectionString");
             JsonPathSanitizers.Remove("$..token");
             SanitizedHeaders.Add("api-key");
+            SanitizedHeaders.Add("x-ms-query-source-authorization");
             CompareBodies = false;
         }
 
