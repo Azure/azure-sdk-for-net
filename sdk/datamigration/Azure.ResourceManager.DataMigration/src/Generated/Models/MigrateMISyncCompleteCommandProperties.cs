@@ -14,40 +14,49 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateMISyncCompleteCommandProperties : DataMigrationCommandProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
-        public MigrateMISyncCompleteCommandProperties()
+        public MigrateMISyncCompleteCommandProperties() : base(DataMigrationCommandType.MigrateSqlServerAzureDbSqlMiComplete)
         {
-            CommandType = DataMigrationCommandType.MigrateSqlServerAzureDBSqlMIComplete;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
         /// <param name="output"> Command output. This is ignored if submitted. </param>
-        internal MigrateMISyncCompleteCommandProperties(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output) : base(commandType, errors, state, serializedAdditionalRawData)
+        internal MigrateMISyncCompleteCommandProperties(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output) : base(commandType, errors, state, additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;
-            CommandType = commandType;
         }
 
         /// <summary> Command input. </summary>
         internal MigrateMISyncCompleteCommandInput Input { get; set; }
-        /// <summary> Name of managed instance database. </summary>
-        public string InputSourceDatabaseName
-        {
-            get => Input is null ? default : Input.SourceDatabaseName;
-            set => Input = new MigrateMISyncCompleteCommandInput(value);
-        }
 
         /// <summary> Command output. This is ignored if submitted. </summary>
         internal MigrateMISyncCompleteCommandOutput Output { get; }
-        /// <summary> List of errors that happened during the command execution. </summary>
-        public IReadOnlyList<DataMigrationReportableException> OutputErrors
+
+        /// <summary> Name of managed instance database. </summary>
+        public string InputSourceDatabaseName
         {
-            get => Output?.Errors;
+            get
+            {
+                return Input is null ? default : Input.SourceDatabaseName;
+            }
+            set
+            {
+                Input = new MigrateMISyncCompleteCommandInput(value);
+            }
+        }
+
+        /// <summary> List of errors that happened during the command execution. </summary>
+        public IList<DataMigrationReportableException> OutputErrors
+        {
+            get
+            {
+                return Output is null ? default : Output.Errors;
+            }
         }
     }
 }

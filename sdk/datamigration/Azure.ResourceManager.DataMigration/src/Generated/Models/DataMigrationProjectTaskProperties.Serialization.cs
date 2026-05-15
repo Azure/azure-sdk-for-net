@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    [PersistableModelProxy(typeof(UnknownProjectTaskProperties))]
-    public partial class DataMigrationProjectTaskProperties : IUtf8JsonSerializable, IJsonModel<DataMigrationProjectTaskProperties>
+    /// <summary>
+    /// Base class for all types of DMS (classic) task properties. If task is not supported by current client, this object is returned.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="CheckOciDriverTaskProperties"/>, <see cref="UploadOciDriverTaskProperties"/>, <see cref="InstallOciDriverTaskProperties"/>, <see cref="ConnectToMongoDBTaskProperties"/>, <see cref="ConnectToSourceSqlServerTaskProperties"/>, <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="ConnectToSourceMySqlTaskProperties"/>, <see cref="ConnectToSourceOracleSyncTaskProperties"/>, <see cref="ConnectToTargetSqlDBTaskProperties"/>, <see cref="ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="GetUserTablesSqlTaskProperties"/>, <see cref="GetUserTablesSqlSyncTaskProperties"/>, <see cref="GetUserTablesOracleTaskProperties"/>, <see cref="GetUserTablesPostgreSqlTaskProperties"/>, <see cref="GetUserTablesMySqlTaskProperties"/>, <see cref="ConnectToTargetSqlMITaskProperties"/>, <see cref="ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="MigrateMongoDBTaskProperties"/>, <see cref="MigrateSqlServerSqlMITaskProperties"/>, <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="MigrateSqlServerSqlDBTaskProperties"/>, <see cref="MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/>, <see cref="ValidateMongoDBTaskProperties"/>, <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="GetTdeCertificatesSqlTaskProperties"/>, and <see cref="MigrateSsisTaskProperties"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownDataMigrationProjectTaskProperties))]
+    public abstract partial class DataMigrationProjectTaskProperties : IJsonModel<DataMigrationProjectTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationProjectTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataMigrationProjectTaskProperties"/> for deserialization. </summary>
+        internal DataMigrationProjectTaskProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataMigrationProjectTaskProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMigrationProjectTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationProjectTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationProjectTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMigrationProjectTaskProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationProjectTaskProperties IPersistableModel<DataMigrationProjectTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationProjectTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationProjectTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,19 +77,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationProjectTaskProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (var item in Errors)
+                foreach (DataMigrationODataError item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -55,7 +103,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("commands"u8);
                 writer.WriteStartArray();
-                foreach (var item in Commands)
+                foreach (DataMigrationCommandProperties item in Commands)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,19 +116,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in ClientData)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,102 +142,114 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        DataMigrationProjectTaskProperties IJsonModel<DataMigrationProjectTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationProjectTaskProperties IJsonModel<DataMigrationProjectTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataMigrationProjectTaskProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationProjectTaskProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMigrationProjectTaskProperties(document.RootElement, options);
         }
 
-        internal static DataMigrationProjectTaskProperties DeserializeDataMigrationProjectTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMigrationProjectTaskProperties DeserializeDataMigrationProjectTaskProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("taskType", out JsonElement discriminator))
+            if (element.TryGetProperty("taskType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Connect.MongoDb": return ConnectToMongoDBTaskProperties.DeserializeConnectToMongoDBTaskProperties(element, options);
-                    case "ConnectToSource.MySql": return ConnectToSourceMySqlTaskProperties.DeserializeConnectToSourceMySqlTaskProperties(element, options);
-                    case "ConnectToSource.Oracle.Sync": return ConnectToSourceOracleSyncTaskProperties.DeserializeConnectToSourceOracleSyncTaskProperties(element, options);
-                    case "ConnectToSource.PostgreSql.Sync": return ConnectToSourcePostgreSqlSyncTaskProperties.DeserializeConnectToSourcePostgreSqlSyncTaskProperties(element, options);
-                    case "ConnectToSource.SqlServer": return ConnectToSourceSqlServerTaskProperties.DeserializeConnectToSourceSqlServerTaskProperties(element, options);
-                    case "ConnectToSource.SqlServer.Sync": return ConnectToSourceSqlServerSyncTaskProperties.DeserializeConnectToSourceSqlServerSyncTaskProperties(element, options);
-                    case "ConnectToTarget.AzureDbForMySql": return ConnectToTargetAzureDBForMySqlTaskProperties.DeserializeConnectToTargetAzureDBForMySqlTaskProperties(element, options);
-                    case "ConnectToTarget.AzureDbForPostgreSql.Sync": return ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties.DeserializeConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(element, options);
-                    case "ConnectToTarget.AzureSqlDbMI": return ConnectToTargetSqlMITaskProperties.DeserializeConnectToTargetSqlMITaskProperties(element, options);
-                    case "ConnectToTarget.AzureSqlDbMI.Sync.LRS": return ConnectToTargetSqlMISyncTaskProperties.DeserializeConnectToTargetSqlMISyncTaskProperties(element, options);
-                    case "ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync": return ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties.DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(element, options);
-                    case "ConnectToTarget.SqlDb": return ConnectToTargetSqlDBTaskProperties.DeserializeConnectToTargetSqlDBTaskProperties(element, options);
-                    case "ConnectToTarget.SqlDb.Sync": return ConnectToTargetSqlDBSyncTaskProperties.DeserializeConnectToTargetSqlDBSyncTaskProperties(element, options);
-                    case "GetTDECertificates.Sql": return GetTdeCertificatesSqlTaskProperties.DeserializeGetTdeCertificatesSqlTaskProperties(element, options);
-                    case "GetUserTables.AzureSqlDb.Sync": return GetUserTablesSqlSyncTaskProperties.DeserializeGetUserTablesSqlSyncTaskProperties(element, options);
-                    case "GetUserTables.Sql": return GetUserTablesSqlTaskProperties.DeserializeGetUserTablesSqlTaskProperties(element, options);
-                    case "GetUserTablesMySql": return GetUserTablesMySqlTaskProperties.DeserializeGetUserTablesMySqlTaskProperties(element, options);
-                    case "GetUserTablesOracle": return GetUserTablesOracleTaskProperties.DeserializeGetUserTablesOracleTaskProperties(element, options);
-                    case "GetUserTablesPostgreSql": return GetUserTablesPostgreSqlTaskProperties.DeserializeGetUserTablesPostgreSqlTaskProperties(element, options);
-                    case "Migrate.MongoDb": return MigrateMongoDBTaskProperties.DeserializeMigrateMongoDBTaskProperties(element, options);
-                    case "Migrate.MySql.AzureDbForMySql": return MigrateMySqlAzureDBForMySqlOfflineTaskProperties.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskProperties(element, options);
-                    case "Migrate.MySql.AzureDbForMySql.Sync": return MigrateMySqlAzureDBForMySqlSyncTaskProperties.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskProperties(element, options);
-                    case "Migrate.Oracle.AzureDbForPostgreSql.Sync": return MigrateOracleAzureDBForPostgreSqlSyncTaskProperties.DeserializeMigrateOracleAzureDBForPostgreSqlSyncTaskProperties(element, options);
-                    case "Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2": return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(element, options);
-                    case "Migrate.SqlServer.AzureSqlDb.Sync": return MigrateSqlServerSqlDBSyncTaskProperties.DeserializeMigrateSqlServerSqlDBSyncTaskProperties(element, options);
-                    case "Migrate.SqlServer.AzureSqlDbMI": return MigrateSqlServerSqlMITaskProperties.DeserializeMigrateSqlServerSqlMITaskProperties(element, options);
-                    case "Migrate.SqlServer.AzureSqlDbMI.Sync.LRS": return MigrateSqlServerSqlMISyncTaskProperties.DeserializeMigrateSqlServerSqlMISyncTaskProperties(element, options);
-                    case "Migrate.SqlServer.SqlDb": return MigrateSqlServerSqlDBTaskProperties.DeserializeMigrateSqlServerSqlDBTaskProperties(element, options);
-                    case "Migrate.Ssis": return MigrateSsisTaskProperties.DeserializeMigrateSsisTaskProperties(element, options);
-                    case "MigrateSchemaSqlServerSqlDb": return MigrateSchemaSqlServerSqlDBTaskProperties.DeserializeMigrateSchemaSqlServerSqlDBTaskProperties(element, options);
-                    case "Service.Check.OCI": return CheckOciDriverTaskProperties.DeserializeCheckOciDriverTaskProperties(element, options);
-                    case "Service.Install.OCI": return InstallOciDriverTaskProperties.DeserializeInstallOciDriverTaskProperties(element, options);
-                    case "Service.Upload.OCI": return UploadOciDriverTaskProperties.DeserializeUploadOciDriverTaskProperties(element, options);
-                    case "Validate.MongoDb": return ValidateMongoDBTaskProperties.DeserializeValidateMongoDBTaskProperties(element, options);
-                    case "Validate.Oracle.AzureDbPostgreSql.Sync": return ValidateOracleAzureDBForPostgreSqlSyncTaskProperties.DeserializeValidateOracleAzureDBForPostgreSqlSyncTaskProperties(element, options);
-                    case "ValidateMigrationInput.SqlServer.AzureSqlDbMI": return ValidateMigrationInputSqlServerSqlMITaskProperties.DeserializeValidateMigrationInputSqlServerSqlMITaskProperties(element, options);
-                    case "ValidateMigrationInput.SqlServer.AzureSqlDbMI.Sync.LRS": return ValidateMigrationInputSqlServerSqlMISyncTaskProperties.DeserializeValidateMigrationInputSqlServerSqlMISyncTaskProperties(element, options);
-                    case "ValidateMigrationInput.SqlServer.SqlDb.Sync": return ValidateMigrationInputSqlServerSqlDBSyncTaskProperties.DeserializeValidateMigrationInputSqlServerSqlDBSyncTaskProperties(element, options);
+                    case "MigrateSchemaSqlServerSqlDb":
+                        return MigrateSchemaSqlServerSqlDBTaskProperties.DeserializeMigrateSchemaSqlServerSqlDBTaskProperties(element, options);
+                    case "Service.Check.OCI":
+                        return CheckOciDriverTaskProperties.DeserializeCheckOciDriverTaskProperties(element, options);
+                    case "Service.Upload.OCI":
+                        return UploadOciDriverTaskProperties.DeserializeUploadOciDriverTaskProperties(element, options);
+                    case "Service.Install.OCI":
+                        return InstallOciDriverTaskProperties.DeserializeInstallOciDriverTaskProperties(element, options);
+                    case "Connect.MongoDb":
+                        return ConnectToMongoDBTaskProperties.DeserializeConnectToMongoDBTaskProperties(element, options);
+                    case "ConnectToSource.SqlServer":
+                        return ConnectToSourceSqlServerTaskProperties.DeserializeConnectToSourceSqlServerTaskProperties(element, options);
+                    case "ConnectToSource.SqlServer.Sync":
+                        return ConnectToSourceSqlServerSyncTaskProperties.DeserializeConnectToSourceSqlServerSyncTaskProperties(element, options);
+                    case "ConnectToSource.PostgreSql.Sync":
+                        return ConnectToSourcePostgreSqlSyncTaskProperties.DeserializeConnectToSourcePostgreSqlSyncTaskProperties(element, options);
+                    case "ConnectToSource.MySql":
+                        return ConnectToSourceMySqlTaskProperties.DeserializeConnectToSourceMySqlTaskProperties(element, options);
+                    case "ConnectToSource.Oracle.Sync":
+                        return ConnectToSourceOracleSyncTaskProperties.DeserializeConnectToSourceOracleSyncTaskProperties(element, options);
+                    case "ConnectToTarget.SqlDb":
+                        return ConnectToTargetSqlDBTaskProperties.DeserializeConnectToTargetSqlDBTaskProperties(element, options);
+                    case "ConnectToTarget.SqlDb.Sync":
+                        return ConnectToTargetSqlDBSyncTaskProperties.DeserializeConnectToTargetSqlDBSyncTaskProperties(element, options);
+                    case "ConnectToTarget.AzureDbForPostgreSql.Sync":
+                        return ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties.DeserializeConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(element, options);
+                    case "ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync":
+                        return ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties.DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(element, options);
+                    case "GetUserTables.Sql":
+                        return GetUserTablesSqlTaskProperties.DeserializeGetUserTablesSqlTaskProperties(element, options);
+                    case "GetUserTables.AzureSqlDb.Sync":
+                        return GetUserTablesSqlSyncTaskProperties.DeserializeGetUserTablesSqlSyncTaskProperties(element, options);
+                    case "GetUserTablesOracle":
+                        return GetUserTablesOracleTaskProperties.DeserializeGetUserTablesOracleTaskProperties(element, options);
+                    case "GetUserTablesPostgreSql":
+                        return GetUserTablesPostgreSqlTaskProperties.DeserializeGetUserTablesPostgreSqlTaskProperties(element, options);
+                    case "GetUserTablesMySql":
+                        return GetUserTablesMySqlTaskProperties.DeserializeGetUserTablesMySqlTaskProperties(element, options);
+                    case "ConnectToTarget.AzureSqlDbMI":
+                        return ConnectToTargetSqlMITaskProperties.DeserializeConnectToTargetSqlMITaskProperties(element, options);
+                    case "ConnectToTarget.AzureSqlDbMI.Sync.LRS":
+                        return ConnectToTargetSqlMISyncTaskProperties.DeserializeConnectToTargetSqlMISyncTaskProperties(element, options);
+                    case "ConnectToTarget.AzureDbForMySql":
+                        return ConnectToTargetAzureDBForMySqlTaskProperties.DeserializeConnectToTargetAzureDBForMySqlTaskProperties(element, options);
+                    case "Migrate.MongoDb":
+                        return MigrateMongoDBTaskProperties.DeserializeMigrateMongoDBTaskProperties(element, options);
+                    case "Migrate.SqlServer.AzureSqlDbMI":
+                        return MigrateSqlServerSqlMITaskProperties.DeserializeMigrateSqlServerSqlMITaskProperties(element, options);
+                    case "Migrate.SqlServer.AzureSqlDbMI.Sync.LRS":
+                        return MigrateSqlServerSqlMISyncTaskProperties.DeserializeMigrateSqlServerSqlMISyncTaskProperties(element, options);
+                    case "Migrate.SqlServer.SqlDb":
+                        return MigrateSqlServerSqlDBTaskProperties.DeserializeMigrateSqlServerSqlDBTaskProperties(element, options);
+                    case "Migrate.SqlServer.AzureSqlDb.Sync":
+                        return MigrateSqlServerSqlDBSyncTaskProperties.DeserializeMigrateSqlServerSqlDBSyncTaskProperties(element, options);
+                    case "Migrate.MySql.AzureDbForMySql.Sync":
+                        return MigrateMySqlAzureDBForMySqlSyncTaskProperties.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskProperties(element, options);
+                    case "Migrate.MySql.AzureDbForMySql":
+                        return MigrateMySqlAzureDBForMySqlOfflineTaskProperties.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskProperties(element, options);
+                    case "Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2":
+                        return MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(element, options);
+                    case "Migrate.Oracle.AzureDbForPostgreSql.Sync":
+                        return MigrateOracleAzureDBForPostgreSqlSyncTaskProperties.DeserializeMigrateOracleAzureDBForPostgreSqlSyncTaskProperties(element, options);
+                    case "ValidateMigrationInput.SqlServer.SqlDb.Sync":
+                        return ValidateMigrationInputSqlServerSqlDBSyncTaskProperties.DeserializeValidateMigrationInputSqlServerSqlDBSyncTaskProperties(element, options);
+                    case "ValidateMigrationInput.SqlServer.AzureSqlDbMI":
+                        return ValidateMigrationInputSqlServerSqlMITaskProperties.DeserializeValidateMigrationInputSqlServerSqlMITaskProperties(element, options);
+                    case "ValidateMigrationInput.SqlServer.AzureSqlDbMI.Sync.LRS":
+                        return ValidateMigrationInputSqlServerSqlMISyncTaskProperties.DeserializeValidateMigrationInputSqlServerSqlMISyncTaskProperties(element, options);
+                    case "Validate.MongoDb":
+                        return ValidateMongoDBTaskProperties.DeserializeValidateMongoDBTaskProperties(element, options);
+                    case "Validate.Oracle.AzureDbPostgreSql.Sync":
+                        return ValidateOracleAzureDBForPostgreSqlSyncTaskProperties.DeserializeValidateOracleAzureDBForPostgreSqlSyncTaskProperties(element, options);
+                    case "GetTDECertificates.Sql":
+                        return GetTdeCertificatesSqlTaskProperties.DeserializeGetTdeCertificatesSqlTaskProperties(element, options);
+                    case "Migrate.Ssis":
+                        return MigrateSsisTaskProperties.DeserializeMigrateSsisTaskProperties(element, options);
                 }
             }
-            return UnknownProjectTaskProperties.DeserializeUnknownProjectTaskProperties(element, options);
+            return UnknownDataMigrationProjectTaskProperties.DeserializeUnknownDataMigrationProjectTaskProperties(element, options);
         }
-
-        BinaryData IPersistableModel<DataMigrationProjectTaskProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationProjectTaskProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMigrationProjectTaskProperties IPersistableModel<DataMigrationProjectTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationProjectTaskProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationProjectTaskProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMigrationProjectTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

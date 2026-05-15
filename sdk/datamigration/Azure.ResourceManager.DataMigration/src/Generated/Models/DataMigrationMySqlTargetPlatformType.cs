@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationMySqlTargetPlatformType : IEquatable<DataMigrationMySqlTargetPlatformType>
     {
         private readonly string _value;
+        /// <summary> SqlServer. </summary>
+        private const string SqlServerValue = "SqlServer";
+        /// <summary> AzureDbForMySQL. </summary>
+        private const string AzureDbForMySQLValue = "AzureDbForMySQL";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMySqlTargetPlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationMySqlTargetPlatformType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SqlServerValue = "SqlServer";
-        private const string AzureDBForMySqlValue = "AzureDbForMySQL";
+            _value = value;
+        }
 
         /// <summary> SqlServer. </summary>
         public static DataMigrationMySqlTargetPlatformType SqlServer { get; } = new DataMigrationMySqlTargetPlatformType(SqlServerValue);
+
         /// <summary> AzureDbForMySQL. </summary>
-        public static DataMigrationMySqlTargetPlatformType AzureDBForMySql { get; } = new DataMigrationMySqlTargetPlatformType(AzureDBForMySqlValue);
+        public static DataMigrationMySqlTargetPlatformType AzureDbForMySQL { get; } = new DataMigrationMySqlTargetPlatformType(AzureDbForMySQLValue);
+
         /// <summary> Determines if two <see cref="DataMigrationMySqlTargetPlatformType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationMySqlTargetPlatformType left, DataMigrationMySqlTargetPlatformType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationMySqlTargetPlatformType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationMySqlTargetPlatformType left, DataMigrationMySqlTargetPlatformType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationMySqlTargetPlatformType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationMySqlTargetPlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationMySqlTargetPlatformType(string value) => new DataMigrationMySqlTargetPlatformType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationMySqlTargetPlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationMySqlTargetPlatformType?(string value) => value == null ? null : new DataMigrationMySqlTargetPlatformType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationMySqlTargetPlatformType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationMySqlTargetPlatformType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

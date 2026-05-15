@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,86 +15,137 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct SyncDatabaseMigrationReportingState : IEquatable<SyncDatabaseMigrationReportingState>
     {
         private readonly string _value;
+        /// <summary> UNDEFINED. </summary>
+        private const string UNDEFINEDValue = "UNDEFINED";
+        /// <summary> CONFIGURING. </summary>
+        private const string CONFIGURINGValue = "CONFIGURING";
+        /// <summary> INITIALIAZING. </summary>
+        private const string INITIALIAZINGValue = "INITIALIAZING";
+        /// <summary> STARTING. </summary>
+        private const string STARTINGValue = "STARTING";
+        /// <summary> RUNNING. </summary>
+        private const string RUNNINGValue = "RUNNING";
+        /// <summary> READY_TO_COMPLETE. </summary>
+        private const string READYTOCOMPLETEValue = "READY_TO_COMPLETE";
+        /// <summary> COMPLETING. </summary>
+        private const string COMPLETINGValue = "COMPLETING";
+        /// <summary> COMPLETE. </summary>
+        private const string COMPLETEValue = "COMPLETE";
+        /// <summary> CANCELLING. </summary>
+        private const string CANCELLINGValue = "CANCELLING";
+        /// <summary> CANCELLED. </summary>
+        private const string CANCELLEDValue = "CANCELLED";
+        /// <summary> FAILED. </summary>
+        private const string FAILEDValue = "FAILED";
+        /// <summary> VALIDATING. </summary>
+        private const string VALIDATINGValue = "VALIDATING";
+        /// <summary> VALIDATION_COMPLETE. </summary>
+        private const string VALIDATIONCOMPLETEValue = "VALIDATION_COMPLETE";
+        /// <summary> VALIDATION_FAILED. </summary>
+        private const string VALIDATIONFAILEDValue = "VALIDATION_FAILED";
+        /// <summary> RESTORE_IN_PROGRESS. </summary>
+        private const string RESTOREINPROGRESSValue = "RESTORE_IN_PROGRESS";
+        /// <summary> RESTORE_COMPLETED. </summary>
+        private const string RESTORECOMPLETEDValue = "RESTORE_COMPLETED";
+        /// <summary> BACKUP_IN_PROGRESS. </summary>
+        private const string BACKUPINPROGRESSValue = "BACKUP_IN_PROGRESS";
+        /// <summary> BACKUP_COMPLETED. </summary>
+        private const string BACKUPCOMPLETEDValue = "BACKUP_COMPLETED";
 
         /// <summary> Initializes a new instance of <see cref="SyncDatabaseMigrationReportingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncDatabaseMigrationReportingState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UndefinedValue = "UNDEFINED";
-        private const string ConfiguringValue = "CONFIGURING";
-        private const string InitialiazingValue = "INITIALIAZING";
-        private const string StartingValue = "STARTING";
-        private const string RunningValue = "RUNNING";
-        private const string ReadyTOCompleteValue = "READY_TO_COMPLETE";
-        private const string CompletingValue = "COMPLETING";
-        private const string CompleteValue = "COMPLETE";
-        private const string CancellingValue = "CANCELLING";
-        private const string CancelledValue = "CANCELLED";
-        private const string FailedValue = "FAILED";
-        private const string ValidatingValue = "VALIDATING";
-        private const string ValidationCompleteValue = "VALIDATION_COMPLETE";
-        private const string ValidationFailedValue = "VALIDATION_FAILED";
-        private const string RestoreINProgressValue = "RESTORE_IN_PROGRESS";
-        private const string RestoreCompletedValue = "RESTORE_COMPLETED";
-        private const string BackupINProgressValue = "BACKUP_IN_PROGRESS";
-        private const string BackupCompletedValue = "BACKUP_COMPLETED";
-
         /// <summary> UNDEFINED. </summary>
-        public static SyncDatabaseMigrationReportingState Undefined { get; } = new SyncDatabaseMigrationReportingState(UndefinedValue);
+        public static SyncDatabaseMigrationReportingState UNDEFINED { get; } = new SyncDatabaseMigrationReportingState(UNDEFINEDValue);
+
         /// <summary> CONFIGURING. </summary>
-        public static SyncDatabaseMigrationReportingState Configuring { get; } = new SyncDatabaseMigrationReportingState(ConfiguringValue);
+        public static SyncDatabaseMigrationReportingState CONFIGURING { get; } = new SyncDatabaseMigrationReportingState(CONFIGURINGValue);
+
         /// <summary> INITIALIAZING. </summary>
-        public static SyncDatabaseMigrationReportingState Initialiazing { get; } = new SyncDatabaseMigrationReportingState(InitialiazingValue);
+        public static SyncDatabaseMigrationReportingState INITIALIAZING { get; } = new SyncDatabaseMigrationReportingState(INITIALIAZINGValue);
+
         /// <summary> STARTING. </summary>
-        public static SyncDatabaseMigrationReportingState Starting { get; } = new SyncDatabaseMigrationReportingState(StartingValue);
+        public static SyncDatabaseMigrationReportingState STARTING { get; } = new SyncDatabaseMigrationReportingState(STARTINGValue);
+
         /// <summary> RUNNING. </summary>
-        public static SyncDatabaseMigrationReportingState Running { get; } = new SyncDatabaseMigrationReportingState(RunningValue);
+        public static SyncDatabaseMigrationReportingState RUNNING { get; } = new SyncDatabaseMigrationReportingState(RUNNINGValue);
+
         /// <summary> READY_TO_COMPLETE. </summary>
-        public static SyncDatabaseMigrationReportingState ReadyTOComplete { get; } = new SyncDatabaseMigrationReportingState(ReadyTOCompleteValue);
+        public static SyncDatabaseMigrationReportingState READYTOCOMPLETE { get; } = new SyncDatabaseMigrationReportingState(READYTOCOMPLETEValue);
+
         /// <summary> COMPLETING. </summary>
-        public static SyncDatabaseMigrationReportingState Completing { get; } = new SyncDatabaseMigrationReportingState(CompletingValue);
+        public static SyncDatabaseMigrationReportingState COMPLETING { get; } = new SyncDatabaseMigrationReportingState(COMPLETINGValue);
+
         /// <summary> COMPLETE. </summary>
-        public static SyncDatabaseMigrationReportingState Complete { get; } = new SyncDatabaseMigrationReportingState(CompleteValue);
+        public static SyncDatabaseMigrationReportingState COMPLETE { get; } = new SyncDatabaseMigrationReportingState(COMPLETEValue);
+
         /// <summary> CANCELLING. </summary>
-        public static SyncDatabaseMigrationReportingState Cancelling { get; } = new SyncDatabaseMigrationReportingState(CancellingValue);
+        public static SyncDatabaseMigrationReportingState CANCELLING { get; } = new SyncDatabaseMigrationReportingState(CANCELLINGValue);
+
         /// <summary> CANCELLED. </summary>
-        public static SyncDatabaseMigrationReportingState Cancelled { get; } = new SyncDatabaseMigrationReportingState(CancelledValue);
+        public static SyncDatabaseMigrationReportingState CANCELLED { get; } = new SyncDatabaseMigrationReportingState(CANCELLEDValue);
+
         /// <summary> FAILED. </summary>
-        public static SyncDatabaseMigrationReportingState Failed { get; } = new SyncDatabaseMigrationReportingState(FailedValue);
+        public static SyncDatabaseMigrationReportingState FAILED { get; } = new SyncDatabaseMigrationReportingState(FAILEDValue);
+
         /// <summary> VALIDATING. </summary>
-        public static SyncDatabaseMigrationReportingState Validating { get; } = new SyncDatabaseMigrationReportingState(ValidatingValue);
+        public static SyncDatabaseMigrationReportingState VALIDATING { get; } = new SyncDatabaseMigrationReportingState(VALIDATINGValue);
+
         /// <summary> VALIDATION_COMPLETE. </summary>
-        public static SyncDatabaseMigrationReportingState ValidationComplete { get; } = new SyncDatabaseMigrationReportingState(ValidationCompleteValue);
+        public static SyncDatabaseMigrationReportingState VALIDATIONCOMPLETE { get; } = new SyncDatabaseMigrationReportingState(VALIDATIONCOMPLETEValue);
+
         /// <summary> VALIDATION_FAILED. </summary>
-        public static SyncDatabaseMigrationReportingState ValidationFailed { get; } = new SyncDatabaseMigrationReportingState(ValidationFailedValue);
+        public static SyncDatabaseMigrationReportingState VALIDATIONFAILED { get; } = new SyncDatabaseMigrationReportingState(VALIDATIONFAILEDValue);
+
         /// <summary> RESTORE_IN_PROGRESS. </summary>
-        public static SyncDatabaseMigrationReportingState RestoreINProgress { get; } = new SyncDatabaseMigrationReportingState(RestoreINProgressValue);
+        public static SyncDatabaseMigrationReportingState RESTOREINPROGRESS { get; } = new SyncDatabaseMigrationReportingState(RESTOREINPROGRESSValue);
+
         /// <summary> RESTORE_COMPLETED. </summary>
-        public static SyncDatabaseMigrationReportingState RestoreCompleted { get; } = new SyncDatabaseMigrationReportingState(RestoreCompletedValue);
+        public static SyncDatabaseMigrationReportingState RESTORECOMPLETED { get; } = new SyncDatabaseMigrationReportingState(RESTORECOMPLETEDValue);
+
         /// <summary> BACKUP_IN_PROGRESS. </summary>
-        public static SyncDatabaseMigrationReportingState BackupINProgress { get; } = new SyncDatabaseMigrationReportingState(BackupINProgressValue);
+        public static SyncDatabaseMigrationReportingState BACKUPINPROGRESS { get; } = new SyncDatabaseMigrationReportingState(BACKUPINPROGRESSValue);
+
         /// <summary> BACKUP_COMPLETED. </summary>
-        public static SyncDatabaseMigrationReportingState BackupCompleted { get; } = new SyncDatabaseMigrationReportingState(BackupCompletedValue);
+        public static SyncDatabaseMigrationReportingState BACKUPCOMPLETED { get; } = new SyncDatabaseMigrationReportingState(BACKUPCOMPLETEDValue);
+
         /// <summary> Determines if two <see cref="SyncDatabaseMigrationReportingState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyncDatabaseMigrationReportingState left, SyncDatabaseMigrationReportingState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyncDatabaseMigrationReportingState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyncDatabaseMigrationReportingState left, SyncDatabaseMigrationReportingState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncDatabaseMigrationReportingState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyncDatabaseMigrationReportingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyncDatabaseMigrationReportingState(string value) => new SyncDatabaseMigrationReportingState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyncDatabaseMigrationReportingState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyncDatabaseMigrationReportingState?(string value) => value == null ? null : new SyncDatabaseMigrationReportingState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyncDatabaseMigrationReportingState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyncDatabaseMigrationReportingState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

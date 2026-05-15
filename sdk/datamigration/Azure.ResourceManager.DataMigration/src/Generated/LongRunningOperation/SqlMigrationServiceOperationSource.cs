@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal class SqlMigrationServiceOperationSource : IOperationSource<SqlMigrationServiceResource>
+    /// <summary></summary>
+    internal partial class SqlMigrationServiceOperationSource : IOperationSource<SqlMigrationServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlMigrationServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlMigrationServiceResource IOperationSource<SqlMigrationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlMigrationServiceData data = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlMigrationServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlMigrationServiceResource> IOperationSource<SqlMigrationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
-            return await Task.FromResult(new SqlMigrationServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlMigrationServiceData data = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlMigrationServiceResource(_client, data);
         }
     }
 }

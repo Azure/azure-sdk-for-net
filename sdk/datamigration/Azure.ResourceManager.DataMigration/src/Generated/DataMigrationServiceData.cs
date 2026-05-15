@@ -7,109 +7,158 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary>
-    /// A class representing the DataMigrationService data model.
-    /// An Azure Database Migration Service (classic) resource
-    /// </summary>
-    public partial class DataMigrationServiceData : TrackedResourceData
+    /// <summary> An Azure Database Migration Service (classic) resource. </summary>
+    public partial class DataMigrationServiceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public DataMigrationServiceData(AzureLocation location) : base(location)
+        public DataMigrationServiceData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> HTTP strong entity tag value. Ignored if submitted. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Custom service properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eTag"> HTTP strong entity tag value. Ignored if submitted. </param>
         /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
-        /// <param name="provisioningState"> The resource's provisioning state. </param>
-        /// <param name="publicKey"> The public key of the service, used to encrypt secrets sent to the service. </param>
-        /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
-        /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
-        /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
-        /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, DataMigrationServiceSku sku, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? shouldDeleteResourcesOnStop, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationServiceProperties properties, IDictionary<string, string> tags, string location, ETag? eTag, string kind, DataMigrationServiceSku sku) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Tags = tags;
+            Location = location;
+            ETag = eTag;
             Kind = kind;
             Sku = sku;
-            ProvisioningState = provisioningState;
-            PublicKey = publicKey;
-            VirtualSubnetId = virtualSubnetId;
-            VirtualNicId = virtualNicId;
-            AutoStopDelay = autoStopDelay;
-            ShouldDeleteResourcesOnStop = shouldDeleteResourcesOnStop;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceData"/> for deserialization. </summary>
-        internal DataMigrationServiceData()
-        {
-        }
+        /// <summary> Custom service properties. </summary>
+        internal DataMigrationServiceProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; set; }
 
         /// <summary> HTTP strong entity tag value. Ignored if submitted. </summary>
         public ETag? ETag { get; set; }
+
         /// <summary> The resource kind. Only 'vm' (the default) is supported. </summary>
         public string Kind { get; set; }
+
         /// <summary> Service SKU. </summary>
         public DataMigrationServiceSku Sku { get; set; }
+
         /// <summary> The resource's provisioning state. </summary>
-        public DataMigrationServiceProvisioningState? ProvisioningState { get; }
+        public DataMigrationServiceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The public key of the service, used to encrypt secrets sent to the service. </summary>
-        public string PublicKey { get; set; }
+        public string PublicKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMigrationServiceProperties();
+                }
+                Properties.PublicKey = value;
+            }
+        }
+
         /// <summary> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </summary>
-        public string VirtualSubnetId { get; set; }
+        public string VirtualSubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualSubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMigrationServiceProperties();
+                }
+                Properties.VirtualSubnetId = value;
+            }
+        }
+
         /// <summary> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </summary>
-        public string VirtualNicId { get; set; }
+        public string VirtualNicId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNicId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMigrationServiceProperties();
+                }
+                Properties.VirtualNicId = value;
+            }
+        }
+
         /// <summary> The time delay before the service is auto-stopped when idle. </summary>
-        public string AutoStopDelay { get; set; }
+        public string AutoStopDelay
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoStopDelay;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMigrationServiceProperties();
+                }
+                Properties.AutoStopDelay = value;
+            }
+        }
+
         /// <summary> Whether service resources should be deleted when stopped. (Turned on by default). </summary>
-        public bool? ShouldDeleteResourcesOnStop { get; set; }
+        public bool? ShouldDeleteResourcesOnStop
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShouldDeleteResourcesOnStop;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataMigrationServiceProperties();
+                }
+                Properties.ShouldDeleteResourcesOnStop = value;
+            }
+        }
     }
 }

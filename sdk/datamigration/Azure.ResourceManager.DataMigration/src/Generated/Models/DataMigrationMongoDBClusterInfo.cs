@@ -14,81 +14,46 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a MongoDB data source. </summary>
     public partial class DataMigrationMongoDBClusterInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="isShardingSupported"> Whether the cluster supports sharded collections. </param>
-        /// <param name="clusterType"> The type of data source. </param>
+        /// <param name="type"> The type of data source. </param>
         /// <param name="version"> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databases"/> or <paramref name="version"/> is null. </exception>
-        internal DataMigrationMongoDBClusterInfo(IEnumerable<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType clusterType, string version)
+        internal DataMigrationMongoDBClusterInfo(IEnumerable<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType @type, string version)
         {
-            Argument.AssertNotNull(databases, nameof(databases));
-            Argument.AssertNotNull(version, nameof(version));
-
             Databases = databases.ToList();
             IsShardingSupported = isShardingSupported;
-            ClusterType = clusterType;
+            Type = @type;
             Version = version;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="isShardingSupported"> Whether the cluster supports sharded collections. </param>
-        /// <param name="clusterType"> The type of data source. </param>
+        /// <param name="type"> The type of data source. </param>
         /// <param name="version"> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationMongoDBClusterInfo(IReadOnlyList<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType clusterType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationMongoDBClusterInfo(IReadOnlyList<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType @type, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Databases = databases;
             IsShardingSupported = isShardingSupported;
-            ClusterType = clusterType;
+            Type = @type;
             Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBClusterInfo"/> for deserialization. </summary>
-        internal DataMigrationMongoDBClusterInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of non-system databases in the cluster. </summary>
         public IReadOnlyList<DataMigrationMongoDBDatabaseInfo> Databases { get; }
+
         /// <summary> Whether the cluster supports sharded collections. </summary>
         public bool IsShardingSupported { get; }
+
         /// <summary> The type of data source. </summary>
-        public DataMigrationMongoDBClusterType ClusterType { get; }
+        public DataMigrationMongoDBClusterType Type { get; }
+
         /// <summary> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </summary>
         public string Version { get; }
     }

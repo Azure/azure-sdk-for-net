@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationMongoDBClusterType : IEquatable<DataMigrationMongoDBClusterType>
     {
         private readonly string _value;
+        /// <summary> BlobContainer. </summary>
+        private const string BlobContainerValue = "BlobContainer";
+        /// <summary> CosmosDb. </summary>
+        private const string CosmosDbValue = "CosmosDb";
+        /// <summary> MongoDb. </summary>
+        private const string MongoDbValue = "MongoDb";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBClusterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationMongoDBClusterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BlobContainerValue = "BlobContainer";
-        private const string CosmosDBValue = "CosmosDb";
-        private const string MongoDBValue = "MongoDb";
+            _value = value;
+        }
 
         /// <summary> BlobContainer. </summary>
         public static DataMigrationMongoDBClusterType BlobContainer { get; } = new DataMigrationMongoDBClusterType(BlobContainerValue);
+
         /// <summary> CosmosDb. </summary>
-        public static DataMigrationMongoDBClusterType CosmosDB { get; } = new DataMigrationMongoDBClusterType(CosmosDBValue);
+        public static DataMigrationMongoDBClusterType CosmosDb { get; } = new DataMigrationMongoDBClusterType(CosmosDbValue);
+
         /// <summary> MongoDb. </summary>
-        public static DataMigrationMongoDBClusterType MongoDB { get; } = new DataMigrationMongoDBClusterType(MongoDBValue);
+        public static DataMigrationMongoDBClusterType MongoDb { get; } = new DataMigrationMongoDBClusterType(MongoDbValue);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBClusterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationMongoDBClusterType left, DataMigrationMongoDBClusterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationMongoDBClusterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationMongoDBClusterType left, DataMigrationMongoDBClusterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationMongoDBClusterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBClusterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationMongoDBClusterType(string value) => new DataMigrationMongoDBClusterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationMongoDBClusterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationMongoDBClusterType?(string value) => value == null ? null : new DataMigrationMongoDBClusterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationMongoDBClusterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationMongoDBClusterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

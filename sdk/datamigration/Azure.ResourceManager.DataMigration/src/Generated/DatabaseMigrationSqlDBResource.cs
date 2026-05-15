@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A Class representing a DatabaseMigrationSqlDB along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseMigrationSqlDBResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseMigrationSqlDBResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatabaseMigrationSqlDB method.
+    /// A class representing a DatabaseMigrationSqlDB along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseMigrationSqlDBResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDatabaseMigrationSqlDBs method.
     /// </summary>
     public partial class DatabaseMigrationSqlDBResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DatabaseMigrationSqlDBResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="sqlDBInstanceName"> The sqlDBInstanceName. </param>
-        /// <param name="targetDBName"> The targetDBName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics;
-        private readonly DatabaseMigrationsSqlDbRestOperations _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient;
+        private readonly ClientDiagnostics _databaseMigrationsSqlDbClientDiagnostics;
+        private readonly DatabaseMigrationsSqlDb _databaseMigrationsSqlDbRestClient;
         private readonly DatabaseMigrationSqlDBData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/databaseMigrations";
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlDBResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DatabaseMigrationSqlDBResource for mocking. </summary>
         protected DatabaseMigrationSqlDBResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlDBResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlDBResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseMigrationSqlDBResource(ArmClient client, DatabaseMigrationSqlDBData data) : this(client, data.Id)
@@ -56,73 +44,95 @@ namespace Azure.ResourceManager.DataMigration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlDBResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlDBResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseMigrationSqlDBResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string databaseMigrationSqlDBDatabaseMigrationsSqlDBApiVersion);
-            _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient = new DatabaseMigrationsSqlDbRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationSqlDBDatabaseMigrationsSqlDBApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string databaseMigrationSqlDBApiVersion);
+            _databaseMigrationsSqlDbClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
+            _databaseMigrationsSqlDbRestClient = new DatabaseMigrationsSqlDb(_databaseMigrationsSqlDbClientDiagnostics, Pipeline, Endpoint, databaseMigrationSqlDBApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DatabaseMigrationSqlDBData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sqlDbInstanceName"> The sqlDbInstanceName. </param>
+        /// <param name="targetDbName"> The targetDbName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieve the Database Migration resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatabaseMigrationSqlDBResource>> GetAsync(Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlDBResource>> GetAsync(string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Get");
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Get");
             scope.Start();
             try
             {
-                var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatabaseMigrationSqlDBData> response = Response.FromValue(DatabaseMigrationSqlDBData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatabaseMigrationSqlDBResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,35 +146,43 @@ namespace Azure.ResourceManager.DataMigration
         /// Retrieve the Database Migration resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseMigrationSqlDBResource> Get(Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlDBResource> Get(string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Get");
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Get");
             scope.Start();
             try
             {
-                var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatabaseMigrationSqlDBData> response = Response.FromValue(DatabaseMigrationSqlDBData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DatabaseMigrationSqlDBResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -178,36 +196,43 @@ namespace Azure.ResourceManager.DataMigration
         /// Delete Database Migration resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Optional force delete boolean. If this is provided as true, migration will be deleted even if active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Delete");
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Delete");
             scope.Start();
             try
             {
-                var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDbClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -221,36 +246,43 @@ namespace Azure.ResourceManager.DataMigration
         /// Delete Database Migration resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Optional force delete boolean. If this is provided as true, migration will be deleted even if active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Delete");
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Delete");
             scope.Start();
             try
             {
-                var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDbClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -261,23 +293,247 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// Create or Update Database Migration resource.
+        /// Stop on going migration for the database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Required migration operation ID for which cancel will be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, MigrationOperationInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDbClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop on going migration for the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Required migration operation ID for which cancel will be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Cancel(WaitUntil waitUntil, MigrationOperationInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDbClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retry on going migration for the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/retry. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Retry. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Required migration operation ID for which retry will be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DatabaseMigrationSqlDBResource>> RetryAsync(WaitUntil waitUntil, MigrationOperationInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Retry");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateRetryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
+                    new DatabaseMigrationSqlDBOperationSource(Client),
+                    _databaseMigrationsSqlDbClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retry on going migration for the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/retry. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_Retry. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Required migration operation ID for which retry will be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DatabaseMigrationSqlDBResource> Retry(WaitUntil waitUntil, MigrationOperationInput content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Retry");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateRetryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
+                    new DatabaseMigrationSqlDBOperationSource(Client),
+                    _databaseMigrationsSqlDbClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a DatabaseMigrationSqlDB.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,14 +545,27 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Update");
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Update");
             scope.Start();
             try
             {
-                var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
+                    new DatabaseMigrationSqlDBOperationSource(Client),
+                    _databaseMigrationsSqlDbClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -307,23 +576,23 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// Create or Update Database Migration resource.
+        /// Update a DatabaseMigrationSqlDB.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseMigrationSqlDbs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DatabaseMigrationSqlDBResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,198 +604,27 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Update");
+            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Update");
             scope.Start();
             try
             {
-                var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
+                    new DatabaseMigrationSqlDBOperationSource(Client),
+                    _databaseMigrationsSqlDbClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stop on going migration for the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> Required migration operation ID for which cancel will be initiated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(input, nameof(input));
-
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Cancel");
-            scope.Start();
-            try
-            {
-                var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stop on going migration for the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> Required migration operation ID for which cancel will be initiated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual ArmOperation Cancel(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(input, nameof(input));
-
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Cancel");
-            scope.Start();
-            try
-            {
-                var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken);
-                var operation = new DataMigrationArmOperation(_databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retry on going migration for the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/retry</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Retry</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> Required migration operation ID for which retry will be initiated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual async Task<ArmOperation<DatabaseMigrationSqlDBResource>> RetryAsync(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(input, nameof(input));
-
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Retry");
-            scope.Start();
-            try
-            {
-                var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.RetryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateRetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retry on going migration for the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}/retry</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_Retry</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> Required migration operation ID for which retry will be initiated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual ArmOperation<DatabaseMigrationSqlDBResource> Retry(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(input, nameof(input));
-
-            using var scope = _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBResource.Retry");
-            scope.Start();
-            try
-            {
-                var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Retry(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(new DatabaseMigrationSqlDBOperationSource(Client), _databaseMigrationSqlDBDatabaseMigrationsSqlDBClientDiagnostics, Pipeline, _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.CreateRetryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

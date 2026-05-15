@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationProjectTargetPlatform : IEquatable<DataMigrationProjectTargetPlatform>
     {
         private readonly string _value;
+        /// <summary> SQLDB. </summary>
+        private const string SQLDBValue = "SQLDB";
+        /// <summary> SQLMI. </summary>
+        private const string SQLMIValue = "SQLMI";
+        /// <summary> AzureDbForMySql. </summary>
+        private const string AzureDbForMySqlValue = "AzureDbForMySql";
+        /// <summary> AzureDbForPostgreSql. </summary>
+        private const string AzureDbForPostgreSqlValue = "AzureDbForPostgreSql";
+        /// <summary> MongoDb. </summary>
+        private const string MongoDbValue = "MongoDb";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectTargetPlatform"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationProjectTargetPlatform(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SqlDBValue = "SQLDB";
-        private const string SqlMIValue = "SQLMI";
-        private const string AzureDBForMySqlValue = "AzureDbForMySql";
-        private const string AzureDBForPostgreSqlValue = "AzureDbForPostgreSql";
-        private const string MongoDBValue = "MongoDb";
-        private const string UnknownValue = "Unknown";
-
         /// <summary> SQLDB. </summary>
-        public static DataMigrationProjectTargetPlatform SqlDB { get; } = new DataMigrationProjectTargetPlatform(SqlDBValue);
+        public static DataMigrationProjectTargetPlatform SQLDB { get; } = new DataMigrationProjectTargetPlatform(SQLDBValue);
+
         /// <summary> SQLMI. </summary>
-        public static DataMigrationProjectTargetPlatform SqlMI { get; } = new DataMigrationProjectTargetPlatform(SqlMIValue);
+        public static DataMigrationProjectTargetPlatform SQLMI { get; } = new DataMigrationProjectTargetPlatform(SQLMIValue);
+
         /// <summary> AzureDbForMySql. </summary>
-        public static DataMigrationProjectTargetPlatform AzureDBForMySql { get; } = new DataMigrationProjectTargetPlatform(AzureDBForMySqlValue);
+        public static DataMigrationProjectTargetPlatform AzureDbForMySql { get; } = new DataMigrationProjectTargetPlatform(AzureDbForMySqlValue);
+
         /// <summary> AzureDbForPostgreSql. </summary>
-        public static DataMigrationProjectTargetPlatform AzureDBForPostgreSql { get; } = new DataMigrationProjectTargetPlatform(AzureDBForPostgreSqlValue);
+        public static DataMigrationProjectTargetPlatform AzureDbForPostgreSql { get; } = new DataMigrationProjectTargetPlatform(AzureDbForPostgreSqlValue);
+
         /// <summary> MongoDb. </summary>
-        public static DataMigrationProjectTargetPlatform MongoDB { get; } = new DataMigrationProjectTargetPlatform(MongoDBValue);
+        public static DataMigrationProjectTargetPlatform MongoDb { get; } = new DataMigrationProjectTargetPlatform(MongoDbValue);
+
         /// <summary> Unknown. </summary>
         public static DataMigrationProjectTargetPlatform Unknown { get; } = new DataMigrationProjectTargetPlatform(UnknownValue);
+
         /// <summary> Determines if two <see cref="DataMigrationProjectTargetPlatform"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationProjectTargetPlatform left, DataMigrationProjectTargetPlatform right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationProjectTargetPlatform"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationProjectTargetPlatform left, DataMigrationProjectTargetPlatform right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationProjectTargetPlatform"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationProjectTargetPlatform"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationProjectTargetPlatform(string value) => new DataMigrationProjectTargetPlatform(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationProjectTargetPlatform"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationProjectTargetPlatform?(string value) => value == null ? null : new DataMigrationProjectTargetPlatform(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationProjectTargetPlatform other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationProjectTargetPlatform other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
