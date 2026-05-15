@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for `DatabaseMigrationCosmosDbMongo` and `MigrationService` resources.
 
 ### Other Changes
+
+- Migrated SDK generation from AutoRest/Swagger to TypeSpec.
 
 ## 1.0.0 (2025-09-25)
 
