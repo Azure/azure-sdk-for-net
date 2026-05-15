@@ -883,6 +883,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Returns all the resources of a particular type belonging to a subscription.
         /// <item>
         /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccountsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccountsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
