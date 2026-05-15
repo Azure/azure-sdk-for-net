@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
+    /// <summary> An option to filter out replications. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
     public readonly partial struct ExcludeReplicationsFilter : IEquatable<ExcludeReplicationsFilter>
     {
         private readonly string _value;
+        /// <summary> 'None' returns all replications. </summary>
+        private const string NoneValue = "None";
+        /// <summary> 'Deleted' excludes deleted replications. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="ExcludeReplicationsFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExcludeReplicationsFilter(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string DeletedValue = "Deleted";
+            _value = value;
+        }
 
         /// <summary> 'None' returns all replications. </summary>
         public static ExcludeReplicationsFilter None { get; } = new ExcludeReplicationsFilter(NoneValue);
+
         /// <summary> 'Deleted' excludes deleted replications. </summary>
         public static ExcludeReplicationsFilter Deleted { get; } = new ExcludeReplicationsFilter(DeletedValue);
+
         /// <summary> Determines if two <see cref="ExcludeReplicationsFilter"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExcludeReplicationsFilter left, ExcludeReplicationsFilter right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExcludeReplicationsFilter"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExcludeReplicationsFilter left, ExcludeReplicationsFilter right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExcludeReplicationsFilter"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExcludeReplicationsFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExcludeReplicationsFilter(string value) => new ExcludeReplicationsFilter(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExcludeReplicationsFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExcludeReplicationsFilter?(string value) => value == null ? null : new ExcludeReplicationsFilter(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExcludeReplicationsFilter other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExcludeReplicationsFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

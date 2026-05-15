@@ -2094,6 +2094,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountFailoverType (Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType value) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType (Azure.ResourceManager.Storage.Models.StorageAccountFailoverType value) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType left, Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2652,6 +2653,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageListKeyExpand (Azure.ResourceManager.Storage.Models.ListKeysRequestExpand value) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ListKeysRequestExpand (Azure.ResourceManager.Storage.Models.StorageListKeyExpand value) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ListKeysRequestExpand (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ListKeysRequestExpand? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand left, Azure.ResourceManager.Storage.Models.ListKeysRequestExpand right) { throw null; }
         public override string ToString() { throw null; }
     }
