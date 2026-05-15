@@ -77,7 +77,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The validation options to send to individual download requests.
-        /// Tells the client not to perform the checksum validation, leaving
+        /// Tells the client not to perform the responseChecksum validation, leaving
         /// it to this class to perform that work.
         /// </summary>
         private DownloadTransferValidationOptions ValidationOptions
@@ -516,7 +516,7 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
             // with structured message, the message integrity will already be validated,
-            // but we can still get the checksum out of the response object
+            // but we can still get the responseChecksum out of the response object
             if (structuredMessage)
             {
                 response.Value.Details.ContentCrc?.CopyTo(checksumBuffer.Span);
@@ -535,7 +535,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Downloads a range and buffers the full response body into memory,
-        /// performing checksum validation during the read. This enables true
+        /// performing responseChecksum validation during the read. This enables true
         /// parallel network I/O since each task fully consumes its HTTP response.
         /// </summary>
         private async Task<BufferedDownloadResult> DownloadAndBufferAsync(
@@ -556,7 +556,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Reads a download response fully into a rented buffer and validates its checksum.
+        /// Reads a download response fully into a rented buffer and validates its responseChecksum.
         /// The caller is responsible for returning the rented Buffer and PartitionChecksum
         /// arrays to the ArrayPool when done.
         /// </summary>
@@ -614,7 +614,7 @@ namespace Azure.Storage.Blobs
                         throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
                     }
                 }
-                // Calculate and validate per-chunk checksum
+                // Calculate and validate per-chunk responseChecksum
                 if (structuredMessage)
                 {
                     if (partitionChecksum != null)
@@ -625,9 +625,9 @@ namespace Azure.Storage.Blobs
                 else if (hasher != null && partitionChecksum != null)
                 {
                     hasher.GetFinalHash(partitionChecksum.AsSpan(0, _checksumSize));
-                    (ReadOnlyMemory<byte> checksum, StorageChecksumAlgorithm _)
+                    (ReadOnlyMemory<byte> responseChecksum, StorageChecksumAlgorithm _)
                         = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
-                    if (!partitionChecksum.AsSpan(0, _checksumSize).SequenceEqual(checksum.Span))
+                    if (!partitionChecksum.AsSpan(0, _checksumSize).SequenceEqual(responseChecksum.Span))
                     {
                         throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                     }
