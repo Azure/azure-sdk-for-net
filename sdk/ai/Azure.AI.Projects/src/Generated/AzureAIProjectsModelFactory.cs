@@ -1364,6 +1364,61 @@ namespace Azure.AI.Projects
             return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A single memory item stored in the memory store, containing content and metadata.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Memory.UserProfileMemoryItem"/> and <see cref="Memory.ChatSummaryMemoryItem"/>.
+        /// </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <param name="kind"> The kind of the memory item. </param>
+        /// <returns> A new <see cref="Memory.MemoryItem"/> instance for mocking. </returns>
+        public static MemoryItem MemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
+        {
+            return new UnknownMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                new MemoryItemKind(kind),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="Memory.UserProfileMemoryItem"/> instance for mocking. </returns>
+        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new UserProfileMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.UserProfile,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item containing a summary extracted from conversations. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="Memory.ChatSummaryMemoryItem"/> instance for mocking. </returns>
+        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new ChatSummaryMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.ChatSummary,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Usage statistics of a memory store operation. </summary>
         /// <param name="embeddingTokens"> The number of embedding tokens. </param>
         /// <param name="inputTokens"> The number of input tokens. </param>
@@ -1428,6 +1483,16 @@ namespace Azure.AI.Projects
         public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = default)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response for deleting a memory item from a memory store. </summary>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
+        /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
+        /// <returns> A new <see cref="Projects.DeleteMemoryResponse"/> instance for mocking. </returns>
+        public static DeleteMemoryResponse DeleteMemoryResponse(string name = default, string memoryId = default, bool deleted = default)
+        {
+            return new DeleteMemoryResponse("memory.deleted", name, memoryId, deleted, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Evaluator Metric. </summary>

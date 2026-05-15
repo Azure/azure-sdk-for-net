@@ -920,6 +920,7 @@ namespace Azure.AI.Projects.Agents
         SkillsV1Preview = 6,
         DataGenerationJobsV1Preview = 7,
         ModelsV1Preview = 8,
+        AgentsOptimizationV1Preview = 9,
     }
     public partial class HeaderTelemetryEndpointAuth : Azure.AI.Projects.Agents.TelemetryEndpointAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>
     {
