@@ -57,8 +57,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionResult result = response.Value;
 
             Console.WriteLine("Transcription with speaker diarization:");
-            var channelPhrases = result.PhrasesByChannel.First();
-            foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+            var channelPhrases = result.CombinedPhrases.First();
+            foreach (TranscribedPhrase phrase in result.Phrases)
             {
                 // Speaker information is included in the phrase
                 Console.WriteLine($"Speaker {phrase.Speaker}: {phrase.Text}");

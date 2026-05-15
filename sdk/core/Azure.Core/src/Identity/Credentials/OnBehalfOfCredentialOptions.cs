@@ -3,8 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
@@ -13,7 +16,7 @@ namespace Azure.Identity
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [TypeForwardedFrom("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
-    public class OnBehalfOfCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class OnBehalfOfCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenRequestCallback
     {
         /// <summary>
         /// The <see cref="TokenCachePersistenceOptions"/>.
@@ -32,6 +35,10 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
+
+        /// <inheritdoc/>
+        [Experimental("AZID0003")]
+        public Action<TokenRequestCallbackContext> TokenRequestCallback { get; set; }
     }
 #pragma warning restore AZC0034
 }

@@ -1453,7 +1453,10 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task TestHostedAgentEndpoint()
+    [TestCase(true, false)]
+    [TestCase(true, true)]
+    [TestCase(false, false)]
+    public async Task TestHostedAgentEndpoint(bool useNewClient, bool useGetMethod)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
@@ -1492,8 +1495,29 @@ public class AgentsTests : AgentsTestBase
             apiVersion: "v1"
         );
         responsesOptions.AgentName = agentVersion.Name;
-        ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
-        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient;
+        if (useNewClient)
+        {
+            ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
+            if (useGetMethod)
+            {
+                // We have to create options one more time as once the pipeline is created, it
+                // becomes frozen.
+                responsesOptions = CreateTestProjectOpenAIClientOptions(
+                    apiVersion: "v1"
+                );
+                responsesOptions.AgentName = agentVersion.Name;
+                responseClient = CreateProxyFromClient(openAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+            }
+            else
+            {
+                responseClient = openAIClient.GetProjectResponsesClient();
+            }
+        }
+        else
+        {
+            responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        }
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Assert.That(response.GetOutputText(), Is.Not.Empty);
     }
