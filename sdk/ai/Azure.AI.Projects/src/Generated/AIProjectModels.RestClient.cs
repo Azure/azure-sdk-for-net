@@ -61,7 +61,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetModelVersionsRequest(RequestOptions options)
+        internal PipelineMessage CreateGetLatestModelVersionsRequest(RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetModelVersionsRequest(Uri nextPage, RequestOptions options)
+        internal PipelineMessage CreateNextGetLatestModelVersionsRequest(Uri nextPage, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             if (nextPage.IsAbsoluteUri)

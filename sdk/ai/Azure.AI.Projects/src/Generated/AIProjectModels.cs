@@ -53,7 +53,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectModelsListModelVersionsCollectionResult(this, name, options);
+            return new AIProjectModelsGetModelVersionsCollectionResult(this, name, options);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectModelsListModelVersionsAsyncCollectionResult(this, name, options);
+            return new AIProjectModelsGetModelVersionsAsyncCollectionResult(this, name, options);
         }
 
         /// <summary> List all versions of the given ModelVersion. </summary>
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectModelsListModelVersionsCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
+            return new AIProjectModelsGetModelVersionsCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all versions of the given ModelVersion. </summary>
@@ -100,7 +100,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectModelsListModelVersionsAsyncCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
+            return new AIProjectModelsGetModelVersionsAsyncCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetModelVersions(RequestOptions options)
+        public virtual CollectionResult GetLatestModelVersions(RequestOptions options)
         {
-            return new AIProjectModelsListModelVersionsCollectionResult(this, options);
+            return new AIProjectModelsGetLatestModelVersionsCollectionResult(this, options);
         }
 
         /// <summary>
@@ -130,25 +130,25 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetModelVersionsAsync(RequestOptions options)
+        public virtual AsyncCollectionResult GetLatestModelVersionsAsync(RequestOptions options)
         {
-            return new AIProjectModelsListModelVersionsAsyncCollectionResult(this, options);
+            return new AIProjectModelsGetLatestModelVersionsAsyncCollectionResult(this, options);
         }
 
         /// <summary> List the latest version of each ModelVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<ModelVersion> GetModelVersions(CancellationToken cancellationToken = default)
+        public virtual CollectionResult<ModelVersion> GetLatestModelVersions(CancellationToken cancellationToken = default)
         {
-            return new AIProjectModelsListModelVersionsCollectionResultOfT(this, cancellationToken.ToRequestOptions());
+            return new AIProjectModelsGetLatestModelVersionsCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List the latest version of each ModelVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<ModelVersion> GetModelVersionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<ModelVersion> GetLatestModelVersionsAsync(CancellationToken cancellationToken = default)
         {
-            return new AIProjectModelsListModelVersionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
+            return new AIProjectModelsGetLatestModelVersionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>

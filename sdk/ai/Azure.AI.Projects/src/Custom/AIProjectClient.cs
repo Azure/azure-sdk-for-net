@@ -191,6 +191,11 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
 
+        /// <summary> Initializes a new instance of AIProjectModels. </summary>
+        internal virtual AIProjectModels GetAIProjectModelsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectModels) ?? Interlocked.CompareExchange(ref _cachedAIProjectModels, new AIProjectModels(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectModels;
+        }
         /// <summary> Gets the client for managing connections. </summary>
         public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
         /// <summary> Gets the client for managing datasets. </summary>
@@ -208,6 +213,7 @@ namespace Azure.AI.Projects
         public virtual ProjectEvaluators Evaluators => GetProjectEvaluatorsClient();
         public virtual ProjectInsights Insights => GetProjectInsightsClient();
         public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
+        public virtual AIProjectModels Models => GetAIProjectModelsClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

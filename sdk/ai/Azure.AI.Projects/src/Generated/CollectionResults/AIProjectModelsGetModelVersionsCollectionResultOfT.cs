@@ -10,29 +10,32 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class AIProjectModelsListModelVersionsAsyncCollectionResult : AsyncCollectionResult
+    internal partial class AIProjectModelsGetModelVersionsCollectionResultOfT : CollectionResult<ModelVersion>
     {
         private readonly AIProjectModels _client;
+        private readonly string _name;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of AIProjectModelsListModelVersionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AIProjectModelsGetModelVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AIProjectModels client used to send requests. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AIProjectModelsListModelVersionsAsyncCollectionResult(AIProjectModels client, RequestOptions options)
+        public AIProjectModelsGetModelVersionsCollectionResultOfT(AIProjectModels client, string name, RequestOptions options)
         {
             _client = client;
+            _name = name;
             _options = options;
         }
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetModelVersionsRequest(_options);
+            PipelineMessage message = _client.CreateGetModelVersionsRequest(_name, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextPageUri = ((PagedModelVersion)result).NextLink;
@@ -40,7 +43,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetModelVersionsRequest(nextPageUri, _options);
+                message = _client.CreateNextGetModelVersionsRequest(nextPageUri, _name, _options);
             }
         }
 
@@ -58,6 +61,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+        }
+
+        /// <summary> Gets the values from the specified page. </summary>
+        /// <param name="page"></param>
+        /// <returns> The values from the specified page. </returns>
+        protected override IEnumerable<ModelVersion> GetValuesFromPage(ClientResult page)
+        {
+            return ((PagedModelVersion)page).Value;
         }
     }
 }

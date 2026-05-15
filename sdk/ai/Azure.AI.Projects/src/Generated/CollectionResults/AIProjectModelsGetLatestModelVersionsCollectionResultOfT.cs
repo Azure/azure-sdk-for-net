@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class AIProjectModelsListModelVersionsCollectionResultOfT : CollectionResult<ModelVersion>
+    internal partial class AIProjectModelsGetLatestModelVersionsCollectionResultOfT : CollectionResult<ModelVersion>
     {
         private readonly AIProjectModels _client;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of AIProjectModelsListModelVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AIProjectModelsGetLatestModelVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AIProjectModels client used to send requests. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AIProjectModelsListModelVersionsCollectionResultOfT(AIProjectModels client, RequestOptions options)
+        public AIProjectModelsGetLatestModelVersionsCollectionResultOfT(AIProjectModels client, RequestOptions options)
         {
             _client = client;
             _options = options;
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetModelVersionsRequest(_options);
+            PipelineMessage message = _client.CreateGetLatestModelVersionsRequest(_options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetModelVersionsRequest(nextPageUri, _options);
+                message = _client.CreateNextGetLatestModelVersionsRequest(nextPageUri, _options);
             }
         }
 
