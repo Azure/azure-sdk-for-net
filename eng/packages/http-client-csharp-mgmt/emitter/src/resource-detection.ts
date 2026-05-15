@@ -479,6 +479,10 @@ export function buildArmProviderSchema(
             const sdkModel = models.get(resource.resourceModelId);
             const typespecModel = sdkModel?.__raw as Model | undefined;
             const clientResourceName = pluralize.singular(clientName);
+            // For multi-scope resources, the same model can have multiple resource
+            // paths. Only use the client-derived name when it disambiguates from
+            // the raw TypeSpec model name; otherwise keep the clientName-adjusted
+            // model name already assigned as the default resource name.
             if (clientResourceName !== typespecModel?.name) {
               resource.metadata.resourceName = clientResourceName;
             }
