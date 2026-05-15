@@ -503,15 +503,6 @@ namespace Azure.ResourceManager.Sql.Mocking
             return new JobPrivateEndpointResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlServerJobStepResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServerJobStepResource"/> object. </returns>
-        public virtual SqlServerJobStepResource GetSqlServerJobStepResource(ResourceIdentifier id)
-        {
-            SqlServerJobStepResource.ValidateResourceId(id);
-            return new SqlServerJobStepResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="SqlServerJobTargetGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlServerJobTargetGroupResource"/> object. </returns>
@@ -528,24 +519,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             SqlServerJobVersionResource.ValidateResourceId(id);
             return new SqlServerJobVersionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="LongTermRetentionBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LongTermRetentionBackupResource"/> object. </returns>
-        public virtual LongTermRetentionBackupResource GetLongTermRetentionBackupResource(ResourceIdentifier id)
-        {
-            LongTermRetentionBackupResource.ValidateResourceId(id);
-            return new LongTermRetentionBackupResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="LongTermRetentionManagedInstanceBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LongTermRetentionManagedInstanceBackupResource"/> object. </returns>
-        public virtual LongTermRetentionManagedInstanceBackupResource GetLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier id)
-        {
-            LongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
-            return new LongTermRetentionManagedInstanceBackupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="LongTermRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>

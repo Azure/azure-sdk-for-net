@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), ExtendedDatabaseBlobAuditingPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), ExtendedDatabaseBlobAuditingPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = Response.FromValue(ExtendedDatabaseBlobAuditingPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), ExtendedDatabaseBlobAuditingPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), ExtendedDatabaseBlobAuditingPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = Response.FromValue(ExtendedDatabaseBlobAuditingPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = Response.FromValue(ExtendedDatabaseBlobAuditingPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = Response.FromValue(ExtendedDatabaseBlobAuditingPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = default;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = default;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = default;
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToString(), context);
+                HttpMessage message = _extendedDatabaseBlobAuditingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName.ToSerialString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtendedDatabaseBlobAuditingPolicyData> response = default;

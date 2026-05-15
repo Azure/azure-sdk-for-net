@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImportExportExtensionsOperationResultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databaseExtensionsClientDiagnostics.CreateScope("ImportExportExtensionsOperationResultResource.Get");
             scope.Start();
@@ -126,8 +126,13 @@ namespace Azure.ResourceManager.Sql
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _databaseExtensionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ImportExportExtensionsOperationResultData> response = Response.FromValue(ImportExportExtensionsOperationResultData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ImportExportExtensionsOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Get(CancellationToken cancellationToken = default)
+        public virtual Response<ImportExportExtensionsOperationResultResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databaseExtensionsClientDiagnostics.CreateScope("ImportExportExtensionsOperationResultResource.Get");
             scope.Start();
@@ -169,8 +174,13 @@ namespace Azure.ResourceManager.Sql
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _databaseExtensionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ImportExportExtensionsOperationResultData> response = Response.FromValue(ImportExportExtensionsOperationResultData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ImportExportExtensionsOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

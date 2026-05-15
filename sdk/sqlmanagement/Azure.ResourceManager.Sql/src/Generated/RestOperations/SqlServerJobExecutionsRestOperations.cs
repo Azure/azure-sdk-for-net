@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.Sql
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -302,7 +301,6 @@ namespace Azure.ResourceManager.Sql
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

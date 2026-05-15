@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SqlServerJobExecutionResource>> CreateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        internal virtual async Task<ArmOperation> CreateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sqlServerJobExecutionsClientDiagnostics.CreateScope("SqlServerJobResource.Create");
             scope.Start();
@@ -329,16 +329,10 @@ namespace Azure.ResourceManager.Sql
                 };
                 HttpMessage message = _sqlServerJobExecutionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SqlArmOperation<SqlServerJobExecutionResource> operation = new SqlArmOperation<SqlServerJobExecutionResource>(
-                    new SqlServerJobExecutionOperationSource(Client),
-                    _sqlServerJobExecutionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                SqlArmOperation operation = new SqlArmOperation(_sqlServerJobExecutionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -372,7 +366,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SqlServerJobExecutionResource> Create(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        internal virtual ArmOperation Create(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sqlServerJobExecutionsClientDiagnostics.CreateScope("SqlServerJobResource.Create");
             scope.Start();
@@ -384,16 +378,10 @@ namespace Azure.ResourceManager.Sql
                 };
                 HttpMessage message = _sqlServerJobExecutionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SqlArmOperation<SqlServerJobExecutionResource> operation = new SqlArmOperation<SqlServerJobExecutionResource>(
-                    new SqlServerJobExecutionOperationSource(Client),
-                    _sqlServerJobExecutionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                SqlArmOperation operation = new SqlArmOperation(_sqlServerJobExecutionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }
@@ -584,18 +572,26 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job version. </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerJobVersionResource>> GetSqlServerJobVersionAsync(int jobVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerJobVersionResource>> GetSqlServerJobVersionAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             return await GetSqlServerJobVersions().GetAsync(jobVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a job version. </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerJobVersionResource> GetSqlServerJobVersion(int jobVersion, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerJobVersionResource> GetSqlServerJobVersion(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             return GetSqlServerJobVersions().Get(jobVersion, cancellationToken);
         }
     }

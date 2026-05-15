@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetCapabilitiesByLocationRequest(Guid subscriptionId, string locationName, string include, RequestContext context)
+        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, string locationName, string include, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

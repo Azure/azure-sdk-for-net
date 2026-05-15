@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByVersionRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName, RequestContext context)
+        internal HttpMessage CreateGetByVersionRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobVersion, string stepName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/versions/", false);
-            uri.AppendPath(jobVersion.ToString(), true);
+            uri.AppendPath(jobVersion, true);
             uri.AppendPath("/steps/", false);
             uri.AppendPath(stepName, true);
             if (_apiVersion != null)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByVersionRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, RequestContext context)
+        internal HttpMessage CreateGetByVersionRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/versions/", false);
-            uri.AppendPath(jobVersion.ToString(), true);
+            uri.AppendPath(jobVersion, true);
             uri.AppendPath("/steps", false);
             if (_apiVersion != null)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByVersionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, RequestContext context)
+        internal HttpMessage CreateNextGetByVersionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

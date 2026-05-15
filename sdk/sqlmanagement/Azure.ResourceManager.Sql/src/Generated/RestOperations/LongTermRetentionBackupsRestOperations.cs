@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionBackupsWithLocationRequest(Guid subscriptionId, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionBackupsWithLocationRequest(Uri nextPage, Guid subscriptionId, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionBackupsWithServerRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionBackupsWithServerRequest(Uri nextPage, Guid subscriptionId, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionBackupsByResourceGroupLocationRequest(Guid subscriptionId, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByResourceGroupLocationRequest(Guid subscriptionId, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionBackupsByResourceGroupLocationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByResourceGroupLocationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionBackupsByResourceGroupServerRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByResourceGroupServerRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionBackupsByResourceGroupServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByResourceGroupServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

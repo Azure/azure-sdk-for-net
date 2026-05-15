@@ -73,8 +73,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlServerJobVersionResource>> GetAsync(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SqlServerJobVersionResource>> GetAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Get");
             scope.Start();
             try
@@ -118,8 +122,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlServerJobVersionResource> Get(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SqlServerJobVersionResource> Get(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Get");
             scope.Start();
             try
@@ -235,8 +243,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Exists");
             scope.Start();
             try
@@ -288,8 +300,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Exists");
             scope.Start();
             try
@@ -341,8 +357,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<SqlServerJobVersionResource>> GetIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SqlServerJobVersionResource>> GetIfExistsAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
             scope.Start();
             try
@@ -398,8 +418,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<SqlServerJobVersionResource> GetIfExists(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SqlServerJobVersionResource> GetIfExists(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
             scope.Start();
             try

@@ -257,463 +257,464 @@ namespace Azure.ResourceManager.Sql
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.Models.SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.ResourceManager.Sql.Models.SqlNameAvailabilityContent p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).CheckSqlServerNameAvailability(p1, p2);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.SqlNameAvailabilityResponse>> CheckSqlServerNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.ResourceManager.Sql.Models.SqlNameAvailabilityContent p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).CheckSqlServerNameAvailabilityAsync(p1, p2);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.Models.SqlLocationCapabilities> GetCapabilitiesByLocation(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<Azure.ResourceManager.Sql.Models.SqlCapabilityGroup> p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetCapabilitiesByLocation(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.SqlLocationCapabilities>> GetCapabilitiesByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<Azure.ResourceManager.Sql.Models.SqlCapabilityGroup> p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetCapabilitiesByLocationAsync(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.DeletedServerResource> GetDeletedServer(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetDeletedServer(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DeletedServerResource>> GetDeletedServerAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetDeletedServerAsync(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.DeletedServerCollection GetDeletedServers(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetDeletedServers(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource GetDistributedAvailabilityGroupResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetDistributedAvailabilityGroupResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.InstanceFailoverGroupResource> GetInstanceFailoverGroup(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetInstanceFailoverGroup(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.InstanceFailoverGroupResource>> GetInstanceFailoverGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetInstanceFailoverGroupAsync(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.InstanceFailoverGroupCollection GetInstanceFailoverGroups(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetInstanceFailoverGroups(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsByLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsByLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocation(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsByResourceGroupLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsByResourceGroupLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServer(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsByResourceGroupServer(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsByResourceGroupServerAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsByServer(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsByServerAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsWithLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsWithLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsWithLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsWithLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsWithServer(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsWithServer(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionBackupsWithServerAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionBackupsWithServerAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsByInstance(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsByLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsByLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsWithInstance(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsWithInstance(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Nullable<System.Boolean> p3, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocation(p1, p2);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocation(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocation(p1, p2);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(p1, p2);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Nullable<System.Boolean> p2, System.Nullable<Azure.ResourceManager.Sql.Models.SqlDatabaseState> p3, System.Threading.CancellationToken p4)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(p1, p2, p3, p4);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(p1, p2);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.ManagedInstanceServerTrustCertificateResource GetManagedInstanceServerTrustCertificateResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetManagedInstanceServerTrustCertificateResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionBackupResource> GetResourceGroupLongTermRetentionBackup(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetResourceGroupLongTermRetentionBackup(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionBackupResource>> GetResourceGroupLongTermRetentionBackupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetResourceGroupLongTermRetentionBackupAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetResourceGroupLongTermRetentionBackupResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetResourceGroupLongTermRetentionBackups(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetResourceGroupLongTermRetentionManagedInstanceBackup(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetResourceGroupLongTermRetentionManagedInstanceBackup(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionManagedInstanceBackupResource>> GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionManagedInstanceBackupResource GetResourceGroupLongTermRetentionManagedInstanceBackupResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetResourceGroupLongTermRetentionManagedInstanceBackupResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetResourceGroupLongTermRetentionManagedInstanceBackups(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SqlServerJobVersionStepResource GetSqlServerJobVersionStepResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetSqlServerJobVersionStepResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource> GetSqlServerTrustGroup(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetSqlServerTrustGroup(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetSqlServerTrustGroupAsync(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SqlServerTrustGroupCollection GetSqlServerTrustGroups(this Azure.ResourceManager.Resources.ResourceGroupResource p0, Azure.Core.AzureLocation p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlResourceGroupResource(p0).GetSqlServerTrustGroups(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.SqlTimeZoneResource> GetSqlTimeZone(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSqlTimeZone(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlTimeZoneResource>> GetSqlTimeZoneAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSqlTimeZoneAsync(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SqlTimeZoneCollection GetSqlTimeZones(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSqlTimeZones(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource> GetSubscriptionLongTermRetentionBackup(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionLongTermRetentionBackup(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource>> GetSubscriptionLongTermRetentionBackupAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionLongTermRetentionBackupAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetSubscriptionLongTermRetentionBackupResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionLongTermRetentionBackups(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetSubscriptionLongTermRetentionManagedInstanceBackup(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionLongTermRetentionManagedInstanceBackup(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3, System.String p4, System.Threading.CancellationToken p5)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(p1, p2, p3, p4, p5);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource GetSubscriptionLongTermRetentionManagedInstanceBackupResource(this Azure.ResourceManager.ArmClient p0, Azure.Core.ResourceIdentifier p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlArmClient(p0).GetSubscriptionLongTermRetentionManagedInstanceBackupResource(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.String p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionLongTermRetentionManagedInstanceBackups(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.Sql.SubscriptionUsageResource> GetSubscriptionUsage(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionUsage(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SubscriptionUsageResource>> GetSubscriptionUsageAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.String p2, System.Threading.CancellationToken p3)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionUsageAsync(p1, p2, p3);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.ResourceManager.Sql.SubscriptionUsageCollection GetSubscriptionUsages(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSubscriptionUsages(p1);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetSyncDatabaseIdsSyncGroups(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSyncDatabaseIdsSyncGroups(p1, p2);
         }
 
         [Azure.Core.ForwardsClientCalls]
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource p0, Azure.Core.AzureLocation p1, System.Threading.CancellationToken p2)
         {
-            throw new System.NotSupportedException("This API is preserved for binary compatibility with the previous SQL management SDK surface. Use the generated replacement API for new code.");
+            return GetMockableSqlSubscriptionResource(p0).GetSyncDatabaseIdsSyncGroupsAsync(p1, p2);
         }
     }
 }

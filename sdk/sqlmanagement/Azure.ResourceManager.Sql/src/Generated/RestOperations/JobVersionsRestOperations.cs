@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/versions/", false);
-            uri.AppendPath(jobVersion.ToString(), true);
+            uri.AppendPath(jobVersion, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetSyncDatabaseIdsSyncGroupsRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateGetSyncDatabaseIdsRequest(Guid subscriptionId, string locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetSyncDatabaseIdsSyncGroupsRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateNextGetSyncDatabaseIdsRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

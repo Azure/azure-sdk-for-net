@@ -1,8 +1,8 @@
 {
   "package-name": "Azure.ResourceManager.Sql",
   "namespace": "Azure.ResourceManager.Sql",
-  "enable-wire-path-attribute": true,
   "model-namespace": true,
+  "enable-wire-path-attribute": true,
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

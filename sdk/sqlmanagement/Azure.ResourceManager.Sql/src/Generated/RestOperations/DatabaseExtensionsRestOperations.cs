@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Sql
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 

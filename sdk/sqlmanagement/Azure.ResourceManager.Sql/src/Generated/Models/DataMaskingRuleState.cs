@@ -5,14 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.Sql;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
-    public enum DataMaskingRuleState
+    public readonly partial struct DataMaskingRuleState : IEquatable<DataMaskingRuleState>
     {
-        /// <summary> Disabled. </summary>
-        Disabled,
+        private readonly string _value;
         /// <summary> Enabled. </summary>
-        Enabled
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+
+        /// <summary> Initializes a new instance of <see cref="DataMaskingRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataMaskingRuleState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Enabled. </summary>
+        public static DataMaskingRuleState Enabled { get; } = new DataMaskingRuleState(EnabledValue);
+
+        /// <summary> Disabled. </summary>
+        public static DataMaskingRuleState Disabled { get; } = new DataMaskingRuleState(DisabledValue);
+
+        /// <summary> Determines if two <see cref="DataMaskingRuleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(DataMaskingRuleState left, DataMaskingRuleState right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="DataMaskingRuleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(DataMaskingRuleState left, DataMaskingRuleState right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="DataMaskingRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMaskingRuleState(string value) => new DataMaskingRuleState(value);
+
+        /// <summary> Converts a string to a <see cref="DataMaskingRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMaskingRuleState?(string value) => value == null ? null : new DataMaskingRuleState(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is DataMaskingRuleState other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(DataMaskingRuleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

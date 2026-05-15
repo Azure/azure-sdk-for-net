@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         private readonly string _serverName;
         private readonly string _jobAgentName;
         private readonly string _jobName;
-        private readonly int _jobVersion;
+        private readonly string _jobVersion;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SqlServerJobStepsGetByVersionAsyncCollectionResultOfT(SqlServerJobSteps client, Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SqlServerJobStepsGetByVersionAsyncCollectionResultOfT(SqlServerJobSteps client, Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobVersion, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

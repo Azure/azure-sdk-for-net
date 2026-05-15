@@ -3089,32 +3089,6 @@ namespace Azure.ResourceManager.Sql
             return GetCachedClient(client => new ImportExportExtensionsOperationResultCollection(client, Id));
         }
 
-        /// <summary> Gets a database extension. This will return resource not found as it is not supported. </summary>
-        /// <param name="extensionName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response> GetImportExportExtensionsOperationResultAsync(string extensionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-
-            return await GetImportExportExtensionsOperationResults().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a database extension. This will return resource not found as it is not supported. </summary>
-        /// <param name="extensionName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response GetImportExportExtensionsOperationResult(string extensionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-
-            return GetImportExportExtensionsOperationResults().Get(extensionName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SqlDatabaseSqlVulnerabilityAssessments in the <see cref="SqlDatabaseResource"/>. </summary>
         /// <returns> An object representing collection of SqlDatabaseSqlVulnerabilityAssessments and their operations over a SqlDatabaseSqlVulnerabilityAssessmentResource. </returns>
         public virtual SqlDatabaseSqlVulnerabilityAssessmentCollection GetSqlDatabaseSqlVulnerabilityAssessments()

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(RuleState))
             {
                 writer.WritePropertyName("ruleState"u8);
-                writer.WriteStringValue(RuleState.Value.ToSerialString());
+                writer.WriteStringValue(RuleState.Value.ToString());
             }
             writer.WritePropertyName("schemaName"u8);
             writer.WriteStringValue(SchemaName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(AliasName);
             }
             writer.WritePropertyName("maskingFunction"u8);
-            writer.WriteStringValue(MaskingFunction.ToSerialString());
+            writer.WriteStringValue(MaskingFunction.ToString());
             if (Optional.IsDefined(NumberFrom))
             {
                 writer.WritePropertyName("numberFrom"u8);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    ruleState = prop.Value.GetString().ToDataMaskingRuleState();
+                    ruleState = new DataMaskingRuleState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("schemaName"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("maskingFunction"u8))
                 {
-                    maskingFunction = prop.Value.GetString().ToDataMaskingFunction();
+                    maskingFunction = new DataMaskingFunction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numberFrom"u8))

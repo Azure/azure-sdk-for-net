@@ -993,24 +993,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlServerJobStepResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlServerJobStepResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SqlServerJobStepResource"/> object. </returns>
-        public static SqlServerJobStepResource GetSqlServerJobStepResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetSqlServerJobStepResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SqlServerJobTargetGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -1044,42 +1026,6 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSqlArmClient(client).GetSqlServerJobVersionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LongTermRetentionBackupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlArmClient.GetLongTermRetentionBackupResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LongTermRetentionBackupResource"/> object. </returns>
-        public static LongTermRetentionBackupResource GetLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetLongTermRetentionBackupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LongTermRetentionManagedInstanceBackupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlArmClient.GetLongTermRetentionManagedInstanceBackupResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LongTermRetentionManagedInstanceBackupResource"/> object. </returns>
-        public static LongTermRetentionManagedInstanceBackupResource GetLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSqlArmClient(client).GetLongTermRetentionManagedInstanceBackupResource(id);
         }
 
         /// <summary>
@@ -2854,7 +2800,7 @@ namespace Azure.ResourceManager.Sql
         /// Lists the long term retention backups for a given location based on resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionBackupsByResourceGroupLocationAsync(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupLocationAsync(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2864,18 +2810,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given location based on resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionBackupsByResourceGroupLocation(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupLocation(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2885,18 +2831,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given server based on resource groups.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionBackupsByResourceGroupServerAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupServerAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2907,18 +2853,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetByResourceGroupServerAsync(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given server based on resource groups.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionBackupsByResourceGroupServer(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupServer(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2929,18 +2875,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetByResourceGroupServer(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupLocationAsync(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2953,18 +2899,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupLocation(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2977,18 +2923,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupInstanceAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2999,18 +2945,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupInstanceAsync(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlResourceGroupResource.GetByResourceGroupInstance(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -3021,11 +2967,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetByResourceGroupInstance(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlResourceGroupResource(resourceGroupResource).GetByResourceGroupInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3518,43 +3464,43 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of all deleted servers in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetDeletedServersAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetAllAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DeletedServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedServerResource> GetDeletedServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DeletedServerResource> GetAllAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetDeletedServersAsync(cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetAllAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of all deleted servers in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetDeletedServers(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetAll(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DeletedServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedServerResource> GetDeletedServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<DeletedServerResource> GetAll(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetDeletedServers(cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetAll(cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocationAsync(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByLocationAsync(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3564,18 +3510,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocation(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByLocation(string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3585,18 +3531,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetByLocation(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServerAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByServerAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3607,18 +3553,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetByServerAsync(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServer(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByServer(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3629,18 +3575,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetByServer(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByLocationAsync(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3653,18 +3599,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByLocation(string, bool?, SqlDatabaseState?, long?, long?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3677,18 +3623,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetByLocation(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByLocation(locationName, onlyLatestPerDatabase, databaseState, skip, top, filter, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByInstanceAsync(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3699,18 +3645,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetByInstanceAsync(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByInstance(string, string, bool?, SqlDatabaseState?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3721,18 +3667,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetByInstance(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of sync database ids.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroupsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIdsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3740,18 +3686,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIdsAsync(locationName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of sync database ids.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetSyncDatabaseIds(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3759,18 +3705,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static Pageable<SyncDatabaseIdProperties> GetSyncDatabaseIds(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetSyncDatabaseIds(locationName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the subscription capabilities available for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetCapabilitiesByLocationAsync(string, SqlCapabilityGroup?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByLocationAsync(string, SqlCapabilityGroup?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3778,18 +3724,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SqlLocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, SqlCapabilityGroup? include = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlLocationCapabilities>> GetByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, SqlCapabilityGroup? include = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSqlSubscriptionResource(subscriptionResource).GetByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the subscription capabilities available for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetCapabilitiesByLocation(string, SqlCapabilityGroup?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSqlSubscriptionResource.GetByLocation(string, SqlCapabilityGroup?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -3797,11 +3743,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SqlLocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, string locationName, SqlCapabilityGroup? include = default, CancellationToken cancellationToken = default)
+        public static Response<SqlLocationCapabilities> GetByLocation(this SubscriptionResource subscriptionResource, string locationName, SqlCapabilityGroup? include = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSqlSubscriptionResource(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
+            return GetMockableSqlSubscriptionResource(subscriptionResource).GetByLocation(locationName, include, cancellationToken);
         }
     }
 }
