@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,55 +18,113 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedService"/>. </summary>
         /// <param name="functionAppUri"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
-        public AzureFunctionLinkedService(DataFactoryElement<string> functionAppUri)
+        public AzureFunctionLinkedService(DataFactoryElement<string> functionAppUri) : base("AzureFunction")
         {
             Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
 
-            FunctionAppUri = functionAppUri;
-            LinkedServiceType = "AzureFunction";
+            TypeProperties = new AzureFunctionLinkedServiceTypeProperties(functionAppUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="functionAppUri"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </param>
-        /// <param name="functionKey"> Function or Host key for Azure Function App. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <param name="resourceId"> Allowed token audiences for azure function. Type: string (or Expression with resultType string). </param>
-        /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> functionAppUri, DataFactorySecret functionKey, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> resourceId, DataFactoryElement<string> authentication) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Function linked service properties. </param>
+        internal AzureFunctionLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureFunctionLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            FunctionAppUri = functionAppUri;
-            FunctionKey = functionKey;
-            EncryptedCredential = encryptedCredential;
-            Credential = credential;
-            ResourceId = resourceId;
-            Authentication = authentication;
-            LinkedServiceType = linkedServiceType ?? "AzureFunction";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedService"/> for deserialization. </summary>
-        internal AzureFunctionLinkedService()
-        {
-        }
+        /// <summary> Azure Function linked service properties. </summary>
+        internal AzureFunctionLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> FunctionAppUri { get; set; }
-        /// <summary> Function or Host key for Azure Function App. </summary>
-        public DataFactorySecret FunctionKey { get; set; }
+        public DataFactoryElement<string> FunctionAppUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FunctionAppUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionLinkedServiceTypeProperties();
+                }
+                TypeProperties.FunctionAppUri = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
+
         /// <summary> Allowed token audiences for azure function. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ResourceId { get; set; }
+        public DataFactoryElement<string> ResourceId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ResourceId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionLinkedServiceTypeProperties();
+                }
+                TypeProperties.ResourceId = value;
+            }
+        }
+
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Authentication { get; set; }
+        public DataFactoryElement<string> Authentication
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Authentication;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFunctionLinkedServiceTypeProperties();
+                }
+                TypeProperties.Authentication = value;
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,84 +19,232 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
-        public ImpalaLinkedService(DataFactoryElement<string> host, ImpalaAuthenticationType authenticationType)
+        public ImpalaLinkedService(DataFactoryElement<string> host, ImpalaAuthenticationType authenticationType) : base("Impala")
         {
             Argument.AssertNotNull(host, nameof(host));
 
-            Host = host;
-            AuthenticationType = authenticationType;
-            LinkedServiceType = "Impala";
+            TypeProperties = new ImpalaLinkedServiceTypeProperties(host, authenticationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImpalaLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </param>
-        /// <param name="port"> The TCP port that the Impala server uses to listen for client connections. The default value is 21050. </param>
-        /// <param name="authenticationType"> The authentication type to use. </param>
-        /// <param name="username"> The user name used to access the Impala server. The default value is anonymous when using SASLUsername. </param>
-        /// <param name="password"> The password corresponding to the user name when using UsernameAndPassword. </param>
-        /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer (for V2 only). Default value is Binary. </param>
-        /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
-        /// <param name="enableServerCertificateValidation"> Specify whether to enable server SSL certificate validation when you connect.Always use System Trust Store (for V2 only). The default value is true. </param>
-        /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
-        /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
-        /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
-        /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal ImpalaLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, ImpalaAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, ImpalaThriftTransportProtocol? thriftTransportProtocol, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Impala server linked service properties. </param>
+        internal ImpalaLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ImpalaLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Host = host;
-            Port = port;
-            AuthenticationType = authenticationType;
-            Username = username;
-            Password = password;
-            ThriftTransportProtocol = thriftTransportProtocol;
-            EnableSsl = enableSsl;
-            EnableServerCertificateValidation = enableServerCertificateValidation;
-            TrustedCertPath = trustedCertPath;
-            UseSystemTrustStore = useSystemTrustStore;
-            AllowHostNameCNMismatch = allowHostNameCNMismatch;
-            AllowSelfSignedServerCert = allowSelfSignedServerCert;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Impala";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImpalaLinkedService"/> for deserialization. </summary>
-        internal ImpalaLinkedService()
-        {
-        }
+        /// <summary> Impala server linked service properties. </summary>
+        internal ImpalaLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> The TCP port that the Impala server uses to listen for client connections. The default value is 21050. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> The authentication type to use. </summary>
-        public ImpalaAuthenticationType AuthenticationType { get; set; }
+        public ImpalaAuthenticationType AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The user name used to access the Impala server. The default value is anonymous when using SASLUsername. </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> The password corresponding to the user name when using UsernameAndPassword. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The transport protocol to use in the Thrift layer (for V2 only). Default value is Binary. </summary>
-        public ImpalaThriftTransportProtocol? ThriftTransportProtocol { get; set; }
+        public ImpalaThriftTransportProtocol? ThriftTransportProtocol
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ThriftTransportProtocol;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.ThriftTransportProtocol = value;
+            }
+        }
+
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
-        public DataFactoryElement<bool> EnableSsl { get; set; }
+        public DataFactoryElement<bool> EnableSsl
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableSsl;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableSsl = value;
+            }
+        }
+
         /// <summary> Specify whether to enable server SSL certificate validation when you connect.Always use System Trust Store (for V2 only). The default value is true. </summary>
-        public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
+        public DataFactoryElement<bool> EnableServerCertificateValidation
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableServerCertificateValidation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableServerCertificateValidation = value;
+            }
+        }
+
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
-        public DataFactoryElement<string> TrustedCertPath { get; set; }
+        public DataFactoryElement<string> TrustedCertPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TrustedCertPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.TrustedCertPath = value;
+            }
+        }
+
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
-        public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
+        public DataFactoryElement<bool> UseSystemTrustStore
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseSystemTrustStore;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseSystemTrustStore = value;
+            }
+        }
+
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
-        public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
+        public DataFactoryElement<bool> AllowHostNameCNMismatch
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AllowHostNameCNMismatch;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.AllowHostNameCNMismatch = value;
+            }
+        }
+
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
-        public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
+        public DataFactoryElement<bool> AllowSelfSignedServerCert
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AllowSelfSignedServerCert;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.AllowSelfSignedServerCert = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ImpalaLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

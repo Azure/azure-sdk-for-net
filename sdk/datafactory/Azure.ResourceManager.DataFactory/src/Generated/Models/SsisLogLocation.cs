@@ -8,83 +8,82 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SSIS package execution log location. </summary>
     public partial class SsisLogLocation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/>. </summary>
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
-        /// <param name="locationType"> The type of SSIS log location. </param>
+        /// <param name="type"> The type of SSIS log location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
-        public SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType locationType)
+        public SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType @type)
         {
             Argument.AssertNotNull(logPath, nameof(logPath));
 
             LogPath = logPath;
-            LocationType = locationType;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/>. </summary>
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
-        /// <param name="locationType"> The type of SSIS log location. </param>
-        /// <param name="accessCredential"> The package execution log access credential. </param>
-        /// <param name="logRefreshInterval"> Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType locationType, SsisAccessCredential accessCredential, DataFactoryElement<string> logRefreshInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> The type of SSIS log location. </param>
+        /// <param name="typeProperties"> SSIS package execution log location properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType @type, SSISLogLocationTypeProperties typeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogPath = logPath;
-            LocationType = locationType;
-            AccessCredential = accessCredential;
-            LogRefreshInterval = logRefreshInterval;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/> for deserialization. </summary>
-        internal SsisLogLocation()
-        {
+            Type = @type;
+            TypeProperties = typeProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The SSIS package execution log path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> LogPath { get; set; }
+
         /// <summary> The type of SSIS log location. </summary>
-        public SsisLogLocationType LocationType { get; set; }
+        public SsisLogLocationType Type { get; set; }
+
+        /// <summary> SSIS package execution log location properties. </summary>
+        internal SSISLogLocationTypeProperties TypeProperties { get; set; }
+
         /// <summary> The package execution log access credential. </summary>
-        public SsisAccessCredential AccessCredential { get; set; }
+        public SsisAccessCredential AccessCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccessCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SSISLogLocationTypeProperties();
+                }
+                TypeProperties.AccessCredential = value;
+            }
+        }
+
         /// <summary> Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        public DataFactoryElement<string> LogRefreshInterval { get; set; }
+        public DataFactoryElement<string> LogRefreshInterval
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LogRefreshInterval;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SSISLogLocationTypeProperties();
+                }
+                TypeProperties.LogRefreshInterval = value;
+            }
+        }
     }
 }

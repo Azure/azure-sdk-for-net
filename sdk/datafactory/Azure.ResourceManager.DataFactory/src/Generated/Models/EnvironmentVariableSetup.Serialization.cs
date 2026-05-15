@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class EnvironmentVariableSetup : IUtf8JsonSerializable, IJsonModel<EnvironmentVariableSetup>
+    /// <summary> The custom setup of setting environment variable. </summary>
+    public partial class EnvironmentVariableSetup : CustomSetupBase, IJsonModel<EnvironmentVariableSetup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnvironmentVariableSetup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVariableSetup"/> for deserialization. </summary>
+        internal EnvironmentVariableSetup()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CustomSetupBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEnvironmentVariableSetup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EnvironmentVariableSetup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnvironmentVariableSetup IPersistableModel<EnvironmentVariableSetup>.Create(BinaryData data, ModelReaderWriterOptions options) => (EnvironmentVariableSetup)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EnvironmentVariableSetup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnvironmentVariableSetup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,114 +74,62 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("variableName"u8);
-            writer.WriteStringValue(VariableName);
-            writer.WritePropertyName("variableValue"u8);
-            writer.WriteStringValue(VariableValue);
-            writer.WriteEndObject();
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        EnvironmentVariableSetup IJsonModel<EnvironmentVariableSetup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnvironmentVariableSetup IJsonModel<EnvironmentVariableSetup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EnvironmentVariableSetup)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CustomSetupBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEnvironmentVariableSetup(document.RootElement, options);
         }
 
-        internal static EnvironmentVariableSetup DeserializeEnvironmentVariableSetup(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EnvironmentVariableSetup DeserializeEnvironmentVariableSetup(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string type = default;
-            string variableName = default;
-            string variableValue = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string @type = "EnvironmentVariableSetup";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            EnvironmentVariableSetupTypeProperties typeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("typeProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("variableName"u8))
-                        {
-                            variableName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("variableValue"u8))
-                        {
-                            variableValue = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    typeProperties = EnvironmentVariableSetupTypeProperties.DeserializeEnvironmentVariableSetupTypeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EnvironmentVariableSetup(type, serializedAdditionalRawData, variableName, variableValue);
+            return new EnvironmentVariableSetup(@type, additionalBinaryDataProperties, typeProperties);
         }
-
-        BinaryData IPersistableModel<EnvironmentVariableSetup>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EnvironmentVariableSetup IPersistableModel<EnvironmentVariableSetup>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariableSetup>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEnvironmentVariableSetup(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnvironmentVariableSetup)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EnvironmentVariableSetup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

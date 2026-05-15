@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    [PersistableModelProxy(typeof(UnknownActivity))]
-    public partial class PipelineActivity : IUtf8JsonSerializable, IJsonModel<PipelineActivity>
+    /// <summary>
+    /// A pipeline activity.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ControlActivity"/>, <see cref="ExecutionActivity"/>, <see cref="CopyActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="ExecuteSSISPackageActivity"/>, <see cref="CustomActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="DeleteActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="LookupActivity"/>, <see cref="WebActivity"/>, <see cref="GetDatasetMetadataActivity"/>, <see cref="IfConditionActivity"/>, <see cref="SwitchActivity"/>, <see cref="ForEachActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="WaitActivity"/>, <see cref="FailActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="FilterActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DatabricksJobActivity"/>, <see cref="SetVariableActivity"/>, <see cref="AppendVariableActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="WebHookActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="DataFactoryScriptActivity"/>, <see cref="SynapseNotebookActivity"/>, and <see cref="SynapseSparkJobDefinitionActivity"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownPipelineActivity))]
+    public abstract partial class PipelineActivity : IJsonModel<PipelineActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PipelineActivity"/> for deserialization. </summary>
+        internal PipelineActivity()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PipelineActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePipelineActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PipelineActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PipelineActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PipelineActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PipelineActivity IPersistableModel<PipelineActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PipelineActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PipelineActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,16 +77,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PipelineActivity)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActivityType);
+            writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -57,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
-                foreach (var item in DependsOn)
+                foreach (PipelineActivityDependency item in DependsOn)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -67,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
-                foreach (var item in UserProperties)
+                foreach (PipelineActivityUserProperty item in UserProperties)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -77,9 +125,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -87,106 +135,122 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        PipelineActivity IJsonModel<PipelineActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PipelineActivity IJsonModel<PipelineActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PipelineActivity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PipelineActivity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePipelineActivity(document.RootElement, options);
         }
 
-        internal static PipelineActivity DeserializePipelineActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PipelineActivity DeserializePipelineActivity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
-                    case "AzureDataExplorerCommand": return AzureDataExplorerCommandActivity.DeserializeAzureDataExplorerCommandActivity(element, options);
-                    case "AzureFunctionActivity": return AzureFunctionActivity.DeserializeAzureFunctionActivity(element, options);
-                    case "AzureMLBatchExecution": return AzureMLBatchExecutionActivity.DeserializeAzureMLBatchExecutionActivity(element, options);
-                    case "AzureMLExecutePipeline": return AzureMLExecutePipelineActivity.DeserializeAzureMLExecutePipelineActivity(element, options);
-                    case "AzureMLUpdateResource": return AzureMLUpdateResourceActivity.DeserializeAzureMLUpdateResourceActivity(element, options);
-                    case "Container": return ControlActivity.DeserializeControlActivity(element, options);
-                    case "Copy": return CopyActivity.DeserializeCopyActivity(element, options);
-                    case "Custom": return CustomActivity.DeserializeCustomActivity(element, options);
-                    case "DatabricksJob": return DatabricksJobActivity.DeserializeDatabricksJobActivity(element, options);
-                    case "DatabricksNotebook": return DatabricksNotebookActivity.DeserializeDatabricksNotebookActivity(element, options);
-                    case "DatabricksSparkJar": return DatabricksSparkJarActivity.DeserializeDatabricksSparkJarActivity(element, options);
-                    case "DatabricksSparkPython": return DatabricksSparkPythonActivity.DeserializeDatabricksSparkPythonActivity(element, options);
-                    case "DataLakeAnalyticsU-SQL": return DataLakeAnalyticsUsqlActivity.DeserializeDataLakeAnalyticsUsqlActivity(element, options);
-                    case "Delete": return DeleteActivity.DeserializeDeleteActivity(element, options);
-                    case "ExecuteDataFlow": return ExecuteDataFlowActivity.DeserializeExecuteDataFlowActivity(element, options);
-                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
-                    case "ExecuteSSISPackage": return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element, options);
-                    case "ExecuteWranglingDataflow": return ExecuteWranglingDataflowActivity.DeserializeExecuteWranglingDataflowActivity(element, options);
-                    case "Execution": return ExecutionActivity.DeserializeExecutionActivity(element, options);
-                    case "Fail": return FailActivity.DeserializeFailActivity(element, options);
-                    case "Filter": return FilterActivity.DeserializeFilterActivity(element, options);
-                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element, options);
-                    case "GetMetadata": return GetDatasetMetadataActivity.DeserializeGetDatasetMetadataActivity(element, options);
-                    case "HDInsightHive": return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element, options);
-                    case "HDInsightMapReduce": return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element, options);
-                    case "HDInsightPig": return HDInsightPigActivity.DeserializeHDInsightPigActivity(element, options);
-                    case "HDInsightSpark": return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element, options);
-                    case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element, options);
-                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element, options);
-                    case "Lookup": return LookupActivity.DeserializeLookupActivity(element, options);
-                    case "Script": return DataFactoryScriptActivity.DeserializeDataFactoryScriptActivity(element, options);
-                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element, options);
-                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element, options);
-                    case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element, options);
-                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element, options);
-                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element, options);
-                    case "Until": return UntilActivity.DeserializeUntilActivity(element, options);
-                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element, options);
-                    case "Wait": return WaitActivity.DeserializeWaitActivity(element, options);
-                    case "WebActivity": return WebActivity.DeserializeWebActivity(element, options);
-                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element, options);
+                    case "Container":
+                        return ControlActivity.DeserializeControlActivity(element, options);
+                    case "Execution":
+                        return ExecutionActivity.DeserializeExecutionActivity(element, options);
+                    case "Copy":
+                        return CopyActivity.DeserializeCopyActivity(element, options);
+                    case "HDInsightHive":
+                        return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element, options);
+                    case "HDInsightPig":
+                        return HDInsightPigActivity.DeserializeHDInsightPigActivity(element, options);
+                    case "HDInsightMapReduce":
+                        return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element, options);
+                    case "HDInsightStreaming":
+                        return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element, options);
+                    case "HDInsightSpark":
+                        return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element, options);
+                    case "ExecuteSSISPackage":
+                        return ExecuteSSISPackageActivity.DeserializeExecuteSSISPackageActivity(element, options);
+                    case "Custom":
+                        return CustomActivity.DeserializeCustomActivity(element, options);
+                    case "SqlServerStoredProcedure":
+                        return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element, options);
+                    case "ExecutePipeline":
+                        return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
+                    case "Delete":
+                        return DeleteActivity.DeserializeDeleteActivity(element, options);
+                    case "AzureDataExplorerCommand":
+                        return AzureDataExplorerCommandActivity.DeserializeAzureDataExplorerCommandActivity(element, options);
+                    case "Lookup":
+                        return LookupActivity.DeserializeLookupActivity(element, options);
+                    case "WebActivity":
+                        return WebActivity.DeserializeWebActivity(element, options);
+                    case "GetMetadata":
+                        return GetDatasetMetadataActivity.DeserializeGetDatasetMetadataActivity(element, options);
+                    case "IfCondition":
+                        return IfConditionActivity.DeserializeIfConditionActivity(element, options);
+                    case "Switch":
+                        return SwitchActivity.DeserializeSwitchActivity(element, options);
+                    case "ForEach":
+                        return ForEachActivity.DeserializeForEachActivity(element, options);
+                    case "AzureMLBatchExecution":
+                        return AzureMLBatchExecutionActivity.DeserializeAzureMLBatchExecutionActivity(element, options);
+                    case "AzureMLUpdateResource":
+                        return AzureMLUpdateResourceActivity.DeserializeAzureMLUpdateResourceActivity(element, options);
+                    case "AzureMLExecutePipeline":
+                        return AzureMLExecutePipelineActivity.DeserializeAzureMLExecutePipelineActivity(element, options);
+                    case "DataLakeAnalyticsU-SQL":
+                        return DataLakeAnalyticsUsqlActivity.DeserializeDataLakeAnalyticsUsqlActivity(element, options);
+                    case "Wait":
+                        return WaitActivity.DeserializeWaitActivity(element, options);
+                    case "Fail":
+                        return FailActivity.DeserializeFailActivity(element, options);
+                    case "Until":
+                        return UntilActivity.DeserializeUntilActivity(element, options);
+                    case "Validation":
+                        return ValidationActivity.DeserializeValidationActivity(element, options);
+                    case "Filter":
+                        return FilterActivity.DeserializeFilterActivity(element, options);
+                    case "DatabricksNotebook":
+                        return DatabricksNotebookActivity.DeserializeDatabricksNotebookActivity(element, options);
+                    case "DatabricksSparkJar":
+                        return DatabricksSparkJarActivity.DeserializeDatabricksSparkJarActivity(element, options);
+                    case "DatabricksSparkPython":
+                        return DatabricksSparkPythonActivity.DeserializeDatabricksSparkPythonActivity(element, options);
+                    case "DatabricksJob":
+                        return DatabricksJobActivity.DeserializeDatabricksJobActivity(element, options);
+                    case "SetVariable":
+                        return SetVariableActivity.DeserializeSetVariableActivity(element, options);
+                    case "AppendVariable":
+                        return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
+                    case "AzureFunctionActivity":
+                        return AzureFunctionActivity.DeserializeAzureFunctionActivity(element, options);
+                    case "WebHook":
+                        return WebHookActivity.DeserializeWebHookActivity(element, options);
+                    case "ExecuteDataFlow":
+                        return ExecuteDataFlowActivity.DeserializeExecuteDataFlowActivity(element, options);
+                    case "ExecuteWranglingDataflow":
+                        return ExecuteWranglingDataflowActivity.DeserializeExecuteWranglingDataflowActivity(element, options);
+                    case "Script":
+                        return DataFactoryScriptActivity.DeserializeDataFactoryScriptActivity(element, options);
+                    case "SynapseNotebook":
+                        return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element, options);
+                    case "SparkJob":
+                        return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element, options);
                 }
             }
-            return UnknownActivity.DeserializeUnknownActivity(element, options);
+            return UnknownPipelineActivity.DeserializeUnknownPipelineActivity(element, options);
         }
-
-        BinaryData IPersistableModel<PipelineActivity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PipelineActivity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PipelineActivity IPersistableModel<PipelineActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePipelineActivity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PipelineActivity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PipelineActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

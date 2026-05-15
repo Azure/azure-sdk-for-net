@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,37 +19,47 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. Type: integer (or Expression with resultType integer). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
-        public WaitActivity(string name, DataFactoryElement<int> waitTimeInSeconds) : base(name)
+        public WaitActivity(string name, DataFactoryElement<int> waitTimeInSeconds) : base("Wait", name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(waitTimeInSeconds, nameof(waitTimeInSeconds));
 
-            WaitTimeInSeconds = waitTimeInSeconds;
-            ActivityType = "Wait";
+            TypeProperties = new WaitActivityTypeProperties(waitTimeInSeconds);
         }
 
         /// <summary> Initializes a new instance of <see cref="WaitActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="waitTimeInSeconds"> Duration in seconds. Type: integer (or Expression with resultType integer). </param>
-        internal WaitActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> waitTimeInSeconds) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Wait activity properties. </param>
+        internal WaitActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, WaitActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
-            WaitTimeInSeconds = waitTimeInSeconds;
-            ActivityType = activityType ?? "Wait";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WaitActivity"/> for deserialization. </summary>
-        internal WaitActivity()
-        {
-        }
+        /// <summary> Wait activity properties. </summary>
+        internal WaitActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> Duration in seconds. Type: integer (or Expression with resultType integer). </summary>
-        public DataFactoryElement<int> WaitTimeInSeconds { get; set; }
+        public DataFactoryElement<int> WaitTimeInSeconds
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.WaitTimeInSeconds;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new WaitActivityTypeProperties();
+                }
+                TypeProperties.WaitTimeInSeconds = value;
+            }
+        }
     }
 }

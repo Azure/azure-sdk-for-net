@@ -17,16 +17,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="SalesforceV2Source"/>. </summary>
         public SalesforceV2Source()
         {
-            CopySourceType = "SalesforceV2Source";
         }
 
         /// <summary> Initializes a new instance of <see cref="SalesforceV2Source"/>. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="soqlQuery"> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </param>
@@ -34,24 +33,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="includeDeletedObjects"> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="pageSize"> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </param>
         /// <param name="partitionOption"> Partition option for the SalesforceV2 connector in copy activity, AutoDetect or None. Type: string (or Expression with resultType string). </param>
-        internal SalesforceV2Source(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> soqlQuery, DataFactoryElement<string> query, DataFactoryElement<bool> includeDeletedObjects, DataFactoryElement<int> pageSize, DataFactoryElement<string> partitionOption) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal SalesforceV2Source(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> soqlQuery, DataFactoryElement<string> query, DataFactoryElement<bool> includeDeletedObjects, DataFactoryElement<int> pageSize, DataFactoryElement<string> partitionOption) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
-            SoqlQuery = soqlQuery;
+            SOQLQuery = soqlQuery;
             Query = query;
             IncludeDeletedObjects = includeDeletedObjects;
             PageSize = pageSize;
             PartitionOption = partitionOption;
-            CopySourceType = copySourceType ?? "SalesforceV2Source";
         }
 
         /// <summary> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SoqlQuery { get; set; }
+        public DataFactoryElement<string> SOQLQuery { get; set; }
+
         /// <summary> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }
+
         /// <summary> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> IncludeDeletedObjects { get; set; }
+
         /// <summary> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> PageSize { get; set; }
+
         /// <summary> Partition option for the SalesforceV2 connector in copy activity, AutoDetect or None. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PartitionOption { get; set; }
     }

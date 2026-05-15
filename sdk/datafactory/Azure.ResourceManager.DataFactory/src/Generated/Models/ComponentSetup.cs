@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,34 +17,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ComponentSetup"/>. </summary>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        public ComponentSetup(string componentName)
+        public ComponentSetup(string componentName) : base("ComponentSetup")
         {
             Argument.AssertNotNull(componentName, nameof(componentName));
 
-            ComponentName = componentName;
-            CustomSetupBaseType = "ComponentSetup";
+            TypeProperties = new LicensedComponentSetupTypeProperties(componentName);
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentSetup"/>. </summary>
-        /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="componentName"> The name of the 3rd party component. </param>
-        /// <param name="licenseKey"> The license key to activate the component. </param>
-        internal ComponentSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string componentName, DataFactorySecret licenseKey) : base(customSetupBaseType, serializedAdditionalRawData)
+        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="typeProperties"> Install 3rd party component type properties. </param>
+        internal ComponentSetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, LicensedComponentSetupTypeProperties typeProperties) : base(@type, additionalBinaryDataProperties)
         {
-            ComponentName = componentName;
-            LicenseKey = licenseKey;
-            CustomSetupBaseType = customSetupBaseType ?? "ComponentSetup";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComponentSetup"/> for deserialization. </summary>
-        internal ComponentSetup()
-        {
-        }
+        /// <summary> Install 3rd party component type properties. </summary>
+        internal LicensedComponentSetupTypeProperties TypeProperties { get; set; }
 
         /// <summary> The name of the 3rd party component. </summary>
-        public string ComponentName { get; set; }
-        /// <summary> The license key to activate the component. </summary>
-        public DataFactorySecret LicenseKey { get; set; }
+        public string ComponentName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ComponentName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new LicensedComponentSetupTypeProperties();
+                }
+                TypeProperties.ComponentName = value;
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,44 +18,59 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
         /// <param name="targetName"> The server name of data source access. Type: string. </param>
         /// <param name="userName"> The user name of data source access. Type: string. </param>
-        /// <param name="password"> The password of data source access. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="userName"/> is null. </exception>
+        public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName) : base("CmdkeySetup")
         {
             Argument.AssertNotNull(targetName, nameof(targetName));
             Argument.AssertNotNull(userName, nameof(userName));
-            Argument.AssertNotNull(password, nameof(password));
 
-            TargetName = targetName;
-            UserName = userName;
-            Password = password;
-            CustomSetupBaseType = "CmdkeySetup";
+            TypeProperties = new CmdkeySetupTypeProperties(targetName, userName);
         }
 
         /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
-        /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="targetName"> The server name of data source access. Type: string. </param>
-        /// <param name="userName"> The user name of data source access. Type: string. </param>
-        /// <param name="password"> The password of data source access. </param>
-        internal CmdkeySetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password) : base(customSetupBaseType, serializedAdditionalRawData)
+        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="typeProperties"> Cmdkey command custom setup type properties. </param>
+        internal CmdkeySetup(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CmdkeySetupTypeProperties typeProperties) : base(@type, additionalBinaryDataProperties)
         {
-            TargetName = targetName;
-            UserName = userName;
-            Password = password;
-            CustomSetupBaseType = customSetupBaseType ?? "CmdkeySetup";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/> for deserialization. </summary>
-        internal CmdkeySetup()
-        {
-        }
+        /// <summary> Cmdkey command custom setup type properties. </summary>
+        internal CmdkeySetupTypeProperties TypeProperties { get; set; }
 
         /// <summary> The server name of data source access. Type: string. </summary>
-        public DataFactoryElement<string> TargetName { get; set; }
+        public DataFactoryElement<string> TargetName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TargetName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CmdkeySetupTypeProperties();
+                }
+                TypeProperties.TargetName = value;
+            }
+        }
+
         /// <summary> The user name of data source access. Type: string. </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> The password of data source access. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CmdkeySetupTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
     }
 }

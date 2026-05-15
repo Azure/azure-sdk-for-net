@@ -8,71 +8,50 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The format definition of a storage.
-    /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetTextFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetAvroFormat"/>, <see cref="DatasetOrcFormat"/>, and <see cref="DatasetParquetFormat"/>.
     /// </summary>
     public abstract partial class DatasetStorageFormat
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
-        protected DatasetStorageFormat()
+        /// <param name="type"> Type of dataset storage format. </param>
+        private protected DatasetStorageFormat(string @type)
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Type = @type;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
-        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
+        /// <param name="type"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetStorageFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal DatasetStorageFormat(string @type, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties)
         {
-            DatasetStorageFormatType = datasetStorageFormatType;
+            Type = @type;
             Serializer = serializer;
             Deserializer = deserializer;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of dataset storage format. </summary>
-        internal string DatasetStorageFormatType { get; set; }
+        internal string Type { get; set; }
+
         /// <summary> Serializer. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Serializer { get; set; }
+
         /// <summary> Deserializer. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Deserializer { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

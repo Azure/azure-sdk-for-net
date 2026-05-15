@@ -15,31 +15,30 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureDataLakeStoreSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreSink"/>. </summary>
-        public AzureDataLakeStoreSink()
+        public AzureDataLakeStoreSink() : base("AzureDataLakeStoreSink")
         {
-            CopySinkType = "AzureDataLakeStoreSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreSink"/>. </summary>
-        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="type"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </param>
         /// <param name="enableAdlsSingleFileParallel"> Single File Parallel. </param>
-        internal AzureDataLakeStoreSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> copyBehavior, DataFactoryElement<bool> enableAdlsSingleFileParallel) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureDataLakeStoreSink(string @type, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> copyBehavior, DataFactoryElement<bool> enableAdlsSingleFileParallel) : base(@type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             CopyBehavior = copyBehavior;
             EnableAdlsSingleFileParallel = enableAdlsSingleFileParallel;
-            CopySinkType = copySinkType ?? "AzureDataLakeStoreSink";
         }
 
         /// <summary> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CopyBehavior { get; set; }
+
         /// <summary> Single File Parallel. </summary>
         public DataFactoryElement<bool> EnableAdlsSingleFileParallel { get; set; }
     }

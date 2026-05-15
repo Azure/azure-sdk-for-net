@@ -15,59 +15,162 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class Db2LinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="Db2LinkedService"/>. </summary>
-        public Db2LinkedService()
+        public Db2LinkedService() : base("Db2")
         {
-            LinkedServiceType = "Db2";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="Db2LinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="server"> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
-        /// <param name="database"> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </param>
-        /// <param name="username"> Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password for authentication. </param>
-        /// <param name="packageCollection"> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
-        /// <param name="certificateCommonName"> Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string. </param>
-        internal Db2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<string> database, Db2AuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> packageCollection, DataFactoryElement<string> certificateCommonName, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> DB2 linked service properties. </param>
+        internal Db2LinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, Db2LinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionString = connectionString;
-            Server = server;
-            Database = database;
-            AuthenticationType = authenticationType;
-            Username = username;
-            Password = password;
-            PackageCollection = packageCollection;
-            CertificateCommonName = certificateCommonName;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Db2";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> DB2 linked service properties. </summary>
+        internal Db2LinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
+
         /// <summary> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </summary>
-        public Db2AuthenticationType? AuthenticationType { get; set; }
+        public Db2AuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> Password for authentication. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> PackageCollection { get; set; }
+        public DataFactoryElement<string> PackageCollection
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.PackageCollection;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.PackageCollection = value;
+            }
+        }
+
         /// <summary> Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> CertificateCommonName { get; set; }
+        public DataFactoryElement<string> CertificateCommonName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CertificateCommonName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.CertificateCommonName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2LinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

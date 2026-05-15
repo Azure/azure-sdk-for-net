@@ -15,91 +15,298 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForOracleLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/>. </summary>
-        public AmazonRdsForOracleLinkedService()
+        public AmazonRdsForOracleLinkedService() : base("AmazonRdsForOracle")
         {
-            LinkedServiceType = "AmazonRdsForOracle";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </param>
-        /// <param name="server"> The location of AmazonRdsForOracle database you want to connect to, the supported forms include connector descriptor, Easy Connect (Plus) Naming and Oracle Net Services Name (Only self-hosted IR). Type: string. Only used for Version 2.0. </param>
-        /// <param name="authenticationType"> Authentication type for connecting to the AmazonRdsForOracle database. Only used for Version 2.0. </param>
-        /// <param name="username"> The AmazonRdsForOracle database username. Type: string. Only used for Version 2.0. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
-        /// <param name="encryptionClient"> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </param>
-        /// <param name="encryptionTypesClient"> Specifies the encryption algorithms that client can use. Supported values are AES128, AES192, AES256, 3DES112, 3DES168, default value is (AES256). Type: string. Only used for Version 2.0. </param>
-        /// <param name="cryptoChecksumClient"> Specifies the desired data integrity behavior when this client connects to a server. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </param>
-        /// <param name="cryptoChecksumTypesClient"> Specifies the crypto-checksum algorithms that client can use. Supported values are SHA1, SHA256, SHA384, SHA512, default value is (SHA512). Type: string. Only used for Version 2.0. </param>
-        /// <param name="initialLobFetchSize"> Specifies the amount that the source initially fetches for LOB columns, default value is 0. Type: integer. Only used for Version 2.0. </param>
-        /// <param name="fetchSize"> Specifies the number of bytes that the driver allocates to fetch the data in one database round-trip, default value is 10485760. Type: integer. Only used for Version 2.0. </param>
-        /// <param name="statementCacheSize"> Specifies the number of cursors or statements to be cached for each database connection, default value is 0. Type: integer. Only used for Version 2.0. </param>
-        /// <param name="initializationString"> Specifies a command that is issued immediately after connecting to the database to manage session settings. Type: string. Only used for Version 2.0. </param>
-        /// <param name="enableBulkLoad"> Specifies whether to use bulk copy or batch insert when loading data into the database, default value is true. Type: boolean. Only used for Version 2.0. </param>
-        /// <param name="supportV1DataTypes"> Specifies whether to use the Version 1.0 data type mappings. Do not set this to true unless you want to keep backward compatibility with Version 1.0's data type mappings, default value is false. Type: boolean. Only used for Version 2.0. </param>
-        /// <param name="fetchTswtzAsTimestamp"> Specifies whether the driver returns column value with the TIMESTAMP WITH TIME ZONE data type as DateTime or string. This setting is ignored if supportV1DataTypes is not true, default value is true. Type: boolean. Only used for Version 2.0. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonRdsForOracleLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, AmazonRdsForOracleAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> encryptionClient, DataFactoryElement<string> encryptionTypesClient, DataFactoryElement<string> cryptoChecksumClient, DataFactoryElement<string> cryptoChecksumTypesClient, DataFactoryElement<int> initialLobFetchSize, DataFactoryElement<int> fetchSize, DataFactoryElement<int> statementCacheSize, DataFactoryElement<string> initializationString, DataFactoryElement<bool> enableBulkLoad, DataFactoryElement<bool> supportV1DataTypes, DataFactoryElement<bool> fetchTswtzAsTimestamp, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> AmazonRdsForOracle database linked service properties. </param>
+        internal AmazonRdsForOracleLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AmazonRdsForLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionString = connectionString;
-            Server = server;
-            AuthenticationType = authenticationType;
-            Username = username;
-            Password = password;
-            EncryptionClient = encryptionClient;
-            EncryptionTypesClient = encryptionTypesClient;
-            CryptoChecksumClient = cryptoChecksumClient;
-            CryptoChecksumTypesClient = cryptoChecksumTypesClient;
-            InitialLobFetchSize = initialLobFetchSize;
-            FetchSize = fetchSize;
-            StatementCacheSize = statementCacheSize;
-            InitializationString = initializationString;
-            EnableBulkLoad = enableBulkLoad;
-            SupportV1DataTypes = supportV1DataTypes;
-            FetchTswtzAsTimestamp = fetchTswtzAsTimestamp;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "AmazonRdsForOracle";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> AmazonRdsForOracle database linked service properties. </summary>
+        internal AmazonRdsForLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> The location of AmazonRdsForOracle database you want to connect to, the supported forms include connector descriptor, Easy Connect (Plus) Naming and Oracle Net Services Name (Only self-hosted IR). Type: string. Only used for Version 2.0. </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> Authentication type for connecting to the AmazonRdsForOracle database. Only used for Version 2.0. </summary>
-        public AmazonRdsForOracleAuthenticationType? AuthenticationType { get; set; }
+        public AmazonRdsForOracleAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The AmazonRdsForOracle database username. Type: string. Only used for Version 2.0. </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
-        public DataFactoryElement<string> EncryptionClient { get; set; }
+        public DataFactoryElement<string> EncryptionClient
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptionClient;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptionClient = value;
+            }
+        }
+
         /// <summary> Specifies the encryption algorithms that client can use. Supported values are AES128, AES192, AES256, 3DES112, 3DES168, default value is (AES256). Type: string. Only used for Version 2.0. </summary>
-        public DataFactoryElement<string> EncryptionTypesClient { get; set; }
+        public DataFactoryElement<string> EncryptionTypesClient
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptionTypesClient;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptionTypesClient = value;
+            }
+        }
+
         /// <summary> Specifies the desired data integrity behavior when this client connects to a server. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
-        public DataFactoryElement<string> CryptoChecksumClient { get; set; }
+        public DataFactoryElement<string> CryptoChecksumClient
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CryptoChecksumClient;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.CryptoChecksumClient = value;
+            }
+        }
+
         /// <summary> Specifies the crypto-checksum algorithms that client can use. Supported values are SHA1, SHA256, SHA384, SHA512, default value is (SHA512). Type: string. Only used for Version 2.0. </summary>
-        public DataFactoryElement<string> CryptoChecksumTypesClient { get; set; }
+        public DataFactoryElement<string> CryptoChecksumTypesClient
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CryptoChecksumTypesClient;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.CryptoChecksumTypesClient = value;
+            }
+        }
+
         /// <summary> Specifies the amount that the source initially fetches for LOB columns, default value is 0. Type: integer. Only used for Version 2.0. </summary>
-        public DataFactoryElement<int> InitialLobFetchSize { get; set; }
+        public DataFactoryElement<int> InitialLobFetchSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.InitialLobFetchSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.InitialLobFetchSize = value;
+            }
+        }
+
         /// <summary> Specifies the number of bytes that the driver allocates to fetch the data in one database round-trip, default value is 10485760. Type: integer. Only used for Version 2.0. </summary>
-        public DataFactoryElement<int> FetchSize { get; set; }
+        public DataFactoryElement<int> FetchSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FetchSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.FetchSize = value;
+            }
+        }
+
         /// <summary> Specifies the number of cursors or statements to be cached for each database connection, default value is 0. Type: integer. Only used for Version 2.0. </summary>
-        public DataFactoryElement<int> StatementCacheSize { get; set; }
+        public DataFactoryElement<int> StatementCacheSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.StatementCacheSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.StatementCacheSize = value;
+            }
+        }
+
         /// <summary> Specifies a command that is issued immediately after connecting to the database to manage session settings. Type: string. Only used for Version 2.0. </summary>
-        public DataFactoryElement<string> InitializationString { get; set; }
+        public DataFactoryElement<string> InitializationString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.InitializationString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.InitializationString = value;
+            }
+        }
+
         /// <summary> Specifies whether to use bulk copy or batch insert when loading data into the database, default value is true. Type: boolean. Only used for Version 2.0. </summary>
-        public DataFactoryElement<bool> EnableBulkLoad { get; set; }
+        public DataFactoryElement<bool> EnableBulkLoad
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableBulkLoad;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableBulkLoad = value;
+            }
+        }
+
         /// <summary> Specifies whether to use the Version 1.0 data type mappings. Do not set this to true unless you want to keep backward compatibility with Version 1.0's data type mappings, default value is false. Type: boolean. Only used for Version 2.0. </summary>
-        public DataFactoryElement<bool> SupportV1DataTypes { get; set; }
+        public DataFactoryElement<bool> SupportV1DataTypes
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SupportV1DataTypes;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.SupportV1DataTypes = value;
+            }
+        }
+
         /// <summary> Specifies whether the driver returns column value with the TIMESTAMP WITH TIME ZONE data type as DateTime or string. This setting is ignored if supportV1DataTypes is not true, default value is true. Type: boolean. Only used for Version 2.0. </summary>
-        public DataFactoryElement<bool> FetchTswtzAsTimestamp { get; set; }
+        public DataFactoryElement<bool> FetchTswtzAsTimestamp
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FetchTswtzAsTimestamp;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.FetchTswtzAsTimestamp = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

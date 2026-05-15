@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    internal class DataFactoryDataFlowCreateDebugSessionResultOperationSource : IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>
+    /// <summary></summary>
+    internal partial class DataFactoryDataFlowCreateDebugSessionResultOperationSource : IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>
     {
-        DataFactoryDataFlowCreateDebugSessionResult IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal DataFactoryDataFlowCreateDebugSessionResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return DataFactoryDataFlowCreateDebugSessionResult.DeserializeDataFactoryDataFlowCreateDebugSessionResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        DataFactoryDataFlowCreateDebugSessionResult IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DataFactoryDataFlowCreateDebugSessionResult result = DataFactoryDataFlowCreateDebugSessionResult.DeserializeDataFactoryDataFlowCreateDebugSessionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DataFactoryDataFlowCreateDebugSessionResult> IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return DataFactoryDataFlowCreateDebugSessionResult.DeserializeDataFactoryDataFlowCreateDebugSessionResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DataFactoryDataFlowCreateDebugSessionResult result = DataFactoryDataFlowCreateDebugSessionResult.DeserializeDataFactoryDataFlowCreateDebugSessionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

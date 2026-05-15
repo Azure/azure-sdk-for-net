@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown version of CustomSetupBase. </summary>
     internal partial class UnknownCustomSetupBase : CustomSetupBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomSetupBase"/>. </summary>
-        /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCustomSetupBase(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(customSetupBaseType, serializedAdditionalRawData)
-        {
-            CustomSetupBaseType = customSetupBaseType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCustomSetupBase"/> for deserialization. </summary>
-        internal UnknownCustomSetupBase()
+        /// <param name="type"> The type of custom setup. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCustomSetupBase(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

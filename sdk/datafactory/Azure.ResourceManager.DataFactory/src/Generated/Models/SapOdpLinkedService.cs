@@ -15,95 +15,315 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapOdpLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SapOdpLinkedService"/>. </summary>
-        public SapOdpLinkedService()
+        public SapOdpLinkedService() : base("SapOdp")
         {
-            LinkedServiceType = "SapOdp";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="SapOdpLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server"> Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="systemNumber"> System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
-        /// <param name="clientId"> Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
-        /// <param name="language"> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </param>
-        /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="userName"> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the SAP server where the table is located. </param>
-        /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
-        /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncFlag"> SNC activation flag (Boolean) to access the SAP server where the table is located. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="sncMyName"> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncPartnerName"> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncLibraryPath"> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncQop"> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </param>
-        /// <param name="x509CertificatePath"> SNC X509 certificate file path. Type: string (or Expression with resultType string). </param>
-        /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
-        /// <param name="subscriberName"> The subscriber name. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SapOdpLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<bool> sncFlag, DataFactoryElement<string> sncMyName, DataFactoryElement<string> sncPartnerName, DataFactoryElement<string> sncLibraryPath, DataFactoryElement<string> sncQop, DataFactoryElement<string> x509CertificatePath, DataFactoryElement<string> logonGroup, DataFactoryElement<string> subscriberName, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Properties specific to SAP ODP linked service type. </param>
+        internal SapOdpLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SapOdpLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Server = server;
-            SystemNumber = systemNumber;
-            ClientId = clientId;
-            Language = language;
-            SystemId = systemId;
-            UserName = userName;
-            Password = password;
-            MessageServer = messageServer;
-            MessageServerService = messageServerService;
-            SncFlag = sncFlag;
-            SncMyName = sncMyName;
-            SncPartnerName = sncPartnerName;
-            SncLibraryPath = sncLibraryPath;
-            SncQop = sncQop;
-            X509CertificatePath = x509CertificatePath;
-            LogonGroup = logonGroup;
-            SubscriberName = subscriberName;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "SapOdp";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Properties specific to SAP ODP linked service type. </summary>
+        internal SapOdpLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SystemNumber { get; set; }
+        public DataFactoryElement<string> SystemNumber
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SystemNumber;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SystemNumber = value;
+            }
+        }
+
         /// <summary> Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Language { get; set; }
+        public DataFactoryElement<string> Language
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Language;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.Language = value;
+            }
+        }
+
         /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SystemId { get; set; }
+        public DataFactoryElement<string> SystemId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SystemId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SystemId = value;
+            }
+        }
+
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> Password to access the SAP server where the table is located. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MessageServer { get; set; }
+        public DataFactoryElement<string> MessageServer
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MessageServer;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.MessageServer = value;
+            }
+        }
+
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MessageServerService { get; set; }
+        public DataFactoryElement<string> MessageServerService
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MessageServerService;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.MessageServerService = value;
+            }
+        }
+
         /// <summary> SNC activation flag (Boolean) to access the SAP server where the table is located. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> SncFlag { get; set; }
+        public DataFactoryElement<bool> SncFlag
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SncFlag;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SncFlag = value;
+            }
+        }
+
         /// <summary> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SncMyName { get; set; }
+        public DataFactoryElement<string> SncMyName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SncMyName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SncMyName = value;
+            }
+        }
+
         /// <summary> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SncPartnerName { get; set; }
+        public DataFactoryElement<string> SncPartnerName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SncPartnerName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SncPartnerName = value;
+            }
+        }
+
         /// <summary> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SncLibraryPath { get; set; }
+        public DataFactoryElement<string> SncLibraryPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SncLibraryPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SncLibraryPath = value;
+            }
+        }
+
         /// <summary> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SncQop { get; set; }
+        public DataFactoryElement<string> SncQop
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SncQop;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SncQop = value;
+            }
+        }
+
         /// <summary> SNC X509 certificate file path. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> X509CertificatePath { get; set; }
+        public DataFactoryElement<string> X509CertificatePath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.X509CertificatePath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.X509CertificatePath = value;
+            }
+        }
+
         /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> LogonGroup { get; set; }
+        public DataFactoryElement<string> LogonGroup
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LogonGroup;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.LogonGroup = value;
+            }
+        }
+
         /// <summary> The subscriber name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SubscriberName { get; set; }
+        public DataFactoryElement<string> SubscriberName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SubscriberName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.SubscriberName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapOdpLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

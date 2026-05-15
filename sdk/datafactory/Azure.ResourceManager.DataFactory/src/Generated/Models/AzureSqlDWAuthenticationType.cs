@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct AzureSqlDWAuthenticationType : IEquatable<AzureSqlDWAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> SQL. </summary>
+        private const string SQLValue = "SQL";
+        /// <summary> ServicePrincipal. </summary>
+        private const string ServicePrincipalValue = "ServicePrincipal";
+        /// <summary> SystemAssignedManagedIdentity. </summary>
+        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
+        /// <summary> UserAssignedManagedIdentity. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="AzureSqlDWAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureSqlDWAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SqlValue = "SQL";
-        private const string ServicePrincipalValue = "ServicePrincipal";
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
-
         /// <summary> SQL. </summary>
-        public static AzureSqlDWAuthenticationType Sql { get; } = new AzureSqlDWAuthenticationType(SqlValue);
+        public static AzureSqlDWAuthenticationType SQL { get; } = new AzureSqlDWAuthenticationType(SQLValue);
+
         /// <summary> ServicePrincipal. </summary>
         public static AzureSqlDWAuthenticationType ServicePrincipal { get; } = new AzureSqlDWAuthenticationType(ServicePrincipalValue);
+
         /// <summary> SystemAssignedManagedIdentity. </summary>
         public static AzureSqlDWAuthenticationType SystemAssignedManagedIdentity { get; } = new AzureSqlDWAuthenticationType(SystemAssignedManagedIdentityValue);
+
         /// <summary> UserAssignedManagedIdentity. </summary>
         public static AzureSqlDWAuthenticationType UserAssignedManagedIdentity { get; } = new AzureSqlDWAuthenticationType(UserAssignedManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="AzureSqlDWAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureSqlDWAuthenticationType left, AzureSqlDWAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureSqlDWAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureSqlDWAuthenticationType left, AzureSqlDWAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureSqlDWAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureSqlDWAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureSqlDWAuthenticationType(string value) => new AzureSqlDWAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureSqlDWAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureSqlDWAuthenticationType?(string value) => value == null ? null : new AzureSqlDWAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureSqlDWAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureSqlDWAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

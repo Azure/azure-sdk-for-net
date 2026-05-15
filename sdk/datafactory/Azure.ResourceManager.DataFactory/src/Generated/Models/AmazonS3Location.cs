@@ -15,27 +15,26 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonS3Location : DatasetLocation
     {
         /// <summary> Initializes a new instance of <see cref="AmazonS3Location"/>. </summary>
-        public AmazonS3Location()
+        public AmazonS3Location() : base("AmazonS3Location")
         {
-            DatasetLocationType = "AmazonS3Location";
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonS3Location"/>. </summary>
-        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        /// <param name="type"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="bucketName"> Specify the bucketName of amazon S3. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of amazon S3. Type: string (or Expression with resultType string). </param>
-        internal AmazonS3Location(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal AmazonS3Location(string @type, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> version) : base(@type, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
             Version = version;
-            DatasetLocationType = datasetLocationType ?? "AmazonS3Location";
         }
 
         /// <summary> Specify the bucketName of amazon S3. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BucketName { get; set; }
+
         /// <summary> Specify the version of amazon S3. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Version { get; set; }
     }

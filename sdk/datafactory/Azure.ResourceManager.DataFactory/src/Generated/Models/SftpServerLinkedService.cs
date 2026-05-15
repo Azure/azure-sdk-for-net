@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,75 +18,164 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/>. </summary>
         /// <param name="host"> The SFTP server host name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
-        public SftpServerLinkedService(DataFactoryElement<string> host)
+        public SftpServerLinkedService(DataFactoryElement<string> host) : base("Sftp")
         {
             Argument.AssertNotNull(host, nameof(host));
 
-            Host = host;
-            LinkedServiceType = "Sftp";
+            TypeProperties = new SftpServerLinkedServiceTypeProperties(host);
         }
 
         /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> The SFTP server host name. Type: string (or Expression with resultType string). </param>
-        /// <param name="port"> The TCP port number that the SFTP server uses to listen for client connections. Default value is 22. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="authenticationType"> The authentication type to be used to connect to the FTP server. </param>
-        /// <param name="userName"> The username used to log on to the SFTP server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to logon the SFTP server for Basic authentication. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="privateKeyPath"> The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string). </param>
-        /// <param name="privateKeyContent"> Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. </param>
-        /// <param name="passPhrase"> The password to decrypt the SSH private key if the SSH private key is encrypted. </param>
-        /// <param name="skipHostKeyValidation"> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="hostKeyFingerprint"> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </param>
-        internal SftpServerLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, SftpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, DataFactoryElement<string> privateKeyPath, DataFactorySecret privateKeyContent, DataFactorySecret passPhrase, DataFactoryElement<bool> skipHostKeyValidation, DataFactoryElement<string> hostKeyFingerprint) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Properties specific to this linked service type. </param>
+        internal SftpServerLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SftpServerLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Host = host;
-            Port = port;
-            AuthenticationType = authenticationType;
-            UserName = userName;
-            Password = password;
-            EncryptedCredential = encryptedCredential;
-            PrivateKeyPath = privateKeyPath;
-            PrivateKeyContent = privateKeyContent;
-            PassPhrase = passPhrase;
-            SkipHostKeyValidation = skipHostKeyValidation;
-            HostKeyFingerprint = hostKeyFingerprint;
-            LinkedServiceType = linkedServiceType ?? "Sftp";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/> for deserialization. </summary>
-        internal SftpServerLinkedService()
-        {
-        }
+        /// <summary> Properties specific to this linked service type. </summary>
+        internal SftpServerLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The SFTP server host name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> The TCP port number that the SFTP server uses to listen for client connections. Default value is 22. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> The authentication type to be used to connect to the FTP server. </summary>
-        public SftpAuthenticationType? AuthenticationType { get; set; }
+        public SftpAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The username used to log on to the SFTP server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> Password to logon the SFTP server for Basic authentication. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> PrivateKeyPath { get; set; }
-        /// <summary> Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. </summary>
-        public DataFactorySecret PrivateKeyContent { get; set; }
-        /// <summary> The password to decrypt the SSH private key if the SSH private key is encrypted. </summary>
-        public DataFactorySecret PassPhrase { get; set; }
+        public DataFactoryElement<string> PrivateKeyPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.PrivateKeyPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.PrivateKeyPath = value;
+            }
+        }
+
         /// <summary> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> SkipHostKeyValidation { get; set; }
+        public DataFactoryElement<bool> SkipHostKeyValidation
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SkipHostKeyValidation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.SkipHostKeyValidation = value;
+            }
+        }
+
         /// <summary> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> HostKeyFingerprint { get; set; }
+        public DataFactoryElement<string> HostKeyFingerprint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HostKeyFingerprint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SftpServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.HostKeyFingerprint = value;
+            }
+        }
     }
 }

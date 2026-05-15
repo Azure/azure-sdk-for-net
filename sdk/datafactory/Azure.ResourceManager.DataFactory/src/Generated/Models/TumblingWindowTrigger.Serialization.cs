@@ -9,15 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TumblingWindowTrigger : IUtf8JsonSerializable, IJsonModel<TumblingWindowTrigger>
+    /// <summary> Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past). </summary>
+    public partial class TumblingWindowTrigger : DataFactoryTriggerProperties, IJsonModel<TumblingWindowTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TumblingWindowTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTrigger"/> for deserialization. </summary>
+        internal TumblingWindowTrigger()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryTriggerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTumblingWindowTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TumblingWindowTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TumblingWindowTrigger IPersistableModel<TumblingWindowTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (TumblingWindowTrigger)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TumblingWindowTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TumblingWindowTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,134 +74,79 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("pipeline"u8);
             writer.WriteObjectValue(Pipeline, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("frequency"u8);
-            writer.WriteStringValue(Frequency.ToString());
-            writer.WritePropertyName("interval"u8);
-            writer.WriteNumberValue(Interval);
-            writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (Optional.IsDefined(Delay))
-            {
-                writer.WritePropertyName("delay"u8);
-                JsonSerializer.Serialize(writer, Delay);
-            }
-            writer.WritePropertyName("maxConcurrency"u8);
-            writer.WriteNumberValue(MaxConcurrency);
-            if (Optional.IsDefined(RetryPolicy))
-            {
-                writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy, options);
-            }
-            if (Optional.IsCollectionDefined(DependsOn))
-            {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (var item in DependsOn)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        TumblingWindowTrigger IJsonModel<TumblingWindowTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TumblingWindowTrigger IJsonModel<TumblingWindowTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TumblingWindowTrigger)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryTriggerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTumblingWindowTrigger(document.RootElement, options);
         }
 
-        internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TriggerPipelineReference pipeline = default;
-            string type = default;
+            string @type = "TumblingWindowTrigger";
             string description = default;
             DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
-            TumblingWindowFrequency frequency = default;
-            int interval = default;
-            DateTimeOffset startTime = default;
-            DateTimeOffset? endTime = default;
-            DataFactoryElement<string> delay = default;
-            int maxConcurrency = default;
-            RetryPolicy retryPolicy = default;
-            IList<DependencyReference> dependsOn = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            TriggerPipelineReference pipeline = default;
+            TumblingWindowTriggerTypeProperties typeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("pipeline"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value, options);
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    type = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("runtimeState"u8))
                 {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("runtimeState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runtimeState = new DataFactoryTriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new DataFactoryTriggerRuntimeState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("annotations"u8))
+                if (prop.NameEquals("annotations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -170,128 +160,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("pipeline"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("frequency"u8))
-                        {
-                            frequency = new TumblingWindowFrequency(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("interval"u8))
-                        {
-                            interval = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("startTime"u8))
-                        {
-                            startTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("endTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("delay"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            delay = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("maxConcurrency"u8))
-                        {
-                            maxConcurrency = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("retryPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("dependsOn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DependencyReference> array = new List<DependencyReference>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DependencyReference.DeserializeDependencyReference(item, options));
-                            }
-                            dependsOn = array;
-                            continue;
-                        }
-                    }
+                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(prop.Value, options);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (prop.NameEquals("typeProperties"u8))
+                {
+                    typeProperties = TumblingWindowTriggerTypeProperties.DeserializeTumblingWindowTriggerTypeProperties(prop.Value, options);
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new TumblingWindowTrigger(
-                type,
+                @type,
                 description,
                 runtimeState,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 pipeline,
-                frequency,
-                interval,
-                startTime,
-                endTime,
-                delay,
-                maxConcurrency,
-                retryPolicy,
-                dependsOn ?? new ChangeTrackingList<DependencyReference>());
+                typeProperties);
         }
-
-        BinaryData IPersistableModel<TumblingWindowTrigger>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TumblingWindowTrigger IPersistableModel<TumblingWindowTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTumblingWindowTrigger(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TumblingWindowTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

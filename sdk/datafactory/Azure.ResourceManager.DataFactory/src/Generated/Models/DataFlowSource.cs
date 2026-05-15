@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,27 +20,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFlowSource(string name) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFlowSource"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
-        /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet, serializedAdditionalRawData)
-        {
-            SchemaLinkedService = schemaLinkedService;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataFlowSource"/> for deserialization. </summary>
-        internal DataFlowSource()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowSource(string name, string description, DatasetReference dataset, DataFlowReference flowlet, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, description, dataset, flowlet, additionalBinaryDataProperties)
         {
         }
-
-        /// <summary> Schema linked service reference. </summary>
-        public DataFactoryLinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

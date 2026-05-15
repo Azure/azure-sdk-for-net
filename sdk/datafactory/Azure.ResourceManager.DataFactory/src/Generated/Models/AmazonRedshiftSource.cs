@@ -17,30 +17,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftSource"/>. </summary>
         public AmazonRedshiftSource()
         {
-            CopySourceType = "AmazonRedshiftSource";
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftSource"/>. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="query"> Database query. Type: string (or Expression with resultType string). </param>
         /// <param name="redshiftUnloadSettings"> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </param>
-        internal AmazonRedshiftSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> query, RedshiftUnloadSettings redshiftUnloadSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal AmazonRedshiftSource(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> query, RedshiftUnloadSettings redshiftUnloadSettings) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             RedshiftUnloadSettings = redshiftUnloadSettings;
-            CopySourceType = copySourceType ?? "AmazonRedshiftSource";
         }
 
         /// <summary> Database query. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }
+
         /// <summary> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </summary>
-        public RedshiftUnloadSettings RedshiftUnloadSettings { get; set; }
+        internal RedshiftUnloadSettings RedshiftUnloadSettings { get; set; }
+
+        /// <summary> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> RedshiftUnloadBucketName
+        {
+            get
+            {
+                return RedshiftUnloadSettings is null ? default : RedshiftUnloadSettings.BucketName;
+            }
+            set
+            {
+                RedshiftUnloadSettings = new RedshiftUnloadSettings(value);
+            }
+        }
     }
 }

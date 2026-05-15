@@ -17,29 +17,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2Source"/>. </summary>
         public ServiceNowV2Source()
         {
-            CopySourceType = "ServiceNowV2Source";
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2Source"/>. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="expression"> Expression to filter data from source. </param>
         /// <param name="pageSize"> Page size of the result. Type: integer (or Expression with resultType integer). </param>
-        internal ServiceNowV2Source(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryExpressionV2 expression, DataFactoryElement<int> pageSize) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal ServiceNowV2Source(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryExpressionV2 expression, DataFactoryElement<int> pageSize) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             Expression = expression;
             PageSize = pageSize;
-            CopySourceType = copySourceType ?? "ServiceNowV2Source";
         }
 
         /// <summary> Expression to filter data from source. </summary>
         public DataFactoryExpressionV2 Expression { get; set; }
+
         /// <summary> Page size of the result. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> PageSize { get; set; }
     }

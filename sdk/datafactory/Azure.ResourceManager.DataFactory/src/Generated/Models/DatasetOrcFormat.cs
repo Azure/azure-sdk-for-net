@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DatasetOrcFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of <see cref="DatasetOrcFormat"/>. </summary>
-        public DatasetOrcFormat()
+        public DatasetOrcFormat() : base("OrcFormat")
         {
-            DatasetStorageFormatType = "OrcFormat";
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetOrcFormat"/>. </summary>
-        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
+        /// <param name="type"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DatasetOrcFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal DatasetOrcFormat(string @type, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(@type, serializer, deserializer, additionalProperties)
         {
-            DatasetStorageFormatType = datasetStorageFormatType ?? "OrcFormat";
         }
     }
 }

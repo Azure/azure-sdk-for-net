@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class IcebergWriteSettings : FormatWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="IcebergWriteSettings"/>. </summary>
-        public IcebergWriteSettings()
+        public IcebergWriteSettings() : base("IcebergWriteSettings")
         {
-            FormatWriteSettingsType = "IcebergWriteSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="IcebergWriteSettings"/>. </summary>
-        /// <param name="formatWriteSettingsType"> The write setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IcebergWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(formatWriteSettingsType, additionalProperties)
+        /// <param name="type"> The write setting type. </param>
+        /// <param name="additionalProperties"></param>
+        internal IcebergWriteSettings(string @type, IDictionary<string, BinaryData> additionalProperties) : base(@type, additionalProperties)
         {
-            FormatWriteSettingsType = formatWriteSettingsType ?? "IcebergWriteSettings";
         }
     }
 }

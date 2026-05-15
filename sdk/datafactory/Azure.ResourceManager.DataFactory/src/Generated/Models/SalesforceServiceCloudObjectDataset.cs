@@ -15,38 +15,43 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceServiceCloudObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public SalesforceServiceCloudObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public SalesforceServiceCloudObjectDataset() : base("SalesforceServiceCloudObject")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "SalesforceServiceCloudObject";
         }
 
         /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="objectApiName"> The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string). </param>
-        internal SalesforceServiceCloudObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> objectApiName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Salesforce Service Cloud object dataset properties. </param>
+        internal SalesforceServiceCloudObjectDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, SalesforceServiceCloudObjectDatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            ObjectApiName = objectApiName;
-            DatasetType = datasetType ?? "SalesforceServiceCloudObject";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/> for deserialization. </summary>
-        internal SalesforceServiceCloudObjectDataset()
-        {
-        }
+        /// <summary> Salesforce Service Cloud object dataset properties. </summary>
+        internal SalesforceServiceCloudObjectDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ObjectApiName { get; set; }
+        public DataFactoryElement<string> ObjectApiName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ObjectApiName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudObjectDatasetTypeProperties();
+                }
+                TypeProperties.ObjectApiName = value;
+            }
+        }
     }
 }

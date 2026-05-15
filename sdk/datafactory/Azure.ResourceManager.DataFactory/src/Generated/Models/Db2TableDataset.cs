@@ -15,46 +15,77 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class Db2TableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="Db2TableDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public Db2TableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public Db2TableDataset() : base("Db2Table")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "Db2Table";
         }
 
         /// <summary> Initializes a new instance of <see cref="Db2TableDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
-        /// <param name="schemaTypePropertiesSchema"> The Db2 schema name. Type: string (or Expression with resultType string). </param>
-        /// <param name="table"> The Db2 table name. Type: string (or Expression with resultType string). </param>
-        internal Db2TableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> schemaTypePropertiesSchema, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Db2 table dataset properties. </param>
+        internal Db2TableDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, Db2TableDatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            TableName = tableName;
-            SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
-            Table = table;
-            DatasetType = datasetType ?? "Db2Table";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Db2TableDataset"/> for deserialization. </summary>
-        internal Db2TableDataset()
-        {
-        }
+        /// <summary> Db2 table dataset properties. </summary>
+        internal Db2TableDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
-        public DataFactoryElement<string> TableName { get; set; }
+        public DataFactoryElement<string> TableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2TableDatasetTypeProperties();
+                }
+                TypeProperties.TableName = value;
+            }
+        }
+
         /// <summary> The Db2 schema name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
+        public DataFactoryElement<string> SchemaTypePropertiesSchema
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SchemaTypePropertiesSchema;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2TableDatasetTypeProperties();
+                }
+                TypeProperties.SchemaTypePropertiesSchema = value;
+            }
+        }
+
         /// <summary> The Db2 table name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Table { get; set; }
+        public DataFactoryElement<string> Table
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Table;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Db2TableDatasetTypeProperties();
+                }
+                TypeProperties.Table = value;
+            }
+        }
     }
 }

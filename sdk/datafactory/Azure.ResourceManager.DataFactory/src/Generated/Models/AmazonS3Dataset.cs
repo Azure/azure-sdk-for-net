@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,77 +16,167 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonS3Dataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public AmazonS3Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> bucketName) : base(linkedServiceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="bucketName"/> is null. </exception>
+        public AmazonS3Dataset(DataFactoryElement<string> bucketName) : base("AmazonS3Object")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(bucketName, nameof(bucketName));
 
-            BucketName = bucketName;
-            DatasetType = "AmazonS3Object";
+            TypeProperties = new AmazonS3DatasetTypeProperties(bucketName);
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
-        /// <param name="key"> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </param>
-        /// <param name="prefix"> The prefix filter for the S3 object name. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> The version for the S3 object. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeStart"> The start of S3 object's modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of S3 object's modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="format">
-        /// The format of files.
-        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
-        /// </param>
-        /// <param name="compression"> The data compression method used for the Amazon S3 object. </param>
-        internal AmazonS3Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> key, DataFactoryElement<string> prefix, DataFactoryElement<string> version, DataFactoryElement<string> modifiedDatetimeStart, DataFactoryElement<string> modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Amazon S3 dataset properties. </param>
+        internal AmazonS3Dataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AmazonS3DatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            BucketName = bucketName;
-            Key = key;
-            Prefix = prefix;
-            Version = version;
-            ModifiedDatetimeStart = modifiedDatetimeStart;
-            ModifiedDatetimeEnd = modifiedDatetimeEnd;
-            Format = format;
-            Compression = compression;
-            DatasetType = datasetType ?? "AmazonS3Object";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/> for deserialization. </summary>
-        internal AmazonS3Dataset()
-        {
-        }
+        /// <summary> Amazon S3 dataset properties. </summary>
+        internal AmazonS3DatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> BucketName { get; set; }
+        public DataFactoryElement<string> BucketName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.BucketName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.BucketName = value;
+            }
+        }
+
         /// <summary> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Key { get; set; }
+        public DataFactoryElement<string> Key
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Key;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.Key = value;
+            }
+        }
+
         /// <summary> The prefix filter for the S3 object name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Prefix { get; set; }
+        public DataFactoryElement<string> Prefix
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Prefix;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.Prefix = value;
+            }
+        }
+
         /// <summary> The version for the S3 object. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Version { get; set; }
+        public DataFactoryElement<string> Version
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Version;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.Version = value;
+            }
+        }
+
         /// <summary> The start of S3 object's modified datetime. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ModifiedDatetimeStart { get; set; }
+        public DataFactoryElement<string> ModifiedDatetimeStart
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ModifiedDatetimeStart;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.ModifiedDatetimeStart = value;
+            }
+        }
+
         /// <summary> The end of S3 object's modified datetime. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ModifiedDatetimeEnd { get; set; }
-        /// <summary>
-        /// The format of files.
-        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
-        /// </summary>
-        public DatasetStorageFormat Format { get; set; }
+        public DataFactoryElement<string> ModifiedDatetimeEnd
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ModifiedDatetimeEnd;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.ModifiedDatetimeEnd = value;
+            }
+        }
+
+        /// <summary> The format of files. </summary>
+        public DatasetStorageFormat Format
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Format;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.Format = value;
+            }
+        }
+
         /// <summary> The data compression method used for the Amazon S3 object. </summary>
-        public DatasetCompression Compression { get; set; }
+        public DatasetCompression Compression
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Compression;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3DatasetTypeProperties();
+                }
+                TypeProperties.Compression = value;
+            }
+        }
     }
 }

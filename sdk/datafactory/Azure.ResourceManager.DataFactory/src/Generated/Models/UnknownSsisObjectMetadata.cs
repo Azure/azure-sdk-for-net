@@ -10,22 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown version of SsisObjectMetadata. </summary>
     internal partial class UnknownSsisObjectMetadata : SsisObjectMetadata
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSsisObjectMetadata"/>. </summary>
-        /// <param name="metadataType"> Type of metadata. </param>
+        /// <param name="type"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSsisObjectMetadata(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(metadataType, id, name, description, serializedAdditionalRawData)
-        {
-            MetadataType = metadataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownSsisObjectMetadata"/> for deserialization. </summary>
-        internal UnknownSsisObjectMetadata()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSsisObjectMetadata(SsisObjectMetadataType @type, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, name, description, additionalBinaryDataProperties)
         {
         }
     }

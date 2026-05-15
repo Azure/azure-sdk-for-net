@@ -9,15 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureMLServiceLinkedService : IUtf8JsonSerializable, IJsonModel<AzureMLServiceLinkedService>
+    /// <summary> Azure ML Service linked service. </summary>
+    public partial class AzureMLServiceLinkedService : DataFactoryLinkedServiceProperties, IJsonModel<AzureMLServiceLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLServiceLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedService"/> for deserialization. </summary>
+        internal AzureMLServiceLinkedService()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureMLServiceLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureMLServiceLinkedService>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureMLServiceLinkedService IPersistableModel<AzureMLServiceLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureMLServiceLinkedService)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureMLServiceLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureMLServiceLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,145 +74,97 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("subscriptionId"u8);
-            JsonSerializer.Serialize(writer, SubscriptionId);
-            writer.WritePropertyName("resourceGroupName"u8);
-            JsonSerializer.Serialize(writer, ResourceGroupName);
-            writer.WritePropertyName("mlWorkspaceName"u8);
-            JsonSerializer.Serialize(writer, MLWorkspaceName);
-            if (Optional.IsDefined(Authentication))
-            {
-                writer.WritePropertyName("authentication"u8);
-                JsonSerializer.Serialize(writer, Authentication);
-            }
-            if (Optional.IsDefined(ServicePrincipalId))
-            {
-                writer.WritePropertyName("servicePrincipalId"u8);
-                JsonSerializer.Serialize(writer, ServicePrincipalId);
-            }
-            if (Optional.IsDefined(ServicePrincipalKey))
-            {
-                writer.WritePropertyName("servicePrincipalKey"u8);
-                JsonSerializer.Serialize(writer, ServicePrincipalKey);
-            }
-            if (Optional.IsDefined(Tenant))
-            {
-                writer.WritePropertyName("tenant"u8);
-                JsonSerializer.Serialize(writer, Tenant);
-            }
-            if (Optional.IsDefined(EncryptedCredential))
-            {
-                writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteStringValue(EncryptedCredential);
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        AzureMLServiceLinkedService IJsonModel<AzureMLServiceLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureMLServiceLinkedService IJsonModel<AzureMLServiceLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureMLServiceLinkedService)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryLinkedServiceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureMLServiceLinkedService(document.RootElement, options);
         }
 
-        internal static AzureMLServiceLinkedService DeserializeAzureMLServiceLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureMLServiceLinkedService DeserializeAzureMLServiceLinkedService(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string type = default;
-            string version = default;
+            string @type = "AzureMLService";
+            string linkedServiceVersion = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            DataFactoryElement<string> subscriptionId = default;
-            DataFactoryElement<string> resourceGroupName = default;
-            DataFactoryElement<string> mlWorkspaceName = default;
-            DataFactoryElement<string> authentication = default;
-            DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecret servicePrincipalKey = default;
-            DataFactoryElement<string> tenant = default;
-            string encryptedCredential = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureMLServiceLinkedServiceTypeProperties typeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    linkedServiceVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectVia"u8))
+                if (prop.NameEquals("connectVia"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"u8))
+                if (prop.NameEquals("parameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
+                        dictionary.Add(prop0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"u8))
+                if (prop.NameEquals("annotations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -181,124 +178,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("typeProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("subscriptionId"u8))
-                        {
-                            subscriptionId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGroupName"u8))
-                        {
-                            resourceGroupName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("mlWorkspaceName"u8))
-                        {
-                            mlWorkspaceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("authentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authentication = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("servicePrincipalId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("servicePrincipalKey"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("tenant"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("encryptedCredential"u8))
-                        {
-                            encryptedCredential = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    typeProperties = AzureMLServiceLinkedServiceTypeProperties.DeserializeAzureMLServiceLinkedServiceTypeProperties(prop.Value, options);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new AzureMLServiceLinkedService(
-                type,
-                version,
+                @type,
+                linkedServiceVersion,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                subscriptionId,
-                resourceGroupName,
-                mlWorkspaceName,
-                authentication,
-                servicePrincipalId,
-                servicePrincipalKey,
-                tenant,
-                encryptedCredential);
+                typeProperties);
         }
-
-        BinaryData IPersistableModel<AzureMLServiceLinkedService>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureMLServiceLinkedService IPersistableModel<AzureMLServiceLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureMLServiceLinkedService(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureMLServiceLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

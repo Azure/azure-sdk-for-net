@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryBlobSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryBlobSource"/>. </summary>
-        public DataFactoryBlobSource()
+        public DataFactoryBlobSource() : base("BlobSource")
         {
-            CopySourceType = "BlobSource";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryBlobSource"/>. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="treatEmptyAsNull"> Treat empty as null. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="skipHeaderLineCount"> Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer). </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal DataFactoryBlobSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> treatEmptyAsNull, DataFactoryElement<int> skipHeaderLineCount, DataFactoryElement<bool> recursive) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal DataFactoryBlobSource(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> treatEmptyAsNull, DataFactoryElement<int> skipHeaderLineCount, DataFactoryElement<bool> recursive) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             TreatEmptyAsNull = treatEmptyAsNull;
             SkipHeaderLineCount = skipHeaderLineCount;
             Recursive = recursive;
-            CopySourceType = copySourceType ?? "BlobSource";
         }
 
         /// <summary> Treat empty as null. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> TreatEmptyAsNull { get; set; }
+
         /// <summary> Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> SkipHeaderLineCount { get; set; }
+
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> Recursive { get; set; }
     }

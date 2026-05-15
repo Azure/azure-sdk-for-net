@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,89 +19,233 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="deploymentType"> The deployment type of the Dynamics CRM instance. 'Online' for Dynamics CRM Online and 'OnPremisesWithIfd' for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to connect to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario, 'Active Directory' for Dynamics on-premises with IFD. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
-        public DynamicsCrmLinkedService(DataFactoryElement<string> deploymentType, DataFactoryElement<string> authenticationType)
+        public DynamicsCrmLinkedService(DataFactoryElement<string> deploymentType, DataFactoryElement<string> authenticationType) : base("DynamicsCrm")
         {
             Argument.AssertNotNull(deploymentType, nameof(deploymentType));
             Argument.AssertNotNull(authenticationType, nameof(authenticationType));
 
-            DeploymentType = deploymentType;
-            AuthenticationType = authenticationType;
-            LinkedServiceType = "DynamicsCrm";
+            TypeProperties = new DynamicsCrmLinkedServiceTypeProperties(deploymentType, authenticationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="deploymentType"> The deployment type of the Dynamics CRM instance. 'Online' for Dynamics CRM Online and 'OnPremisesWithIfd' for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </param>
-        /// <param name="hostName"> The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </param>
-        /// <param name="port"> The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="serviceUri"> The URL to the Microsoft Dynamics CRM server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string). </param>
-        /// <param name="organizationName"> The organization name of the Dynamics CRM instance. The property is required for on-prem and required for online when there are more than one Dynamics CRM instances associated with the user. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> The authentication type to connect to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario, 'Active Directory' for Dynamics on-premises with IFD. Type: string (or Expression with resultType string). </param>
-        /// <param name="domain"> The Active Directory domain that will verify user credentials. Type: string (or Expression with resultType string). </param>
-        /// <param name="username"> User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the Dynamics CRM instance. </param>
-        /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal DynamicsCrmLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> domain, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, DataFactoryCredentialReference credential, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Dynamics CRM linked service properties. </param>
+        internal DynamicsCrmLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DynamicsCrmLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            DeploymentType = deploymentType;
-            HostName = hostName;
-            Port = port;
-            ServiceUri = serviceUri;
-            OrganizationName = organizationName;
-            AuthenticationType = authenticationType;
-            Domain = domain;
-            Username = username;
-            Password = password;
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalCredentialType = servicePrincipalCredentialType;
-            ServicePrincipalCredential = servicePrincipalCredential;
-            Credential = credential;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "DynamicsCrm";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/> for deserialization. </summary>
-        internal DynamicsCrmLinkedService()
-        {
-        }
+        /// <summary> Dynamics CRM linked service properties. </summary>
+        internal DynamicsCrmLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The deployment type of the Dynamics CRM instance. 'Online' for Dynamics CRM Online and 'OnPremisesWithIfd' for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> DeploymentType { get; set; }
+        public DataFactoryElement<string> DeploymentType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DeploymentType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.DeploymentType = value;
+            }
+        }
+
         /// <summary> The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> HostName { get; set; }
+        public DataFactoryElement<string> HostName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HostName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.HostName = value;
+            }
+        }
+
         /// <summary> The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> The URL to the Microsoft Dynamics CRM server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServiceUri { get; set; }
+        public DataFactoryElement<string> ServiceUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServiceUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServiceUri = value;
+            }
+        }
+
         /// <summary> The organization name of the Dynamics CRM instance. The property is required for on-prem and required for online when there are more than one Dynamics CRM instances associated with the user. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> OrganizationName { get; set; }
+        public DataFactoryElement<string> OrganizationName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.OrganizationName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.OrganizationName = value;
+            }
+        }
+
         /// <summary> The authentication type to connect to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario, 'Active Directory' for Dynamics on-premises with IFD. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AuthenticationType { get; set; }
+        public DataFactoryElement<string> AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The Active Directory domain that will verify user credentials. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Domain { get; set; }
+        public DataFactoryElement<string> Domain
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Domain;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.Domain = value;
+            }
+        }
+
         /// <summary> User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> Password to access the Dynamics CRM instance. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
-        /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
-        public DataFactorySecret ServicePrincipalCredential { get; set; }
+        public DataFactoryElement<string> ServicePrincipalCredentialType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalCredentialType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalCredentialType = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Binary. </summary>
         Binary,
         /// <summary> HTTP. </summary>
-        Http
+        HTTP
     }
 }

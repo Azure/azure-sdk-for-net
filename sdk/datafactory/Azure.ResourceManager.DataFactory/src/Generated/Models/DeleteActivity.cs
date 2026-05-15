@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,67 +19,133 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Delete activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
-        public DeleteActivity(string name, DatasetReference dataset) : base(name)
+        public DeleteActivity(string name, DatasetReference dataset) : base("Delete", name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(dataset, nameof(dataset));
 
-            Dataset = dataset;
-            ActivityType = "Delete";
+            TypeProperties = new DeleteActivityTypeProperties(dataset);
         }
 
         /// <summary> Initializes a new instance of <see cref="DeleteActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="recursive"> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="maxConcurrentConnections"> The max concurrent connections to connect data source at the same time. </param>
-        /// <param name="enableLogging"> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="logStorageSettings"> Log storage settings customer need to provide when enableLogging is true. </param>
-        /// <param name="dataset"> Delete activity dataset reference. </param>
-        /// <param name="storeSettings">
-        /// Delete activity store settings.
-        /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="LakeHouseReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
-        /// </param>
-        internal DeleteActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<bool> recursive, int? maxConcurrentConnections, DataFactoryElement<bool> enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> Delete activity properties. </param>
+        internal DeleteActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy, DeleteActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, policy)
         {
-            Recursive = recursive;
-            MaxConcurrentConnections = maxConcurrentConnections;
-            EnableLogging = enableLogging;
-            LogStorageSettings = logStorageSettings;
-            Dataset = dataset;
-            StoreSettings = storeSettings;
-            ActivityType = activityType ?? "Delete";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteActivity"/> for deserialization. </summary>
-        internal DeleteActivity()
-        {
-        }
+        /// <summary> Delete activity properties. </summary>
+        internal DeleteActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> Recursive { get; set; }
+        public DataFactoryElement<bool> Recursive
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Recursive;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DeleteActivityTypeProperties();
+                }
+                TypeProperties.Recursive = value;
+            }
+        }
+
         /// <summary> The max concurrent connections to connect data source at the same time. </summary>
-        public int? MaxConcurrentConnections { get; set; }
+        public int? MaxConcurrentConnections
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MaxConcurrentConnections;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DeleteActivityTypeProperties();
+                }
+                TypeProperties.MaxConcurrentConnections = value;
+            }
+        }
+
         /// <summary> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> EnableLogging { get; set; }
+        public DataFactoryElement<bool> EnableLogging
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableLogging;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DeleteActivityTypeProperties();
+                }
+                TypeProperties.EnableLogging = value;
+            }
+        }
+
         /// <summary> Log storage settings customer need to provide when enableLogging is true. </summary>
-        public LogStorageSettings LogStorageSettings { get; set; }
+        public LogStorageSettings LogStorageSettings
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LogStorageSettings;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DeleteActivityTypeProperties();
+                }
+                TypeProperties.LogStorageSettings = value;
+            }
+        }
+
         /// <summary> Delete activity dataset reference. </summary>
-        public DatasetReference Dataset { get; set; }
-        /// <summary>
-        /// Delete activity store settings.
-        /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="LakeHouseReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
-        /// </summary>
-        public StoreReadSettings StoreSettings { get; set; }
+        public DatasetReference Dataset
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Dataset;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DeleteActivityTypeProperties();
+                }
+                TypeProperties.Dataset = value;
+            }
+        }
+
+        /// <summary> Delete activity store settings. </summary>
+        public StoreReadSettings StoreSettings
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.StoreSettings;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DeleteActivityTypeProperties();
+                }
+                TypeProperties.StoreSettings = value;
+            }
+        }
     }
 }

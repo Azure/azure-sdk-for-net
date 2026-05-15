@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapOdpSource : IUtf8JsonSerializable, IJsonModel<SapOdpSource>
+    /// <summary> A copy activity source for SAP ODP source. </summary>
+    public partial class SapOdpSource : TabularSource, IJsonModel<SapOdpSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOdpSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopyActivitySource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapOdpSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapOdpSource)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapOdpSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapOdpSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapOdpSource IPersistableModel<SapOdpSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapOdpSource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapOdpSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapOdpSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,30 +70,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapOdpSource)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ExtractionMode))
             {
                 writer.WritePropertyName("extractionMode"u8);
-                JsonSerializer.Serialize(writer, ExtractionMode);
+                writer.WriteObjectValue(ExtractionMode, options);
             }
             if (Optional.IsDefined(SubscriberProcess))
             {
                 writer.WritePropertyName("subscriberProcess"u8);
-                JsonSerializer.Serialize(writer, SubscriberProcess);
+                writer.WriteObjectValue(SubscriberProcess, options);
             }
             if (Optional.IsDefined(Selection))
             {
                 writer.WritePropertyName("selection"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Selection);
+                writer.WriteRawValue(Selection);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Selection, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Selection))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -62,21 +102,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("projection"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Projection);
+                writer.WriteRawValue(Projection);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Projection, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Projection))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -84,141 +112,147 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        SapOdpSource IJsonModel<SapOdpSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapOdpSource IJsonModel<SapOdpSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapOdpSource)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopyActivitySource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapOdpSource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapOdpSource(document.RootElement, options);
         }
 
-        internal static SapOdpSource DeserializeSapOdpSource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapOdpSource DeserializeSapOdpSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataFactoryElement<string> extractionMode = default;
-            DataFactoryElement<string> subscriberProcess = default;
-            BinaryData selection = default;
-            BinaryData projection = default;
-            DataFactoryElement<string> queryTimeout = default;
-            BinaryData additionalColumns = default;
-            string type = default;
+            string @type = "SapOdpSource";
             DataFactoryElement<int> sourceRetryCount = default;
             DataFactoryElement<string> sourceRetryWait = default;
             DataFactoryElement<int> maxConcurrentConnections = default;
             DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryElement<string> queryTimeout = default;
+            BinaryData additionalColumns = default;
+            DataFactoryElement<string> extractionMode = default;
+            DataFactoryElement<string> subscriberProcess = default;
+            BinaryData selection = default;
+            BinaryData projection = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("extractionMode"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceRetryCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extractionMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("subscriberProcess"u8))
+                if (prop.NameEquals("sourceRetryWait"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subscriberProcess = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("selection"u8))
+                if (prop.NameEquals("maxConcurrentConnections"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selection = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("projection"u8))
+                if (prop.NameEquals("disableMetricsCollection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    projection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("queryTimeout"u8))
+                if (prop.NameEquals("queryTimeout"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    queryTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("additionalColumns"u8))
+                if (prop.NameEquals("additionalColumns"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
+                    additionalColumns = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("extractionMode"u8))
                 {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceRetryCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    extractionMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sourceRetryWait"u8))
+                if (prop.NameEquals("subscriberProcess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    subscriberProcess = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"u8))
+                if (prop.NameEquals("selection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    selection = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"u8))
+                if (prop.NameEquals("projection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    projection = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (options.Format != "W")
+                {
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new SapOdpSource(
-                type,
+                @type,
                 sourceRetryCount,
                 sourceRetryWait,
                 maxConcurrentConnections,
@@ -231,36 +265,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 selection,
                 projection);
         }
-
-        BinaryData IPersistableModel<SapOdpSource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapOdpSource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SapOdpSource IPersistableModel<SapOdpSource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpSource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSapOdpSource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapOdpSource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SapOdpSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

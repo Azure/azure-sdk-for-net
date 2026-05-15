@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,72 +23,87 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(events, nameof(events));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            Events = events.ToList();
-            Scope = scope;
-            TriggerType = "CustomEventsTrigger";
+            TypeProperties = new CustomEventsTriggerTypeProperties(events, scope);
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/>. </summary>
-        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
-        /// <param name="subjectBeginsWith"> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
-        /// <param name="subjectEndsWith"> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
-        /// <param name="events"> The list of event types that cause this trigger to fire. </param>
-        /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
-        internal CustomEventsTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string subjectBeginsWith, string subjectEndsWith, IList<BinaryData> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        /// <param name="typeProperties"> Custom Events Trigger properties. </param>
+        internal CustomEventsTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, CustomEventsTriggerTypeProperties typeProperties) : base(@type, description, runtimeState, annotations, additionalProperties, pipelines)
         {
-            SubjectBeginsWith = subjectBeginsWith;
-            SubjectEndsWith = subjectEndsWith;
-            Events = events;
-            Scope = scope;
-            TriggerType = triggerType ?? "CustomEventsTrigger";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/> for deserialization. </summary>
-        internal CustomEventsTrigger()
-        {
-        }
+        /// <summary> Custom Events Trigger properties. </summary>
+        internal CustomEventsTriggerTypeProperties TypeProperties { get; set; }
 
         /// <summary> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
-        public string SubjectBeginsWith { get; set; }
+        public string SubjectBeginsWith
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SubjectBeginsWith;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CustomEventsTriggerTypeProperties();
+                }
+                TypeProperties.SubjectBeginsWith = value;
+            }
+        }
+
         /// <summary> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
-        public string SubjectEndsWith { get; set; }
-        /// <summary>
-        /// The list of event types that cause this trigger to fire.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Events { get; }
+        public string SubjectEndsWith
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SubjectEndsWith;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CustomEventsTriggerTypeProperties();
+                }
+                TypeProperties.SubjectEndsWith = value;
+            }
+        }
+
+        /// <summary> The list of event types that cause this trigger to fire. </summary>
+        public IList<BinaryData> Events
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CustomEventsTriggerTypeProperties();
+                }
+                return TypeProperties.Events;
+            }
+        }
+
         /// <summary> The ARM resource ID of the Azure Event Grid Topic. </summary>
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Scope;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CustomEventsTriggerTypeProperties();
+                }
+                TypeProperties.Scope = value;
+            }
+        }
     }
 }

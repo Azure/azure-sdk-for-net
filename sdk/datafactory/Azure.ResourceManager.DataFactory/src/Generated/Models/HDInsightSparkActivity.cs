@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,129 +20,143 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="rootPath"> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </param>
         /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
-        public HDInsightSparkActivity(string name, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath) : base(name)
+        public HDInsightSparkActivity(string name, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath) : base("HDInsightSpark", name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(rootPath, nameof(rootPath));
             Argument.AssertNotNull(entryFilePath, nameof(entryFilePath));
 
-            RootPath = rootPath;
-            EntryFilePath = entryFilePath;
-            Arguments = new ChangeTrackingList<BinaryData>();
-            SparkConfig = new ChangeTrackingDictionary<string, BinaryData>();
-            ActivityType = "HDInsightSpark";
+            TypeProperties = new HDInsightSparkActivityTypeProperties(rootPath, entryFilePath);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="rootPath"> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </param>
-        /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
-        /// <param name="arguments"> The user-specified arguments to HDInsightSparkActivity. </param>
-        /// <param name="getDebugInfo"> Debug info option. </param>
-        /// <param name="sparkJobLinkedService"> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </param>
-        /// <param name="className"> The application's Java/Spark main class. </param>
-        /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
-        /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal HDInsightSparkActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryLinkedServiceReference sparkJobLinkedService, string className, DataFactoryElement<string> proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> HDInsight spark activity properties. </param>
+        internal HDInsightSparkActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy, HDInsightSparkActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, policy)
         {
-            RootPath = rootPath;
-            EntryFilePath = entryFilePath;
-            Arguments = arguments;
-            GetDebugInfo = getDebugInfo;
-            SparkJobLinkedService = sparkJobLinkedService;
-            ClassName = className;
-            ProxyUser = proxyUser;
-            SparkConfig = sparkConfig;
-            ActivityType = activityType ?? "HDInsightSpark";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/> for deserialization. </summary>
-        internal HDInsightSparkActivity()
-        {
-        }
+        /// <summary> HDInsight spark activity properties. </summary>
+        internal HDInsightSparkActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> RootPath { get; set; }
+        public DataFactoryElement<string> RootPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.RootPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightSparkActivityTypeProperties();
+                }
+                TypeProperties.RootPath = value;
+            }
+        }
+
         /// <summary> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> EntryFilePath { get; set; }
-        /// <summary>
-        /// The user-specified arguments to HDInsightSparkActivity.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Arguments { get; }
+        public DataFactoryElement<string> EntryFilePath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EntryFilePath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightSparkActivityTypeProperties();
+                }
+                TypeProperties.EntryFilePath = value;
+            }
+        }
+
+        /// <summary> The user-specified arguments to HDInsightSparkActivity. </summary>
+        public IList<BinaryData> Arguments
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightSparkActivityTypeProperties();
+                }
+                return TypeProperties.Arguments;
+            }
+        }
+
         /// <summary> Debug info option. </summary>
-        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
-        /// <summary> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </summary>
-        public DataFactoryLinkedServiceReference SparkJobLinkedService { get; set; }
+        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.GetDebugInfo;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightSparkActivityTypeProperties();
+                }
+                TypeProperties.GetDebugInfo = value;
+            }
+        }
+
         /// <summary> The application's Java/Spark main class. </summary>
-        public string ClassName { get; set; }
+        public string ClassName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClassName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightSparkActivityTypeProperties();
+                }
+                TypeProperties.ClassName = value;
+            }
+        }
+
         /// <summary> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ProxyUser { get; set; }
-        /// <summary>
-        /// Spark configuration property.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> SparkConfig { get; }
+        public DataFactoryElement<string> ProxyUser
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ProxyUser;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightSparkActivityTypeProperties();
+                }
+                TypeProperties.ProxyUser = value;
+            }
+        }
+
+        /// <summary> Spark configuration property. </summary>
+        public IDictionary<string, BinaryData> SparkConfig
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightSparkActivityTypeProperties();
+                }
+                return TypeProperties.SparkConfig;
+            }
+        }
     }
 }

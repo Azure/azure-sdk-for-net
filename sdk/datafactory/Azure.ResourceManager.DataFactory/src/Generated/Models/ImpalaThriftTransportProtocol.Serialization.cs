@@ -11,17 +11,25 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     internal static partial class ImpalaThriftTransportProtocolExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ImpalaThriftTransportProtocol value) => value switch
         {
             ImpalaThriftTransportProtocol.Binary => "Binary",
-            ImpalaThriftTransportProtocol.Http => "HTTP",
+            ImpalaThriftTransportProtocol.HTTP => "HTTP",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImpalaThriftTransportProtocol value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ImpalaThriftTransportProtocol ToImpalaThriftTransportProtocol(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Binary")) return ImpalaThriftTransportProtocol.Binary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HTTP")) return ImpalaThriftTransportProtocol.Http;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Binary"))
+            {
+                return ImpalaThriftTransportProtocol.Binary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HTTP"))
+            {
+                return ImpalaThriftTransportProtocol.HTTP;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImpalaThriftTransportProtocol value.");
         }
     }

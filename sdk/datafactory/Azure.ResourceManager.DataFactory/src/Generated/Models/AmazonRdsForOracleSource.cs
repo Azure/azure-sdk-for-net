@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,18 +16,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForOracleSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleSource"/>. </summary>
-        public AmazonRdsForOracleSource()
+        public AmazonRdsForOracleSource() : base("AmazonRdsForOracleSource")
         {
-            CopySourceType = "AmazonRdsForOracleSource";
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleSource"/>. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="oracleReaderQuery"> AmazonRdsForOracle reader query. Type: string (or Expression with resultType string). </param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="numberPrecision"> The decimal precision used to represent Oracle NUMBER type without precision and scale. The range is 1 to 256 and default value is 256 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </param>
         /// <param name="numberScale"> The decimal scale used to represent Oracle NUMBER type without precision and scale. The range is 0 to 130 and default value is 130 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </param>
-        internal AmazonRdsForOracleSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> oracleReaderQuery, DataFactoryElement<string> queryTimeout, DataFactoryElement<string> partitionOption, AmazonRdsForOraclePartitionSettings partitionSettings, BinaryData additionalColumns, DataFactoryElement<int> numberPrecision, DataFactoryElement<int> numberScale) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AmazonRdsForOracleSource(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> oracleReaderQuery, DataFactoryElement<string> queryTimeout, DataFactoryElement<string> partitionOption, AmazonRdsForOraclePartitionSettings partitionSettings, BinaryData additionalColumns, DataFactoryElement<int> numberPrecision, DataFactoryElement<int> numberScale) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             OracleReaderQuery = oracleReaderQuery;
             QueryTimeout = queryTimeout;
@@ -43,50 +43,51 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalColumns = additionalColumns;
             NumberPrecision = numberPrecision;
             NumberScale = numberScale;
-            CopySourceType = copySourceType ?? "AmazonRdsForOracleSource";
         }
 
         /// <summary> AmazonRdsForOracle reader query. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> OracleReaderQuery { get; set; }
+
         /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> QueryTimeout { get; set; }
+
         /// <summary> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PartitionOption { get; set; }
+
         /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
         public AmazonRdsForOraclePartitionSettings PartitionSettings { get; set; }
+
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData AdditionalColumns { get; set; }
+
         /// <summary> The decimal precision used to represent Oracle NUMBER type without precision and scale. The range is 1 to 256 and default value is 256 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
         public DataFactoryElement<int> NumberPrecision { get; set; }
+
         /// <summary> The decimal scale used to represent Oracle NUMBER type without precision and scale. The range is 0 to 130 and default value is 130 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
         public DataFactoryElement<int> NumberScale { get; set; }
     }

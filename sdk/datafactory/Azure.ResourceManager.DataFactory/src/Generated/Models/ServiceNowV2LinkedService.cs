@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,64 +19,130 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ServiceNowV2LinkedService(DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType)
+        public ServiceNowV2LinkedService(DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType) : base("ServiceNowV2")
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            Endpoint = endpoint;
-            AuthenticationType = authenticationType;
-            LinkedServiceType = "ServiceNowV2";
+            TypeProperties = new ServiceNowV2LinkedServiceTypeProperties(endpoint, authenticationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="endpoint"> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </param>
-        /// <param name="authenticationType"> The authentication type to use. </param>
-        /// <param name="username"> The user name used to connect to the ServiceNowV2 server for Basic and OAuth2 authentication. </param>
-        /// <param name="password"> The password corresponding to the user name for Basic and OAuth2 authentication. </param>
-        /// <param name="clientId"> The client id for OAuth2 authentication. </param>
-        /// <param name="clientSecret"> The client secret for OAuth2 authentication. </param>
-        /// <param name="grantType"> GrantType for OAuth2 authentication. Default value is password. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal ServiceNowV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> grantType, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> ServiceNowV2 server linked service properties. </param>
+        internal ServiceNowV2LinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ServiceNowV2LinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Endpoint = endpoint;
-            AuthenticationType = authenticationType;
-            Username = username;
-            Password = password;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            GrantType = grantType;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "ServiceNowV2";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedService"/> for deserialization. </summary>
-        internal ServiceNowV2LinkedService()
-        {
-        }
+        /// <summary> ServiceNowV2 server linked service properties. </summary>
+        internal ServiceNowV2LinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </summary>
-        public DataFactoryElement<string> Endpoint { get; set; }
+        public DataFactoryElement<string> Endpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Endpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServiceNowV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.Endpoint = value;
+            }
+        }
+
         /// <summary> The authentication type to use. </summary>
-        public ServiceNowV2AuthenticationType AuthenticationType { get; set; }
+        public ServiceNowV2AuthenticationType AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServiceNowV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The user name used to connect to the ServiceNowV2 server for Basic and OAuth2 authentication. </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> The password corresponding to the user name for Basic and OAuth2 authentication. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServiceNowV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The client id for OAuth2 authentication. </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary> The client secret for OAuth2 authentication. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServiceNowV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> GrantType for OAuth2 authentication. Default value is password. </summary>
-        public DataFactoryElement<string> GrantType { get; set; }
+        public DataFactoryElement<string> GrantType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.GrantType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServiceNowV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.GrantType = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServiceNowV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,47 +17,62 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/>. </summary>
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
-        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService)
+        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> is null. </exception>
+        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency)
         {
             Argument.AssertNotNull(folderPath, nameof(folderPath));
-            Argument.AssertNotNull(linkedService, nameof(linkedService));
 
-            FolderPath = folderPath;
-            MaxConcurrency = maxConcurrency;
-            LinkedService = linkedService;
-            TriggerType = "BlobTrigger";
+            TypeProperties = new BlobTriggerTypeProperties(folderPath, maxConcurrency);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/>. </summary>
-        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
-        /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
-        /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
-        internal DataFactoryBlobTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        /// <param name="typeProperties"> Blob Trigger properties. </param>
+        internal DataFactoryBlobTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, BlobTriggerTypeProperties typeProperties) : base(@type, description, runtimeState, annotations, additionalProperties, pipelines)
         {
-            FolderPath = folderPath;
-            MaxConcurrency = maxConcurrency;
-            LinkedService = linkedService;
-            TriggerType = triggerType ?? "BlobTrigger";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/> for deserialization. </summary>
-        internal DataFactoryBlobTrigger()
-        {
-        }
+        /// <summary> Blob Trigger properties. </summary>
+        internal BlobTriggerTypeProperties TypeProperties { get; set; }
 
         /// <summary> The path of the container/folder that will trigger the pipeline. </summary>
-        public string FolderPath { get; set; }
+        public string FolderPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FolderPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new BlobTriggerTypeProperties();
+                }
+                TypeProperties.FolderPath = value;
+            }
+        }
+
         /// <summary> The max number of parallel files to handle when it is triggered. </summary>
-        public int MaxConcurrency { get; set; }
-        /// <summary> The Azure Storage linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedService { get; set; }
+        public int MaxConcurrency
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MaxConcurrency;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new BlobTriggerTypeProperties();
+                }
+                TypeProperties.MaxConcurrency = value;
+            }
+        }
     }
 }

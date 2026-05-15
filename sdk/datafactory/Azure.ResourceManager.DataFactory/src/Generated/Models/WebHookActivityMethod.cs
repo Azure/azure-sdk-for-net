@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct WebHookActivityMethod : IEquatable<WebHookActivityMethod>
     {
         private readonly string _value;
+        /// <summary> POST. </summary>
+        private const string POSTValue = "POST";
 
         /// <summary> Initializes a new instance of <see cref="WebHookActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebHookActivityMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PostValue = "POST";
-
         /// <summary> POST. </summary>
-        public static WebHookActivityMethod Post { get; } = new WebHookActivityMethod(PostValue);
+        public static WebHookActivityMethod POST { get; } = new WebHookActivityMethod(POSTValue);
+
         /// <summary> Determines if two <see cref="WebHookActivityMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebHookActivityMethod left, WebHookActivityMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebHookActivityMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebHookActivityMethod left, WebHookActivityMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebHookActivityMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebHookActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebHookActivityMethod(string value) => new WebHookActivityMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebHookActivityMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebHookActivityMethod?(string value) => value == null ? null : new WebHookActivityMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebHookActivityMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebHookActivityMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

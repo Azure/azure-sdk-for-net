@@ -15,55 +15,100 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ManagedIntegrationRuntime : DataFactoryIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntime"/>. </summary>
-        public ManagedIntegrationRuntime()
+        public ManagedIntegrationRuntime() : base(IntegrationRuntimeType.Managed)
         {
-            IntegrationRuntimeType = IntegrationRuntimeType.Managed;
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntime"/>. </summary>
-        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
+        /// <param name="typeProperties"> Managed integration runtime properties. </param>
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
-        /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
-        /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        /// <param name="customerVirtualNetwork"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
-        /// <param name="interactiveQuery"> Interactive authoring capability reference. </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork, InteractiveQueryProperties interactiveQuery) : base(integrationRuntimeType, description, additionalProperties)
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType @type, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedIntegrationRuntimeTypeProperties typeProperties, ManagedVirtualNetworkReference managedVirtualNetwork) : base(@type, description, additionalProperties)
         {
             State = state;
+            TypeProperties = typeProperties;
             ManagedVirtualNetwork = managedVirtualNetwork;
-            ComputeProperties = computeProperties;
-            SsisProperties = ssisProperties;
-            CustomerVirtualNetwork = customerVirtualNetwork;
-            InteractiveQuery = interactiveQuery;
-            IntegrationRuntimeType = integrationRuntimeType;
         }
 
         /// <summary> Integration runtime state, only valid for managed dedicated integration runtime. </summary>
         public IntegrationRuntimeState? State { get; }
+
+        /// <summary> Managed integration runtime properties. </summary>
+        internal ManagedIntegrationRuntimeTypeProperties TypeProperties { get; set; }
+
         /// <summary> Managed Virtual Network reference. </summary>
         public ManagedVirtualNetworkReference ManagedVirtualNetwork { get; set; }
+
         /// <summary> The compute resource for managed integration runtime. </summary>
-        public IntegrationRuntimeComputeProperties ComputeProperties { get; set; }
-        /// <summary> SSIS properties for managed integration runtime. </summary>
-        public IntegrationRuntimeSsisProperties SsisProperties { get; set; }
-        /// <summary> The name of virtual network to which Azure-SSIS integration runtime will join. </summary>
-        internal IntegrationRuntimeCustomerVirtualNetwork CustomerVirtualNetwork { get; set; }
-        /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>
-        public ResourceIdentifier CustomerVirtualNetworkSubnetId
+        public IntegrationRuntimeComputeProperties ComputeProperties
         {
-            get => CustomerVirtualNetwork is null ? default : CustomerVirtualNetwork.SubnetId;
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ComputeProperties;
+            }
             set
             {
-                if (CustomerVirtualNetwork is null)
-                    CustomerVirtualNetwork = new IntegrationRuntimeCustomerVirtualNetwork();
-                CustomerVirtualNetwork.SubnetId = value;
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ManagedIntegrationRuntimeTypeProperties();
+                }
+                TypeProperties.ComputeProperties = value;
+            }
+        }
+
+        /// <summary> SSIS properties for managed integration runtime. </summary>
+        public IntegrationRuntimeSsisProperties SsisProperties
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SsisProperties;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ManagedIntegrationRuntimeTypeProperties();
+                }
+                TypeProperties.SsisProperties = value;
             }
         }
 
         /// <summary> Interactive authoring capability reference. </summary>
-        public InteractiveQueryProperties InteractiveQuery { get; set; }
+        public InteractiveQueryProperties InteractiveQuery
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.InteractiveQuery;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ManagedIntegrationRuntimeTypeProperties();
+                }
+                TypeProperties.InteractiveQuery = value;
+            }
+        }
+
+        /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>
+        public ResourceIdentifier CustomerVirtualNetworkSubnetId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CustomerVirtualNetworkSubnetId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ManagedIntegrationRuntimeTypeProperties();
+                }
+                TypeProperties.CustomerVirtualNetworkSubnetId = value;
+            }
+        }
     }
 }

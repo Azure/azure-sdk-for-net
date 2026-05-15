@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,61 +19,131 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </param>
         /// <param name="clientId"> The client ID associated with your PayPal application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
-        public PaypalLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> clientId)
+        public PaypalLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> clientId) : base("Paypal")
         {
             Argument.AssertNotNull(host, nameof(host));
             Argument.AssertNotNull(clientId, nameof(clientId));
 
-            Host = host;
-            ClientId = clientId;
-            LinkedServiceType = "Paypal";
+            TypeProperties = new PaypalLinkedServiceTypeProperties(host, clientId);
         }
 
         /// <summary> Initializes a new instance of <see cref="PaypalLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </param>
-        /// <param name="clientId"> The client ID associated with your PayPal application. </param>
-        /// <param name="clientSecret"> The client secret associated with your PayPal application. </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal PaypalLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Paypal Service linked service properties. </param>
+        internal PaypalLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, PaypalLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Host = host;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            UseEncryptedEndpoints = useEncryptedEndpoints;
-            UseHostVerification = useHostVerification;
-            UsePeerVerification = usePeerVerification;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Paypal";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PaypalLinkedService"/> for deserialization. </summary>
-        internal PaypalLinkedService()
-        {
-        }
+        /// <summary> Paypal Service linked service properties. </summary>
+        internal PaypalLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PaypalLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> The client ID associated with your PayPal application. </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary> The client secret associated with your PayPal application. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PaypalLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
+        public DataFactoryElement<bool> UseEncryptedEndpoints
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseEncryptedEndpoints;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PaypalLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseEncryptedEndpoints = value;
+            }
+        }
+
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UseHostVerification { get; set; }
+        public DataFactoryElement<bool> UseHostVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseHostVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PaypalLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseHostVerification = value;
+            }
+        }
+
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UsePeerVerification { get; set; }
+        public DataFactoryElement<bool> UsePeerVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UsePeerVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PaypalLinkedServiceTypeProperties();
+                }
+                TypeProperties.UsePeerVerification = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new PaypalLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

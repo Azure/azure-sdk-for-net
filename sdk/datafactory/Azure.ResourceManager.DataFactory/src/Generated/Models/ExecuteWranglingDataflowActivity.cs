@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,83 +19,214 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="dataFlow"> Data flow reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataFlow"/> is null. </exception>
-        public ExecuteWranglingDataflowActivity(string name, DataFlowReference dataFlow) : base(name)
+        public ExecuteWranglingDataflowActivity(string name, DataFlowReference dataFlow) : base(name, "ExecuteWranglingDataflow")
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(dataFlow, nameof(dataFlow));
 
-            DataFlow = dataFlow;
-            Sinks = new ChangeTrackingDictionary<string, PowerQuerySink>();
-            Queries = new ChangeTrackingList<PowerQuerySinkMapping>();
-            ActivityType = "ExecuteWranglingDataflow";
+            TypeProperties = new ExecutePowerQueryActivityTypeProperties(dataFlow);
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Execute power query activity properties. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="dataFlow"> Data flow reference. </param>
-        /// <param name="staging"> Staging info for execute data flow activity. </param>
-        /// <param name="integrationRuntime"> The integration runtime reference. </param>
-        /// <param name="continuationSettings"> Continuation settings for execute data flow activity. </param>
-        /// <param name="compute"> Compute properties for data flow activity. </param>
-        /// <param name="traceLevel"> Trace level setting used for data flow monitoring output. Supported values are: 'coarse', 'fine', and 'none'. Type: string (or Expression with resultType string). </param>
-        /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sinks"> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </param>
-        /// <param name="queries"> List of mapping for Power Query mashup query to sink dataset(s). </param>
-        internal ExecuteWranglingDataflowActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ContinuationSettingsReference continuationSettings, ExecuteDataFlowActivityComputeType compute, DataFactoryElement<string> traceLevel, DataFactoryElement<bool> continueOnError, DataFactoryElement<bool> runConcurrently, DataFactoryElement<int> sourceStagingConcurrency, IDictionary<string, PowerQuerySink> sinks, IList<PowerQuerySinkMapping> queries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal ExecuteWranglingDataflowActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ExecutePowerQueryActivityTypeProperties typeProperties, PipelineActivityPolicy policy) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
+            TypeProperties = typeProperties;
             Policy = policy;
-            DataFlow = dataFlow;
-            Staging = staging;
-            IntegrationRuntime = integrationRuntime;
-            ContinuationSettings = continuationSettings;
-            Compute = compute;
-            TraceLevel = traceLevel;
-            ContinueOnError = continueOnError;
-            RunConcurrently = runConcurrently;
-            SourceStagingConcurrency = sourceStagingConcurrency;
-            Sinks = sinks;
-            Queries = queries;
-            ActivityType = activityType ?? "ExecuteWranglingDataflow";
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/> for deserialization. </summary>
-        internal ExecuteWranglingDataflowActivity()
-        {
-        }
+        /// <summary> Execute power query activity properties. </summary>
+        internal ExecutePowerQueryActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> Activity policy. </summary>
         public PipelineActivityPolicy Policy { get; set; }
+
         /// <summary> Data flow reference. </summary>
-        public DataFlowReference DataFlow { get; set; }
-        /// <summary> Staging info for execute data flow activity. </summary>
-        public DataFlowStagingInfo Staging { get; set; }
+        public DataFlowReference DataFlow
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DataFlow;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.DataFlow = value;
+            }
+        }
+
         /// <summary> The integration runtime reference. </summary>
-        public IntegrationRuntimeReference IntegrationRuntime { get; set; }
+        public IntegrationRuntimeReference IntegrationRuntime
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.IntegrationRuntime;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.IntegrationRuntime = value;
+            }
+        }
+
         /// <summary> Continuation settings for execute data flow activity. </summary>
-        public ContinuationSettingsReference ContinuationSettings { get; set; }
+        public ContinuationSettingsReference ContinuationSettings
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ContinuationSettings;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.ContinuationSettings = value;
+            }
+        }
+
         /// <summary> Compute properties for data flow activity. </summary>
-        public ExecuteDataFlowActivityComputeType Compute { get; set; }
+        public ExecuteDataFlowActivityComputeType Compute
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Compute;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.Compute = value;
+            }
+        }
+
         /// <summary> Trace level setting used for data flow monitoring output. Supported values are: 'coarse', 'fine', and 'none'. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> TraceLevel { get; set; }
+        public DataFactoryElement<string> TraceLevel
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TraceLevel;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.TraceLevel = value;
+            }
+        }
+
         /// <summary> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> ContinueOnError { get; set; }
+        public DataFactoryElement<bool> ContinueOnError
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ContinueOnError;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.ContinueOnError = value;
+            }
+        }
+
         /// <summary> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> RunConcurrently { get; set; }
+        public DataFactoryElement<bool> RunConcurrently
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.RunConcurrently;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.RunConcurrently = value;
+            }
+        }
+
         /// <summary> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </summary>
-        public DataFactoryElement<int> SourceStagingConcurrency { get; set; }
+        public DataFactoryElement<int> SourceStagingConcurrency
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SourceStagingConcurrency;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.SourceStagingConcurrency = value;
+            }
+        }
+
+        /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> StagingFolderPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.StagingFolderPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.StagingFolderPath = value;
+            }
+        }
+
         /// <summary> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </summary>
-        public IDictionary<string, PowerQuerySink> Sinks { get; }
+        public IDictionary<string, PowerQuerySink> Sinks
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                return TypeProperties.Sinks;
+            }
+        }
+
         /// <summary> List of mapping for Power Query mashup query to sink dataset(s). </summary>
-        public IList<PowerQuerySinkMapping> Queries { get; }
+        public IList<PowerQuerySinkMapping> Queries
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                return TypeProperties.Queries;
+            }
+        }
     }
 }

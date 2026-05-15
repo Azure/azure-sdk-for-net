@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,87 +18,198 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ODataLinkedService"/>. </summary>
         /// <param name="uri"> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ODataLinkedService(DataFactoryElement<string> uri)
+        public ODataLinkedService(DataFactoryElement<string> uri) : base("OData")
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            Uri = uri;
-            LinkedServiceType = "OData";
+            TypeProperties = new ODataLinkedServiceTypeProperties(uri);
         }
 
         /// <summary> Initializes a new instance of <see cref="ODataLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri"> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> Type of authentication used to connect to the OData service. </param>
-        /// <param name="userName"> User name of the OData service. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password of the OData service. </param>
-        /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </param>
-        /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
-        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
-        /// <param name="aadResourceId"> Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string). </param>
-        /// <param name="aadServicePrincipalCredentialType"> Specify the credential type (key or cert) is used for service principal. </param>
-        /// <param name="servicePrincipalKey"> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal ODataLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, ODataAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> tenant, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> aadResourceId, ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType, DataFactorySecret servicePrincipalKey, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> OData linked service properties. </param>
+        internal ODataLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ODataLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Uri = uri;
-            AuthenticationType = authenticationType;
-            UserName = userName;
-            Password = password;
-            AuthHeaders = authHeaders;
-            Tenant = tenant;
-            ServicePrincipalId = servicePrincipalId;
-            AzureCloudType = azureCloudType;
-            AadResourceId = aadResourceId;
-            AadServicePrincipalCredentialType = aadServicePrincipalCredentialType;
-            ServicePrincipalKey = servicePrincipalKey;
-            ServicePrincipalEmbeddedCert = servicePrincipalEmbeddedCert;
-            ServicePrincipalEmbeddedCertPassword = servicePrincipalEmbeddedCertPassword;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "OData";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ODataLinkedService"/> for deserialization. </summary>
-        internal ODataLinkedService()
-        {
-        }
+        /// <summary> OData linked service properties. </summary>
+        internal ODataLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Uri { get; set; }
+        public DataFactoryElement<string> Uri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Uri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.Uri = value;
+            }
+        }
+
         /// <summary> Type of authentication used to connect to the OData service. </summary>
-        public ODataAuthenticationType? AuthenticationType { get; set; }
+        public ODataAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> User name of the OData service. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> Password of the OData service. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </summary>
-        public DataFactoryElement<IDictionary<string, string>> AuthHeaders { get; set; }
+        public DataFactoryElement<IDictionary<string, string>> AuthHeaders
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthHeaders;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthHeaders = value;
+            }
+        }
+
         /// <summary> Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AzureCloudType { get; set; }
+        public DataFactoryElement<string> AzureCloudType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AzureCloudType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.AzureCloudType = value;
+            }
+        }
+
         /// <summary> Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AadResourceId { get; set; }
+        public DataFactoryElement<string> AadResourceId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AadResourceId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.AadResourceId = value;
+            }
+        }
+
         /// <summary> Specify the credential type (key or cert) is used for service principal. </summary>
-        public ODataAadServicePrincipalCredentialType? AadServicePrincipalCredentialType { get; set; }
-        /// <summary> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
-        /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
-        /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
+        public ODataAadServicePrincipalCredentialType? AadServicePrincipalCredentialType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AadServicePrincipalCredentialType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.AadServicePrincipalCredentialType = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

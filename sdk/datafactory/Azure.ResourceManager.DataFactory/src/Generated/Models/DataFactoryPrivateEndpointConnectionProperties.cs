@@ -7,48 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A remote private endpoint connection. </summary>
     public partial class DataFactoryPrivateEndpointConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionProperties"/>. </summary>
-        public DataFactoryPrivateEndpointConnectionProperties()
+        internal DataFactoryPrivateEndpointConnectionProperties()
         {
         }
 
@@ -56,26 +25,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="provisioningState"></param>
         /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryPrivateEndpointConnectionProperties(string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPrivateEndpointConnectionProperties(string provisioningState, ArmIdWrapper privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> Gets the ProvisioningState. </summary>
         public string ProvisioningState { get; }
+
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
-        internal SubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-        }
+        internal ArmIdWrapper PrivateEndpoint { get; }
 
         /// <summary> The state of a private link connection. </summary>
-        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; }
+
+        /// <summary> Gets the Id. </summary>
+        public string PrivateEndpointId
+        {
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
+        }
     }
 }

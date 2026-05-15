@@ -15,80 +15,128 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ZohoLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/>. </summary>
-        public ZohoLinkedService()
+        public ZohoLinkedService() : base("Zoho")
         {
-            LinkedServiceType = "Zoho";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="endpoint"> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </param>
-        /// <param name="accessToken"> The access token for Zoho authentication. </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal ZohoLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactorySecret accessToken, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Zoho server linked service properties. </param>
+        internal ZohoLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ZohoLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionProperties = connectionProperties;
-            Endpoint = endpoint;
-            AccessToken = accessToken;
-            UseEncryptedEndpoints = useEncryptedEndpoints;
-            UseHostVerification = useHostVerification;
-            UsePeerVerification = usePeerVerification;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Zoho";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary>
-        /// Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ConnectionProperties { get; set; }
+        /// <summary> Zoho server linked service properties. </summary>
+        internal ZohoLinkedServiceTypeProperties TypeProperties { get; set; }
+
+        /// <summary> Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public BinaryData ConnectionProperties
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionProperties;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ZohoLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionProperties = value;
+            }
+        }
+
         /// <summary> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </summary>
-        public DataFactoryElement<string> Endpoint { get; set; }
-        /// <summary> The access token for Zoho authentication. </summary>
-        public DataFactorySecret AccessToken { get; set; }
+        public DataFactoryElement<string> Endpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Endpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ZohoLinkedServiceTypeProperties();
+                }
+                TypeProperties.Endpoint = value;
+            }
+        }
+
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
+        public DataFactoryElement<bool> UseEncryptedEndpoints
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseEncryptedEndpoints;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ZohoLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseEncryptedEndpoints = value;
+            }
+        }
+
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UseHostVerification { get; set; }
+        public DataFactoryElement<bool> UseHostVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseHostVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ZohoLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseHostVerification = value;
+            }
+        }
+
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UsePeerVerification { get; set; }
+        public DataFactoryElement<bool> UsePeerVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UsePeerVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ZohoLinkedServiceTypeProperties();
+                }
+                TypeProperties.UsePeerVerification = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ZohoLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,77 +20,94 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parentTrigger"/> is null. </exception>
-        public RerunTumblingWindowTrigger(BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency)
+        public RerunTumblingWindowTrigger(BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base("RerunTumblingWindowTrigger")
         {
             Argument.AssertNotNull(parentTrigger, nameof(parentTrigger));
 
-            ParentTrigger = parentTrigger;
-            RequestedStartOn = requestedStartOn;
-            RequestedEndOn = requestedEndOn;
-            RerunConcurrency = rerunConcurrency;
-            TriggerType = "RerunTumblingWindowTrigger";
+            TypeProperties = new RerunTumblingWindowTriggerTypeProperties(parentTrigger, requestedStartOn, requestedEndOn, rerunConcurrency);
         }
 
         /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/>. </summary>
-        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="parentTrigger"> The parent trigger reference. </param>
-        /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
-        /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
-        /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        internal RerunTumblingWindowTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Rerun Trigger properties. </param>
+        internal RerunTumblingWindowTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, RerunTumblingWindowTriggerTypeProperties typeProperties) : base(@type, description, runtimeState, annotations, additionalProperties)
         {
-            ParentTrigger = parentTrigger;
-            RequestedStartOn = requestedStartOn;
-            RequestedEndOn = requestedEndOn;
-            RerunConcurrency = rerunConcurrency;
-            TriggerType = triggerType ?? "RerunTumblingWindowTrigger";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/> for deserialization. </summary>
-        internal RerunTumblingWindowTrigger()
+        /// <summary> Rerun Trigger properties. </summary>
+        internal RerunTumblingWindowTriggerTypeProperties TypeProperties { get; set; }
+
+        /// <summary> The parent trigger reference. </summary>
+        public BinaryData ParentTrigger
         {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ParentTrigger;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
+                }
+                TypeProperties.ParentTrigger = value;
+            }
         }
 
-        /// <summary>
-        /// The parent trigger reference.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ParentTrigger { get; set; }
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
-        public DateTimeOffset RequestedStartOn { get; set; }
+        public DateTimeOffset RequestedStartOn
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.RequestedStartOn;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
+                }
+                TypeProperties.RequestedStartOn = value;
+            }
+        }
+
         /// <summary> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
-        public DateTimeOffset RequestedEndOn { get; set; }
+        public DateTimeOffset RequestedEndOn
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.RequestedEndOn;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
+                }
+                TypeProperties.RequestedEndOn = value;
+            }
+        }
+
         /// <summary> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </summary>
-        public int RerunConcurrency { get; set; }
+        public int RerunConcurrency
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.RerunConcurrency;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
+                }
+                TypeProperties.RerunConcurrency = value;
+            }
+        }
     }
 }

@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    /// <summary>
+    /// Integration runtime status.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIntegrationRuntimeStatus"/> and <see cref="SelfHostedIntegrationRuntimeStatus"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownIntegrationRuntimeStatus))]
-    public partial class IntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeStatus>
+    public abstract partial class IntegrationRuntimeStatus : IJsonModel<IntegrationRuntimeStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeStatus"/> for deserialization. </summary>
+        internal IntegrationRuntimeStatus()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIntegrationRuntimeStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeStatus IPersistableModel<IntegrationRuntimeStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IntegrationRuntimeStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IntegrationRuntimeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,14 +77,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeStatus)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(RuntimeType.ToString());
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
             {
                 writer.WritePropertyName("dataFactoryName"u8);
@@ -50,9 +98,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -60,66 +108,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        IntegrationRuntimeStatus IJsonModel<IntegrationRuntimeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeStatus IJsonModel<IntegrationRuntimeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIntegrationRuntimeStatus(document.RootElement, options);
         }
 
-        internal static IntegrationRuntimeStatus DeserializeIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IntegrationRuntimeStatus DeserializeIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed": return ManagedIntegrationRuntimeStatus.DeserializeManagedIntegrationRuntimeStatus(element, options);
-                    case "SelfHosted": return SelfHostedIntegrationRuntimeStatus.DeserializeSelfHostedIntegrationRuntimeStatus(element, options);
+                    case "Managed":
+                        return ManagedIntegrationRuntimeStatus.DeserializeManagedIntegrationRuntimeStatus(element, options);
+                    case "SelfHosted":
+                        return SelfHostedIntegrationRuntimeStatus.DeserializeSelfHostedIntegrationRuntimeStatus(element, options);
                 }
             }
             return UnknownIntegrationRuntimeStatus.DeserializeUnknownIntegrationRuntimeStatus(element, options);
         }
-
-        BinaryData IPersistableModel<IntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IntegrationRuntimeStatus IPersistableModel<IntegrationRuntimeStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIntegrationRuntimeStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IntegrationRuntimeStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

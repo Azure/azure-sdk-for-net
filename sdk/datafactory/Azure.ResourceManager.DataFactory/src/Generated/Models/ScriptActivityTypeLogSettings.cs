@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Log settings of script activity. </summary>
     public partial class ScriptActivityTypeLogSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
@@ -55,22 +27,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogDestination = logDestination;
             LogLocationSettings = logLocationSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/> for deserialization. </summary>
-        internal ScriptActivityTypeLogSettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The destination of logs. Type: string. </summary>
         public ScriptActivityLogDestination LogDestination { get; set; }
+
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
-        public LogLocationSettings LogLocationSettings { get; set; }
+        internal LogLocationSettings LogLocationSettings { get; set; }
+
+        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> LogLocationPath
+        {
+            get
+            {
+                return LogLocationSettings is null ? default : LogLocationSettings.Path;
+            }
+            set
+            {
+                if (LogLocationSettings is null)
+                {
+                    LogLocationSettings = new LogLocationSettings();
+                }
+                LogLocationSettings.Path = value;
+            }
+        }
     }
 }

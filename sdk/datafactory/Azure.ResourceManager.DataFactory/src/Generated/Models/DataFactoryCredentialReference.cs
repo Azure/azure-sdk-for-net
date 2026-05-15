@@ -7,75 +7,47 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Credential reference type. </summary>
     public partial class DataFactoryCredentialReference
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
-        /// <param name="referenceType"> Credential reference type. </param>
+        /// <param name="type"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public DataFactoryCredentialReference(DataFactoryCredentialReferenceType referenceType, string referenceName)
+        public DataFactoryCredentialReference(DataFactoryCredentialReferenceType @type, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            ReferenceType = referenceType;
+            Type = @type;
             ReferenceName = referenceName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
-        /// <param name="referenceType"> Credential reference type. </param>
+        /// <param name="type"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryCredentialReference(DataFactoryCredentialReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal DataFactoryCredentialReference(DataFactoryCredentialReferenceType @type, string referenceName, IDictionary<string, BinaryData> additionalProperties)
         {
-            ReferenceType = referenceType;
+            Type = @type;
             ReferenceName = referenceName;
-            AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/> for deserialization. </summary>
-        internal DataFactoryCredentialReference()
-        {
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Credential reference type. </summary>
-        public DataFactoryCredentialReferenceType ReferenceType { get; set; }
+        public DataFactoryCredentialReferenceType Type { get; set; }
+
         /// <summary> Reference credential name. </summary>
         public string ReferenceName { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

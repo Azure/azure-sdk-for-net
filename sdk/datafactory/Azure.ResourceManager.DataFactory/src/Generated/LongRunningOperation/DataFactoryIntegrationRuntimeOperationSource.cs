@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    internal class DataFactoryIntegrationRuntimeOperationSource : IOperationSource<DataFactoryIntegrationRuntimeResource>
+    /// <summary></summary>
+    internal partial class DataFactoryIntegrationRuntimeOperationSource : IOperationSource<DataFactoryIntegrationRuntimeResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DataFactoryIntegrationRuntimeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DataFactoryIntegrationRuntimeResource IOperationSource<DataFactoryIntegrationRuntimeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataFactoryIntegrationRuntimeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataFactoryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DataFactoryIntegrationRuntimeData data = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataFactoryIntegrationRuntimeResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DataFactoryIntegrationRuntimeResource> IOperationSource<DataFactoryIntegrationRuntimeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataFactoryIntegrationRuntimeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataFactoryContext.Default);
-            return await Task.FromResult(new DataFactoryIntegrationRuntimeResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DataFactoryIntegrationRuntimeData data = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataFactoryIntegrationRuntimeResource(_client, data);
         }
     }
 }

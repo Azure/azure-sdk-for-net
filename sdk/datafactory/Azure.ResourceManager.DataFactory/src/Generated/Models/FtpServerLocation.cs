@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class FtpServerLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of <see cref="FtpServerLocation"/>. </summary>
-        public FtpServerLocation()
+        public FtpServerLocation() : base("FtpServerLocation")
         {
-            DatasetLocationType = "FtpServerLocation";
         }
 
         /// <summary> Initializes a new instance of <see cref="FtpServerLocation"/>. </summary>
-        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        /// <param name="type"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FtpServerLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal FtpServerLocation(string @type, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties) : base(@type, folderPath, fileName, additionalProperties)
         {
-            DatasetLocationType = datasetLocationType ?? "FtpServerLocation";
         }
     }
 }

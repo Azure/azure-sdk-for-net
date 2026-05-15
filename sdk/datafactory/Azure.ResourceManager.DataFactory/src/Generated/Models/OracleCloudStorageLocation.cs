@@ -15,27 +15,26 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OracleCloudStorageLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of <see cref="OracleCloudStorageLocation"/>. </summary>
-        public OracleCloudStorageLocation()
+        public OracleCloudStorageLocation() : base("OracleCloudStorageLocation")
         {
-            DatasetLocationType = "OracleCloudStorageLocation";
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleCloudStorageLocation"/>. </summary>
-        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        /// <param name="type"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="bucketName"> Specify the bucketName of Oracle Cloud Storage. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Specify the version of Oracle Cloud Storage. Type: string (or Expression with resultType string). </param>
-        internal OracleCloudStorageLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal OracleCloudStorageLocation(string @type, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> version) : base(@type, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
             Version = version;
-            DatasetLocationType = datasetLocationType ?? "OracleCloudStorageLocation";
         }
 
         /// <summary> Specify the bucketName of Oracle Cloud Storage. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BucketName { get; set; }
+
         /// <summary> Specify the version of Oracle Cloud Storage. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Version { get; set; }
     }

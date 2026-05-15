@@ -6,11 +6,11 @@
 
 ### Breaking Changes
 
+- Migrated code generation from AutoRest/Swagger to TypeSpec. The public API surface is largely preserved through TypeSpec `@@clientName` / `@@alternateType` decorators and `@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding`, but some incidental shape changes may be visible (e.g., parameter naming, additional-property dictionaries) and a small number of types previously surfaced through generated discriminated-union envelopes have been removed in favor of the external `Azure.Core.Expressions.DataFactory.*` representations.
+
 ### Bugs Fixed
 
 ### Other Changes
-
-- Migrated code generation from AutoRest to TypeSpec.
 
 ## 1.11.0 (2025-12-01)
 

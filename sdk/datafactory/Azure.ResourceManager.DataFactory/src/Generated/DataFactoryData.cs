@@ -7,134 +7,159 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary>
-    /// A class representing the DataFactory data model.
-    /// Factory resource type.
-    /// </summary>
+    /// <summary> Factory resource type. </summary>
     public partial class DataFactoryData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DataFactoryData(AzureLocation location) : base(location)
         {
-            GlobalParameters = new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
-        /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
-        /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
-        /// <param name="version"> Version of the factory. </param>
-        /// <param name="purviewConfiguration"> Purview information of the factory. </param>
-        /// <param name="repoConfiguration">
-        /// Git repo information of the factory.
-        /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
-        /// </param>
-        /// <param name="globalParameters"> List of parameters for factory. </param>
-        /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, DateTimeOffset? createdOn, string version, DataFactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters, DataFactoryEncryptionConfiguration encryption, DataFactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the factory. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Managed service identity of the factory. </param>
+        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, FactoryProperties properties, ETag? eTag, IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
-            ProvisioningState = provisioningState;
-            CreatedOn = createdOn;
-            Version = version;
-            PurviewConfiguration = purviewConfiguration;
-            RepoConfiguration = repoConfiguration;
-            GlobalParameters = globalParameters;
-            Encryption = encryption;
-            PublicNetworkAccess = publicNetworkAccess;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             ETag = eTag;
-            AdditionalProperties = additionalProperties;
+            Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryData"/> for deserialization. </summary>
-        internal DataFactoryData()
-        {
-        }
+        /// <summary> Properties of the factory. </summary>
+        internal FactoryProperties Properties { get; set; }
 
-        /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+
+        /// <summary> Managed service identity of the factory. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Factory provisioning state, example Succeeded. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> Time the factory was created in ISO8601 format. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Version of the factory. </summary>
-        public string Version { get; }
-        /// <summary> Purview information of the factory. </summary>
-        internal DataFactoryPurviewConfiguration PurviewConfiguration { get; set; }
-        /// <summary> Purview resource id. </summary>
-        public ResourceIdentifier PurviewResourceId
+        public string ProvisioningState
         {
-            get => PurviewConfiguration is null ? default : PurviewConfiguration.PurviewResourceId;
-            set
+            get
             {
-                if (PurviewConfiguration is null)
-                    PurviewConfiguration = new DataFactoryPurviewConfiguration();
-                PurviewConfiguration.PurviewResourceId = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
-        /// <summary>
-        /// Git repo information of the factory.
-        /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
-        /// </summary>
-        public FactoryRepoConfiguration RepoConfiguration { get; set; }
+        /// <summary> Time the factory was created in ISO8601 format. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Version of the factory. </summary>
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
+        /// <summary> Git repo information of the factory. </summary>
+        public FactoryRepoConfiguration RepoConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepoConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FactoryProperties();
+                }
+                Properties.RepoConfiguration = value;
+            }
+        }
+
         /// <summary> List of parameters for factory. </summary>
-        public IDictionary<string, DataFactoryGlobalParameterProperties> GlobalParameters { get; }
+        public IDictionary<string, DataFactoryGlobalParameterProperties> GlobalParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FactoryProperties();
+                }
+                return Properties.GlobalParameters;
+            }
+        }
+
         /// <summary> Properties to enable Customer Managed Key for the factory. </summary>
-        public DataFactoryEncryptionConfiguration Encryption { get; set; }
+        public DataFactoryEncryptionConfiguration Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FactoryProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
-        public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+        public DataFactoryPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FactoryProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
+        /// <summary> Purview resource id. </summary>
+        public string PurviewResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PurviewResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FactoryProperties();
+                }
+                Properties.PurviewResourceId = value;
+            }
+        }
     }
 }

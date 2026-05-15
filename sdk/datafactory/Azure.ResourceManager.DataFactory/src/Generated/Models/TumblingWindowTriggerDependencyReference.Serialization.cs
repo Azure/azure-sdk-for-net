@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TumblingWindowTriggerDependencyReference : IUtf8JsonSerializable, IJsonModel<TumblingWindowTriggerDependencyReference>
+    /// <summary> Referenced tumbling window trigger dependency. </summary>
+    public partial class TumblingWindowTriggerDependencyReference : TriggerDependencyReference, IJsonModel<TumblingWindowTriggerDependencyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TumblingWindowTriggerDependencyReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/> for deserialization. </summary>
+        internal TumblingWindowTriggerDependencyReference()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DependencyReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTumblingWindowTriggerDependencyReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TumblingWindowTriggerDependencyReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TumblingWindowTriggerDependencyReference IPersistableModel<TumblingWindowTriggerDependencyReference>.Create(BinaryData data, ModelReaderWriterOptions options) => (TumblingWindowTriggerDependencyReference)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TumblingWindowTriggerDependencyReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TumblingWindowTriggerDependencyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Offset))
             {
@@ -47,92 +92,64 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        TumblingWindowTriggerDependencyReference IJsonModel<TumblingWindowTriggerDependencyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TumblingWindowTriggerDependencyReference IJsonModel<TumblingWindowTriggerDependencyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TumblingWindowTriggerDependencyReference)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DependencyReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTumblingWindowTriggerDependencyReference(document.RootElement, options);
         }
 
-        internal static TumblingWindowTriggerDependencyReference DeserializeTumblingWindowTriggerDependencyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TumblingWindowTriggerDependencyReference DeserializeTumblingWindowTriggerDependencyReference(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string @type = "TumblingWindowTriggerDependencyReference";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryTriggerReference referenceTrigger = default;
             string offset = default;
             string size = default;
-            DataFactoryTriggerReference referenceTrigger = default;
-            string type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("offset"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    offset = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("referenceTrigger"u8))
                 {
-                    size = property.Value.GetString();
+                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("referenceTrigger"u8))
+                if (prop.NameEquals("offset"u8))
                 {
-                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value, options);
+                    offset = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    type = property.Value.GetString();
+                    size = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new TumblingWindowTriggerDependencyReference(type, serializedAdditionalRawData, referenceTrigger, offset, size);
+            return new TumblingWindowTriggerDependencyReference(@type, additionalBinaryDataProperties, referenceTrigger, offset, size);
         }
-
-        BinaryData IPersistableModel<TumblingWindowTriggerDependencyReference>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TumblingWindowTriggerDependencyReference IPersistableModel<TumblingWindowTriggerDependencyReference>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTriggerDependencyReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTumblingWindowTriggerDependencyReference(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTriggerDependencyReference)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TumblingWindowTriggerDependencyReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

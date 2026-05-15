@@ -15,38 +15,43 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ODataResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="ODataResourceDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public ODataResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public ODataResourceDataset() : base("ODataResource")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "ODataResource";
         }
 
         /// <summary> Initializes a new instance of <see cref="ODataResourceDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="path"> The OData resource path. Type: string (or Expression with resultType string). </param>
-        internal ODataResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> OData dataset properties. </param>
+        internal ODataResourceDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, ODataResourceDatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            Path = path;
-            DatasetType = datasetType ?? "ODataResource";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ODataResourceDataset"/> for deserialization. </summary>
-        internal ODataResourceDataset()
-        {
-        }
+        /// <summary> OData dataset properties. </summary>
+        internal ODataResourceDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The OData resource path. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Path { get; set; }
+        public DataFactoryElement<string> Path
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Path;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ODataResourceDatasetTypeProperties();
+                }
+                TypeProperties.Path = value;
+            }
+        }
     }
 }

@@ -12,52 +12,23 @@ using System.Net;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The IP address of self-hosted integration runtime node. </summary>
-    public partial class IntegrationRuntimeNodeIPAddress
+    public partial class IntegrationRuntimeNodeIpAddress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
-        internal IntegrationRuntimeNodeIPAddress()
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIpAddress"/>. </summary>
+        internal IntegrationRuntimeNodeIpAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIpAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeNodeIpAddress(IPAddress ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddress = ipAddress;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP address of self-hosted integration runtime node. </summary>

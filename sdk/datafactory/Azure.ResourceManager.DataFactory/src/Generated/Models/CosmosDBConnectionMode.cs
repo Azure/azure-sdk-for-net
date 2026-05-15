@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct CosmosDBConnectionMode : IEquatable<CosmosDBConnectionMode>
     {
         private readonly string _value;
+        /// <summary> Gateway. </summary>
+        private const string GatewayValue = "Gateway";
+        /// <summary> Direct. </summary>
+        private const string DirectValue = "Direct";
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBConnectionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GatewayValue = "Gateway";
-        private const string DirectValue = "Direct";
+            _value = value;
+        }
 
         /// <summary> Gateway. </summary>
         public static CosmosDBConnectionMode Gateway { get; } = new CosmosDBConnectionMode(GatewayValue);
+
         /// <summary> Direct. </summary>
         public static CosmosDBConnectionMode Direct { get; } = new CosmosDBConnectionMode(DirectValue);
+
         /// <summary> Determines if two <see cref="CosmosDBConnectionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBConnectionMode left, CosmosDBConnectionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBConnectionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBConnectionMode left, CosmosDBConnectionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBConnectionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBConnectionMode(string value) => new CosmosDBConnectionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBConnectionMode?(string value) => value == null ? null : new CosmosDBConnectionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBConnectionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBConnectionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

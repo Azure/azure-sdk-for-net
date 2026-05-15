@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,71 +18,181 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/>. </summary>
         /// <param name="dataLakeStoreUri"> Data Lake Store service URI. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
-        public AzureDataLakeStoreLinkedService(DataFactoryElement<string> dataLakeStoreUri)
+        public AzureDataLakeStoreLinkedService(DataFactoryElement<string> dataLakeStoreUri) : base("AzureDataLakeStore")
         {
             Argument.AssertNotNull(dataLakeStoreUri, nameof(dataLakeStoreUri));
 
-            DataLakeStoreUri = dataLakeStoreUri;
-            LinkedServiceType = "AzureDataLakeStore";
+            TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties(dataLakeStoreUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="dataLakeStoreUri"> Data Lake Store service URI. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against the Azure Data Lake Store account. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The Key of the application used to authenticate against the Azure Data Lake Store account. </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
-        /// <param name="accountName"> Data Lake Store account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="subscriptionId"> Data Lake Store account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
-        /// <param name="resourceGroupName"> Data Lake Store account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDataLakeStoreLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> dataLakeStoreUri, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountName, DataFactoryElement<string> subscriptionId, DataFactoryElement<string> resourceGroupName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Data Lake Store linked service properties. </param>
+        internal AzureDataLakeStoreLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureDataLakeStoreLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            DataLakeStoreUri = dataLakeStoreUri;
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalKey = servicePrincipalKey;
-            Tenant = tenant;
-            AzureCloudType = azureCloudType;
-            AccountName = accountName;
-            SubscriptionId = subscriptionId;
-            ResourceGroupName = resourceGroupName;
-            EncryptedCredential = encryptedCredential;
-            Credential = credential;
-            LinkedServiceType = linkedServiceType ?? "AzureDataLakeStore";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/> for deserialization. </summary>
-        internal AzureDataLakeStoreLinkedService()
-        {
-        }
+        /// <summary> Azure Data Lake Store linked service properties. </summary>
+        internal AzureDataLakeStoreLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> Data Lake Store service URI. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> DataLakeStoreUri { get; set; }
+        public DataFactoryElement<string> DataLakeStoreUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DataLakeStoreUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.DataLakeStoreUri = value;
+            }
+        }
+
         /// <summary> The ID of the application used to authenticate against the Azure Data Lake Store account. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The Key of the application used to authenticate against the Azure Data Lake Store account. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AzureCloudType { get; set; }
+        public DataFactoryElement<string> AzureCloudType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AzureCloudType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.AzureCloudType = value;
+            }
+        }
+
         /// <summary> Data Lake Store account name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AccountName { get; set; }
+        public DataFactoryElement<string> AccountName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccountName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.AccountName = value;
+            }
+        }
+
         /// <summary> Data Lake Store account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SubscriptionId { get; set; }
+        public DataFactoryElement<string> SubscriptionId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SubscriptionId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.SubscriptionId = value;
+            }
+        }
+
         /// <summary> Data Lake Store account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ResourceGroupName { get; set; }
+        public DataFactoryElement<string> ResourceGroupName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ResourceGroupName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.ResourceGroupName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
     }
 }

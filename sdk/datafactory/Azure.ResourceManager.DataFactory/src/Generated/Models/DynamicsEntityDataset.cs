@@ -15,38 +15,43 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DynamicsEntityDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public DynamicsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public DynamicsEntityDataset() : base("DynamicsEntity")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "DynamicsEntity";
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="entityName"> The logical name of the entity. Type: string (or Expression with resultType string). </param>
-        internal DynamicsEntityDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> entityName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Dynamics entity dataset properties. </param>
+        internal DynamicsEntityDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DynamicsEntityDatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            EntityName = entityName;
-            DatasetType = datasetType ?? "DynamicsEntity";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/> for deserialization. </summary>
-        internal DynamicsEntityDataset()
-        {
-        }
+        /// <summary> Dynamics entity dataset properties. </summary>
+        internal DynamicsEntityDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> EntityName { get; set; }
+        public DataFactoryElement<string> EntityName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EntityName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsEntityDatasetTypeProperties();
+                }
+                TypeProperties.EntityName = value;
+            }
+        }
     }
 }

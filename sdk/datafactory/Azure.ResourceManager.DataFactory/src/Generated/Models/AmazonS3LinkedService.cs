@@ -15,47 +15,94 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonS3LinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AmazonS3LinkedService"/>. </summary>
-        public AmazonS3LinkedService()
+        public AmazonS3LinkedService() : base("AmazonS3")
         {
-            LinkedServiceType = "AmazonS3";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonS3LinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="authenticationType"> The authentication type of S3. Allowed value: AccessKey (default) or TemporarySecurityCredentials. Type: string (or Expression with resultType string). </param>
-        /// <param name="accessKeyId"> The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
-        /// <param name="secretAccessKey"> The secret access key of the Amazon S3 Identity and Access Management (IAM) user. </param>
-        /// <param name="serviceUri"> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
-        /// <param name="sessionToken"> The session token for the S3 temporary security credential. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonS3LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> authenticationType, DataFactoryElement<string> accessKeyId, DataFactorySecret secretAccessKey, DataFactoryElement<string> serviceUri, DataFactorySecret sessionToken, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Amazon S3 linked service properties. </param>
+        internal AmazonS3LinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AmazonS3LinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            AuthenticationType = authenticationType;
-            AccessKeyId = accessKeyId;
-            SecretAccessKey = secretAccessKey;
-            ServiceUri = serviceUri;
-            SessionToken = sessionToken;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "AmazonS3";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Amazon S3 linked service properties. </summary>
+        internal AmazonS3LinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> The authentication type of S3. Allowed value: AccessKey (default) or TemporarySecurityCredentials. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AuthenticationType { get; set; }
+        public DataFactoryElement<string> AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3LinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AccessKeyId { get; set; }
-        /// <summary> The secret access key of the Amazon S3 Identity and Access Management (IAM) user. </summary>
-        public DataFactorySecret SecretAccessKey { get; set; }
+        public DataFactoryElement<string> AccessKeyId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccessKeyId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3LinkedServiceTypeProperties();
+                }
+                TypeProperties.AccessKeyId = value;
+            }
+        }
+
         /// <summary> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServiceUri { get; set; }
-        /// <summary> The session token for the S3 temporary security credential. </summary>
-        public DataFactorySecret SessionToken { get; set; }
+        public DataFactoryElement<string> ServiceUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServiceUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3LinkedServiceTypeProperties();
+                }
+                TypeProperties.ServiceUri = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonS3LinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

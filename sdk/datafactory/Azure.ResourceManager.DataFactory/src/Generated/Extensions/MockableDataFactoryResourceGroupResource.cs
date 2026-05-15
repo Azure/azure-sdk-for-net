@@ -8,33 +8,52 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataFactory;
+using Azure.ResourceManager.DataFactory.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataFactory.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDataFactoryResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDataFactoryResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _pipelineRunsClientDiagnostics;
+        private PipelineRuns _pipelineRunsRestClient;
+        private ClientDiagnostics _activityRunsClientDiagnostics;
+        private ActivityRuns _activityRunsRestClient;
+        private ClientDiagnostics _triggerRunsClientDiagnostics;
+        private TriggerRuns _triggerRunsRestClient;
+
+        /// <summary> Initializes a new instance of MockableDataFactoryResourceGroupResource for mocking. </summary>
         protected MockableDataFactoryResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataFactoryResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataFactoryResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataFactoryResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics PipelineRunsClientDiagnostics => _pipelineRunsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataFactory.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of DataFactoryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
+        private PipelineRuns PipelineRunsRestClient => _pipelineRunsRestClient ??= new PipelineRuns(PipelineRunsClientDiagnostics, Pipeline, Endpoint, "2018-06-01");
+
+        private ClientDiagnostics ActivityRunsClientDiagnostics => _activityRunsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataFactory.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ActivityRuns ActivityRunsRestClient => _activityRunsRestClient ??= new ActivityRuns(ActivityRunsClientDiagnostics, Pipeline, Endpoint, "2018-06-01");
+
+        private ClientDiagnostics TriggerRunsClientDiagnostics => _triggerRunsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataFactory.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private TriggerRuns TriggerRunsRestClient => _triggerRunsRestClient ??= new TriggerRuns(TriggerRunsClientDiagnostics, Pipeline, Endpoint, "2018-06-01");
+
+        /// <summary> Gets a collection of DataFactories in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DataFactories and their operations over a DataFactoryResource. </returns>
         public virtual DataFactoryCollection GetDataFactories()
         {
             return GetCachedClient(client => new DataFactoryCollection(client, Id));
@@ -44,20 +63,16 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// Gets a factory.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Factories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -67,8 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataFactoryResource>> GetDataFactoryAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryResource>> GetDataFactoryAsync(string factoryName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+
             return await GetDataFactories().GetAsync(factoryName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
@@ -76,20 +93,16 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// Gets a factory.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Factories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,9 +112,505 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataFactoryResource> GetDataFactory(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryResource> GetDataFactory(string factoryName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+
             return GetDataFactories().Get(factoryName, ifNoneMatch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_PipelineRunsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataFactoryPipelineRunInfo>> GetAsync(string factoryName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = PipelineRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PipelineRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, runId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryPipelineRunInfo> response = Response.FromValue(DataFactoryPipelineRunInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_PipelineRunsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataFactoryPipelineRunInfo> Get(string factoryName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = PipelineRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PipelineRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, runId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryPipelineRunInfo> response = Response.FromValue(DataFactoryPipelineRunInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CancelAsync(string factoryName, string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = PipelineRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PipelineRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, runId, isRecursive, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Cancel(string factoryName, string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = PipelineRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PipelineRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, runId, isRecursive, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByPipelineRun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PipelineActivityRunsResult>> QueryByPipelineRunAsync(string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ActivityRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.QueryByPipelineRun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ActivityRunsRestClient.CreateQueryByPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, runId, RunFilterContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PipelineActivityRunsResult> response = Response.FromValue(PipelineActivityRunsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByPipelineRun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PipelineActivityRunsResult> QueryByPipelineRun(string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ActivityRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.QueryByPipelineRun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ActivityRunsRestClient.CreateQueryByPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, runId, RunFilterContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PipelineActivityRunsResult> response = Response.FromValue(PipelineActivityRunsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rerun single trigger instance by runId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/rerun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Rerun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="triggerName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RerunAsync(string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = TriggerRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Rerun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriggerRunsRestClient.CreateRerunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, triggerName, runId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rerun single trigger instance by runId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/rerun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Rerun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="triggerName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Rerun(string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = TriggerRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Rerun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriggerRunsRestClient.CreateRerunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, triggerName, runId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel a single trigger instance by runId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="triggerName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CancelAsync(string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = TriggerRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriggerRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, triggerName, runId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel a single trigger instance by runId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="factoryName"></param>
+        /// <param name="triggerName"></param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Cancel(string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = TriggerRunsClientDiagnostics.CreateScope("MockableDataFactoryResourceGroupResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = TriggerRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, triggerName, runId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

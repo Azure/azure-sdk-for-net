@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,43 +20,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="message"/> or <paramref name="errorCode"/> is null. </exception>
-        public FailActivity(string name, DataFactoryElement<string> message, DataFactoryElement<string> errorCode) : base(name)
+        public FailActivity(string name, DataFactoryElement<string> message, DataFactoryElement<string> errorCode) : base("Fail", name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotNull(errorCode, nameof(errorCode));
 
-            Message = message;
-            ErrorCode = errorCode;
-            ActivityType = "Fail";
+            TypeProperties = new FailActivityTypeProperties(message, errorCode);
         }
 
         /// <summary> Initializes a new instance of <see cref="FailActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
-        /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
-        internal FailActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> message, DataFactoryElement<string> errorCode) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Fail activity properties. </param>
+        internal FailActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FailActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
-            Message = message;
-            ErrorCode = errorCode;
-            ActivityType = activityType ?? "Fail";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FailActivity"/> for deserialization. </summary>
-        internal FailActivity()
-        {
-        }
+        /// <summary> Fail activity properties. </summary>
+        internal FailActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Message { get; set; }
+        public DataFactoryElement<string> Message
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Message;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FailActivityTypeProperties();
+                }
+                TypeProperties.Message = value;
+            }
+        }
+
         /// <summary> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ErrorCode { get; set; }
+        public DataFactoryElement<string> ErrorCode
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ErrorCode;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FailActivityTypeProperties();
+                }
+                TypeProperties.ErrorCode = value;
+            }
+        }
     }
 }

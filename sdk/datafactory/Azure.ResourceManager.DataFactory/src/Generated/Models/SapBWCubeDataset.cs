@@ -15,32 +15,20 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapBWCubeDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="SapBWCubeDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public SapBWCubeDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public SapBWCubeDataset() : base("SapBwCube")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "SapBwCube";
         }
 
         /// <summary> Initializes a new instance of <see cref="SapBWCubeDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SapBWCubeDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
-        {
-            DatasetType = datasetType ?? "SapBwCube";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SapBWCubeDataset"/> for deserialization. </summary>
-        internal SapBWCubeDataset()
+        /// <param name="additionalProperties"></param>
+        internal SapBWCubeDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
         }
     }

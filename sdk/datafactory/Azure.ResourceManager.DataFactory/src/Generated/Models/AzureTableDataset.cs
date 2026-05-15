@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,41 +16,48 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureTableDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
-        public AzureTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base(linkedServiceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public AzureTableDataset(DataFactoryElement<string> tableName) : base("AzureTable")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            TableName = tableName;
-            DatasetType = "AzureTable";
+            TypeProperties = new AzureTableDatasetTypeProperties(tableName);
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureTableDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </param>
-        internal AzureTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Table dataset properties. </param>
+        internal AzureTableDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AzureTableDatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            TableName = tableName;
-            DatasetType = datasetType ?? "AzureTable";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureTableDataset"/> for deserialization. </summary>
-        internal AzureTableDataset()
-        {
-        }
+        /// <summary> Azure Table dataset properties. </summary>
+        internal AzureTableDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> TableName { get; set; }
+        public DataFactoryElement<string> TableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureTableDatasetTypeProperties();
+                }
+                TypeProperties.TableName = value;
+            }
+        }
     }
 }

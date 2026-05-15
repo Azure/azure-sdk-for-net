@@ -15,47 +15,111 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceServiceCloudV2LinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudV2LinkedService"/>. </summary>
-        public SalesforceServiceCloudV2LinkedService()
+        public SalesforceServiceCloudV2LinkedService() : base("SalesforceServiceCloudV2")
         {
-            LinkedServiceType = "SalesforceServiceCloudV2";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudV2LinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="environmentUri"> The URL of Salesforce Service Cloud instance. For example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> The authentication type to be used to connect to the Salesforce. Currently, we only support OAuth2ClientCredentials, it is also the default value. </param>
-        /// <param name="clientId"> The client Id for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
-        /// <param name="clientSecret"> The client secret for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. </param>
-        /// <param name="apiVersion"> The Salesforce API version used in ADF. The version must be larger than or equal to 47.0 which is required by Salesforce BULK API 2.0. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SalesforceServiceCloudV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> environmentUri, DataFactoryElement<string> authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> apiVersion, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Salesforce Service Cloud V2 linked service properties. </param>
+        internal SalesforceServiceCloudV2LinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SalesforceServiceCloudV2LinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            EnvironmentUri = environmentUri;
-            AuthenticationType = authenticationType;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            ApiVersion = apiVersion;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "SalesforceServiceCloudV2";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Salesforce Service Cloud V2 linked service properties. </summary>
+        internal SalesforceServiceCloudV2LinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> The URL of Salesforce Service Cloud instance. For example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> EnvironmentUri { get; set; }
+        public DataFactoryElement<string> EnvironmentUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnvironmentUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.EnvironmentUri = value;
+            }
+        }
+
         /// <summary> The authentication type to be used to connect to the Salesforce. Currently, we only support OAuth2ClientCredentials, it is also the default value. </summary>
-        public DataFactoryElement<string> AuthenticationType { get; set; }
+        public DataFactoryElement<string> AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The client Id for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary> The client secret for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> The Salesforce API version used in ADF. The version must be larger than or equal to 47.0 which is required by Salesforce BULK API 2.0. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ApiVersion { get; set; }
+        public DataFactoryElement<string> ApiVersion
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ApiVersion;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.ApiVersion = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudV2LinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

@@ -12,22 +12,20 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The TarGZip compression read settings. </summary>
-    public partial class TarGzipReadSettings : CompressionReadSettings
+    public partial class TarGZipReadSettings : CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of <see cref="TarGzipReadSettings"/>. </summary>
-        public TarGzipReadSettings()
+        /// <summary> Initializes a new instance of <see cref="TarGZipReadSettings"/>. </summary>
+        public TarGZipReadSettings() : base("TarGZipReadSettings")
         {
-            CompressionReadSettingsType = "TarGZipReadSettings";
         }
 
-        /// <summary> Initializes a new instance of <see cref="TarGzipReadSettings"/>. </summary>
-        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <summary> Initializes a new instance of <see cref="TarGZipReadSettings"/>. </summary>
+        /// <param name="type"> The Compression setting type. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        internal TarGzipReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
+        internal TarGZipReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveCompressionFileNameAsFolder) : base(@type, additionalProperties)
         {
             PreserveCompressionFileNameAsFolder = preserveCompressionFileNameAsFolder;
-            CompressionReadSettingsType = compressionReadSettingsType ?? "TarGZipReadSettings";
         }
 
         /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>

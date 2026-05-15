@@ -14,30 +14,20 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ParquetReadSettings : FormatReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="ParquetReadSettings"/>. </summary>
-        public ParquetReadSettings()
+        public ParquetReadSettings() : base("ParquetReadSettings")
         {
-            FormatReadSettingsType = "ParquetReadSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="ParquetReadSettings"/>. </summary>
-        /// <param name="formatReadSettingsType"> The read setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="compressionProperties">
-        /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
-        /// </param>
-        internal ParquetReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
+        /// <param name="type"> The read setting type. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="compressionProperties"> Compression settings. </param>
+        internal ParquetReadSettings(string @type, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties) : base(@type, additionalProperties)
         {
             CompressionProperties = compressionProperties;
-            FormatReadSettingsType = formatReadSettingsType ?? "ParquetReadSettings";
         }
 
-        /// <summary>
-        /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
-        /// </summary>
+        /// <summary> Compression settings. </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
     }
 }

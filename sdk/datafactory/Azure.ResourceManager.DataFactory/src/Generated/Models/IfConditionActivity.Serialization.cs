@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IfConditionActivity : IUtf8JsonSerializable, IJsonModel<IfConditionActivity>
+    /// <summary> This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities property depending on the result of the expression. </summary>
+    public partial class IfConditionActivity : ControlActivity, IJsonModel<IfConditionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IfConditionActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IfConditionActivity"/> for deserialization. </summary>
+        internal IfConditionActivity()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIfConditionActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IfConditionActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IfConditionActivity IPersistableModel<IfConditionActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (IfConditionActivity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IfConditionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IfConditionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,238 +74,133 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IfConditionActivity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue(Expression, options);
-            if (Optional.IsCollectionDefined(IfTrueActivities))
-            {
-                writer.WritePropertyName("ifTrueActivities"u8);
-                writer.WriteStartArray();
-                foreach (var item in IfTrueActivities)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(IfFalseActivities))
-            {
-                writer.WritePropertyName("ifFalseActivities"u8);
-                writer.WriteStartArray();
-                foreach (var item in IfFalseActivities)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        IfConditionActivity IJsonModel<IfConditionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IfConditionActivity IJsonModel<IfConditionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IfConditionActivity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IfConditionActivity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIfConditionActivity(document.RootElement, options);
         }
 
-        internal static IfConditionActivity DeserializeIfConditionActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IfConditionActivity DeserializeIfConditionActivity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            string type = default;
+            string @type = "IfCondition";
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
-            DataFactoryExpression expression = default;
-            IList<PipelineActivity> ifTrueActivities = default;
-            IList<PipelineActivity> ifFalseActivities = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IfConditionActivityTypeProperties typeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new PipelineActivityState(property.Value.GetString());
+                    state = new PipelineActivityState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("onInactiveMarkAs"u8))
+                if (prop.NameEquals("onInactiveMarkAs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dependsOn"u8))
+                if (prop.NameEquals("dependsOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"u8))
+                if (prop.NameEquals("userProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("typeProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("expression"u8))
-                        {
-                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("ifTrueActivities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PipelineActivity> array = new List<PipelineActivity>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeserializePipelineActivity(item, options));
-                            }
-                            ifTrueActivities = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("ifFalseActivities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PipelineActivity> array = new List<PipelineActivity>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeserializePipelineActivity(item, options));
-                            }
-                            ifFalseActivities = array;
-                            continue;
-                        }
-                    }
+                    typeProperties = IfConditionActivityTypeProperties.DeserializeIfConditionActivityTypeProperties(prop.Value, options);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (options.Format != "W")
+                {
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new IfConditionActivity(
                 name,
-                type,
+                @type,
                 description,
                 state,
                 onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
-                expression,
-                ifTrueActivities ?? new ChangeTrackingList<PipelineActivity>(),
-                ifFalseActivities ?? new ChangeTrackingList<PipelineActivity>());
+                typeProperties);
         }
-
-        BinaryData IPersistableModel<IfConditionActivity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IfConditionActivity IPersistableModel<IfConditionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIfConditionActivity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IfConditionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,43 +18,79 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzureSynapseArtifactsLinkedService"/>. </summary>
         /// <param name="endpoint"> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AzureSynapseArtifactsLinkedService(DataFactoryElement<string> endpoint)
+        public AzureSynapseArtifactsLinkedService(DataFactoryElement<string> endpoint) : base("AzureSynapseArtifacts")
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            Endpoint = endpoint;
-            LinkedServiceType = "AzureSynapseArtifacts";
+            TypeProperties = new AzureSynapseArtifactsLinkedServiceTypeProperties(endpoint);
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureSynapseArtifactsLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="endpoint"> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </param>
-        /// <param name="authentication"> Required to specify MSI, if using system assigned managed identity as authentication method. Type: string (or Expression with resultType string). </param>
-        /// <param name="workspaceResourceId"> The resource ID of the Synapse workspace. The format should be: /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}. Type: string (or Expression with resultType string). </param>
-        internal AzureSynapseArtifactsLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> authentication, DataFactoryElement<string> workspaceResourceId) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Synapse Analytics (Artifacts) linked service properties. </param>
+        internal AzureSynapseArtifactsLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureSynapseArtifactsLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Endpoint = endpoint;
-            Authentication = authentication;
-            WorkspaceResourceId = workspaceResourceId;
-            LinkedServiceType = linkedServiceType ?? "AzureSynapseArtifacts";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSynapseArtifactsLinkedService"/> for deserialization. </summary>
-        internal AzureSynapseArtifactsLinkedService()
-        {
-        }
+        /// <summary> Azure Synapse Analytics (Artifacts) linked service properties. </summary>
+        internal AzureSynapseArtifactsLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Endpoint { get; set; }
+        public DataFactoryElement<string> Endpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Endpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSynapseArtifactsLinkedServiceTypeProperties();
+                }
+                TypeProperties.Endpoint = value;
+            }
+        }
+
         /// <summary> Required to specify MSI, if using system assigned managed identity as authentication method. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Authentication { get; set; }
+        public DataFactoryElement<string> Authentication
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Authentication;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSynapseArtifactsLinkedServiceTypeProperties();
+                }
+                TypeProperties.Authentication = value;
+            }
+        }
+
         /// <summary> The resource ID of the Synapse workspace. The format should be: /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> WorkspaceResourceId { get; set; }
+        public DataFactoryElement<string> WorkspaceResourceId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.WorkspaceResourceId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSynapseArtifactsLinkedServiceTypeProperties();
+                }
+                TypeProperties.WorkspaceResourceId = value;
+            }
+        }
     }
 }

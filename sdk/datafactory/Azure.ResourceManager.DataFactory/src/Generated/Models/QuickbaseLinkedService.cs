@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,47 +17,63 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
         /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
-        /// <param name="userToken"> The user token for the Quickbase source. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="userToken"/> is null. </exception>
-        public QuickbaseLinkedService(DataFactoryElement<string> uri, DataFactorySecret userToken)
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        public QuickbaseLinkedService(DataFactoryElement<string> uri) : base("Quickbase")
         {
             Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNull(userToken, nameof(userToken));
 
-            Uri = uri;
-            UserToken = userToken;
-            LinkedServiceType = "Quickbase";
+            TypeProperties = new QuickbaseLinkedServiceTypeProperties(uri);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
-        /// <param name="userToken"> The user token for the Quickbase source. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal QuickbaseLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactorySecret userToken, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Quickbase linked service properties. </param>
+        internal QuickbaseLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, QuickbaseLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Uri = uri;
-            UserToken = userToken;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Quickbase";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/> for deserialization. </summary>
-        internal QuickbaseLinkedService()
-        {
-        }
+        /// <summary> Quickbase linked service properties. </summary>
+        internal QuickbaseLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Uri { get; set; }
-        /// <summary> The user token for the Quickbase source. </summary>
-        public DataFactorySecret UserToken { get; set; }
+        public DataFactoryElement<string> Uri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Uri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickbaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.Uri = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new QuickbaseLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

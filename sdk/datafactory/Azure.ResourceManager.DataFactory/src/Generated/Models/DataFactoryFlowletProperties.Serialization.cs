@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryFlowletProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryFlowletProperties>
+    /// <summary> Data flow flowlet. </summary>
+    public partial class DataFactoryFlowletProperties : DataFactoryDataFlowProperties, IJsonModel<DataFactoryFlowletProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryFlowletProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryDataFlowProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataFactoryFlowletProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryFlowletProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryFlowletProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataFactoryFlowletProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryFlowletProperties IPersistableModel<DataFactoryFlowletProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataFactoryFlowletProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryFlowletProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryFlowletProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,114 +69,70 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryFlowletProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sources))
+            if (Optional.IsDefined(TypeProperties))
             {
-                writer.WritePropertyName("sources"u8);
-                writer.WriteStartArray();
-                foreach (var item in Sources)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("typeProperties"u8);
+                writer.WriteObjectValue(TypeProperties, options);
             }
-            if (Optional.IsCollectionDefined(Sinks))
-            {
-                writer.WritePropertyName("sinks"u8);
-                writer.WriteStartArray();
-                foreach (var item in Sinks)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Transformations))
-            {
-                writer.WritePropertyName("transformations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Transformations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Script))
-            {
-                writer.WritePropertyName("script"u8);
-                writer.WriteStringValue(Script);
-            }
-            if (Optional.IsCollectionDefined(ScriptLines))
-            {
-                writer.WritePropertyName("scriptLines"u8);
-                writer.WriteStartArray();
-                foreach (var item in ScriptLines)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        DataFactoryFlowletProperties IJsonModel<DataFactoryFlowletProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryFlowletProperties IJsonModel<DataFactoryFlowletProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataFactoryFlowletProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryDataFlowProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryFlowletProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataFactoryFlowletProperties(document.RootElement, options);
         }
 
-        internal static DataFactoryFlowletProperties DeserializeDataFactoryFlowletProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataFactoryFlowletProperties DeserializeDataFactoryFlowletProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string type = default;
+            string @type = "Flowlet";
             string description = default;
             IList<BinaryData> annotations = default;
             DataFlowFolder folder = default;
-            IList<DataFlowSource> sources = default;
-            IList<DataFlowSink> sinks = default;
-            IList<DataFlowTransformation> transformations = default;
-            string script = default;
-            IList<string> scriptLines = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            FlowletTypeProperties typeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("annotations"u8))
+                if (prop.NameEquals("annotations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -149,136 +146,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("folder"u8))
+                if (prop.NameEquals("folder"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("typeProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("sources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DataFlowSource> array = new List<DataFlowSource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataFlowSource.DeserializeDataFlowSource(item, options));
-                            }
-                            sources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("sinks"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DataFlowSink> array = new List<DataFlowSink>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataFlowSink.DeserializeDataFlowSink(item, options));
-                            }
-                            sinks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("transformations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DataFlowTransformation> array = new List<DataFlowTransformation>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item, options));
-                            }
-                            transformations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("script"u8))
-                        {
-                            script = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("scriptLines"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            scriptLines = array;
-                            continue;
-                        }
-                    }
+                    typeProperties = FlowletTypeProperties.DeserializeFlowletTypeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataFactoryFlowletProperties(
-                type,
+                @type,
                 description,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 folder,
-                serializedAdditionalRawData,
-                sources ?? new ChangeTrackingList<DataFlowSource>(),
-                sinks ?? new ChangeTrackingList<DataFlowSink>(),
-                transformations ?? new ChangeTrackingList<DataFlowTransformation>(),
-                script,
-                scriptLines ?? new ChangeTrackingList<string>());
+                additionalBinaryDataProperties,
+                typeProperties);
         }
-
-        BinaryData IPersistableModel<DataFactoryFlowletProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryFlowletProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataFactoryFlowletProperties IPersistableModel<DataFactoryFlowletProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryFlowletProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataFactoryFlowletProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryFlowletProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataFactoryFlowletProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

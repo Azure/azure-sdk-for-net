@@ -9,15 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatabricksSparkPythonActivity : IUtf8JsonSerializable, IJsonModel<DatabricksSparkPythonActivity>
+    /// <summary> DatabricksSparkPython activity. </summary>
+    public partial class DatabricksSparkPythonActivity : ExecutionActivity, IJsonModel<DatabricksSparkPythonActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabricksSparkPythonActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/> for deserialization. </summary>
+        internal DatabricksSparkPythonActivity()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatabricksSparkPythonActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatabricksSparkPythonActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabricksSparkPythonActivity IPersistableModel<DatabricksSparkPythonActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatabricksSparkPythonActivity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabricksSparkPythonActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabricksSparkPythonActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,321 +74,144 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("pythonFile"u8);
-            JsonSerializer.Serialize(writer, PythonFile);
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartArray();
-                foreach (var item in Parameters)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Libraries))
-            {
-                writer.WritePropertyName("libraries"u8);
-                writer.WriteStartArray();
-                foreach (var item in Libraries)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item0.Value);
-#else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
-#endif
-                    }
-                    writer.WriteEndObject();
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        DatabricksSparkPythonActivity IJsonModel<DatabricksSparkPythonActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabricksSparkPythonActivity IJsonModel<DatabricksSparkPythonActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DatabricksSparkPythonActivity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatabricksSparkPythonActivity(document.RootElement, options);
         }
 
-        internal static DatabricksSparkPythonActivity DeserializeDatabricksSparkPythonActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DatabricksSparkPythonActivity DeserializeDatabricksSparkPythonActivity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
-            PipelineActivityPolicy policy = default;
             string name = default;
-            string type = default;
+            string @type = "DatabricksSparkPython";
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
-            DataFactoryElement<string> pythonFile = default;
-            IList<BinaryData> parameters = default;
-            IList<IDictionary<string, BinaryData>> libraries = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PipelineActivityPolicy policy = default;
+            DatabricksSparkPythonActivityTypeProperties typeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    state = new PipelineActivityState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policy"u8))
+                if (prop.NameEquals("onInactiveMarkAs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("dependsOn"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new PipelineActivityState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("onInactiveMarkAs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dependsOn"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"u8))
+                if (prop.NameEquals("userProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("policy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("pythonFile"u8))
-                        {
-                            pythonFile = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("parameters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<BinaryData> array = new List<BinaryData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(BinaryData.FromString(item.GetRawText()));
-                                }
-                            }
-                            parameters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("libraries"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                                    foreach (var property1 in item.EnumerateObject())
-                                    {
-                                        if (property1.Value.ValueKind == JsonValueKind.Null)
-                                        {
-                                            dictionary.Add(property1.Name, null);
-                                        }
-                                        else
-                                        {
-                                            dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                        }
-                                    }
-                                    array.Add(dictionary);
-                                }
-                            }
-                            libraries = array;
-                            continue;
-                        }
-                    }
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(prop.Value, options);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (prop.NameEquals("typeProperties"u8))
+                {
+                    typeProperties = DatabricksSparkPythonActivityTypeProperties.DeserializeDatabricksSparkPythonActivityTypeProperties(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new DatabricksSparkPythonActivity(
                 name,
-                type,
+                @type,
                 description,
                 state,
                 onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
-                pythonFile,
-                parameters ?? new ChangeTrackingList<BinaryData>(),
-                libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>());
+                typeProperties);
         }
-
-        BinaryData IPersistableModel<DatabricksSparkPythonActivity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DatabricksSparkPythonActivity IPersistableModel<DatabricksSparkPythonActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabricksSparkPythonActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatabricksSparkPythonActivity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatabricksSparkPythonActivity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DatabricksSparkPythonActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

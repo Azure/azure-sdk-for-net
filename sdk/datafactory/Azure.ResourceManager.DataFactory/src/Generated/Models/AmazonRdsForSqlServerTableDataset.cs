@@ -15,42 +15,60 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForSqlServerTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerTableDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AmazonRdsForSqlServerTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AmazonRdsForSqlServerTableDataset() : base("AmazonRdsForSqlServerTable")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "AmazonRdsForSqlServerTable";
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerTableDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="schemaTypePropertiesSchema"> The schema name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="table"> The table name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
-        internal AmazonRdsForSqlServerTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> schemaTypePropertiesSchema, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> The Amazon RDS for SQL Server dataset properties. </param>
+        internal AmazonRdsForSqlServerTableDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AmazonRdsForSqlServerTableDatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
-            Table = table;
-            DatasetType = datasetType ?? "AmazonRdsForSqlServerTable";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerTableDataset"/> for deserialization. </summary>
-        internal AmazonRdsForSqlServerTableDataset()
-        {
-        }
+        /// <summary> The Amazon RDS for SQL Server dataset properties. </summary>
+        internal AmazonRdsForSqlServerTableDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The schema name of the SQL Server dataset. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
+        public DataFactoryElement<string> SchemaTypePropertiesSchema
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SchemaTypePropertiesSchema;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForSqlServerTableDatasetTypeProperties();
+                }
+                TypeProperties.SchemaTypePropertiesSchema = value;
+            }
+        }
+
         /// <summary> The table name of the SQL Server dataset. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Table { get; set; }
+        public DataFactoryElement<string> Table
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Table;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRdsForSqlServerTableDatasetTypeProperties();
+                }
+                TypeProperties.Table = value;
+            }
+        }
     }
 }

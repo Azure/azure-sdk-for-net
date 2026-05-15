@@ -15,71 +15,179 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureBlobFSLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSLinkedService"/>. </summary>
-        public AzureBlobFSLinkedService()
+        public AzureBlobFSLinkedService() : base("AzureBlobFS")
         {
-            LinkedServiceType = "AzureBlobFS";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSLinkedService"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
-        /// <param name="accountKey"> Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account. </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
-        /// <param name="sasUri"> SAS URI of the Azure Data Lake Storage Gen2 service. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
-        internal AzureBlobFSLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactoryElement<string> accountKey, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, DataFactoryElement<string> sasUri, DataFactorySecret sasToken) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Data Lake Storage Gen2 linked service properties. </param>
+        internal AzureBlobFSLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureBlobFSLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Uri = uri;
-            AccountKey = accountKey;
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalKey = servicePrincipalKey;
-            Tenant = tenant;
-            AzureCloudType = azureCloudType;
-            EncryptedCredential = encryptedCredential;
-            Credential = credential;
-            ServicePrincipalCredentialType = servicePrincipalCredentialType;
-            ServicePrincipalCredential = servicePrincipalCredential;
-            SasUri = sasUri;
-            SasToken = sasToken;
-            LinkedServiceType = linkedServiceType ?? "AzureBlobFS";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Azure Data Lake Storage Gen2 linked service properties. </summary>
+        internal AzureBlobFSLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Uri { get; set; }
+        public DataFactoryElement<string> Uri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Uri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.Uri = value;
+            }
+        }
+
         /// <summary> Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AccountKey { get; set; }
+        public DataFactoryElement<string> AccountKey
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccountKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.AccountKey = value;
+            }
+        }
+
         /// <summary> The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AzureCloudType { get; set; }
+        public DataFactoryElement<string> AzureCloudType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AzureCloudType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.AzureCloudType = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
+
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
-        /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
-        public DataFactorySecret ServicePrincipalCredential { get; set; }
+        public DataFactoryElement<string> ServicePrincipalCredentialType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalCredentialType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalCredentialType = value;
+            }
+        }
+
         /// <summary> SAS URI of the Azure Data Lake Storage Gen2 service. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> SasUri { get; set; }
-        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
-        public DataFactorySecret SasToken { get; set; }
+        public DataFactoryElement<string> SasUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SasUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobFSLinkedServiceTypeProperties();
+                }
+                TypeProperties.SasUri = value;
+            }
+        }
     }
 }

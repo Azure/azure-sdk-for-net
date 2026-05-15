@@ -8,15 +8,65 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    /// <summary>
+    /// A copy activity sink.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DelimitedTextSink"/>, <see cref="JsonSink"/>, <see cref="OrcSink"/>, <see cref="RestSink"/>, <see cref="TeradataSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="WarehouseSink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureTableSink"/>, <see cref="AvroSink"/>, <see cref="ParquetSink"/>, <see cref="BinarySink"/>, <see cref="IcebergSink"/>, <see cref="DataFactoryBlobSink"/>, <see cref="FileSystemSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="SqlSink"/>, <see cref="SqlServerSink"/>, <see cref="AzureSqlSink"/>, <see cref="SqlMISink"/>, <see cref="SqlDWSink"/>, <see cref="SnowflakeSink"/>, <see cref="SnowflakeV2Sink"/>, <see cref="OracleSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="OdbcSink"/>, <see cref="InformixSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="DynamicsSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="SalesforceSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="LakeHouseTableSink"/>, <see cref="SalesforceV2Sink"/>, and <see cref="SalesforceServiceCloudV2Sink"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownCopySink))]
-    public partial class CopySink : IUtf8JsonSerializable, IJsonModel<CopySink>
+    public abstract partial class CopySink : IJsonModel<CopySink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopySink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CopySink"/> for deserialization. </summary>
+        internal CopySink()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CopySink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCopySink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopySink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CopySink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CopySink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CopySink IPersistableModel<CopySink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CopySink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CopySink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,51 +78,50 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CopySink)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySinkType);
+            writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                JsonSerializer.Serialize(writer, WriteBatchSize);
+                writer.WriteObjectValue(WriteBatchSize, options);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                JsonSerializer.Serialize(writer, WriteBatchTimeout);
+                writer.WriteObjectValue(WriteBatchTimeout, options);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                JsonSerializer.Serialize(writer, SinkRetryCount);
+                writer.WriteObjectValue(SinkRetryCount, options);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                JsonSerializer.Serialize(writer, SinkRetryWait);
+                writer.WriteObjectValue(SinkRetryWait, options);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
+                writer.WriteObjectValue(MaxConcurrentConnections, options);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-                JsonSerializer.Serialize(writer, DisableMetricsCollection);
+                writer.WriteObjectValue(DisableMetricsCollection, options);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -80,110 +129,130 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        CopySink IJsonModel<CopySink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CopySink IJsonModel<CopySink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CopySink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CopySink)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCopySink(document.RootElement, options);
         }
 
-        internal static CopySink DeserializeCopySink(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CopySink DeserializeCopySink(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AvroSink": return AvroSink.DeserializeAvroSink(element, options);
-                    case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element, options);
-                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
-                    case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element, options);
-                    case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element, options);
-                    case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element, options);
-                    case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element, options);
-                    case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element, options);
-                    case "AzureSearchIndexSink": return AzureSearchIndexSink.DeserializeAzureSearchIndexSink(element, options);
-                    case "AzureSqlSink": return AzureSqlSink.DeserializeAzureSqlSink(element, options);
-                    case "AzureTableSink": return AzureTableSink.DeserializeAzureTableSink(element, options);
-                    case "BinarySink": return BinarySink.DeserializeBinarySink(element, options);
-                    case "BlobSink": return DataFactoryBlobSink.DeserializeDataFactoryBlobSink(element, options);
-                    case "CommonDataServiceForAppsSink": return CommonDataServiceForAppsSink.DeserializeCommonDataServiceForAppsSink(element, options);
-                    case "CosmosDbMongoDbApiSink": return CosmosDBMongoDBApiSink.DeserializeCosmosDBMongoDBApiSink(element, options);
-                    case "CosmosDbSqlApiSink": return CosmosDBSqlApiSink.DeserializeCosmosDBSqlApiSink(element, options);
-                    case "DelimitedTextSink": return DelimitedTextSink.DeserializeDelimitedTextSink(element, options);
-                    case "DocumentDbCollectionSink": return DocumentDBCollectionSink.DeserializeDocumentDBCollectionSink(element, options);
-                    case "DynamicsCrmSink": return DynamicsCrmSink.DeserializeDynamicsCrmSink(element, options);
-                    case "DynamicsSink": return DynamicsSink.DeserializeDynamicsSink(element, options);
-                    case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element, options);
-                    case "IcebergSink": return IcebergSink.DeserializeIcebergSink(element, options);
-                    case "InformixSink": return InformixSink.DeserializeInformixSink(element, options);
-                    case "JsonSink": return JsonSink.DeserializeJsonSink(element, options);
-                    case "LakeHouseTableSink": return LakeHouseTableSink.DeserializeLakeHouseTableSink(element, options);
-                    case "MicrosoftAccessSink": return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element, options);
-                    case "MongoDbAtlasSink": return MongoDBAtlasSink.DeserializeMongoDBAtlasSink(element, options);
-                    case "MongoDbV2Sink": return MongoDBV2Sink.DeserializeMongoDBV2Sink(element, options);
-                    case "OdbcSink": return OdbcSink.DeserializeOdbcSink(element, options);
-                    case "OracleSink": return OracleSink.DeserializeOracleSink(element, options);
-                    case "OrcSink": return OrcSink.DeserializeOrcSink(element, options);
-                    case "ParquetSink": return ParquetSink.DeserializeParquetSink(element, options);
-                    case "RestSink": return RestSink.DeserializeRestSink(element, options);
-                    case "SalesforceServiceCloudSink": return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element, options);
-                    case "SalesforceServiceCloudV2Sink": return SalesforceServiceCloudV2Sink.DeserializeSalesforceServiceCloudV2Sink(element, options);
-                    case "SalesforceSink": return SalesforceSink.DeserializeSalesforceSink(element, options);
-                    case "SalesforceV2Sink": return SalesforceV2Sink.DeserializeSalesforceV2Sink(element, options);
-                    case "SapCloudForCustomerSink": return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element, options);
-                    case "SnowflakeSink": return SnowflakeSink.DeserializeSnowflakeSink(element, options);
-                    case "SnowflakeV2Sink": return SnowflakeV2Sink.DeserializeSnowflakeV2Sink(element, options);
-                    case "SqlDWSink": return SqlDWSink.DeserializeSqlDWSink(element, options);
-                    case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element, options);
-                    case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element, options);
-                    case "SqlSink": return SqlSink.DeserializeSqlSink(element, options);
-                    case "TeradataSink": return TeradataSink.DeserializeTeradataSink(element, options);
-                    case "WarehouseSink": return WarehouseSink.DeserializeWarehouseSink(element, options);
+                    case "DelimitedTextSink":
+                        return DelimitedTextSink.DeserializeDelimitedTextSink(element, options);
+                    case "JsonSink":
+                        return JsonSink.DeserializeJsonSink(element, options);
+                    case "OrcSink":
+                        return OrcSink.DeserializeOrcSink(element, options);
+                    case "RestSink":
+                        return RestSink.DeserializeRestSink(element, options);
+                    case "TeradataSink":
+                        return TeradataSink.DeserializeTeradataSink(element, options);
+                    case "AzurePostgreSqlSink":
+                        return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element, options);
+                    case "AzureMySqlSink":
+                        return AzureMySqlSink.DeserializeAzureMySqlSink(element, options);
+                    case "AzureDatabricksDeltaLakeSink":
+                        return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
+                    case "WarehouseSink":
+                        return WarehouseSink.DeserializeWarehouseSink(element, options);
+                    case "SapCloudForCustomerSink":
+                        return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element, options);
+                    case "AzureQueueSink":
+                        return AzureQueueSink.DeserializeAzureQueueSink(element, options);
+                    case "AzureTableSink":
+                        return AzureTableSink.DeserializeAzureTableSink(element, options);
+                    case "AvroSink":
+                        return AvroSink.DeserializeAvroSink(element, options);
+                    case "ParquetSink":
+                        return ParquetSink.DeserializeParquetSink(element, options);
+                    case "BinarySink":
+                        return BinarySink.DeserializeBinarySink(element, options);
+                    case "IcebergSink":
+                        return IcebergSink.DeserializeIcebergSink(element, options);
+                    case "BlobSink":
+                        return DataFactoryBlobSink.DeserializeDataFactoryBlobSink(element, options);
+                    case "FileSystemSink":
+                        return FileSystemSink.DeserializeFileSystemSink(element, options);
+                    case "DocumentDbCollectionSink":
+                        return DocumentDBCollectionSink.DeserializeDocumentDBCollectionSink(element, options);
+                    case "CosmosDbSqlApiSink":
+                        return CosmosDBSqlApiSink.DeserializeCosmosDBSqlApiSink(element, options);
+                    case "SqlSink":
+                        return SqlSink.DeserializeSqlSink(element, options);
+                    case "SqlServerSink":
+                        return SqlServerSink.DeserializeSqlServerSink(element, options);
+                    case "AzureSqlSink":
+                        return AzureSqlSink.DeserializeAzureSqlSink(element, options);
+                    case "SqlMISink":
+                        return SqlMISink.DeserializeSqlMISink(element, options);
+                    case "SqlDWSink":
+                        return SqlDWSink.DeserializeSqlDWSink(element, options);
+                    case "SnowflakeSink":
+                        return SnowflakeSink.DeserializeSnowflakeSink(element, options);
+                    case "SnowflakeV2Sink":
+                        return SnowflakeV2Sink.DeserializeSnowflakeV2Sink(element, options);
+                    case "OracleSink":
+                        return OracleSink.DeserializeOracleSink(element, options);
+                    case "AzureDataLakeStoreSink":
+                        return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element, options);
+                    case "AzureBlobFSSink":
+                        return AzureBlobFSSink.DeserializeAzureBlobFSSink(element, options);
+                    case "AzureSearchIndexSink":
+                        return AzureSearchIndexSink.DeserializeAzureSearchIndexSink(element, options);
+                    case "OdbcSink":
+                        return OdbcSink.DeserializeOdbcSink(element, options);
+                    case "InformixSink":
+                        return InformixSink.DeserializeInformixSink(element, options);
+                    case "MicrosoftAccessSink":
+                        return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element, options);
+                    case "DynamicsSink":
+                        return DynamicsSink.DeserializeDynamicsSink(element, options);
+                    case "DynamicsCrmSink":
+                        return DynamicsCrmSink.DeserializeDynamicsCrmSink(element, options);
+                    case "CommonDataServiceForAppsSink":
+                        return CommonDataServiceForAppsSink.DeserializeCommonDataServiceForAppsSink(element, options);
+                    case "AzureDataExplorerSink":
+                        return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element, options);
+                    case "SalesforceSink":
+                        return SalesforceSink.DeserializeSalesforceSink(element, options);
+                    case "SalesforceServiceCloudSink":
+                        return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element, options);
+                    case "MongoDbAtlasSink":
+                        return MongoDBAtlasSink.DeserializeMongoDBAtlasSink(element, options);
+                    case "MongoDbV2Sink":
+                        return MongoDBV2Sink.DeserializeMongoDBV2Sink(element, options);
+                    case "CosmosDbMongoDbApiSink":
+                        return CosmosDBMongoDBApiSink.DeserializeCosmosDBMongoDBApiSink(element, options);
+                    case "LakeHouseTableSink":
+                        return LakeHouseTableSink.DeserializeLakeHouseTableSink(element, options);
+                    case "SalesforceV2Sink":
+                        return SalesforceV2Sink.DeserializeSalesforceV2Sink(element, options);
+                    case "SalesforceServiceCloudV2Sink":
+                        return SalesforceServiceCloudV2Sink.DeserializeSalesforceServiceCloudV2Sink(element, options);
                 }
             }
             return UnknownCopySink.DeserializeUnknownCopySink(element, options);
         }
-
-        BinaryData IPersistableModel<CopySink>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CopySink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CopySink IPersistableModel<CopySink>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCopySink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CopySink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CopySink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

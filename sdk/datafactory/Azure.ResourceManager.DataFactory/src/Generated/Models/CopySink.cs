@@ -8,87 +8,70 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// A copy activity sink.
-    /// Please note <see cref="CopySink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AvroSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="AzureSqlSink"/>, <see cref="AzureTableSink"/>, <see cref="BinarySink"/>, <see cref="DataFactoryBlobSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="DelimitedTextSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="DynamicsSink"/>, <see cref="FileSystemSink"/>, <see cref="IcebergSink"/>, <see cref="InformixSink"/>, <see cref="JsonSink"/>, <see cref="LakeHouseTableSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="OdbcSink"/>, <see cref="OracleSink"/>, <see cref="OrcSink"/>, <see cref="ParquetSink"/>, <see cref="RestSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="SalesforceServiceCloudV2Sink"/>, <see cref="SalesforceSink"/>, <see cref="SalesforceV2Sink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="SnowflakeSink"/>, <see cref="SnowflakeV2Sink"/>, <see cref="SqlDWSink"/>, <see cref="SqlMISink"/>, <see cref="SqlServerSink"/>, <see cref="SqlSink"/>, <see cref="TeradataSink"/> and <see cref="WarehouseSink"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DelimitedTextSink"/>, <see cref="JsonSink"/>, <see cref="OrcSink"/>, <see cref="RestSink"/>, <see cref="TeradataSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="WarehouseSink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureTableSink"/>, <see cref="AvroSink"/>, <see cref="ParquetSink"/>, <see cref="BinarySink"/>, <see cref="IcebergSink"/>, <see cref="DataFactoryBlobSink"/>, <see cref="FileSystemSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="SqlSink"/>, <see cref="SqlServerSink"/>, <see cref="AzureSqlSink"/>, <see cref="SqlMISink"/>, <see cref="SqlDWSink"/>, <see cref="SnowflakeSink"/>, <see cref="SnowflakeV2Sink"/>, <see cref="OracleSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="OdbcSink"/>, <see cref="InformixSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="DynamicsSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="SalesforceSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="LakeHouseTableSink"/>, <see cref="SalesforceV2Sink"/>, and <see cref="SalesforceServiceCloudV2Sink"/>.
     /// </summary>
     public abstract partial class CopySink
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
-        protected CopySink()
+        /// <param name="type"> Copy sink type. </param>
+        private protected CopySink(string @type)
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Type = @type;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
-        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="type"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CopySink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal CopySink(string @type, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
-            CopySinkType = copySinkType;
+            Type = @type;
             WriteBatchSize = writeBatchSize;
             WriteBatchTimeout = writeBatchTimeout;
             SinkRetryCount = sinkRetryCount;
             SinkRetryWait = sinkRetryWait;
             MaxConcurrentConnections = maxConcurrentConnections;
             DisableMetricsCollection = disableMetricsCollection;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Copy sink type. </summary>
-        internal string CopySinkType { get; set; }
+        internal string Type { get; set; }
+
         /// <summary> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
         public DataFactoryElement<int> WriteBatchSize { get; set; }
+
         /// <summary> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> WriteBatchTimeout { get; set; }
+
         /// <summary> Sink retry count. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> SinkRetryCount { get; set; }
+
         /// <summary> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> SinkRetryWait { get; set; }
+
         /// <summary> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> MaxConcurrentConnections { get; set; }
+
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> DisableMetricsCollection { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

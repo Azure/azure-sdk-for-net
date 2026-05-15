@@ -9,15 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataLakeAnalyticsUsqlActivity : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsUsqlActivity>
+    /// <summary> Data Lake Analytics U-SQL activity. </summary>
+    public partial class DataLakeAnalyticsUsqlActivity : ExecutionActivity, IJsonModel<DataLakeAnalyticsUsqlActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsUsqlActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/> for deserialization. </summary>
+        internal DataLakeAnalyticsUsqlActivity()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataLakeAnalyticsUsqlActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataLakeAnalyticsUsqlActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataLakeAnalyticsUsqlActivity IPersistableModel<DataLakeAnalyticsUsqlActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataLakeAnalyticsUsqlActivity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataLakeAnalyticsUsqlActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataLakeAnalyticsUsqlActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,327 +74,144 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("scriptPath"u8);
-            JsonSerializer.Serialize(writer, ScriptPath);
-            writer.WritePropertyName("scriptLinkedService"u8);
-            JsonSerializer.Serialize(writer, ScriptLinkedService);
-            if (Optional.IsDefined(DegreeOfParallelism))
-            {
-                writer.WritePropertyName("degreeOfParallelism"u8);
-                JsonSerializer.Serialize(writer, DegreeOfParallelism);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                JsonSerializer.Serialize(writer, Priority);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(RuntimeVersion))
-            {
-                writer.WritePropertyName("runtimeVersion"u8);
-                JsonSerializer.Serialize(writer, RuntimeVersion);
-            }
-            if (Optional.IsDefined(CompilationMode))
-            {
-                writer.WritePropertyName("compilationMode"u8);
-                JsonSerializer.Serialize(writer, CompilationMode);
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
-        DataLakeAnalyticsUsqlActivity IJsonModel<DataLakeAnalyticsUsqlActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataLakeAnalyticsUsqlActivity IJsonModel<DataLakeAnalyticsUsqlActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataLakeAnalyticsUsqlActivity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PipelineActivity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataLakeAnalyticsUsqlActivity(document.RootElement, options);
         }
 
-        internal static DataLakeAnalyticsUsqlActivity DeserializeDataLakeAnalyticsUsqlActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataLakeAnalyticsUsqlActivity DeserializeDataLakeAnalyticsUsqlActivity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
-            PipelineActivityPolicy policy = default;
             string name = default;
-            string type = default;
+            string @type = "DataLakeAnalyticsU-SQL";
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
-            DataFactoryElement<string> scriptPath = default;
-            DataFactoryLinkedServiceReference scriptLinkedService = default;
-            DataFactoryElement<int> degreeOfParallelism = default;
-            DataFactoryElement<int> priority = default;
-            IDictionary<string, BinaryData> parameters = default;
-            DataFactoryElement<string> runtimeVersion = default;
-            DataFactoryElement<string> compilationMode = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PipelineActivityPolicy policy = default;
+            DataLakeAnalyticsUSQLActivityTypeProperties typeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    state = new PipelineActivityState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policy"u8))
+                if (prop.NameEquals("onInactiveMarkAs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("dependsOn"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new PipelineActivityState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("onInactiveMarkAs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dependsOn"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"u8))
+                if (prop.NameEquals("userProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("policy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("scriptPath"u8))
-                        {
-                            scriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("scriptLinkedService"u8))
-                        {
-                            scriptLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("degreeOfParallelism"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            degreeOfParallelism = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("priority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            priority = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("parameters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            parameters = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("runtimeVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            runtimeVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("compilationMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            compilationMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                    }
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(prop.Value, options);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (prop.NameEquals("typeProperties"u8))
+                {
+                    typeProperties = DataLakeAnalyticsUSQLActivityTypeProperties.DeserializeDataLakeAnalyticsUSQLActivityTypeProperties(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new DataLakeAnalyticsUsqlActivity(
                 name,
-                type,
+                @type,
                 description,
                 state,
                 onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
-                scriptPath,
-                scriptLinkedService,
-                degreeOfParallelism,
-                priority,
-                parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                runtimeVersion,
-                compilationMode);
+                typeProperties);
         }
-
-        BinaryData IPersistableModel<DataLakeAnalyticsUsqlActivity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataLakeAnalyticsUsqlActivity IPersistableModel<DataLakeAnalyticsUsqlActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsUsqlActivity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataLakeAnalyticsUsqlActivity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataLakeAnalyticsUsqlActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

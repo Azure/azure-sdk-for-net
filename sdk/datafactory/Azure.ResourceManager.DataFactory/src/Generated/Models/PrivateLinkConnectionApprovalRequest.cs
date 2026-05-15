@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A request to approve or reject a private endpoint connection. </summary>
     public partial class PrivateLinkConnectionApprovalRequest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequest"/>. </summary>
         public PrivateLinkConnectionApprovalRequest()
@@ -55,26 +24,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequest"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState, WritableSubResource privateEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState, PrivateEndpoint privateEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             PrivateEndpoint = privateEndpoint;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The state of a private link connection. </summary>
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
+
         /// <summary> The resource of private endpoint. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
+
+        /// <summary> The resource Id for private endpoint. </summary>
+        public string PrivateEndpointId
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
             set
             {
                 if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
+                {
+                    PrivateEndpoint = new PrivateEndpoint();
+                }
                 PrivateEndpoint.Id = value;
             }
         }

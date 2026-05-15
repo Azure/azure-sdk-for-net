@@ -15,23 +15,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureBlobFSWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSWriteSettings"/>. </summary>
-        public AzureBlobFSWriteSettings()
+        public AzureBlobFSWriteSettings() : base("AzureBlobFSWriteSettings")
         {
-            StoreWriteSettingsType = "AzureBlobFSWriteSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSWriteSettings"/>. </summary>
-        /// <param name="storeWriteSettingsType"> The write setting type. </param>
+        /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="blockSizeInMB"> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </param>
-        internal AzureBlobFSWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> blockSizeInMB) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, metadata, additionalProperties)
+        internal AzureBlobFSWriteSettings(string @type, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> blockSizeInMB) : base(@type, maxConcurrentConnections, disableMetricsCollection, copyBehavior, metadata, additionalProperties)
         {
             BlockSizeInMB = blockSizeInMB;
-            StoreWriteSettingsType = storeWriteSettingsType ?? "AzureBlobFSWriteSettings";
         }
 
         /// <summary> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </summary>

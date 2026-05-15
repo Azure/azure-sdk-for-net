@@ -7,114 +7,93 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The nested object which contains the information and credential which can be used to connect with related store or compute resource.
-    /// Please note <see cref="DataFactoryLinkedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AmazonMwsLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AmazonS3CompatibleLinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureStorageLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CosmosDBLinkedService"/>, <see cref="CosmosDBMongoDBApiLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleBigQueryV2LinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="LakeHouseLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="MongoDBLinkedService"/>, <see cref="MongoDBAtlasLinkedService"/>, <see cref="MongoDBV2LinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="OracleCloudStorageLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PostgreSqlV2LinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SalesforceServiceCloudV2LinkedService"/>, <see cref="SalesforceV2LinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="ServiceNowV2LinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SnowflakeV2LinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="WarehouseLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZendeskLinkedService"/> and <see cref="ZohoLinkedService"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="CosmosDBLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AmazonS3CompatibleLinkedService"/>, <see cref="OracleCloudStorageLinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PostgreSqlV2LinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="MongoDBLinkedService"/>, <see cref="MongoDBAtlasLinkedService"/>, <see cref="MongoDBV2LinkedService"/>, <see cref="CosmosDBMongoDBApiLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="ZendeskLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="AmazonMwsLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleBigQueryV2LinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZohoLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SnowflakeV2LinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="LakeHouseLinkedService"/>, <see cref="SalesforceV2LinkedService"/>, <see cref="SalesforceServiceCloudV2LinkedService"/>, <see cref="WarehouseLinkedService"/>, and <see cref="ServiceNowV2LinkedService"/>.
     /// </summary>
     public abstract partial class DataFactoryLinkedServiceProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
-        protected DataFactoryLinkedServiceProperties()
+        /// <param name="type"> Type of linked service. </param>
+        private protected DataFactoryLinkedServiceProperties(string @type)
         {
+            Type = @type;
             Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             Annotations = new ChangeTrackingList<BinaryData>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="type"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryLinkedServiceProperties(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal DataFactoryLinkedServiceProperties(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
-            LinkedServiceType = linkedServiceType;
+            Type = @type;
             LinkedServiceVersion = linkedServiceVersion;
             ConnectVia = connectVia;
             Description = description;
             Parameters = parameters;
             Annotations = annotations;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of linked service. </summary>
-        internal string LinkedServiceType { get; set; }
+        internal string Type { get; set; }
+
         /// <summary> Version of the linked service. </summary>
         public string LinkedServiceVersion { get; set; }
+
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
+
         /// <summary> Linked service description. </summary>
         public string Description { get; set; }
+
         /// <summary> Parameters for linked service. </summary>
         public IDictionary<string, EntityParameterSpecification> Parameters { get; }
+
         /// <summary>
         /// List of tags that can be used for describing the linked service.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IList<BinaryData> Annotations { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

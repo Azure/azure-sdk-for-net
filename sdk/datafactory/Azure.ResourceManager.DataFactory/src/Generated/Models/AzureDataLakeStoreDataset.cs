@@ -15,58 +15,94 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureDataLakeStoreDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureDataLakeStoreDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AzureDataLakeStoreDataset() : base("AzureDataLakeStoreFile")
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "AzureDataLakeStoreFile";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/>. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="folderPath"> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileName"> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </param>
-        /// <param name="format">
-        /// The format of the Data Lake Store.
-        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
-        /// </param>
-        /// <param name="compression"> The data compression method used for the item(s) in the Azure Data Lake Store. </param>
-        internal AzureDataLakeStoreDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Data Lake Store dataset properties. </param>
+        internal AzureDataLakeStoreDataset(string @type, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AzureDataLakeStoreDatasetTypeProperties typeProperties) : base(@type, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
-            FolderPath = folderPath;
-            FileName = fileName;
-            Format = format;
-            Compression = compression;
-            DatasetType = datasetType ?? "AzureDataLakeStoreFile";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/> for deserialization. </summary>
-        internal AzureDataLakeStoreDataset()
-        {
-        }
+        /// <summary> Azure Data Lake Store dataset properties. </summary>
+        internal AzureDataLakeStoreDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> FolderPath { get; set; }
+        public DataFactoryElement<string> FolderPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FolderPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreDatasetTypeProperties();
+                }
+                TypeProperties.FolderPath = value;
+            }
+        }
+
         /// <summary> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> FileName { get; set; }
-        /// <summary>
-        /// The format of the Data Lake Store.
-        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
-        /// </summary>
-        public DatasetStorageFormat Format { get; set; }
+        public DataFactoryElement<string> FileName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FileName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreDatasetTypeProperties();
+                }
+                TypeProperties.FileName = value;
+            }
+        }
+
+        /// <summary> The format of the Data Lake Store. </summary>
+        public DatasetStorageFormat Format
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Format;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreDatasetTypeProperties();
+                }
+                TypeProperties.Format = value;
+            }
+        }
+
         /// <summary> The data compression method used for the item(s) in the Azure Data Lake Store. </summary>
-        public DatasetCompression Compression { get; set; }
+        public DatasetCompression Compression
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Compression;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureDataLakeStoreDatasetTypeProperties();
+                }
+                TypeProperties.Compression = value;
+            }
+        }
     }
 }

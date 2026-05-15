@@ -14,38 +14,60 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ManagedIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeStatus"/>. </summary>
-        internal ManagedIntegrationRuntimeStatus()
+        /// <param name="typeProperties"> Managed integration runtime status type properties. </param>
+        internal ManagedIntegrationRuntimeStatus(ManagedIntegrationRuntimeStatusTypeProperties typeProperties) : base(IntegrationRuntimeType.Managed)
         {
-            Nodes = new ChangeTrackingList<ManagedIntegrationRuntimeNode>();
-            OtherErrors = new ChangeTrackingList<ManagedIntegrationRuntimeError>();
-            RuntimeType = IntegrationRuntimeType.Managed;
+            TypeProperties = typeProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeStatus"/>. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
+        /// <param name="type"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="createdOn"> The time at which the integration runtime was created, in ISO8601 format. </param>
-        /// <param name="nodes"> The list of nodes for managed integration runtime. </param>
-        /// <param name="otherErrors"> The errors that occurred on this integration runtime. </param>
-        /// <param name="lastOperation"> The last operation result that occurred on this integration runtime. </param>
-        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, IReadOnlyList<ManagedIntegrationRuntimeNode> nodes, IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors, ManagedIntegrationRuntimeOperationResult lastOperation) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Managed integration runtime status type properties. </param>
+        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType @type, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, ManagedIntegrationRuntimeStatusTypeProperties typeProperties) : base(@type, dataFactoryName, state, additionalProperties)
         {
-            CreatedOn = createdOn;
-            Nodes = nodes;
-            OtherErrors = otherErrors;
-            LastOperation = lastOperation;
-            RuntimeType = runtimeType;
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Managed integration runtime status type properties. </summary>
+        internal ManagedIntegrationRuntimeStatusTypeProperties TypeProperties { get; }
+
         /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return TypeProperties.CreatedOn;
+            }
+        }
+
         /// <summary> The list of nodes for managed integration runtime. </summary>
-        public IReadOnlyList<ManagedIntegrationRuntimeNode> Nodes { get; }
+        public IReadOnlyList<ManagedIntegrationRuntimeNode> Nodes
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Nodes;
+            }
+        }
+
         /// <summary> The errors that occurred on this integration runtime. </summary>
-        public IReadOnlyList<ManagedIntegrationRuntimeError> OtherErrors { get; }
+        public IReadOnlyList<ManagedIntegrationRuntimeError> OtherErrors
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.OtherErrors;
+            }
+        }
+
         /// <summary> The last operation result that occurred on this integration runtime. </summary>
-        public ManagedIntegrationRuntimeOperationResult LastOperation { get; }
+        public ManagedIntegrationRuntimeOperationResult LastOperation
+        {
+            get
+            {
+                return TypeProperties.LastOperation;
+            }
+        }
     }
 }

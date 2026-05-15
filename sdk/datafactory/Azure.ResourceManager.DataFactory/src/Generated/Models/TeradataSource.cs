@@ -17,33 +17,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="TeradataSource"/>. </summary>
         public TeradataSource()
         {
-            CopySourceType = "TeradataSource";
         }
 
         /// <summary> Initializes a new instance of <see cref="TeradataSource"/>. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="query"> Teradata query. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for teradata read in parallel. Possible values include: "None", "Hash", "DynamicRange". </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for teradata source partitioning. </param>
-        internal TeradataSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> query, DataFactoryElement<string> partitionOption, TeradataPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        internal TeradataSource(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> query, DataFactoryElement<string> partitionOption, TeradataPartitionSettings partitionSettings) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
             PartitionOption = partitionOption;
             PartitionSettings = partitionSettings;
-            CopySourceType = copySourceType ?? "TeradataSource";
         }
 
         /// <summary> Teradata query. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }
+
         /// <summary> The partition mechanism that will be used for teradata read in parallel. Possible values include: "None", "Hash", "DynamicRange". </summary>
         public DataFactoryElement<string> PartitionOption { get; set; }
+
         /// <summary> The settings that will be leveraged for teradata source partitioning. </summary>
         public TeradataPartitionSettings PartitionSettings { get; set; }
     }

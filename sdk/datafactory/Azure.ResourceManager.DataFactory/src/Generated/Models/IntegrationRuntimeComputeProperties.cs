@@ -8,16 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The compute resource properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeComputeProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeComputeProperties"/>. </summary>
         public IntegrationRuntimeComputeProperties()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeComputeProperties"/>. </summary>
@@ -26,69 +30,48 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="numberOfNodes"> The required number of nodes for managed integration runtime. </param>
         /// <param name="maxParallelExecutionsPerNode"> Maximum parallel executions count per node for managed integration runtime. </param>
         /// <param name="dataFlowProperties"> Data flow properties for managed integration runtime. </param>
-        /// <param name="vnetProperties"> VNet properties for managed integration runtime. </param>
+        /// <param name="vNetProperties"> VNet properties for managed integration runtime. </param>
         /// <param name="copyComputeScaleProperties"> CopyComputeScale properties for managed integration runtime. </param>
         /// <param name="pipelineExternalComputeScaleProperties"> PipelineExternalComputeScale properties for managed integration runtime. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVnetProperties vnetProperties, CopyComputeScaleProperties copyComputeScaleProperties, PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal IntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVnetProperties vNetProperties, CopyComputeScaleProperties copyComputeScaleProperties, PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Location = location;
             NodeSize = nodeSize;
             NumberOfNodes = numberOfNodes;
             MaxParallelExecutionsPerNode = maxParallelExecutionsPerNode;
             DataFlowProperties = dataFlowProperties;
-            VnetProperties = vnetProperties;
+            VNetProperties = vNetProperties;
             CopyComputeScaleProperties = copyComputeScaleProperties;
             PipelineExternalComputeScaleProperties = pipelineExternalComputeScaleProperties;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </summary>
         public AzureLocation? Location { get; set; }
+
         /// <summary> The node size requirement to managed integration runtime. </summary>
         public string NodeSize { get; set; }
+
         /// <summary> The required number of nodes for managed integration runtime. </summary>
         public int? NumberOfNodes { get; set; }
+
         /// <summary> Maximum parallel executions count per node for managed integration runtime. </summary>
         public int? MaxParallelExecutionsPerNode { get; set; }
+
         /// <summary> Data flow properties for managed integration runtime. </summary>
         public IntegrationRuntimeDataFlowProperties DataFlowProperties { get; set; }
+
         /// <summary> VNet properties for managed integration runtime. </summary>
-        public IntegrationRuntimeVnetProperties VnetProperties { get; set; }
+        public IntegrationRuntimeVnetProperties VNetProperties { get; set; }
+
         /// <summary> CopyComputeScale properties for managed integration runtime. </summary>
         public CopyComputeScaleProperties CopyComputeScaleProperties { get; set; }
+
         /// <summary> PipelineExternalComputeScale properties for managed integration runtime. </summary>
         public PipelineExternalComputeScaleProperties PipelineExternalComputeScaleProperties { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

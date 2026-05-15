@@ -15,32 +15,74 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ServicePrincipalCredential : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredential"/>. </summary>
-        public ServicePrincipalCredential()
+        public ServicePrincipalCredential() : base("ServicePrincipal")
         {
-            CredentialType = "ServicePrincipal";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredential"/>. </summary>
-        /// <param name="credentialType"> Type of credential. </param>
+        /// <param name="type"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="servicePrincipalId"> The app ID of the service principal used to authenticate. </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate. </param>
-        /// <param name="tenant"> The ID of the tenant to which the service principal belongs. </param>
-        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> servicePrincipalId, DataFactoryKeyVaultSecret servicePrincipalKey, DataFactoryElement<string> tenant) : base(credentialType, description, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Service Principal credential properties. </param>
+        internal ServicePrincipalCredential(string @type, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ServicePrincipalCredentialTypeProperties typeProperties) : base(@type, description, annotations, additionalProperties)
         {
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalKey = servicePrincipalKey;
-            Tenant = tenant;
-            CredentialType = credentialType ?? "ServicePrincipal";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Service Principal credential properties. </summary>
+        internal ServicePrincipalCredentialTypeProperties TypeProperties { get; set; }
+
         /// <summary> The app ID of the service principal used to authenticate. </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServicePrincipalCredentialTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The key of the service principal used to authenticate. </summary>
-        public DataFactoryKeyVaultSecret ServicePrincipalKey { get; set; }
+        public AzureKeyVaultSecretReference ServicePrincipalKey
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServicePrincipalCredentialTypeProperties();
+                }
+                TypeProperties.ServicePrincipalKey = value;
+            }
+        }
+
         /// <summary> The ID of the tenant to which the service principal belongs. </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ServicePrincipalCredentialTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
     }
 }
