@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource()
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -25,6 +25,7 @@ namespace Azure.Generator.Management.Tests.Common
                         ],
                         decorators: []);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            var noContentResponseType = InputFactory.OperationResponse(statusCodes: [204], bodytype: null);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
             // the http operation parameters
             var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
@@ -34,6 +35,7 @@ namespace Azure.Generator.Management.Tests.Common
             var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
             var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PATCH");
+            var checkExistenceOperation = InputFactory.Operation(name: "checkExistence", responses: [noContentResponseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "HEAD");
             // the method parameters
             var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
@@ -42,17 +44,27 @@ namespace Azure.Generator.Management.Tests.Common
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var checkExistenceMethod = InputFactory.BasicServiceMethod("checkExistence", checkExistenceOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
-            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+            var resourceMethods = new List<ResourceMethod>
+            {
                 new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
-            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+            };
+            var clientMethods = new List<InputServiceMethod> { getMethod, createMethod, updateMethod };
+            if (includeCheckExistence)
+            {
+                resourceMethods.Add(new ResourceMethod(ResourceOperationKind.CheckExistence, checkExistenceMethod, new RequestPathPattern(checkExistenceMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!));
+                clientMethods.Add(checkExistenceMethod);
+            }
+
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, resourceMethods, resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
                 TestClientName,
-                methods: [getMethod, createMethod, updateMethod],
+                methods: clientMethods,
                 decorators: [armProviderDecorator],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
 

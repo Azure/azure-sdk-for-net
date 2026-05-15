@@ -119,6 +119,7 @@ just the HTTP shape of the operation:
 | Kind | Meaning |
 | --- | --- |
 | `Read` | Gets the enclosing resource. This operation materializes the SDK resource instance. |
+| `CheckExistence` | Checks whether the enclosing resource exists. |
 | `Create` | Creates or replaces the enclosing resource. |
 | `Update` | Updates the enclosing resource. |
 | `Delete` | Deletes the enclosing resource. |
@@ -263,11 +264,12 @@ For each candidate resource model `M` from Step 1:
 
    | Verb | Kind |
    | --- | --- |
-   | `PUT` | `Create` |
-   | `PATCH` | `Update` |
-   | `DELETE` | `Delete` |
+| `PUT` | `Create` |
+| `PATCH` | `Update` |
+| `DELETE` | `Delete` |
+| `HEAD` | `CheckExistence` |
 
-   Operation-kind decorators are not consulted. If two operations of
+    Operation-kind decorators are not consulted. If two operations of
    the same kind hit the same path, emit a diagnostic and pick the one
    whose model matches the resource model. When the resource came from
    a dynamic-type expansion, each expanded resource attaches the
@@ -281,7 +283,7 @@ For each candidate resource model `M` from Step 1:
 
 After Step 2, the resource set is fixed: a list of resources each with
 `{ model, instance path, type, name, apiVersion, scope,
-Read [, Create] [, Update] [, Delete] }`, where `type` is fully
+Read [, Create] [, CheckExistence] [, Update] [, Delete] }`, where `type` is fully
 constant. `parent` is filled in by Step 3.
 
 ### Step 3 — Resolve parent relationships
@@ -369,16 +371,25 @@ For each remaining operation `O`:
 1. If `O`'s verb is not `GET`, skip — it cannot be a `List`.
 2. If `O`'s response is not a collection of some item model `T`,
    skip — it cannot be a `List`.
-3. Otherwise, look for a resource `R` in the **detected resource set** such that
-   both:
-   - `O.path` is a prefix of `R.instancePath`, and
-   - `R.model == T`.
+3. Otherwise, look for a resource `R` in the **detected resource set**
+   such that `R.model == T` and `O.path` identifies a collection of
+   `R`. A path identifies a collection of `R` when either:
+   - `O.path` is exactly `R.instancePath` with the trailing name segment
+     removed. This is the normal list-by-parent/list-by-resource-group
+     shape. Singleton resources are handled the same way: the collection
+     path is the singleton instance path with its literal singleton name
+     removed.
+   - `O.path` has the same ARM resource type as `R` and ends on that
+     resource type. This covers scope-level list operations whose path
+     intentionally omits part of the instance path, such as a
+     subscription-level list of resource-group-scoped resources.
 
-   If at least one such `R` exists, attach `O` to the resource with
-   the **shortest** matching `instancePath` as `R.List`. (The shortest
-   match is the closest containing resource whose model is `T` — i.e.
-   `R` itself, not some deeper resource that happens to also be of
-   model `T`.)
+   Exact collection-path matches take precedence over scope-level
+   resource-type matches. If multiple resources still match, attach `O`
+   to the resource with the **shortest** matching `instancePath` as
+   `R.List`. (The shortest match is the closest containing resource
+   whose model is `T` — i.e. `R` itself, not some deeper resource that
+   happens to also be of model `T`.)
 4. If no such `R` exists, `O` falls through to Pass 2.
 
 #### Pass 2 — Everything else is an `Action`
@@ -526,3 +537,8 @@ The end state expected by the C# generator is two collections:
 
 This is attached to the root client as the `@armProviderSchema` decorator
 and consumed by every later step of the C# generator.
+
+`CheckExistence` is part of the desired schema shape so the resource detection
+algorithm does not misclassify same-resource `HEAD` operations as actions. The
+C# generator may choose not to emit public SDK methods for a kind until that
+kind's API shape is designed.

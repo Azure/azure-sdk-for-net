@@ -163,6 +163,31 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_CheckExistenceOperation_IsNotEmitted()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+            var collectionProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .FirstOrDefault();
+            Assert.That(collectionProvider, Is.Not.Null);
+
+            var generatedMethodNames = resourceProvider!.Methods
+                .Concat(collectionProvider!.Methods)
+                .Select(m => m.Signature.Name)
+                .ToList();
+
+            Assert.That(
+                generatedMethodNames.Any(n => n.Contains("CheckExistence", StringComparison.OrdinalIgnoreCase)),
+                Is.False,
+                $"CheckExistence is detected in metadata but should not be emitted yet. Methods: {string.Join(", ", generatedMethodNames)}");
+        }
+
+        [TestCase]
         public void Verify_NestedChildResource_CollectionGetter_IncludesPathParameters()
         {
             var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource();
