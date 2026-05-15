@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         private readonly string _value;
         /// <summary> SQLServer. </summary>
-        private const string SQLServerValue = "SQLServer";
+        private const string SqlServerValue = "SQLServer";
         /// <summary> SQLDB. </summary>
-        private const string SQLDBValue = "SQLDB";
+        private const string SqlDBValue = "SQLDB";
         /// <summary> SQLDW. </summary>
-        private const string SQLDWValue = "SQLDW";
+        private const string SqlDWValue = "SQLDW";
         /// <summary> SQLMI. </summary>
-        private const string SQLMIValue = "SQLMI";
+        private const string SqlMIValue = "SQLMI";
         /// <summary> AzureDBForMySql. </summary>
         private const string AzureDBForMySqlValue = "AzureDBForMySql";
         /// <summary> AzureDBForPostgresSQL. </summary>
-        private const string AzureDBForPostgresSQLValue = "AzureDBForPostgresSQL";
+        private const string AzureDBForPostgresSqlValue = "AzureDBForPostgresSQL";
         /// <summary> MongoDB. </summary>
         private const string MongoDBValue = "MongoDB";
 
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> SQLServer. </summary>
-        public static DataMigrationScenarioTarget SQLServer { get; } = new DataMigrationScenarioTarget(SQLServerValue);
+        public static DataMigrationScenarioTarget SqlServer { get; } = new DataMigrationScenarioTarget(SqlServerValue);
 
         /// <summary> SQLDB. </summary>
-        public static DataMigrationScenarioTarget SQLDB { get; } = new DataMigrationScenarioTarget(SQLDBValue);
+        public static DataMigrationScenarioTarget SqlDB { get; } = new DataMigrationScenarioTarget(SqlDBValue);
 
         /// <summary> SQLDW. </summary>
-        public static DataMigrationScenarioTarget SQLDW { get; } = new DataMigrationScenarioTarget(SQLDWValue);
+        public static DataMigrationScenarioTarget SqlDW { get; } = new DataMigrationScenarioTarget(SqlDWValue);
 
         /// <summary> SQLMI. </summary>
-        public static DataMigrationScenarioTarget SQLMI { get; } = new DataMigrationScenarioTarget(SQLMIValue);
+        public static DataMigrationScenarioTarget SqlMI { get; } = new DataMigrationScenarioTarget(SqlMIValue);
 
         /// <summary> AzureDBForMySql. </summary>
         public static DataMigrationScenarioTarget AzureDBForMySql { get; } = new DataMigrationScenarioTarget(AzureDBForMySqlValue);
 
         /// <summary> AzureDBForPostgresSQL. </summary>
-        public static DataMigrationScenarioTarget AzureDBForPostgresSQL { get; } = new DataMigrationScenarioTarget(AzureDBForPostgresSQLValue);
+        public static DataMigrationScenarioTarget AzureDBForPostgresSql { get; } = new DataMigrationScenarioTarget(AzureDBForPostgresSqlValue);
 
         /// <summary> MongoDB. </summary>
         public static DataMigrationScenarioTarget MongoDB { get; } = new DataMigrationScenarioTarget(MongoDBValue);

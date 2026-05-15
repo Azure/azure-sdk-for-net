@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         private readonly string _value;
         /// <summary> SQLDB. </summary>
-        private const string SQLDBValue = "SQLDB";
+        private const string SqlDBValue = "SQLDB";
         /// <summary> SQLMI. </summary>
-        private const string SQLMIValue = "SQLMI";
+        private const string SqlMIValue = "SQLMI";
         /// <summary> AzureDbForMySql. </summary>
-        private const string AzureDbForMySqlValue = "AzureDbForMySql";
+        private const string AzureDBForMySqlValue = "AzureDbForMySql";
         /// <summary> AzureDbForPostgreSql. </summary>
-        private const string AzureDbForPostgreSqlValue = "AzureDbForPostgreSql";
+        private const string AzureDBForPostgreSqlValue = "AzureDbForPostgreSql";
         /// <summary> MongoDb. </summary>
-        private const string MongoDbValue = "MongoDb";
+        private const string MongoDBValue = "MongoDb";
         /// <summary> Unknown. </summary>
         private const string UnknownValue = "Unknown";
 
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> SQLDB. </summary>
-        public static DataMigrationProjectTargetPlatform SQLDB { get; } = new DataMigrationProjectTargetPlatform(SQLDBValue);
+        public static DataMigrationProjectTargetPlatform SqlDB { get; } = new DataMigrationProjectTargetPlatform(SqlDBValue);
 
         /// <summary> SQLMI. </summary>
-        public static DataMigrationProjectTargetPlatform SQLMI { get; } = new DataMigrationProjectTargetPlatform(SQLMIValue);
+        public static DataMigrationProjectTargetPlatform SqlMI { get; } = new DataMigrationProjectTargetPlatform(SqlMIValue);
 
         /// <summary> AzureDbForMySql. </summary>
-        public static DataMigrationProjectTargetPlatform AzureDbForMySql { get; } = new DataMigrationProjectTargetPlatform(AzureDbForMySqlValue);
+        public static DataMigrationProjectTargetPlatform AzureDBForMySql { get; } = new DataMigrationProjectTargetPlatform(AzureDBForMySqlValue);
 
         /// <summary> AzureDbForPostgreSql. </summary>
-        public static DataMigrationProjectTargetPlatform AzureDbForPostgreSql { get; } = new DataMigrationProjectTargetPlatform(AzureDbForPostgreSqlValue);
+        public static DataMigrationProjectTargetPlatform AzureDBForPostgreSql { get; } = new DataMigrationProjectTargetPlatform(AzureDBForPostgreSqlValue);
 
         /// <summary> MongoDb. </summary>
-        public static DataMigrationProjectTargetPlatform MongoDb { get; } = new DataMigrationProjectTargetPlatform(MongoDbValue);
+        public static DataMigrationProjectTargetPlatform MongoDB { get; } = new DataMigrationProjectTargetPlatform(MongoDBValue);
 
         /// <summary> Unknown. </summary>
         public static DataMigrationProjectTargetPlatform Unknown { get; } = new DataMigrationProjectTargetPlatform(UnknownValue);

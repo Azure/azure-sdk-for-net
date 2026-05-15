@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         private readonly string _value;
         /// <summary> UNDEFINED. </summary>
-        private const string UNDEFINEDValue = "UNDEFINED";
+        private const string UndefinedValue = "UNDEFINED";
         /// <summary> VALIDATING. </summary>
-        private const string VALIDATINGValue = "VALIDATING";
+        private const string ValidatingValue = "VALIDATING";
         /// <summary> PENDING. </summary>
-        private const string PENDINGValue = "PENDING";
+        private const string PendingValue = "PENDING";
         /// <summary> COMPLETE. </summary>
-        private const string COMPLETEValue = "COMPLETE";
+        private const string CompleteValue = "COMPLETE";
         /// <summary> ACTION_REQUIRED. </summary>
-        private const string ACTIONREQUIREDValue = "ACTION_REQUIRED";
+        private const string ActionRequiredValue = "ACTION_REQUIRED";
         /// <summary> FAILED. </summary>
-        private const string FAILEDValue = "FAILED";
+        private const string FailedValue = "FAILED";
 
         /// <summary> Initializes a new instance of <see cref="ReplicateMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> UNDEFINED. </summary>
-        public static ReplicateMigrationState UNDEFINED { get; } = new ReplicateMigrationState(UNDEFINEDValue);
+        public static ReplicateMigrationState Undefined { get; } = new ReplicateMigrationState(UndefinedValue);
 
         /// <summary> VALIDATING. </summary>
-        public static ReplicateMigrationState VALIDATING { get; } = new ReplicateMigrationState(VALIDATINGValue);
+        public static ReplicateMigrationState Validating { get; } = new ReplicateMigrationState(ValidatingValue);
 
         /// <summary> PENDING. </summary>
-        public static ReplicateMigrationState PENDING { get; } = new ReplicateMigrationState(PENDINGValue);
+        public static ReplicateMigrationState Pending { get; } = new ReplicateMigrationState(PendingValue);
 
         /// <summary> COMPLETE. </summary>
-        public static ReplicateMigrationState COMPLETE { get; } = new ReplicateMigrationState(COMPLETEValue);
+        public static ReplicateMigrationState Complete { get; } = new ReplicateMigrationState(CompleteValue);
 
         /// <summary> ACTION_REQUIRED. </summary>
-        public static ReplicateMigrationState ACTIONREQUIRED { get; } = new ReplicateMigrationState(ACTIONREQUIREDValue);
+        public static ReplicateMigrationState ActionRequired { get; } = new ReplicateMigrationState(ActionRequiredValue);
 
         /// <summary> FAILED. </summary>
-        public static ReplicateMigrationState FAILED { get; } = new ReplicateMigrationState(FAILEDValue);
+        public static ReplicateMigrationState Failed { get; } = new ReplicateMigrationState(FailedValue);
 
         /// <summary> Determines if two <see cref="ReplicateMigrationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

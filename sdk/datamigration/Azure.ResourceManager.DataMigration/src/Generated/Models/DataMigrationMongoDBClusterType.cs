@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> BlobContainer. </summary>
         private const string BlobContainerValue = "BlobContainer";
         /// <summary> CosmosDb. </summary>
-        private const string CosmosDbValue = "CosmosDb";
+        private const string CosmosDBValue = "CosmosDb";
         /// <summary> MongoDb. </summary>
-        private const string MongoDbValue = "MongoDb";
+        private const string MongoDBValue = "MongoDb";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBClusterType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DataMigrationMongoDBClusterType BlobContainer { get; } = new DataMigrationMongoDBClusterType(BlobContainerValue);
 
         /// <summary> CosmosDb. </summary>
-        public static DataMigrationMongoDBClusterType CosmosDb { get; } = new DataMigrationMongoDBClusterType(CosmosDbValue);
+        public static DataMigrationMongoDBClusterType CosmosDB { get; } = new DataMigrationMongoDBClusterType(CosmosDBValue);
 
         /// <summary> MongoDb. </summary>
-        public static DataMigrationMongoDBClusterType MongoDb { get; } = new DataMigrationMongoDBClusterType(MongoDbValue);
+        public static DataMigrationMongoDBClusterType MongoDB { get; } = new DataMigrationMongoDBClusterType(MongoDBValue);
 
         /// <summary> Determines if two <see cref="DataMigrationMongoDBClusterType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

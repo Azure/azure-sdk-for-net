@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         private readonly string _value;
         /// <summary> BEFORE_LOAD. </summary>
-        private const string BEFORELOADValue = "BEFORE_LOAD";
+        private const string BeforeLoadValue = "BEFORE_LOAD";
         /// <summary> FULL_LOAD. </summary>
-        private const string FULLLOADValue = "FULL_LOAD";
+        private const string FullLoadValue = "FULL_LOAD";
         /// <summary> COMPLETED. </summary>
-        private const string COMPLETEDValue = "COMPLETED";
+        private const string CompletedValue = "COMPLETED";
         /// <summary> CANCELED. </summary>
-        private const string CANCELEDValue = "CANCELED";
+        private const string CanceledValue = "CANCELED";
         /// <summary> ERROR. </summary>
-        private const string ERRORValue = "ERROR";
+        private const string ErrorValue = "ERROR";
         /// <summary> FAILED. </summary>
-        private const string FAILEDValue = "FAILED";
+        private const string FailedValue = "FAILED";
 
         /// <summary> Initializes a new instance of <see cref="SyncTableMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> BEFORE_LOAD. </summary>
-        public static SyncTableMigrationState BEFORELOAD { get; } = new SyncTableMigrationState(BEFORELOADValue);
+        public static SyncTableMigrationState BeforeLoad { get; } = new SyncTableMigrationState(BeforeLoadValue);
 
         /// <summary> FULL_LOAD. </summary>
-        public static SyncTableMigrationState FULLLOAD { get; } = new SyncTableMigrationState(FULLLOADValue);
+        public static SyncTableMigrationState FullLoad { get; } = new SyncTableMigrationState(FullLoadValue);
 
         /// <summary> COMPLETED. </summary>
-        public static SyncTableMigrationState COMPLETED { get; } = new SyncTableMigrationState(COMPLETEDValue);
+        public static SyncTableMigrationState Completed { get; } = new SyncTableMigrationState(CompletedValue);
 
         /// <summary> CANCELED. </summary>
-        public static SyncTableMigrationState CANCELED { get; } = new SyncTableMigrationState(CANCELEDValue);
+        public static SyncTableMigrationState Canceled { get; } = new SyncTableMigrationState(CanceledValue);
 
         /// <summary> ERROR. </summary>
-        public static SyncTableMigrationState ERROR { get; } = new SyncTableMigrationState(ERRORValue);
+        public static SyncTableMigrationState Error { get; } = new SyncTableMigrationState(ErrorValue);
 
         /// <summary> FAILED. </summary>
-        public static SyncTableMigrationState FAILED { get; } = new SyncTableMigrationState(FAILEDValue);
+        public static SyncTableMigrationState Failed { get; } = new SyncTableMigrationState(FailedValue);
 
         /// <summary> Determines if two <see cref="SyncTableMigrationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

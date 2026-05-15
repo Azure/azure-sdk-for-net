@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> DB2. </summary>
         private const string DB2Value = "DB2";
         /// <summary> MySQL. </summary>
-        private const string MySQLValue = "MySQL";
+        private const string MySqlValue = "MySQL";
         /// <summary> Oracle. </summary>
         private const string OracleValue = "Oracle";
         /// <summary> SQL. </summary>
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         /// <summary> Sybase. </summary>
         private const string SybaseValue = "Sybase";
         /// <summary> PostgreSQL. </summary>
-        private const string PostgreSQLValue = "PostgreSQL";
+        private const string PostgreSqlValue = "PostgreSQL";
         /// <summary> MongoDB. </summary>
         private const string MongoDBValue = "MongoDB";
         /// <summary> SQLRDS. </summary>
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DataMigrationScenarioSource DB2 { get; } = new DataMigrationScenarioSource(DB2Value);
 
         /// <summary> MySQL. </summary>
-        public static DataMigrationScenarioSource MySQL { get; } = new DataMigrationScenarioSource(MySQLValue);
+        public static DataMigrationScenarioSource MySql { get; } = new DataMigrationScenarioSource(MySqlValue);
 
         /// <summary> Oracle. </summary>
         public static DataMigrationScenarioSource Oracle { get; } = new DataMigrationScenarioSource(OracleValue);
 
         /// <summary> SQL. </summary>
-        public static DataMigrationScenarioSource SQL { get; } = new DataMigrationScenarioSource(SQLValue);
+        public static DataMigrationScenarioSource Sql { get; } = new DataMigrationScenarioSource(SqlValue);
 
         /// <summary> Sybase. </summary>
         public static DataMigrationScenarioSource Sybase { get; } = new DataMigrationScenarioSource(SybaseValue);
 
         /// <summary> PostgreSQL. </summary>
-        public static DataMigrationScenarioSource PostgreSQL { get; } = new DataMigrationScenarioSource(PostgreSQLValue);
+        public static DataMigrationScenarioSource PostgreSql { get; } = new DataMigrationScenarioSource(PostgreSqlValue);
 
         /// <summary> MongoDB. </summary>
         public static DataMigrationScenarioSource MongoDB { get; } = new DataMigrationScenarioSource(MongoDBValue);

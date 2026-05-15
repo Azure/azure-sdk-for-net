@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         private readonly string _value;
         /// <summary> SQL. </summary>
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         /// <summary> MySQL. </summary>
-        private const string MySQLValue = "MySQL";
+        private const string MySqlValue = "MySQL";
         /// <summary> PostgreSql. </summary>
         private const string PostgreSqlValue = "PostgreSql";
         /// <summary> MongoDb. </summary>
-        private const string MongoDbValue = "MongoDb";
+        private const string MongoDBValue = "MongoDb";
         /// <summary> Unknown. </summary>
         private const string UnknownValue = "Unknown";
 
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> SQL. </summary>
-        public static DataMigrationProjectSourcePlatform SQL { get; } = new DataMigrationProjectSourcePlatform(SQLValue);
+        public static DataMigrationProjectSourcePlatform Sql { get; } = new DataMigrationProjectSourcePlatform(SqlValue);
 
         /// <summary> MySQL. </summary>
-        public static DataMigrationProjectSourcePlatform MySQL { get; } = new DataMigrationProjectSourcePlatform(MySQLValue);
+        public static DataMigrationProjectSourcePlatform MySql { get; } = new DataMigrationProjectSourcePlatform(MySqlValue);
 
         /// <summary> PostgreSql. </summary>
         public static DataMigrationProjectSourcePlatform PostgreSql { get; } = new DataMigrationProjectSourcePlatform(PostgreSqlValue);
 
         /// <summary> MongoDb. </summary>
-        public static DataMigrationProjectSourcePlatform MongoDb { get; } = new DataMigrationProjectSourcePlatform(MongoDbValue);
+        public static DataMigrationProjectSourcePlatform MongoDB { get; } = new DataMigrationProjectSourcePlatform(MongoDBValue);
 
         /// <summary> Unknown. </summary>
         public static DataMigrationProjectSourcePlatform Unknown { get; } = new DataMigrationProjectSourcePlatform(UnknownValue);

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> SqlServer. </summary>
         private const string SqlServerValue = "SqlServer";
         /// <summary> AzureDbForMySQL. </summary>
-        private const string AzureDbForMySQLValue = "AzureDbForMySQL";
+        private const string AzureDBForMySqlValue = "AzureDbForMySQL";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMySqlTargetPlatformType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DataMigrationMySqlTargetPlatformType SqlServer { get; } = new DataMigrationMySqlTargetPlatformType(SqlServerValue);
 
         /// <summary> AzureDbForMySQL. </summary>
-        public static DataMigrationMySqlTargetPlatformType AzureDbForMySQL { get; } = new DataMigrationMySqlTargetPlatformType(AzureDbForMySQLValue);
+        public static DataMigrationMySqlTargetPlatformType AzureDBForMySql { get; } = new DataMigrationMySqlTargetPlatformType(AzureDBForMySqlValue);
 
         /// <summary> Determines if two <see cref="DataMigrationMySqlTargetPlatformType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
