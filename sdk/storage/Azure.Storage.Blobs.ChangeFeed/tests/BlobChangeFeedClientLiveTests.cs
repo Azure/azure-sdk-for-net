@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             foreach (BlobChangeFeedEvent e in events)
             {
                 Assert.GreaterOrEqual(e.EventTime, roundedStart, "Event time should be within the rounded window");
-                Assert.Less(e.EventTime, roundedEnd, "Event time should be within the rounded window");
+                Assert.LessOrEqual(e.EventTime, roundedEnd, "Event time should be within the rounded window");
             }
         }
 

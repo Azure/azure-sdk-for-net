@@ -82,7 +82,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// Builds a change feed reader, either from scratch with a time window or by resuming from a continuation token.
         /// </summary>
         /// <param name="startTime">Optional inclusive start time (ignored when resuming from a cursor).</param>
-        /// <param name="endTime">Optional exclusive end time (ignored when resuming from a cursor).</param>
+        /// <param name="endTime">Optional inclusive end time (ignored when resuming from a cursor).</param>
         /// <param name="continuation">Serialized continuation token from a previous page, or null for a fresh start.</param>
         /// <param name="async">Whether to use async APIs.</param>
         /// <param name="cancellationToken">Cancellation token.</param>

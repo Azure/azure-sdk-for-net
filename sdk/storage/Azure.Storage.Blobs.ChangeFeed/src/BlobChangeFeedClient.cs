@@ -233,10 +233,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         }
 
         /// <summary>
-        /// GetChanges.
+        /// Returns change feed events within the specified time range. Both
+        /// <paramref name="start"/> and <paramref name="end"/> are inclusive — events whose
+        /// <c>EventTime</c> equals either boundary are returned.
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
+        /// <param name="start">Inclusive start time of the change feed window.</param>
+        /// <param name="end">Inclusive end time of the change feed window.</param>
         /// <returns><see cref="BlobChangeFeedPageable"/>.</returns>
 #pragma warning disable AZC0002
         public virtual Pageable<BlobChangeFeedEvent> GetChanges(DateTimeOffset? start = default, DateTimeOffset? end = default)
@@ -269,10 +271,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         }
 
         /// <summary>
-        /// GetChangesAsync.
+        /// Returns change feed events within the specified time range. Both
+        /// <paramref name="start"/> and <paramref name="end"/> are inclusive — events whose
+        /// <c>EventTime</c> equals either boundary are returned.
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
+        /// <param name="start">Inclusive start time of the change feed window.</param>
+        /// <param name="end">Inclusive end time of the change feed window.</param>
         /// <returns><see cref="BlobChangeFeedAsyncPageable"/>.</returns>
 #pragma warning disable AZC0002
         public virtual AsyncPageable<BlobChangeFeedEvent> GetChangesAsync(
