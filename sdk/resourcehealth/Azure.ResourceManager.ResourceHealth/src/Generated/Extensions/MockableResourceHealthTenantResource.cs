@@ -8,34 +8,40 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceHealth;
 using Azure.ResourceManager.ResourceHealth.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableResourceHealthTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceHealthTenantResource"/> class for mocking. </summary>
+        private ClientDiagnostics _operationsClientDiagnostics;
+        private Operations _operationsRestClient;
+
+        /// <summary> Initializes a new instance of MockableResourceHealthTenantResource for mocking. </summary>
         protected MockableResourceHealthTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceHealthTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourceHealthTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourceHealthTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of ResourceHealthMetadataEntityResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of ResourceHealthMetadataEntityResources and their operations over a ResourceHealthMetadataEntityResource. </returns>
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+
+        /// <summary> Gets a collection of ResourceHealthMetadataEntities in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceHealthMetadataEntities and their operations over a ResourceHealthMetadataEntityResource. </returns>
         public virtual ResourceHealthMetadataEntityCollection GetResourceHealthMetadataEntities()
         {
             return GetCachedClient(client => new ResourceHealthMetadataEntityCollection(client, Id));
@@ -45,20 +51,16 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// Gets the list of metadata entities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/metadata/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metadata_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataEntities_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceHealthMetadataEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,6 +71,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceHealthMetadataEntityResource>> GetResourceHealthMetadataEntityAsync(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return await GetResourceHealthMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
@@ -76,20 +80,16 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// Gets the list of metadata entities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/metadata/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/metadata/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metadata_GetEntity</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataEntities_GetEntity. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceHealthMetadataEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,11 +100,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         [ForwardsClientCalls]
         public virtual Response<ResourceHealthMetadataEntityResource> GetResourceHealthMetadataEntity(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return GetResourceHealthMetadataEntities().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantResourceHealthEventResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantResourceHealthEventResources and their operations over a TenantResourceHealthEventResource. </returns>
+        /// <summary> Gets a collection of TenantResourceHealthEvents in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of TenantResourceHealthEvents and their operations over a TenantResourceHealthEventResource. </returns>
         public virtual TenantResourceHealthEventCollection GetTenantResourceHealthEvents()
         {
             return GetCachedClient(client => new TenantResourceHealthEventCollection(client, Id));
@@ -114,32 +116,30 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// Service health event in the tenant by event tracking id
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TenantResourceHealthEventResource>> GetTenantResourceHealthEventAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantResourceHealthEventResource>> GetTenantResourceHealthEventAsync(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
+
             return await GetTenantResourceHealthEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
         }
 
@@ -147,37 +147,35 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// Service health event in the tenant by event tracking id
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/events/{eventTrackingId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantEventOperationGroup_GetByTenantIdAndTrackingId. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantResourceHealthEventResource> GetTenantResourceHealthEvent(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public virtual Response<TenantResourceHealthEventResource> GetTenantResourceHealthEvent(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
+
             return GetTenantResourceHealthEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceEmergingIssueResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
+        /// <summary> Gets a collection of ServiceEmergingIssues in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceEmergingIssues and their operations over a ServiceEmergingIssueResource. </returns>
         public virtual ServiceEmergingIssueCollection GetServiceEmergingIssues()
         {
             return GetCachedClient(client => new ServiceEmergingIssueCollection(client, Id));
@@ -187,20 +185,16 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/emergingIssues/{issueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmergingIssues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EmergingIssuesGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEmergingIssueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,20 +210,16 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/emergingIssues/{issueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmergingIssues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EmergingIssuesGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEmergingIssueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,6 +229,94 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual Response<ServiceEmergingIssueResource> GetServiceEmergingIssue(EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
             return GetServiceEmergingIssues().Get(issueName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists available operations for the resourcehealth resource provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Operations_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperationListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableResourceHealthTenantResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists available operations for the resourcehealth resource provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.ResourceHealth/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Operations_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperationListResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableResourceHealthTenantResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

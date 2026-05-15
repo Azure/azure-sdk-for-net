@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     public readonly partial struct ResourceHealthAvailabilityStateValue : IEquatable<ResourceHealthAvailabilityStateValue>
     {
         private readonly string _value;
+        /// <summary> Available. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> Degraded. </summary>
+        private const string DegradedValue = "Degraded";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStateValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceHealthAvailabilityStateValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailableValue = "Available";
-        private const string UnavailableValue = "Unavailable";
-        private const string DegradedValue = "Degraded";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Available. </summary>
         public static ResourceHealthAvailabilityStateValue Available { get; } = new ResourceHealthAvailabilityStateValue(AvailableValue);
+
         /// <summary> Unavailable. </summary>
         public static ResourceHealthAvailabilityStateValue Unavailable { get; } = new ResourceHealthAvailabilityStateValue(UnavailableValue);
+
         /// <summary> Degraded. </summary>
         public static ResourceHealthAvailabilityStateValue Degraded { get; } = new ResourceHealthAvailabilityStateValue(DegradedValue);
+
         /// <summary> Unknown. </summary>
         public static ResourceHealthAvailabilityStateValue Unknown { get; } = new ResourceHealthAvailabilityStateValue(UnknownValue);
+
         /// <summary> Determines if two <see cref="ResourceHealthAvailabilityStateValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceHealthAvailabilityStateValue left, ResourceHealthAvailabilityStateValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceHealthAvailabilityStateValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceHealthAvailabilityStateValue left, ResourceHealthAvailabilityStateValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthAvailabilityStateValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceHealthAvailabilityStateValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceHealthAvailabilityStateValue(string value) => new ResourceHealthAvailabilityStateValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceHealthAvailabilityStateValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceHealthAvailabilityStateValue?(string value) => value == null ? null : new ResourceHealthAvailabilityStateValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceHealthAvailabilityStateValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceHealthAvailabilityStateValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

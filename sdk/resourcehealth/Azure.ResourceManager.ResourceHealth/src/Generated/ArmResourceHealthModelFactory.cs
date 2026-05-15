@@ -10,33 +10,62 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourceHealthModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthAvailabilityStatus"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
-        /// <param name="properties"> Properties of availability state. </param>
-        /// <returns> A new <see cref="Models.ResourceHealthAvailabilityStatus"/> instance for mocking. </returns>
-        public static ResourceHealthAvailabilityStatus ResourceHealthAvailabilityStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceHealthAvailabilityStatusProperties properties = null)
+        /// <summary> Lists the operations response. </summary>
+        /// <param name="value"> List of operations available in the Microsoft.ResourceHealth resource provider. </param>
+        /// <returns> A new <see cref="Models.OperationListResult"/> instance for mocking. </returns>
+        public static OperationListResult OperationListResult(IEnumerable<ResourceHealthOperationInfo> value = default)
         {
-            return new ResourceHealthAvailabilityStatus(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
+            value ??= new ChangeTrackingList<ResourceHealthOperationInfo>();
+
+            return new OperationListResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthAvailabilityStatusProperties"/>. </summary>
+        /// <summary> Operation available in the Microsoft.ResourceHealth resource provider. </summary>
+        /// <param name="name"> Name of the operation. </param>
+        /// <param name="display"> Properties of the operation. </param>
+        /// <returns> A new <see cref="Models.ResourceHealthOperationInfo"/> instance for mocking. </returns>
+        public static ResourceHealthOperationInfo ResourceHealthOperationInfo(string name = default, OperationDisplay display = default)
+        {
+            return new ResourceHealthOperationInfo(name, display, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of the operation. </summary>
+        /// <param name="provider"> Provider name. </param>
+        /// <param name="resource"> Resource name. </param>
+        /// <param name="operation"> Operation name. </param>
+        /// <param name="description"> Description of the operation. </param>
+        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
+        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
+        {
+            return new OperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> availabilityStatus of a resource. </summary>
+        /// <param name="id"> Azure Resource Manager Identity for the availabilityStatuses resource. </param>
+        /// <param name="name"></param>
+        /// <param name="type"> Microsoft.ResourceHealth/AvailabilityStatuses. </param>
+        /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
+        /// <param name="properties"> Properties of availability state. </param>
+        /// <returns> A new <see cref="ResourceHealth.AvailabilityStatusData"/> instance for mocking. </returns>
+        public static AvailabilityStatusData AvailabilityStatusData(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, string location = default, ResourceHealthAvailabilityStatusProperties properties = default)
+        {
+            return new AvailabilityStatusData(
+                id,
+                name,
+                @type,
+                location,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of availability state. </summary>
         /// <param name="availabilityState"> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </param>
         /// <param name="title"> Title description of the availability status. </param>
         /// <param name="summary"> Summary description of the availability status. </param>
@@ -58,10 +87,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
         /// <returns> A new <see cref="Models.ResourceHealthAvailabilityStatusProperties"/> instance for mocking. </returns>
-        public static ResourceHealthAvailabilityStatusProperties ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState = null, string title = null, string summary = null, string detailedStatus = null, string reasonType = null, string context = null, string category = null, string articleId = null, DateTimeOffset? rootCauseAttributionOn = null, string healthEventType = null, string healthEventCause = null, string healthEventCategory = null, string healthEventId = null, DateTimeOffset? resolutionEta = null, DateTimeOffset? occuredOn = null, ReasonChronicityType? reasonChronicity = null, DateTimeOffset? reportedOn = null, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved = null, IEnumerable<ResourceHealthRecommendedAction> recommendedActions = null, IEnumerable<ServiceImpactingEvent> serviceImpactingEvents = null)
+        public static ResourceHealthAvailabilityStatusProperties ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState = default, string title = default, string summary = default, string detailedStatus = default, string reasonType = default, string context = default, string category = default, string articleId = default, DateTimeOffset? rootCauseAttributionOn = default, string healthEventType = default, string healthEventCause = default, string healthEventCategory = default, string healthEventId = default, DateTimeOffset? resolutionEta = default, DateTimeOffset? occuredOn = default, ReasonChronicityType? reasonChronicity = default, DateTimeOffset? reportedOn = default, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved = default, IEnumerable<ResourceHealthRecommendedAction> recommendedActions = default, IEnumerable<ServiceImpactingEvent> serviceImpactingEvents = default)
         {
-            recommendedActions ??= new List<ResourceHealthRecommendedAction>();
-            serviceImpactingEvents ??= new List<ServiceImpactingEvent>();
+            recommendedActions ??= new ChangeTrackingList<ResourceHealthRecommendedAction>();
+            serviceImpactingEvents ??= new ChangeTrackingList<ServiceImpactingEvent>();
 
             return new ResourceHealthAvailabilityStatusProperties(
                 availabilityState,
@@ -82,160 +111,156 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 reasonChronicity,
                 reportedOn,
                 recentlyResolved,
-                recommendedActions?.ToList(),
-                serviceImpactingEvents?.ToList(),
-                serializedAdditionalRawData: null);
+                recommendedActions.ToList(),
+                serviceImpactingEvents.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthAvailabilityStateRecentlyResolved"/>. </summary>
+        /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
         /// <param name="unavailableOccuredOn"> Timestamp for when the availabilityState changed to Unavailable. </param>
         /// <param name="resolvedOn"> Timestamp when the availabilityState changes to Available. </param>
         /// <param name="unavailableSummary"> Brief description of cause of the resource becoming unavailable. </param>
         /// <returns> A new <see cref="Models.ResourceHealthAvailabilityStateRecentlyResolved"/> instance for mocking. </returns>
-        public static ResourceHealthAvailabilityStateRecentlyResolved ResourceHealthAvailabilityStateRecentlyResolved(DateTimeOffset? unavailableOccuredOn = null, DateTimeOffset? resolvedOn = null, string unavailableSummary = null)
+        public static ResourceHealthAvailabilityStateRecentlyResolved ResourceHealthAvailabilityStateRecentlyResolved(DateTimeOffset? unavailableOccuredOn = default, DateTimeOffset? resolvedOn = default, string unavailableSummary = default)
         {
-            return new ResourceHealthAvailabilityStateRecentlyResolved(unavailableOccuredOn, resolvedOn, unavailableSummary, serializedAdditionalRawData: null);
+            return new ResourceHealthAvailabilityStateRecentlyResolved(unavailableOccuredOn, resolvedOn, unavailableSummary, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthRecommendedAction"/>. </summary>
+        /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
         /// <param name="actionUriComment"> the comment for the Action. </param>
         /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
         /// <returns> A new <see cref="Models.ResourceHealthRecommendedAction"/> instance for mocking. </returns>
-        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = null, Uri actionUri = null, string actionUriComment = null, string actionUriText = null)
+        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = default, Uri actionUri = default, string actionUriComment = default, string actionUriText = default)
         {
-            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, serializedAdditionalRawData: null);
+            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceImpactingEvent"/>. </summary>
         /// <param name="eventStartOn"> Timestamp for when the event started. </param>
         /// <param name="eventStatusLastModifiedOn"> Timestamp for when event was submitted/detected. </param>
         /// <param name="correlationId"> Correlation id for the event. </param>
-        /// <param name="statusValue"> Status of the service impacting event. </param>
+        /// <param name="statusValue"> Current status of the event. </param>
         /// <param name="incidentProperties"> Properties of the service impacting event. </param>
         /// <returns> A new <see cref="Models.ServiceImpactingEvent"/> instance for mocking. </returns>
-        public static ServiceImpactingEvent ServiceImpactingEvent(DateTimeOffset? eventStartOn = null, DateTimeOffset? eventStatusLastModifiedOn = null, string correlationId = null, string statusValue = null, ServiceImpactingEventIncidentProperties incidentProperties = null)
+        public static ServiceImpactingEvent ServiceImpactingEvent(DateTimeOffset? eventStartOn = default, DateTimeOffset? eventStatusLastModifiedOn = default, string correlationId = default, string statusValue = default, ServiceImpactingEventIncidentProperties incidentProperties = default)
         {
             return new ServiceImpactingEvent(
                 eventStartOn,
                 eventStatusLastModifiedOn,
                 correlationId,
-                statusValue != null ? new ServiceImpactingEventStatus(statusValue, serializedAdditionalRawData: null) : null,
+                statusValue is null ? default : new ServiceImpactingEventStatus(statusValue, null),
                 incidentProperties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceImpactingEventIncidentProperties"/>. </summary>
+        /// <summary> Properties of the service impacting event. </summary>
         /// <param name="title"> Title of the incident. </param>
         /// <param name="service"> Service impacted by the event. </param>
         /// <param name="region"> Region impacted by the event. </param>
         /// <param name="incidentType"> Type of Event. </param>
         /// <returns> A new <see cref="Models.ServiceImpactingEventIncidentProperties"/> instance for mocking. </returns>
-        public static ServiceImpactingEventIncidentProperties ServiceImpactingEventIncidentProperties(string title = null, string service = null, string region = null, string incidentType = null)
+        public static ServiceImpactingEventIncidentProperties ServiceImpactingEventIncidentProperties(string title = default, string service = default, string region = default, string incidentType = default)
         {
-            return new ServiceImpactingEventIncidentProperties(title, service, region, incidentType, serializedAdditionalRawData: null);
+            return new ServiceImpactingEventIncidentProperties(title, service, region, incidentType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealth.ResourceHealthMetadataEntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="dependsOn"> The list of keys on which this entity depends on. </param>
-        /// <param name="applicableScenarios"> The list of scenarios applicable to this metadata entity. </param>
-        /// <param name="supportedValues"> The list of supported values. </param>
-        /// <returns> A new <see cref="ResourceHealth.ResourceHealthMetadataEntityData"/> instance for mocking. </returns>
-        public static ResourceHealthMetadataEntityData ResourceHealthMetadataEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> dependsOn = null, IEnumerable<MetadataEntityScenario> applicableScenarios = null, IEnumerable<MetadataSupportedValueDetail> supportedValues = null)
+        /// <summary> ARM proxy resource. </summary>
+        /// <param name="id"> Azure Resource Manager Identity for the availabilityStatuses resource. </param>
+        /// <param name="name"></param>
+        /// <param name="type"> Microsoft.ResourceHealth/AvailabilityStatuses. </param>
+        /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
+        /// <returns> A new <see cref="Models.ProxyResourceAutoGenerated"/> instance for mocking. </returns>
+        public static ProxyResourceAutoGenerated ProxyResourceAutoGenerated(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, string location = default)
         {
-            dependsOn ??= new List<string>();
-            applicableScenarios ??= new List<MetadataEntityScenario>();
-            supportedValues ??= new List<MetadataSupportedValueDetail>();
-
-            return new ResourceHealthMetadataEntityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName,
-                dependsOn?.ToList(),
-                applicableScenarios?.ToList(),
-                supportedValues?.ToList(),
-                serializedAdditionalRawData: null);
+            return new ProxyResourceAutoGenerated(id, name, @type, location, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MetadataSupportedValueDetail"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="resourceTypes"> The list of associated resource types. </param>
-        /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
-        public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = null, string displayName = null, IEnumerable<ResourceType> resourceTypes = null)
-        {
-            resourceTypes ??= new List<ResourceType>();
-
-            return new MetadataSupportedValueDetail(id, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceHealth.ResourceHealthEventImpactedResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
         /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
         /// <param name="targetRegion"> Impacted resource region name. </param>
-        /// <param name="resourceName"> Resource name of the impacted resource. </param>
-        /// <param name="resourceGroup"> Resource group name of the impacted resource. </param>
-        /// <param name="status"> Status of the impacted resource. </param>
-        /// <param name="maintenanceStartTime"> Start time of maintenance for the impacted resource. </param>
-        /// <param name="maintenanceEndTime"> End time of maintenance for the impacted resource. </param>
         /// <param name="info"> Additional information. </param>
         /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventImpactedResourceData"/> instance for mocking. </returns>
-        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceType? targetResourceType = null, ResourceIdentifier targetResourceId = null, string targetRegion = null, string resourceName = null, string resourceGroup = null, string status = null, string maintenanceStartTime = null, string maintenanceEndTime = null, IEnumerable<ResourceHealthKeyValueItem> info = null)
+        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string targetResourceType = default, string targetResourceId = default, string targetRegion = default, IEnumerable<ResourceHealthKeyValueItem> info = default)
         {
-            info ??= new List<ResourceHealthKeyValueItem>();
-
             return new ResourceHealthEventImpactedResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                targetResourceType,
-                targetResourceId,
-                targetRegion,
-                resourceName,
-                resourceGroup,
-                status,
-                maintenanceStartTime,
-                maintenanceEndTime,
-                info?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                targetResourceType is null && targetResourceId is null && targetRegion is null && info is null ? default : new ResourceHealthEventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, (info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>()).ToList(), null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthKeyValueItem"/>. </summary>
+        /// <summary> Key value tuple. </summary>
         /// <param name="key"> Key of tuple. </param>
         /// <param name="value"> Value of tuple. </param>
         /// <returns> A new <see cref="Models.ResourceHealthKeyValueItem"/> instance for mocking. </returns>
-        public static ResourceHealthKeyValueItem ResourceHealthKeyValueItem(string key = null, string value = null)
+        public static ResourceHealthKeyValueItem ResourceHealthKeyValueItem(string key = default, string value = default)
         {
-            return new ResourceHealthKeyValueItem(key, value, serializedAdditionalRawData: null);
+            return new ResourceHealthKeyValueItem(key, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealth.ResourceHealthEventData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> The display name. </param>
+        /// <param name="dependsOn"> The list of keys on which this entity depends on. </param>
+        /// <param name="applicableScenarios"> The list of scenarios applicable to this metadata entity. </param>
+        /// <param name="supportedValues"> The list of supported values. </param>
+        /// <returns> A new <see cref="ResourceHealth.ResourceHealthMetadataEntityData"/> instance for mocking. </returns>
+        public static ResourceHealthMetadataEntityData ResourceHealthMetadataEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<string> dependsOn = default, IEnumerable<MetadataEntityScenario> applicableScenarios = default, IEnumerable<MetadataSupportedValueDetail> supportedValues = default)
+        {
+            return new ResourceHealthMetadataEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                displayName is null && dependsOn is null && applicableScenarios is null && supportedValues is null ? default : new MetadataEntityProperties(displayName, (dependsOn ?? new ChangeTrackingList<string>()).ToList(), (applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>()).ToList(), (supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>()).ToList(), null));
+        }
+
+        /// <summary> The metadata supported value detail. </summary>
+        /// <param name="id"> The id of the metadata value. </param>
+        /// <param name="previousId"> The previous value of the id field in case the data has changed. </param>
+        /// <param name="serviceGuid"> The permanent guid for the service. Used when the id is a service name. </param>
+        /// <param name="displayName"> The display name. </param>
+        /// <param name="resourceTypes"> The list of associated resource types. </param>
+        /// <param name="priority"> Priority of this metadata supported value. Lower number is given higher preference. </param>
+        /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
+        public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = default, string previousId = default, string serviceGuid = default, string displayName = default, IEnumerable<ResourceType> resourceTypes = default, int? priority = default)
+        {
+            resourceTypes ??= new ChangeTrackingList<ResourceType>();
+
+            return new MetadataSupportedValueDetail(
+                id,
+                previousId,
+                serviceGuid,
+                displayName,
+                resourceTypes.ToList(),
+                priority,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eventType"> Type of event. </param>
-        /// <param name="eventSubType"> Sub type of the event. Currently used to determine retirement communications for health advisory events. </param>
+        /// <param name="eventSubType"> Sub-type of event. </param>
         /// <param name="eventSource"> Source of event. </param>
         /// <param name="status"> Current status of event. </param>
         /// <param name="title"> Title text of event. </param>
-        /// <param name="summary"> Summary text of event. </param>
+        /// <param name="summary"> Summary text of event. Use fetchEventDetails endpoint to get summary of sensitive events. </param>
         /// <param name="header"> Header text of event. </param>
         /// <param name="level"> Level of insight. </param>
         /// <param name="eventLevel"> Level of event. </param>
+        /// <param name="isEventSensitive"> If true the event may contains sensitive data. Use the post events/{trackingId}/fetchEventDetails endpoint to fetch sensitive data see https://learn.microsoft.com/en-us/azure/service-health/security-advisories-elevated-access. </param>
         /// <param name="externalIncidentId"> The id of the Incident. </param>
         /// <param name="reason"> The reason for the Incident. </param>
         /// <param name="article"> Article of event. </param>
@@ -247,83 +272,90 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="faqs"> Frequently asked questions for the service health event. </param>
         /// <param name="isHirEvent"> It provides information if the event is High incident rate event or not. </param>
         /// <param name="isMicrosoftSupportEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
-        /// <param name="description"> Contains the communication message for the event, that could include summary, root cause and other details. </param>
+        /// <param name="description"> Contains the communication message for the event, that could include summary, root cause and other details. Use fetchEventDetails endpoint to get description of sensitive events. </param>
         /// <param name="isPlatformInitiated"> Is true if the event is platform initiated. </param>
         /// <param name="isChatWithUsEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
         /// <param name="priority"> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </param>
         /// <param name="lastUpdateOn"> It provides the Timestamp for when the health impacting event was last updated. </param>
         /// <param name="hirStage"> Stage for HIR Document. </param>
-        /// <param name="additionalInformationMessage"> Additional information. </param>
         /// <param name="duration"> duration in seconds. </param>
         /// <param name="impactType"> The type of the impact. </param>
-        /// <param name="maintenanceId"> Unique identifier for planned maintenance event. </param>
-        /// <param name="maintenanceType"> The type of planned maintenance event. </param>
-        /// <param name="argQuery"> Azure Resource Graph query to fetch the affected resources from their existing Azure Resource Graph locations. </param>
+        /// <param name="eventTags">
+        /// A list of metadata tags associated with the event. Possible values include:
+        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
+        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
+        /// </param>
+        /// <param name="newRate"> Billing rate change information - new rate. </param>
+        /// <param name="oldRate"> Billing rate change information - old rate. </param>
+        /// <param name="currencyType"> Billing currency type information. Example: USD, CAD. </param>
+        /// <param name="billingId"> Billing identifier information. </param>
+        /// <param name="additionalInformationMessage"> Additional information Message. </param>
         /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
-        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceHealthEventTypeValue? eventType = null, EventSubTypeValue? eventSubType = null, ResourceHealthEventSourceValue? eventSource = null, ResourceHealthEventStatusValue? status = null, string title = null, string summary = null, string header = null, ResourceHealthEventInsightLevelValue? level = null, ResourceHealthEventLevelValue? eventLevel = null, string externalIncidentId = null, string reason = null, ResourceHealthEventArticle article = null, IEnumerable<ResourceHealthEventLink> links = null, DateTimeOffset? impactStartOn = null, DateTimeOffset? impactMitigationOn = null, IEnumerable<ResourceHealthEventImpact> impact = null, ResourceHealthEventRecommendedActions recommendedActions = null, IEnumerable<ResourceHealthEventFaq> faqs = null, bool? isHirEvent = null, bool? isMicrosoftSupportEnabled = null, string description = null, bool? isPlatformInitiated = null, bool? isChatWithUsEnabled = null, int? priority = null, DateTimeOffset? lastUpdateOn = null, string hirStage = null, string additionalInformationMessage = null, int? duration = null, string impactType = null, string maintenanceId = null, string maintenanceType = null, string argQuery = null)
+        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, EventSubTypeValues? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
         {
-            links ??= new List<ResourceHealthEventLink>();
-            impact ??= new List<ResourceHealthEventImpact>();
-            faqs ??= new List<ResourceHealthEventFaq>();
-
             return new ResourceHealthEventData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                eventType,
-                eventSubType,
-                eventSource,
-                status,
-                title,
-                summary,
-                header,
-                level,
-                eventLevel,
-                externalIncidentId,
-                reason,
-                article,
-                links?.ToList(),
-                impactStartOn,
-                impactMitigationOn,
-                impact?.ToList(),
-                recommendedActions,
-                faqs?.ToList(),
-                isHirEvent,
-                isMicrosoftSupportEnabled,
-                description,
-                isPlatformInitiated,
-                isChatWithUsEnabled,
-                priority,
-                lastUpdateOn,
-                hirStage,
-                additionalInformationMessage != null ? new ResourceHealthEventAdditionalInformation(additionalInformationMessage, serializedAdditionalRawData: null) : null,
-                duration,
-                impactType,
-                maintenanceId,
-                maintenanceType,
-                argQuery,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null && additionalInformationMessage is null ? default : new ResourceHealthEventProperties(
+                    eventType,
+                    eventSubType,
+                    eventSource,
+                    status,
+                    title,
+                    summary,
+                    header,
+                    level,
+                    eventLevel,
+                    isEventSensitive,
+                    externalIncidentId,
+                    reason,
+                    article,
+                    (links ?? new ChangeTrackingList<ResourceHealthEventLink>()).ToList(),
+                    impactStartOn,
+                    impactMitigationOn,
+                    (impact ?? new ChangeTrackingList<ResourceHealthEventImpact>()).ToList(),
+                    recommendedActions,
+                    (faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>()).ToList(),
+                    isHirEvent,
+                    isMicrosoftSupportEnabled,
+                    description,
+                    isPlatformInitiated,
+                    isChatWithUsEnabled,
+                    priority,
+                    lastUpdateOn,
+                    hirStage,
+                    new ResourceHealthEventAdditionalInformation(additionalInformationMessage, null),
+                    duration,
+                    impactType,
+                    (eventTags ?? new ChangeTrackingList<string>()).ToList(),
+                    newRate,
+                    oldRate,
+                    currencyType,
+                    billingId,
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventArticle"/>. </summary>
+        /// <summary> Article of event. </summary>
         /// <param name="articleContent"> Article content of event. </param>
         /// <param name="articleId"> Article Id. </param>
         /// <param name="parameters"> It provides a map of parameter name and value. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventArticle"/> instance for mocking. </returns>
-        public static ResourceHealthEventArticle ResourceHealthEventArticle(string articleContent = null, string articleId = null, BinaryData parameters = null)
+        public static ResourceHealthEventArticle ResourceHealthEventArticle(string articleContent = default, string articleId = default, BinaryData parameters = default)
         {
-            return new ResourceHealthEventArticle(articleContent, articleId, parameters, serializedAdditionalRawData: null);
+            return new ResourceHealthEventArticle(articleContent, articleId, parameters, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventLink"/>. </summary>
+        /// <summary> Useful links for service health event. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="displayText"> Display text of link. </param>
         /// <param name="extensionName"> It provides the name of portal extension to produce link for given service health event. </param>
         /// <param name="bladeName"> It provides the name of portal extension blade to produce link for given service health event. </param>
         /// <param name="parameters"> It provides a map of parameter name and value for portal extension blade to produce lik for given service health event. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventLink"/> instance for mocking. </returns>
-        public static ResourceHealthEventLink ResourceHealthEventLink(ResourceHealthEventLinkTypeValue? linkType = null, ResourceHealthEventLinkDisplayText displayText = null, string extensionName = null, string bladeName = null, BinaryData parameters = null)
+        public static ResourceHealthEventLink ResourceHealthEventLink(ResourceHealthEventLinkTypeValue? linkType = default, ResourceHealthEventLinkDisplayText displayText = default, string extensionName = default, string bladeName = default, BinaryData parameters = default)
         {
             return new ResourceHealthEventLink(
                 linkType,
@@ -331,130 +363,132 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 extensionName,
                 bladeName,
                 parameters,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventLinkDisplayText"/>. </summary>
+        /// <summary> Display text of link. </summary>
         /// <param name="value"> Display text of link. </param>
         /// <param name="localizedValue"> Localized display text of link. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventLinkDisplayText"/> instance for mocking. </returns>
-        public static ResourceHealthEventLinkDisplayText ResourceHealthEventLinkDisplayText(string value = null, string localizedValue = null)
+        public static ResourceHealthEventLinkDisplayText ResourceHealthEventLinkDisplayText(string value = default, string localizedValue = default)
         {
-            return new ResourceHealthEventLinkDisplayText(value, localizedValue, serializedAdditionalRawData: null);
+            return new ResourceHealthEventLinkDisplayText(value, localizedValue, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventImpact"/>. </summary>
+        /// <summary> Azure service impacted by the service health event. </summary>
         /// <param name="impactedService"> Impacted service name. </param>
+        /// <param name="impactedServiceGuid"> Impacted service guid. This is the permanent identifier for the impacted service. </param>
         /// <param name="impactedRegions"> List regions impacted by the service health event. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventImpact"/> instance for mocking. </returns>
-        public static ResourceHealthEventImpact ResourceHealthEventImpact(string impactedService = null, IEnumerable<ResourceHealthEventImpactedServiceRegion> impactedRegions = null)
+        public static ResourceHealthEventImpact ResourceHealthEventImpact(string impactedService = default, string impactedServiceGuid = default, IEnumerable<ResourceHealthEventImpactedServiceRegion> impactedRegions = default)
         {
-            impactedRegions ??= new List<ResourceHealthEventImpactedServiceRegion>();
+            impactedRegions ??= new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>();
 
-            return new ResourceHealthEventImpact(impactedService, impactedRegions?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceHealthEventImpact(impactedService, impactedServiceGuid, impactedRegions.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventImpactedServiceRegion"/>. </summary>
+        /// <summary> Azure region impacted by the service health event. </summary>
         /// <param name="impactedRegion"> Impacted region name. </param>
         /// <param name="status"> Current status of event in the region. </param>
         /// <param name="impactedSubscriptions"> List subscription impacted by the service health event. </param>
         /// <param name="impactedTenants"> List tenant impacted by the service health event. </param>
         /// <param name="lastUpdateOn"> It provides the Timestamp for when the last update for the service health event. </param>
-        /// <param name="updates"> List of updates for given service health event. </param>
+        /// <param name="updates"> List of updates for given service health event.  Use fetchEventDetails endpoint to get updates of sensitive events. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventImpactedServiceRegion"/> instance for mocking. </returns>
-        public static ResourceHealthEventImpactedServiceRegion ResourceHealthEventImpactedServiceRegion(string impactedRegion = null, ResourceHealthEventStatusValue? status = null, IEnumerable<string> impactedSubscriptions = null, IEnumerable<string> impactedTenants = null, DateTimeOffset? lastUpdateOn = null, IEnumerable<ResourceHealthEventUpdate> updates = null)
+        public static ResourceHealthEventImpactedServiceRegion ResourceHealthEventImpactedServiceRegion(string impactedRegion = default, ResourceHealthEventStatusValue? status = default, IEnumerable<string> impactedSubscriptions = default, IEnumerable<string> impactedTenants = default, DateTimeOffset? lastUpdateOn = default, IEnumerable<ResourceHealthEventUpdate> updates = default)
         {
-            impactedSubscriptions ??= new List<string>();
-            impactedTenants ??= new List<string>();
-            updates ??= new List<ResourceHealthEventUpdate>();
+            impactedSubscriptions ??= new ChangeTrackingList<string>();
+            impactedTenants ??= new ChangeTrackingList<string>();
+            updates ??= new ChangeTrackingList<ResourceHealthEventUpdate>();
 
             return new ResourceHealthEventImpactedServiceRegion(
                 impactedRegion,
                 status,
-                impactedSubscriptions?.ToList(),
-                impactedTenants?.ToList(),
+                impactedSubscriptions.ToList(),
+                impactedTenants.ToList(),
                 lastUpdateOn,
-                updates?.ToList(),
-                serializedAdditionalRawData: null);
+                updates.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventUpdate"/>. </summary>
+        /// <summary> Update for service health event. </summary>
         /// <param name="summary"> Summary text for the given update for the service health event. </param>
         /// <param name="updatedOn"> It provides the Timestamp for the given update for the service health event. </param>
+        /// <param name="eventTags">
+        /// A list of metadata tags associated with the event. Possible values include:
+        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
+        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
+        /// </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventUpdate"/> instance for mocking. </returns>
-        public static ResourceHealthEventUpdate ResourceHealthEventUpdate(string summary = null, DateTimeOffset? updatedOn = null)
+        public static ResourceHealthEventUpdate ResourceHealthEventUpdate(string summary = default, DateTimeOffset? updatedOn = default, IEnumerable<string> eventTags = default)
         {
-            return new ResourceHealthEventUpdate(summary, updatedOn, serializedAdditionalRawData: null);
+            eventTags ??= new ChangeTrackingList<string>();
+
+            return new ResourceHealthEventUpdate(summary, updatedOn, eventTags.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventRecommendedActions"/>. </summary>
+        /// <summary> Recommended actions of event. </summary>
         /// <param name="message"> Recommended action title for the service health event. </param>
         /// <param name="actions"> Recommended actions for the service health event. </param>
         /// <param name="localeCode"> Recommended action locale for the service health event. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventRecommendedActions"/> instance for mocking. </returns>
-        public static ResourceHealthEventRecommendedActions ResourceHealthEventRecommendedActions(string message = null, IEnumerable<ResourceHealthEventRecommendedActionsItem> actions = null, string localeCode = null)
+        public static ResourceHealthEventRecommendedActions ResourceHealthEventRecommendedActions(string message = default, IEnumerable<ResourceHealthEventRecommendedActionsItem> actions = default, string localeCode = default)
         {
-            actions ??= new List<ResourceHealthEventRecommendedActionsItem>();
+            actions ??= new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>();
 
-            return new ResourceHealthEventRecommendedActions(message, actions?.ToList(), localeCode, serializedAdditionalRawData: null);
+            return new ResourceHealthEventRecommendedActions(message, actions.ToList(), localeCode, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventRecommendedActionsItem"/>. </summary>
+        /// <summary> Recommended action for the service health event. </summary>
         /// <param name="groupId"> Recommended action group Id for the service health event. </param>
         /// <param name="actionText"> Recommended action text. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventRecommendedActionsItem"/> instance for mocking. </returns>
-        public static ResourceHealthEventRecommendedActionsItem ResourceHealthEventRecommendedActionsItem(int? groupId = null, string actionText = null)
+        public static ResourceHealthEventRecommendedActionsItem ResourceHealthEventRecommendedActionsItem(int? groupId = default, string actionText = default)
         {
-            return new ResourceHealthEventRecommendedActionsItem(groupId, actionText, serializedAdditionalRawData: null);
+            return new ResourceHealthEventRecommendedActionsItem(groupId, actionText, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventFaq"/>. </summary>
+        /// <summary> Frequently asked question for the service health event. </summary>
         /// <param name="question"> FAQ question for the service health event. </param>
         /// <param name="answer"> FAQ answer for the service health event. </param>
         /// <param name="localeCode"> FAQ locale for the service health event. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventFaq"/> instance for mocking. </returns>
-        public static ResourceHealthEventFaq ResourceHealthEventFaq(string question = null, string answer = null, string localeCode = null)
+        public static ResourceHealthEventFaq ResourceHealthEventFaq(string question = default, string answer = default, string localeCode = default)
         {
-            return new ResourceHealthEventFaq(question, answer, localeCode, serializedAdditionalRawData: null);
+            return new ResourceHealthEventFaq(question, answer, localeCode, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealth.ServiceEmergingIssueData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="refreshedOn"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
         /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
         /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
         /// <returns> A new <see cref="ResourceHealth.ServiceEmergingIssueData"/> instance for mocking. </returns>
-        public static ServiceEmergingIssueData ServiceEmergingIssueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? refreshedOn = null, IEnumerable<EmergingIssueBannerType> statusBanners = null, IEnumerable<EmergingIssueActiveEventType> statusActiveEvents = null)
+        public static ServiceEmergingIssueData ServiceEmergingIssueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? refreshedOn = default, IEnumerable<EmergingIssueBannerType> statusBanners = default, IEnumerable<EmergingIssueActiveEventType> statusActiveEvents = default)
         {
-            statusBanners ??= new List<EmergingIssueBannerType>();
-            statusActiveEvents ??= new List<EmergingIssueActiveEventType>();
-
             return new ServiceEmergingIssueData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                refreshedOn,
-                statusBanners?.ToList(),
-                statusActiveEvents?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                refreshedOn is null && statusBanners is null && statusActiveEvents is null ? default : new EmergingIssue(refreshedOn, (statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>()).ToList(), (statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>()).ToList(), null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EmergingIssueBannerType"/>. </summary>
+        /// <summary> Banner type of emerging issue. </summary>
         /// <param name="title"> The banner title. </param>
         /// <param name="message"> The details of banner. </param>
         /// <param name="cloud"> The cloud type of this banner. </param>
         /// <param name="lastModifiedOn"> The last time modified on this banner. </param>
         /// <returns> A new <see cref="Models.EmergingIssueBannerType"/> instance for mocking. </returns>
-        public static EmergingIssueBannerType EmergingIssueBannerType(string title = null, string message = null, string cloud = null, DateTimeOffset? lastModifiedOn = null)
+        public static EmergingIssueBannerType EmergingIssueBannerType(string title = default, string message = default, string cloud = default, DateTimeOffset? lastModifiedOn = default)
         {
-            return new EmergingIssueBannerType(title, message, cloud, lastModifiedOn, serializedAdditionalRawData: null);
+            return new EmergingIssueBannerType(title, message, cloud, lastModifiedOn, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EmergingIssueActiveEventType"/>. </summary>
+        /// <summary> Active event type of emerging issue. </summary>
         /// <param name="title"> The active event title. </param>
         /// <param name="description"> The details of active event. </param>
         /// <param name="trackingId"> The tracking id of this active event. </param>
@@ -466,9 +500,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="lastModifiedOn"> The last time modified on this banner. </param>
         /// <param name="impacts"> The list of emerging issues impacts. </param>
         /// <returns> A new <see cref="Models.EmergingIssueActiveEventType"/> instance for mocking. </returns>
-        public static EmergingIssueActiveEventType EmergingIssueActiveEventType(string title = null, string description = null, string trackingId = null, DateTimeOffset? startOn = null, string cloud = null, ResourceHealthEventSeverityLevel? severity = null, ResourceHealthEventStageValue? stage = null, bool? isPublished = null, DateTimeOffset? lastModifiedOn = null, IEnumerable<EmergingIssueImpact> impacts = null)
+        public static EmergingIssueActiveEventType EmergingIssueActiveEventType(string title = default, string description = default, string trackingId = default, DateTimeOffset? startOn = default, string cloud = default, ResourceHealthEventSeverityLevel? severity = default, ResourceHealthEventStageValue? stage = default, bool? isPublished = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<EmergingIssueImpact> impacts = default)
         {
-            impacts ??= new List<EmergingIssueImpact>();
+            impacts ??= new ChangeTrackingList<EmergingIssueImpact>();
 
             return new EmergingIssueActiveEventType(
                 title,
@@ -480,29 +514,29 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 stage,
                 isPublished,
                 lastModifiedOn,
-                impacts?.ToList(),
-                serializedAdditionalRawData: null);
+                impacts.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EmergingIssueImpact"/>. </summary>
+        /// <summary> Object of the emerging issue impact on services and regions. </summary>
         /// <param name="id"> The impacted service id. </param>
         /// <param name="name"> The impacted service name. </param>
         /// <param name="regions"> The list of impacted regions for corresponding emerging issues. </param>
         /// <returns> A new <see cref="Models.EmergingIssueImpact"/> instance for mocking. </returns>
-        public static EmergingIssueImpact EmergingIssueImpact(string id = null, string name = null, IEnumerable<EmergingIssueImpactedRegion> regions = null)
+        public static EmergingIssueImpact EmergingIssueImpact(string id = default, string name = default, IEnumerable<EmergingIssueImpactedRegion> regions = default)
         {
-            regions ??= new List<EmergingIssueImpactedRegion>();
+            regions ??= new ChangeTrackingList<EmergingIssueImpactedRegion>();
 
-            return new EmergingIssueImpact(id, name, regions?.ToList(), serializedAdditionalRawData: null);
+            return new EmergingIssueImpact(id, name, regions.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EmergingIssueImpactedRegion"/>. </summary>
+        /// <summary> Object of impacted region. </summary>
         /// <param name="id"> The impacted region id. </param>
         /// <param name="name"> The impacted region name. </param>
         /// <returns> A new <see cref="Models.EmergingIssueImpactedRegion"/> instance for mocking. </returns>
-        public static EmergingIssueImpactedRegion EmergingIssueImpactedRegion(string id = null, string name = null)
+        public static EmergingIssueImpactedRegion EmergingIssueImpactedRegion(string id = default, string name = default)
         {
-            return new EmergingIssueImpactedRegion(id, name, serializedAdditionalRawData: null);
+            return new EmergingIssueImpactedRegion(id, name, additionalBinaryDataProperties: null);
         }
     }
 }
