@@ -23632,6 +23632,17 @@
         {
           "name": "Azure.ResourceManager.Private.@armResourceInternal",
           "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@clientOption",
+          "arguments": {
+            "name": "resource-name-mappings",
+            "value": {
+              "EventGridTopicEventGridPrivateEndpointConnection": "EventGridTopicPrivateEndpointConnection",
+              "EventGridDomainEventGridPrivateEndpointConnection": "EventGridDomainPrivateEndpointConnection"
+            },
+            "scope": "csharp"
+          }
         }
       ],
       "serializationOptions": {
@@ -27161,7 +27172,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
-                "resourceName": "EventGridTopicEventGridPrivateEndpointConnection",
+                "resourceName": "EventGridTopicPrivateEndpointConnection",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -27220,7 +27231,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
-                "resourceName": "EventGridDomainEventGridPrivateEndpointConnection",
+                "resourceName": "EventGridDomainPrivateEndpointConnection",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },

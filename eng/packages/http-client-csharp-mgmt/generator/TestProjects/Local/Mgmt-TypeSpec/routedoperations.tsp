@@ -125,3 +125,16 @@ interface EventGridPrivateEndpointConnections {
     void
   >;
 }
+
+// Rename the per-enum-value expanded resources to shorter, friendlier names via
+// the generic @@clientOption "resource-name-mappings" mechanism. The LHS keys
+// must match the names the emitter generates for each expansion.
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Resource name mappings"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Resource name mappings"
+@@clientOption(EventGridPrivateEndpointConnection,
+  "resource-name-mappings",
+  #{
+    EventGridTopicEventGridPrivateEndpointConnection: "EventGridTopicPrivateEndpointConnection",
+    EventGridDomainEventGridPrivateEndpointConnection: "EventGridDomainPrivateEndpointConnection",
+  },
+  "csharp");
