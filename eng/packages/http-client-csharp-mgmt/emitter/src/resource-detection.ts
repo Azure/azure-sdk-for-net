@@ -132,8 +132,8 @@ export function buildArmProviderSchema(
     }
   }
 
-  // Track client-derived resource names that disambiguate multiple paths for the same model
-  const resourcePathToClientResourceName = new Map<string, string>();
+  // Track client names associated with each resource path for name derivation
+  const resourcePathToClientName = new Map<string, string>();
 
   // Track explicit resource names from TypeSpec (e.g., from LegacyOperations ResourceName parameter)
   const resourcePathToExplicitName = new Map<string, string>();
@@ -272,15 +272,9 @@ export function buildArmProviderSchema(
       let entry = resourcePathToMetadataMap.get(metadataKey);
       if (!entry) {
         const model = resourceModelMap.get(modelId);
-        // Store the client-derived name only when it disambiguates from the raw model name.
-        const clientResourceName = pluralize.singular(client.name);
-        const sdkModel = models.get(modelId);
-        const typespecModel = sdkModel?.__raw as Model | undefined;
-        if (
-          clientResourceName !== typespecModel?.name &&
-          !resourcePathToClientResourceName.has(metadataKey)
-        ) {
-          resourcePathToClientResourceName.set(metadataKey, clientResourceName);
+        // Store the client name for this resource path for later use (fallback if no explicit name)
+        if (!resourcePathToClientName.has(metadataKey)) {
+          resourcePathToClientName.set(metadataKey, client.name);
         }
 
         entry = {
@@ -479,10 +473,15 @@ export function buildArmProviderSchema(
         if (explicitName) {
           resource.metadata.resourceName = explicitName;
         } else {
-          const clientResourceName =
-            resourcePathToClientResourceName.get(metadataKey);
-          if (clientResourceName) {
-            resource.metadata.resourceName = clientResourceName;
+          // Try to derive from client name using pluralize.singular
+          const clientName = resourcePathToClientName.get(metadataKey);
+          if (clientName) {
+            const sdkModel = models.get(resource.resourceModelId);
+            const typespecModel = sdkModel?.__raw as Model | undefined;
+            const clientResourceName = pluralize.singular(clientName);
+            if (clientResourceName !== typespecModel?.name) {
+              resource.metadata.resourceName = clientResourceName;
+            }
           }
         }
       }
