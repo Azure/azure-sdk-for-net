@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.24 (Unreleased)
+## 1.0.0-beta.24 (2026-05-15)
 
 ### Features Added
 
@@ -10,12 +10,9 @@
 - Added `W3CBaggagePropagator` middleware that parses the W3C `baggage` header into `Activity.Baggage` on all target frameworks (net8.0, net9.0, net10.0).
 - Configured W3C Trace Context and Baggage propagators via `Sdk.SetDefaultTextMapPropagator` for outgoing request propagation.
 - Added conditional exporter registration: Azure Monitor, OTLP, and Agent365 exporters activate only when their respective environment variables are set.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `PlatformHeaders.ErrorSource` (`x-platform-error-source`), `PlatformHeaders.ErrorDetail`
+  (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
+  `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.
 
 - Replaced `Azure.Monitor.OpenTelemetry.AspNetCore` with the unified `Microsoft.OpenTelemetry` distro for telemetry. The new distro auto-detects Azure Monitor and OTLP exporters from environment variables and eliminates the need for duplicate-instrumentation guards.
 

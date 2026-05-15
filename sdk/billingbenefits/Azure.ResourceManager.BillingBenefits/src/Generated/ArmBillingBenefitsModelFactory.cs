@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public static partial class ArmBillingBenefitsModelFactory
     {
 
+        /// <summary> Resource definition for Discounts. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="properties"> Discount properties. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
         /// <returns> A new <see cref="BillingBenefits.DiscountData"/> instance for mocking. </returns>
-        public static DiscountData DiscountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsDiscountProperties properties = default, string managedBy = default, string kind = default, string etag = default, BillingBenefitsManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        public static DiscountData DiscountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsDiscountProperties properties = default, string managedBy = default, string kind = default, string eTag = default, BillingBenefitsManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 properties,
                 managedBy,
                 kind,
-                etag,
+                eTag,
                 identity,
                 sku,
                 plan);
@@ -497,12 +498,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
         /// <returns> A new <see cref="BillingBenefits.CreditData"/> instance for mocking. </returns>
-        public static CreditData CreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CreditStatus? status = default, string productCode = default, CreditReason reason = default, BillingBenefitsCommitment credit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, CreditPolicies policies = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, IEnumerable<CreditBreakdownItem> breakdown = default, BillingBenefitsProvisioningState? provisioningState = default, string systemId = default, string customerId = default, ResourceIdentifier resourceId = default, string managedBy = default, string kind = default, string etag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        public static CreditData CreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CreditStatus? status = default, string productCode = default, CreditReason reason = default, BillingBenefitsCommitment credit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, CreditPolicies policies = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, IEnumerable<CreditBreakdownItem> breakdown = default, BillingBenefitsProvisioningState? provisioningState = default, string systemId = default, string customerId = default, ResourceIdentifier resourceId = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -532,7 +533,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     null),
                 managedBy,
                 kind,
-                etag,
+                eTag,
                 identity,
                 sku,
                 plan);
@@ -563,6 +564,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new CreditPatch(tags, credit is null && endOn is null && breakdown is null ? default : new CreditPatchProperties(credit, endOn, (breakdown ?? new ChangeTrackingList<CreditBreakdownItem>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Resource definition for Conditional Credits. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -572,12 +574,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="properties"> Conditional credit properties. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
         /// <returns> A new <see cref="BillingBenefits.ConditionalCreditData"/> instance for mocking. </returns>
-        public static ConditionalCreditData ConditionalCreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsConditionalCreditProperties properties = default, string managedBy = default, string kind = default, string etag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        public static ConditionalCreditData ConditionalCreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsConditionalCreditProperties properties = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -592,7 +594,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 properties,
                 managedBy,
                 kind,
-                etag,
+                eTag,
                 identity,
                 sku,
                 plan);
@@ -1159,12 +1161,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="credit"> Commitment towards the benefit. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
         /// <returns> A new <see cref="BillingBenefits.CreditSourceData"/> instance for mocking. </returns>
-        public static CreditSourceData CreditSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CreditStatus? status = default, ResourceIdentifier sourceResourceId = default, string impactedBillingPeriod = default, BillingBenefitsCommitment credit = default, string managedBy = default, string kind = default, string etag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        public static CreditSourceData CreditSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CreditStatus? status = default, ResourceIdentifier sourceResourceId = default, string impactedBillingPeriod = default, BillingBenefitsCommitment credit = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1179,7 +1181,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 status is null && sourceResourceId is null && impactedBillingPeriod is null && credit is null ? default : new CreditSourceProperties(status, sourceResourceId, impactedBillingPeriod, credit, null),
                 managedBy,
                 kind,
-                etag,
+                eTag,
                 identity,
                 sku,
                 plan);
@@ -1212,12 +1214,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="systemId"> This is the globally unique identifier of the free services which will not change for its lifetime. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="etag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
         /// <returns> A new <see cref="BillingBenefits.FreeServicesData"/> instance for mocking. </returns>
-        public static FreeServicesData FreeServicesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string productCode = default, FreeServicesStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string systemId = default, string managedBy = default, string kind = default, string etag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        public static FreeServicesData FreeServicesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string productCode = default, FreeServicesStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string systemId = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1242,7 +1244,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     null),
                 managedBy,
                 kind,
-                etag,
+                eTag,
                 identity,
                 sku,
                 plan);
