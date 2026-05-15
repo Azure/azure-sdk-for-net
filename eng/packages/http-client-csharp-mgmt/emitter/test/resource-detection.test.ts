@@ -256,7 +256,7 @@ interface Employees2 {
     );
   });
 
-  it("uses clientName-adjusted model name as default resource wrapper name for multi-scope resources", async () => {
+  it("uses clientName-adjusted model name as default resource wrapper name for list operations at multiple scopes", async () => {
     const program = await typeSpecCompile(
       `
 /** Container app job properties */
@@ -327,7 +327,7 @@ interface Jobs {
     );
   });
 
-  it("keeps clientName-adjusted model name when legacy multi-resource fallback matches the raw model name", async () => {
+  it("keeps clientName-adjusted model name when legacy multiple-path fallback matches the raw model name", async () => {
     const program = await typeSpecCompile(
       `
 /** Container app job properties */
