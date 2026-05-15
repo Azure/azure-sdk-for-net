@@ -1,4 +1,4 @@
 directory: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/ResourceHealth
-commit: bc51ceb29ecebb483c7291679c34d025a2898005
+commit: d7e86173e4ebb5995eaaea4f0c3b71e1935d7c85
 repo: zedy-wj/azure-rest-api-specs-migration
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
