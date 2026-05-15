@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Download link validity. </summary>
-        public DateTimeOffset? ValidTill
+        public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ValidTill;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
     }

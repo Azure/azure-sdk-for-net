@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Initializes a new instance of <see cref="PricesheetDownloadProperties"/>. </summary>
         /// <param name="downloadUri"> The link (url) to download the pricesheet. </param>
-        /// <param name="validTill"> Download link validity. </param>
+        /// <param name="expiresOn"> Download link validity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PricesheetDownloadProperties(string downloadUri, DateTimeOffset? validTill, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PricesheetDownloadProperties(string downloadUri, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DownloadUri = downloadUri;
-            ValidTill = validTill;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Consumption.Models
         public string DownloadUri { get; }
 
         /// <summary> Download link validity. </summary>
-        public DateTimeOffset? ValidTill { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

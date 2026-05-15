@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModernReservationRecommendationProperties(string location, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, string resourceType, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModernReservationRecommendationProperties(AzureLocation? location, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, string resourceType, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             LookBackPeriod = lookBackPeriod;
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Resource Location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The number of days of usage to look back for recommendation. </summary>
         public int? LookBackPeriod { get; }

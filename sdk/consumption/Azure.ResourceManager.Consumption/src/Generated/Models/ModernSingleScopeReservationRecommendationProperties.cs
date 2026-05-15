@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subscriptionId"> Subscription ID associated with single scoped recommendation. </param>
-        internal ModernSingleScopeReservationRecommendationProperties(string location, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, string resourceType, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties, string subscriptionId) : base(location, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, resourceType, totalCostWithReservedInstances, netSavings, firstUsageOn, scope, skuProperties, skuName, lastUsageOn, totalHours, additionalBinaryDataProperties)
+        internal ModernSingleScopeReservationRecommendationProperties(AzureLocation? location, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, string resourceType, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, DateTimeOffset? lastUsageOn, int? totalHours, IDictionary<string, BinaryData> additionalBinaryDataProperties, string subscriptionId) : base(location, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, resourceType, totalCostWithReservedInstances, netSavings, firstUsageOn, scope, skuProperties, skuName, lastUsageOn, totalHours, additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
         }

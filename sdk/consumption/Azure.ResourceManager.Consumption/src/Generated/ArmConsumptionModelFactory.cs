@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="status"> The status of the long running operation. </param>
         /// <param name="downloadUri"> The link (url) to download the pricesheet. </param>
-        /// <param name="validTill"> Download link validity. </param>
+        /// <param name="expiresOn"> Download link validity. </param>
         /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(OperationStatusType? status = default, string downloadUri = default, DateTimeOffset? validTill = default)
+        public static OperationStatus OperationStatus(OperationStatusType? status = default, string downloadUri = default, DateTimeOffset? expiresOn = default)
         {
-            return new OperationStatus(status, downloadUri is null && validTill is null ? default : new PricesheetDownloadProperties(downloadUri, validTill, null), additionalBinaryDataProperties: null);
+            return new OperationStatus(status, downloadUri is null && expiresOn is null ? default : new PricesheetDownloadProperties(downloadUri, expiresOn, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1207,7 +1207,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <returns> A new <see cref="Models.ModernReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static ModernReservationRecommendationProperties ModernReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, string scope = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
+        public static ModernReservationRecommendationProperties ModernReservationRecommendationProperties(AzureLocation? location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, string scope = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <param name="subscriptionId"> Subscription ID associated with single scoped recommendation. </param>
         /// <returns> A new <see cref="Models.ModernSingleScopeReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static ModernSingleScopeReservationRecommendationProperties ModernSingleScopeReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, string subscriptionId = default)
+        public static ModernSingleScopeReservationRecommendationProperties ModernSingleScopeReservationRecommendationProperties(AzureLocation? location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, string subscriptionId = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 
@@ -1303,7 +1303,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="totalHours"> The total hours for which the cost is covered. </param>
         /// <returns> A new <see cref="Models.ModernSharedScopeReservationRecommendationProperties"/> instance for mocking. </returns>
-        public static ModernSharedScopeReservationRecommendationProperties ModernSharedScopeReservationRecommendationProperties(string location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
+        public static ModernSharedScopeReservationRecommendationProperties ModernSharedScopeReservationRecommendationProperties(AzureLocation? location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default)
         {
             skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
 

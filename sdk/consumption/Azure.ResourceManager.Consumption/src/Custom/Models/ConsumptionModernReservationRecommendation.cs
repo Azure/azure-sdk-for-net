@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -15,10 +16,13 @@ namespace Azure.ResourceManager.Consumption.Models
     // AutoRest-generated surface did, by delegating to the (already public) Properties bag.
     // Note: Properties.Location is surfaced as LocationPropertiesLocation to avoid colliding
     // with the inherited ConsumptionReservationRecommendation.Location (AzureLocation?).
+    // Properties.Location is itself AzureLocation? (mapped via @@alternateType in client.tsp),
+    // but the shipped v1.1.0 LocationPropertiesLocation was string, so we stringify it here
+    // to preserve binary back-compat.
     public partial class ConsumptionModernReservationRecommendation
     {
         /// <summary> Resource Location. </summary>
-        public string LocationPropertiesLocation => Properties?.Location;
+        public string LocationPropertiesLocation => Properties?.Location?.ToString();
 
         /// <summary> The number of days of usage to look back for recommendation. </summary>
         public int? LookBackPeriod => Properties?.LookBackPeriod;

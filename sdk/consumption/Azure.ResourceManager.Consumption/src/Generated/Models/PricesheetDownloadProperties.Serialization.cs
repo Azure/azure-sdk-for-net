@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("downloadUrl"u8);
                 writer.WriteStringValue(DownloadUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidTill))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("validTill"u8);
-                writer.WriteStringValue(ValidTill.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             string downloadUri = default;
-            DateTimeOffset? validTill = default;
+            DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    validTill = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PricesheetDownloadProperties(downloadUri, validTill, additionalBinaryDataProperties);
+            return new PricesheetDownloadProperties(downloadUri, expiresOn, additionalBinaryDataProperties);
         }
     }
 }
