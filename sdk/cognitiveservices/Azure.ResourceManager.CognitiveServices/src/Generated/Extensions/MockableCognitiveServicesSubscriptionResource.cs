@@ -368,6 +368,62 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesDeletedAccountsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new DeletedAccountsGetCognitiveServicesDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts"), data => new CognitiveServicesAccountResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesAccountResource> GetCognitiveServicesDeletedAccounts(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new DeletedAccountsGetCognitiveServicesDeletedAccountsCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts"), data => new CognitiveServicesAccountResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
         /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/commitmentPlans. </description>
         /// </item>
         /// <item>

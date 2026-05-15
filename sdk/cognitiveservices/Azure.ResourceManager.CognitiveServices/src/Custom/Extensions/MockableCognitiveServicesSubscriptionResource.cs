@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesDeletedAccountResource>(new DeletedAccountsGetDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccountsAsync"), data => new CognitiveServicesDeletedAccountResource(Client, data));
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesDeletedAccountResource>(new DeletedAccountsGetCognitiveServicesDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccountsAsync"), data => new CognitiveServicesDeletedAccountResource(Client, data));
         }
 
         // TODO: The CodeGen force renames the list method of a resource which cause duplicate methode name in extension class. This customization code should be removed after CodeGen fix the issue https://github.com/Azure/azure-sdk-for-net/issues/58210.
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesDeletedAccountResource>(new DeletedAccountsGetDeletedAccountsCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts"), data => new CognitiveServicesDeletedAccountResource(Client, data));
+            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesDeletedAccountResource>(new DeletedAccountsGetCognitiveServicesDeletedAccountsCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts"), data => new CognitiveServicesDeletedAccountResource(Client, data));
         }
     }
 }
