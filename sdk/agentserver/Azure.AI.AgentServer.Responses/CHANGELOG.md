@@ -4,7 +4,9 @@
 
 ### Features Added
 
-- Enable AgentFramework telemetry
+- Replaced `invoke_agent` SERVER span with baggage-only propagation. W3C trace context propagation is now handled automatically by ASP.NET Core, so handler spans are parented directly under the caller's span.
+- Response ID, conversation ID, and streaming mode are propagated as Activity baggage for downstream correlation.
+- Simplified `ResponsesActivitySource` to focus on baggage propagation rather than span creation.
 
 ## 1.0.0-beta.5 (Unreleased)
 
