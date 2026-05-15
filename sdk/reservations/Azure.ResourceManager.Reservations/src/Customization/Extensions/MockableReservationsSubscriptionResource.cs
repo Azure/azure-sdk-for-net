@@ -1,13 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed Guid-typed overloads on the mockable subscription resource
-// (GetQuotaRequestDetail(string, AzureLocation, Guid, ...)). The new TypeSpec-based generator
-// emits only the string-typed overload; this partial method preserves the legacy Guid API surface.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
 #pragma warning disable CS1591
@@ -18,11 +15,11 @@ namespace Azure.ResourceManager.Reservations.Mocking
     {
         [ForwardsClientCalls]
         public virtual Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-            => GetQuotaRequestDetailAsync(providerId, location, id.ToString(), cancellationToken);
+            => GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken);
 
         [ForwardsClientCalls]
         public virtual Response<QuotaRequestDetailResource> GetQuotaRequestDetail(string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-            => GetQuotaRequestDetail(providerId, location, id.ToString(), cancellationToken);
+            => GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
 
         public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
             => GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);

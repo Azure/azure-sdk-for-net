@@ -72,66 +72,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
         }
 
         /// <summary>
-        /// Get the details of the `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ReservationOrderResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand the planInformation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
-            return await GetReservationOrders().GetAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the details of the `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ReservationOrderResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand the planInformation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ReservationOrderResource> GetReservationOrder(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
-            return GetReservationOrders().Get(reservationOrderId, expand, cancellationToken);
-        }
-
-        /// <summary>
         /// List all the operations.
         /// <list type="bullet">
         /// <item>

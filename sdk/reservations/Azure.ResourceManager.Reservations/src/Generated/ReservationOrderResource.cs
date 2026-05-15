@@ -84,14 +84,6 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="reservationOrderId"> The reservationOrderId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string reservationOrderId)
-        {
-            string resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -135,7 +127,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Id.Name, expand, context);
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Guid.Parse(Id.Name), expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReservationOrderData> response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +176,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Id.Name, expand, context);
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Guid.Parse(Id.Name), expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReservationOrderData> response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +228,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Id.Name, ChangeDirectoryContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Guid.Parse(Id.Name), ChangeDirectoryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChangeDirectoryDetail> response = Response.FromValue(ChangeDirectoryDetail.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +280,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Id.Name, ChangeDirectoryContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Guid.Parse(Id.Name), ChangeDirectoryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChangeDirectoryDetail> response = Response.FromValue(ChangeDirectoryDetail.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +332,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Id.Name, ReservationCalculateRefundContent.ToRequestContent(content), context);
+                HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Guid.Parse(Id.Name), ReservationCalculateRefundContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReservationCalculateRefundResult> response = Response.FromValue(ReservationCalculateRefundResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -392,7 +384,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Id.Name, ReservationCalculateRefundContent.ToRequestContent(content), context);
+                HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Guid.Parse(Id.Name), ReservationCalculateRefundContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReservationCalculateRefundResult> response = Response.FromValue(ReservationCalculateRefundResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -445,7 +437,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _returnRestClient.CreateReturnRequest(Id.Name, ReservationRefundContent.ToRequestContent(content), context);
+                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderOperationSource(Client),
@@ -504,7 +496,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _returnRestClient.CreateReturnRequest(Id.Name, ReservationRefundContent.ToRequestContent(content), context);
+                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderOperationSource(Client),
@@ -563,7 +555,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Id.Name, ReservationPurchaseContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), ReservationPurchaseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderOperationSource(Client),
@@ -622,7 +614,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Id.Name, ReservationPurchaseContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), ReservationPurchaseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderOperationSource(Client),
@@ -649,34 +641,6 @@ namespace Azure.ResourceManager.Reservations
         public virtual ReservationDetailCollection GetReservationDetails()
         {
             return GetCachedClient(client => new ReservationDetailCollection(client, Id));
-        }
-
-        /// <summary> Get specific `Reservation` details. </summary>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="expand"> Supported value of this query is renewProperties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReservationDetailResource>> GetReservationDetailAsync(string reservationId, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
-            return await GetReservationDetails().GetAsync(reservationId, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get specific `Reservation` details. </summary>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="expand"> Supported value of this query is renewProperties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ReservationDetailResource> GetReservationDetail(string reservationId, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
-            return GetReservationDetails().Get(reservationId, expand, cancellationToken);
         }
     }
 }

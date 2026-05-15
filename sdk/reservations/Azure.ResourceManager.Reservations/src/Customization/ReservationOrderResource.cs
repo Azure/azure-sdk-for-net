@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed Guid-typed CreateResourceIdentifier(Guid reservationOrderId) and
-// GetReservationDetail(Guid reservationId, ...) overloads. The new TypeSpec-based generator emits
-// only string-typed overloads; these partial methods preserve the legacy Guid API surface.
-//
-// Additionally, GA modelled MergeReservation/SplitReservation as
+// Justification: GA modelled MergeReservation/SplitReservation as
 // ArmOperation<IList<ReservationDetailData>> and Return as a synchronous
 // Response<ReservationRefundResult>. The new generator emits Pageable shapes for Merge/Split
 // and an LRO for Return; these shims preserve the GA-shape methods.
@@ -32,15 +28,15 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationOrderResource
     {
         public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId)
-            => CreateResourceIdentifier(reservationOrderId.ToString());
+            => new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}");
 
         [ForwardsClientCalls]
         public virtual Task<Response<ReservationDetailResource>> GetReservationDetailAsync(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
-            => GetReservationDetailAsync(reservationId.ToString(), expand, cancellationToken);
+            => GetReservationDetails().GetAsync(reservationId, expand, cancellationToken);
 
         [ForwardsClientCalls]
         public virtual Response<ReservationDetailResource> GetReservationDetail(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
-            => GetReservationDetail(reservationId.ToString(), expand, cancellationToken);
+            => GetReservationDetails().Get(reservationId, expand, cancellationToken);
 
         public virtual async Task<ArmOperation<IList<ReservationDetailData>>> MergeReservationAsync(WaitUntil waitUntil, MergeContent content, CancellationToken cancellationToken = default)
         {
@@ -51,7 +47,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Id.Name, MergeContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
                 return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
@@ -72,7 +68,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Id.Name, MergeContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
                 return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
@@ -93,7 +89,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Id.Name, SplitContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
                 return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
@@ -114,7 +110,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Id.Name, SplitContent.ToRequestContent(content), context);
+                HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
                 return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
@@ -136,7 +132,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _returnRestClient.CreateReturnRequest(Id.Name, ReservationRefundContent.ToRequestContent(content), context);
+                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationRefundResult value = response.Status >= 200 && response.Status < 300 && response.Content?.ToMemory().Length > 0
                     ? ReservationRefundResult.DeserializeReservationRefundResult(response.Content)
@@ -160,7 +156,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _returnRestClient.CreateReturnRequest(Id.Name, ReservationRefundContent.ToRequestContent(content), context);
+                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationRefundResult value = response.Status >= 200 && response.Status < 300 && response.Content?.ToMemory().Length > 0
                     ? ReservationRefundResult.DeserializeReservationRefundResult(response.Content)

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations
     internal partial class ReservationGetAllCollectionResultOfT : Pageable<ReservationDetailData>
     {
         private readonly Reservation _client;
-        private readonly string _reservationOrderId;
+        private readonly Guid _reservationOrderId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReservationGetAllCollectionResultOfT(Reservation client, string reservationOrderId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReservationGetAllCollectionResultOfT(Reservation client, Guid reservationOrderId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _reservationOrderId = reservationOrderId;

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string reservationOrderId, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid reservationOrderId, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string reservationOrderId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid reservationOrderId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateChangeDirectoryRequest(string reservationOrderId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateChangeDirectoryRequest(Guid reservationOrderId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/changeDirectory", false);
             if (_apiVersion != null)
             {

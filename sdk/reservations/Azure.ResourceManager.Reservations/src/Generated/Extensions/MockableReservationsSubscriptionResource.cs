@@ -49,68 +49,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
             return GetCachedClient(client => new QuotaRequestDetailCollection(client, Id, providerId, location));
         }
 
-        /// <summary>
-        /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> QuotaRequestStatus_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-10-25. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerId"> The providerId for the resource. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="id"> Quota Request ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            return await GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> QuotaRequestStatus_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-10-25. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerId"> The providerId for the resource. </param>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="id"> Quota Request ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<QuotaRequestDetailResource> GetQuotaRequestDetail(string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            return GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ReservationQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="providerId"> The providerId for the resource. </param>
         /// <param name="location"> The location for the resource. </param>

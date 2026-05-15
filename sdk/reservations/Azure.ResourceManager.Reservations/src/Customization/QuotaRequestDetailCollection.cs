@@ -1,13 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed Guid-typed overloads for the quota request id. The new TypeSpec-based
-// generator emits string-typed parameters; these partial methods preserve the legacy Guid API surface
-// by forwarding to the generated string-based methods.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 #pragma warning disable CS1591
 
@@ -15,28 +13,120 @@ namespace Azure.ResourceManager.Reservations
 {
     public partial class QuotaRequestDetailCollection
     {
-        /// <summary> Get the details and status of the quota request by quota request id. </summary>
-        public virtual Task<Response<QuotaRequestDetailResource>> GetAsync(Guid id, CancellationToken cancellationToken = default)
-            => GetAsync(id.ToString(), cancellationToken);
+        public virtual async Task<Response<QuotaRequestDetailResource>> GetAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        /// <summary> Get the details and status of the quota request by quota request id. </summary>
         public virtual Response<QuotaRequestDetailResource> Get(Guid id, CancellationToken cancellationToken = default)
-            => Get(id.ToString(), cancellationToken);
+        {
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        public virtual Task<Response<bool>> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
-            => ExistsAsync(id.ToString(), cancellationToken);
+        public virtual async Task<Response<bool>> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            NullableResponse<QuotaRequestDetailResource> response = await GetIfExistsAsync(id, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.HasValue, response.GetRawResponse());
+        }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
         public virtual Response<bool> Exists(Guid id, CancellationToken cancellationToken = default)
-            => Exists(id.ToString(), cancellationToken);
+        {
+            NullableResponse<QuotaRequestDetailResource> response = GetIfExists(id, cancellationToken);
+            return Response.FromValue(response.HasValue, response.GetRawResponse());
+        }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        public virtual Task<NullableResponse<QuotaRequestDetailResource>> GetIfExistsAsync(Guid id, CancellationToken cancellationToken = default)
-            => GetIfExistsAsync(id.ToString(), cancellationToken);
+        public virtual async Task<NullableResponse<QuotaRequestDetailResource>> GetIfExistsAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<QuotaRequestDetailData> response = result.Status switch
+                {
+                    200 => Response.FromValue(QuotaRequestDetailData.FromResponse(result), result),
+                    404 => Response.FromValue((QuotaRequestDetailData)null, result),
+                    _ => throw new RequestFailedException(result)
+                };
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
         public virtual NullableResponse<QuotaRequestDetailResource> GetIfExists(Guid id, CancellationToken cancellationToken = default)
-            => GetIfExists(id.ToString(), cancellationToken);
+        {
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<QuotaRequestDetailData> response = result.Status switch
+                {
+                    200 => Response.FromValue(QuotaRequestDetailData.FromResponse(result), result),
+                    404 => Response.FromValue((QuotaRequestDetailData)null, result),
+                    _ => throw new RequestFailedException(result)
+                };
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

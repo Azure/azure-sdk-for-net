@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string providerId, AzureLocation location, string id, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string providerId, AzureLocation location, Guid id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations
             uri.AppendPath("/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/serviceLimitsRequests/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(id.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

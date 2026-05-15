@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateReturnRequest(string reservationOrderId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReturnRequest(Guid reservationOrderId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/return", false);
             if (_apiVersion != null)
             {

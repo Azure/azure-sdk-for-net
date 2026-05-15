@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string reservationOrderId, string reservationId, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid reservationOrderId, Guid reservationId, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
+            uri.AppendPath(reservationId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string reservationOrderId, string reservationId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid reservationOrderId, Guid reservationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
+            uri.AppendPath(reservationId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string reservationOrderId, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid reservationOrderId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/reservations", false);
             if (_apiVersion != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string reservationOrderId, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid reservationOrderId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateGetAvailableScopesRequest(string reservationOrderId, string reservationId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetAvailableScopesRequest(Guid reservationOrderId, Guid reservationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
+            uri.AppendPath(reservationId.ToString(), true);
             uri.AppendPath("/availableScopes", false);
             if (_apiVersion != null)
             {
@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateArchiveRequest(string reservationOrderId, string reservationId, RequestContext context)
+        internal HttpMessage CreateArchiveRequest(Guid reservationOrderId, Guid reservationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
+            uri.AppendPath(reservationId.ToString(), true);
             uri.AppendPath("/archive", false);
             if (_apiVersion != null)
             {
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateUnarchiveRequest(string reservationOrderId, string reservationId, RequestContext context)
+        internal HttpMessage CreateUnarchiveRequest(Guid reservationOrderId, Guid reservationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
+            uri.AppendPath(reservationId.ToString(), true);
             uri.AppendPath("/unarchive", false);
             if (_apiVersion != null)
             {
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateGetRevisionsRequest(string reservationOrderId, string reservationId, RequestContext context)
+        internal HttpMessage CreateGetRevisionsRequest(Guid reservationOrderId, Guid reservationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
+            uri.AppendPath(reservationId.ToString(), true);
             uri.AppendPath("/revisions", false);
             if (_apiVersion != null)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateNextGetRevisionsRequest(Uri nextPage, string reservationOrderId, string reservationId, RequestContext context)
+        internal HttpMessage CreateNextGetRevisionsRequest(Uri nextPage, Guid reservationOrderId, Guid reservationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateSplitReservationRequest(string reservationOrderId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSplitReservationRequest(Guid reservationOrderId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/split", false);
             if (_apiVersion != null)
             {
@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.Reservations
             return message;
         }
 
-        internal HttpMessage CreateMergeReservationRequest(string reservationOrderId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateMergeReservationRequest(Guid reservationOrderId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath(reservationOrderId.ToString(), true);
             uri.AppendPath("/merge", false);
             if (_apiVersion != null)
             {
