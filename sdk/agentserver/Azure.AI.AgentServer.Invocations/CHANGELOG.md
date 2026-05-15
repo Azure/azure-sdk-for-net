@@ -1,15 +1,11 @@
 # Release History
 
-## 1.0.0-alpha.20260506.1 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
 - Replaced `invoke_agent` SERVER span with baggage-only propagation. W3C trace context propagation is now handled automatically by ASP.NET Core, so handler spans are parented directly under the caller's span.
 - Invocation and session IDs are propagated as Activity baggage for downstream correlation.
-
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
 
 ### Breaking Changes
 

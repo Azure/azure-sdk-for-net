@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-alpha.20260506.1 (Unreleased)
+## 1.0.0-beta.24 (Unreleased)
 
 ### Features Added
 
@@ -10,10 +10,6 @@
 - Added `W3CBaggagePropagator` middleware that parses the W3C `baggage` header into `Activity.Baggage` on all target frameworks (net8.0, net9.0, net10.0).
 - Configured W3C Trace Context and Baggage propagators via `Sdk.SetDefaultTextMapPropagator` for outgoing request propagation.
 - Added conditional exporter registration: Azure Monitor, OTLP, and Agent365 exporters activate only when their respective environment variables are set.
-
-## 1.0.0-beta.24 (Unreleased)
-
-### Features Added
 
 ### Breaking Changes
 
