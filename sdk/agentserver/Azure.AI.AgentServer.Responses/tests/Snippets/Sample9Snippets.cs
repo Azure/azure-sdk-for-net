@@ -3,7 +3,7 @@
 
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
-using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Microsoft.OpenTelemetry;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,11 +40,12 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             // Health probe.
             builder.Services.AddHealthChecks();
 
-            // Observability: Azure Monitor + OpenTelemetry traces and metrics.
-            // UseAzureMonitor reads APPLICATIONINSIGHTS_CONNECTION_STRING at runtime.
-            builder.Services.AddOpenTelemetry()
-                .UseAzureMonitor()
-                .WithTracing(tracing =>
+            // Observability: Microsoft OpenTelemetry distro with traces and metrics.
+            // Auto-detects Azure Monitor (APPLICATIONINSIGHTS_CONNECTION_STRING) and
+            // OTLP (OTEL_EXPORTER_OTLP_ENDPOINT) exporters from environment variables.
+            var otel = builder.Services.AddOpenTelemetry();
+            otel.UseMicrosoftOpenTelemetry(options => { });
+            otel.WithTracing(tracing =>
                 {
                     tracing.AddSource("Azure.AI.AgentServer.Responses");
                 })
