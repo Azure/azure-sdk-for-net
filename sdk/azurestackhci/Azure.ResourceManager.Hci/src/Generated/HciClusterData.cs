@@ -96,16 +96,6 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> The ring to which this cluster belongs to. </summary>
-        [WirePath("properties.ring")]
-        public string Ring
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Ring;
-            }
-        }
-
         /// <summary> Endpoint configured for management from the Azure portal. </summary>
         [WirePath("properties.cloudManagementEndpoint")]
         public string CloudManagementEndpoint
@@ -389,26 +379,6 @@ namespace Azure.ResourceManager.Hci
             get
             {
                 return Properties is null ? default : Properties.ClusterPattern;
-            }
-        }
-
-        /// <summary> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </summary>
-        [WirePath("properties.confidentialVmProperties")]
-        public ConfidentialVmProperties ConfidentialVmProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConfidentialVmProperties;
-            }
-        }
-
-        /// <summary> Software Defined Networking Properties of the cluster. </summary>
-        [WirePath("properties.sdnProperties")]
-        public ClusterSdnProperties SdnProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SdnProperties;
             }
         }
 
