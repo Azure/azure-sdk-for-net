@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="identityKeyStore"> Identity key store type of the machine. </param>
         /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineUpdateProperties(LocationData locationData, HybridComputeOSProfile osProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId, string identityKeyStore, string tpmEkCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineUpdateProperties(HybridComputeLocation locationData, HybridComputeOSProfile osProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId, string identityKeyStore, string tpmEkCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationData = locationData;
             OSProfile = osProfile;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         [WirePath("locationData")]
-        public LocationData LocationData { get; set; }
+        public HybridComputeLocation LocationData { get; set; }
 
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
         [WirePath("osProfile")]

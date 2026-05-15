@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Time))
+            if (Optional.IsDefined(TimeOn))
             {
                 writer.WritePropertyName("time"u8);
-                writer.WriteStringValue(Time.Value, "O");
+                writer.WriteStringValue(TimeOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ExtensionsStatusLevelTypes? level = default;
             string displayStatus = default;
             string message = default;
-            DateTimeOffset? time = default;
+            DateTimeOffset? timeOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    time = prop.Value.GetDateTimeOffset("O");
+                    timeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 level,
                 displayStatus,
                 message,
-                time,
+                timeOn,
                 additionalBinaryDataProperties);
         }
     }

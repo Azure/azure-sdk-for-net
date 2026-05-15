@@ -15,69 +15,69 @@ using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The SetupExtensionRequest. </summary>
-    public partial class SetupExtensionRequest : IJsonModel<SetupExtensionRequest>
+    /// <summary> The SetupExtensionContent. </summary>
+    public partial class SetupExtensionContent : IJsonModel<SetupExtensionContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SetupExtensionRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SetupExtensionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSetupExtensionRequest(document.RootElement, options);
+                        return DeserializeSetupExtensionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SetupExtensionRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SetupExtensionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SetupExtensionRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SetupExtensionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SetupExtensionRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SetupExtensionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SetupExtensionRequest IPersistableModel<SetupExtensionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SetupExtensionContent IPersistableModel<SetupExtensionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SetupExtensionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SetupExtensionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="setupExtensionRequest"> The <see cref="SetupExtensionRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SetupExtensionRequest setupExtensionRequest)
+        /// <param name="setupExtensionContent"> The <see cref="SetupExtensionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SetupExtensionContent setupExtensionContent)
         {
-            if (setupExtensionRequest == null)
+            if (setupExtensionContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(setupExtensionRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(setupExtensionContent, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SetupExtensionRequest"/> from. </param>
-        internal static SetupExtensionRequest FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SetupExtensionContent"/> from. </param>
+        internal static SetupExtensionContent FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSetupExtensionRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSetupExtensionContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SetupExtensionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SetupExtensionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SetupExtensionRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SetupExtensionContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -122,24 +122,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SetupExtensionRequest IJsonModel<SetupExtensionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SetupExtensionContent IJsonModel<SetupExtensionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SetupExtensionRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SetupExtensionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SetupExtensionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SetupExtensionRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SetupExtensionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSetupExtensionRequest(document.RootElement, options);
+            return DeserializeSetupExtensionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SetupExtensionRequest DeserializeSetupExtensionRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SetupExtensionContent DeserializeSetupExtensionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SetupExtensionRequest(extensions ?? new ChangeTrackingList<MachineExtensionProperties>(), additionalBinaryDataProperties);
+            return new SetupExtensionContent(extensions ?? new ChangeTrackingList<MachineExtensionProperties>(), additionalBinaryDataProperties);
         }
     }
 }

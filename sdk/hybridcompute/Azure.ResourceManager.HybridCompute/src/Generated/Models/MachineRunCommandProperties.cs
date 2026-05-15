@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="MachineRunCommandProperties"/>. </summary>
         public MachineRunCommandProperties()
         {
-            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
-            ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
+            Parameters = new ChangeTrackingList<RunCommandInputContent>();
+            ProtectedParameters = new ChangeTrackingList<RunCommandInputContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineRunCommandProperties"/>. </summary>
         /// <param name="source"> The source of the run command script. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <param name="protectedParameters"> The parameters used by the script. </param>
-        /// <param name="asyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
+        /// <param name="isAsyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
         /// <param name="runAsUser"> Specifies the user account on the machine when executing the run command. </param>
         /// <param name="runAsPassword"> Specifies the user account password on the machine when executing the run command. </param>
         /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine run command instance view. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandProperties(MachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, MachineRunCommandInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineRunCommandProperties(MachineRunCommandScriptSource source, IList<RunCommandInputContent> parameters, IList<RunCommandInputContent> protectedParameters, bool? isAsyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, MachineRunCommandInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Parameters = parameters;
             ProtectedParameters = protectedParameters;
-            AsyncExecution = asyncExecution;
+            IsAsyncExecution = isAsyncExecution;
             RunAsUser = runAsUser;
             RunAsPassword = runAsPassword;
             TimeoutInSeconds = timeoutInSeconds;
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("parameters")]
-        public IList<RunCommandInputParameter> Parameters { get; } = new ChangeTrackingList<RunCommandInputParameter>();
+        public IList<RunCommandInputContent> Parameters { get; } = new ChangeTrackingList<RunCommandInputContent>();
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("protectedParameters")]
-        public IList<RunCommandInputParameter> ProtectedParameters { get; } = new ChangeTrackingList<RunCommandInputParameter>();
+        public IList<RunCommandInputContent> ProtectedParameters { get; } = new ChangeTrackingList<RunCommandInputContent>();
 
         /// <summary> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </summary>
         [WirePath("asyncExecution")]
-        public bool? AsyncExecution { get; set; }
+        public bool? IsAsyncExecution { get; set; }
 
         /// <summary> Specifies the user account on the machine when executing the run command. </summary>
         [WirePath("runAsUser")]

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkProfile"> Information about the network the machine is on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineProperties(LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, IdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string hardwareResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineProperties(HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, IdentityKeyStore? identityKeyStore, string tpmEkCertificate, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, ResourceIdentifier hardwareResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         [WirePath("locationData")]
-        public LocationData LocationData { get; set; }
+        public HybridComputeLocation LocationData { get; set; }
 
         /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
         [WirePath("agentConfiguration")]
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </summary>
         [WirePath("hardwareResourceId")]
-        public string HardwareResourceId { get; set; }
+        public ResourceIdentifier HardwareResourceId { get; set; }
 
         /// <summary> Specifies whether any MS SQL instance is discovered on the machine. </summary>
         [WirePath("mssqlDiscovered")]

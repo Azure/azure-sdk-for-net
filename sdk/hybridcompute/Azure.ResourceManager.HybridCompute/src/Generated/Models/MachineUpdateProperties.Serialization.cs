@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            LocationData locationData = default;
+            HybridComputeLocation locationData = default;
             HybridComputeOSProfile osProfile = default;
             HybridComputeCloudMetadata cloudMetadata = default;
             AgentUpgrade agentUpgrade = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    locationData = LocationData.DeserializeLocationData(prop.Value, options);
+                    locationData = HybridComputeLocation.DeserializeHybridComputeLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osProfile"u8))

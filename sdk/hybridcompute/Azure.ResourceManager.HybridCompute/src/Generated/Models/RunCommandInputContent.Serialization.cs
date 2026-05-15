@@ -14,56 +14,56 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the properties of a run command parameter. </summary>
-    public partial class RunCommandInputParameter : IJsonModel<RunCommandInputParameter>
+    public partial class RunCommandInputContent : IJsonModel<RunCommandInputContent>
     {
-        /// <summary> Initializes a new instance of <see cref="RunCommandInputParameter"/> for deserialization. </summary>
-        internal RunCommandInputParameter()
+        /// <summary> Initializes a new instance of <see cref="RunCommandInputContent"/> for deserialization. </summary>
+        internal RunCommandInputContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RunCommandInputParameter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RunCommandInputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunCommandInputParameter(document.RootElement, options);
+                        return DeserializeRunCommandInputContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandInputParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandInputContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandInputParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandInputContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunCommandInputParameter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RunCommandInputContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunCommandInputParameter IPersistableModel<RunCommandInputParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunCommandInputContent IPersistableModel<RunCommandInputContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunCommandInputParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunCommandInputContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunCommandInputParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunCommandInputContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandInputParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandInputContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunCommandInputParameter IJsonModel<RunCommandInputParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunCommandInputContent IJsonModel<RunCommandInputContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RunCommandInputParameter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RunCommandInputContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputParameter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandInputContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandInputParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandInputContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunCommandInputParameter(document.RootElement, options);
+            return DeserializeRunCommandInputContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RunCommandInputParameter DeserializeRunCommandInputParameter(JsonElement element, ModelReaderWriterOptions options)
+        internal static RunCommandInputContent DeserializeRunCommandInputContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RunCommandInputParameter(name, value, additionalBinaryDataProperties);
+            return new RunCommandInputContent(name, value, additionalBinaryDataProperties);
         }
     }
 }

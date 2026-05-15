@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="content"> Parameters supplied to the Setup Extensions operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SetupExtensionRequest>> SetupExtensionsAsync(WaitUntil waitUntil, SetupExtensionRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SetupExtensionContent>> SetupExtensionsAsync(WaitUntil waitUntil, SetupExtensionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -862,10 +862,10 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SetupExtensionRequest.ToRequestContent(content), context);
+                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HybridComputeArmOperation<SetupExtensionRequest> operation = new HybridComputeArmOperation<SetupExtensionRequest>(
-                    new SetupExtensionRequestOperationSource(),
+                HybridComputeArmOperation<SetupExtensionContent> operation = new HybridComputeArmOperation<SetupExtensionContent>(
+                    new SetupExtensionContentOperationSource(),
                     _hybridComputeClientClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="content"> Parameters supplied to the Setup Extensions operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SetupExtensionRequest> SetupExtensions(WaitUntil waitUntil, SetupExtensionRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SetupExtensionContent> SetupExtensions(WaitUntil waitUntil, SetupExtensionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -921,10 +921,10 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SetupExtensionRequest.ToRequestContent(content), context);
+                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HybridComputeArmOperation<SetupExtensionRequest> operation = new HybridComputeArmOperation<SetupExtensionRequest>(
-                    new SetupExtensionRequestOperationSource(),
+                HybridComputeArmOperation<SetupExtensionContent> operation = new HybridComputeArmOperation<SetupExtensionContent>(
+                    new SetupExtensionContentOperationSource(),
                     _hybridComputeClientClientDiagnostics,
                     Pipeline,
                     message.Request,

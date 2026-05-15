@@ -14,56 +14,56 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
-    public partial class LocationData : IJsonModel<LocationData>
+    public partial class HybridComputeLocation : IJsonModel<HybridComputeLocation>
     {
-        /// <summary> Initializes a new instance of <see cref="LocationData"/> for deserialization. </summary>
-        internal LocationData()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLocation"/> for deserialization. </summary>
+        internal HybridComputeLocation()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LocationData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HybridComputeLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLocationData(document.RootElement, options);
+                        return DeserializeHybridComputeLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLocation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LocationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LocationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HybridComputeLocation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocationData IPersistableModel<LocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HybridComputeLocation IPersistableModel<HybridComputeLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocationData IJsonModel<LocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HybridComputeLocation IJsonModel<HybridComputeLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LocationData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HybridComputeLocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLocationData(document.RootElement, options);
+            return DeserializeHybridComputeLocation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LocationData DeserializeLocationData(JsonElement element, ModelReaderWriterOptions options)
+        internal static HybridComputeLocation DeserializeHybridComputeLocation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LocationData(name, city, district, countryOrRegion, additionalBinaryDataProperties);
+            return new HybridComputeLocation(name, city, district, countryOrRegion, additionalBinaryDataProperties);
         }
     }
 }

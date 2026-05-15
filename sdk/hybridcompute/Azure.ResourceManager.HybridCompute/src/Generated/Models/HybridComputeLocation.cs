@@ -12,28 +12,28 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
-    public partial class LocationData
+    public partial class HybridComputeLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LocationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLocation"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public LocationData(string name)
+        public HybridComputeLocation(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLocation"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <param name="city"> The city or locality where the resource is located. </param>
         /// <param name="district"> The district, state, or province where the resource is located. </param>
         /// <param name="countryOrRegion"> The country or region where the resource is located. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocationData(string name, string city, string district, string countryOrRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeLocation(string name, string city, string district, string countryOrRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             City = city;

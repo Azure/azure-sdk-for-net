@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         [WirePath("properties.locationData")]
-        public LocationData LocationData
+        public HybridComputeLocation LocationData
         {
             get
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </summary>
         [WirePath("properties.hardwareResourceId")]
-        public string HardwareResourceId
+        public ResourceIdentifier HardwareResourceId
         {
             get
             {

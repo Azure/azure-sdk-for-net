@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         [WirePath("properties.locationData")]
-        public LocationData LocationData
+        public HybridComputeLocation LocationData
         {
             get
             {

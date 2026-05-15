@@ -11,22 +11,22 @@ using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The SetupExtensionRequest. </summary>
-    public partial class SetupExtensionRequest
+    /// <summary> The SetupExtensionContent. </summary>
+    public partial class SetupExtensionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SetupExtensionRequest"/>. </summary>
-        public SetupExtensionRequest()
+        /// <summary> Initializes a new instance of <see cref="SetupExtensionContent"/>. </summary>
+        public SetupExtensionContent()
         {
             Extensions = new ChangeTrackingList<MachineExtensionProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SetupExtensionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetupExtensionContent"/>. </summary>
         /// <param name="extensions"> The list of extensions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SetupExtensionRequest(IList<MachineExtensionProperties> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SetupExtensionContent(IList<MachineExtensionProperties> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Extensions = extensions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

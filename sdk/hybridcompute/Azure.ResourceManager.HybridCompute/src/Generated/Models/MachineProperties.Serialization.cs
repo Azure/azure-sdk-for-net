@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            LocationData locationData = default;
+            HybridComputeLocation locationData = default;
             AgentConfiguration agentConfiguration = default;
             HybridComputeServiceStatuses serviceStatuses = default;
             HybridComputeHardwareProfile hardwareProfile = default;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string dnsFqdn = default;
             ResourceIdentifier privateLinkScopeResourceId = default;
             ResourceIdentifier parentClusterResourceId = default;
-            string hardwareResourceId = default;
+            ResourceIdentifier hardwareResourceId = default;
             string msSqlDiscovered = default;
             IReadOnlyDictionary<string, string> detectedProperties = default;
             HybridComputeNetworkProfile networkProfile = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    locationData = LocationData.DeserializeLocationData(prop.Value, options);
+                    locationData = HybridComputeLocation.DeserializeHybridComputeLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentConfiguration"u8))
@@ -630,7 +630,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("hardwareResourceId"u8))
                 {
-                    hardwareResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mssqlDiscovered"u8))

@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
+        /// <param name="timeOn"> The time of the status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionsResourceStatus(string code, ExtensionsStatusLevelTypes? level, string displayStatus, string message, DateTimeOffset? time, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtensionsResourceStatus(string code, ExtensionsStatusLevelTypes? level, string displayStatus, string message, DateTimeOffset? timeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Level = level;
             DisplayStatus = displayStatus;
             Message = message;
-            Time = time;
+            TimeOn = timeOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The time of the status. </summary>
         [WirePath("time")]
-        public DateTimeOffset? Time { get; }
+        public DateTimeOffset? TimeOn { get; }
     }
 }

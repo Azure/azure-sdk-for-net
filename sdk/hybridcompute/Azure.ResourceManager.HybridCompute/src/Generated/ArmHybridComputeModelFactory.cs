@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineExtensionUpgrade(extensionTargets, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The SetupExtensionRequest. </summary>
+        /// <summary> The SetupExtensionContent. </summary>
         /// <param name="extensions"> The list of extensions. </param>
-        /// <returns> A new <see cref="Models.SetupExtensionRequest"/> instance for mocking. </returns>
-        public static SetupExtensionRequest SetupExtensionRequest(IEnumerable<MachineExtensionProperties> extensions = default)
+        /// <returns> A new <see cref="Models.SetupExtensionContent"/> instance for mocking. </returns>
+        public static SetupExtensionContent SetupExtensionContent(IEnumerable<MachineExtensionProperties> extensions = default)
         {
             extensions ??= new ChangeTrackingList<MachineExtensionProperties>();
 
-            return new SetupExtensionRequest(extensions.ToList(), additionalBinaryDataProperties: null);
+            return new SetupExtensionContent(extensions.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes the properties of a Machine Extension. </summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
-        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LocationData locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, IdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, string hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, IdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
         /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
         /// <returns> A new <see cref="Models.HybridComputeMachinePatch"/> instance for mocking. </returns>
-        public static HybridComputeMachinePatch HybridComputeMachinePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default, LocationData locationData = default, HybridComputeOSProfile osProfile = default, AgentUpgrade agentUpgrade = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier privateLinkScopeResourceId = default, string identityKeyStore = default, string tpmEkCertificate = default, string cloudMetadataProvider = default)
+        public static HybridComputeMachinePatch HybridComputeMachinePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default, HybridComputeLocation locationData = default, HybridComputeOSProfile osProfile = default, AgentUpgrade agentUpgrade = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier privateLinkScopeResourceId = default, string identityKeyStore = default, string tpmEkCertificate = default, string cloudMetadataProvider = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="source"> The source of the run command script. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <param name="protectedParameters"> The parameters used by the script. </param>
-        /// <param name="asyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
+        /// <param name="isAsyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
         /// <param name="runAsUser"> Specifies the user account on the machine when executing the run command. </param>
         /// <param name="runAsPassword"> Specifies the user account password on the machine when executing the run command. </param>
         /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine run command instance view. </param>
         /// <returns> A new <see cref="HybridCompute.MachineRunCommandData"/> instance for mocking. </returns>
-        public static MachineRunCommandData MachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputParameter> parameters = default, IEnumerable<RunCommandInputParameter> protectedParameters = default, bool? asyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, string outputBlobUri = default, string errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
+        public static MachineRunCommandData MachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputContent> parameters = default, IEnumerable<RunCommandInputContent> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, string outputBlobUri = default, string errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -819,11 +819,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                source is null && parameters is null && protectedParameters is null && asyncExecution is null && runAsUser is null && runAsPassword is null && timeoutInSeconds is null && outputBlobUri is null && errorBlobUri is null && outputBlobManagedIdentity is null && errorBlobManagedIdentity is null && provisioningState is null && instanceView is null ? default : new MachineRunCommandProperties(
+                source is null && parameters is null && protectedParameters is null && isAsyncExecution is null && runAsUser is null && runAsPassword is null && timeoutInSeconds is null && outputBlobUri is null && errorBlobUri is null && outputBlobManagedIdentity is null && errorBlobManagedIdentity is null && provisioningState is null && instanceView is null ? default : new MachineRunCommandProperties(
                     source,
-                    (parameters ?? new ChangeTrackingList<RunCommandInputParameter>()).ToList(),
-                    (protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>()).ToList(),
-                    asyncExecution,
+                    (parameters ?? new ChangeTrackingList<RunCommandInputContent>()).ToList(),
+                    (protectedParameters ?? new ChangeTrackingList<RunCommandInputContent>()).ToList(),
+                    isAsyncExecution,
                     runAsUser,
                     runAsPassword,
                     timeoutInSeconds,
@@ -867,16 +867,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
+        /// <param name="timeOn"> The time of the status. </param>
         /// <returns> A new <see cref="Models.ExtensionsResourceStatus"/> instance for mocking. </returns>
-        public static ExtensionsResourceStatus ExtensionsResourceStatus(string code = default, ExtensionsStatusLevelTypes? level = default, string displayStatus = default, string message = default, DateTimeOffset? time = default)
+        public static ExtensionsResourceStatus ExtensionsResourceStatus(string code = default, ExtensionsStatusLevelTypes? level = default, string displayStatus = default, string message = default, DateTimeOffset? timeOn = default)
         {
             return new ExtensionsResourceStatus(
                 code,
                 level,
                 displayStatus,
                 message,
-                time,
+                timeOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1323,59 +1323,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, string cloudMetadataProvider, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IEnumerable<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IEnumerable<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, IEnumerable<HybridComputeNetworkInterface> networkInterfaces)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
-
-            return new HybridComputeMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                name is null && agentConfiguration is null && serviceStatuses is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
-                    new LocationData(name, default, default, default, default),
-                    agentConfiguration,
-                    serviceStatuses,
-                    default,
-                    default,
-                    default,
-                    new HybridComputeCloudMetadata(cloudMetadataProvider, default),
-                    agentUpgrade,
-                    osProfile,
-                    licenseProfile,
-                    provisioningState,
-                    status,
-                    lastStatusChange,
-                    (errorDetails ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                    agentVersion,
-                    vmId,
-                    displayName,
-                    machineFqdn,
-                    clientPublicKey,
-                    default,
-                    default,
-                    osName,
-                    osVersion,
-                    osType,
-                    vmUuid,
-                    (extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>()).ToList(),
-                    osSku,
-                    osEdition,
-                    domainName,
-                    adFqdn,
-                    dnsFqdn,
-                    privateLinkScopeResourceId,
-                    parentClusterResourceId,
-                    default,
-                    msSqlDiscovered,
-                    detectedProperties,
-                    new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
-                    default),
-                resources.ToList(),
-                identity,
-                kind);
+            return HybridComputeMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, locationData: locationData, agentConfiguration: agentConfiguration, serviceStatuses: serviceStatuses, hardwareProfile: default, firmwareProfile: default, agentUpgrade: agentUpgrade, osProfile: osProfile, licenseProfile: licenseProfile, provisioningState: provisioningState, status: status, lastStatusChange: lastStatusChange, errorDetails: errorDetails, agentVersion: agentVersion, vmId: vmId, displayName: displayName, machineFqdn: machineFqdn, clientPublicKey: clientPublicKey, identityKeyStore: default, tpmEkCertificate: default, osName: osName, osVersion: osVersion, osType: osType, vmUuid: vmUuid, extensions: extensions, osSku: osSku, osEdition: osEdition, domainName: domainName, adFqdn: adFqdn, dnsFqdn: dnsFqdn, privateLinkScopeResourceId: privateLinkScopeResourceId, parentClusterResourceId: parentClusterResourceId, hardwareResourceId: default, msSqlDiscovered: msSqlDiscovered, detectedProperties: detectedProperties, storageDisks: default, cloudMetadataProvider: cloudMetadataProvider, networkInterfaces: networkInterfaces, resources: resources, identity: identity, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputeWindowsConfiguration"/>. </summary>

@@ -15,30 +15,30 @@ using Azure.ResourceManager.HybridCompute.Models;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary></summary>
-    internal partial class SetupExtensionRequestOperationSource : IOperationSource<SetupExtensionRequest>
+    internal partial class SetupExtensionContentOperationSource : IOperationSource<SetupExtensionContent>
     {
         /// <summary></summary>
-        internal SetupExtensionRequestOperationSource()
+        internal SetupExtensionContentOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SetupExtensionRequest IOperationSource<SetupExtensionRequest>.CreateResult(Response response, CancellationToken cancellationToken)
+        SetupExtensionContent IOperationSource<SetupExtensionContent>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SetupExtensionRequest result = SetupExtensionRequest.DeserializeSetupExtensionRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SetupExtensionContent result = SetupExtensionContent.DeserializeSetupExtensionContent(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SetupExtensionRequest> IOperationSource<SetupExtensionRequest>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SetupExtensionContent> IOperationSource<SetupExtensionContent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SetupExtensionRequest result = SetupExtensionRequest.DeserializeSetupExtensionRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SetupExtensionContent result = SetupExtensionContent.DeserializeSetupExtensionContent(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
     }
