@@ -2,9 +2,11 @@
 
 ## 1.0.0 (2026-05-14)
 
-### Features Added
+First stable release of the Azure.AI.Speech.Transcription client library.
 
-- First stable release of the Azure.AI.Speech.Transcription client library.
+### Breaking Changes
+
+- Removed `TranscriptionResult.PhrasesByChannel` and the associated `TranscribedPhrases` type. Use `TranscriptionResult.Phrases` for the flat phrase list and `TranscriptionResult.CombinedPhrases` for the per-channel combined transcript.
 
 ## 1.0.0-beta.2 (2026-04-20)
 
