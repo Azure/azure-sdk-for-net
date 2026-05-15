@@ -4,7 +4,9 @@
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Internal non-generic interface for proxy resolution without knowing T at compile time.
+/// Internal non-generic interface for proxy resolution. Required because the generic chain
+/// walkers are called with T=object (STJ converter and ModelReaderWriter.ReadInternal both
+/// erase T), so casting to <see cref="ModelProxy{T}"/> with the real model type is not possible.
 /// </summary>
 internal interface IModelProxy
 {

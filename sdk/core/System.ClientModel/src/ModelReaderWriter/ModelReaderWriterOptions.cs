@@ -117,9 +117,9 @@ public class ModelReaderWriterOptions
         }
 
         // Write path: walk chain first-to-last (FIFO), return the first that CanHandle.
-        for (int i = 0; i < chain.Count; i++)
+        foreach (var entry in chain)
         {
-            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && chain[i] is IPersistableModel<T> typedProxy)
+            if (entry is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && entry is IPersistableModel<T> typedProxy)
             {
                 ProxiedModel = model;
                 return typedProxy;
@@ -145,9 +145,9 @@ public class ModelReaderWriterOptions
         }
 
         // Write path: walk chain first-to-last (FIFO), return the first IJsonModel<T> that CanHandle.
-        for (int i = 0; i < chain.Count; i++)
+        foreach (var entry in chain)
         {
-            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && chain[i] is IJsonModel<T> jsonProxy)
+            if (entry is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && entry is IJsonModel<T> jsonProxy)
             {
                 ProxiedModel = model;
                 return jsonProxy;
@@ -175,9 +175,9 @@ public class ModelReaderWriterOptions
         }
 
         // Walk chain first-to-last (FIFO), check CanHandle on each proxy.
-        for (int i = 0; i < chain.Count; i++)
+        foreach (var entry in chain)
         {
-            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
+            if (entry is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
             {
                 ProxiedModel = model;
                 return (T?)proxyBase.CreateFromData(data, this);
@@ -213,9 +213,9 @@ public class ModelReaderWriterOptions
         BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
 
         // Walk chain first-to-last (FIFO), check CanHandle with the BinaryData.
-        for (int i = 0; i < chain.Count; i++)
+        foreach (var entry in chain)
         {
-            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
+            if (entry is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
             {
                 ProxiedModel = model;
                 return (T?)proxyBase.CreateFromData(data, this);
@@ -250,9 +250,9 @@ public class ModelReaderWriterOptions
         BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
 
         // Walk chain first-to-last (FIFO) with CanHandle.
-        for (int i = 0; i < chain.Count; i++)
+        foreach (var entry in chain)
         {
-            if (chain[i] is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
+            if (entry is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
             {
                 ProxiedModel = model;
                 return proxyBase.CreateFromData(data, this);
