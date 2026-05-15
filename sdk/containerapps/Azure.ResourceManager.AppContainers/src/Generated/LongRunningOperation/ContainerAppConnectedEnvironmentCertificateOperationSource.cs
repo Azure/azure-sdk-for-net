@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal class ContainerAppConnectedEnvironmentCertificateOperationSource : IOperationSource<ContainerAppConnectedEnvironmentCertificateResource>
+    /// <summary></summary>
+    internal partial class ContainerAppConnectedEnvironmentCertificateOperationSource : IOperationSource<ContainerAppConnectedEnvironmentCertificateResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ContainerAppConnectedEnvironmentCertificateOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ContainerAppConnectedEnvironmentCertificateResource IOperationSource<ContainerAppConnectedEnvironmentCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ContainerAppCertificateData data = ContainerAppCertificateData.DeserializeContainerAppCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ContainerAppConnectedEnvironmentCertificateResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ContainerAppConnectedEnvironmentCertificateResource> IOperationSource<ContainerAppConnectedEnvironmentCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
-            return await Task.FromResult(new ContainerAppConnectedEnvironmentCertificateResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ContainerAppCertificateData data = ContainerAppCertificateData.DeserializeContainerAppCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerAppConnectedEnvironmentCertificateResource(_client, data);
         }
     }
 }

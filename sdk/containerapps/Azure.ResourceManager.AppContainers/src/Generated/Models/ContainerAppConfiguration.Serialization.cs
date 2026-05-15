@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppConfiguration>
+    /// <summary> Non versioned Container App configuration properties that define the mutable settings of a Container app. </summary>
+    public partial class ContainerAppConfiguration : IJsonModel<ContainerAppConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerAppConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerAppConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerAppConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppConfiguration IPersistableModel<ContainerAppConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerAppConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (var item in Secrets)
+                foreach (ContainerAppWritableSecret item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -51,6 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("activeRevisionsMode"u8);
                 writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
             }
+            if (Optional.IsDefined(TargetLabel))
+            {
+                writer.WritePropertyName("targetLabel"u8);
+                writer.WriteStringValue(TargetLabel);
+            }
             if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
@@ -60,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();
-                foreach (var item in Registries)
+                foreach (ContainerAppRegistryCredentials item in Registries)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -81,6 +124,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
             }
+            if (Optional.IsDefined(RevisionTransitionThreshold))
+            {
+                writer.WritePropertyName("revisionTransitionThreshold"u8);
+                writer.WriteNumberValue(RevisionTransitionThreshold.Value);
+            }
             if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
@@ -90,21 +138,21 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("identitySettings"u8);
                 writer.WriteStartArray();
-                foreach (var item in IdentitySettings)
+                foreach (ContainerAppIdentitySettings item in IdentitySettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,129 +161,149 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        ContainerAppConfiguration IJsonModel<ContainerAppConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppConfiguration IJsonModel<ContainerAppConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerAppConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppConfiguration(document.RootElement, options);
         }
 
-        internal static ContainerAppConfiguration DeserializeContainerAppConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerAppConfiguration DeserializeContainerAppConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<ContainerAppWritableSecret> secrets = default;
             ContainerAppActiveRevisionsMode? activeRevisionsMode = default;
+            string targetLabel = default;
             ContainerAppIngressConfiguration ingress = default;
             IList<ContainerAppRegistryCredentials> registries = default;
             ContainerAppDaprConfiguration dapr = default;
-            Runtime runtime = default;
+            CSharpRuntime runtime = default;
             int? maxInactiveRevisions = default;
+            int? revisionTransitionThreshold = default;
             Service service = default;
             IList<ContainerAppIdentitySettings> identitySettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("secrets"u8))
+                if (prop.NameEquals("secrets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item, options));
                     }
                     secrets = array;
                     continue;
                 }
-                if (property.NameEquals("activeRevisionsMode"u8))
+                if (prop.NameEquals("activeRevisionsMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activeRevisionsMode = new ContainerAppActiveRevisionsMode(property.Value.GetString());
+                    activeRevisionsMode = new ContainerAppActiveRevisionsMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingress"u8))
+                if (prop.NameEquals("targetLabel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    targetLabel = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ingress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(property.Value, options);
+                    ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("registries"u8))
+                if (prop.NameEquals("registries"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ContainerAppRegistryCredentials> array = new List<ContainerAppRegistryCredentials>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item, options));
                     }
                     registries = array;
                     continue;
                 }
-                if (property.NameEquals("dapr"u8))
+                if (prop.NameEquals("dapr"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value, options);
+                    dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("runtime"u8))
+                if (prop.NameEquals("runtime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runtime = Runtime.DeserializeRuntime(property.Value, options);
+                    runtime = CSharpRuntime.DeserializeCSharpRuntime(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("maxInactiveRevisions"u8))
+                if (prop.NameEquals("maxInactiveRevisions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxInactiveRevisions = property.Value.GetInt32();
+                    maxInactiveRevisions = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("service"u8))
+                if (prop.NameEquals("revisionTransitionThreshold"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    service = Service.DeserializeService(property.Value, options);
+                    revisionTransitionThreshold = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("identitySettings"u8))
+                if (prop.NameEquals("service"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    service = Service.DeserializeService(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identitySettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ContainerAppIdentitySettings> array = new List<ContainerAppIdentitySettings>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ContainerAppIdentitySettings.DeserializeContainerAppIdentitySettings(item, options));
                     }
@@ -244,236 +312,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppConfiguration(
                 secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
                 activeRevisionsMode,
+                targetLabel,
                 ingress,
                 registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
                 dapr,
                 runtime,
                 maxInactiveRevisions,
+                revisionTransitionThreshold,
                 service,
                 identitySettings ?? new ChangeTrackingList<ContainerAppIdentitySettings>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secrets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Secrets))
-                {
-                    if (Secrets.Any())
-                    {
-                        builder.Append("  secrets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Secrets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  secrets: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveRevisionsMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  activeRevisionsMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ActiveRevisionsMode))
-                {
-                    builder.Append("  activeRevisionsMode: ");
-                    builder.AppendLine($"'{ActiveRevisionsMode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ingress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ingress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Ingress))
-                {
-                    builder.Append("  ingress: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Ingress, options, 2, false, "  ingress: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Registries), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  registries: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Registries))
-                {
-                    if (Registries.Any())
-                    {
-                        builder.Append("  registries: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Registries)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  registries: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dapr), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dapr: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Dapr))
-                {
-                    builder.Append("  dapr: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Dapr, options, 2, false, "  dapr: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("EnableMetrics", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  runtime: ");
-                builder.AppendLine("{");
-                builder.AppendLine("    java: {");
-                builder.Append("      enableMetrics: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("    }");
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Runtime))
-                {
-                    builder.Append("  runtime: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Runtime, options, 2, false, "  runtime: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxInactiveRevisions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxInactiveRevisions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxInactiveRevisions))
-                {
-                    builder.Append("  maxInactiveRevisions: ");
-                    builder.AppendLine($"{MaxInactiveRevisions.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ServiceType", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  service: ");
-                builder.AppendLine("{");
-                builder.Append("    type: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Service))
-                {
-                    builder.Append("  service: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Service, options, 2, false, "  service: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentitySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identitySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IdentitySettings))
-                {
-                    if (IdentitySettings.Any())
-                    {
-                        builder.Append("  identitySettings: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IdentitySettings)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  identitySettings: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContainerAppConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerAppConfiguration IPersistableModel<ContainerAppConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerAppConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerAppConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

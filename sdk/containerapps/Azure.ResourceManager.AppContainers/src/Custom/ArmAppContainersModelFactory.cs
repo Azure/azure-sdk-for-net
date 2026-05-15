@@ -1,47 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ArmAppContainersModelFactory
+    // TODO: Remove this suppression when https://github.com/Azure/azure-sdk-for-net/issues/57525 is fixed.
+    // The TypeSpec model uses an intentionally empty LogicAppProperties envelope. The generator keeps that
+    // empty envelope internal, so suppress the public model-factory overload that would expose the internal type.
+    [CodeGenSuppress("LogicAppData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(ContainerAppLogicAppConfiguration))]
+    public static partial class ArmAppContainersModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedEnvironmentStorageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="managedEnvironmentStorageAzureFile"> Storage properties. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppManagedEnvironmentStorageData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppManagedEnvironmentStorageData ContainerAppManagedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType,
-            SystemData systemData, ContainerAppAzureFileProperties managedEnvironmentStorageAzureFile = null)
-        {
-            return ContainerAppManagedEnvironmentStorageData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: new ManagedEnvironmentStorageProperties() { AzureFile = managedEnvironmentStorageAzureFile });
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="connectedEnvironmentStorageAzureFile"> Storage properties. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppConnectedEnvironmentStorageData ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAzureFileProperties connectedEnvironmentStorageAzureFile = null)
-        {
-            return ContainerAppConnectedEnvironmentStorageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                 new ConnectedEnvironmentStorageProperties()
-                 {
-                     AzureFile = connectedEnvironmentStorageAzureFile
-                 });
-        }
     }
 }

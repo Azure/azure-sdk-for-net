@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -21,69 +23,75 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobDetectorPropertyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _containerAppJobDetectorPropertyJobsClientDiagnostics;
-        private readonly JobsRestOperations _containerAppJobDetectorPropertyJobsRestClient;
+        private readonly ClientDiagnostics _containerAppJobDetectorPropertiesClientDiagnostics;
+        private readonly ContainerAppJobDetectorProperties _containerAppJobDetectorPropertiesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorPropertyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobDetectorPropertyCollection for mocking. </summary>
         protected ContainerAppJobDetectorPropertyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorPropertyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobDetectorPropertyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppJobDetectorPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerAppJobDetectorPropertyJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerAppJobDetectorPropertyResource.ResourceType, out string containerAppJobDetectorPropertyJobsApiVersion);
-            _containerAppJobDetectorPropertyJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobDetectorPropertyJobsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerAppJobDetectorPropertyResource.ResourceType, out string containerAppJobDetectorPropertyApiVersion);
+            _containerAppJobDetectorPropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
+            _containerAppJobDetectorPropertiesRestClient = new ContainerAppJobDetectorProperties(_containerAppJobDetectorPropertiesClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2025-10-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerAppJobResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppJobResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppJobResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the properties of a Container App Job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_ProxyGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ProxyGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerAppJobDetectorPropertyResource>> GetAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
+            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppJobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -97,38 +105,42 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a Container App Job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_ProxyGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ProxyGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerAppJobDetectorPropertyResource> Get(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
+            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerAppJobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,36 +154,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_ProxyGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ProxyGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
+            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerAppJobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerAppJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -185,36 +211,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_ProxyGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ProxyGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
+            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerAppJobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerAppJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -228,38 +268,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_ProxyGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ProxyGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerAppJobDetectorPropertyResource>> GetIfExistsAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerAppJobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerAppJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerAppJobDetectorPropertyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,38 +329,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_ProxyGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_ProxyGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerAppJobDetectorPropertyResource> GetIfExists(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerAppJobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerAppJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerAppJobDetectorPropertyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

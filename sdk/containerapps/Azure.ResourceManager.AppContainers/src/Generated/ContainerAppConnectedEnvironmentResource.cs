@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a ContainerAppConnectedEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppConnectedEnvironmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppConnectedEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppConnectedEnvironment method.
+    /// A class representing a ContainerAppConnectedEnvironment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppConnectedEnvironmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppConnectedEnvironments method.
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ContainerAppConnectedEnvironmentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="connectedEnvironmentName"> The connectedEnvironmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics;
-        private readonly ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
+        private readonly ClientDiagnostics _connectedEnvironmentsClientDiagnostics;
+        private readonly ConnectedEnvironments _connectedEnvironmentsRestClient;
         private readonly ContainerAppConnectedEnvironmentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments";
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentResource for mocking. </summary>
         protected ContainerAppConnectedEnvironmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppConnectedEnvironmentResource(ArmClient client, ContainerAppConnectedEnvironmentData data) : this(client, data.Id)
@@ -56,278 +46,92 @@ namespace Azure.ResourceManager.AppContainers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppConnectedEnvironmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string containerAppConnectedEnvironmentConnectedEnvironmentsApiVersion);
-            _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient = new ConnectedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentConnectedEnvironmentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string containerAppConnectedEnvironmentApiVersion);
+            _connectedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ContainerAppConnectedEnvironmentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="connectedEnvironmentName"> The connectedEnvironmentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentCertificateResources in the ContainerAppConnectedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentCertificateResources and their operations over a ContainerAppConnectedEnvironmentCertificateResource. </returns>
-        public virtual ContainerAppConnectedEnvironmentCertificateCollection GetContainerAppConnectedEnvironmentCertificates()
-        {
-            return GetCachedClient(client => new ContainerAppConnectedEnvironmentCertificateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the specified Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsCertificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Name of the Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppConnectedEnvironmentCertificateResource>> GetContainerAppConnectedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppConnectedEnvironmentCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsCertificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Name of the Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppConnectedEnvironmentCertificateResource> GetContainerAppConnectedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppConnectedEnvironmentCertificates().Get(certificateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentDaprComponentResources in the ContainerAppConnectedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentDaprComponentResources and their operations over a ContainerAppConnectedEnvironmentDaprComponentResource. </returns>
-        public virtual ContainerAppConnectedEnvironmentDaprComponentCollection GetContainerAppConnectedEnvironmentDaprComponents()
-        {
-            return GetCachedClient(client => new ContainerAppConnectedEnvironmentDaprComponentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a dapr component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/daprComponents/{componentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsDaprComponents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentName"> Name of the Dapr Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppConnectedEnvironmentDaprComponentResource>> GetContainerAppConnectedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppConnectedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a dapr component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/daprComponents/{componentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsDaprComponents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentName"> Name of the Dapr Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppConnectedEnvironmentDaprComponentResource> GetContainerAppConnectedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppConnectedEnvironmentDaprComponents().Get(componentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentStorageResources in the ContainerAppConnectedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentStorageResources and their operations over a ContainerAppConnectedEnvironmentStorageResource. </returns>
-        public virtual ContainerAppConnectedEnvironmentStorageCollection GetContainerAppConnectedEnvironmentStorages()
-        {
-            return GetCachedClient(client => new ContainerAppConnectedEnvironmentStorageCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get storage for a connectedEnvironment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageName"> Name of the storage. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppConnectedEnvironmentStorageResource>> GetContainerAppConnectedEnvironmentStorageAsync(string storageName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppConnectedEnvironmentStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get storage for a connectedEnvironment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageName"> Name of the storage. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppConnectedEnvironmentStorageResource> GetContainerAppConnectedEnvironmentStorage(string storageName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppConnectedEnvironmentStorages().Get(storageName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the properties of an connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppConnectedEnvironmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Get");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,33 +145,139 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of an connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppConnectedEnvironmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Get");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Get");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patches a Managed Environment. Only patching of tags is supported currently
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContainerAppConnectedEnvironmentResource>> UpdateAsync(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppConnectedEnvironmentPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patches a Managed Environment. Only patching of tags is supported currently
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContainerAppConnectedEnvironmentResource> Update(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppConnectedEnvironmentPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -381,20 +291,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Delete an connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,14 +312,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Delete");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppContainersArmOperation operation = new AppContainersArmOperation(_connectedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -423,20 +340,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Delete an connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,99 +361,22 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Delete");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppContainersArmOperation operation = new AppContainersArmOperation(_connectedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Patches a Managed Environment. Only patching of tags is supported currently
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ContainerAppConnectedEnvironmentResource>> UpdateAsync(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Patches a Managed Environment. Only patching of tags is supported currently
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ContainerAppConnectedEnvironmentResource> Update(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -549,20 +389,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks if resource connectedEnvironmentName is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -573,11 +413,21 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.CheckNameAvailability");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppNameAvailabilityResult> response = Response.FromValue(ContainerAppNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -591,20 +441,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks if resource connectedEnvironmentName is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironments_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppConnectedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -615,11 +465,21 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.CheckNameAvailability");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppNameAvailabilityResult> response = Response.FromValue(ContainerAppNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -629,27 +489,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -659,29 +499,35 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.AddTag");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerAppConnectedEnvironmentPatch();
-                    foreach (var tag in current.Tags)
+                    ContainerAppConnectedEnvironmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppConnectedEnvironmentPatch patch = new ContainerAppConnectedEnvironmentPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ContainerAppConnectedEnvironmentResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -691,27 +537,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -721,29 +547,35 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.AddTag");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerAppConnectedEnvironmentPatch();
-                    foreach (var tag in current.Tags)
+                    ContainerAppConnectedEnvironmentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppConnectedEnvironmentPatch patch = new ContainerAppConnectedEnvironmentPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ContainerAppConnectedEnvironmentResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -753,54 +585,40 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ContainerAppConnectedEnvironmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.SetTags");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerAppConnectedEnvironmentPatch();
+                    ContainerAppConnectedEnvironmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppConnectedEnvironmentPatch patch = new ContainerAppConnectedEnvironmentPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ContainerAppConnectedEnvironmentResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -810,54 +628,40 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ContainerAppConnectedEnvironmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.SetTags");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerAppConnectedEnvironmentPatch();
+                    ContainerAppConnectedEnvironmentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppConnectedEnvironmentPatch patch = new ContainerAppConnectedEnvironmentPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ContainerAppConnectedEnvironmentResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -867,27 +671,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -895,29 +679,35 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.RemoveTag");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerAppConnectedEnvironmentPatch();
-                    foreach (var tag in current.Tags)
+                    ContainerAppConnectedEnvironmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppConnectedEnvironmentPatch patch = new ContainerAppConnectedEnvironmentPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ContainerAppConnectedEnvironmentResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -927,27 +717,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -955,29 +725,35 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.RemoveTag");
+            using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppConnectedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerAppConnectedEnvironmentPatch();
-                    foreach (var tag in current.Tags)
+                    ContainerAppConnectedEnvironmentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppConnectedEnvironmentPatch patch = new ContainerAppConnectedEnvironmentPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ContainerAppConnectedEnvironmentResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -985,6 +761,105 @@ namespace Azure.ResourceManager.AppContainers
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentStorages in the <see cref="ContainerAppConnectedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentStorages and their operations over a ContainerAppConnectedEnvironmentStorageResource. </returns>
+        public virtual ContainerAppConnectedEnvironmentStorageCollection GetContainerAppConnectedEnvironmentStorages()
+        {
+            return GetCachedClient(client => new ContainerAppConnectedEnvironmentStorageCollection(client, Id));
+        }
+
+        /// <summary> Get storage for a connectedEnvironment. </summary>
+        /// <param name="storageName"> Name of the storage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppConnectedEnvironmentStorageResource>> GetContainerAppConnectedEnvironmentStorageAsync(string storageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+
+            return await GetContainerAppConnectedEnvironmentStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get storage for a connectedEnvironment. </summary>
+        /// <param name="storageName"> Name of the storage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppConnectedEnvironmentStorageResource> GetContainerAppConnectedEnvironmentStorage(string storageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+
+            return GetContainerAppConnectedEnvironmentStorages().Get(storageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentCertificates in the <see cref="ContainerAppConnectedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentCertificates and their operations over a ContainerAppConnectedEnvironmentCertificateResource. </returns>
+        public virtual ContainerAppConnectedEnvironmentCertificateCollection GetContainerAppConnectedEnvironmentCertificates()
+        {
+            return GetCachedClient(client => new ContainerAppConnectedEnvironmentCertificateCollection(client, Id));
+        }
+
+        /// <summary> Get the specified Certificate. </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppConnectedEnvironmentCertificateResource>> GetContainerAppConnectedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return await GetContainerAppConnectedEnvironmentCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified Certificate. </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppConnectedEnvironmentCertificateResource> GetContainerAppConnectedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return GetContainerAppConnectedEnvironmentCertificates().Get(certificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentDaprComponents in the <see cref="ContainerAppConnectedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentDaprComponents and their operations over a ContainerAppConnectedEnvironmentDaprComponentResource. </returns>
+        public virtual ContainerAppConnectedEnvironmentDaprComponentCollection GetContainerAppConnectedEnvironmentDaprComponents()
+        {
+            return GetCachedClient(client => new ContainerAppConnectedEnvironmentDaprComponentCollection(client, Id));
+        }
+
+        /// <summary> Get a dapr component. </summary>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppConnectedEnvironmentDaprComponentResource>> GetContainerAppConnectedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return await GetContainerAppConnectedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a dapr component. </summary>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppConnectedEnvironmentDaprComponentResource> GetContainerAppConnectedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return GetContainerAppConnectedEnvironmentDaprComponents().Get(componentName, cancellationToken);
         }
     }
 }
