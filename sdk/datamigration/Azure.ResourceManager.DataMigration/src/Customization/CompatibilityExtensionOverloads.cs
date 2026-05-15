@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible overload preserving the old SQL DB resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ResourceGroupResource resourceGroupResource, string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible overload preserving the old SQL DB resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ResourceGroupResource resourceGroupResource, string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -101,6 +103,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible overload preserving the old SQL MI resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ResourceGroupResource resourceGroupResource, string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -109,6 +112,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible overload preserving the old SQL MI resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ResourceGroupResource resourceGroupResource, string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -125,6 +129,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible overload preserving the old SQL VM resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ResourceGroupResource resourceGroupResource, string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible overload preserving the old SQL VM resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ResourceGroupResource resourceGroupResource, string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -187,11 +193,13 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         // Backward-compatible overload preserving the old SQL DB resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlDBs().Get(targetDbName, parentName, migrationOperationId, expand, cancellationToken);
 
         // Backward-compatible overload preserving the old SQL DB resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlDBs().GetAsync(targetDbName, parentName, migrationOperationId, expand, cancellationToken);
 
@@ -202,11 +210,13 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         // Backward-compatible overload preserving the old SQL MI resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlMIs().Get(targetDbName, parentName, migrationOperationId, expand, cancellationToken);
 
         // Backward-compatible overload preserving the old SQL MI resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlMIs().GetAsync(targetDbName, parentName, migrationOperationId, expand, cancellationToken);
 
@@ -217,11 +227,13 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         // Backward-compatible overload preserving the old SQL VM resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlVms().Get(targetDbName, parentName, migrationOperationId, expand, cancellationToken);
 
         // Backward-compatible overload preserving the old SQL VM resource-group shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(string parentName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlVms().GetAsync(targetDbName, parentName, migrationOperationId, expand, cancellationToken);
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class ConnectToSourceSqlServerTaskOutput : IJsonModel<ConnectToSourceSqlServerTaskOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutput"/> for deserialization. </summary>
-        internal ConnectToSourceSqlServerTaskOutput()
+        protected ConnectToSourceSqlServerTaskOutput()
         {
         }
 

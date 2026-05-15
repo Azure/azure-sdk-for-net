@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class ConnectToSourceSqlServerTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput>
     {
-        internal ConnectToSourceSqlServerTaskOutput() { }
+        protected ConnectToSourceSqlServerTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1803,7 +1803,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class DatabaseMigrationBaseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.DatabaseMigrationBaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.DatabaseMigrationBaseProperties>
     {
-        internal DatabaseMigrationBaseProperties() { }
+        protected DatabaseMigrationBaseProperties() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.SqlMigrationErrorInfo MigrationFailureError { get { throw null; } }
         public string MigrationOperationId { get { throw null; } set { } }
@@ -2216,7 +2216,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class DataMigrationCommandProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties>
     {
-        internal DataMigrationCommandProperties() { }
+        protected DataMigrationCommandProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.DataMigrationODataError> Errors { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationCommandState? State { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3129,7 +3129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class DataMigrationProjectTaskProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.DataMigrationProjectTaskProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.DataMigrationProjectTaskProperties>
     {
-        internal DataMigrationProjectTaskProperties() { }
+        protected DataMigrationProjectTaskProperties() { }
         public System.Collections.Generic.IDictionary<string, string> ClientData { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties> Commands { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.DataMigrationODataError> Errors { get { throw null; } }
@@ -4215,7 +4215,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         public MigrateMISyncCompleteCommandProperties() { }
         public string InputSourceDatabaseName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.DataMigrationReportableException> OutputErrors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.DataMigrationReportableException> OutputErrors { get { throw null; } }
         protected override Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4279,7 +4279,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput>
     {
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutput() { }
+        protected MigrateMySqlAzureDBForMySqlOfflineTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4438,7 +4438,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateMySqlAzureDBForMySqlSyncTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput>
     {
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutput() { }
+        protected MigrateMySqlAzureDBForMySqlSyncTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4621,7 +4621,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput>
     {
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutput() { }
+        protected MigrateOracleAzureDBPostgreSqlSyncTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4789,7 +4789,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>
     {
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput() { }
+        protected MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4961,7 +4961,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateSchemaSqlServerSqlDBTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput>
     {
-        internal MigrateSchemaSqlServerSqlDBTaskOutput() { }
+        protected MigrateSchemaSqlServerSqlDBTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5120,7 +5120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateSqlServerSqlDBSyncTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput>
     {
-        internal MigrateSqlServerSqlDBSyncTaskOutput() { }
+        protected MigrateSqlServerSqlDBSyncTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5269,7 +5269,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateSqlServerSqlDBTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput>
     {
-        internal MigrateSqlServerSqlDBTaskOutput() { }
+        protected MigrateSqlServerSqlDBTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5462,7 +5462,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateSqlServerSqlMISyncTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMISyncTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMISyncTaskOutput>
     {
-        internal MigrateSqlServerSqlMISyncTaskOutput() { }
+        protected MigrateSqlServerSqlMISyncTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMISyncTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5577,7 +5577,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateSqlServerSqlMITaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput>
     {
-        internal MigrateSqlServerSqlMITaskOutput() { }
+        protected MigrateSqlServerSqlMITaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMITaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5727,7 +5727,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class MigrateSsisTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MigrateSsisTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MigrateSsisTaskOutput>
     {
-        internal MigrateSsisTaskOutput() { }
+        protected MigrateSsisTaskOutput() { }
         public string Id { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.MigrateSsisTaskOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6299,7 +6299,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public abstract partial class ServerConnectionInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ServerConnectionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ServerConnectionInfo>
     {
-        internal ServerConnectionInfo() { }
+        protected ServerConnectionInfo() { }
         public string Password { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataMigration.Models.ServerConnectionInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

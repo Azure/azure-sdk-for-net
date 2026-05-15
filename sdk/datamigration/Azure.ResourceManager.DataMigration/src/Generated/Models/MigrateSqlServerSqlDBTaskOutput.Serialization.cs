@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class MigrateSqlServerSqlDBTaskOutput : IJsonModel<MigrateSqlServerSqlDBTaskOutput>
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutput"/> for deserialization. </summary>
-        internal MigrateSqlServerSqlDBTaskOutput()
+        protected MigrateSqlServerSqlDBTaskOutput()
         {
         }
 

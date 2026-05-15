@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class MigrateSsisTaskOutput : IJsonModel<MigrateSsisTaskOutput>
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutput"/> for deserialization. </summary>
-        internal MigrateSsisTaskOutput()
+        protected MigrateSsisTaskOutput()
         {
         }
 

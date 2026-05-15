@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class DatabaseMigrationBaseProperties : IJsonModel<DatabaseMigrationBaseProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationBaseProperties"/> for deserialization. </summary>
-        internal DatabaseMigrationBaseProperties()
+        protected DatabaseMigrationBaseProperties()
         {
         }
 

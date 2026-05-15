@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutput : IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>
     {
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/> for deserialization. </summary>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutput()
+        protected MigrateMySqlAzureDBForMySqlOfflineTaskOutput()
         {
         }
 

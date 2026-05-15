@@ -182,6 +182,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible GA project-task accessor.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<DataMigrationServiceTaskResource> GetDataMigrationServiceTask(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Response<TaskResource> response = GetTasks().Get(taskName, expand, cancellationToken);
@@ -190,6 +191,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible GA project-task accessor.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<DataMigrationServiceTaskResource>> GetDataMigrationServiceTaskAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Response<TaskResource> response = await GetTasks().GetAsync(taskName, expand, cancellationToken).ConfigureAwait(false);
@@ -207,6 +209,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible GA alias for service-level tasks.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<ServiceServiceTaskResource> GetServiceServiceTask(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Response<DataMigrationServiceTaskResource> response = GetDataMigrationServiceTask(taskName, expand, cancellationToken);
@@ -215,6 +218,7 @@ namespace Azure.ResourceManager.DataMigration
 
         // Backward-compatible GA alias for service-level tasks.
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServiceServiceTaskResource>> GetServiceServiceTaskAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Response<DataMigrationServiceTaskResource> response = await GetDataMigrationServiceTaskAsync(taskName, expand, cancellationToken).ConfigureAwait(false);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class DataMigrationProjectTaskProperties : IJsonModel<DataMigrationProjectTaskProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectTaskProperties"/> for deserialization. </summary>
-        internal DataMigrationProjectTaskProperties()
+        protected DataMigrationProjectTaskProperties()
         {
         }
 

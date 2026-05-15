@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class ServerConnectionInfo : IJsonModel<ServerConnectionInfo>
     {
         /// <summary> Initializes a new instance of <see cref="ServerConnectionInfo"/> for deserialization. </summary>
-        internal ServerConnectionInfo()
+        protected ServerConnectionInfo()
         {
         }
 

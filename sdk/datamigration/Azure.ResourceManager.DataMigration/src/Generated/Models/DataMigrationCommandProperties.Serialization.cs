@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class DataMigrationCommandProperties : IJsonModel<DataMigrationCommandProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DataMigrationCommandProperties"/> for deserialization. </summary>
-        internal DataMigrationCommandProperties()
+        protected DataMigrationCommandProperties()
         {
         }
 

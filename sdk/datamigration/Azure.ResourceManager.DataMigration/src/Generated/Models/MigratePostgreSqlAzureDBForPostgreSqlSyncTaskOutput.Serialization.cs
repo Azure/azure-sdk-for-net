@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>
     {
         /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> for deserialization. </summary>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput()
+        protected MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput()
         {
         }
 

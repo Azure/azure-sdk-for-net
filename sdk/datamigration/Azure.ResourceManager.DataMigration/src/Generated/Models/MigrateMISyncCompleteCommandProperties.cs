@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> List of errors that happened during the command execution. </summary>
-        public IList<DataMigrationReportableException> OutputErrors
+        public IReadOnlyList<DataMigrationReportableException> OutputErrors
         {
             get
             {
-                return Output is null ? default : Output.Errors;
+                return Output is null ? default : (IReadOnlyList<DataMigrationReportableException>)Output.Errors;
             }
         }
     }
