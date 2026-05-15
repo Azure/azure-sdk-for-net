@@ -1,14 +1,25 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2026-05-15)
 
 ### Features Added
 
-### Breaking Changes
+- All error responses (4xx/5xx) now include the `x-platform-error-source` header classifying
+  error origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or
+  `upstream` (developer handler failure) per container-image-spec §8.
+- Platform errors include the `x-platform-error-detail` header with full exception context
+  (type, message, stack trace) for diagnostic telemetry. `AggregateException` wrappers are
+  unwrapped and the detail is truncated to 2048 characters.
+- Foundry storage pipeline exceptions are now tagged as platform errors at the source, enabling
+  accurate classification of storage transport, authentication, and service failures regardless
+  of exception type.
 
 ### Bugs Fixed
 
-### Other Changes
+- Enabled automatic gzip/deflate/brotli decompression on the Foundry storage HTTP pipeline.
+  Intermediary gateways or load-balancers that return compressed responses are now handled
+  transparently, preventing JSON parse failures on raw gzip bytes. The pipeline also
+  advertises `Accept-Encoding` support so servers can compress responses proactively.
 
 ## 1.0.0-beta.4 (2026-04-22)
 
