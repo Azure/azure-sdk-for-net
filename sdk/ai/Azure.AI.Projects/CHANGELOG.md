@@ -3,8 +3,14 @@
 ## 2.1.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
+- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
 
 ### Breaking Changes
+- Removed `DataGenerationJobs`, `DataGenerationJob`, `DataGenerationJobInputs`, `DataGenerationJobResult`, `DataGenerationModelOptions`, `DataGenerationTokenUsage`.
+- Removed `SimpleQnADataGenerationJobOptions`, `TaskDataGenerationJobOptions`, `ToolUseFineTuningDataGenerationJobOptions`, `TracesDataGenerationJobOptions`.
+- Removed `AgentDataGenerationJobSource`, `DatasetDataGenerationJobSource`, `FileDataGenerationJobSource`, `PromptDataGenerationJobSource`, `TracesDataGenerationJobSource`.
+- Removed `DatasetDataGenerationJobOutput`, `FileDataGenerationJobOutput`.
 
 ### Bugs Fixed
 
