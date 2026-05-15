@@ -80,7 +80,51 @@ public override ResourceNameRequirements GetResourceNameRequirements()
 
 The `pattern` string is parsed to determine which `ResourceNameCharacters` flags to include. Character classes (`[a-z]`, `[A-Z]`, `[0-9]`, `-`, `_`, `.`, `()`) are extracted from the regex and tested against representative characters.
 
-## `disable-safe-flatten`
+## `resource-name-mappings`
+
+Renames one or more resources generated from a model. This is a generic, late-stage name override that runs after all resource building (expansion, parent inference, scope assignment, post-processing) is complete, so it works uniformly for normal resources, singleton resources, and resources produced by expanding a dynamic `{parentType}` segment into one resource per enum value.
+
+The decorator value is a record whose keys are the resource names the emitter currently generates and whose values are the desired replacement names. Resources whose generated names do not appear in the map are left untouched.
+
+**Target:** ARM resource model whose generated resource name(s) should be overridden. When the same model produces multiple resources (e.g. an expandable `{parentType}` segment), one decorator on the shared model covers all of its generated resources.
+
+**Value:** A record mapping the current generated `resourceName` to the desired `resourceName`.
+
+**Example — expandable resource:**
+
+Without the decorator, the emitter expands `EventGridPrivateEndpointConnection` (whose `RoutedOperations` parent path contains `{parentType}` with enum values `eventGridTopics` and `eventGridDomains`) into two C# resources named `EventGridTopicEventGridPrivateEndpointConnection` and `EventGridDomainEventGridPrivateEndpointConnection`. The duplicated `EventGrid` prefix is awkward; the decorator below renames both:
+
+```typespec
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Resource name mappings"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Resource name mappings"
+@@clientOption(EventGridPrivateEndpointConnection,
+  "resource-name-mappings",
+  #{
+    EventGridTopicEventGridPrivateEndpointConnection: "EventGridTopicPrivateEndpointConnection",
+    EventGridDomainEventGridPrivateEndpointConnection: "EventGridDomainPrivateEndpointConnection",
+  },
+  "csharp"
+);
+```
+
+This is the TypeSpec equivalent of Swagger's `request-path-to-resource-name` (e.g., `…/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: DnsARecord`).
+
+**Example — plain resource rename:**
+
+```typespec
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Resource name mappings"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Resource name mappings"
+@@clientOption(RecordSet, "resource-name-mappings", #{ RecordSet: "DnsRecordSet" }, "csharp");
+```
+
+**Effect:** Only `metadata.resourceName` is changed on the affected `ArmResourceSchema` entries, which drives the C# `XxxResource` / `XxxCollection` / `XxxResources*RestOperations` class names. The underlying data model (`XxxData`) and the resource type string are not affected.
+
+**Diagnostics:**
+
+- A warning is emitted for each mapping key that does not match any actually generated resource name on the targeted model. This catches typos and silent drift when the emitter's name-derivation logic changes.
+- A warning is emitted if applying the overrides produces two resources with the same `resourceName`.
+
+
 
 Opts a model out of the C# generator's *safe-flatten* transform. By default, when a parent model has a property whose type is another model that contains exactly one public, non-discriminator, non-obsolete property, the generator lifts that single inner property up onto the parent and removes the inner type. Setting `disable-safe-flatten` to `true` on the inner model preserves it as a public type and keeps the parent's property pointing at it.
 
@@ -107,5 +151,5 @@ The C# generator only honors decorators scoped to `"csharp"` (or with no scope, 
 ## Notes
 
 - All `@@clientOption` decorators require `#suppress` directives for the `client-option` and `client-option-requires-scope` diagnostics until the TCGC issue [Azure/typespec-azure#4104](https://github.com/Azure/typespec-azure/issues/4104) is resolved.
-- The `resource-rbac-roles` and `resource-name-constraint` keys are read during resource detection in the emitter and serialized into the `armProviderSchema` decorator on the code model. The C# generator then deserializes them to drive code generation.
+- The `resource-rbac-roles`, `resource-name-constraint`, and `resource-name-mappings` keys are read during resource detection in the emitter and serialized into the `armProviderSchema` decorator on the code model. The C# generator then deserializes them to drive code generation.
 - The `disable-safe-flatten` key is propagated by TCGC onto the input model's `Decorators` collection. The C# generator reads it directly when deciding whether to apply safe-flatten.
