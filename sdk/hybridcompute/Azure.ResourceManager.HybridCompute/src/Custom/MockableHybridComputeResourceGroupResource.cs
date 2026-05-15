@@ -13,6 +13,46 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     public partial class MockableHybridComputeResourceGroupResource
     {
         /// <summary>
+        /// Updates the base Settings of the target resource.
+        /// This method preserves the AutoRest-generated mockable API for backward compatibility.
+        /// Use <see cref="ArcSettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArcSettings>> UpdateSettingAsync(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
+            Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
+            Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+            Argument.AssertNotNull(arcSettings, nameof(arcSettings));
+
+            ResourceIdentifier id = ArcSettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
+            Response<ArcSettingsResource> response = await new ArcSettingsResource(Client, id).UpdateAsync(arcSettings.ToArcSettingsData(), cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(ArcSettings.FromArcSettingsData(response.Value.Data), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Updates the base Settings of the target resource.
+        /// This method preserves the AutoRest-generated mockable API for backward compatibility.
+        /// Use <see cref="ArcSettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<ArcSettings> UpdateSetting(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
+            Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
+            Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+            Argument.AssertNotNull(arcSettings, nameof(arcSettings));
+
+            ResourceIdentifier id = ArcSettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
+            Response<ArcSettingsResource> response = new ArcSettingsResource(Client, id).Update(arcSettings.ToArcSettingsData(), cancellationToken);
+            return Response.FromValue(ArcSettings.FromArcSettingsData(response.Value.Data), response.GetRawResponse());
+        }
+
+        /// <summary>
         /// Gets a hybrid machine.
         /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
         /// Use <see cref="GetHybridComputeMachine(string, InstanceViewTypes?, CancellationToken)"/> instead.

@@ -99,6 +99,32 @@ namespace Azure.ResourceManager.HybridCompute
         // ----- ResourceGroupResource overloads -----
 
         /// <summary>
+        /// Updates the base Settings of the target resource.
+        /// This method preserves the AutoRest-generated ResourceGroupResource convenience API for backward compatibility.
+        /// Use <see cref="ArcSettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static Task<Response<ArcSettings>> UpdateSettingAsync(this ResourceGroupResource resourceGroupResource, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).UpdateSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the base Settings of the target resource.
+        /// This method preserves the AutoRest-generated ResourceGroupResource convenience API for backward compatibility.
+        /// Use <see cref="ArcSettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public static Response<ArcSettings> UpdateSetting(this ResourceGroupResource resourceGroupResource, string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).UpdateSetting(baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a hybrid machine.
         /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
         /// Use <see cref="GetHybridComputeMachineAsync(ResourceGroupResource, string, InstanceViewTypes?, CancellationToken)"/> instead.
