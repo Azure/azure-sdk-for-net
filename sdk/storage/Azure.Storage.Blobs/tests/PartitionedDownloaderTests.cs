@@ -521,6 +521,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         /// <summary>
+        /// Verifies that all ArrayPool buffers are returned after a fully successful
+        /// multi-partition download. Locks the invariant that the buffered (async) path's
+        /// happy case is balanced w.r.t. ArrayPool rent/return, not just the error paths.
+        /// </summary>
+        [Test]
+        public async Task ReturnsArrayPoolBuffersOnSuccessfulDownload()
+        {
+            MemoryStream destination = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            Mock<BlobBaseClient> blockClient = CreateMockBlobClient();
+            SetupDownload(blockClient, dataSource);
+
+            PartitionedDownloader downloader = CreateDownloader(blockClient.Object, arrayPool: trackingPool);
+
+            Response result = await InvokeDownloadToAsync(downloader, destination);
+
+            AssertContent(100, destination);
+            Assert.NotNull(result);
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after successful download");
+        }
+
+        /// <summary>
         /// Verifies that all ArrayPool buffers are returned when the destination
         /// stream throws during a write. In the async/multi-worker path, this
         /// exercises the two-layer cleanup: ConsumeBufferedTask's finally block

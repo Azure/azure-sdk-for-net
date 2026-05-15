@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -27,19 +28,18 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Holds the result of downloading and buffering a single range into memory.
-        /// The caller is responsible for returning Buffer and PartitionChecksum to the ArrayPool.
+        /// The caller is responsible for disposing BufferedStream, which returns its
+        /// rented ArrayPool buffers.
         /// </summary>
         private readonly struct BufferedDownloadResult
         {
-            public readonly byte[] Buffer;
-            public readonly int BytesRead;
+            public readonly PooledMemoryStream BufferedStream;
             public readonly byte[] PartitionChecksum;
             public readonly long ContentLength;
 
-            public BufferedDownloadResult(byte[] buffer, int bytesRead, byte[] partitionChecksum, long contentLength)
+            public BufferedDownloadResult(PooledMemoryStream bufferedStream, byte[] partitionChecksum, long contentLength)
             {
-                Buffer = buffer;
-                BytesRead = bytesRead;
+                BufferedStream = bufferedStream;
                 PartitionChecksum = partitionChecksum;
                 ContentLength = contentLength;
             }
@@ -403,7 +403,8 @@ namespace Azure.Storage.Blobs
                         // Write the fully-buffered data to the destination stream.
                         // Since the data is already in memory, this is very fast
                         // compared to streaming from the network.
-                        await destination.WriteAsync(result.Buffer, 0, result.BytesRead, cancellationToken).ConfigureAwait(false);
+                        result.BufferedStream.Position = 0;
+                        await result.BufferedStream.CopyToInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
 
                         if (UseMasterCrc && result.PartitionChecksum != null)
                         {
@@ -415,11 +416,7 @@ namespace Azure.Storage.Blobs
                     }
                     finally
                     {
-                        _arrayPool.Return(result.Buffer);
-                        if (result.PartitionChecksum != null)
-                        {
-                            _arrayPool.Return(result.PartitionChecksum);
-                        }
+                        result.BufferedStream.Dispose();
                     }
                 }
             }
@@ -438,15 +435,11 @@ namespace Azure.Storage.Blobs
                         try
                         {
                             BufferedDownloadResult result = await task.ConfigureAwait(false);
-                            _arrayPool.Return(result.Buffer);
-                            if (result.PartitionChecksum != null)
-                            {
-                                _arrayPool.Return(result.PartitionChecksum);
-                            }
+                            result.BufferedStream.Dispose();
                         }
                         catch
                         {
-                            // Task faulted during download; no buffers to return
+                            // Task faulted during download; nothing to dispose
                         }
                     }
                     await Task.WhenAll(bufferedTasks.Select(ReturnBuffersAsync)).ConfigureAwait(false);
@@ -556,9 +549,9 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Reads a download response fully into a rented buffer and validates its responseChecksum.
-        /// The caller is responsible for returning the rented Buffer and PartitionChecksum
-        /// arrays to the ArrayPool when done.
+        /// Reads a download response fully into a <see cref="PooledMemoryStream"/> and
+        /// validates its responseChecksum. The caller is responsible for disposing the
+        /// returned stream, which returns its rented ArrayPool buffers.
         /// </summary>
         private async Task<BufferedDownloadResult> BufferResponseAsync(
             Response<BlobDownloadStreamingResult> response,
@@ -573,47 +566,27 @@ namespace Azure.Storage.Blobs
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
                 : rawSource;
 
-            // Determine buffer size from response content length.
-            // The range size is capped at MaxDownloadBytes (256 MB), so this
-            // should always fit in an int. Guard with an explicit check to
-            // surface a clear error if assumptions change.
             long contentLen = response.Value.Details.ContentLength;
-            long expectedSize = contentLen > 0 ? contentLen : _rangeSize;
-            if (expectedSize > int.MaxValue)
-            {
-                throw new InvalidOperationException(
-                    $"The response content length ({expectedSize} bytes) exceeds the maximum " +
-                    $"bufferable size. Reduce StorageTransferOptions.MaximumTransferLength.");
-            }
-            int bufferSize = (int)expectedSize;
-
-            byte[] buffer = _arrayPool.Rent(bufferSize);
-            byte[] partitionChecksum = _checksumSize > 0 ? _arrayPool.Rent(_checksumSize) : null;
+            PooledMemoryStream bufferedStream = new PooledMemoryStream(_arrayPool, Constants.MB);
+            byte[] partitionChecksum = _checksumSize > 0 ? new byte[_checksumSize] : null;
 
             try
             {
-                // Read the full response body into the buffer.
-                // Use bufferSize (the expected byte count) rather than buffer.Length,
-                // because ArrayPool.Rent may return a larger array than requested.
-                int totalRead = 0;
-                int bytesRead;
-                while (totalRead < bufferSize &&
-                    (bytesRead = await source.ReadAsync(
-                        buffer, totalRead, bufferSize - totalRead, cancellationToken).ConfigureAwait(false)) > 0)
-                {
-                    totalRead += bytesRead;
-                }
+                await source.CopyToExactInternal(bufferedStream, contentLen, async: true, cancellationToken)
+                    .ConfigureAwait(false);
 
-                // Ensure there is no additional data beyond the expected size
-                // to avoid silent truncation.
-                if (totalRead == bufferSize)
+                // Ensure there is no additional data beyond the declared Content-Length.
+                // Probe into a tiny dedicated buffer (not the data buffer) so that an upstream
+                // bug returning a stale extraByte count can't silently corrupt payload bytes.
+                using (_arrayPool.RentDisposable(1, out byte[] extraBuffer))
                 {
-                    int extraByte = await source.ReadAsync(buffer, 0, 1, cancellationToken).ConfigureAwait(false);
+                    int extraByte = await source.ReadAsync(extraBuffer, 0, 1, cancellationToken).ConfigureAwait(false);
                     if (extraByte > 0)
                     {
                         throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
                     }
                 }
+
                 // Calculate and validate per-chunk responseChecksum
                 if (structuredMessage)
                 {
@@ -636,15 +609,11 @@ namespace Azure.Storage.Blobs
                 long chunkContentLength = response.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
                     ?? response.Value.Details.ContentLength;
 
-                return new BufferedDownloadResult(buffer, totalRead, partitionChecksum, chunkContentLength);
+                return new BufferedDownloadResult(bufferedStream, partitionChecksum, chunkContentLength);
             }
             catch
             {
-                _arrayPool.Return(buffer);
-                if (partitionChecksum != null)
-                {
-                    _arrayPool.Return(partitionChecksum);
-                }
+                bufferedStream.Dispose();
                 throw;
             }
         }
