@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> MigrationFromSqlServerToAzureMI. </summary>
         MigrationFromSqlServerToAzureMI,
         /// <summary> MigrationFromMySQLToAzureDBForMySQL. </summary>
-        MigrationFromMySQLToAzureDBForMySQL,
+        MigrationFromMySqlToAzureDBForMySql,
         /// <summary> MigrationFromSqlServerToAzureVM. </summary>
-        MigrationFromSqlServerToAzureVM
+        MigrationFromSqlServerToAzureVm
     }
 }

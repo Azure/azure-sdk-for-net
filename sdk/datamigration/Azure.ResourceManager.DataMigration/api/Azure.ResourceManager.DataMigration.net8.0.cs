@@ -6253,8 +6253,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         Default = 0,
         MigrationFromSqlServerToAzureDB = 1,
         MigrationFromSqlServerToAzureMI = 2,
-        MigrationFromMySQLToAzureDBForMySQL = 3,
-        MigrationFromSqlServerToAzureVM = 4,
+        MigrationFromMySqlToAzureDBForMySql = 3,
+        MigrationFromSqlServerToAzureVm = 4,
     }
     public partial class SqlMigrationAuthenticationKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.SqlMigrationAuthenticationKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.SqlMigrationAuthenticationKeys>
     {
@@ -6586,7 +6586,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class ValidateMigrationInputSqlServerSqlMITaskInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskInput>
     {
-        public ValidateMigrationInputSqlServerSqlMITaskInput(Azure.ResourceManager.DataMigration.Models.DataMigrationSqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.DataMigrationSqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases) { }
+        public ValidateMigrationInputSqlServerSqlMITaskInput(Azure.ResourceManager.DataMigration.Models.DataMigrationSqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.DataMigrationSqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, Azure.ResourceManager.DataMigration.Models.DataMigrationBlobShare backupBlobShare) { }
         public System.Uri BackupBlobShareSasUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationFileShareInfo BackupFileShare { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationBackupMode? BackupMode { get { throw null; } set { } }

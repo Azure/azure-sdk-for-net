@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -17,23 +15,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskInput"/>. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public ValidateMigrationInputSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases)
-        {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
-
-            SourceConnectionInfo = sourceConnectionInfo;
-            TargetConnectionInfo = targetConnectionInfo;
-            SelectedDatabases = selectedDatabases.ToList();
-            SelectedLogins = new ChangeTrackingList<string>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>

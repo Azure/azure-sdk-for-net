@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             ServerLevelPermissionsGroup.Default => "Default",
             ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB => "MigrationFromSqlServerToAzureDB",
             ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureMI => "MigrationFromSqlServerToAzureMI",
-            ServerLevelPermissionsGroup.MigrationFromMySQLToAzureDBForMySQL => "MigrationFromMySQLToAzureDBForMySQL",
-            ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVM => "MigrationFromSqlServerToAzureVM",
+            ServerLevelPermissionsGroup.MigrationFromMySqlToAzureDBForMySql => "MigrationFromMySQLToAzureDBForMySQL",
+            ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVm => "MigrationFromSqlServerToAzureVM",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServerLevelPermissionsGroup value.")
         };
 
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "MigrationFromMySQLToAzureDBForMySQL"))
             {
-                return ServerLevelPermissionsGroup.MigrationFromMySQLToAzureDBForMySQL;
+                return ServerLevelPermissionsGroup.MigrationFromMySqlToAzureDBForMySql;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "MigrationFromSqlServerToAzureVM"))
             {
-                return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVM;
+                return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVm;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServerLevelPermissionsGroup value.");
         }
