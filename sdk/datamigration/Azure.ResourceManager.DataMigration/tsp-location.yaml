@@ -1,0 +1,4 @@
+directory: specification/datamigration/resource-manager/Microsoft.DataMigration/DataMigration
+commit: 349d92e49f41a6453608accde19095f344bde0fb
+repo: cxznmhdcxz/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
