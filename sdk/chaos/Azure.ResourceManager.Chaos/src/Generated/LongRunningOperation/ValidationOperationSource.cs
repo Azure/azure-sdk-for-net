@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Chaos
         Validation IOperationSource<Validation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            Validation result = Validation.DeserializeValidation(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return Validation.DeserializeValidation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Chaos
         async ValueTask<Validation> IOperationSource<Validation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            Validation result = Validation.DeserializeValidation(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return Validation.DeserializeValidation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Chaos
         PermissionsFix IOperationSource<PermissionsFix>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PermissionsFix result = PermissionsFix.DeserializePermissionsFix(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return PermissionsFix.DeserializePermissionsFix(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Chaos
         async ValueTask<PermissionsFix> IOperationSource<PermissionsFix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PermissionsFix result = PermissionsFix.DeserializePermissionsFix(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return PermissionsFix.DeserializePermissionsFix(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
