@@ -100,6 +100,7 @@ Treat deleted custom code as **suspect by default**. Re-add only the smallest co
 | Problem | Decorator |
 |---------|-----------|
 | Wrong property type | `@@alternateType(Model.prop, targetType, "csharp")` |
+| Wrong resoource model keyname type | `@@alternateType(Model.name, targetType, "csharp")` |
 | Wrong name | `@@clientName(target, "NewName", "csharp")` |
 | Type should be public | `@@access(Model, Access.public, "csharp")` |
 | Model should be input and output | `@@usage(Model, Usage.input, "csharp")` (decorator appends; only specify the missing flag) |
