@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net;
+using System.Net.Http;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -17,4 +19,21 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class FoundryStorageClientOptions : ClientOptions
 {
+    public FoundryStorageClientOptions()
+    {
+        // Enable transparent decompression for gzip, deflate, and brotli responses.
+        // Intermediary gateways and load-balancers may return compressed error pages
+        // or compressed JSON regardless of Accept-Encoding. Without this, raw gzip
+        // bytes would reach our JSON deserializers and cause parse failures.
+        // SocketsHttpHandler also automatically sends Accept-Encoding: gzip, deflate, br
+        // so servers that support compression can use it on success paths too.
+        Transport = new HttpClientTransport(
+            new SocketsHttpHandler
+            {
+                AllowAutoRedirect = false,
+                AutomaticDecompression = DecompressionMethods.GZip
+                    | DecompressionMethods.Deflate
+                    | DecompressionMethods.Brotli,
+            });
+    }
 }
