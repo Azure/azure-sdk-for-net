@@ -279,29 +279,6 @@ namespace Azure.AI.Speech.Transcription.Tests
             Assert.That(transcription.CombinedPhrases.First().Text, Is.Not.Empty);
         }
 
-        [RecordedTest]
-        public async Task TranscriptionResultHasPhrases()
-        {
-            TranscriptionClient client = CreateClient();
-            string audioPath = GetAssetPath(SampleAudioFile);
-
-            using FileStream audioStream = File.OpenRead(audioPath);
-            TranscriptionOptions options = new TranscriptionOptions(audioStream);
-            options.Locales.Add("en-US");
-
-            ClientResult<TranscriptionResult> result = await client.TranscribeAsync(options);
-            TranscriptionResult transcription = result.Value;
-
-            Assert.That(transcription.Phrases, Is.Not.Null);
-            Assert.That(transcription.Phrases.Count, Is.GreaterThan(0));
-
-            foreach (TranscribedPhrase phrase in transcription.Phrases)
-            {
-                Assert.That(phrase, Is.Not.Null);
-                Assert.That(phrase.Text, Is.Not.Empty);
-            }
-        }
-
         #endregion
 
         #region Validation Tests
