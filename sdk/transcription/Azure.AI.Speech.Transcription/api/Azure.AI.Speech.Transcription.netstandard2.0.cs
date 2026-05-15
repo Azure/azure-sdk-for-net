@@ -101,13 +101,6 @@ namespace Azure.AI.Speech.Transcription
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribedPhrase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribedPhrase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TranscribedPhrases
-    {
-        public int? Channel;
-        public System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedPhrase> Phrases;
-        public TranscribedPhrases(int? Channel, string Text, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedPhrase> Phrases) { }
-        public string Text { get { throw null; } }
-    }
     public partial class TranscribedWord : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscribedWord>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscribedWord>
     {
         internal TranscribedWord() { }
@@ -193,7 +186,7 @@ namespace Azure.AI.Speech.Transcription
         internal TranscriptionResult() { }
         public System.Collections.Generic.IList<Azure.AI.Speech.Transcription.ChannelCombinedPhrases> CombinedPhrases { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedPhrases> PhrasesByChannel { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Speech.Transcription.TranscribedPhrase> Phrases { get { throw null; } }
         protected virtual Azure.AI.Speech.Transcription.TranscriptionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Speech.Transcription.TranscriptionResult (System.ClientModel.ClientResult result) { throw null; }
