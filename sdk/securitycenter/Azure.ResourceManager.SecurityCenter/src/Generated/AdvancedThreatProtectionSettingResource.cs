@@ -72,9 +72,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="resourceId"> The resourceId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceId)
+        /// <param name="settingName"> The settingName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string settingName)
         {
-            string resourceId0 = $"{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current";
+            string resourceId0 = $"{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}";
             return new ResourceIdentifier(resourceId0);
         }
 
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current. </description>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Properties of the private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionProperties : IJsonModel<PrivateEndpointConnectionProperties>
+    internal partial class PrivateEndpointConnectionProperties : IJsonModel<PrivateEndpointConnectionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/> for deserialization. </summary>
         internal PrivateEndpointConnectionProperties()

@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/current", false);
+            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
+            uri.AppendPath("current", true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -66,7 +67,8 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/current", false);
+            uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
+            uri.AppendPath("current", true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

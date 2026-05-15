@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(ArcAutoProvisioningAws))]
     [ModelReaderWriterBuildable(typeof(ArcAutoProvisioningConfiguration))]
     [ModelReaderWriterBuildable(typeof(ArcAutoProvisioningGcp))]
-    [ModelReaderWriterBuildable(typeof(ArmPrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(AscLocationList))]
     [ModelReaderWriterBuildable(typeof(AssessmentLinks))]
     [ModelReaderWriterBuildable(typeof(AssessmentsMetadatumResource))]
