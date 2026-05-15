@@ -63,6 +63,11 @@ namespace Azure.AI.AgentServer.Core
         public const string ChatIsolationKey = "x-agent-chat-isolation-key";
         public const string ClientHeaderPrefix = "x-client-";
         public const string ClientRequestId = "x-ms-client-request-id";
+        public const string ErrorDetail = "x-platform-error-detail";
+        public const string ErrorSource = "x-platform-error-source";
+        public const string ErrorSourcePlatform = "platform";
+        public const string ErrorSourceUpstream = "upstream";
+        public const string ErrorSourceUser = "user";
         public const string RequestId = "x-request-id";
         public const string RequestIdItemKey = "AgentServer.RequestId";
         public const string ServerVersion = "x-platform-server";

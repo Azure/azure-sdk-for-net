@@ -5,6 +5,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -166,6 +167,112 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_LongRunningPagingMethod_GeneratesOperationSource()
+        {
+            var resourceModel = InputFactory.Model("ManagedNetworkData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+            var listResultModel = InputFactory.Model("OutboundRuleListResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("nextLink", InputPrimitiveType.String),
+                    InputFactory.Property("value", InputFactory.Array(resourceModel)),
+                ],
+                decorators: []);
+
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            var subscriptionIdParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var resourceGroupParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var resourceNameParameter = InputFactory.PathParameter("managedNetworkName", InputPrimitiveType.String, isRequired: true);
+            var subscriptionIdMethodParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupMethodParam = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var resourceNameMethodParam = InputFactory.MethodParameter("managedNetworkName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+
+            var readOperation = InputFactory.Operation(
+                name: "getManagedNetwork",
+                responses: [InputFactory.OperationResponse([200], resourceModel)],
+                parameters: [subscriptionIdParameter, resourceGroupParameter, resourceNameParameter],
+                path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/managedNetworks/{managedNetworkName}");
+            var readMethod = InputFactory.BasicServiceMethod(
+                "getManagedNetwork",
+                readOperation,
+                parameters: [resourceNameMethodParam, subscriptionIdMethodParam, resourceGroupMethodParam],
+                response: InputFactory.ServiceMethodResponse(resourceModel, null));
+
+            var actionOperation = InputFactory.Operation(
+                name: "batchOutboundRules",
+                responses: [InputFactory.OperationResponse([200], listResultModel), InputFactory.OperationResponse([202])],
+                parameters: [subscriptionIdParameter, resourceGroupParameter, resourceNameParameter],
+                path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/managedNetworks/{managedNetworkName}/batchOutboundRules",
+                httpMethod: "POST");
+            var actionMethod = new InputLongRunningPagingServiceMethod(
+                "batchOutboundRules",
+                "public",
+                [],
+                null,
+                null,
+                actionOperation,
+                [resourceNameMethodParam, subscriptionIdMethodParam, resourceGroupMethodParam],
+                InputFactory.ServiceMethodResponse(listResultModel, null),
+                null,
+                false,
+                true,
+                true,
+                "Test.ManagedNetworks.batchOutboundRules",
+                InputFactory.LongRunningServiceMetadata(1, InputFactory.OperationResponse([200], listResultModel), null),
+                InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));
+
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/managedNetworks/{managedNetworkName}";
+            var armProviderDecorator = BuildArmProviderSchema(
+                resourceModel,
+                [
+                    new ResourceMethod(ResourceOperationKind.Read, readMethod, new RequestPathPattern(readOperation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(resourceIdPattern), null), null!),
+                    new ResourceMethod(ResourceOperationKind.Action, actionMethod, new RequestPathPattern(actionOperation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(resourceIdPattern), null), null!)
+                ],
+                resourceIdPattern,
+                "Microsoft.Tests/managedNetworks",
+                null,
+                ResourceScope.ResourceGroup,
+                "ManagedNetwork");
+            var client = InputFactory.Client(
+                "ManagedNetworksClient",
+                methods: [readMethod, actionMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: "Test.ManagedNetworksClient");
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, listResultModel], clients: () => [client]);
+            var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
+
+            Assert.That(outputLibrary, Is.Not.Null);
+            var operationSources = outputLibrary!.OperationSourceDict;
+            Assert.That(operationSources.Keys.Any(type => type.Name == "OutboundRuleListResult"), Is.True);
+            Assert.That(operationSources.Values.Any(source => source.Name == "OutboundRuleListResultOperationSource"), Is.True);
+
+            var resourceProvider = outputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+            var lroPagingMethods = resourceProvider.Methods
+                .Where(method => method.Signature.Name.Contains("BatchOutboundRules"))
+                .ToList();
+            Assert.That(lroPagingMethods, Has.Count.EqualTo(2));
+            Assert.That(lroPagingMethods, Is.All.Matches<MethodProvider>(method =>
+                method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal)
+                && !method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)));
+
+            var readMethods = resourceProvider.Methods
+                .Where(method => method.Signature.Name.Contains("Get"))
+                .ToList();
+            Assert.That(readMethods, Is.Not.Empty);
+            Assert.That(readMethods, Is.All.Matches<MethodProvider>(method =>
+                method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                && !method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal)));
+        }
+
+        [TestCase]
         public void Verify_CreateResult()
         {
             var validateIdMethod = GetOperationSourceProviderMethodByName("CreateResult");
@@ -203,6 +310,45 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(exptected));
+        }
+
+        [TestCase]
+        public void Verify_NonResourceFrameworkType_CreateResult_UsesModelReaderWriter()
+        {
+            // Regression test for #58709: for cross-assembly framework result types (e.g. OperationStatusResult,
+            // defined in Azure.ResourceManager), the generated CreateResult must NOT call the inaccessible internal
+            // Deserialize{Name} factory, and must instead use ModelReaderWriter.Read<T> with the SDK's generated
+            // ModelReaderWriterContext.
+            var (createResult, createResultAsync) = GetNonResourceFrameworkOperationSourceMethods();
+
+            foreach (var (method, isAsync) in new[] { (createResult, false), (createResultAsync, true) })
+            {
+                var body = method.BodyStatements?.ToDisplayString();
+                Assert.That(body, Is.Not.Null);
+
+                // Must use ModelReaderWriter.Read with the generated context, not the internal factory.
+                Assert.That(body, Does.Contain("global::System.ClientModel.Primitives.ModelReaderWriter.Read"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should use ModelReaderWriter.Read for framework result types.");
+                Assert.That(body, Does.Contain("Context.Default"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should pass the generated ModelReaderWriterContext to ModelReaderWriter.Read.");
+                Assert.That(body, Does.Contain("ModelSerializationExtensions.WireOptions"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should pass WireOptions to ModelReaderWriter.Read.");
+                Assert.That(body, Does.Not.Contain("DeserializeOperationStatusResult"),
+                    $"{(isAsync ? "CreateResultAsync" : "CreateResult")} must not call the inaccessible internal Deserialize factory.");
+            }
+        }
+
+        private static (MethodProvider CreateResult, MethodProvider CreateResultAsync) GetNonResourceFrameworkOperationSourceMethods()
+        {
+            // Bootstrap the mock plugin so TypeProvider machinery (ModelReaderWriterContextDefinition, etc.) is available.
+            _ = ManagementMockHelpers.LoadMockPlugin();
+
+            var provider = new OperationSourceProvider(typeof(OperationStatusResult));
+            var createResult = provider.Methods.FirstOrDefault(m => m.Signature.Name == "CreateResult");
+            var createResultAsync = provider.Methods.FirstOrDefault(m => m.Signature.Name == "CreateResultAsync");
+            Assert.That(createResult, Is.Not.Null);
+            Assert.That(createResultAsync, Is.Not.Null);
+            return (createResult!, createResultAsync!);
         }
 
         private static MethodProvider GetOperationSourceProviderMethodByName(string methodName)

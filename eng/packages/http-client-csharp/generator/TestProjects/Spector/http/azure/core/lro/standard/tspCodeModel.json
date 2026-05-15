@@ -135,7 +135,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "createOrReplaceContentType",
+      "name": "CreateOrReplaceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -151,7 +151,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "createOrReplaceContentType1",
+      "name": "CreateOrReplaceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -167,7 +167,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "createOrReplaceContentType2",
+      "name": "CreateOrReplaceContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -183,7 +183,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "createOrReplaceContentType3",
+      "name": "CreateOrReplaceContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -199,7 +199,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "deleteContentType",
+      "name": "CreateOrReplaceContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -215,7 +215,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "deleteContentType1",
+      "name": "CreateOrReplaceContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -231,7 +231,7 @@
     {
       "$id": "23",
       "kind": "constant",
-      "name": "exportContentType",
+      "name": "CreateOrReplaceContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -247,7 +247,7 @@
     {
       "$id": "25",
       "kind": "constant",
-      "name": "exportContentType1",
+      "name": "CreateOrReplaceContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {

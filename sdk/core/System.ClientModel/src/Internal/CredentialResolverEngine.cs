@@ -35,11 +35,6 @@ internal static class CredentialResolverEngine
             configureOverrides(workingSection);
         }
 
-        if (resolvers is null)
-        {
-            return null;
-        }
-
         // Per-resolver cache lookup: the cached provider depends on the
         // (section, resolver-that-actually-produced-it) pair, not on the whole
         // chain. So callers with overlapping chains share entries whenever the
@@ -56,28 +51,31 @@ internal static class CredentialResolverEngine
         // Reference-identity (RuntimeHelpers.GetHashCode) is used so distinct
         // instances of the same type don't leak providers into each other,
         // and any GetHashCode override on the resolver is bypassed.
-        foreach (CredentialResolver resolver in resolvers)
+        if (resolvers is not null)
         {
-            if (resolver is null)
+            foreach (CredentialResolver resolver in resolvers)
             {
-                continue;
-            }
-
-            AuthenticationTokenProvider? provider = CredentialCache.GetOrTryCreate(
-                workingSection,
-                resolver,
-                static (section, r) =>
+                if (resolver is null)
                 {
-                    if (r.TryResolve(section, out AuthenticationTokenProvider? p) && p is not null)
-                    {
-                        return p;
-                    }
-                    return null;
-                });
+                    continue;
+                }
 
-            if (provider is not null)
-            {
-                return provider;
+                AuthenticationTokenProvider? provider = CredentialCache.GetOrTryCreate(
+                    workingSection,
+                    resolver,
+                    static (section, r) =>
+                    {
+                        if (r.TryResolve(section, out AuthenticationTokenProvider? p) && p is not null)
+                        {
+                            return p;
+                        }
+                        return null;
+                    });
+
+                if (provider is not null)
+                {
+                    return provider;
+                }
             }
         }
 
