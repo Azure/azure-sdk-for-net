@@ -51,23 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        /// <summary> The key of the service principal used to authenticate. </summary>
-        public AzureKeyVaultSecretReference ServicePrincipalKey
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.ServicePrincipalKey;
-            }
-            set
-            {
-                if (TypeProperties is null)
-                {
-                    TypeProperties = new ServicePrincipalCredentialTypeProperties();
-                }
-                TypeProperties.ServicePrincipalKey = value;
-            }
-        }
-
         /// <summary> The ID of the tenant to which the service principal belongs. </summary>
         public DataFactoryElement<string> Tenant
         {

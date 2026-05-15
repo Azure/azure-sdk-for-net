@@ -14,62 +14,62 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The request payload of get SSIS object metadata. </summary>
-    public partial class GetSsisObjectMetadataRequest : IJsonModel<GetSsisObjectMetadataRequest>
+    /// <summary> Parameters to regenerate the authentication key. </summary>
+    public partial class IntegrationRuntimeRegenerateKeyContent : IJsonModel<IntegrationRuntimeRegenerateKeyContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetSsisObjectMetadataRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IntegrationRuntimeRegenerateKeyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGetSsisObjectMetadataRequest(document.RootElement, options);
+                        return DeserializeIntegrationRuntimeRegenerateKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetSsisObjectMetadataRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeRegenerateKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GetSsisObjectMetadataRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeRegenerateKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GetSsisObjectMetadataRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IntegrationRuntimeRegenerateKeyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetSsisObjectMetadataRequest IPersistableModel<GetSsisObjectMetadataRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IntegrationRuntimeRegenerateKeyContent IPersistableModel<IntegrationRuntimeRegenerateKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GetSsisObjectMetadataRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IntegrationRuntimeRegenerateKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="getSsisObjectMetadataRequest"> The <see cref="GetSsisObjectMetadataRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GetSsisObjectMetadataRequest getSsisObjectMetadataRequest)
+        /// <param name="integrationRuntimeRegenerateKeyContent"> The <see cref="IntegrationRuntimeRegenerateKeyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IntegrationRuntimeRegenerateKeyContent integrationRuntimeRegenerateKeyContent)
         {
-            if (getSsisObjectMetadataRequest == null)
+            if (integrationRuntimeRegenerateKeyContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(getSsisObjectMetadataRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(integrationRuntimeRegenerateKeyContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GetSsisObjectMetadataRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IntegrationRuntimeRegenerateKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetSsisObjectMetadataRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeRegenerateKeyContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MetadataPath))
+            if (Optional.IsDefined(KeyName))
             {
-                writer.WritePropertyName("metadataPath"u8);
-                writer.WriteStringValue(MetadataPath);
+                writer.WritePropertyName("keyName"u8);
+                writer.WriteStringValue(KeyName.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,36 +109,40 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GetSsisObjectMetadataRequest IJsonModel<GetSsisObjectMetadataRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IntegrationRuntimeRegenerateKeyContent IJsonModel<IntegrationRuntimeRegenerateKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GetSsisObjectMetadataRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IntegrationRuntimeRegenerateKeyContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetSsisObjectMetadataRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeRegenerateKeyContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetSsisObjectMetadataRequest(document.RootElement, options);
+            return DeserializeIntegrationRuntimeRegenerateKeyContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GetSsisObjectMetadataRequest DeserializeGetSsisObjectMetadataRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static IntegrationRuntimeRegenerateKeyContent DeserializeIntegrationRuntimeRegenerateKeyContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string metadataPath = default;
+            IntegrationRuntimeAuthKeyName? keyName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("metadataPath"u8))
+                if (prop.NameEquals("keyName"u8))
                 {
-                    metadataPath = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyName = new IntegrationRuntimeAuthKeyName(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GetSsisObjectMetadataRequest(metadataPath, additionalBinaryDataProperties);
+            return new IntegrationRuntimeRegenerateKeyContent(keyName, additionalBinaryDataProperties);
         }
     }
 }

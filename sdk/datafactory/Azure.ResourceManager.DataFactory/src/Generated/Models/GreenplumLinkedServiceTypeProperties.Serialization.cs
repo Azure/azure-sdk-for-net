@@ -80,11 +80,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString, options);
             }
-            if (Optional.IsDefined(Pwd))
-            {
-                writer.WritePropertyName("pwd"u8);
-                writer.WriteObjectValue(Pwd, options);
-            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -173,7 +168,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> connectionString = default;
-            AzureKeyVaultSecretReference pwd = default;
             string encryptedCredential = default;
             GreenplumAuthenticationType? authenticationType = default;
             DataFactoryElement<string> host = default;
@@ -193,15 +187,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("pwd"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    pwd = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -288,7 +273,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new GreenplumLinkedServiceTypeProperties(
                 connectionString,
-                pwd,
                 encryptedCredential,
                 authenticationType,
                 host,

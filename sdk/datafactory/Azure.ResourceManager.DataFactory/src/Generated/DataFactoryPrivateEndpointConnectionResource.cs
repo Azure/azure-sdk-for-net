@@ -318,13 +318,13 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointWrapper"></param>
+        /// <param name="content"></param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointWrapper"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataFactoryPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(privateEndpointWrapper, nameof(privateEndpointWrapper));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateLinkConnectionApprovalRequestResource.ToRequestContent(privateEndpointWrapper), ifMatch, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryPrivateEndpointConnectionData> response = Response.FromValue(DataFactoryPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -375,13 +375,13 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointWrapper"></param>
+        /// <param name="content"></param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointWrapper"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DataFactoryPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(privateEndpointWrapper, nameof(privateEndpointWrapper));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateLinkConnectionApprovalRequestResource.ToRequestContent(privateEndpointWrapper), ifMatch, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryPrivateEndpointConnectionData> response = Response.FromValue(DataFactoryPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

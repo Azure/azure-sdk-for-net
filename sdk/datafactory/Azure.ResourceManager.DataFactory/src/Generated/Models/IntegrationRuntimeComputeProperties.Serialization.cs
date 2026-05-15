@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties, options);
             }
-            if (Optional.IsDefined(VNetProperties))
+            if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VNetProperties, options);
+                writer.WriteObjectValue(VnetProperties, options);
             }
             if (Optional.IsDefined(CopyComputeScaleProperties))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             int? numberOfNodes = default;
             int? maxParallelExecutionsPerNode = default;
             IntegrationRuntimeDataFlowProperties dataFlowProperties = default;
-            IntegrationRuntimeVnetProperties vNetProperties = default;
+            IntegrationRuntimeVnetProperties vnetProperties = default;
             CopyComputeScaleProperties copyComputeScaleProperties = default;
             PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    vNetProperties = IntegrationRuntimeVnetProperties.DeserializeIntegrationRuntimeVnetProperties(prop.Value, options);
+                    vnetProperties = IntegrationRuntimeVnetProperties.DeserializeIntegrationRuntimeVnetProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("copyComputeScaleProperties"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 numberOfNodes,
                 maxParallelExecutionsPerNode,
                 dataFlowProperties,
-                vNetProperties,
+                vnetProperties,
                 copyComputeScaleProperties,
                 pipelineExternalComputeScaleProperties,
                 additionalProperties);

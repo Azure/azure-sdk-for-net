@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
-    public partial class PrivateLinkConnectionApprovalRequestResource : SubResource
+    public partial class DataFactoryPrivateEndpointConnectionCreateOrUpdateContent : SubResource
     {
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequestResource"/>. </summary>
-        public PrivateLinkConnectionApprovalRequestResource()
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
+        public DataFactoryPrivateEndpointConnectionCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequestResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The resource identifier. </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="type"> The resource type. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal PrivateLinkConnectionApprovalRequestResource(string id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkConnectionApprovalRequest properties) : base(id, name, @type, eTag, additionalBinaryDataProperties)
+        internal DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(string id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkConnectionApprovalRequest properties) : base(id, name, @type, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

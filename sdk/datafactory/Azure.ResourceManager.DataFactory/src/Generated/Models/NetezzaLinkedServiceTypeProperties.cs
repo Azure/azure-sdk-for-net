@@ -29,10 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uid"> Username for authentication. Type: string. </param>
         /// <param name="database"> Database name for connection. Type: string. </param>
         /// <param name="securityLevel"> Specifies the security level for the driver connection to the data store. PreferredUnSecured : prefer unsecured, allow fallback to secured connection if required. OnlyUnSecured : strictly unsecured, no fallback. </param>
-        /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetezzaLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> uid, DataFactoryElement<string> database, NetezzaSecurityLevelType? securityLevel, AzureKeyVaultSecretReference pwd, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetezzaLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> uid, DataFactoryElement<string> database, NetezzaSecurityLevelType? securityLevel, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Server = server;
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             Uid = uid;
             Database = database;
             SecurityLevel = securityLevel;
-            Pwd = pwd;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -62,9 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Specifies the security level for the driver connection to the data store. PreferredUnSecured : prefer unsecured, allow fallback to secured connection if required. OnlyUnSecured : strictly unsecured, no fallback. </summary>
         public NetezzaSecurityLevelType? SecurityLevel { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Pwd { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

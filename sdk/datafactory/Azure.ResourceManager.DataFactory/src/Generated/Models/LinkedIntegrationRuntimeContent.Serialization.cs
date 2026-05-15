@@ -14,62 +14,67 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Request body structure for deleting data flow debug session. </summary>
-    public partial class DeleteDataFlowDebugSessionRequest : IJsonModel<DeleteDataFlowDebugSessionRequest>
+    /// <summary> Data factory name for linked integration runtime request. </summary>
+    public partial class LinkedIntegrationRuntimeContent : IJsonModel<LinkedIntegrationRuntimeContent>
     {
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeContent"/> for deserialization. </summary>
+        internal LinkedIntegrationRuntimeContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeleteDataFlowDebugSessionRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LinkedIntegrationRuntimeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeleteDataFlowDebugSessionRequest(document.RootElement, options);
+                        return DeserializeLinkedIntegrationRuntimeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeleteDataFlowDebugSessionRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkedIntegrationRuntimeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeleteDataFlowDebugSessionRequest IPersistableModel<DeleteDataFlowDebugSessionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LinkedIntegrationRuntimeContent IPersistableModel<LinkedIntegrationRuntimeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeleteDataFlowDebugSessionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkedIntegrationRuntimeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="deleteDataFlowDebugSessionRequest"> The <see cref="DeleteDataFlowDebugSessionRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeleteDataFlowDebugSessionRequest deleteDataFlowDebugSessionRequest)
+        /// <param name="linkedIntegrationRuntimeContent"> The <see cref="LinkedIntegrationRuntimeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LinkedIntegrationRuntimeContent linkedIntegrationRuntimeContent)
         {
-            if (deleteDataFlowDebugSessionRequest == null)
+            if (linkedIntegrationRuntimeContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(deleteDataFlowDebugSessionRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(linkedIntegrationRuntimeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeleteDataFlowDebugSessionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkedIntegrationRuntimeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,16 +85,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SessionId))
-            {
-                writer.WritePropertyName("sessionId"u8);
-                writer.WriteStringValue(SessionId);
-            }
+            writer.WritePropertyName("factoryName"u8);
+            writer.WriteStringValue(LinkedFactoryName);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -109,36 +111,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeleteDataFlowDebugSessionRequest IJsonModel<DeleteDataFlowDebugSessionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LinkedIntegrationRuntimeContent IJsonModel<LinkedIntegrationRuntimeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeleteDataFlowDebugSessionRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LinkedIntegrationRuntimeContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeleteDataFlowDebugSessionRequest(document.RootElement, options);
+            return DeserializeLinkedIntegrationRuntimeContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeleteDataFlowDebugSessionRequest DeserializeDeleteDataFlowDebugSessionRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkedIntegrationRuntimeContent DeserializeLinkedIntegrationRuntimeContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string sessionId = default;
+            string linkedFactoryName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("sessionId"u8))
+                if (prop.NameEquals("factoryName"u8))
                 {
-                    sessionId = prop.Value.GetString();
+                    linkedFactoryName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeleteDataFlowDebugSessionRequest(sessionId, additionalBinaryDataProperties);
+            return new LinkedIntegrationRuntimeContent(linkedFactoryName, additionalBinaryDataProperties);
         }
     }
 }

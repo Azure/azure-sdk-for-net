@@ -12,16 +12,16 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Get GitHub access token request definition. </summary>
-    public partial class GitHubAccessTokenRequest
+    public partial class GitHubAccessTokenContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/>. </summary>
         /// <param name="gitHubAccessCode"> GitHub access code. </param>
         /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUri"/> is null. </exception>
-        public GitHubAccessTokenRequest(string gitHubAccessCode, string gitHubAccessTokenBaseUri)
+        public GitHubAccessTokenContent(string gitHubAccessCode, Uri gitHubAccessTokenBaseUri)
         {
             Argument.AssertNotNull(gitHubAccessCode, nameof(gitHubAccessCode));
             Argument.AssertNotNull(gitHubAccessTokenBaseUri, nameof(gitHubAccessTokenBaseUri));
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/>. </summary>
         /// <param name="gitHubAccessCode"> GitHub access code. </param>
         /// <param name="gitHubClientId"> GitHub application client ID. </param>
         /// <param name="gitHubClientSecret"> GitHub bring your own app client secret information. </param>
         /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubAccessTokenRequest(string gitHubAccessCode, string gitHubClientId, FactoryGitHubClientSecret gitHubClientSecret, string gitHubAccessTokenBaseUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitHubAccessTokenContent(string gitHubAccessCode, string gitHubClientId, FactoryGitHubClientSecret gitHubClientSecret, Uri gitHubAccessTokenBaseUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GitHubAccessCode = gitHubAccessCode;
             GitHubClientId = gitHubClientId;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public FactoryGitHubClientSecret GitHubClientSecret { get; set; }
 
         /// <summary> GitHub access token base URL. </summary>
-        public string GitHubAccessTokenBaseUri { get; }
+        public Uri GitHubAccessTokenBaseUri { get; }
     }
 }

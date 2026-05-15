@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The linked integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryIntegrationRuntimeStatusResult>> CreateLinkedIntegrationRuntimeAsync(CreateLinkedIntegrationRuntimeRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryIntegrationRuntimeStatusResult>> CreateLinkedIntegrationRuntimeAsync(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryIntegrationRuntimeStatusResult> response = Response.FromValue(DataFactoryIntegrationRuntimeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The linked integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataFactoryIntegrationRuntimeStatusResult> CreateLinkedIntegrationRuntime(CreateLinkedIntegrationRuntimeRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryIntegrationRuntimeStatusResult> CreateLinkedIntegrationRuntime(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryIntegrationRuntimeStatusResult> response = Response.FromValue(DataFactoryIntegrationRuntimeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The enable interactive authoring integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> EnableInteractiveQueryAsync(WaitUntil waitUntil, EnableInteractiveQueryRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> EnableInteractiveQueryAsync(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeOperationSource(Client),
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The enable interactive authoring integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> EnableInteractiveQuery(WaitUntil waitUntil, EnableInteractiveQueryRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> EnableInteractiveQuery(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeOperationSource(Client),
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SsisObjectMetadataListResult>> GetAsync(GetSsisObjectMetadataRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SsisObjectMetadataListResult>> GetAsync(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Get");
             scope.Start();
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SsisObjectMetadataListResult> response = Response.FromValue(SsisObjectMetadataListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1096,7 +1096,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SsisObjectMetadataListResult> Get(GetSsisObjectMetadataRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<SsisObjectMetadataListResult> Get(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Get");
             scope.Start();
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SsisObjectMetadataListResult> response = Response.FromValue(SsisObjectMetadataListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The parameters for regenerating integration runtime authentication key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IntegrationRuntimeAuthKeys>> RegenerateAuthKeyAsync(IntegrationRuntimeRegenerateKeyParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationRuntimeAuthKeys>> RegenerateAuthKeyAsync(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyParameters.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IntegrationRuntimeAuthKeys> response = Response.FromValue(IntegrationRuntimeAuthKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The parameters for regenerating integration runtime authentication key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IntegrationRuntimeAuthKeys> RegenerateAuthKey(IntegrationRuntimeRegenerateKeyParameters content, CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationRuntimeAuthKeys> RegenerateAuthKey(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1512,7 +1512,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyParameters.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IntegrationRuntimeAuthKeys> response = Response.FromValue(IntegrationRuntimeAuthKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1552,7 +1552,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The data factory name for the linked integration runtime. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> RemoveLinksAsync(LinkedIntegrationRuntimeRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveLinksAsync(LinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1564,7 +1564,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1599,7 +1599,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The data factory name for the linked integration runtime. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response RemoveLinks(LinkedIntegrationRuntimeRequest content, CancellationToken cancellationToken = default)
+        public virtual Response RemoveLinks(LinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeRequest.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

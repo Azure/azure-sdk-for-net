@@ -15,66 +15,66 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Get GitHub access token request definition. </summary>
-    public partial class GitHubAccessTokenRequest : IJsonModel<GitHubAccessTokenRequest>
+    public partial class GitHubAccessTokenContent : IJsonModel<GitHubAccessTokenContent>
     {
-        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/> for deserialization. </summary>
-        internal GitHubAccessTokenRequest()
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/> for deserialization. </summary>
+        internal GitHubAccessTokenContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GitHubAccessTokenRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GitHubAccessTokenContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGitHubAccessTokenRequest(document.RootElement, options);
+                        return DeserializeGitHubAccessTokenContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubAccessTokenRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubAccessTokenContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubAccessTokenRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubAccessTokenContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GitHubAccessTokenRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GitHubAccessTokenContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubAccessTokenRequest IPersistableModel<GitHubAccessTokenRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GitHubAccessTokenContent IPersistableModel<GitHubAccessTokenContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GitHubAccessTokenRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GitHubAccessTokenContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="gitHubAccessTokenRequest"> The <see cref="GitHubAccessTokenRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GitHubAccessTokenRequest gitHubAccessTokenRequest)
+        /// <param name="gitHubAccessTokenContent"> The <see cref="GitHubAccessTokenContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GitHubAccessTokenContent gitHubAccessTokenContent)
         {
-            if (gitHubAccessTokenRequest == null)
+            if (gitHubAccessTokenContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(gitHubAccessTokenRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(gitHubAccessTokenContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GitHubAccessTokenRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GitHubAccessTokenContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubAccessTokenRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubAccessTokenContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("gitHubAccessCode"u8);
             writer.WriteStringValue(GitHubAccessCode);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(GitHubClientSecret, options);
             }
             writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
-            writer.WriteStringValue(GitHubAccessTokenBaseUri);
+            writer.WriteStringValue(GitHubAccessTokenBaseUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubAccessTokenRequest IJsonModel<GitHubAccessTokenRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GitHubAccessTokenContent IJsonModel<GitHubAccessTokenContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GitHubAccessTokenRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GitHubAccessTokenContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GitHubAccessTokenContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubAccessTokenRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubAccessTokenContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGitHubAccessTokenRequest(document.RootElement, options);
+            return DeserializeGitHubAccessTokenContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GitHubAccessTokenRequest DeserializeGitHubAccessTokenRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static GitHubAccessTokenContent DeserializeGitHubAccessTokenContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string gitHubAccessCode = default;
             string gitHubClientId = default;
             FactoryGitHubClientSecret gitHubClientSecret = default;
-            string gitHubAccessTokenBaseUri = default;
+            Uri gitHubAccessTokenBaseUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("gitHubAccessTokenBaseUrl"u8))
                 {
-                    gitHubAccessTokenBaseUri = prop.Value.GetString();
+                    gitHubAccessTokenBaseUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GitHubAccessTokenRequest(gitHubAccessCode, gitHubClientId, gitHubClientSecret, gitHubAccessTokenBaseUri, additionalBinaryDataProperties);
+            return new GitHubAccessTokenContent(gitHubAccessCode, gitHubClientId, gitHubClientSecret, gitHubAccessTokenBaseUri, additionalBinaryDataProperties);
         }
     }
 }

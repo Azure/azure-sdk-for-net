@@ -24,22 +24,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredentialTypeProperties"/>. </summary>
         /// <param name="servicePrincipalId"> The app ID of the service principal used to authenticate. </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate. </param>
         /// <param name="tenant"> The ID of the tenant to which the service principal belongs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServicePrincipalCredentialTypeProperties(DataFactoryElement<string> servicePrincipalId, AzureKeyVaultSecretReference servicePrincipalKey, DataFactoryElement<string> tenant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServicePrincipalCredentialTypeProperties(DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The app ID of the service principal used to authenticate. </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
-
-        /// <summary> The key of the service principal used to authenticate. </summary>
-        public AzureKeyVaultSecretReference ServicePrincipalKey { get; set; }
 
         /// <summary> The ID of the tenant to which the service principal belongs. </summary>
         public DataFactoryElement<string> Tenant { get; set; }

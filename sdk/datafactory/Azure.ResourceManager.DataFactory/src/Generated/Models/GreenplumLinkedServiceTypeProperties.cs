@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="GreenplumLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="authenticationType"> The authentication type to use. Type: string. Only used for V2. </param>
         /// <param name="host"> Host name for connection. Type: string. Only used for V2. </param>
@@ -35,10 +34,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionTimeout"> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. Only used for V2. </param>
         /// <param name="commandTimeout"> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GreenplumLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, AzureKeyVaultSecretReference pwd, string encryptedCredential, GreenplumAuthenticationType? authenticationType, DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> connectionTimeout, DataFactoryElement<int> commandTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GreenplumLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, string encryptedCredential, GreenplumAuthenticationType? authenticationType, DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> connectionTimeout, DataFactoryElement<int> commandTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
-            Pwd = pwd;
             EncryptedCredential = encryptedCredential;
             AuthenticationType = authenticationType;
             Host = host;
@@ -53,9 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Pwd { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

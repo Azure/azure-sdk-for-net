@@ -29,7 +29,7 @@ $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path $GeneratedRoot).Path
 
 $elementRegex = '(DataFactoryElement<(?:[^<>]|<[^<>]*>)*>)\.DeserializeDataFactoryElement\((?<arg>[^,)]+),\s*options\)'
-$plainTypes = 'DataFactoryLinkedServiceReference','DataFactorySecret','DataFactorySecretString'
+$plainTypes = 'DataFactoryLinkedServiceReference','DataFactorySecret','DataFactorySecretString','DataFactoryKeyVaultSecret'
 
 $filesPatched = 0
 Get-ChildItem $root -Filter '*.Serialization.cs' -File -Recurse | ForEach-Object {
@@ -80,6 +80,39 @@ Get-ChildItem $root -Filter '*.Serialization.cs' -File -Recurse | ForEach-Object
     }
     if ($text -ne $original) {
         [System.IO.File]::WriteAllText($path, $text)
+    }
+}
+
+# Patch the invalid IDictionary<string, BinaryData>.ToRequestContent(parameters) call emitted
+# by the generator in DataFactoryPipelineResource.cs (PipelineResources_CreateRun body param).
+# Redirect to the custom DataFactoryParameterDictionaryHelper.ToRequestContent helper.
+$pipelineFile = Join-Path $root 'DataFactoryPipelineResource.cs'
+if (Test-Path $pipelineFile) {
+    $text = [System.IO.File]::ReadAllText($pipelineFile)
+    $original = $text
+    $text = $text -replace 'IDictionary<string,\s*BinaryData>\.ToRequestContent\(parameters\)',
+        'DataFactoryParameterDictionaryHelper.ToRequestContent(parameters)'
+    if ($text -ne $original) {
+        [System.IO.File]::WriteAllText($pipelineFile, $text)
+        Write-Host "Patched DataFactoryPipelineResource.cs (ToRequestContent helper redirect)."
+    }
+}
+
+# Patch ArmDataFactoryModelFactory.cs: the factory methods expose ETag? eTag publicly but the
+# underlying ctors take string eTag (spec models SubResource.etag: string). Convert via ToString().
+$factoryFile = Join-Path $root 'ArmDataFactoryModelFactory.cs'
+if (Test-Path $factoryFile) {
+    $text = [System.IO.File]::ReadAllText($factoryFile)
+    $original = $text
+    # Match the two affected ctor invocations: positional `eTag` argument inside a
+    # `new DataFactoryPrivate{Endpoint|Link}...(...)` block.
+    $text = [System.Text.RegularExpressions.Regex]::Replace(
+        $text,
+        '(new\s+(?:DataFactoryPrivateEndpointConnectionCreateOrUpdateContent|DataFactoryPrivateLinkResource)\s*\(\s*id,\s*name,\s*default,\s*)eTag(,\s*additionalBinaryDataProperties)',
+        '$1eTag?.ToString()$2')
+    if ($text -ne $original) {
+        [System.IO.File]::WriteAllText($factoryFile, $text)
+        Write-Host "Patched ArmDataFactoryModelFactory.cs (ETag? -> string conversion)."
     }
 }
 

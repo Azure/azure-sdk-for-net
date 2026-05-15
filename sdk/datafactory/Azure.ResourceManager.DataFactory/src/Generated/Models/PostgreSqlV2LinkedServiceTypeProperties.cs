@@ -59,10 +59,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="logParameters"> When enabled, parameter values are logged when commands are executed. Type: boolean. </param>
         /// <param name="timezone"> Gets or sets the session timezone. Type: string. </param>
         /// <param name="encoding"> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. Type: string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlV2LinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<string> authenticationType, DataFactoryElement<int> sslMode, DataFactoryElement<string> schema, DataFactoryElement<bool> pooling, DataFactoryElement<int> connectionTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> sslCertificate, DataFactoryElement<string> sslKey, DataFactoryElement<string> sslPassword, DataFactoryElement<int> readBufferSize, DataFactoryElement<bool> logParameters, DataFactoryElement<string> timezone, DataFactoryElement<string> encoding, AzureKeyVaultSecretReference password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlV2LinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<string> authenticationType, DataFactoryElement<int> sslMode, DataFactoryElement<string> schema, DataFactoryElement<bool> pooling, DataFactoryElement<int> connectionTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> sslCertificate, DataFactoryElement<string> sslKey, DataFactoryElement<string> sslPassword, DataFactoryElement<int> readBufferSize, DataFactoryElement<bool> logParameters, DataFactoryElement<string> timezone, DataFactoryElement<string> encoding, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Server = server;
             Port = port;
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             LogParameters = logParameters;
             Timezone = timezone;
             Encoding = encoding;
-            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -140,9 +138,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </summary>
         public DataFactoryElement<string> Encoding { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. Type: string. </summary>
-        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

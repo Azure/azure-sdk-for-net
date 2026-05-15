@@ -411,23 +411,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.Password;
-            }
-            set
-            {
-                if (TypeProperties is null)
-                {
-                    TypeProperties = new AzureSqlDatabaseLinkedServiceTypeProperties();
-                }
-                TypeProperties.Password = value;
-            }
-        }
-
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId
         {

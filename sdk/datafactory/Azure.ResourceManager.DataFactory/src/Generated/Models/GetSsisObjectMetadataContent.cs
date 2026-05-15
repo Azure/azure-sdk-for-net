@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The request payload of get SSIS object metadata. </summary>
-    public partial class GetSsisObjectMetadataRequest
+    public partial class GetSsisObjectMetadataContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataRequest"/>. </summary>
-        public GetSsisObjectMetadataRequest()
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataContent"/>. </summary>
+        public GetSsisObjectMetadataContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataContent"/>. </summary>
         /// <param name="metadataPath"> Metadata path. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetSsisObjectMetadataRequest(string metadataPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetSsisObjectMetadataContent(string metadataPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetadataPath = metadataPath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

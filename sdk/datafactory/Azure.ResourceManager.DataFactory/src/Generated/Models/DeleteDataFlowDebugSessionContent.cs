@@ -11,26 +11,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Request body structure for deleting data flow debug session. </summary>
-    public partial class DeleteDataFlowDebugSessionRequest
+    public partial class DeleteDataFlowDebugSessionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionRequest"/>. </summary>
-        public DeleteDataFlowDebugSessionRequest()
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionContent"/>. </summary>
+        public DeleteDataFlowDebugSessionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionContent"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteDataFlowDebugSessionRequest(string sessionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteDataFlowDebugSessionContent(Guid? sessionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionId = sessionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
     }
 }

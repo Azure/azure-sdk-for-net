@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The enable the interactive authoring information. </summary>
-    public partial class EnableInteractiveQueryRequest
+    public partial class EnableInteractiveQueryContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnableInteractiveQueryRequest"/>. </summary>
-        public EnableInteractiveQueryRequest()
+        /// <summary> Initializes a new instance of <see cref="EnableInteractiveQueryContent"/>. </summary>
+        public EnableInteractiveQueryContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnableInteractiveQueryRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnableInteractiveQueryContent"/>. </summary>
         /// <param name="autoTerminationMinutes"> The allowed idle time for interactive authoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnableInteractiveQueryRequest(int? autoTerminationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnableInteractiveQueryContent(int? autoTerminationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoTerminationMinutes = autoTerminationMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

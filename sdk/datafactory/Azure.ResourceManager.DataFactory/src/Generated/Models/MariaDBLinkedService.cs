@@ -173,23 +173,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.Password;
-            }
-            set
-            {
-                if (TypeProperties is null)
-                {
-                    TypeProperties = new MariaDBLinkedServiceTypeProperties();
-                }
-                TypeProperties.Password = value;
-            }
-        }
-
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential
         {

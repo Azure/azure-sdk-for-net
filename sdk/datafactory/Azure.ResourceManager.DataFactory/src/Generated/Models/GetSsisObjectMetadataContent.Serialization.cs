@@ -14,67 +14,62 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data factory name for linked integration runtime request. </summary>
-    public partial class LinkedIntegrationRuntimeRequest : IJsonModel<LinkedIntegrationRuntimeRequest>
+    /// <summary> The request payload of get SSIS object metadata. </summary>
+    public partial class GetSsisObjectMetadataContent : IJsonModel<GetSsisObjectMetadataContent>
     {
-        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRequest"/> for deserialization. </summary>
-        internal LinkedIntegrationRuntimeRequest()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedIntegrationRuntimeRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GetSsisObjectMetadataContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLinkedIntegrationRuntimeRequest(document.RootElement, options);
+                        return DeserializeGetSsisObjectMetadataContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetSsisObjectMetadataContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetSsisObjectMetadataContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LinkedIntegrationRuntimeRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GetSsisObjectMetadataContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedIntegrationRuntimeRequest IPersistableModel<LinkedIntegrationRuntimeRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GetSsisObjectMetadataContent IPersistableModel<GetSsisObjectMetadataContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LinkedIntegrationRuntimeRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetSsisObjectMetadataContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="linkedIntegrationRuntimeRequest"> The <see cref="LinkedIntegrationRuntimeRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LinkedIntegrationRuntimeRequest linkedIntegrationRuntimeRequest)
+        /// <param name="getSsisObjectMetadataContent"> The <see cref="GetSsisObjectMetadataContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GetSsisObjectMetadataContent getSsisObjectMetadataContent)
         {
-            if (linkedIntegrationRuntimeRequest == null)
+            if (getSsisObjectMetadataContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(linkedIntegrationRuntimeRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(getSsisObjectMetadataContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LinkedIntegrationRuntimeRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetSsisObjectMetadataContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +80,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetSsisObjectMetadataContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("factoryName"u8);
-            writer.WriteStringValue(LinkedFactoryName);
+            if (Optional.IsDefined(MetadataPath))
+            {
+                writer.WritePropertyName("metadataPath"u8);
+                writer.WriteStringValue(MetadataPath);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,36 +109,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedIntegrationRuntimeRequest IJsonModel<LinkedIntegrationRuntimeRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GetSsisObjectMetadataContent IJsonModel<GetSsisObjectMetadataContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedIntegrationRuntimeRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GetSsisObjectMetadataContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSsisObjectMetadataContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetSsisObjectMetadataContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinkedIntegrationRuntimeRequest(document.RootElement, options);
+            return DeserializeGetSsisObjectMetadataContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LinkedIntegrationRuntimeRequest DeserializeLinkedIntegrationRuntimeRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static GetSsisObjectMetadataContent DeserializeGetSsisObjectMetadataContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string linkedFactoryName = default;
+            string metadataPath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("factoryName"u8))
+                if (prop.NameEquals("metadataPath"u8))
                 {
-                    linkedFactoryName = prop.Value.GetString();
+                    metadataPath = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LinkedIntegrationRuntimeRequest(linkedFactoryName, additionalBinaryDataProperties);
+            return new GetSsisObjectMetadataContent(metadataPath, additionalBinaryDataProperties);
         }
     }
 }

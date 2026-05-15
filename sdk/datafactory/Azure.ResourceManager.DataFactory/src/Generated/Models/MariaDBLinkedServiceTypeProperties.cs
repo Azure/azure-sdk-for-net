@@ -31,10 +31,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> Database name for connection. Type: string. </param>
         /// <param name="sslMode"> This option specifies whether the driver uses TLS encryption and verification when connecting to MariaDB. E.g., SSLMode=&lt;0/1/2/3/4&gt;. Options: DISABLED (0) / PREFERRED (1) (Default) / REQUIRED (2) / VERIFY_CA (3) / VERIFY_IDENTITY (4), REQUIRED (2) is recommended to only allow connections encrypted with SSL/TLS. </param>
         /// <param name="useSystemTrustStore"> This option specifies whether to use a CA certificate from the system trust store, or from a specified PEM file. E.g. UseSystemTrustStore=&lt;0/1&gt;; Options: Enabled (1) / Disabled (0) (Default). </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MariaDBLinkedServiceTypeProperties(DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> useSystemTrustStore, AzureKeyVaultSecretReference password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MariaDBLinkedServiceTypeProperties(DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> useSystemTrustStore, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DriverVersion = driverVersion;
             ConnectionString = connectionString;
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             Database = database;
             SslMode = sslMode;
             UseSystemTrustStore = useSystemTrustStore;
-            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -72,9 +70,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> This option specifies whether to use a CA certificate from the system trust store, or from a specified PEM file. E.g. UseSystemTrustStore=&lt;0/1&gt;; Options: Enabled (1) / Disabled (0) (Default). </summary>
         public DataFactoryElement<int> UseSystemTrustStore { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

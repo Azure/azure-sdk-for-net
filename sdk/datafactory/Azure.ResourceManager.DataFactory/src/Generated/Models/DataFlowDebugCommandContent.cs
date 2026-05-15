@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Request body structure for data flow debug command. </summary>
-    public partial class DataFlowDebugCommandRequest
+    public partial class DataFlowDebugCommandContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandRequest"/>. </summary>
-        public DataFlowDebugCommandRequest()
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandContent"/>. </summary>
+        public DataFlowDebugCommandContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandContent"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="command"> The command type. </param>
         /// <param name="commandPayload"> The command payload object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFlowDebugCommandRequest(string sessionId, DataFlowDebugCommandType? command, DataFlowDebugCommandPayload commandPayload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFlowDebugCommandContent(Guid? sessionId, DataFlowDebugCommandType? command, DataFlowDebugCommandPayload commandPayload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionId = sessionId;
             Command = command;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
 
         /// <summary> The command type. </summary>
         public DataFlowDebugCommandType? Command { get; set; }

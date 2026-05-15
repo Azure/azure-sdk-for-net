@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> Database name for connection. Type: string. </param>
         /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1: prefer, 2: require, 3: verify-ca, 4: verify-full. </param>
         /// <param name="useSystemTrustStore"> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="allowZeroDateTime"> This allows the special “zero” date value 0000-00-00 to be retrieved from the database. Type: boolean. </param>
         /// <param name="connectionTimeout"> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error. Type: integer. </param>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sslKey"> The path to the client’s SSL private key in PEM format. SslCert must also be specified. Type: string. </param>
         /// <param name="treatTinyAsBoolean"> When set to true, TINYINT(1) values are returned as booleans. Type: bool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlLinkedServiceTypeProperties(DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> useSystemTrustStore, AzureKeyVaultSecretReference password, string encryptedCredential, DataFactoryElement<bool> allowZeroDateTime, DataFactoryElement<int> connectionTimeout, DataFactoryElement<bool> convertZeroDateTime, DataFactoryElement<string> guidFormat, DataFactoryElement<string> sslCert, DataFactoryElement<string> sslKey, DataFactoryElement<bool> treatTinyAsBoolean, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MySqlLinkedServiceTypeProperties(DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> useSystemTrustStore, string encryptedCredential, DataFactoryElement<bool> allowZeroDateTime, DataFactoryElement<int> connectionTimeout, DataFactoryElement<bool> convertZeroDateTime, DataFactoryElement<string> guidFormat, DataFactoryElement<string> sslCert, DataFactoryElement<string> sslKey, DataFactoryElement<bool> treatTinyAsBoolean, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DriverVersion = driverVersion;
             ConnectionString = connectionString;
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             Database = database;
             SslMode = sslMode;
             UseSystemTrustStore = useSystemTrustStore;
-            Password = password;
             EncryptedCredential = encryptedCredential;
             AllowZeroDateTime = allowZeroDateTime;
             ConnectionTimeout = connectionTimeout;
@@ -86,9 +84,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </summary>
         public DataFactoryElement<int> UseSystemTrustStore { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

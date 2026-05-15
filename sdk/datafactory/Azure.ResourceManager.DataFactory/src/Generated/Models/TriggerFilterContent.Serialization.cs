@@ -14,62 +14,62 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The enable the interactive authoring information. </summary>
-    public partial class EnableInteractiveQueryRequest : IJsonModel<EnableInteractiveQueryRequest>
+    /// <summary> Query parameters for triggers. </summary>
+    public partial class TriggerFilterContent : IJsonModel<TriggerFilterContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EnableInteractiveQueryRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TriggerFilterContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEnableInteractiveQueryRequest(document.RootElement, options);
+                        return DeserializeTriggerFilterContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnableInteractiveQueryRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggerFilterContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EnableInteractiveQueryRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggerFilterContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EnableInteractiveQueryRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TriggerFilterContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EnableInteractiveQueryRequest IPersistableModel<EnableInteractiveQueryRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TriggerFilterContent IPersistableModel<TriggerFilterContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EnableInteractiveQueryRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TriggerFilterContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="enableInteractiveQueryRequest"> The <see cref="EnableInteractiveQueryRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EnableInteractiveQueryRequest enableInteractiveQueryRequest)
+        /// <param name="triggerFilterContent"> The <see cref="TriggerFilterContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TriggerFilterContent triggerFilterContent)
         {
-            if (enableInteractiveQueryRequest == null)
+            if (triggerFilterContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(enableInteractiveQueryRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(triggerFilterContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EnableInteractiveQueryRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TriggerFilterContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnableInteractiveQueryRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggerFilterContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutoTerminationMinutes))
+            if (Optional.IsDefined(ContinuationToken))
             {
-                writer.WritePropertyName("autoTerminationMinutes"u8);
-                writer.WriteNumberValue(AutoTerminationMinutes.Value);
+                writer.WritePropertyName("continuationToken"u8);
+                writer.WriteStringValue(ContinuationToken);
+            }
+            if (Optional.IsDefined(ParentTriggerName))
+            {
+                writer.WritePropertyName("parentTriggerName"u8);
+                writer.WriteStringValue(ParentTriggerName);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,40 +114,42 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EnableInteractiveQueryRequest IJsonModel<EnableInteractiveQueryRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TriggerFilterContent IJsonModel<TriggerFilterContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EnableInteractiveQueryRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TriggerFilterContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnableInteractiveQueryRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggerFilterContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEnableInteractiveQueryRequest(document.RootElement, options);
+            return DeserializeTriggerFilterContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EnableInteractiveQueryRequest DeserializeEnableInteractiveQueryRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static TriggerFilterContent DeserializeTriggerFilterContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? autoTerminationMinutes = default;
+            string continuationToken = default;
+            string parentTriggerName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("autoTerminationMinutes"u8))
+                if (prop.NameEquals("continuationToken"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    autoTerminationMinutes = prop.Value.GetInt32();
+                    continuationToken = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("parentTriggerName"u8))
+                {
+                    parentTriggerName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EnableInteractiveQueryRequest(autoTerminationMinutes, additionalBinaryDataProperties);
+            return new TriggerFilterContent(continuationToken, parentTriggerName, additionalBinaryDataProperties);
         }
     }
 }

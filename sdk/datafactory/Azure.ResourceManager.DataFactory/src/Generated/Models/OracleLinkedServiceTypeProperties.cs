@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> The location of Oracle database you want to connect to, the supported forms include connector descriptor, Easy Connect (Plus) Naming and Oracle Net Services Name (Only self-hosted IR). Type: string. Only used for Version 2.0. </param>
         /// <param name="authenticationType"> Authentication type for connecting to the Oracle database. Only used for Version 2.0. </param>
         /// <param name="username"> The Oracle database username. Type: string. Only used for Version 2.0. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptionClient"> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </param>
         /// <param name="encryptionTypesClient"> Specifies the encryption algorithms that client can use. Supported values are AES128, AES192, AES256, 3DES112, 3DES168, default value is (AES256). Type: string. Only used for Version 2.0. </param>
         /// <param name="cryptoChecksumClient"> Specifies the desired data integrity behavior when this client connects to a server. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </param>
@@ -41,13 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fetchTswtzAsTimestamp"> Specifies whether the driver returns column value with the TIMESTAMP WITH TIME ZONE data type as DateTime or string. This setting is ignored if supportV1DataTypes is not true, default value is true. Type: boolean. Only used for Version 2.0. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OracleLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, OracleAuthenticationType? authenticationType, DataFactoryElement<string> username, AzureKeyVaultSecretReference password, DataFactoryElement<string> encryptionClient, DataFactoryElement<string> encryptionTypesClient, DataFactoryElement<string> cryptoChecksumClient, DataFactoryElement<string> cryptoChecksumTypesClient, DataFactoryElement<int> initialLobFetchSize, DataFactoryElement<int> fetchSize, DataFactoryElement<int> statementCacheSize, DataFactoryElement<string> initializationString, DataFactoryElement<bool> enableBulkLoad, DataFactoryElement<bool> supportV1DataTypes, DataFactoryElement<bool> fetchTswtzAsTimestamp, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OracleLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, OracleAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactoryElement<string> encryptionClient, DataFactoryElement<string> encryptionTypesClient, DataFactoryElement<string> cryptoChecksumClient, DataFactoryElement<string> cryptoChecksumTypesClient, DataFactoryElement<int> initialLobFetchSize, DataFactoryElement<int> fetchSize, DataFactoryElement<int> statementCacheSize, DataFactoryElement<string> initializationString, DataFactoryElement<bool> enableBulkLoad, DataFactoryElement<bool> supportV1DataTypes, DataFactoryElement<bool> fetchTswtzAsTimestamp, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Server = server;
             AuthenticationType = authenticationType;
             Username = username;
-            Password = password;
             EncryptionClient = encryptionClient;
             EncryptionTypesClient = encryptionTypesClient;
             CryptoChecksumClient = cryptoChecksumClient;
@@ -74,9 +72,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The Oracle database username. Type: string. Only used for Version 2.0. </summary>
         public DataFactoryElement<string> Username { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
         public DataFactoryElement<string> EncryptionClient { get; set; }

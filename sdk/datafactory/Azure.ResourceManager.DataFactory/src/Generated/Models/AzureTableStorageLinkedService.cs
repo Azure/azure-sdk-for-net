@@ -54,23 +54,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
-        public AzureKeyVaultSecretReference AccountKey
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.AccountKey;
-            }
-            set
-            {
-                if (TypeProperties is null)
-                {
-                    TypeProperties = new AzureTableStorageLinkedServiceTypeProperties();
-                }
-                TypeProperties.AccountKey = value;
-            }
-        }
-
         /// <summary> SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> SasUri
         {
@@ -85,23 +68,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     TypeProperties = new AzureTableStorageLinkedServiceTypeProperties();
                 }
                 TypeProperties.SasUri = value;
-            }
-        }
-
-        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
-        public AzureKeyVaultSecretReference SasToken
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.SasToken;
-            }
-            set
-            {
-                if (TypeProperties is null)
-                {
-                    TypeProperties = new AzureTableStorageLinkedServiceTypeProperties();
-                }
-                TypeProperties.SasToken = value;
             }
         }
 

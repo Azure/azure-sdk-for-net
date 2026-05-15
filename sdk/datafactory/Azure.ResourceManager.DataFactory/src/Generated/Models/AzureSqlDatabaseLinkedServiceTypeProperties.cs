@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
         /// <param name="userName"> The user name to be used when connecting to server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
@@ -51,12 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureSqlDatabaseLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> connectionString, AzureSqlDatabaseAuthenticationType? authenticationType, DataFactoryElement<string> userName, AzureKeyVaultSecretReference password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, DataFactoryCredentialReference credential) : base(server, database, encrypt, trustServerCertificate, hostNameInCertificate, applicationIntent, connectTimeout, connectRetryCount, connectRetryInterval, loadBalanceTimeout, commandTimeout, integratedSecurity, failoverPartner, maxPoolSize, minPoolSize, multipleActiveResultSets, multiSubnetFailover, packetSize, pooling, additionalBinaryDataProperties)
+        internal AzureSqlDatabaseLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> connectionString, AzureSqlDatabaseAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, DataFactoryCredentialReference credential) : base(server, database, encrypt, trustServerCertificate, hostNameInCertificate, applicationIntent, connectTimeout, connectRetryCount, connectRetryInterval, loadBalanceTimeout, commandTimeout, integratedSecurity, failoverPartner, maxPoolSize, minPoolSize, multipleActiveResultSets, multiSubnetFailover, packetSize, pooling, additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             AuthenticationType = authenticationType;
             UserName = userName;
-            Password = password;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalCredentialType = servicePrincipalCredentialType;
             Tenant = tenant;
@@ -74,9 +72,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name to be used when connecting to server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }

@@ -30,22 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SnowflakeLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnowflakeLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, AzureKeyVaultSecretReference password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnowflakeLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
-            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The connection string of snowflake. Type: string, SecureString. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
-
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

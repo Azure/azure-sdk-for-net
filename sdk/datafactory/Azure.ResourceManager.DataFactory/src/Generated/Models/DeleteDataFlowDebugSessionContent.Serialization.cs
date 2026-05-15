@@ -14,62 +14,62 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Query parameters for triggers. </summary>
-    public partial class TriggerFilterParameters : IJsonModel<TriggerFilterParameters>
+    /// <summary> Request body structure for deleting data flow debug session. </summary>
+    public partial class DeleteDataFlowDebugSessionContent : IJsonModel<DeleteDataFlowDebugSessionContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerFilterParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeleteDataFlowDebugSessionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTriggerFilterParameters(document.RootElement, options);
+                        return DeserializeDeleteDataFlowDebugSessionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggerFilterParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TriggerFilterParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TriggerFilterParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeleteDataFlowDebugSessionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerFilterParameters IPersistableModel<TriggerFilterParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeleteDataFlowDebugSessionContent IPersistableModel<DeleteDataFlowDebugSessionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TriggerFilterParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeleteDataFlowDebugSessionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="triggerFilterParameters"> The <see cref="TriggerFilterParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TriggerFilterParameters triggerFilterParameters)
+        /// <param name="deleteDataFlowDebugSessionContent"> The <see cref="DeleteDataFlowDebugSessionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeleteDataFlowDebugSessionContent deleteDataFlowDebugSessionContent)
         {
-            if (triggerFilterParameters == null)
+            if (deleteDataFlowDebugSessionContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(triggerFilterParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(deleteDataFlowDebugSessionContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TriggerFilterParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeleteDataFlowDebugSessionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,20 +80,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerFilterParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ContinuationToken))
+            if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("continuationToken"u8);
-                writer.WriteStringValue(ContinuationToken);
-            }
-            if (Optional.IsDefined(ParentTriggerName))
-            {
-                writer.WritePropertyName("parentTriggerName"u8);
-                writer.WriteStringValue(ParentTriggerName);
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -114,42 +109,40 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerFilterParameters IJsonModel<TriggerFilterParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeleteDataFlowDebugSessionContent IJsonModel<DeleteDataFlowDebugSessionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerFilterParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeleteDataFlowDebugSessionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeleteDataFlowDebugSessionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerFilterParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeleteDataFlowDebugSessionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTriggerFilterParameters(document.RootElement, options);
+            return DeserializeDeleteDataFlowDebugSessionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TriggerFilterParameters DeserializeTriggerFilterParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeleteDataFlowDebugSessionContent DeserializeDeleteDataFlowDebugSessionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string continuationToken = default;
-            string parentTriggerName = default;
+            Guid? sessionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("continuationToken"u8))
+                if (prop.NameEquals("sessionId"u8))
                 {
-                    continuationToken = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("parentTriggerName"u8))
-                {
-                    parentTriggerName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TriggerFilterParameters(continuationToken, parentTriggerName, additionalBinaryDataProperties);
+            return new DeleteDataFlowDebugSessionContent(sessionId, additionalBinaryDataProperties);
         }
     }
 }

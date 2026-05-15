@@ -105,23 +105,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public AzureKeyVaultSecretReference Password
-        {
-            get
-            {
-                return TypeProperties is null ? default : TypeProperties.Password;
-            }
-            set
-            {
-                if (TypeProperties is null)
-                {
-                    TypeProperties = new OracleLinkedServiceTypeProperties();
-                }
-                TypeProperties.Password = value;
-            }
-        }
-
         /// <summary> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
         public DataFactoryElement<string> EncryptionClient
         {

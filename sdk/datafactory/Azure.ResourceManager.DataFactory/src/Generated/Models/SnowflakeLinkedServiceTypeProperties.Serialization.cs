@@ -82,11 +82,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("connectionString"u8);
             writer.WriteObjectValue(ConnectionString, options);
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password, options);
-            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -135,7 +130,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> connectionString = default;
-            AzureKeyVaultSecretReference password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,15 +137,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("connectionString"u8))
                 {
                     connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("password"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    password = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -164,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SnowflakeLinkedServiceTypeProperties(connectionString, password, encryptedCredential, additionalBinaryDataProperties);
+            return new SnowflakeLinkedServiceTypeProperties(connectionString, encryptedCredential, additionalBinaryDataProperties);
         }
     }
 }

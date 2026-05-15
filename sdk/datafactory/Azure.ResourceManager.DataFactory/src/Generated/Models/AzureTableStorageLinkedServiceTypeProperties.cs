@@ -21,14 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureTableStorageLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
         /// <param name="sasUri"> SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serviceEndpoint"> Table service endpoint of the Azure Table Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureTableStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, AzureKeyVaultSecretReference accountKey, DataFactoryElement<string> sasUri, AzureKeyVaultSecretReference sasToken, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential) : base(connectionString, accountKey, sasUri, sasToken, encryptedCredential, additionalBinaryDataProperties)
+        internal AzureTableStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential) : base(connectionString, sasUri, encryptedCredential, additionalBinaryDataProperties)
         {
             ServiceEndpoint = serviceEndpoint;
             Credential = credential;

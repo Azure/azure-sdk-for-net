@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> A boolean to determine if the vnet configuration needs to be overwritten. </summary>
-        public bool? AllowVNetOverride
+        public bool? AllowVnetOverride
         {
             get
             {
-                return Properties is null ? default : Properties.AllowVNetOverride;
+                return Properties is null ? default : Properties.AllowVnetOverride;
             }
             set
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     Properties = new Models.ChangeDataCapture();
                 }
-                Properties.AllowVNetOverride = value;
+                Properties.AllowVnetOverride = value;
             }
         }
 

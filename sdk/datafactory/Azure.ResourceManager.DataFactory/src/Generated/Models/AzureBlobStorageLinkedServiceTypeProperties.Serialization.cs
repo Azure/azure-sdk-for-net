@@ -80,20 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString, options);
             }
-            if (Optional.IsDefined(AccountKey))
-            {
-                writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey, options);
-            }
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteObjectValue(SasUri, options);
-            }
-            if (Optional.IsDefined(SasToken))
-            {
-                writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken, options);
             }
             if (Optional.IsDefined(ServiceEndpoint))
             {
@@ -183,9 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> connectionString = default;
-            AzureKeyVaultSecretReference accountKey = default;
             DataFactoryElement<string> sasUri = default;
-            AzureKeyVaultSecretReference sasToken = default;
             DataFactoryElement<string> serviceEndpoint = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> tenant = default;
@@ -207,15 +195,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("accountKey"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    accountKey = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("sasUri"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -223,15 +202,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     sasUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("sasToken"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sasToken = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("serviceEndpoint"u8))
@@ -318,9 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new AzureBlobStorageLinkedServiceTypeProperties(
                 connectionString,
-                accountKey,
                 sasUri,
-                sasToken,
                 serviceEndpoint,
                 servicePrincipalId,
                 tenant,

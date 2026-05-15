@@ -13,25 +13,25 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A list of exposure control features. </summary>
-    public partial class ExposureControlBatchRequest
+    public partial class ExposureControlBatchContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/>. </summary>
         /// <param name="exposureControlRequests"> List of exposure control features. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlRequests"/> is null. </exception>
-        public ExposureControlBatchRequest(IEnumerable<ExposureControlContent> exposureControlRequests)
+        public ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests)
         {
             Argument.AssertNotNull(exposureControlRequests, nameof(exposureControlRequests));
 
             ExposureControlRequests = exposureControlRequests.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/>. </summary>
         /// <param name="exposureControlRequests"> List of exposure control features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExposureControlBatchRequest(IList<ExposureControlContent> exposureControlRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExposureControlBatchContent(IList<ExposureControlContent> exposureControlRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExposureControlRequests = exposureControlRequests;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

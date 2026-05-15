@@ -24,17 +24,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
         /// <param name="sasUri"> SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, AzureKeyVaultSecretReference accountKey, DataFactoryElement<string> sasUri, AzureKeyVaultSecretReference sasToken, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
-            AccountKey = accountKey;
             SasUri = sasUri;
-            SasToken = sasToken;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,14 +38,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
 
-        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
-        public AzureKeyVaultSecretReference AccountKey { get; set; }
-
         /// <summary> SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> SasUri { get; set; }
-
-        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
-        public AzureKeyVaultSecretReference SasToken { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

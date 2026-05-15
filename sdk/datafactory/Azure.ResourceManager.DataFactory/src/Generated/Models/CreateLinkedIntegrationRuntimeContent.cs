@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The linked integration runtime information. </summary>
-    public partial class CreateLinkedIntegrationRuntimeRequest
+    public partial class CreateLinkedIntegrationRuntimeContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeRequest"/>. </summary>
-        public CreateLinkedIntegrationRuntimeRequest()
+        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeContent"/>. </summary>
+        public CreateLinkedIntegrationRuntimeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeContent"/>. </summary>
         /// <param name="name"> The name of the linked integration runtime. </param>
         /// <param name="subscriptionId"> The ID of the subscription that the linked integration runtime belongs to. </param>
         /// <param name="dataFactoryName"> The name of the data factory that the linked integration runtime belongs to. </param>
         /// <param name="dataFactoryLocation"> The location of the data factory that the linked integration runtime belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateLinkedIntegrationRuntimeRequest(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateLinkedIntegrationRuntimeContent(string name, string subscriptionId, string dataFactoryName, AzureLocation? dataFactoryLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SubscriptionId = subscriptionId;
@@ -46,6 +47,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string DataFactoryName { get; set; }
 
         /// <summary> The location of the data factory that the linked integration runtime belongs to. </summary>
-        public string DataFactoryLocation { get; set; }
+        public AzureLocation? DataFactoryLocation { get; set; }
     }
 }

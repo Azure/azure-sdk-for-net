@@ -105,11 +105,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("securityLevel"u8);
                 writer.WriteStringValue(SecurityLevel.Value.ToString());
             }
-            if (Optional.IsDefined(Pwd))
-            {
-                writer.WritePropertyName("pwd"u8);
-                writer.WriteObjectValue(Pwd, options);
-            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -163,7 +158,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> uid = default;
             DataFactoryElement<string> database = default;
             NetezzaSecurityLevelType? securityLevel = default;
-            AzureKeyVaultSecretReference pwd = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -222,15 +216,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     securityLevel = new NetezzaSecurityLevelType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("pwd"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    pwd = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -248,7 +233,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 uid,
                 database,
                 securityLevel,
-                pwd,
                 encryptedCredential,
                 additionalBinaryDataProperties);
         }

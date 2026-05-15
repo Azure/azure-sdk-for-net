@@ -14,62 +14,67 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Update integration runtime node request. </summary>
-    public partial class UpdateIntegrationRuntimeNodeRequest : IJsonModel<UpdateIntegrationRuntimeNodeRequest>
+    /// <summary> A list of exposure control features. </summary>
+    public partial class ExposureControlBatchContent : IJsonModel<ExposureControlBatchContent>
     {
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/> for deserialization. </summary>
+        internal ExposureControlBatchContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateIntegrationRuntimeNodeRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExposureControlBatchContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateIntegrationRuntimeNodeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpdateIntegrationRuntimeNodeRequest(document.RootElement, options);
+                        return DeserializeExposureControlBatchContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateIntegrationRuntimeNodeRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExposureControlBatchContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateIntegrationRuntimeNodeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateIntegrationRuntimeNodeRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExposureControlBatchContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateIntegrationRuntimeNodeRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExposureControlBatchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateIntegrationRuntimeNodeRequest IPersistableModel<UpdateIntegrationRuntimeNodeRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExposureControlBatchContent IPersistableModel<ExposureControlBatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateIntegrationRuntimeNodeRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExposureControlBatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="updateIntegrationRuntimeNodeRequest"> The <see cref="UpdateIntegrationRuntimeNodeRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UpdateIntegrationRuntimeNodeRequest updateIntegrationRuntimeNodeRequest)
+        /// <param name="exposureControlBatchContent"> The <see cref="ExposureControlBatchContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExposureControlBatchContent exposureControlBatchContent)
         {
-            if (updateIntegrationRuntimeNodeRequest == null)
+            if (exposureControlBatchContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(updateIntegrationRuntimeNodeRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(exposureControlBatchContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpdateIntegrationRuntimeNodeRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExposureControlBatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,16 +85,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateIntegrationRuntimeNodeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateIntegrationRuntimeNodeRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExposureControlBatchContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ConcurrentJobsLimit))
+            writer.WritePropertyName("exposureControlRequests"u8);
+            writer.WriteStartArray();
+            foreach (ExposureControlContent item in ExposureControlRequests)
             {
-                writer.WritePropertyName("concurrentJobsLimit"u8);
-                writer.WriteNumberValue(ConcurrentJobsLimit.Value);
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -109,40 +116,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateIntegrationRuntimeNodeRequest IJsonModel<UpdateIntegrationRuntimeNodeRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExposureControlBatchContent IJsonModel<ExposureControlBatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateIntegrationRuntimeNodeRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExposureControlBatchContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateIntegrationRuntimeNodeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateIntegrationRuntimeNodeRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExposureControlBatchContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdateIntegrationRuntimeNodeRequest(document.RootElement, options);
+            return DeserializeExposureControlBatchContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpdateIntegrationRuntimeNodeRequest DeserializeUpdateIntegrationRuntimeNodeRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExposureControlBatchContent DeserializeExposureControlBatchContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? concurrentJobsLimit = default;
+            IList<ExposureControlContent> exposureControlRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("concurrentJobsLimit"u8))
+                if (prop.NameEquals("exposureControlRequests"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    List<ExposureControlContent> array = new List<ExposureControlContent>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(ExposureControlContent.DeserializeExposureControlContent(item, options));
                     }
-                    concurrentJobsLimit = prop.Value.GetInt32();
+                    exposureControlRequests = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateIntegrationRuntimeNodeRequest(concurrentJobsLimit, additionalBinaryDataProperties);
+            return new ExposureControlBatchContent(exposureControlRequests, additionalBinaryDataProperties);
         }
     }
 }

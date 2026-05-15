@@ -95,11 +95,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue(Username, options);
             }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password, options);
-            }
             if (Optional.IsDefined(EncryptionClient))
             {
                 writer.WritePropertyName("encryptionClient"u8);
@@ -206,7 +201,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> server = default;
             OracleAuthenticationType? authenticationType = default;
             DataFactoryElement<string> username = default;
-            AzureKeyVaultSecretReference password = default;
             DataFactoryElement<string> encryptionClient = default;
             DataFactoryElement<string> encryptionTypesClient = default;
             DataFactoryElement<string> cryptoChecksumClient = default;
@@ -256,15 +250,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     username = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("password"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    password = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryptionClient"u8))
@@ -381,7 +366,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 server,
                 authenticationType,
                 username,
-                password,
                 encryptionClient,
                 encryptionTypesClient,
                 cryptoChecksumClient,

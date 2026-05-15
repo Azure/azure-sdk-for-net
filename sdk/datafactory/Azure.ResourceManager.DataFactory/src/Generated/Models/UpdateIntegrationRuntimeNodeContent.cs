@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Update integration runtime node request. </summary>
-    public partial class UpdateIntegrationRuntimeNodeRequest
+    public partial class UpdateIntegrationRuntimeNodeContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeRequest"/>. </summary>
-        public UpdateIntegrationRuntimeNodeRequest()
+        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
+        public UpdateIntegrationRuntimeNodeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
         /// <param name="concurrentJobsLimit"> The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateIntegrationRuntimeNodeRequest(int? concurrentJobsLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateIntegrationRuntimeNodeContent(int? concurrentJobsLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConcurrentJobsLimit = concurrentJobsLimit;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

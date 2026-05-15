@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
         /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
         /// <param name="policy"> CDC policy. </param>
-        /// <param name="allowVNetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
+        /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
         /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCapture(ChangeDataCaptureFolder folder, string description, IList<MapperSourceConnectionsInfo> sourceConnectionsInfo, IList<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy, bool? allowVNetOverride, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCapture(ChangeDataCaptureFolder folder, string description, IList<MapperSourceConnectionsInfo> sourceConnectionsInfo, IList<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy, bool? allowVnetOverride, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Folder = folder;
             Description = description;
             SourceConnectionsInfo = sourceConnectionsInfo;
             TargetConnectionsInfo = targetConnectionsInfo;
             Policy = policy;
-            AllowVNetOverride = allowVNetOverride;
+            AllowVnetOverride = allowVnetOverride;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public MapperPolicy Policy { get; set; }
 
         /// <summary> A boolean to determine if the vnet configuration needs to be overwritten. </summary>
-        public bool? AllowVNetOverride { get; set; }
+        public bool? AllowVnetOverride { get; set; }
 
         /// <summary> Status of the CDC as to if it is running or stopped. </summary>
         public string Status { get; set; }

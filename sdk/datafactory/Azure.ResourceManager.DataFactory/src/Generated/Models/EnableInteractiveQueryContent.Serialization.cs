@@ -14,67 +14,62 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of exposure control features. </summary>
-    public partial class ExposureControlBatchRequest : IJsonModel<ExposureControlBatchRequest>
+    /// <summary> The enable the interactive authoring information. </summary>
+    public partial class EnableInteractiveQueryContent : IJsonModel<EnableInteractiveQueryContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchRequest"/> for deserialization. </summary>
-        internal ExposureControlBatchRequest()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExposureControlBatchRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EnableInteractiveQueryContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExposureControlBatchRequest(document.RootElement, options);
+                        return DeserializeEnableInteractiveQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExposureControlBatchRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnableInteractiveQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExposureControlBatchRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnableInteractiveQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExposureControlBatchRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EnableInteractiveQueryContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExposureControlBatchRequest IPersistableModel<ExposureControlBatchRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EnableInteractiveQueryContent IPersistableModel<EnableInteractiveQueryContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExposureControlBatchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EnableInteractiveQueryContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="exposureControlBatchRequest"> The <see cref="ExposureControlBatchRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExposureControlBatchRequest exposureControlBatchRequest)
+        /// <param name="enableInteractiveQueryContent"> The <see cref="EnableInteractiveQueryContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EnableInteractiveQueryContent enableInteractiveQueryContent)
         {
-            if (exposureControlBatchRequest == null)
+            if (enableInteractiveQueryContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(exposureControlBatchRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(enableInteractiveQueryContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExposureControlBatchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EnableInteractiveQueryContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,18 +80,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExposureControlBatchRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EnableInteractiveQueryContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("exposureControlRequests"u8);
-            writer.WriteStartArray();
-            foreach (ExposureControlContent item in ExposureControlRequests)
+            if (Optional.IsDefined(AutoTerminationMinutes))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("autoTerminationMinutes"u8);
+                writer.WriteNumberValue(AutoTerminationMinutes.Value);
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -116,41 +109,40 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExposureControlBatchRequest IJsonModel<ExposureControlBatchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EnableInteractiveQueryContent IJsonModel<EnableInteractiveQueryContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExposureControlBatchRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EnableInteractiveQueryContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExposureControlBatchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnableInteractiveQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExposureControlBatchRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EnableInteractiveQueryContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExposureControlBatchRequest(document.RootElement, options);
+            return DeserializeEnableInteractiveQueryContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExposureControlBatchRequest DeserializeExposureControlBatchRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static EnableInteractiveQueryContent DeserializeEnableInteractiveQueryContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ExposureControlContent> exposureControlRequests = default;
+            int? autoTerminationMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("exposureControlRequests"u8))
+                if (prop.NameEquals("autoTerminationMinutes"u8))
                 {
-                    List<ExposureControlContent> array = new List<ExposureControlContent>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(ExposureControlContent.DeserializeExposureControlContent(item, options));
+                        continue;
                     }
-                    exposureControlRequests = array;
+                    autoTerminationMinutes = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExposureControlBatchRequest(exposureControlRequests, additionalBinaryDataProperties);
+            return new EnableInteractiveQueryContent(autoTerminationMinutes, additionalBinaryDataProperties);
         }
     }
 }

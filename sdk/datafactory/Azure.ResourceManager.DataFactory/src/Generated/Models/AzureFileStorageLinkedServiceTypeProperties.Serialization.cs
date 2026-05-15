@@ -90,20 +90,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString, options);
             }
-            if (Optional.IsDefined(AccountKey))
-            {
-                writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey, options);
-            }
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteObjectValue(SasUri, options);
-            }
-            if (Optional.IsDefined(SasToken))
-            {
-                writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken, options);
             }
             if (Optional.IsDefined(FileShare))
             {
@@ -175,9 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> userId = default;
             DataFactoryElement<string> connectionString = default;
-            AzureKeyVaultSecretReference accountKey = default;
             DataFactoryElement<string> sasUri = default;
-            AzureKeyVaultSecretReference sasToken = default;
             DataFactoryElement<string> fileShare = default;
             DataFactoryElement<string> snapshot = default;
             string encryptedCredential = default;
@@ -213,15 +201,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("accountKey"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    accountKey = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("sasUri"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -229,15 +208,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     sasUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("sasToken"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sasToken = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fileShare"u8))
@@ -290,9 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 host,
                 userId,
                 connectionString,
-                accountKey,
                 sasUri,
-                sasToken,
                 fileShare,
                 snapshot,
                 encryptedCredential,

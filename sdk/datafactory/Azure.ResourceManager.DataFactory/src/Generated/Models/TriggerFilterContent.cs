@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Query parameters for triggers. </summary>
-    public partial class TriggerFilterParameters
+    public partial class TriggerFilterContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TriggerFilterParameters"/>. </summary>
-        public TriggerFilterParameters()
+        /// <summary> Initializes a new instance of <see cref="TriggerFilterContent"/>. </summary>
+        public TriggerFilterContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerFilterParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerFilterContent"/>. </summary>
         /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
         /// <param name="parentTriggerName"> The name of the parent TumblingWindowTrigger to get the child rerun triggers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerFilterParameters(string continuationToken, string parentTriggerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggerFilterContent(string continuationToken, string parentTriggerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContinuationToken = continuationToken;
             ParentTriggerName = parentTriggerName;

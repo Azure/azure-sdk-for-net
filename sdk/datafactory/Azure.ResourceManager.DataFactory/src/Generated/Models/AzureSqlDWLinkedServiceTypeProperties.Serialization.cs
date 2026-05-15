@@ -91,11 +91,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName, options);
             }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password, options);
-            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -176,7 +171,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> connectionString = default;
             AzureSqlDWAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
-            AzureKeyVaultSecretReference password = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
             DataFactoryElement<string> tenant = default;
@@ -383,15 +377,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("password"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    password = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -471,7 +456,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 connectionString,
                 authenticationType,
                 userName,
-                password,
                 servicePrincipalId,
                 servicePrincipalCredentialType,
                 tenant,

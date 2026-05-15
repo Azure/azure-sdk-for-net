@@ -24,9 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
         /// <param name="sasUri"> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="serviceEndpoint"> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
@@ -37,12 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
         /// <param name="containerUri"> Container uri of the Azure Blob Storage resource only support for anonymous access. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, AzureKeyVaultSecretReference accountKey, DataFactoryElement<string> sasUri, AzureKeyVaultSecretReference sasToken, DataFactoryElement<string> serviceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountKind, string encryptedCredential, DataFactoryCredentialReference credential, AzureStorageAuthenticationType? authenticationType, DataFactoryElement<string> containerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, DataFactoryElement<string> serviceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountKind, string encryptedCredential, DataFactoryCredentialReference credential, AzureStorageAuthenticationType? authenticationType, DataFactoryElement<string> containerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
-            AccountKey = accountKey;
             SasUri = sasUri;
-            SasToken = sasToken;
             ServiceEndpoint = serviceEndpoint;
             ServicePrincipalId = servicePrincipalId;
             Tenant = tenant;
@@ -58,14 +54,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
 
-        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
-        public AzureKeyVaultSecretReference AccountKey { get; set; }
-
         /// <summary> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> SasUri { get; set; }
-
-        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
-        public AzureKeyVaultSecretReference SasToken { get; set; }
 
         /// <summary> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
         public DataFactoryElement<string> ServiceEndpoint { get; set; }

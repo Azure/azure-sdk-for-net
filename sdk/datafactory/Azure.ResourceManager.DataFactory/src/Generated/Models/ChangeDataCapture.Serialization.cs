@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
             writer.WriteObjectValue(Policy, options);
-            if (Optional.IsDefined(AllowVNetOverride))
+            if (Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);
-                writer.WriteBooleanValue(AllowVNetOverride.Value);
+                writer.WriteBooleanValue(AllowVnetOverride.Value);
             }
             if (Optional.IsDefined(Status))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<MapperSourceConnectionsInfo> sourceConnectionsInfo = default;
             IList<MapperTargetConnectionsInfo> targetConnectionsInfo = default;
             MapperPolicy policy = default;
-            bool? allowVNetOverride = default;
+            bool? allowVnetOverride = default;
             string status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    allowVNetOverride = prop.Value.GetBoolean();
+                    allowVnetOverride = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 sourceConnectionsInfo,
                 targetConnectionsInfo,
                 policy,
-                allowVNetOverride,
+                allowVnetOverride,
                 status,
                 additionalBinaryDataProperties);
         }

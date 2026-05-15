@@ -12,25 +12,25 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Data factory name for linked integration runtime request. </summary>
-    public partial class LinkedIntegrationRuntimeRequest
+    public partial class LinkedIntegrationRuntimeContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeContent"/>. </summary>
         /// <param name="linkedFactoryName"> The data factory name for linked integration runtime. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedFactoryName"/> is null. </exception>
-        public LinkedIntegrationRuntimeRequest(string linkedFactoryName)
+        public LinkedIntegrationRuntimeContent(string linkedFactoryName)
         {
             Argument.AssertNotNull(linkedFactoryName, nameof(linkedFactoryName));
 
             LinkedFactoryName = linkedFactoryName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeContent"/>. </summary>
         /// <param name="linkedFactoryName"> The data factory name for linked integration runtime. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedIntegrationRuntimeRequest(string linkedFactoryName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinkedIntegrationRuntimeContent(string linkedFactoryName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkedFactoryName = linkedFactoryName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

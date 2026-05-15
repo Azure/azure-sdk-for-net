@@ -15,61 +15,61 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Request body structure for data flow debug command. </summary>
-    public partial class DataFlowDebugCommandRequest : IJsonModel<DataFlowDebugCommandRequest>
+    public partial class DataFlowDebugCommandContent : IJsonModel<DataFlowDebugCommandContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataFlowDebugCommandRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataFlowDebugCommandContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataFlowDebugCommandRequest(document.RootElement, options);
+                        return DeserializeDataFlowDebugCommandContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowDebugCommandRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowDebugCommandContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowDebugCommandRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowDebugCommandContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataFlowDebugCommandRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataFlowDebugCommandContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataFlowDebugCommandRequest IPersistableModel<DataFlowDebugCommandRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataFlowDebugCommandContent IPersistableModel<DataFlowDebugCommandContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataFlowDebugCommandRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataFlowDebugCommandContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dataFlowDebugCommandRequest"> The <see cref="DataFlowDebugCommandRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataFlowDebugCommandRequest dataFlowDebugCommandRequest)
+        /// <param name="dataFlowDebugCommandContent"> The <see cref="DataFlowDebugCommandContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataFlowDebugCommandContent dataFlowDebugCommandContent)
         {
-            if (dataFlowDebugCommandRequest == null)
+            if (dataFlowDebugCommandContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(dataFlowDebugCommandRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(dataFlowDebugCommandContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataFlowDebugCommandRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataFlowDebugCommandContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowDebugCommandRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowDebugCommandContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
-                writer.WriteStringValue(SessionId);
+                writer.WriteStringValue(SessionId.Value);
             }
             if (Optional.IsDefined(Command))
             {
@@ -119,30 +119,30 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataFlowDebugCommandRequest IJsonModel<DataFlowDebugCommandRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataFlowDebugCommandContent IJsonModel<DataFlowDebugCommandContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataFlowDebugCommandRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataFlowDebugCommandContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowDebugCommandRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowDebugCommandContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataFlowDebugCommandRequest(document.RootElement, options);
+            return DeserializeDataFlowDebugCommandContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataFlowDebugCommandRequest DeserializeDataFlowDebugCommandRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataFlowDebugCommandContent DeserializeDataFlowDebugCommandContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string sessionId = default;
+            Guid? sessionId = default;
             DataFlowDebugCommandType? command = default;
             DataFlowDebugCommandPayload commandPayload = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("sessionId"u8))
                 {
-                    sessionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("command"u8))
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFlowDebugCommandRequest(sessionId, command, commandPayload, additionalBinaryDataProperties);
+            return new DataFlowDebugCommandContent(sessionId, command, commandPayload, additionalBinaryDataProperties);
         }
     }
 }

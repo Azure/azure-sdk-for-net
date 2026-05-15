@@ -15,61 +15,61 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The linked integration runtime information. </summary>
-    public partial class CreateLinkedIntegrationRuntimeRequest : IJsonModel<CreateLinkedIntegrationRuntimeRequest>
+    public partial class CreateLinkedIntegrationRuntimeContent : IJsonModel<CreateLinkedIntegrationRuntimeContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateLinkedIntegrationRuntimeRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CreateLinkedIntegrationRuntimeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCreateLinkedIntegrationRuntimeRequest(document.RootElement, options);
+                        return DeserializeCreateLinkedIntegrationRuntimeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CreateLinkedIntegrationRuntimeRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CreateLinkedIntegrationRuntimeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateLinkedIntegrationRuntimeRequest IPersistableModel<CreateLinkedIntegrationRuntimeRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CreateLinkedIntegrationRuntimeContent IPersistableModel<CreateLinkedIntegrationRuntimeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CreateLinkedIntegrationRuntimeRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateLinkedIntegrationRuntimeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="createLinkedIntegrationRuntimeRequest"> The <see cref="CreateLinkedIntegrationRuntimeRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CreateLinkedIntegrationRuntimeRequest createLinkedIntegrationRuntimeRequest)
+        /// <param name="createLinkedIntegrationRuntimeContent"> The <see cref="CreateLinkedIntegrationRuntimeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CreateLinkedIntegrationRuntimeContent createLinkedIntegrationRuntimeContent)
         {
-            if (createLinkedIntegrationRuntimeRequest == null)
+            if (createLinkedIntegrationRuntimeContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(createLinkedIntegrationRuntimeRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(createLinkedIntegrationRuntimeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CreateLinkedIntegrationRuntimeRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateLinkedIntegrationRuntimeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFactoryLocation))
             {
                 writer.WritePropertyName("dataFactoryLocation"u8);
-                writer.WriteStringValue(DataFactoryLocation);
+                writer.WriteStringValue(DataFactoryLocation.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -124,24 +124,24 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateLinkedIntegrationRuntimeRequest IJsonModel<CreateLinkedIntegrationRuntimeRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CreateLinkedIntegrationRuntimeContent IJsonModel<CreateLinkedIntegrationRuntimeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateLinkedIntegrationRuntimeRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CreateLinkedIntegrationRuntimeContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateLinkedIntegrationRuntimeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateLinkedIntegrationRuntimeContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateLinkedIntegrationRuntimeRequest(document.RootElement, options);
+            return DeserializeCreateLinkedIntegrationRuntimeContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CreateLinkedIntegrationRuntimeRequest DeserializeCreateLinkedIntegrationRuntimeRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CreateLinkedIntegrationRuntimeContent DeserializeCreateLinkedIntegrationRuntimeContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string subscriptionId = default;
             string dataFactoryName = default;
-            string dataFactoryLocation = default;
+            AzureLocation? dataFactoryLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("dataFactoryLocation"u8))
                 {
-                    dataFactoryLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataFactoryLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateLinkedIntegrationRuntimeRequest(name, subscriptionId, dataFactoryName, dataFactoryLocation, additionalBinaryDataProperties);
+            return new CreateLinkedIntegrationRuntimeContent(name, subscriptionId, dataFactoryName, dataFactoryLocation, additionalBinaryDataProperties);
         }
     }
 }
