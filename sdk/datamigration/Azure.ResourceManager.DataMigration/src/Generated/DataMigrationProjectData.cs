@@ -15,16 +15,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary> A project resource. </summary>
-    public partial class DataMigrationProjectData : ResourceData
+    public partial class DataMigrationProjectData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DataMigrationProjectData"/>. </summary>
-        public DataMigrationProjectData()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -32,27 +26,19 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Project properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Project properties. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
-        internal DataMigrationProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProjectProperties properties, IDictionary<string, string> tags, string location, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataMigrationProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ProjectProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
             ETag = eTag;
         }
 
         /// <summary> Project properties. </summary>
         internal ProjectProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
 
         /// <summary> HTTP strong entity tag value. This is ignored if submitted. </summary>
         public ETag? ETag { get; set; }

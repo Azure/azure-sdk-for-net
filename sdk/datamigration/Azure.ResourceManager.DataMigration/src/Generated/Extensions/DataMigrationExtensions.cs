@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.DataMigration
         /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetUsagesAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -915,18 +915,18 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataMigrationQuota> GetAllAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataMigrationQuota> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetAllAsync(location, cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetAll(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetUsages(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -934,11 +934,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataMigrationQuota> GetAll(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<DataMigrationQuota> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetAll(location, cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

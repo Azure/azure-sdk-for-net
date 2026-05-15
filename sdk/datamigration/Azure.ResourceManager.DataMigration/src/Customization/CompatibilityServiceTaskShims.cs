@@ -4,6 +4,7 @@
 #pragma warning disable SA1402, SA1649, CS1591
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
@@ -19,6 +20,12 @@ namespace Azure.ResourceManager.DataMigration
     /// <summary>Backward-compatible GA alias for service-level tasks.</summary>
     public class ServiceServiceTaskResource : DataMigrationServiceTaskResource
     {
+        public static new readonly Azure.Core.ResourceType ResourceType = DataMigrationServiceTaskResource.ResourceType;
+
+        protected ServiceServiceTaskResource()
+        {
+        }
+
         internal ServiceServiceTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
@@ -26,13 +33,163 @@ namespace Azure.ResourceManager.DataMigration
         internal ServiceServiceTaskResource(ArmClient client, DataMigrationProjectTaskData data) : base(client, data)
         {
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual Response<ServiceServiceTaskResource> Get(string expand = default, CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = base.Get(expand, cancellationToken);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual async Task<Response<ServiceServiceTaskResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = await base.GetAsync(expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual Response<ServiceServiceTaskResource> Update(DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = base.Update(data, cancellationToken);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual async Task<Response<ServiceServiceTaskResource>> UpdateAsync(DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = await base.UpdateAsync(data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual Response<ServiceServiceTaskResource> Cancel(CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = base.Cancel(cancellationToken);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual async Task<Response<ServiceServiceTaskResource>> CancelAsync(CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = await base.CancelAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
     }
 
     /// <summary>Backward-compatible GA alias for service-level tasks.</summary>
-    public class ServiceServiceTaskCollection : DataMigrationServiceTaskCollection
+    public class ServiceServiceTaskCollection : DataMigrationServiceTaskCollection, IEnumerable<ServiceServiceTaskResource>, IAsyncEnumerable<ServiceServiceTaskResource>
     {
+        protected ServiceServiceTaskCollection()
+        {
+        }
+
         internal ServiceServiceTaskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual ArmOperation<ServiceServiceTaskResource> CreateOrUpdate(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<DataMigrationServiceTaskResource> operation = base.CreateOrUpdate(waitUntil, taskName, data, cancellationToken);
+            return new DataMigrationArmOperation<ServiceServiceTaskResource>(Response.FromValue(new ServiceServiceTaskResource(Client, operation.Value.Data), operation.GetRawResponse()), operation.GetRehydrationToken());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual async Task<ArmOperation<ServiceServiceTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<DataMigrationServiceTaskResource> operation = await base.CreateOrUpdateAsync(waitUntil, taskName, data, cancellationToken).ConfigureAwait(false);
+            return new DataMigrationArmOperation<ServiceServiceTaskResource>(Response.FromValue(new ServiceServiceTaskResource(Client, operation.Value.Data), operation.GetRawResponse()), operation.GetRehydrationToken());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual Response<ServiceServiceTaskResource> Get(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = base.Get(taskName, expand, cancellationToken);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual async Task<Response<ServiceServiceTaskResource>> GetAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Response<DataMigrationServiceTaskResource> response = await base.GetAsync(taskName, expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual Pageable<ServiceServiceTaskResource> GetAll(string taskType = default, CancellationToken cancellationToken = default)
+            => new ServiceTaskPageable(base.GetAll(taskType, cancellationToken), Client);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual AsyncPageable<ServiceServiceTaskResource> GetAllAsync(string taskType = default, CancellationToken cancellationToken = default)
+            => new ServiceTaskAsyncPageable(base.GetAllAsync(taskType, cancellationToken), Client);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual NullableResponse<ServiceServiceTaskResource> GetIfExists(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            NullableResponse<DataMigrationServiceTaskResource> response = base.GetIfExists(taskName, expand, cancellationToken);
+            return response.HasValue ? Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse()) : new NoValueResponse<ServiceServiceTaskResource>(response.GetRawResponse());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new virtual async Task<NullableResponse<ServiceServiceTaskResource>> GetIfExistsAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            NullableResponse<DataMigrationServiceTaskResource> response = await base.GetIfExistsAsync(taskName, expand, cancellationToken).ConfigureAwait(false);
+            return response.HasValue ? Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse()) : new NoValueResponse<ServiceServiceTaskResource>(response.GetRawResponse());
+        }
+
+        IEnumerator<ServiceServiceTaskResource> IEnumerable<ServiceServiceTaskResource>.GetEnumerator() => GetAll().GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+        IAsyncEnumerator<ServiceServiceTaskResource> IAsyncEnumerable<ServiceServiceTaskResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+
+        private sealed class ServiceTaskPageable : Pageable<ServiceServiceTaskResource>
+        {
+            private readonly Pageable<DataMigrationServiceTaskResource> _pageable;
+            private readonly ArmClient _client;
+
+            public ServiceTaskPageable(Pageable<DataMigrationServiceTaskResource> pageable, ArmClient client)
+            {
+                _pageable = pageable;
+                _client = client;
+            }
+
+            public override IEnumerable<Page<ServiceServiceTaskResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                foreach (Page<DataMigrationServiceTaskResource> page in _pageable.AsPages(continuationToken, pageSizeHint))
+                {
+                    List<ServiceServiceTaskResource> values = new List<ServiceServiceTaskResource>();
+                    foreach (DataMigrationServiceTaskResource resource in page.Values)
+                    {
+                        values.Add(new ServiceServiceTaskResource(_client, resource.Data));
+                    }
+                    yield return Page<ServiceServiceTaskResource>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                }
+            }
+        }
+
+        private sealed class ServiceTaskAsyncPageable : AsyncPageable<ServiceServiceTaskResource>
+        {
+            private readonly AsyncPageable<DataMigrationServiceTaskResource> _pageable;
+            private readonly ArmClient _client;
+
+            public ServiceTaskAsyncPageable(AsyncPageable<DataMigrationServiceTaskResource> pageable, ArmClient client)
+            {
+                _pageable = pageable;
+                _client = client;
+            }
+
+            public override async IAsyncEnumerable<Page<ServiceServiceTaskResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                await foreach (Page<DataMigrationServiceTaskResource> page in _pageable.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+                {
+                    List<ServiceServiceTaskResource> values = new List<ServiceServiceTaskResource>();
+                    foreach (DataMigrationServiceTaskResource resource in page.Values)
+                    {
+                        values.Add(new ServiceServiceTaskResource(_client, resource.Data));
+                    }
+                    yield return Page<ServiceServiceTaskResource>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                }
+            }
         }
     }
 
@@ -213,7 +370,7 @@ namespace Azure.ResourceManager.DataMigration
         public virtual Response<ServiceServiceTaskResource> GetServiceServiceTask(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Response<DataMigrationServiceTaskResource> response = GetDataMigrationServiceTask(taskName, expand, cancellationToken);
-            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Id), response.GetRawResponse());
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
         }
 
         // Backward-compatible GA alias for service-level tasks.
@@ -222,7 +379,7 @@ namespace Azure.ResourceManager.DataMigration
         public virtual async Task<Response<ServiceServiceTaskResource>> GetServiceServiceTaskAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Response<DataMigrationServiceTaskResource> response = await GetDataMigrationServiceTaskAsync(taskName, expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Id), response.GetRawResponse());
+            return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value.Data), response.GetRawResponse());
         }
     }
 

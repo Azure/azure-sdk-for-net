@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataMigrationQuota> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataMigrationQuota> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetAllAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetAll");
+            return new UsagesGetUsagesAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataMigrationQuota> GetAll(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataMigrationQuota> GetUsages(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetAllCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetAll");
+            return new UsagesGetUsagesCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
         }
     }
 }

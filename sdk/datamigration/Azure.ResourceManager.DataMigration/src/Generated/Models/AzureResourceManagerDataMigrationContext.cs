@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(UnknownConnectToSourceSqlServerTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownDatabaseMigrationBaseProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownDatabaseMigrationProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownDataMigrationCommandProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownDataMigrationMongoDBProgress))]
-    [ModelReaderWriterBuildable(typeof(UnknownDataMigrationProjectTaskProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownCommandProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownMongoDBProgress))]
+    [ModelReaderWriterBuildable(typeof(UnknownProjectTaskProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput))]
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(UnknownMigrateSqlServerSqlMISyncTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateSqlServerSqlMITaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateSsisTaskOutput))]
-    [ModelReaderWriterBuildable(typeof(UnknownServerConnectionInfo))]
+    [ModelReaderWriterBuildable(typeof(UnknownConnectionInfo))]
     [ModelReaderWriterBuildable(typeof(UploadOciDriverTaskInput))]
     [ModelReaderWriterBuildable(typeof(UploadOciDriverTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UploadOciDriverTaskProperties))]
@@ -359,3 +359,4 @@ namespace Azure.ResourceManager.DataMigration
     {
     }
 }
+

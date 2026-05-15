@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Defines the connection properties of a server
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationSqlConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/>, and <see cref="DataMigrationMISqlConnectionInfo"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownServerConnectionInfo))]
+    [PersistableModelProxy(typeof(UnknownConnectionInfo))]
     public abstract partial class ServerConnectionInfo : IJsonModel<ServerConnectionInfo>
     {
         /// <summary> Initializes a new instance of <see cref="ServerConnectionInfo"/> for deserialization. </summary>
@@ -154,7 +154,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DataMigrationMISqlConnectionInfo.DeserializeDataMigrationMISqlConnectionInfo(element, options);
                 }
             }
-            return UnknownServerConnectionInfo.DeserializeUnknownServerConnectionInfo(element, options);
+            return UnknownConnectionInfo.DeserializeUnknownConnectionInfo(element, options);
         }
     }
 }
+

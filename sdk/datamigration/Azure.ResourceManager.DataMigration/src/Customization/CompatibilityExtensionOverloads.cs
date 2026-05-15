@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         // Backward-compatible GA name for the usages listing API.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<DataMigrationQuota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
-            => GetAll(location.ToString(), cancellationToken);
+            => GetUsages(location.ToString(), cancellationToken);
 
         // Backward-compatible GA name for the usages listing API.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<DataMigrationQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-            => GetAllAsync(location.ToString(), cancellationToken);
+            => GetUsagesAsync(location.ToString(), cancellationToken);
     }
 
     /// <summary>Backward-compatible mockable members for GA signatures.</summary>

@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 
@@ -100,9 +101,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         // Backward-compatible constructor that preserved the blob share shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MigrateSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, DataMigrationBlobShare backupBlobShare)
-            : this(sourceConnectionInfo, targetConnectionInfo, selectedDatabases)
+            : this(sourceConnectionInfo, targetConnectionInfo, null, selectedDatabases is IList<MigrateSqlServerSqlMIDatabaseInput> databaseList ? databaseList : new List<MigrateSqlServerSqlMIDatabaseInput>(selectedDatabases), null, null, null, null, backupBlobShare, null, null, null)
         {
-            BackupBlobShare = backupBlobShare;
         }
     }
 }

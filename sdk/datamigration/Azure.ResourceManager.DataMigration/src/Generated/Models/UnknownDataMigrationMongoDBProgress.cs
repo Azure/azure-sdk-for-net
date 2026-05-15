@@ -10,9 +10,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownDataMigrationMongoDBProgress : DataMigrationMongoDBProgress
+    internal partial class UnknownMongoDBProgress : DataMigrationMongoDBProgress
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataMigrationMongoDBProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMongoDBProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataMigrationMongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, DataMigrationMongoDBProgressResultType resultType, DataMigrationMongoDBMigrationState state, long totalBytes, long totalDocuments, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType != default ? resultType : "unknown", state, totalBytes, totalDocuments, additionalBinaryDataProperties)
+        internal UnknownMongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, DataMigrationMongoDBProgressResultType resultType, DataMigrationMongoDBMigrationState state, long totalBytes, long totalDocuments, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType != default ? resultType : "unknown", state, totalBytes, totalDocuments, additionalBinaryDataProperties)
         {
         }
     }
 }
+

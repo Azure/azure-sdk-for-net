@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Base class for all types of DMS (classic) command properties. If command is not supported by current client, this object is returned.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, and <see cref="DataMigrationMongoDBRestartCommand"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataMigrationCommandProperties))]
+    [PersistableModelProxy(typeof(UnknownCommandProperties))]
     public abstract partial class DataMigrationCommandProperties : IJsonModel<DataMigrationCommandProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DataMigrationCommandProperties"/> for deserialization. </summary>
@@ -176,7 +176,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DataMigrationMongoDBRestartCommand.DeserializeDataMigrationMongoDBRestartCommand(element, options);
                 }
             }
-            return UnknownDataMigrationCommandProperties.DeserializeUnknownDataMigrationCommandProperties(element, options);
+            return UnknownCommandProperties.DeserializeUnknownCommandProperties(element, options);
         }
     }
 }
+

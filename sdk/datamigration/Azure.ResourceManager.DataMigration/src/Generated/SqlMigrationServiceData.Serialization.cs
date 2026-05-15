@@ -18,8 +18,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary> A SQL Migration Service. </summary>
-    public partial class SqlMigrationServiceData : ResourceData, IJsonModel<SqlMigrationServiceData>
+    public partial class SqlMigrationServiceData : TrackedResourceData, IJsonModel<SqlMigrationServiceData>
     {
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationServiceData"/> for deserialization. </summary>
+        internal SqlMigrationServiceData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -101,27 +106,6 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -154,9 +138,9 @@ namespace Azure.ResourceManager.DataMigration
             Core.ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SqlMigrationServiceProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
+            SqlMigrationServiceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -191,15 +175,6 @@ namespace Azure.ResourceManager.DataMigration
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataMigrationContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = SqlMigrationServiceProperties.DeserializeSqlMigrationServiceProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -223,7 +198,16 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SqlMigrationServiceProperties.DeserializeSqlMigrationServiceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -237,9 +221,9 @@ namespace Azure.ResourceManager.DataMigration
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location);
+                location,
+                properties);
         }
     }
 }
