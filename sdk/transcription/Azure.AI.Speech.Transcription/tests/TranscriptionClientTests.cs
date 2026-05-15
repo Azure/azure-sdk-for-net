@@ -86,7 +86,7 @@ namespace Azure.AI.Speech.Transcription.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Value, Is.Not.Null);
             Assert.That(result.Value.Duration, Is.GreaterThan(TimeSpan.Zero));
-            Assert.That(result.Value.PhrasesByChannel, Is.Not.Null);
+            Assert.That(result.Value.Phrases, Is.Not.Null);
         }
 
         [RecordedTest]
@@ -280,7 +280,7 @@ namespace Azure.AI.Speech.Transcription.Tests
         }
 
         [RecordedTest]
-        public async Task TranscriptionResultHasPhrasesByChannel()
+        public async Task TranscriptionResultHasPhrases()
         {
             TranscriptionClient client = CreateClient();
             string audioPath = GetAssetPath(SampleAudioFile);
@@ -292,15 +292,13 @@ namespace Azure.AI.Speech.Transcription.Tests
             ClientResult<TranscriptionResult> result = await client.TranscribeAsync(options);
             TranscriptionResult transcription = result.Value;
 
-            var phrasesByChannel = transcription.PhrasesByChannel;
-            Assert.That(phrasesByChannel, Is.Not.Null);
-            Assert.That(phrasesByChannel.Count(), Is.GreaterThan(0));
+            Assert.That(transcription.Phrases, Is.Not.Null);
+            Assert.That(transcription.Phrases.Count, Is.GreaterThan(0));
 
-            foreach (var channelPhrases in phrasesByChannel)
+            foreach (TranscribedPhrase phrase in transcription.Phrases)
             {
-                Assert.That(channelPhrases, Is.Not.Null);
-                Assert.That(channelPhrases.Phrases, Is.Not.Null);
-                Assert.That(channelPhrases.Text, Is.Not.Empty);
+                Assert.That(phrase, Is.Not.Null);
+                Assert.That(phrase.Text, Is.Not.Empty);
             }
         }
 
