@@ -398,6 +398,126 @@ export function extractRbacRoles(model: DecoratedType | undefined): RbacRole[] {
   );
 }
 
+const resourceNameMappingsKey = "resource-name-mappings";
+
+/**
+ * Extracts a map of resource-name overrides from a model's @@clientOption decorator
+ * with key "resource-name-mappings".
+ *
+ * The decorator value is expected to be a record mapping the current generated
+ * resource name (LHS) to the desired resource name (RHS), e.g.:
+ *
+ * ```tsp
+ * @@clientOption(MyModel, "resource-name-mappings", #{
+ *   GeneratedNameA: "DesiredNameA",
+ *   GeneratedNameB: "DesiredNameB",
+ * });
+ * ```
+ *
+ * This is a generic mechanism for renaming resources whose auto-derived names
+ * are unsatisfactory (e.g., the per-enum-value names produced when an expandable
+ * `{parentType}` segment is materialized into multiple concrete resources, or a
+ * single resource whose model name is not the desired SDK class name).
+ *
+ * Returns `undefined` if no mapping is configured or all entries are invalid.
+ */
+export function extractResourceNameMappings(
+  model: DecoratedType | undefined
+): Map<string, string> | undefined {
+  if (!model) return undefined;
+  const value = getClientOptions(model, resourceNameMappingsKey);
+  if (!value || typeof value !== "object") return undefined;
+  const map = new Map<string, string>();
+  for (const [from, to] of Object.entries(value as Record<string, unknown>)) {
+    if (typeof to === "string" && to.length > 0 && from.length > 0) {
+      map.set(from, to);
+    }
+  }
+  return map.size > 0 ? map : undefined;
+}
+
+/**
+ * Applies `resource-name-mappings` @@clientOption overrides to a finalized list
+ * of {@link ArmResourceSchema} entries.
+ *
+ * This is a late, name-only transformation: it runs after all resource building
+ * (expansion, parent inference, scope assignment, post-processing) is complete
+ * and only mutates `metadata.resourceName`. No downstream resource-building
+ * logic depends on `resourceName` for correctness, so this can be applied
+ * uniformly as a final step from both the legacy and resolveArmResources paths.
+ *
+ * The function also reports diagnostics for:
+ * - mapping keys that did not match any actually generated resource name
+ *   (catches typos and silent drift in name-derivation logic), and
+ * - resource-name collisions introduced by the override.
+ *
+ * @param resources The finalized resource list to rename in place.
+ * @param options.resolveModel Returns the underlying decorated TypeSpec/SDK model
+ *   for a given resource. Used to look up the `@@clientOption` decorator value.
+ *   Multiple resources sharing the same `resourceModelId` will resolve to the
+ *   same model, and the mapping on that model is applied across all of them.
+ * @param options.diagnosticReporter Optional reporter for warnings.
+ */
+export function applyResourceNameOverrides(
+  resources: ArmResourceSchema[],
+  options: {
+    resolveModel: (resource: ArmResourceSchema) => DecoratedType | undefined;
+    diagnosticReporter?: (message: string) => void;
+  }
+): void {
+  const { resolveModel, diagnosticReporter } = options;
+
+  const groupsByModel = new Map<DecoratedType, ArmResourceSchema[]>();
+  for (const r of resources) {
+    const model = resolveModel(r);
+    if (!model) continue;
+    let list = groupsByModel.get(model);
+    if (!list) {
+      list = [];
+      groupsByModel.set(model, list);
+    }
+    list.push(r);
+  }
+
+  for (const [model, group] of groupsByModel) {
+    const overrides = extractResourceNameMappings(model);
+    if (!overrides) continue;
+
+    const usedKeys = new Set<string>();
+    for (const r of group) {
+      const newName = overrides.get(r.metadata.resourceName);
+      if (newName !== undefined) {
+        usedKeys.add(r.metadata.resourceName);
+        r.metadata.resourceName = newName;
+      }
+    }
+
+    for (const key of overrides.keys()) {
+      if (!usedKeys.has(key)) {
+        diagnosticReporter?.(
+          `resource-name-mappings entry '${key}' did not match any resource generated from this model. Check for typos or generator-name drift.`
+        );
+      }
+    }
+  }
+
+  // Collision check across the full resource list after overrides are applied.
+  const nameToCount = new Map<string, number>();
+  for (const r of resources) {
+    nameToCount.set(
+      r.metadata.resourceName,
+      (nameToCount.get(r.metadata.resourceName) ?? 0) + 1
+    );
+  }
+  for (const [name, count] of nameToCount) {
+    if (count > 1) {
+      diagnosticReporter?.(
+        `Multiple resources have the same resource name '${name}' after applying resource-name-mappings overrides.`
+      );
+    }
+  }
+}
+
 const nameConstraintKey = "resource-name-constraint";
 
 /**

@@ -55,6 +55,7 @@ import {
   resolveResourceApiVersions,
   extractRbacRoles,
   extractNameConstraintOverrides,
+  applyResourceNameOverrides,
   isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
@@ -301,6 +302,19 @@ export function resolveArmResources(
       methodMap
     );
   }
+
+  // Final step: apply user-provided resource-name overrides from the
+  // @@clientOption(model, "resource-name-mappings", ...) decorator. This is a
+  // pure name-only transformation; no downstream resource-building logic
+  // depends on `resourceName`, so it is safe to run last.
+  applyResourceNameOverrides(filteredResources, {
+    resolveModel: (resource) => {
+      const resolved = schemaToResolvedResource.get(resource);
+      if (!resolved) return undefined;
+      return getClientType(sdkContext, resolved.type) as SdkModelType;
+    },
+    diagnosticReporter: reportWarning
+  });
 
   return {
     resources: filteredResources,

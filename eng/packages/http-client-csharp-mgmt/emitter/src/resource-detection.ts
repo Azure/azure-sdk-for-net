@@ -26,6 +26,7 @@ import {
   findLongestPrefixMatch,
   RequestPath,
   extractNameConstraintOverrides,
+  applyResourceNameOverrides,
   isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
 import {
@@ -538,6 +539,15 @@ export function buildArmProviderSchema(
       serviceMethods
     );
   }
+
+  // Final step: apply user-provided resource-name overrides from the
+  // @@clientOption(model, "resource-name-mappings", ...) decorator. This is a
+  // pure name-only transformation; no downstream resource-building logic
+  // depends on `resourceName`, so it is safe to run last.
+  applyResourceNameOverrides(filteredResources, {
+    resolveModel: (resource) => models.get(resource.resourceModelId),
+    diagnosticReporter: reportWarning
+  });
 
   return {
     resources: filteredResources,
