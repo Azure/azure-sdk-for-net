@@ -93,7 +93,8 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
             throw new InvalidOperationException($"Either {typeToConvert.ToFriendlyName()} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
         }
 
-        var result = _options.ReadWithChain(typeToConvert, iJsonModel, ref reader);
+        var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        var result = callOptions.ReadWithChain(typeToConvert, iJsonModel, ref reader);
         return (IJsonModel<object>?)result;
     }
 
@@ -102,6 +103,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        _options.ResolveProxy(value).Write(writer, _options);
+        var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        callOptions.ResolveProxy(value).Write(writer, callOptions);
     }
 }

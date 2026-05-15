@@ -184,7 +184,19 @@ namespace System.ClientModel.Tests.Internal.Perf
             }
 
             public override BinaryData Write(ModelReaderWriterOptions options)
-                => ModelReaderWriter.Write(this, options);
+            {
+                var model = (BenchmarkModel)options.ProxiedModel!;
+                using var stream = new System.IO.MemoryStream();
+                using var writer = new Utf8JsonWriter(stream);
+                writer.WriteStartObject();
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(model.Value);
+                writer.WritePropertyName("proxied"u8);
+                writer.WriteBooleanValue(true);
+                writer.WriteEndObject();
+                writer.Flush();
+                return BinaryData.FromBytes(stream.ToArray());
+            }
 
             public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
