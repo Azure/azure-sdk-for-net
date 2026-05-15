@@ -5166,7 +5166,940 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(position, rewrittenRequests[0].RangeStartOffset,
                 "First buffer-fill request should start exactly at the caller's Position.");
         }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ReadStreamingAsync_LayoutEndpoint_FromGetLayout()
+        {
+            // This is the customer-facing feature for Data Locality on the
+            // one-shot read path:
+            //   1. Calls GetLayoutAsync,
+            //   2. Picks the endpoint whose layout range covers the offset they
+            //      want from the returned DataLakeFileLayoutInfo items,
+            //   3. Passes it through DataLakeFileReadOptions.LayoutEndpoint to
+            //      ReadStreamingAsync.
+            // We verify the same on-the-wire effect: DataLocalityPolicy
+            // rewrites the URI host/port while preserving the original Host
+            // header for authentication.
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange - upload a file large enough that the service is willing
+            // to return locality information.
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient downloadFile = InstrumentClient(new DataLakeFileClient(
+                file.Uri,
+                Tenants.GetNewHnsSharedKeyCredentials(),
+                options));
+
+            string originalHost = file.Uri.Host;
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout items and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // read through it.
+            string layoutEndpoint = null;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in downloadFile.GetLayoutAsync())
+            {
+                DataLakeFileLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                "Service should return a layout entry covering offset 0 for a 20 MB file.");
+
+            DataLakeFileReadOptions readOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<DataLakeFileReadStreamingResult> response =
+                await downloadFile.ReadStreamingAsync(readOptions);
+
+            // Drain so we exercise the response body too.
+            using (var resultStream = new MemoryStream())
+            {
+                await response.Value.Content.CopyToAsync(resultStream);
+                Assert.AreEqual(downloadLength, resultStream.Length);
+                TestHelper.AssertSequenceEqual(
+                    new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                    resultStream.ToArray());
+            }
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot read issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one ReadStreaming request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ReadStreamingAsync_LayoutEndpoint_FromGetLayout_WithRange()
+        {
+            // Verifies two things on top of the baseline:
+            //   1. The customer endpoint-selection loop still works for a mid-file
+            //      offset (not just offset 0, which the first segment always covers).
+            //   2. The on-the-wire range header actually carries the requested offset,
+            //      so the rewritten layout-endpoint request is fetching the right bytes.
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange - upload a file large enough that the service is willing
+            // to return locality information.
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient downloadFile = InstrumentClient(new DataLakeFileClient(
+                file.Uri,
+                Tenants.GetNewHnsSharedKeyCredentials(),
+                options));
+
+            string originalHost = file.Uri.Host;
+
+            // Pick a non-zero offset that lands well into the file so the customer's
+            // segment-selection loop has to actually walk past the first range.
+            int downloadOffset = 12 * Constants.MB;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout items and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // read through it.
+            string layoutEndpoint = null;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in downloadFile.GetLayoutAsync())
+            {
+                DataLakeFileLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                $"Service should return a layout entry covering offset {downloadOffset} for a 20 MB file.");
+
+            DataLakeFileReadOptions readOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<DataLakeFileReadStreamingResult> response =
+                await downloadFile.ReadStreamingAsync(readOptions);
+
+            // Drain so we exercise the response body too. The bytes must match the
+            // requested range exactly - this catches any regression that would
+            // accidentally route a mid-file range request to a host that doesn't
+            // serve those bytes (which would manifest as a content mismatch, not
+            // an HTTP-level error).
+            using (var resultStream = new MemoryStream())
+            {
+                await response.Value.Content.CopyToAsync(resultStream);
+                Assert.AreEqual(downloadLength, resultStream.Length);
+                TestHelper.AssertSequenceEqual(
+                    new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                    resultStream.ToArray());
+            }
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot read issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one ReadStreaming request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+
+            // The on-the-wire range header must carry the requested offset.
+            // This locks in that DataLakeFileReadOptions.Range is plumbed through to the
+            // x-ms-range header on the layout-endpoint-rewritten request.
+            Assert.AreEqual(
+                downloadOffset,
+                rewritten.RangeStartOffset,
+                $"Rewritten ReadStreaming request should carry x-ms-range starting at offset {downloadOffset}.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ReadContentAsync_LayoutEndpoint_FromGetLayout()
+        {
+            // This is the customer-facing feature for Data Locality on the
+            // one-shot read-content path:
+            //   1. Calls GetLayoutAsync,
+            //   2. Picks the endpoint whose layout range covers the offset they
+            //      want from the returned DataLakeFileLayoutInfo items,
+            //   3. Passes it through DataLakeFileReadOptions.LayoutEndpoint to
+            //      ReadContentAsync.
+            // We verify the same on-the-wire effect: DataLocalityPolicy
+            // rewrites the URI host/port while preserving the original Host
+            // header for authentication.
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange - upload a file large enough that the service is willing
+            // to return locality information.
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient downloadFile = InstrumentClient(new DataLakeFileClient(
+                file.Uri,
+                Tenants.GetNewHnsSharedKeyCredentials(),
+                options));
+
+            string originalHost = file.Uri.Host;
+            int downloadOffset = 0;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout items and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // read through it.
+            string layoutEndpoint = null;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in downloadFile.GetLayoutAsync())
+            {
+                DataLakeFileLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                "Service should return a layout entry covering offset 0 for a 20 MB file.");
+
+            DataLakeFileReadOptions readOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<DataLakeFileReadResult> response =
+                await downloadFile.ReadContentAsync(readOptions);
+
+            // Verify the response body matches the requested range.
+            byte[] responseBytes = response.Value.Content.ToArray();
+            Assert.AreEqual(downloadLength, responseBytes.Length);
+            TestHelper.AssertSequenceEqual(
+                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                responseBytes);
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot read issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one ReadContent request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ReadContentAsync_LayoutEndpoint_FromGetLayout_WithRange()
+        {
+            // Verifies two things on top of the baseline:
+            //   1. The customer endpoint-selection loop still works for a mid-file
+            //      offset (not just offset 0, which the first segment always covers).
+            //   2. The on-the-wire range header actually carries the requested offset,
+            //      so the rewritten layout-endpoint request is fetching the right bytes.
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange - upload a file large enough that the service is willing
+            // to return locality information.
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Build a tracking-instrumented client so we can observe what
+            // DataLocalityPolicy did to the outgoing request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient downloadFile = InstrumentClient(new DataLakeFileClient(
+                file.Uri,
+                Tenants.GetNewHnsSharedKeyCredentials(),
+                options));
+
+            string originalHost = file.Uri.Host;
+
+            // Pick a non-zero offset that lands well into the file so the customer's
+            // segment-selection loop has to actually walk past the first range.
+            int downloadOffset = 12 * Constants.MB;
+            int downloadLength = 4 * Constants.MB;
+
+            // Act - customer code: enumerate layout items and pick the endpoint
+            // whose range covers downloadOffset, then route a single-shot
+            // read through it.
+            string layoutEndpoint = null;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in downloadFile.GetLayoutAsync())
+            {
+                DataLakeFileLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
+                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
+                if (coveringRange == null)
+                {
+                    continue;
+                }
+
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
+                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
+                if (layoutEndpoint != null)
+                {
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(
+                layoutEndpoint,
+                $"Service should return a layout entry covering offset {downloadOffset} for a 20 MB file.");
+
+            DataLakeFileReadOptions readOptions = new()
+            {
+                Range = new HttpRange(downloadOffset, downloadLength),
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            int rewrittenBefore = trackingPolicy.TrackedRequests.Count(r => r.HasHostHeader);
+            Response<DataLakeFileReadResult> response =
+                await downloadFile.ReadContentAsync(readOptions);
+
+            // Verify the response body matches the requested range. The bytes must
+            // match exactly - this catches any regression that would accidentally
+            // route a mid-file range request to a host that doesn't serve those bytes
+            // (which would manifest as a content mismatch, not an HTTP-level error).
+            byte[] responseBytes = response.Value.Content.ToArray();
+            Assert.AreEqual(downloadLength, responseBytes.Length);
+            TestHelper.AssertSequenceEqual(
+                new ArraySegment<byte>(data, downloadOffset, downloadLength).ToArray(),
+                responseBytes);
+
+            // Assert - exactly one new request was rewritten by DataLocalityPolicy
+            // (the single-shot read issued above), and that rewrite matches
+            // the endpoint the customer supplied.
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests = trackingPolicy.TrackedRequests
+                .Where(r => r.HasHostHeader)
+                .Skip(rewrittenBefore)
+                .ToList();
+
+            Assert.AreEqual(
+                1,
+                rewrittenRequests.Count,
+                "Expected exactly one ReadContent request to be rewritten by DataLocalityPolicy.");
+
+            DataLocalityTrackingPolicy.RequestInfo rewritten = rewrittenRequests[0];
+
+            Assert.Greater(
+                rewritten.RequestPort,
+                0,
+                "Request URI port should be set by DataLocalityPolicy.");
+            Assert.AreEqual(
+                originalHost,
+                rewritten.HostHeaderValue,
+                "Host header should preserve the original host for authentication.");
+            Assert.AreNotEqual(
+                rewritten.RequestHost,
+                rewritten.HostHeaderValue,
+                "Host header should differ from the rewritten URI host.");
+
+            // The on-the-wire range header must carry the requested offset.
+            // This locks in that DataLakeFileReadOptions.Range is plumbed through to the
+            // x-ms-range header on the layout-endpoint-rewritten request.
+            Assert.AreEqual(
+                downloadOffset,
+                rewritten.RangeStartOffset,
+                $"Rewritten ReadContent request should carry x-ms-range starting at offset {downloadOffset}.");
+        }
         #endregion
+
+        #region GetLayoutTests
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+                Assert.AreEqual(size, layoutInfo.FileContentLength);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.CreatedOn);
+                Assert.IsTrue(layoutInfo.IsServerEncrypted);
+                Assert.AreEqual(DataLakeLeaseStatus.Unlocked, layoutInfo.LeaseStatus);
+                Assert.AreEqual(DataLakeLeaseState.Available, layoutInfo.LeaseState);
+                Assert.NotNull(layoutInfo.Ranges);
+                Assert.NotNull(layoutInfo.Endpoints);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_EmptyFile()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            await file.FlushAsync(0);
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.Null(layoutInfo.Ranges);
+                Assert.Null(layoutInfo.Endpoints);
+                Assert.Null(layoutInfo.Marker);
+                Assert.Null(layoutInfo.NextMarker);
+                Assert.Null(layoutInfo.MaxResults);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_ReturnsRangesAndEndpoints()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.IsNotNull(layoutInfo.Ranges);
+                Assert.IsNotNull(layoutInfo.Endpoints);
+
+                // Verify ranges have valid start/end byte offsets
+                Assert.IsNotEmpty(layoutInfo.Ranges.Range);
+                foreach (DataLakeFileLayoutRangesRangeItem rangeItem in layoutInfo.Ranges.Range)
+                {
+                    Assert.GreaterOrEqual(rangeItem.Start, 0);
+                    Assert.Greater(rangeItem.End, rangeItem.Start);
+                }
+
+                // Verify ranges are contiguous and cover byte 0 through size-1
+                Assert.AreEqual(0, layoutInfo.Ranges.Range[0].Start);
+                for (int i = 1; i < layoutInfo.Ranges.Range.Count; i++)
+                {
+                    Assert.AreEqual(layoutInfo.Ranges.Range[i - 1].End + 1, layoutInfo.Ranges.Range[i].Start);
+                }
+                Assert.AreEqual(size - 1, layoutInfo.Ranges.Range[layoutInfo.Ranges.Range.Count - 1].End);
+
+                // Verify endpoints are present and each range's EndpointIndex resolves
+                Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
+                Dictionary<int, string> endpointMap = new Dictionary<int, string>();
+                foreach (DataLakeFileLayoutEndpointsEndpointItem ep in layoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                    endpointMap[ep.Index] = ep.Value;
+                }
+                foreach (DataLakeFileLayoutRangesRangeItem rangeItem in layoutInfo.Ranges.Range)
+                {
+                    Assert.IsTrue(endpointMap.ContainsKey(rangeItem.EndpointIndex),
+                        $"Range [{rangeItem.Start}-{rangeItem.End}] references EndpointIndex {rangeItem.EndpointIndex} not found in endpoints");
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_MaxPageSize()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Act
+            int maxPageSize = 1;
+            await foreach (Page<DataLakeFileLayoutInfo> page in file.GetLayoutAsync().AsPages(pageSizeHint: maxPageSize))
+            {
+                foreach (DataLakeFileLayoutInfo layoutInfo in page.Values)
+                {
+                    // Assert
+                    Assert.AreEqual(maxPageSize, layoutInfo.MaxResults);
+                    Assert.AreEqual(maxPageSize, layoutInfo.Ranges.Range.Count);
+                    Assert.AreEqual(maxPageSize, layoutInfo.Endpoints.Endpoint.Count);
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_ContinuationToken()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Act
+            Page<DataLakeFileLayoutInfo> page1 = file.GetLayoutAsync().AsPages(pageSizeHint: 1).FirstAsync().GetAwaiter().GetResult();
+            DataLakeFileLayoutInfo layoutInfo1 = page1.Values.First();
+            Assert.AreEqual(1, layoutInfo1.Ranges.Range.Count);
+
+            string continuationToken = layoutInfo1.NextMarker;
+            ETag prevETag = layoutInfo1.ETag;
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfMatch = prevETag };
+            Page<DataLakeFileLayoutInfo> page2 = file.GetLayoutAsync(conditions: conditions).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
+            DataLakeFileLayoutInfo layoutInfo2 = page2.Values.First();
+            Assert.AreEqual(continuationToken, layoutInfo2.Marker);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Ranged_ValidatesRange()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            long rangeOffset = 3 * Constants.MB;
+            long rangeCount = size - rangeOffset;
+            HttpRange range = new HttpRange(rangeOffset, rangeCount);
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(range))
+            {
+                // Assert
+                Assert.IsNotNull(layoutInfo.Ranges);
+                Assert.IsNotEmpty(layoutInfo.Ranges.Range);
+
+                // Verify range coverage is scoped to the requested range
+                Assert.AreEqual(layoutInfo.Ranges.Range[0].Start, rangeOffset);
+                long rangeEnd = rangeOffset + rangeCount - 1;
+                Assert.AreEqual(layoutInfo.Ranges.Range[layoutInfo.Ranges.Range.Count - 1].End, rangeEnd);
+
+                // Verify endpoints are returned and resolvable
+                Assert.IsNotNull(layoutInfo.Endpoints);
+                Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
+                foreach (DataLakeFileLayoutEndpointsEndpointItem ep in layoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Error()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetLayoutAsync().ToListAsync(),
+                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Conditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                // Arrange
+                DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+                long size = 5 * Constants.KB;
+                byte[] data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadAsync(stream);
+                }
+
+                parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
+                parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
+                    conditions: conditions))
+                {
+                    // Assert
+                    Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                // Arrange
+                DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+                long size = 5 * Constants.KB;
+                byte[] data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadAsync(stream);
+                }
+
+                parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                // Act
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
+                            conditions: conditions))
+                        {
+                            // intentionally empty
+                        }
+                    });
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Lease()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+            await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
+                conditions: conditions))
+            {
+                // Assert
+                Assert.AreEqual(DataLakeLeaseStatus.Locked, layoutInfo.LeaseStatus);
+                Assert.AreEqual(DataLakeLeaseState.Leased, layoutInfo.LeaseState);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_LeaseFailed()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetLayoutAsync(conditions: conditions).ToListAsync(),
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Metadata()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            IDictionary<string, string> metadata = BuildMetadata();
+            DataLakeFileUploadOptions uploadOptions = new DataLakeFileUploadOptions
+            {
+                Metadata = metadata
+            };
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream, uploadOptions);
+            }
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.CreatedOn);
+                Assert.AreEqual(size, layoutInfo.FileContentLength);
+                Assert.IsTrue(layoutInfo.IsServerEncrypted);
+                Assert.AreEqual(DataLakeLeaseStatus.Unlocked, layoutInfo.LeaseStatus);
+                Assert.AreEqual(DataLakeLeaseState.Available, layoutInfo.LeaseState);
+                Assert.IsNotNull(layoutInfo.Metadata);
+                AssertMetadataEquality(metadata, layoutInfo.Metadata, isDirectory: false);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_FileSAS()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            DataLakeFileClient sasFile = InstrumentClient(
+                GetServiceClient_DataLakeServiceSas_FileSystem(fileSystemName)
+                    .GetFileSystemClient(fileSystemName)
+                    .GetFileClient(fileName));
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in sasFile.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+            }
+        }
+        #endregion GetLayoutTests
 
         /// <summary>
         /// Pipeline policy that records the host/port and Host header of each

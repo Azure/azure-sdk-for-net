@@ -6217,6 +6217,85 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion OpenWrite
 
+        #region GetLayout
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the file.
+        /// In addition, it may optionally return the layout of the file.
+        /// </summary>
+        /// <param name="range">
+        /// If provided, returns metadata only for the specified range.
+        /// If not provided, returns the metadata for the entire file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the file's properties and layout.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{DataLakeFileLayoutInfo}"/> describing the
+        /// file's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Pageable<DataLakeFileLayoutInfo> GetLayout(
+            HttpRange range = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                _blockBlobClient,
+                range: range,
+                conditions: conditions.ToBlobRequestConditions())
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the file.
+        /// In addition, it may optionally return the layout of the file.
+        /// </summary>
+        /// <param name="range">
+        /// If provided, returns metadata only for the specified range.
+        /// If not provided, returns the metadata for the entire file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the file's properties and layout.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{DataLakeFileLayoutInfo}"/> describing the
+        /// file's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<DataLakeFileLayoutInfo> GetLayoutAsync(
+            HttpRange range = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                _blockBlobClient,
+                range: range,
+                conditions: conditions.ToBlobRequestConditions())
+            .ToAsyncCollection(cancellationToken);
+
+        #endregion GetLayout
+
         #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,

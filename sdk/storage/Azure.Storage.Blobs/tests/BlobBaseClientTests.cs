@@ -9446,7 +9446,7 @@ namespace Azure.Storage.Blobs.Test
             // This is the customer-facing feature for Data Locality:
             //   1. Calls GetLayoutAsync,
             //   2. Picks the endpoint whose layout range covers the offset they
-            //      want from the returned BlobLayoutInfo pages,
+            //      want from the returned BlobLayoutInfo items,
             //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
             //      DownloadStreamingAsync.
             // We verify the same on-the-wire effect: DataLocalityPolicy
@@ -9485,20 +9485,20 @@ namespace Azure.Storage.Blobs.Test
             int downloadOffset = 0;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout pages and pick the endpoint
+            // Act - customer code: enumerate layout items and pick the endpoint
             // whose range covers downloadOffset, then route a single-shot
             // download through it.
             string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
             {
-                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
                     ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
                 if (coveringRange == null)
                 {
                     continue;
                 }
 
-                layoutEndpoint = page.Endpoints?.Endpoint
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
                     ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
                 if (layoutEndpoint != null)
                 {
@@ -9607,20 +9607,20 @@ namespace Azure.Storage.Blobs.Test
             int downloadOffset = 12 * Constants.MB;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout pages and pick the endpoint
+            // Act - customer code: enumerate layout items and pick the endpoint
             // whose range covers downloadOffset, then route a single-shot
             // download through it.
             string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
             {
-                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
                     ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
                 if (coveringRange == null)
                 {
                     continue;
                 }
 
-                layoutEndpoint = page.Endpoints?.Endpoint
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
                     ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
                 if (layoutEndpoint != null)
                 {
@@ -9701,7 +9701,7 @@ namespace Azure.Storage.Blobs.Test
             // This is the customer-facing feature for Data Locality:
             //   1. Calls GetLayoutAsync,
             //   2. Picks the endpoint whose layout range covers the offset they
-            //      want from the returned BlobLayoutInfo pages,
+            //      want from the returned BlobLayoutInfo items,
             //   3. Passes it through BlobDownloadOptions.LayoutEndpoint to
             //      DownloadContentAsync.
             // We verify the same on-the-wire effect: DataLocalityPolicy
@@ -9740,20 +9740,20 @@ namespace Azure.Storage.Blobs.Test
             int downloadOffset = 0;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout pages and pick the endpoint
+            // Act - customer code: enumerate layout items and pick the endpoint
             // whose range covers downloadOffset, then route a single-shot
             // download through it.
             string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
             {
-                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
                     ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
                 if (coveringRange == null)
                 {
                     continue;
                 }
 
-                layoutEndpoint = page.Endpoints?.Endpoint
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
                     ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
                 if (layoutEndpoint != null)
                 {
@@ -9859,20 +9859,20 @@ namespace Azure.Storage.Blobs.Test
             int downloadOffset = 12 * Constants.MB;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout pages and pick the endpoint
+            // Act - customer code: enumerate layout items and pick the endpoint
             // whose range covers downloadOffset, then route a single-shot
             // download through it.
             string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo page in downloadBlob.GetLayoutAsync())
+            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
             {
-                BlobLayoutRangesRangeItem coveringRange = page.Ranges?.Range
+                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
                     ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
                 if (coveringRange == null)
                 {
                     continue;
                 }
 
-                layoutEndpoint = page.Endpoints?.Endpoint
+                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
                     ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
                 if (layoutEndpoint != null)
                 {
