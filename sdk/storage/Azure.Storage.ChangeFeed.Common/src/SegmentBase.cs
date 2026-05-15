@@ -68,7 +68,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="async">Whether to use async APIs.</param>
         /// <param name="pageSize">Maximum number of events to return.</param>
         /// <param name="startTime">Optional inclusive start time for event-level filtering.</param>
-        /// <param name="endTime">Optional exclusive end time for event-level filtering.</param>
+        /// <param name="endTime">Optional inclusive end time for event-level filtering.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A list of events read from the segment's shards.</returns>
         public virtual async Task<List<TEvent>> GetPage(
@@ -107,7 +107,7 @@ namespace Azure.Storage.ChangeFeed.Common
                     if (_finishedShards.Count == _shards.Count) break;
                     continue;
                 }
-                if (endTime.HasValue && changeFeedEvent.EventTime >= endTime.Value)
+                if (endTime.HasValue && changeFeedEvent.EventTime > endTime.Value)
                 {
                     if (_finishedShards.Count == _shards.Count) break;
                     continue;

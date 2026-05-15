@@ -6,6 +6,7 @@
 - Added `BlobChangeFeedClientOptions.IncludeNonFinalizedEvents`. When enabled, the change feed reader returns events past the finalized watermark; pages produced in this mode do not carry a continuation token, and `GetChanges(string)` / `GetChangesAsync(string)` will throw if a continuation token is supplied.
 
 ### Breaking Changes
+- `BlobChangeFeedClient.GetChanges(start, end)` and `GetChangesAsync(start, end)` now treat `end` as **inclusive**. Events whose `EventTime` equals `end` are returned. Previously the upper bound was exclusive.
 
 ### Bugs Fixed
 
