@@ -122,8 +122,7 @@ public class SseKeepAliveTests
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddInvocationsServer();
-        builder.Services.AddSingleton(handler);
-        builder.Services.AddScoped<InvocationHandler>(sp => sp.GetRequiredService<InvocationHandler>());
+        builder.Services.AddSingleton<InvocationHandler>(handler);
 
         var app = builder.Build();
         app.MapInvocationsServer();
