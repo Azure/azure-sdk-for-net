@@ -211,7 +211,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange - 100 byte blob with data locality enabled and download hint present
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: DownloadHint.Layout);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
@@ -325,7 +325,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange - 100 byte blob with NO download hint
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: null);
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: default);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange - 100 byte blob with download hint present but feature disabled
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: DownloadHint.Layout);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
@@ -428,7 +428,7 @@ namespace Azure.Storage.Blobs.Test
             // null-Segments value for the full TTL, and the download should
             // still complete successfully (chunks fall back to the original endpoint).
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: DownloadHint.Layout);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
@@ -503,7 +503,7 @@ namespace Azure.Storage.Blobs.Test
             // an empty array, the cache should store it for the full TTL, and the
             // download should complete with chunks falling back to the original endpoint.
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: DownloadHint.Layout);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
@@ -565,7 +565,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange - 100 byte blob; GetLayout fails with a non-soft status.
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: DownloadHint.Layout);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
@@ -629,7 +629,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange - 100 byte blob; GetLayout returns segments split across 2 pages.
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: DownloadHint.Layout);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
@@ -726,7 +726,7 @@ namespace Azure.Storage.Blobs.Test
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            MockDataSource dataSource = new MockDataSource(100, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(100, downloadHint: DownloadHint.Layout);
             var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
             SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
 
@@ -801,7 +801,7 @@ namespace Azure.Storage.Blobs.Test
             // enabled and a download hint present, no chunked downloads occur, so
             // GetLayout must not be called and no AutoRefreshingCache should be built.
             MemoryStream stream = new MemoryStream();
-            MockDataSource dataSource = new MockDataSource(10, downloadHint: "layout");
+            MockDataSource dataSource = new MockDataSource(10, downloadHint: DownloadHint.Layout);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
@@ -1074,11 +1074,11 @@ namespace Azure.Storage.Blobs.Test
         private class MockDataSource
         {
             private readonly int _length;
-            private readonly string _downloadHint;
+            private readonly DownloadHint _downloadHint;
 
             public List<(HttpRange Range, BlobRequestConditions Conditions)> Requests { get; } = new List<(HttpRange Range, BlobRequestConditions Conditions)>();
 
-            public MockDataSource(int length, string downloadHint = null)
+            public MockDataSource(int length, DownloadHint downloadHint = default)
             {
                 _length = length;
                 _downloadHint = downloadHint;

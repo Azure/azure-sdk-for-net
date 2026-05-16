@@ -287,8 +287,7 @@ namespace Azure.Storage.Blobs
                 // fetches the blob layout so subsequent range requests can be
                 // routed to optimal endpoints.
                 if (_enableDataLocality
-                    && string.Equals(
-                        initialResponse.Value.Details.DownloadHint, Constants.Blob.DownloadHintLayout))
+                    && initialResponse.Value.Details.DownloadHint == DownloadHint.Layout)
                 {
                     layoutCache = new AutoRefreshingCache<BlobLayoutSegmentCacheValue>(
                         acquire: async (acquireAsync, ct) =>

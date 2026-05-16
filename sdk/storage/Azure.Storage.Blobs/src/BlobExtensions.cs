@@ -1082,7 +1082,7 @@ namespace Azure.Storage.Blobs
                     ImmutabilityPolicy = immutabilityPolicy,
                     HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
                     CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
-                    DownloadHint = response.Headers.DownloadHint
+                    DownloadHint = response.Headers.DownloadHint.GetValueOrDefault()
                 }
             };
         }

@@ -218,6 +218,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Indicates the download hint for the blob.
         /// </summary>
-        public string DownloadHint { get; internal set; }
+        public DownloadHint DownloadHint { get; internal set; }
     }
 }
