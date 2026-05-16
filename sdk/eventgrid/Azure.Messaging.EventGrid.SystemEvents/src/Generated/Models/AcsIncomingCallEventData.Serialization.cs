@@ -106,6 +106,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("onBehalfOfCallee"u8);
                 writer.WriteObjectValue(OnBehalfOfCallee, options);
             }
+            if (Optional.IsDefined(OnBehalfOf))
+            {
+                writer.WritePropertyName("onBehalfOf"u8);
+                writer.WriteObjectValue(OnBehalfOf, options);
+            }
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
@@ -160,6 +165,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             AcsIncomingCallCustomContext customContext = default;
             string incomingCallContext = default;
             CommunicationIdentifierModel onBehalfOfCallee = default;
+            CommunicationIdentifierModel onBehalfOf = default;
             string correlationId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -203,6 +209,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     onBehalfOfCallee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("onBehalfOf"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onBehalfOf = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("correlationId"u8))
                 {
                     correlationId = prop.Value.GetString();
@@ -221,6 +236,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 customContext,
                 incomingCallContext,
                 onBehalfOfCallee,
+                onBehalfOf,
                 correlationId,
                 additionalBinaryDataProperties);
         }
