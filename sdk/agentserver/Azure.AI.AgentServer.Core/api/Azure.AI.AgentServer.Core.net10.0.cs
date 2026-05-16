@@ -82,4 +82,13 @@ namespace Azure.AI.AgentServer.Core
         public System.Collections.Generic.IReadOnlyList<string> GetSegments() { throw null; }
         public void Register(string identity) { }
     }
+    public sealed partial class SseKeepAliveSession : System.IAsyncDisposable
+    {
+        internal SseKeepAliveSession() { }
+        public bool IsKeepAliveActive { get { throw null; } }
+        public System.IO.Stream Stream { get { throw null; } }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public void EnableKeepAlive(System.TimeSpan interval) { }
+        public static Azure.AI.AgentServer.Core.SseKeepAliveSession Start(System.IO.Stream output, System.TimeSpan interval, Microsoft.Extensions.Logging.ILogger logger, string contextName) { throw null; }
+    }
 }
