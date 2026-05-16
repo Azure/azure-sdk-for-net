@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -576,10 +577,11 @@ namespace Azure.Messaging.EventGrid
         /// <param name="callerDisplayName"> Display name of caller. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
-        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
+        /// <param name="onBehalfOfCallee"> The communication identifier of the callee for the "on behalf of" call. </param>
+        /// <param name="onBehalfOf"> The communication identifier on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
-        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier = default, CommunicationIdentifierModel fromCommunicationIdentifier = default, string serverCallId = default, string callerDisplayName = default, AcsIncomingCallCustomContext customContext = default, string incomingCallContext = default, CommunicationIdentifierModel onBehalfOfCallee = default, string correlationId = default)
+        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier = default, CommunicationIdentifierModel fromCommunicationIdentifier = default, string serverCallId = default, string callerDisplayName = default, AcsIncomingCallCustomContext customContext = default, string incomingCallContext = default, CommunicationIdentifierModel onBehalfOfCallee = default, CommunicationIdentifierModel onBehalfOf = default, string correlationId = default)
         {
             return new AcsIncomingCallEventData(
                 toCommunicationIdentifier,
@@ -589,6 +591,7 @@ namespace Azure.Messaging.EventGrid
                 customContext,
                 incomingCallContext,
                 onBehalfOfCallee,
+                onBehalfOf,
                 correlationId,
                 additionalBinaryDataProperties: null);
         }
@@ -901,11 +904,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEventBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatMessageEventBaseProperties AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default)
+        public static AcsChatMessageEventBaseProperties AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default)
         {
             return new AcsChatMessageEventBaseProperties(
                 recipientCommunicationIdentifier,
@@ -915,6 +919,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version);
@@ -927,13 +932,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -945,6 +951,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -958,11 +965,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEventInThreadBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default)
+        public static AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default)
         {
             return new AcsChatMessageEventInThreadBaseProperties(
                 transactionId,
@@ -971,6 +979,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version);
@@ -982,13 +991,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -999,6 +1009,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -1012,13 +1023,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1029,6 +1041,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -1042,13 +1055,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1059,6 +1073,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -1073,6 +1088,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
@@ -1080,7 +1096,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1092,6 +1108,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -1106,6 +1123,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
@@ -1113,7 +1131,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1124,6 +1142,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -1139,12 +1158,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="deleteTime"> The time at which the message was deleted. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageDeletedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageDeletedEventData AcsChatMessageDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, DateTimeOffset? deleteTime = default)
+        public static AcsChatMessageDeletedEventData AcsChatMessageDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, DateTimeOffset? deleteTime = default)
         {
             return new AcsChatMessageDeletedEventData(
                 recipientCommunicationIdentifier,
@@ -1154,6 +1174,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -1166,12 +1187,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="deleteTime"> The time at which the message was deleted. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageDeletedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, DateTimeOffset? deleteTime = default)
+        public static AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, long? sequenceId = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, DateTimeOffset? deleteTime = default)
         {
             return new AcsChatMessageDeletedInThreadEventData(
                 transactionId,
@@ -1180,6 +1202,7 @@ namespace Azure.Messaging.EventGrid
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
@@ -1226,8 +1249,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <param name="retentionPolicy"> The retention policy for the chat. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default, AcsChatRetentionPolicy retentionPolicy = default)
         {
             properties ??= new ChangeTrackingDictionary<string, object>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1243,7 +1267,17 @@ namespace Azure.Messaging.EventGrid
                 createdByCommunicationIdentifier,
                 properties,
                 metadata,
-                participants.ToList());
+                participants.ToList(),
+                retentionPolicy);
+        }
+
+        /// <summary> Schema of common properties of all chat retention policy. </summary>
+        /// <param name="kind"> The chat retention policy kind. </param>
+        /// <param name="deleteThreadAfterDays"> The delete thread after number of days. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatRetentionPolicy"/> instance for mocking. </returns>
+        public static AcsChatRetentionPolicy AcsChatRetentionPolicy(AcsChatRetentionPolicyKind? kind = default, int? deleteThreadAfterDays = default)
+        {
+            return new AcsChatRetentionPolicy(kind, deleteThreadAfterDays, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of common properties of all chat thread events. </summary>
@@ -1266,8 +1300,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <param name="retentionPolicy"> The retention policy for the chat. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default, AcsChatRetentionPolicy retentionPolicy = default)
         {
             properties ??= new ChangeTrackingDictionary<string, object>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1282,7 +1317,8 @@ namespace Azure.Messaging.EventGrid
                 createdByCommunicationIdentifier,
                 properties,
                 metadata,
-                participants.ToList());
+                participants.ToList(),
+                retentionPolicy);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadWithUserDeleted event. </summary>
@@ -1314,8 +1350,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the thread. </param>
         /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
+        /// <param name="reason"> The chat thread deletion reason. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadDeletedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel deletedByCommunicationIdentifier = default, DateTimeOffset? deleteTime = default)
+        public static AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel deletedByCommunicationIdentifier = default, DateTimeOffset? deleteTime = default, AcsChatThreadDeletedReasonType? reason = default)
         {
             return new AcsChatThreadDeletedEventData(
                 transactionId,
@@ -1324,7 +1361,8 @@ namespace Azure.Messaging.EventGrid
                 createTime,
                 version,
                 deletedByCommunicationIdentifier,
-                deleteTime);
+                deleteTime,
+                reason);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser event. </summary>
@@ -1337,8 +1375,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
+        /// <param name="retentionPolicy"> The retention policy for the chat. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, string> metadata = default, IReadOnlyDictionary<string, object> properties = default)
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, string> metadata = default, IReadOnlyDictionary<string, object> properties = default, AcsChatRetentionPolicy retentionPolicy = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             properties ??= new ChangeTrackingDictionary<string, object>();
@@ -1353,7 +1392,8 @@ namespace Azure.Messaging.EventGrid
                 editedByCommunicationIdentifier,
                 editTime,
                 metadata,
-                properties);
+                properties,
+                retentionPolicy);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadPropertiesUpdated event. </summary>
@@ -1365,8 +1405,9 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
+        /// <param name="retentionPolicy"> The retention policy for the chat. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default, AcsChatRetentionPolicy retentionPolicy = default)
         {
             properties ??= new ChangeTrackingDictionary<string, object>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1380,7 +1421,8 @@ namespace Azure.Messaging.EventGrid
                 editedByCommunicationIdentifier,
                 editTime,
                 properties,
-                metadata);
+                metadata,
+                retentionPolicy);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantAddedToThreadWithUser event. </summary>
@@ -4525,6 +4567,282 @@ namespace Azure.Messaging.EventGrid
         public static ResourceNotificationsContainerServiceEventResourcesScheduledEventData ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default, string apiVersion = default)
         {
             return new ResourceNotificationsContainerServiceEventResourcesScheduledEventData(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallEventData"/>. </summary>
+        /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
+        /// <param name="serverCallId"> The Id of the server call. </param>
+        /// <param name="callerDisplayName"> Display name of caller. </param>
+        /// <param name="customContext"> Custom Context of Incoming Call. </param>
+        /// <param name="incomingCallContext"> Signed incoming call context. </param>
+        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
+        /// <param name="correlationId"> CorrelationId (CallId). </param>
+        /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
+        {
+            return AcsIncomingCallEventData(toCommunicationIdentifier, fromCommunicationIdentifier, serverCallId, callerDisplayName, customContext, incomingCallContext, onBehalfOfCallee, onBehalfOf: default, correlationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEventBaseProperties"/>. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEventBaseProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageEventBaseProperties AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version)
+        {
+            return AcsChatMessageEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedEventData"/>. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata)
+        {
+            return AcsChatMessageReceivedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, messageBody, metadata);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEventInThreadBaseProperties"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEventInThreadBaseProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version)
+        {
+            return AcsChatMessageEventInThreadBaseProperties(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata)
+        {
+            return AcsChatAzureBotCommandReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, messageBody, metadata);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata)
+        {
+            return AcsChatTypingIndicatorReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, messageBody, metadata);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata)
+        {
+            return AcsChatMessageReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, messageBody, metadata);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEditedEventData"/>. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <param name="editTime"> The time at which the message was edited. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata, DateTimeOffset? editTime)
+        {
+            return AcsChatMessageEditedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, messageBody, metadata, editTime);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <param name="editTime"> The time at which the message was edited. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata, DateTimeOffset? editTime)
+        {
+            return AcsChatMessageEditedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, messageBody, metadata, editTime);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageDeletedEventData"/>. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="deleteTime"> The time at which the message was deleted. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageDeletedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageDeletedEventData AcsChatMessageDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, DateTimeOffset? deleteTime)
+        {
+            return AcsChatMessageDeletedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, deleteTime);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageDeletedInThreadEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="deleteTime"> The time at which the message was deleted. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageDeletedInThreadEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, DateTimeOffset? deleteTime)
+        {
+            return AcsChatMessageDeletedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId: default, composeTime, @type, version, deleteTime);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/>. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
+        /// <param name="properties"> The thread properties. </param>
+        /// <param name="metadata"> The thread metadata. </param>
+        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IEnumerable<AcsChatThreadParticipantProperties> participants)
+        {
+            return AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, metadata, participants, retentionPolicy: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadCreatedEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
+        /// <param name="properties"> The thread properties. </param>
+        /// <param name="metadata"> The thread metadata. </param>
+        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IEnumerable<AcsChatThreadParticipantProperties> participants)
+        {
+            return AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, metadata, participants, retentionPolicy: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadDeletedEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
+        /// <param name="deleteTime"> The deletion time of the thread. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadDeletedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel deletedByCommunicationIdentifier, DateTimeOffset? deleteTime)
+        {
+            return AcsChatThreadDeletedEventData(transactionId, threadId, createTime, version, deletedByCommunicationIdentifier, deleteTime, reason: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/>. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
+        /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
+        /// <param name="metadata"> The thread metadata. </param>
+        /// <param name="properties"> The updated thread properties. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, object> properties)
+        {
+            return AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, metadata, properties, retentionPolicy: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
+        /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
+        /// <param name="properties"> The updated thread properties. </param>
+        /// <param name="metadata"> The thread metadata. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata)
+        {
+            return AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties, metadata, retentionPolicy: default);
         }
     }
 }

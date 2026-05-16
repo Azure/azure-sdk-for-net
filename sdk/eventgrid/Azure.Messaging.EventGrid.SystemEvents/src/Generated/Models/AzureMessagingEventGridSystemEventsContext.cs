@@ -39,6 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [ModelReaderWriterBuildable(typeof(AcsChatParticipantAddedToThreadWithUserEventData))]
     [ModelReaderWriterBuildable(typeof(AcsChatParticipantRemovedFromThreadEventData))]
     [ModelReaderWriterBuildable(typeof(AcsChatParticipantRemovedFromThreadWithUserEventData))]
+    [ModelReaderWriterBuildable(typeof(AcsChatRetentionPolicy))]
     [ModelReaderWriterBuildable(typeof(AcsChatThreadCreatedEventData))]
     [ModelReaderWriterBuildable(typeof(AcsChatThreadCreatedWithUserEventData))]
     [ModelReaderWriterBuildable(typeof(AcsChatThreadDeletedEventData))]
