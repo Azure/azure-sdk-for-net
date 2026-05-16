@@ -204,11 +204,11 @@ public class AgentsTestBase : ProjectsClientTestBase
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private readonly List<string> _conversationIDs = [];
-    private readonly List<string> _memoryStoreNames = [];
     private ProjectConversationsClient _conversations = null;
-    private AIProjectMemoryStores _stores = null;
+    protected readonly string MEMORY_STORE_NAME = "test-memory-store";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly string TOOLBOX_NAME = "ToolBoxForTest";
+    protected readonly int PAGE_SIZE = 3;
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -296,12 +296,14 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: MEMORY_STORE_NAME);
         }
         catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
-        memoryDefinitions.Options = new(true, true);
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
+        {
+            Options = new(true, true)
+        };
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
         int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
         MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
@@ -313,7 +315,6 @@ public class AgentsTestBase : ProjectsClientTestBase
             },
             pollingInterval: pollingInterval);
         Assert.That(updateResult.Status, Is.EqualTo(MemoryStoreUpdateStatus.Completed), $"Unexpected memory store update status: {updateResult.Status}, error details: {updateResult.ErrorDetails}.");
-        _memoryStoreNames.Add(store.Name);
         return store;
     }
 
@@ -632,20 +633,21 @@ public class AgentsTestBase : ProjectsClientTestBase
                 }
             }
         }
-        if (_stores != null)
+        List<string> memoryStores = await projectClient.MemoryStores.GetMemoryStoresAsync()
+            .Select(x => x.Name)
+            .Where(x => x.StartsWith(MEMORY_STORE_NAME))
+            .ToListAsync();
+        foreach (string name in memoryStores)
         {
-            foreach (string name in _memoryStoreNames)
+            try
             {
-                try
-                {
-                    await _stores.DeleteMemoryStoreAsync(name: name);
-                }
-                catch (RequestFailedException ex)
-                {
-                    // Throw only if it is the error other then "Not found."
-                    if (ex.Status != 404)
-                        throw;
-                }
+                await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: name);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Throw only if it is the error other then "Not found."
+                if (ex.Status != 404)
+                    throw;
             }
         }
         // Remove Vector stores
