@@ -102,6 +102,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return methodProvider;
         }
 
+        // Exposes the signature so an aggregating provider can validate compatibility across candidates.
+        internal MethodSignature Signature => _signature;
+
+        // Exposes the per-candidate body statements so an aggregating provider can compose multiple
+        // candidates into a single dispatching method.
+        internal MethodBodyStatement[] BodyStatements => _bodyStatements;
+
+        // Exposes the underlying ResourceMethod metadata for aggregated XML doc generation.
+        internal InputPagingServiceMethod Method => _method;
+
+        // Exposes the convenience method description for aggregated XML doc generation.
+        internal MethodProvider ConvenienceMethod => _convenienceMethod;
+
         protected MethodSignature CreateSignature()
         {
             var returnType = _isAsync

@@ -89,11 +89,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(SaasResourceId))
-            {
-                writer.WritePropertyName("saasResourceId"u8);
-                writer.WriteStringValue(SaasResourceId);
-            }
             writer.WritePropertyName("offerDetails"u8);
             writer.WriteObjectValue(OfferDetails, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -140,7 +135,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             string subscriptionId = default;
             MarketplaceSubscriptionStatus? subscriptionStatus = default;
-            string saasResourceId = default;
             OfferDetails offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,11 +153,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     subscriptionStatus = new MarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("saasResourceId"u8))
-                {
-                    saasResourceId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("offerDetails"u8))
                 {
                     offerDetails = OfferDetails.DeserializeOfferDetails(prop.Value, options);
@@ -174,7 +163,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, additionalBinaryDataProperties);
+            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties);
         }
     }
 }

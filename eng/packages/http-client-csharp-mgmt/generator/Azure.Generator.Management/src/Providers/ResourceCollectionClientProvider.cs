@@ -34,6 +34,7 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<FieldProvider> _extraFields;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
+        private readonly ListOperationSet? _getAllSet;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
 
@@ -62,10 +63,104 @@ namespace Azure.Generator.Management.Providers
 
             InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
             _operationContext = InitializeContext(this, resourceMetadata, _getAll);
+            _getAllSet = BuildListOperationSet(resourceMethods);
 
             // this depends on _getAll being initialized
             (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
+
+        private ListOperationSet? BuildListOperationSet(IReadOnlyList<ResourceMethod> resourceMethods)
+        {
+            var listMethods = resourceMethods.Where(m => m.Kind == ResourceOperationKind.List).ToList();
+            if (listMethods.Count <= 1)
+            {
+                // Single (or zero) list operation — use the existing single-op path.
+                return null;
+            }
+
+            var candidates = new List<ListCandidate>();
+            ListCandidate? fallback = null;
+            CSharpType? sharedItemType = null;
+
+            foreach (var method in listMethods)
+            {
+                if (method.InputMethod is not InputPagingServiceMethod paging)
+                {
+                    // Aggregation only supports paged list operations. Fall back to single-op.
+                    return null;
+                }
+
+                var convenience = _clientInfos[method.InputClient]
+                    .RestClientProvider.GetConvenienceMethodByOperation(method.InputMethod.Operation, isAsync: true);
+                if (convenience.Signature.ReturnType is not { Arguments.Count: > 0 } returnType)
+                {
+                    return null;
+                }
+                var itemType = returnType.Arguments[0];
+                if (sharedItemType is null)
+                {
+                    sharedItemType = itemType;
+                }
+                else if (!sharedItemType.Equals(itemType))
+                {
+                    // Heterogeneous item types across list operations — disable aggregation.
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        code: "aggregated-getall-incompatible-items",
+                        message: $"List operations for resource '{_resource.ResourceName}' have incompatible item types; disabling aggregated GetAll.",
+                        targetCrossLanguageDefinitionId: method.InputMethod.CrossLanguageDefinitionId);
+                    return null;
+                }
+
+                var operationContext = OperationContext.Create(method.Scope.ScopeIdPattern);
+                var restClientInfo = _clientInfos[method.InputClient];
+
+                var dispatchType = MapScopeKindToDispatchType(method.Scope.Kind);
+                if (method.Scope.Kind == ResourceScope.Extension && dispatchType is null)
+                {
+                    // Generic-extension fallback. Only one allowed.
+                    if (fallback is not null)
+                    {
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                            code: "aggregated-getall-multiple-fallbacks",
+                            message: $"Resource '{_resource.ResourceName}' has multiple generic-extension list operations; disabling aggregated GetAll.",
+                            targetCrossLanguageDefinitionId: method.InputMethod.CrossLanguageDefinitionId);
+                        return null;
+                    }
+                    fallback = new ListCandidate(method, operationContext, restClientInfo, DispatchResourceType: null);
+                }
+                else if (dispatchType is null)
+                {
+                    // Unsupported scope (e.g. Tenant) — disable aggregation for now.
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        code: "aggregated-getall-unsupported-scope",
+                        message: $"Resource '{_resource.ResourceName}' has a list operation with scope kind '{method.Scope.Kind}' which is not yet supported by aggregated GetAll; disabling aggregation.",
+                        targetCrossLanguageDefinitionId: method.InputMethod.CrossLanguageDefinitionId);
+                    return null;
+                }
+                else
+                {
+                    candidates.Add(new ListCandidate(method, operationContext, restClientInfo, dispatchType));
+                }
+            }
+
+            if (sharedItemType is null)
+            {
+                return null;
+            }
+
+            // Sort candidates so that more specific dispatch types come first; ensure stable order.
+            candidates.Sort((a, b) => string.Compare(a.DispatchResourceType!.Name, b.DispatchResourceType!.Name, StringComparison.Ordinal));
+
+            return new ListOperationSet(candidates, fallback, sharedItemType);
+        }
+
+        private static CSharpType? MapScopeKindToDispatchType(ResourceScope kind) => kind switch
+        {
+            ResourceScope.Subscription => (CSharpType)typeof(SubscriptionResource),
+            ResourceScope.ResourceGroup => typeof(ResourceGroupResource),
+            ResourceScope.ManagementGroup => typeof(ManagementGroupResource),
+            _ => null,
+        };
 
         private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, ArmResourceMetadata resourceMetadata, ResourceMethod? getAll)
         {
@@ -345,11 +440,29 @@ namespace Azure.Generator.Management.Providers
                 return [];
             }
 
+            if (_getAllSet is { RequiresAggregation: true })
+            {
+                _getAllSyncMethodProvider = BuildAggregatedGetAllMethod(_getAllSet, isAsync: false);
+                var getAllAsync = BuildAggregatedGetAllMethod(_getAllSet, isAsync: true);
+                return [getAllAsync, _getAllSyncMethodProvider];
+            }
+
             // implement paging method GetAll
             _getAllSyncMethodProvider = BuildGetAllMethod(_getAll, false);
-            var getAllAsync = BuildGetAllMethod(_getAll, true);
+            var getAllAsyncSingle = BuildGetAllMethod(_getAll, true);
 
-            return [getAllAsync, _getAllSyncMethodProvider];
+            return [getAllAsyncSingle, _getAllSyncMethodProvider];
+        }
+
+        private MethodProvider BuildAggregatedGetAllMethod(ListOperationSet set, bool isAsync)
+        {
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
+            return new AggregatedPageableOperationMethodProvider(
+                this,
+                set,
+                isAsync,
+                methodName!,
+                _resource);
         }
 
         private MethodProvider[] BuildEnumeratorMethods()
