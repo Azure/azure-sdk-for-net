@@ -272,12 +272,35 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
-        /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, OfferDetails offerDetails = default)
+        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, OfferDetails offerDetails = default)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, additionalBinaryDataProperties: null);
+            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="renewalMode"> Subscription renewal mode. </param>
+        /// <param name="endOn"> Current subscription end date and time. </param>
+        /// <returns> A new <see cref="Models.OfferDetails"/> instance for mocking. </returns>
+        public static OfferDetails OfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default, RenewalMode? renewalMode = default, DateTimeOffset? endOn = default)
+        {
+            return new OfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                renewalMode,
+                endOn,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -1785,6 +1808,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="multiScopeWidgetDisplayName"> Display name. </param>
+        /// <returns> A new <see cref="Tests.MultiScopeWidgetData"/> instance for mocking. </returns>
+        public static MultiScopeWidgetData MultiScopeWidgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string multiScopeWidgetDisplayName = default)
+        {
+            return new MultiScopeWidgetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                multiScopeWidgetDisplayName is null ? default : new MultiScopeWidgetProperties(multiScopeWidgetDisplayName, null));
         }
 
         /// <summary> The ZooRecommendation. </summary>

@@ -55,6 +55,15 @@ namespace Azure.Generator.Management.Utilities
                 bool hasUpdateMethod = false;
                 ResourceMethod? createMethod = null;
 
+                // Pre-compute: for resources without a discrete ParentResourceId (extension/
+                // scope-based or tenant-rooted), detect when MULTIPLE list ops share the same
+                // type-signature tail as the resource. In that case all such ops belong to the
+                // collection's aggregated GetAll (PolicyAssignment-like multi-scope dispatch).
+                // For single-candidate cases preserve the previous scope.Kind equality behavior
+                // so single-scope list ops continue to be emitted as parent-resource Pageable
+                // extension methods.
+                var multiScopeListOps = ComputeMultiScopeListOpsForCollection(resourceMetadata);
+
                 foreach (var method in resourceMetadata.Methods)
                 {
                     var isSingleton = resourceMetadata.SingletonResourceName is not null;
@@ -111,9 +120,19 @@ namespace Azure.Generator.Management.Utilities
                             }
                             else
                             {
-                                if (method.Scope.Kind == resourceMetadata.Scope.Kind)
+                                // For resources without a discrete ParentResourceId (extension/scope-based
+                                // resources, tenant-rooted resources), a list operation belongs to the
+                                // collection iff it is one of MULTIPLE list ops whose path tail matches
+                                // the resource (multi-scope dispatch). For a single-candidate case we
+                                // preserve the original scope.Kind equality behavior so that a lone
+                                // single-scope list op continues to be emitted as a Pageable extension
+                                // on the parent resource (subscription/RG/MG/tenant).
+                                if (multiScopeListOps.Contains(method))
                                 {
-                                    // if the operation scope is the resource scope, it is a collection method
+                                    methodsInCollection.Add(method);
+                                }
+                                else if (method.Scope.Kind == resourceMetadata.Scope.Kind)
+                                {
                                     methodsInCollection.Add(method);
                                 }
                                 else
@@ -139,6 +158,113 @@ namespace Azure.Generator.Management.Utilities
 
                 return new(methodsInResource, methodsInCollection, methodsInExtension);
             }
+        }
+
+        /// <summary>
+        /// Returns the set of list operations from <paramref name="resourceMetadata"/> whose path
+        /// tail matches the resource's type-signature tail (see <see cref="IsCollectionScopeListOperation"/>),
+        /// but only if there are at least 2 such operations AND the resource has no discrete
+        /// parent resource id. This signals that aggregated multi-scope dispatch is needed on
+        /// the collection's GetAll.
+        /// </summary>
+        private static HashSet<ResourceMethod> ComputeMultiScopeListOpsForCollection(ArmResourceMetadata resourceMetadata)
+        {
+            var empty = new HashSet<ResourceMethod>();
+            if (resourceMetadata.ParentResourceId is not null)
+            {
+                return empty;
+            }
+            // Multi-scope dispatch is only meaningful when the collection accepts ANY ArmResource
+            // as its parent (Extension-scoped resources like PolicyAssignment, RoleAssignment).
+            // For resources whose collection is bound to a specific parent type (Subscription /
+            // ResourceGroup / ManagementGroup / Tenant), the legacy pattern of putting cross-scope
+            // list ops on the parent resource as Pageable extension methods is correct - the
+            // collection itself is keyed to one scope, so dispatch branches would be unreachable.
+            if (resourceMetadata.Scope.Kind != ResourceScope.Extension)
+            {
+                return empty;
+            }
+
+            var matches = new List<ResourceMethod>();
+            foreach (var m in resourceMetadata.Methods)
+            {
+                if (m.Kind != ResourceOperationKind.List)
+                {
+                    continue;
+                }
+                if (m.Scope.ScopeIdPattern == resourceMetadata.ResourceIdPattern)
+                {
+                    continue;
+                }
+                if (IsCollectionScopeListOperation(m.OperationPath, resourceMetadata.ResourceIdPattern))
+                {
+                    matches.Add(m);
+                }
+            }
+
+            if (matches.Count < 2)
+            {
+                return empty;
+            }
+
+            return new HashSet<ResourceMethod>(matches);
+        }
+
+        /// <summary>
+        /// Returns true when <paramref name="operationPath"/> is a list operation that targets the
+        /// same resource collection as <paramref name="resourceIdPattern"/>. The resource path
+        /// terminates with "...&lt;type signature&gt;/{name}". The list op's path should end with
+        /// the same type signature (the segments from the LAST '/providers/' segment in the
+        /// resource path through the segment just before "{name}"). The segments BEFORE that
+        /// type-signature tail represent the operation's scope (subscription, RG, MG, or any
+        /// parent ARM resource id) and can differ between candidate list ops.
+        /// </summary>
+        internal static bool IsCollectionScopeListOperation(RequestPathPattern operationPath, RequestPathPattern resourceIdPattern)
+        {
+            var opPath = operationPath;
+            var resPath = resourceIdPattern;
+            // The resource pattern must end with a parameter segment ("{name}").
+            if (resPath.Count < 2)
+            {
+                return false;
+            }
+            // Find the LAST '/providers/' literal segment in the resource path. The segments
+            // from there through resPath[^2] (i.e. excluding the trailing {name}) form the
+            // resource's type-signature tail (e.g. "providers/<ns>/<type>" or, for nested
+            // sub-types, "providers/<ns>/<parentType>/{parentName}/<childType>").
+            int providersIdx = -1;
+            for (int i = resPath.Count - 2; i >= 0; i--)
+            {
+                if (resPath[i].IsProvidersSegment)
+                {
+                    providersIdx = i;
+                    break;
+                }
+            }
+            if (providersIdx < 0)
+            {
+                return false;
+            }
+            int tailLength = (resPath.Count - 1) - providersIdx; // segments [providersIdx..^2]
+            if (opPath.Count < tailLength)
+            {
+                return false;
+            }
+            // The op path's tail of equal length must match the resource's type-signature tail.
+            int opTailStart = opPath.Count - tailLength;
+            // First segment of the op tail must be the same 'providers' literal.
+            if (!opPath[opTailStart].IsProvidersSegment)
+            {
+                return false;
+            }
+            for (int k = 0; k < tailLength; k++)
+            {
+                if (!resPath[providersIdx + k].Equals(opPath[opTailStart + k]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

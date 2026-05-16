@@ -821,6 +821,51 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new EventGridDomainResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="MultiScopeWidgetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MultiScopeWidgetResource"/> object. </returns>
+        public virtual MultiScopeWidgetResource GetMultiScopeWidgetResource(ResourceIdentifier id)
+        {
+            MultiScopeWidgetResource.ValidateResourceId(id);
+            return new MultiScopeWidgetResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MultiScopeWidgetCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MultiScopeWidgetResource"/> objects. </returns>
+        public virtual MultiScopeWidgetCollection GetMultiScopeWidgets(ResourceIdentifier scope)
+        {
+            return new MultiScopeWidgetCollection(Client, scope);
+        }
+
+        /// <summary> Get a widget at the given scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="widgetName"> The name of the MultiScopeWidget. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MultiScopeWidgetResource> GetMultiScopeWidget(ResourceIdentifier scope, string widgetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+
+            return GetMultiScopeWidgets(scope).Get(widgetName, cancellationToken);
+        }
+
+        /// <summary> Get a widget at the given scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="widgetName"> The name of the MultiScopeWidget. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="widgetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="widgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MultiScopeWidgetResource>> GetMultiScopeWidgetAsync(ResourceIdentifier scope, string widgetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
+
+            return await GetMultiScopeWidgets(scope).GetAsync(widgetName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> object. </returns>
