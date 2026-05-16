@@ -525,7 +525,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get { throw null; } }
         public string CopyStatusDescription { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public string DownloadHint { get { throw null; } }
+        public Azure.Storage.Blobs.Models.DownloadHint DownloadHint { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
@@ -1375,6 +1375,21 @@ namespace Azure.Storage.Blobs.Models
         None = 0,
         IncludeSnapshots = 1,
         OnlySnapshots = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DownloadHint : System.IEquatable<Azure.Storage.Blobs.Models.DownloadHint>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DownloadHint(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.DownloadHint Layout { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.DownloadHint other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.DownloadHint left, Azure.Storage.Blobs.Models.DownloadHint right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.DownloadHint (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.DownloadHint left, Azure.Storage.Blobs.Models.DownloadHint right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum EncryptionAlgorithmType
     {
