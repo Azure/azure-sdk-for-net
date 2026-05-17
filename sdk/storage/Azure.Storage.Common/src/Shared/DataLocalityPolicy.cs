@@ -34,13 +34,13 @@ namespace Azure.Storage
                 && value is string endpoint
                 && !string.IsNullOrEmpty(endpoint))
             {
-                string originalHost = message.Request.Uri.Host;
+                string originalHostHeader = message.Request.Uri.ToUri().Authority;
 
                 var uri = new Uri(endpoint);
                 message.Request.Uri.Host = uri.Host;
                 message.Request.Uri.Port = uri.Port;
 
-                message.Request.Headers.SetValue("Host", originalHost);
+                message.Request.Headers.SetValue("Host", originalHostHeader);
             }
         }
     }
