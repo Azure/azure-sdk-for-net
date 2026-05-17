@@ -15,7 +15,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal partial class ReplicationRecoveryServicesProvidersGetSiteRecoveryServicesProvidersAsyncCollectionResultOfT : AsyncPageable<SiteRecoveryServicesProviderData>
+    internal partial class ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT : AsyncPageable<SiteRecoveryServicesProviderData>
     {
         private readonly ReplicationRecoveryServicesProviders _client;
         private readonly Guid _subscriptionId;
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ReplicationRecoveryServicesProvidersGetSiteRecoveryServicesProvidersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReplicationRecoveryServicesProviders client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReplicationRecoveryServicesProvidersGetSiteRecoveryServicesProvidersAsyncCollectionResultOfT(ReplicationRecoveryServicesProviders client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT(ReplicationRecoveryServicesProviders client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ReplicationRecoveryServicesProvidersGetSiteRecoveryServicesProvidersAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ReplicationRecoveryServicesProvidersGetSiteRecoveryServicesProvidersAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ReplicationRecoveryServicesProvidersListAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<SiteRecoveryServicesProviderData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

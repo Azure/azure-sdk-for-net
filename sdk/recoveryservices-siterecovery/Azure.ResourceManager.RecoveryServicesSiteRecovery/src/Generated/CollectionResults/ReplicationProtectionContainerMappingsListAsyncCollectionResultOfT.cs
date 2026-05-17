@@ -15,43 +15,37 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal partial class ReplicationProtectionClustersGetSiteRecoveryReplicationProtectionClusterResourcesAsyncCollectionResultOfT : AsyncPageable<SiteRecoveryReplicationProtectionClusterData>
+    internal partial class ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT : AsyncPageable<ProtectionContainerMappingData>
     {
-        private readonly ReplicationProtectionClusters _client;
+        private readonly ReplicationProtectionContainerMappings _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
-        private readonly string _skipToken;
-        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ReplicationProtectionClustersGetSiteRecoveryReplicationProtectionClusterResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ReplicationProtectionClusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ReplicationProtectionContainerMappings client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
-        /// <param name="filter"> OData filter options. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReplicationProtectionClustersGetSiteRecoveryReplicationProtectionClusterResourcesAsyncCollectionResultOfT(ReplicationProtectionClusters client, Guid subscriptionId, string resourceGroupName, string resourceName, string skipToken, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT(ReplicationProtectionContainerMappings client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _resourceName = resourceName;
-            _skipToken = skipToken;
-            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ReplicationProtectionClustersGetSiteRecoveryReplicationProtectionClusterResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ReplicationProtectionClustersGetSiteRecoveryReplicationProtectionClusterResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SiteRecoveryReplicationProtectionClusterData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ReplicationProtectionContainerMappingsListAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ProtectionContainerMappingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -61,8 +55,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     yield break;
                 }
-                ReplicationProtectionClusterCollection result = ReplicationProtectionClusterCollection.FromResponse(response);
-                yield return Page<SiteRecoveryReplicationProtectionClusterData>.FromValues((IReadOnlyList<SiteRecoveryReplicationProtectionClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ProtectionContainerMappingListResult result = ProtectionContainerMappingListResult.FromResponse(response);
+                yield return Page<ProtectionContainerMappingData>.FromValues((IReadOnlyList<ProtectionContainerMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -76,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSiteRecoveryReplicationProtectionClusterResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _skipToken, _filter, _context) : _client.CreateGetSiteRecoveryReplicationProtectionClusterResourcesRequest(_subscriptionId, _resourceGroupName, _resourceName, _skipToken, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetProtectionContainerMappingsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetProtectionContainerMappingsRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

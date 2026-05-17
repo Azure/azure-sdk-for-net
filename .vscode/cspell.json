@@ -667,6 +667,12 @@
       ]
     },
     {
+      "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
+      "words": [
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/devtestlabs/**/*.cs",
       "words": [
         "retarget",

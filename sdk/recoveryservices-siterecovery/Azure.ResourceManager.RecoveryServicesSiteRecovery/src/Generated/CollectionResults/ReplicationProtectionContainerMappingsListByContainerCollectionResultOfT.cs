@@ -14,43 +14,43 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal partial class ReplicationStorageClassificationMappingsGetByReplicationStorageClassificationsCollectionResultOfT : Pageable<StorageClassificationMappingData>
+    internal partial class ReplicationProtectionContainerMappingsListByContainerCollectionResultOfT : Pageable<ProtectionContainerMappingData>
     {
-        private readonly ReplicationStorageClassificationMappings _client;
+        private readonly ReplicationProtectionContainerMappings _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly string _fabricName;
-        private readonly string _storageClassificationName;
+        private readonly string _protectionContainerName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ReplicationStorageClassificationMappingsGetByReplicationStorageClassificationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ReplicationStorageClassificationMappings client used to send requests. </param>
+        /// <summary> Initializes a new instance of ReplicationProtectionContainerMappingsListByContainerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ReplicationProtectionContainerMappings client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="storageClassificationName"> Storage classification name. </param>
+        /// <param name="protectionContainerName"> Protection container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReplicationStorageClassificationMappingsGetByReplicationStorageClassificationsCollectionResultOfT(ReplicationStorageClassificationMappings client, Guid subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReplicationProtectionContainerMappingsListByContainerCollectionResultOfT(ReplicationProtectionContainerMappings client, Guid subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _resourceName = resourceName;
             _fabricName = fabricName;
-            _storageClassificationName = storageClassificationName;
+            _protectionContainerName = protectionContainerName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ReplicationStorageClassificationMappingsGetByReplicationStorageClassificationsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ReplicationProtectionContainerMappingsListByContainerCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ReplicationStorageClassificationMappingsGetByReplicationStorageClassificationsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<StorageClassificationMappingData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ReplicationProtectionContainerMappingsListByContainerCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ProtectionContainerMappingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     yield break;
                 }
-                StorageClassificationMappingListResult result = StorageClassificationMappingListResult.FromResponse(response);
-                yield return Page<StorageClassificationMappingData>.FromValues((IReadOnlyList<StorageClassificationMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ProtectionContainerMappingListResult result = ProtectionContainerMappingListResult.FromResponse(response);
+                yield return Page<ProtectionContainerMappingData>.FromValues((IReadOnlyList<ProtectionContainerMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByReplicationStorageClassificationsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _fabricName, _storageClassificationName, _context) : _client.CreateGetByReplicationStorageClassificationsRequest(_subscriptionId, _resourceGroupName, _resourceName, _fabricName, _storageClassificationName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByReplicationProtectionContainersRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _fabricName, _protectionContainerName, _context) : _client.CreateGetByReplicationProtectionContainersRequest(_subscriptionId, _resourceGroupName, _resourceName, _fabricName, _protectionContainerName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
