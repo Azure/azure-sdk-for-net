@@ -555,10 +555,214 @@ jobs:
           echo "✅ Gate 3 passed — information completeness score: ${{ steps.score.outputs.score }}/9"
           echo "Issue #${{ github.event.issue.number }} proceeds to Gate 4"
 
+  # ──────────────────────────────────────────────────────────────────
+  # Gate 4 – Working-as-Designed Check
+  # Matches issue content against a curated knowledge base of commonly
+  # misunderstood KeyVault behaviors. If a match is found, posts an
+  # explanation with documentation links and adds possible-by-design
+  # label. Never auto-closes — human confirms.
+  # No equivalent exists in the current triage workflows.
+  # ──────────────────────────────────────────────────────────────────
+  gate4-by-design-check:
+    needs: [gate3-info-completeness]
+    if: needs.gate3-info-completeness.outputs.is_sufficient == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      is_by_design: ${{ steps.wad-check.outputs.is_by_design }}
+      matched_id: ${{ steps.wad-check.outputs.matched_id }}
+    steps:
+      - name: Check known behaviors KB
+        id: wad-check
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const body = (context.payload.issue.body || '').toLowerCase();
+            const title = (context.payload.issue.title || '').toLowerCase();
+            const text = title + ' ' + body;
+
+            // Curated Known-Behaviors Knowledge Base
+            // Each entry: id, description, detection patterns, explanation, doc links
+            const knownBehaviors = [
+              {
+                id: 'KV-WAD-001',
+                name: 'Soft-delete recovery window conflict',
+                patterns: [
+                  /409.*conflict.*(?:delete|recover|purge|soft)/,
+                  /(?:soft.?delete|recover|purge).*409/,
+                  /conflict.*(?:already exists|soft.?delete|recovery)/,
+                  /(?:deleted|purged).*(?:vault|secret|key|certificate).*(?:same name|already|conflict)/
+                ],
+                explanation: 'Azure Key Vault uses soft-delete by default. When a vault or object is deleted, it enters a recovery window (default 90 days). During this period, creating a new resource with the same name returns HTTP 409 Conflict. This is intended behavior to protect against accidental data loss.',
+                docs: [
+                  'https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview',
+                  'https://learn.microsoft.com/azure/key-vault/general/key-vault-recovery'
+                ],
+                resolution: 'Either purge the soft-deleted resource first (`az keyvault purge` or `PurgeDeletedSecret`/`PurgeDeletedKey`/`PurgeDeletedCertificate`), or recover it (`az keyvault recover` or the corresponding `Recover*` API), or wait for the retention period to expire.'
+              },
+              {
+                id: 'KV-WAD-002',
+                name: 'Throttling at vault operation limits',
+                patterns: [
+                  /429.*(?:too many|throttl|rate.?limit)/,
+                  /(?:throttl|rate.?limit|too many requests).*429/,
+                  /(?:throttl|rate.?limit).*(?:key.?vault|secret|key|certificate)/,
+                  /(?:10|ten)\s*(?:ops?|operations?|requests?)\s*(?:per|\/)\s*sec/
+                ],
+                explanation: 'Azure Key Vault enforces transaction limits per vault per region. The default limit is 10 operations per second for certain operation types. Exceeding this limit returns HTTP 429 Too Many Requests. This is intended service protection behavior.',
+                docs: [
+                  'https://learn.microsoft.com/azure/key-vault/general/service-limits',
+                  'https://learn.microsoft.com/azure/key-vault/general/overview-throttling'
+                ],
+                resolution: 'Implement retry with exponential backoff (the Azure SDK does this by default). For high-throughput scenarios, consider distributing operations across multiple vaults or caching secrets client-side.'
+              },
+              {
+                id: 'KV-WAD-003',
+                name: 'Certificate import key-certificate mismatch',
+                patterns: [
+                  /400.*(?:import|certificate).*(?:mismatch|invalid|key.*cert|cert.*key|private.?key)/,
+                  /(?:import|merge).*certif.*(?:mismatch|doesn.t match|invalid|bad)/,
+                  /(?:private.?key|public.?key).*(?:does not match|mismatch|invalid).*certif/,
+                  /certif.*import.*(?:400|bad request)/
+                ],
+                explanation: 'When importing a certificate into Key Vault, the private key must match the certificate. A mismatch between the private key and the certificate\'s public key returns HTTP 400 Bad Request. This is expected validation behavior.',
+                docs: [
+                  'https://learn.microsoft.com/azure/key-vault/certificates/how-to-import-certificate',
+                  'https://learn.microsoft.com/azure/key-vault/certificates/about-certificates'
+                ],
+                resolution: 'Verify the PFX/PEM file contains the correct matching private key and certificate chain. Use `openssl x509 -noout -modulus -in cert.pem | openssl md5` and `openssl rsa -noout -modulus -in key.pem | openssl md5` to verify they match.'
+              },
+              {
+                id: 'KV-WAD-004',
+                name: 'Access policies replaced on ARM deployment',
+                patterns: [
+                  /access.?polic.*(?:replace|overwrite|overwrit|lost|missing|reset|gone|removed).*(?:arm|template|bicep|terraform|deploy)/,
+                  /(?:arm|template|bicep|terraform|deploy).*access.?polic.*(?:replace|overwrite|lost|reset)/,
+                  /(?:deployment|deploy).*(?:lost|removed|cleared).*access.?polic/,
+                  /access.?polic.*(?:not merge|not merged|replace.*not.*merge)/
+                ],
+                explanation: 'When deploying a Key Vault via ARM templates, Bicep, or Terraform, the access policies property is treated as a full replacement, not a merge. If the template does not include all existing access policies, the unlisted ones are removed. This is standard ARM resource behavior, not a Key Vault bug.',
+                docs: [
+                  'https://learn.microsoft.com/azure/key-vault/general/assign-access-policy',
+                  'https://learn.microsoft.com/azure/key-vault/general/rbac-migration'
+                ],
+                resolution: 'Migrate to Azure RBAC for Key Vault data plane access (recommended), or ensure ARM templates always include all existing access policies. Consider using `Microsoft.KeyVault/vaults/accessPolicies` sub-resource for incremental updates.'
+              },
+              {
+                id: 'KV-WAD-005',
+                name: 'Firewall blocks access from unexpected IP',
+                patterns: [
+                  /403.*(?:forbidden|firewall|network|ip|vnet|public.?access)/,
+                  /(?:firewall|network.?rule|ip.?rule|vnet).*(?:403|forbidden|blocked|denied|access)/,
+                  /(?:public.?access|public.?network).*(?:disabled|denied|blocked|403)/,
+                  /(?:client.?ip|source.?ip|your.?ip).*(?:not.*allow|blocked|denied)/
+                ],
+                explanation: 'When Key Vault firewall rules are enabled, requests from IPs or VNets not in the allow list return HTTP 403 Forbidden. This is intended security behavior. Note that Azure DevOps, GitHub Actions, and other CI systems use dynamic IPs that may not be in your allow list.',
+                docs: [
+                  'https://learn.microsoft.com/azure/key-vault/general/network-security',
+                  'https://learn.microsoft.com/azure/key-vault/general/overview-vnet-service-endpoints'
+                ],
+                resolution: 'Add the client IP or VNet to the Key Vault firewall allow list, use a Private Endpoint, or enable "Allow trusted Microsoft services to bypass this firewall" for Azure-managed identities.'
+              }
+            ];
+
+            let bestMatch = null;
+            let bestScore = 0;
+
+            for (const behavior of knownBehaviors) {
+              let matchCount = 0;
+              for (const pattern of behavior.patterns) {
+                if (pattern.test(text)) {
+                  matchCount++;
+                }
+              }
+              // Require at least 2 pattern matches for confidence
+              if (matchCount >= 2 && matchCount > bestScore) {
+                bestScore = matchCount;
+                bestMatch = behavior;
+              }
+            }
+
+            const isByDesign = bestMatch !== null;
+
+            core.setOutput('is_by_design', isByDesign ? 'true' : 'false');
+            core.setOutput('matched_id', isByDesign ? bestMatch.id : '');
+            core.setOutput('matched_name', isByDesign ? bestMatch.name : '');
+
+            if (isByDesign) {
+              // Store behavior details for the comment step
+              core.exportVariable('WAD_EXPLANATION', bestMatch.explanation);
+              core.exportVariable('WAD_RESOLUTION', bestMatch.resolution);
+              core.exportVariable('WAD_DOCS', bestMatch.docs.join('\n'));
+              core.exportVariable('WAD_NAME', bestMatch.name);
+              core.exportVariable('WAD_ID', bestMatch.id);
+              core.info(`By-design match: ${bestMatch.id} — ${bestMatch.name} (${bestScore} patterns matched)`);
+            } else {
+              core.info('No known-behavior match found');
+            }
+
+      # ── Flag as possible by-design ──
+      - name: Flag possible by-design
+        if: steps.wad-check.outputs.is_by_design == 'true'
+        uses: actions/github-script@v8
+        env:
+          WAD_EXPLANATION: ${{ env.WAD_EXPLANATION }}
+          WAD_RESOLUTION: ${{ env.WAD_RESOLUTION }}
+          WAD_DOCS: ${{ env.WAD_DOCS }}
+          WAD_NAME: ${{ env.WAD_NAME }}
+          WAD_ID: ${{ env.WAD_ID }}
+        with:
+          script: |
+            const explanation = process.env.WAD_EXPLANATION;
+            const resolution = process.env.WAD_RESOLUTION;
+            const docs = process.env.WAD_DOCS.split('\n');
+            const name = process.env.WAD_NAME;
+            const id = process.env.WAD_ID;
+
+            const docLinks = docs.map(d => `- ${d}`).join('\n');
+
+            const commentBody = [
+              `📘 **Possible Working-as-Designed Behavior** (\`${id}\`)`,
+              ``,
+              `**${name}**`,
+              ``,
+              explanation,
+              ``,
+              `**Recommended resolution:**`,
+              ``,
+              resolution,
+              ``,
+              `**Documentation:**`,
+              docLinks,
+              ``,
+              `A team member will review and confirm whether this applies to your specific scenario.`,
+              ``,
+              `> _This check was performed automatically by Gate 4 – Working-as-Designed Check._`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: commentBody
+            });
+
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['possible-by-design']
+            });
+
+            core.info(`Flagged as possible by-design: ${id} — ${name}`);
+
+      # ── Log pass ──
+      - name: Gate 4 passed
+        if: steps.wad-check.outputs.is_by_design != 'true'
+        run: |
+          echo "✅ Gate 4 passed — no known-behavior match found"
+          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 5"
+
   # Future gates will be added below:
-  # gate4-by-design-check:
-  #   needs: [gate3-info-completeness]
-  #   if: needs.gate3-info-completeness.outputs.is_sufficient == 'true'
-  # gate5-fault-domain: ...
+  # gate5-fault-domain:
+  #   needs: [gate4-by-design-check]
+  #   if: needs.gate4-by-design-check.outputs.is_by_design != 'true'
   # gate6-fix-class: ...
   # assign-copilot: ...
