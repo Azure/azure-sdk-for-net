@@ -740,16 +740,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new LeaseShareResponse(leaseId, leaseTimeSeconds, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The FileServiceItems. </summary>
-        /// <param name="value"> List of file services returned. </param>
-        /// <returns> A new <see cref="Models.FileServiceItems"/> instance for mocking. </returns>
-        public static FileServiceItems FileServiceItems(IEnumerable<FileServiceData> value = default)
-        {
-            value ??= new ChangeTrackingList<FileServiceData>();
-
-            return new FileServiceItems(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </summary>
         /// <param name="storageAccountLimits"> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </param>
         /// <param name="fileShareLimits"> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </param>
@@ -855,16 +845,6 @@ namespace Azure.ResourceManager.Storage.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 corsRules is null ? default : new QueueServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), null), null));
-        }
-
-        /// <summary> The ListQueueServices. </summary>
-        /// <param name="value"> List of queue services returned. </param>
-        /// <returns> A new <see cref="Models.ListQueueServices"/> instance for mocking. </returns>
-        public static ListQueueServices ListQueueServices(IEnumerable<QueueServiceData> value = default)
-        {
-            value ??= new ChangeTrackingList<QueueServiceData>();
-
-            return new ListQueueServices(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1050,16 +1030,6 @@ namespace Azure.ResourceManager.Storage.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 corsRules is null ? default : new TableServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), null), null));
-        }
-
-        /// <summary> The ListTableServices. </summary>
-        /// <param name="value"> List of table services returned. </param>
-        /// <returns> A new <see cref="Models.ListTableServices"/> instance for mocking. </returns>
-        public static ListTableServices ListTableServices(IEnumerable<TableServiceData> value = default)
-        {
-            value ??= new ChangeTrackingList<TableServiceData>();
-
-            return new ListTableServices(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ListQueueServices. </summary>
-    public partial class ListQueueServices : IJsonModel<ListQueueServices>
+    internal partial class ListQueueServices : IJsonModel<ListQueueServices>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
