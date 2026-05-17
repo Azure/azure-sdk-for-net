@@ -13,73 +13,73 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ProviderHub.Models;
+using Azure.ResourceManager.ProviderHub;
 
-namespace Azure.ResourceManager.ProviderHub
+namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class OperationsPutContentData : ResourceData, IJsonModel<OperationsPutContentData>
+    public partial class OperationsPutContent : ResourceData, IJsonModel<OperationsPutContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOperationsPutContentData(document.RootElement, options);
+                        return DeserializeOperationsPutContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationsPutContentData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationsPutContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OperationsPutContentData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationsPutContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OperationsPutContentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OperationsPutContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationsPutContentData IPersistableModel<OperationsPutContentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (OperationsPutContentData)PersistableModelCreateCore(data, options);
+        OperationsPutContent IPersistableModel<OperationsPutContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (OperationsPutContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OperationsPutContentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationsPutContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="operationsPutContentData"> The <see cref="OperationsPutContentData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(OperationsPutContentData operationsPutContentData)
+        /// <param name="operationsPutContent"> The <see cref="OperationsPutContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(OperationsPutContent operationsPutContent)
         {
-            if (operationsPutContentData == null)
+            if (operationsPutContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(operationsPutContentData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(operationsPutContent, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OperationsPutContentData"/> from. </param>
-        internal static OperationsPutContentData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OperationsPutContent"/> from. </param>
+        internal static OperationsPutContent FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOperationsPutContentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeOperationsPutContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OperationsPutContentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationsPutContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationsPutContentData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationsPutContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationsPutContentData IJsonModel<OperationsPutContentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OperationsPutContentData)JsonModelCreateCore(ref reader, options);
+        OperationsPutContent IJsonModel<OperationsPutContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OperationsPutContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationsPutContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationsPutContentData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationsPutContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationsPutContentData(document.RootElement, options);
+            return DeserializeOperationsPutContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OperationsPutContentData DeserializeOperationsPutContentData(JsonElement element, ModelReaderWriterOptions options)
+        internal static OperationsPutContent DeserializeOperationsPutContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ProviderHub
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationsPutContentData(
+            return new OperationsPutContent(
                 id,
                 name,
                 resourceType,
