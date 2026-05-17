@@ -1637,8 +1637,7 @@ namespace Azure.Storage.Blobs.Specialized
                         parameterName: nameof(conditions));
 
                     // Resolve the layout endpoint either from the caller-supplied value
-                    // (single-shot download path) or from the auto-refreshing cache
-                    // (parallel DownloadTo path).
+                    // or from the auto-refreshing cache.
                     if (layoutEndpoint == null && layoutCache != null)
                     {
                         BlobLayoutSegmentCacheValue cachedValue = await layoutCache
