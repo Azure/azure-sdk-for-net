@@ -3486,16 +3486,18 @@ namespace Azure.Storage.Blobs.Specialized
                     ETag etag;
                     long blobContentLength;
                     Metadata bootstrapMetadata;
-                    BlobLayoutSegment[] seedSegments = null;
+                    BlobLayoutSegmentCacheValue? seedLayout = null;
                     BlobLayoutInfo localityHeaders = null;
 
                     if (enableDataLocality)
                     {
+                        BlobLayoutSegment[] seedSegments;
                         (localityHeaders, seedSegments) = await FetchLayoutInternal(
                             range: default,
                             conditions,
                             async,
                             cancellationToken).ConfigureAwait(false);
+                        seedLayout = new BlobLayoutSegmentCacheValue(seedSegments);
                     }
 
                     if (localityHeaders != null)
@@ -3536,18 +3538,24 @@ namespace Azure.Storage.Blobs.Specialized
 
                     // When locality is enabled, build the layout cache so all chunk downloads
                     // can be routed to optimal endpoints. The cache is seeded from the bootstrap
-                    // call, so the first chunk doesn't trigger a duplicate GetLayout.
+                    // call so the first chunk doesn't trigger a duplicate GetLayout. The seed
+                    // carries the bootstrap-time expiry, so if the stream is held past
+                    // LayoutLifetime before the first read, the seed is discarded and the
+                    // cache fetches fresh rather than serving a stale layout.
                     AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null;
                     if (enableDataLocality)
                     {
-                        bool seedConsumed = false;
                         layoutCache = new AutoRefreshingCache<BlobLayoutSegmentCacheValue>(
                             acquire: async (acquireAsync, ct) =>
                             {
-                                if (!seedConsumed)
+                                if (seedLayout.HasValue)
                                 {
-                                    seedConsumed = true;
-                                    return new BlobLayoutSegmentCacheValue(seedSegments);
+                                    BlobLayoutSegmentCacheValue seed = seedLayout.Value;
+                                    seedLayout = null;
+                                    if (seed.ExpiresOn > DateTimeOffset.UtcNow)
+                                    {
+                                        return seed;
+                                    }
                                 }
 #pragma warning disable AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
                                 (_, BlobLayoutSegment[] segments) = await FetchLayoutInternal(
