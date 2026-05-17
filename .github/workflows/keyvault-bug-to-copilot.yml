@@ -200,11 +200,230 @@ jobs:
           echo "✅ Gate 1 passed — no duplicate detected (best score: ${{ steps.dedup.outputs.score }})"
           echo "Issue #${{ github.event.issue.number }} proceeds to Gate 2"
 
+  # ──────────────────────────────────────────────────────────────────
+  # Gate 2 – Version Currency Check
+  # Two-part check: NuGet latest version comparison + CHANGELOG scan
+  # Action on outdated: suggest upgrade but still proceed through gates
+  # Complements existing triage Step 4 (deprecated package check) —
+  # Step 4 asks "is the package dead?", Gate 2 asks "is the customer
+  # behind on a living package?"
+  # ──────────────────────────────────────────────────────────────────
+  gate2-version-check:
+    needs: [gate1-duplicate-check]
+    if: needs.gate1-duplicate-check.outputs.is_duplicate != 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      is_outdated: ${{ steps.version-check.outputs.is_outdated }}
+      customer_version: ${{ steps.version-check.outputs.customer_version }}
+      latest_version: ${{ steps.version-check.outputs.latest_version }}
+      possibly_fixed: ${{ steps.changelog-check.outputs.possibly_fixed }}
+    steps:
+      # ── Part 1: Extract SDK version from issue and compare with NuGet latest ──
+      - name: Check version currency
+        id: version-check
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+
+            // Known KeyVault package IDs
+            const kvPackages = [
+              'Azure.Security.KeyVault.Secrets',
+              'Azure.Security.KeyVault.Keys',
+              'Azure.Security.KeyVault.Certificates',
+              'Azure.Security.KeyVault.Administration'
+            ];
+
+            // Extract package name from issue body
+            let detectedPackage = null;
+            for (const pkg of kvPackages) {
+              if (body.toLowerCase().includes(pkg.toLowerCase())) {
+                detectedPackage = pkg;
+                break;
+              }
+            }
+
+            // Extract version number (patterns: v4.2.0, 4.2.0, Version="4.2.0")
+            const versionPattern = /(?:v|version[=: "]*)?(\d+\.\d+\.\d+(?:-[\w.]+)?)/gi;
+            const versions = [];
+            let vm;
+            while ((vm = versionPattern.exec(body)) !== null) {
+              versions.push(vm[1]);
+            }
+
+            // Filter to plausible SDK versions (start with 4.x for KeyVault)
+            const sdkVersions = versions.filter(v => v.startsWith('4.'));
+            const customerVersion = sdkVersions.length > 0 ? sdkVersions[0] : null;
+
+            if (!detectedPackage || !customerVersion) {
+              core.info(`Package: ${detectedPackage || 'not detected'}, Version: ${customerVersion || 'not detected'}`);
+              core.setOutput('is_outdated', 'false');
+              core.setOutput('customer_version', customerVersion || '');
+              core.setOutput('latest_version', '');
+              core.setOutput('detected_package', detectedPackage || '');
+              return;
+            }
+
+            // Query NuGet for latest stable version
+            const nugetUrl = `https://api.nuget.org/v3-flatcontainer/${detectedPackage.toLowerCase()}/index.json`;
+            const response = await fetch(nugetUrl);
+
+            if (!response.ok) {
+              core.warning(`NuGet lookup failed for ${detectedPackage}: ${response.status}`);
+              core.setOutput('is_outdated', 'false');
+              core.setOutput('customer_version', customerVersion);
+              core.setOutput('latest_version', '');
+              core.setOutput('detected_package', detectedPackage);
+              return;
+            }
+
+            const data = await response.json();
+            // Filter to stable versions (no prerelease suffix)
+            const stableVersions = data.versions.filter(v => !v.includes('-'));
+            const latestVersion = stableVersions[stableVersions.length - 1] || '';
+
+            // Compare: is customer more than 1 minor version behind?
+            const parseSemver = (v) => {
+              const parts = v.replace(/-.+$/, '').split('.').map(Number);
+              return { major: parts[0] || 0, minor: parts[1] || 0, patch: parts[2] || 0 };
+            };
+
+            const cust = parseSemver(customerVersion);
+            const latest = parseSemver(latestVersion);
+            const isOutdated = (latest.major > cust.major) ||
+              (latest.major === cust.major && latest.minor > cust.minor + 1);
+
+            core.setOutput('is_outdated', isOutdated ? 'true' : 'false');
+            core.setOutput('customer_version', customerVersion);
+            core.setOutput('latest_version', latestVersion);
+            core.setOutput('detected_package', detectedPackage);
+
+            core.info(`Package: ${detectedPackage}`);
+            core.info(`Customer version: ${customerVersion}, Latest: ${latestVersion}`);
+            core.info(`Outdated: ${isOutdated}`);
+
+      # ── Part 2: Scan CHANGELOG for matching bug fix keywords ──
+      - name: Checkout repo for CHANGELOG
+        if: steps.version-check.outputs.is_outdated == 'true'
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: sdk/keyvault
+          sparse-checkout-cone-mode: true
+
+      - name: Check CHANGELOG for fixes
+        id: changelog-check
+        if: steps.version-check.outputs.is_outdated == 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const pkg = '${{ steps.version-check.outputs.detected_package }}';
+            const title = context.payload.issue.title || '';
+            const body = context.payload.issue.body || '';
+
+            // Map package name to directory
+            const pkgDirMap = {
+              'Azure.Security.KeyVault.Secrets': 'sdk/keyvault/Azure.Security.KeyVault.Secrets',
+              'Azure.Security.KeyVault.Keys': 'sdk/keyvault/Azure.Security.KeyVault.Keys',
+              'Azure.Security.KeyVault.Certificates': 'sdk/keyvault/Azure.Security.KeyVault.Certificates',
+              'Azure.Security.KeyVault.Administration': 'sdk/keyvault/Azure.Security.KeyVault.Administration'
+            };
+
+            const pkgDir = pkgDirMap[pkg] || '';
+            const changelogPath = path.join(pkgDir, 'CHANGELOG.md');
+            let possiblyFixed = false;
+            let matchingEntry = '';
+
+            try {
+              const changelog = fs.readFileSync(changelogPath, 'utf8');
+
+              // Extract keywords from issue title and body
+              const issueWords = (title + ' ' + body).toLowerCase()
+                .split(/\W+/)
+                .filter(w => w.length > 4);
+              const uniqueWords = [...new Set(issueWords)];
+
+              // Look for "Bug Fixes" sections and check for keyword matches
+              const bugFixPattern = /### Bug(?:s)? Fix(?:es|ed)?\s*\n([\s\S]*?)(?=\n###|\n## |\n$)/gi;
+              let match;
+              while ((match = bugFixPattern.exec(changelog)) !== null) {
+                const section = match[1].toLowerCase();
+                const hits = uniqueWords.filter(w => section.includes(w));
+                if (hits.length >= 3) {
+                  possiblyFixed = true;
+                  matchingEntry = match[0].trim().slice(0, 200);
+                  break;
+                }
+              }
+            } catch (err) {
+              core.info(`CHANGELOG not found at ${changelogPath}: ${err.message}`);
+            }
+
+            core.setOutput('possibly_fixed', possiblyFixed ? 'true' : 'false');
+            core.setOutput('matching_entry', matchingEntry);
+            core.info(`Possibly fixed in newer version: ${possiblyFixed}`);
+
+      # ── Suggest upgrade if outdated ──
+      - name: Suggest upgrade
+        if: steps.version-check.outputs.is_outdated == 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pkg = '${{ steps.version-check.outputs.detected_package }}';
+            const custVer = '${{ steps.version-check.outputs.customer_version }}';
+            const latestVer = '${{ steps.version-check.outputs.latest_version }}';
+            const possiblyFixed = '${{ steps.changelog-check.outputs.possibly_fixed }}';
+
+            let body = [
+              `📦 **Version Currency Check**`,
+              ``,
+              `You appear to be using **${pkg} v${custVer}**, but the latest stable release is **v${latestVer}**.`,
+              ``,
+              `\`\`\`xml`,
+              `<PackageReference Include="${pkg}" Version="${latestVer}" />`,
+              `\`\`\``,
+              ``
+            ];
+
+            if (possiblyFixed === 'true') {
+              body.push(
+                `⚠️ A matching bug fix entry was found in the CHANGELOG for a newer version. This issue **may already be resolved** — please try upgrading first.`,
+                ``
+              );
+            } else {
+              body.push(
+                `We recommend upgrading to check if this issue has been addressed in a newer release.`,
+                ``
+              );
+            }
+
+            body.push(
+              `> _This issue will still proceed through the remaining eligibility gates regardless of version status._`,
+              ``,
+              `> _This check was performed automatically by Gate 2 – Version Currency Check._`
+            );
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: body.join('\n')
+            });
+
+            core.info(`Posted upgrade suggestion for ${pkg}: ${custVer} → ${latestVer}`);
+
+      # ── Log pass ──
+      - name: Gate 2 passed
+        run: |
+          echo "✅ Gate 2 passed — version check complete"
+          echo "  Outdated: ${{ steps.version-check.outputs.is_outdated }}"
+          echo "  Possibly fixed: ${{ steps.changelog-check.outputs.possibly_fixed || 'n/a' }}"
+          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 3"
+
   # Future gates will be added below:
-  # gate2-version-check:
-  #   needs: [gate1-duplicate-check]
-  #   if: needs.gate1-duplicate-check.outputs.is_duplicate != 'true'
-  # gate3-info-completeness: ...
+  # gate3-info-completeness:
+  #   needs: [gate2-version-check]
   # gate4-by-design-check: ...
   # gate5-fault-domain: ...
   # gate6-fix-class: ...
