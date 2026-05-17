@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     {
         private readonly ClientDiagnostics _provisioningServiceDescriptionsClientDiagnostics;
         private readonly ProvisioningServiceDescriptions _provisioningServiceDescriptionsRestClient;
-        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
 
         /// <summary> Initializes a new instance of DeviceProvisioningServiceCollection for mocking. </summary>
         protected DeviceProvisioningServiceCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             TryGetApiVersion(DeviceProvisioningServiceResource.ResourceType, out string deviceProvisioningServiceApiVersion);
             _provisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
             _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServiceApiVersion ?? "2025-02-01-preview");
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServiceApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

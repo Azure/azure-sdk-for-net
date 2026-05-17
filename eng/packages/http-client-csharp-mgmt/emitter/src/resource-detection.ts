@@ -424,13 +424,13 @@ function getDirectResponseModelId(
 }
 
 /**
- * Returns the page-item model id for a pageable method, or undefined when the
- * method is not pageable or returns a non-model item type.
+ * Returns the item model id for a method that returns a resource collection.
+ * Some ARM single-page list templates are represented as basic GET methods
+ * returning T[], so list detection must not be limited to paging/lropaging.
  */
-function getPagingItemModelIdLocal(
+function getCollectionItemModelIdLocal(
   method: SdkMethod<SdkHttpOperation>
 ): string | undefined {
-  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
   const r = method.response?.type;
   if (r?.kind === "array" && r.valueType.kind === "model") {
     return (r.valueType as SdkModelType).crossLanguageDefinitionId;
@@ -477,7 +477,7 @@ function assignRemainingOperations(
     const sdkMethod = serviceMethods.get(methodId);
     if (!sdkMethod || sdkMethod.operation?.verb !== "get") continue;
 
-    const itemModelId = getPagingItemModelIdLocal(sdkMethod);
+    const itemModelId = getCollectionItemModelIdLocal(sdkMethod);
     if (!itemModelId || !identifiedResourceModelIds.has(itemModelId)) continue;
 
     const operationPath = new RequestPath(method.operation.path);
