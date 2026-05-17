@@ -408,6 +408,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(SiteRecoveryJobDetails))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryJobEntity))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryJobErrorDetails))]
+    [ModelReaderWriterBuildable(typeof(SiteRecoveryJobListResult))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryJobProperties))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryJobProviderError))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryJobQueryContent))]

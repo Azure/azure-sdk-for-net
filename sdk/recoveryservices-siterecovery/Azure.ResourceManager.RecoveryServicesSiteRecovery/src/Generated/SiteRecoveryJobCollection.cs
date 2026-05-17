@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// Each <see cref="SiteRecoveryJobResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get a <see cref="SiteRecoveryJobCollection"/> instance call the GetSiteRecoveryJobs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class SiteRecoveryJobCollection : ArmCollection
+    public partial class SiteRecoveryJobCollection : ArmCollection, IEnumerable<SiteRecoveryJobResource>, IAsyncEnumerable<SiteRecoveryJobResource>
     {
         private readonly ClientDiagnostics _replicationJobsClientDiagnostics;
         private readonly ReplicationJobs _replicationJobsRestClient;
@@ -153,6 +155,78 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the list of Azure Site Recovery Jobs for the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteRecoveryJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteRecoveryJobResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SiteRecoveryJobData, SiteRecoveryJobResource>(new ReplicationJobsGetAllAsyncCollectionResultOfT(
+                _replicationJobsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _resourceName,
+                filter,
+                context,
+                "SiteRecoveryJobCollection.GetAll"), data => new SiteRecoveryJobResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the list of Azure Site Recovery Jobs for the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteRecoveryJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteRecoveryJobResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SiteRecoveryJobData, SiteRecoveryJobResource>(new ReplicationJobsGetAllCollectionResultOfT(
+                _replicationJobsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _resourceName,
+                filter,
+                context,
+                "SiteRecoveryJobCollection.GetAll"), data => new SiteRecoveryJobResource(Client, data));
         }
 
         /// <summary>
@@ -389,6 +463,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SiteRecoveryJobResource> IEnumerable<SiteRecoveryJobResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SiteRecoveryJobResource> IAsyncEnumerable<SiteRecoveryJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

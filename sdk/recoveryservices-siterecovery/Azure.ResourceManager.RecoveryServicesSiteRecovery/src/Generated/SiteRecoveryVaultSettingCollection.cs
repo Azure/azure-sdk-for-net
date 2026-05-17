@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,10 +25,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// Each <see cref="SiteRecoveryVaultSettingResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get a <see cref="SiteRecoveryVaultSettingCollection"/> instance call the GetSiteRecoveryVaultSettings method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class SiteRecoveryVaultSettingCollection : ArmCollection
+    public partial class SiteRecoveryVaultSettingCollection : ArmCollection, IEnumerable<SiteRecoveryVaultSettingResource>, IAsyncEnumerable<SiteRecoveryVaultSettingResource>
     {
         private readonly ClientDiagnostics _replicationVaultSettingClientDiagnostics;
         private readonly ReplicationVaultSetting _replicationVaultSettingRestClient;
+        /// <summary> The resourceName. </summary>
+        private readonly string _resourceName;
 
         /// <summary> Initializes a new instance of SiteRecoveryVaultSettingCollection for mocking. </summary>
         protected SiteRecoveryVaultSettingCollection()
@@ -36,9 +40,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteRecoveryVaultSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        internal SiteRecoveryVaultSettingCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
         {
             TryGetApiVersion(SiteRecoveryVaultSettingResource.ResourceType, out string siteRecoveryVaultSettingApiVersion);
+            _resourceName = resourceName;
             _replicationVaultSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryVaultSettingResource.ResourceType.Namespace, Diagnostics);
             _replicationVaultSettingRestClient = new ReplicationVaultSetting(_replicationVaultSettingClientDiagnostics, Pipeline, Endpoint, siteRecoveryVaultSettingApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
@@ -72,15 +78,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="content"> Vault setting creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/>, <paramref name="vaultSettingName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryVaultSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, string vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SiteRecoveryVaultSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(
                     new SiteRecoveryVaultSettingOperationSource(Client),
@@ -132,15 +136,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="content"> Vault setting creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/>, <paramref name="vaultSettingName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SiteRecoveryVaultSettingResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, string vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SiteRecoveryVaultSettingResource> CreateOrUpdate(WaitUntil waitUntil, string vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -152,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(
                     new SiteRecoveryVaultSettingOperationSource(Client),
@@ -191,14 +193,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SiteRecoveryVaultSettingResource>> GetAsync(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SiteRecoveryVaultSettingResource>> GetAsync(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Get");
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteRecoveryVaultSettingData> response = Response.FromValue(SiteRecoveryVaultSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,14 +242,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SiteRecoveryVaultSettingResource> Get(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SiteRecoveryVaultSettingResource> Get(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Get");
@@ -260,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteRecoveryVaultSettingData> response = Response.FromValue(SiteRecoveryVaultSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,6 +275,74 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
+        /// Gets the list of vault setting. This includes the Migration Hub connection settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VaultSettings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteRecoveryVaultSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteRecoveryVaultSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SiteRecoveryVaultSettingData, SiteRecoveryVaultSettingResource>(new ReplicationVaultSettingGetAllAsyncCollectionResultOfT(
+                _replicationVaultSettingRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _resourceName,
+                context,
+                "SiteRecoveryVaultSettingCollection.GetAll"), data => new SiteRecoveryVaultSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the list of vault setting. This includes the Migration Hub connection settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VaultSettings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteRecoveryVaultSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteRecoveryVaultSettingResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SiteRecoveryVaultSettingData, SiteRecoveryVaultSettingResource>(new ReplicationVaultSettingGetAllCollectionResultOfT(
+                _replicationVaultSettingRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _resourceName,
+                context,
+                "SiteRecoveryVaultSettingCollection.GetAll"), data => new SiteRecoveryVaultSettingResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -293,14 +359,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Exists");
@@ -311,7 +375,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteRecoveryVaultSettingData> response = default;
@@ -352,14 +416,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Exists");
@@ -370,7 +432,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteRecoveryVaultSettingData> response = default;
@@ -411,14 +473,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SiteRecoveryVaultSettingResource>> GetIfExistsAsync(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryVaultSettingResource>> GetIfExistsAsync(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.GetIfExists");
@@ -429,7 +489,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteRecoveryVaultSettingData> response = default;
@@ -474,14 +534,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SiteRecoveryVaultSettingResource> GetIfExists(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SiteRecoveryVaultSettingResource> GetIfExists(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.GetIfExists");
@@ -492,7 +550,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, vaultSettingName, context);
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, vaultSettingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteRecoveryVaultSettingData> response = default;
@@ -518,6 +576,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SiteRecoveryVaultSettingResource> IEnumerable<SiteRecoveryVaultSettingResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SiteRecoveryVaultSettingResource> IAsyncEnumerable<SiteRecoveryVaultSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

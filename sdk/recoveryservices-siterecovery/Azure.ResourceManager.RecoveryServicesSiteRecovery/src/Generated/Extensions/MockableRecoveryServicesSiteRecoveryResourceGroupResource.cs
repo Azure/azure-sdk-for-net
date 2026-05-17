@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         private ReplicationStorageClassificationMappings _replicationStorageClassificationMappingsRestClient;
         private ClientDiagnostics _replicationvCentersClientDiagnostics;
         private ReplicationvCenters _replicationvCentersRestClient;
+        private ClientDiagnostics _replicationJobsClientDiagnostics;
+        private ReplicationJobs _replicationJobsRestClient;
         private ClientDiagnostics _replicationAppliancesClientDiagnostics;
         private ReplicationAppliances _replicationAppliancesRestClient;
         private ClientDiagnostics _supportedOperatingSystemsClientDiagnostics;
@@ -105,6 +107,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         private ClientDiagnostics ReplicationvCentersClientDiagnostics => _replicationvCentersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ReplicationvCenters ReplicationvCentersRestClient => _replicationvCentersRestClient ??= new ReplicationvCenters(ReplicationvCentersClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+
+        private ClientDiagnostics ReplicationJobsClientDiagnostics => _replicationJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ReplicationJobs ReplicationJobsRestClient => _replicationJobsRestClient ??= new ReplicationJobs(ReplicationJobsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ReplicationAppliancesClientDiagnostics => _replicationAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -597,10 +603,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary> Gets a collection of SiteRecoveryVaultSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <returns> An object representing collection of SiteRecoveryVaultSettings and their operations over a SiteRecoveryVaultSettingResource. </returns>
-        public virtual SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings()
+        public virtual SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings(string resourceName)
         {
-            return GetCachedClient(client => new SiteRecoveryVaultSettingCollection(client, Id));
+            return GetCachedClient(client => new SiteRecoveryVaultSettingCollection(client, Id, resourceName));
         }
 
         /// <summary>
@@ -620,18 +627,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryVaultSettingResource>> GetSiteRecoveryVaultSettingAsync(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
-            return await GetSiteRecoveryVaultSettings().GetAsync(resourceName, vaultSettingName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryVaultSettings(resourceName).GetAsync(vaultSettingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -651,18 +657,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Vault. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryVaultSettingResource> GetSiteRecoveryVaultSetting(string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
-            return GetSiteRecoveryVaultSettings().Get(resourceName, vaultSettingName, cancellationToken);
+            return GetSiteRecoveryVaultSettings(resourceName).Get(vaultSettingName, cancellationToken);
         }
 
         /// <summary>
@@ -1549,6 +1554,122 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 resourceName,
                 context,
                 "MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVCenters"), data => new SiteRecoveryVCenterResource(Client, data));
+        }
+
+        /// <summary>
+        /// The operation to export the details of the Azure Site Recovery jobs of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReplicationJobsOperationGroup_Export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ReplicationJobsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.Export");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReplicationJobsRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
+                    new SiteRecoveryJobOperationSource(Client),
+                    ReplicationJobsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to export the details of the Azure Site Recovery jobs of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReplicationJobsOperationGroup_Export. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SiteRecoveryJobResource> Export(WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ReplicationJobsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.Export");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReplicationJobsRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
+                    new SiteRecoveryJobOperationSource(Client),
+                    ReplicationJobsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

@@ -894,17 +894,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets a collection of SiteRecoveryVaultSettings in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVaultSettings()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVaultSettings(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of SiteRecoveryVaultSettings and their operations over a SiteRecoveryVaultSettingResource. </returns>
-        public static SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings(this ResourceGroupResource resourceGroupResource)
+        public static SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVaultSettings();
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVaultSettings(resourceName);
         }
 
         /// <summary>
@@ -915,7 +916,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the Vault. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
@@ -935,7 +936,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the Vault. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
@@ -1377,6 +1378,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVCenters(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to export the details of the Azure Site Recovery jobs of the vault.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.ExportAsync(WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).ExportAsync(waitUntil, resourceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation to export the details of the Azure Site Recovery jobs of the vault.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.Export(WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<SiteRecoveryJobResource> Export(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).Export(waitUntil, resourceName, content, cancellationToken);
         }
 
         /// <summary>
