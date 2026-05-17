@@ -117,29 +117,23 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
+            => TryBuildFlattenPropertyMap(returnType, out propertyNameMap, mergeDuplicateKeyValues: true);
+
+        private bool TryBuildFlattenPropertyMap(
+            CSharpType type,
+            [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap,
+            bool mergeDuplicateKeyValues,
+            Dictionary<string, List<FlattenPropertyInfo>>? seedPropertyNameMap = null,
+            bool includeCurrentType = true)
         {
-            Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
-            var currentType = returnType;
-            var foundFlattenedProperties = false;
+            Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = seedPropertyNameMap?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => new List<FlattenPropertyInfo>(kvp.Value));
+            var foundFlattenedProperties = mergedPropertyNameMap is { Count: > 0 };
+            var currentType = type;
             var visited = new HashSet<CSharpType>(new CSharpTypeNameComparer());
+            var shouldIncludeCurrentType = includeCurrentType;
 
-            void MergeFlattenedProperties(Dictionary<string, List<FlattenPropertyInfo>> source)
-            {
-                mergedPropertyNameMap ??= new Dictionary<string, List<FlattenPropertyInfo>>();
-                foreach (var (parameterName, flattenInfoList) in source)
-                {
-                    if (mergedPropertyNameMap.TryGetValue(parameterName, out var existing))
-                    {
-                        existing.AddRange(flattenInfoList);
-                    }
-                    else
-                    {
-                        mergedPropertyNameMap[parameterName] = [.. flattenInfoList];
-                    }
-                }
-
-                foundFlattenedProperties = true;
-            }
             // Walk up the inheritance chain because flattened properties can come from
             // both the current leaf model and any ancestor model in the hierarchy.
             ModelProvider? currentModel;
@@ -153,9 +147,11 @@ namespace Azure.Generator.Management.Visitors
                     break;
                 }
 
-                if (_flattenedModelTypes.TryGetValue(currentType, out var value))
+                if (shouldIncludeCurrentType && _flattenedModelTypes.TryGetValue(currentType, out var value))
                 {
-                    MergeFlattenedProperties(value);
+                    mergedPropertyNameMap ??= new Dictionary<string, List<FlattenPropertyInfo>>();
+                    MergeFlattenPropertyMap(mergedPropertyNameMap, value, mergeDuplicateKeyValues);
+                    foundFlattenedProperties = true;
                 }
 
                 currentModel = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(currentType, out var typeProvider)
@@ -167,12 +163,34 @@ namespace Azure.Generator.Management.Visitors
                 if (currentModel is not null)
                 {
                     currentType = currentModel.BaseType!;
+                    shouldIncludeCurrentType = true;
                 }
             }
             while (currentModel is not null);
 
             propertyNameMap = mergedPropertyNameMap;
             return foundFlattenedProperties;
+        }
+
+        private static void MergeFlattenPropertyMap(
+            Dictionary<string, List<FlattenPropertyInfo>> target,
+            Dictionary<string, List<FlattenPropertyInfo>> source,
+            bool mergeDuplicateKeyValues)
+        {
+            foreach (var (parameterName, flattenInfoList) in source)
+            {
+                if (target.TryGetValue(parameterName, out var existing))
+                {
+                    if (mergeDuplicateKeyValues)
+                    {
+                        existing.AddRange(flattenInfoList);
+                    }
+                }
+                else
+                {
+                    target[parameterName] = [.. flattenInfoList];
+                }
+            }
         }
 
         private void UpdateModelFactoryMethod(MethodProvider method, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
@@ -597,20 +615,13 @@ namespace Azure.Generator.Management.Visitors
             // map. This ensures inherited ctor parameters and base(...) initializer arguments are
             // rewritten to match the base type's already-flattened public ctor signature, even when
             // this derived model has flattening of its own.
-            var effectiveMap = new Dictionary<string, List<FlattenPropertyInfo>>(propertyNameMap);
-            for (var ancestor = model.BaseModelProvider as ModelProvider; ancestor is not null; ancestor = ancestor.BaseModelProvider as ModelProvider)
-            {
-                if (_flattenedModelTypes.TryGetValue(ancestor.Type, out var ancestorMap))
-                {
-                    foreach (var kvp in ancestorMap)
-                    {
-                        if (!effectiveMap.ContainsKey(kvp.Key))
-                        {
-                            effectiveMap[kvp.Key] = kvp.Value;
-                        }
-                    }
-                }
-            }
+            _ = TryBuildFlattenPropertyMap(
+                model.Type,
+                out var effectiveMap,
+                mergeDuplicateKeyValues: false,
+                seedPropertyNameMap: propertyNameMap,
+                includeCurrentType: false);
+            effectiveMap ??= new Dictionary<string, List<FlattenPropertyInfo>>();
 
             if (isSafeFlatten || isFlattenProperty)
             {
