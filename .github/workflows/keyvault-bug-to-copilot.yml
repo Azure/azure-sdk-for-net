@@ -1,0 +1,211 @@
+name: KeyVault Bug to Copilot
+
+# Triggers when the existing issue-triage and event-processor workflows
+# apply labels to a new issue. Gate 1 runs once all three qualifying
+# labels (KeyVault, Client, bug) are present.
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  # ──────────────────────────────────────────────────────────────────
+  # Gate 1 – Duplicate Detection
+  # Two-stage approach: error-signature hashing + title/error-code overlap
+  # Action on match: post comment linking duplicate, add label
+  # Safety: never auto-closes — human confirms
+  # ──────────────────────────────────────────────────────────────────
+  gate1-duplicate-check:
+    if: |
+      github.event.label.name == 'bug' &&
+      contains(join(github.event.issue.labels.*.name, ','), 'Client') &&
+      contains(join(github.event.issue.labels.*.name, ','), 'KeyVault')
+    runs-on: ubuntu-latest
+    outputs:
+      is_duplicate: ${{ steps.dedup.outputs.is_duplicate }}
+      duplicate_of: ${{ steps.dedup.outputs.duplicate_of }}
+      score: ${{ steps.dedup.outputs.score }}
+    steps:
+      # ── Stage 1: Extract error signatures from issue body ──
+      - name: Extract error signatures
+        id: signatures
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+
+            // Extract .NET exception types
+            const exceptionPattern = /(\w+(?:Exception|Error))\b/g;
+            const exceptions = [...new Set(
+              (body.match(exceptionPattern) || [])
+            )];
+
+            // Extract stack trace method names
+            const stackPattern = /at\s+([\w.]+\.\w+)\s*\(/g;
+            const methods = [];
+            let m;
+            while ((m = stackPattern.exec(body)) !== null) {
+              methods.push(m[1]);
+            }
+
+            // Build a deterministic signature and hash it
+            const signature = [...exceptions, ...methods.slice(0, 5)]
+              .sort().join('|').toLowerCase();
+
+            const crypto = require('crypto');
+            const hash = signature
+              ? crypto.createHash('sha256')
+                  .update(signature).digest('hex').slice(0, 16)
+              : '';
+
+            core.setOutput('exceptions', exceptions.join(','));
+            core.setOutput('methods', methods.join(','));
+            core.setOutput('signature_hash', hash);
+            core.setOutput('has_signature', signature ? 'true' : 'false');
+
+            core.info(`Exceptions found: ${exceptions.join(', ') || 'none'}`);
+            core.info(`Stack methods found: ${methods.join(', ') || 'none'}`);
+            core.info(`Signature hash: ${hash || 'none'}`);
+
+      # ── Stage 2: Search open KeyVault bugs for duplicates ──
+      - name: Search for duplicates
+        id: dedup
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const currentNumber = context.payload.issue.number;
+            const body = context.payload.issue.body || '';
+            const title = context.payload.issue.title || '';
+            const sigHash = '${{ steps.signatures.outputs.signature_hash }}';
+            const hasSig = '${{ steps.signatures.outputs.has_signature }}';
+
+            // Find open KeyVault bugs via GitHub Search API
+            const query = `repo:${context.repo.owner}/${context.repo.repo} `
+              + `is:issue is:open label:KeyVault label:bug label:Client`;
+
+            const results = await github.rest.search.issuesAndPullRequests({
+              q: query, sort: 'created', order: 'desc', per_page: 50
+            });
+
+            let bestMatch = null;
+            let bestScore = 0;
+
+            for (const issue of results.data.items) {
+              if (issue.number === currentNumber) continue;
+
+              const otherBody = issue.body || '';
+              const otherTitle = issue.title || '';
+              let score = 0;
+
+              // --- Signal 1: Title keyword overlap (max 40 pts) ---
+              const titleWords = new Set(
+                title.toLowerCase().split(/\W+/).filter(w => w.length > 3)
+              );
+              const otherTitleWords = otherTitle.toLowerCase()
+                .split(/\W+/).filter(w => w.length > 3);
+              const titleOverlap = otherTitleWords
+                .filter(w => titleWords.has(w)).length;
+              if (titleWords.size > 0) {
+                score += Math.round((titleOverlap / titleWords.size) * 40);
+              }
+
+              // --- Signal 2: Error signature hash match (max 50 pts) ---
+              if (hasSig === 'true') {
+                const crypto = require('crypto');
+                const otherExceptions = [...new Set(
+                  (otherBody.match(/(\w+(?:Exception|Error))\b/g) || [])
+                )];
+                const otherStackPattern = /at\s+([\w.]+\.\w+)\s*\(/g;
+                const otherMethods = [];
+                let om;
+                while ((om = otherStackPattern.exec(otherBody)) !== null) {
+                  otherMethods.push(om[1]);
+                }
+                const otherSig = [...otherExceptions, ...otherMethods.slice(0, 5)]
+                  .sort().join('|').toLowerCase();
+                const otherHash = otherSig
+                  ? crypto.createHash('sha256')
+                      .update(otherSig).digest('hex').slice(0, 16)
+                  : '';
+                if (sigHash && otherHash && sigHash === otherHash) {
+                  score += 50;
+                }
+              }
+
+              // --- Signal 3: HTTP error code overlap (max 10 pts) ---
+              const errorCodes = body.match(/\b[45]\d{2}\b/g) || [];
+              const otherCodes = otherBody.match(/\b[45]\d{2}\b/g) || [];
+              const codeOverlap = errorCodes
+                .filter(c => otherCodes.includes(c)).length;
+              score += Math.min(codeOverlap * 5, 10);
+
+              if (score > bestScore) {
+                bestScore = score;
+                bestMatch = issue;
+              }
+            }
+
+            const THRESHOLD = 50;
+            const isDuplicate = bestScore >= THRESHOLD;
+
+            core.setOutput('is_duplicate', isDuplicate ? 'true' : 'false');
+            core.setOutput('duplicate_of',
+              isDuplicate ? bestMatch.number.toString() : '');
+            core.setOutput('score', bestScore.toString());
+
+            if (isDuplicate) {
+              core.info(`Duplicate detected: #${bestMatch.number} (score: ${bestScore})`);
+            } else {
+              core.info(`No duplicate found (best score: ${bestScore})`);
+            }
+
+      # ── Flag duplicate if detected ──
+      - name: Flag duplicate
+        if: steps.dedup.outputs.is_duplicate == 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const dupNum = '${{ steps.dedup.outputs.duplicate_of }}';
+            const score = '${{ steps.dedup.outputs.score }}';
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: [
+                `🔍 **Possible Duplicate Detected**`,
+                ``,
+                `This issue may be related to #${dupNum} (similarity score: ${score}/100).`,
+                ``,
+                `Please review the linked issue before proceeding. A team member will confirm.`,
+                ``,
+                `> _This check was performed automatically by Gate 1 – Duplicate Detection._`
+              ].join('\n')
+            });
+
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['possible-duplicate']
+            });
+
+            core.info(`Flagged issue #${context.payload.issue.number} as possible duplicate of #${dupNum}`);
+
+      # ── Log pass when no duplicate ──
+      - name: Gate 1 passed
+        if: steps.dedup.outputs.is_duplicate != 'true'
+        run: |
+          echo "✅ Gate 1 passed — no duplicate detected (best score: ${{ steps.dedup.outputs.score }})"
+          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 2"
+
+  # Future gates will be added below:
+  # gate2-version-check:
+  #   needs: [gate1-duplicate-check]
+  #   if: needs.gate1-duplicate-check.outputs.is_duplicate != 'true'
+  # gate3-info-completeness: ...
+  # gate4-by-design-check: ...
+  # gate5-fault-domain: ...
+  # gate6-fix-class: ...
+  # assign-copilot: ...
