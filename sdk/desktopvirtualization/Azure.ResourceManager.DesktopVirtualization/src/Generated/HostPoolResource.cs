@@ -28,18 +28,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _hostPoolsClientDiagnostics;
         private readonly HostPools _hostPoolsRestClient;
-        private readonly ClientDiagnostics _activeSessionHostConfigurationsClientDiagnostics;
-        private readonly ActiveSessionHostConfigurations _activeSessionHostConfigurationsRestClient;
         private readonly ClientDiagnostics _appAttachPackageInfoClientDiagnostics;
         private readonly AppAttachPackageInfo _appAttachPackageInfoRestClient;
-        private readonly ClientDiagnostics _scalingPlansClientDiagnostics;
-        private readonly ScalingPlans _scalingPlansRestClient;
-        private readonly ClientDiagnostics _userSessionsClientDiagnostics;
-        private readonly UserSessions _userSessionsRestClient;
         private readonly ClientDiagnostics _msixImagesClientDiagnostics;
         private readonly MSIXImages _msixImagesRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _scalingPlansClientDiagnostics;
+        private readonly ScalingPlans _scalingPlansRestClient;
+        private readonly ClientDiagnostics _userSessionsClientDiagnostics;
+        private readonly UserSessions _userSessionsRestClient;
         private readonly HostPoolData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools";
@@ -66,18 +64,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
             TryGetApiVersion(ResourceType, out string hostPoolApiVersion);
             _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _activeSessionHostConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _userSessionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _msixImagesRestClient = new MSIXImages(_msixImagesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _userSessionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -416,82 +412,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActiveSessionHostConfigurationResource> GetByHostPoolAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT(
-                _activeSessionHostConfigurationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HostPoolResource.GetByHostPool"), data => new ActiveSessionHostConfigurationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActiveSessionHostConfigurationResource> GetByHostPool(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT(
-                _activeSessionHostConfigurationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HostPoolResource.GetByHostPool"), data => new ActiveSessionHostConfigurationResource(Client, data));
-        }
-
-        /// <summary>
         /// Gets information from a package given the path to the package.
         /// <list type="bullet">
         /// <item>
@@ -575,186 +495,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 ImportPackageInfoContent.ToRequestContent(content),
                 context,
                 "HostPoolResource.ImportAppAttachPackageInfos"), data => new AppAttachPackageResource(Client, data));
-        }
-
-        /// <summary>
-        /// List scaling plan associated with hostpool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScalingPlans_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansAsyncCollectionResultOfT(
-                _scalingPlansRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                pageSize,
-                isDescending,
-                initialSkip,
-                context,
-                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
-        }
-
-        /// <summary>
-        /// List scaling plan associated with hostpool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScalingPlans_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansCollectionResultOfT(
-                _scalingPlansRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                pageSize,
-                isDescending,
-                initialSkip,
-                context,
-                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
-        }
-
-        /// <summary>
-        /// A synchronous resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserSessions_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserSessionResource> GetUserSessionsAsync(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsAsyncCollectionResultOfT(
-                _userSessionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                pageSize,
-                isDescending,
-                initialSkip,
-                context,
-                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
-        }
-
-        /// <summary>
-        /// A synchronous resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserSessions_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserSessionResource> GetUserSessions(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsCollectionResultOfT(
-                _userSessionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                pageSize,
-                isDescending,
-                initialSkip,
-                context,
-                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -1103,6 +843,186 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 initialSkip,
                 context,
                 "HostPoolResource.GetPrivateLinkResources");
+        }
+
+        /// <summary>
+        /// List scaling plan associated with hostpool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScalingPlans_ListByHostPool. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansAsyncCollectionResultOfT(
+                _scalingPlansRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context,
+                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
+        }
+
+        /// <summary>
+        /// List scaling plan associated with hostpool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScalingPlans_ListByHostPool. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansCollectionResultOfT(
+                _scalingPlansRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context,
+                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserSessions_ListByHostPool. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UserSessionResource> GetUserSessionsAsync(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsAsyncCollectionResultOfT(
+                _userSessionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context,
+                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UserSessions_ListByHostPool. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UserSessionResource> GetUserSessions(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsCollectionResultOfT(
+                _userSessionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context,
+                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>
