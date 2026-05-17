@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.ApiCenter
     {
         private readonly ClientDiagnostics _servicesClientDiagnostics;
         private readonly Services _servicesRestClient;
-        private readonly ClientDiagnostics _metadataSchemasClientDiagnostics;
-        private readonly MetadataSchemas _metadataSchemasRestClient;
-        private readonly ClientDiagnostics _workspacesClientDiagnostics;
-        private readonly Workspaces _workspacesRestClient;
         private readonly ApiCenterServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services";
@@ -58,10 +54,6 @@ namespace Azure.ResourceManager.ApiCenter
             TryGetApiVersion(ResourceType, out string apiCenterServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
             _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
-            _metadataSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            _metadataSchemasRestClient = new MetadataSchemas(_metadataSchemasClientDiagnostics, Pipeline, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
-            _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -404,102 +396,6 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Checks if specified metadata schema exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MetadataSchemas_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiCenterServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> HeadMetadataSchemaAsync(string metadataSchemaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
-
-            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterServiceResource.HeadMetadataSchema");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _metadataSchemasRestClient.CreateHeadMetadataSchemaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if specified metadata schema exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MetadataSchemas_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiCenterServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response HeadMetadataSchema(string metadataSchemaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
-
-            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterServiceResource.HeadMetadataSchema");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _metadataSchemasRestClient.CreateHeadMetadataSchemaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Exports the effective metadata schema.
         /// <list type="bullet">
         /// <item>
@@ -609,102 +505,6 @@ namespace Azure.ResourceManager.ApiCenter
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if specified workspace exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiCenterServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> HeadWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterServiceResource.HeadWorkspace");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateHeadWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceName, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if specified workspace exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiCenterServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response HeadWorkspace(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ApiCenterServiceResource.HeadWorkspace");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateHeadWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceName, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
             }
             catch (Exception e)
             {

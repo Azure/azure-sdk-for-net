@@ -16,6 +16,20 @@ namespace Azure.Generator.Management.Tests.Providers
     internal class ResourceClientProviderTests
     {
         [TestCase]
+        public void Verify_ResourceNameUsesIdentifierName()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(resourceName: "deploymentStackWhatIfResult");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            Assert.That(resourceProvider!.ResourceName, Is.EqualTo("DeploymentStackWhatIfResult"));
+            Assert.That(resourceProvider.Name, Is.EqualTo("DeploymentStackWhatIfResultResource"));
+        }
+
+        [TestCase]
         public void Verify_ValidateIdMethod()
         {
             var validateIdMethod = GetResourceClientProviderMethodByName("ValidateResourceId");

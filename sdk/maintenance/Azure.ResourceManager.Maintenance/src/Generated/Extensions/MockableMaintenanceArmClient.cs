@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         private ScheduledEvent _scheduledEventRestClient;
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
+        private ClientDiagnostics _configurationAssignmentsClientDiagnostics;
+        private ConfigurationAssignments _configurationAssignmentsRestClient;
         private ClientDiagnostics _updatesClientDiagnostics;
         private Updates _updatesRestClient;
 
@@ -46,6 +48,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+
+        private ClientDiagnostics ConfigurationAssignmentsClientDiagnostics => _configurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ConfigurationAssignments ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new ConfigurationAssignments(ConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -559,6 +565,86 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 scope0.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationAssignmentForResourceGroupOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
+                ConfigurationAssignmentsRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Name,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
+                context,
+                "MockableMaintenanceArmClient.GetAll");
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationAssignmentForResourceGroupOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ConfigurationAssignmentsGetAllCollectionResultOfT(
+                ConfigurationAssignmentsRestClient,
+                Guid.Parse(scope.SubscriptionId),
+                scope.Parent.Name,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
+                context,
+                "MockableMaintenanceArmClient.GetAll");
         }
 
         /// <summary>
