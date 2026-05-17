@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return Client.GetSubscriptionResource(Id).GetDeletedAsync(cancellationToken);
+            return Client.GetSubscriptionResource(Id).GetDeletedAppConfigurationStoresAsync(cancellationToken);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedAppConfigurationStoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            return Client.GetSubscriptionResource(Id).GetDeleted(cancellationToken);
+            return Client.GetSubscriptionResource(Id).GetDeletedAppConfigurationStores(cancellationToken);
         }
 
         IEnumerator<DeletedAppConfigurationStoreResource> IEnumerable<DeletedAppConfigurationStoreResource>.GetEnumerator()
