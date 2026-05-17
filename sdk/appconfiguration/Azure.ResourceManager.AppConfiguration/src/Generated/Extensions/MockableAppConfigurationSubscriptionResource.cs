@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetDeletedAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStoresAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeleted"), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -218,13 +218,13 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedAppConfigurationStoreResource> GetDeleted(CancellationToken cancellationToken = default)
+        public virtual Pageable<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStores(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeleted"), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>

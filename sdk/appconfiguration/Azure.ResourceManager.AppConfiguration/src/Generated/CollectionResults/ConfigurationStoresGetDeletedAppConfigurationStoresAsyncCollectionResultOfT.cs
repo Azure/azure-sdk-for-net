@@ -15,19 +15,19 @@ using Azure.ResourceManager.AppConfiguration.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    internal partial class ConfigurationStoresGetDeletedAsyncCollectionResultOfT : AsyncPageable<DeletedAppConfigurationStoreData>
+    internal partial class ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT : AsyncPageable<DeletedAppConfigurationStoreData>
     {
         private readonly ConfigurationStores _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ConfigurationStoresGetDeletedAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConfigurationStores client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConfigurationStoresGetDeletedAsyncCollectionResultOfT(ConfigurationStores client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT(ConfigurationStores client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppConfiguration
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ConfigurationStoresGetDeletedAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationStoresGetDeletedAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DeletedAppConfigurationStoreData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeletedRequest(nextLink, _subscriptionId, _context) : _client.CreateGetDeletedRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDeletedAppConfigurationStoresRequest(nextLink, _subscriptionId, _context) : _client.CreateGetDeletedAppConfigurationStoresRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
