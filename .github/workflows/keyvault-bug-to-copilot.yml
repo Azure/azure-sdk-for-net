@@ -421,10 +421,144 @@ jobs:
           echo "  Possibly fixed: ${{ steps.changelog-check.outputs.possibly_fixed || 'n/a' }}"
           echo "Issue #${{ github.event.issue.number }} proceeds to Gate 3"
 
+  # ──────────────────────────────────────────────────────────────────
+  # Gate 3 – Information Completeness
+  # Scores 9 signals to determine if the issue has enough detail
+  # for diagnosis. If insufficient (< 5 of 9), auto-requests missing
+  # info and pauses the pipeline. Re-triggers when author responds.
+  # No equivalent exists in the current triage workflows.
+  # ──────────────────────────────────────────────────────────────────
+  gate3-info-completeness:
+    needs: [gate2-version-check]
+    runs-on: ubuntu-latest
+    outputs:
+      is_sufficient: ${{ steps.score.outputs.is_sufficient }}
+      score: ${{ steps.score.outputs.score }}
+    steps:
+      # ── Score 9 completeness signals ──
+      - name: Score information completeness
+        id: score
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const bodyLower = body.toLowerCase();
+            const signals = {};
+
+            // 1. SDK version mentioned
+            signals.sdk_version = /\b\d+\.\d+\.\d+(-[\w.]+)?\b/.test(body);
+
+            // 2. Error message or stack trace
+            signals.error_or_stack = /(\w+(Exception|Error)\b|at\s+[\w.]+\.\w+\s*\(|Traceback|stack\s*trace)/i.test(body);
+
+            // 3. Repro steps
+            signals.repro_steps = /(steps?\s+to\s+repro|repro(duce|duction)?\s+steps|how\s+to\s+repro|to\s+reproduce)/i.test(body)
+              || /(^|\n)\s*(1\.|step\s*1|first,?\s)/im.test(body);
+
+            // 4. Expected behavior
+            signals.expected_behavior = /(expected\s+(behavior|result|outcome|output)|should\s+(return|work|succeed|produce|output|be\b))/i.test(body);
+
+            // 5. Actual behavior
+            signals.actual_behavior = /(actual\s+(behavior|result|outcome|output)|instead\s+(it|I\s+get|of)|but\s+(it|I\s+get|instead)|currently\s+(it|returns|throws))/i.test(body);
+
+            // 6. Environment (OS, .NET version, runtime)
+            signals.environment = /(windows|linux|macos|ubuntu|\.net\s*\d|dotnet\s*\d|runtime|x64|x86|arm64|net\d+\.0)/i.test(body);
+
+            // 7. Code sample
+            signals.code_sample = /(```[\s\S]*?```|<code>|new\s+\w+Client\s*\(|await\s+\w+\.\w+Async\s*\(|using\s+Azure\.\w+)/i.test(body);
+
+            // 8. Package name
+            signals.package_name = /(Azure\.Security\.KeyVault\.\w+|Azure\.Identity|Azure\.\w+\.\w+)/i.test(body);
+
+            // 9. Body length > 200 chars
+            signals.body_length = body.trim().length > 200;
+
+            const score = Object.values(signals).filter(Boolean).length;
+            const THRESHOLD = 5;
+            const isSufficient = score >= THRESHOLD;
+
+            // Identify missing signals for targeted questions
+            const missing = [];
+            if (!signals.sdk_version) missing.push('sdk_version');
+            if (!signals.error_or_stack) missing.push('error_or_stack');
+            if (!signals.repro_steps) missing.push('repro_steps');
+            if (!signals.expected_behavior) missing.push('expected_behavior');
+            if (!signals.actual_behavior) missing.push('actual_behavior');
+            if (!signals.environment) missing.push('environment');
+            if (!signals.code_sample) missing.push('code_sample');
+            if (!signals.package_name) missing.push('package_name');
+            if (!signals.body_length) missing.push('body_length');
+
+            core.setOutput('is_sufficient', isSufficient ? 'true' : 'false');
+            core.setOutput('score', score.toString());
+            core.setOutput('missing', JSON.stringify(missing));
+
+            core.info(`Completeness score: ${score}/9 (threshold: ${THRESHOLD})`);
+            core.info(`Signals: ${JSON.stringify(signals, null, 2)}`);
+            core.info(`Missing: ${missing.join(', ')}`);
+
+      # ── Request missing information if insufficient ──
+      - name: Request missing information
+        if: steps.score.outputs.is_sufficient != 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const score = '${{ steps.score.outputs.score }}';
+            const missing = JSON.parse('${{ steps.score.outputs.missing }}');
+
+            const questionMap = {
+              sdk_version: '- [ ] **SDK version** — Which version of the Azure KeyVault SDK are you using? (e.g., `Azure.Security.KeyVault.Secrets 4.6.0`)',
+              error_or_stack: '- [ ] **Error message / stack trace** — Please share the full exception message and stack trace.',
+              repro_steps: '- [ ] **Reproduction steps** — What are the steps to reproduce this issue?',
+              expected_behavior: '- [ ] **Expected behavior** — What did you expect to happen?',
+              actual_behavior: '- [ ] **Actual behavior** — What actually happened instead?',
+              environment: '- [ ] **Environment** — What OS, .NET version, and runtime are you using? (e.g., Windows 11, .NET 8.0, x64)',
+              code_sample: '- [ ] **Code sample** — Can you share a minimal code snippet that demonstrates the issue?',
+              package_name: '- [ ] **Package name** — Which specific KeyVault package are you using? (Secrets, Keys, Certificates, or Administration)',
+              body_length: '- [ ] **More detail** — Could you provide additional context about the issue?'
+            };
+
+            const questions = missing.map(m => questionMap[m]).filter(Boolean);
+
+            const commentBody = [
+              `📋 **Additional Information Needed**`,
+              ``,
+              `Thank you for reporting this issue! To help us diagnose it effectively, could you provide the following (${score}/9 signals detected, ${5 - parseInt(score)} more needed):`,
+              ``,
+              ...questions,
+              ``,
+              `Once you've provided this information, the issue will automatically continue through our review process.`,
+              ``,
+              `> _This check was performed automatically by Gate 3 – Information Completeness._`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: commentBody
+            });
+
+            // Add needs-author-feedback label to pause pipeline
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['needs-author-feedback']
+            });
+
+            core.info(`Requested missing info: ${missing.join(', ')}`);
+            core.info(`Added needs-author-feedback label — pipeline paused`);
+
+      # ── Log pass ──
+      - name: Gate 3 passed
+        if: steps.score.outputs.is_sufficient == 'true'
+        run: |
+          echo "✅ Gate 3 passed — information completeness score: ${{ steps.score.outputs.score }}/9"
+          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 4"
+
   # Future gates will be added below:
-  # gate3-info-completeness:
-  #   needs: [gate2-version-check]
-  # gate4-by-design-check: ...
+  # gate4-by-design-check:
+  #   needs: [gate3-info-completeness]
+  #   if: needs.gate3-info-completeness.outputs.is_sufficient == 'true'
   # gate5-fault-domain: ...
   # gate6-fix-class: ...
   # assign-copilot: ...
