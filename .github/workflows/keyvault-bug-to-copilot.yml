@@ -760,9 +760,478 @@ jobs:
           echo "✅ Gate 4 passed — no known-behavior match found"
           echo "Issue #${{ github.event.issue.number }} proceeds to Gate 5"
 
-  # Future gates will be added below:
-  # gate5-fault-domain:
-  #   needs: [gate4-by-design-check]
-  #   if: needs.gate4-by-design-check.outputs.is_by_design != 'true'
-  # gate6-fix-class: ...
-  # assign-copilot: ...
+  # ──────────────────────────────────────────────────────────────────
+  # Gate 5 – SDK vs Service Fault Domain
+  # Classifies whether the reported issue is an SDK-side bug (fixable
+  # by us) or a service-side issue (transfer to service team).
+  # Scores SDK and service signals independently; requires +2 margin
+  # for confident classification. Ambiguous → route to human.
+  # No equivalent exists in the current triage workflows.
+  # ──────────────────────────────────────────────────────────────────
+  gate5-fault-domain:
+    needs: [gate4-by-design-check]
+    if: needs.gate4-by-design-check.outputs.is_by_design != 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      domain: ${{ steps.classify.outputs.domain }}
+      sdk_score: ${{ steps.classify.outputs.sdk_score }}
+      service_score: ${{ steps.classify.outputs.service_score }}
+    steps:
+      - name: Classify fault domain
+        id: classify
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const body = (context.payload.issue.body || '');
+            const title = (context.payload.issue.title || '');
+            const text = (title + ' ' + body).toLowerCase();
+
+            let sdkScore = 0;
+            let serviceScore = 0;
+            const sdkSignals = [];
+            const serviceSignals = [];
+
+            // ── SDK-side signals ──
+            const sdkPatterns = [
+              { pattern: /NullReferenceException/i, weight: 3, name: 'NullReferenceException' },
+              { pattern: /ArgumentException|ArgumentNullException|ArgumentOutOfRangeException/i, weight: 3, name: 'ArgumentException' },
+              { pattern: /SerializationException|JsonException|JsonReaderException/i, weight: 3, name: 'SerializationException' },
+              { pattern: /FormatException/i, weight: 2, name: 'FormatException' },
+              { pattern: /ObjectDisposedException/i, weight: 3, name: 'ObjectDisposedException' },
+              { pattern: /NotImplementedException|NotSupportedException/i, weight: 2, name: 'NotImplementedException' },
+              { pattern: /InvalidOperationException/i, weight: 2, name: 'InvalidOperationException' },
+              { pattern: /(?:wrong|incorrect|missing)\s+(?:type|property|field|value)/i, weight: 2, name: 'wrong type/property' },
+              { pattern: /(?:sdk|client|library)\s+(?:bug|issue|error|crash|fail)/i, weight: 2, name: 'SDK bug mention' },
+              { pattern: /(?:deserialization|parsing|mapping)\s+(?:error|fail|issue|bug)/i, weight: 2, name: 'deserialization error' },
+              { pattern: /(?:model|response)\s+(?:property|field)\s+(?:null|missing|wrong|empty)/i, weight: 2, name: 'model property issue' },
+              { pattern: /at\s+Azure\.Security\.KeyVault\./i, weight: 2, name: 'KV SDK stack frame' }
+            ];
+
+            // ── Service-side signals ──
+            const servicePatterns = [
+              { pattern: /\b50[0-9]\b.*(?:internal|server|error|gateway|unavailable)/i, weight: 3, name: 'HTTP 5xx server error' },
+              { pattern: /(?:internal|server)\s+(?:error|failure).*(?:500|502|503)/i, weight: 3, name: 'server error' },
+              { pattern: /\b401\b.*(?:unauthorized|unauthenticated)/i, weight: 2, name: 'HTTP 401' },
+              { pattern: /\b403\b.*(?:forbidden|access\s+denied)/i, weight: 2, name: 'HTTP 403' },
+              { pattern: /(?:service|vault)\s+(?:down|unavailable|outage|unreachable)/i, weight: 3, name: 'service outage' },
+              { pattern: /(?:dns|network|firewall|proxy|timeout)\s+(?:error|fail|issue|resolv)/i, weight: 2, name: 'network/DNS issue' },
+              { pattern: /(?:timeout|timed?\s+out)\s+(?:connect|request|waiting)/i, weight: 2, name: 'connection timeout' },
+              { pattern: /(?:azure\s+)?(?:portal|service|resource\s+provider)\s+(?:error|issue|bug)/i, weight: 2, name: 'service/portal issue' },
+              { pattern: /(?:ARM|resource\s+manager|deployment)\s+(?:error|fail)/i, weight: 2, name: 'ARM deployment error' },
+              { pattern: /RequestFailedException.*(?:500|502|503|ServiceUnavailable)/i, weight: 3, name: 'RequestFailedException 5xx' }
+            ];
+
+            for (const { pattern, weight, name } of sdkPatterns) {
+              if (pattern.test(body) || pattern.test(title)) {
+                sdkScore += weight;
+                sdkSignals.push(name);
+              }
+            }
+
+            for (const { pattern, weight, name } of servicePatterns) {
+              if (pattern.test(body) || pattern.test(title)) {
+                serviceScore += weight;
+                serviceSignals.push(name);
+              }
+            }
+
+            // Require margin of +2 for confident classification
+            const MARGIN = 2;
+            let domain;
+            if (sdkScore >= serviceScore + MARGIN) {
+              domain = 'sdk';
+            } else if (serviceScore >= sdkScore + MARGIN) {
+              domain = 'service';
+            } else {
+              domain = 'ambiguous';
+            }
+
+            core.setOutput('domain', domain);
+            core.setOutput('sdk_score', sdkScore.toString());
+            core.setOutput('service_score', serviceScore.toString());
+            core.setOutput('sdk_signals', sdkSignals.join(', '));
+            core.setOutput('service_signals', serviceSignals.join(', '));
+
+            core.info(`Fault domain: ${domain}`);
+            core.info(`SDK score: ${sdkScore} (${sdkSignals.join(', ') || 'none'})`);
+            core.info(`Service score: ${serviceScore} (${serviceSignals.join(', ') || 'none'})`);
+
+      # ── Transfer service-side issues ──
+      - name: Transfer to service team
+        if: steps.classify.outputs.domain == 'service'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const sdkScore = '${{ steps.classify.outputs.sdk_score }}';
+            const serviceScore = '${{ steps.classify.outputs.service_score }}';
+            const serviceSignals = '${{ steps.classify.outputs.service_signals }}';
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: [
+                `🔀 **Service-Side Issue Detected**`,
+                ``,
+                `This issue appears to be a service-side problem rather than an SDK bug ` +
+                `(service score: ${serviceScore}, SDK score: ${sdkScore}).`,
+                ``,
+                `**Detected signals:** ${serviceSignals}`,
+                ``,
+                `This issue will be routed to the appropriate service team for investigation.`,
+                ``,
+                `> _This check was performed automatically by Gate 5 – Fault Domain Classification._`
+              ].join('\n')
+            });
+
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['Service']
+            });
+
+            core.info('Classified as service-side — transferred');
+
+      # ── Route ambiguous to human ──
+      - name: Route ambiguous to human
+        if: steps.classify.outputs.domain == 'ambiguous'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const sdkScore = '${{ steps.classify.outputs.sdk_score }}';
+            const serviceScore = '${{ steps.classify.outputs.service_score }}';
+            const sdkSignals = '${{ steps.classify.outputs.sdk_signals }}';
+            const serviceSignals = '${{ steps.classify.outputs.service_signals }}';
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: [
+                `🤔 **Ambiguous Fault Domain**`,
+                ``,
+                `The automated classifier could not confidently determine whether this is an SDK bug or a service issue.`,
+                ``,
+                `| Domain | Score | Signals |`,
+                `|---|---|---|`,
+                `| SDK | ${sdkScore} | ${sdkSignals || 'none'} |`,
+                `| Service | ${serviceScore} | ${serviceSignals || 'none'} |`,
+                ``,
+                `A team member will review and classify this issue manually.`,
+                ``,
+                `> _This check was performed automatically by Gate 5 – Fault Domain Classification._`
+              ].join('\n')
+            });
+
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['needs-team-attention']
+            });
+
+            core.info('Classified as ambiguous — routing to human');
+
+      # ── Log pass for SDK-side ──
+      - name: Gate 5 passed
+        if: steps.classify.outputs.domain == 'sdk'
+        run: |
+          echo "✅ Gate 5 passed — classified as SDK-side (SDK: ${{ steps.classify.outputs.sdk_score }}, Service: ${{ steps.classify.outputs.service_score }})"
+          echo "Issue #${{ github.event.issue.number }} proceeds to Gate 6"
+
+  # ──────────────────────────────────────────────────────────────────
+  # Gate 6 – Fix-Class Allowlist
+  # Deterministic safety-critical gate. Classifies the issue into a
+  # known fix class and checks it against a phased allowlist.
+  # Only issues matching an allowlisted class proceed to Copilot.
+  # This is the ONLY gate that takes autonomous action (assignment).
+  # ──────────────────────────────────────────────────────────────────
+  gate6-fix-class:
+    needs: [gate5-fault-domain]
+    if: needs.gate5-fault-domain.outputs.domain == 'sdk'
+    runs-on: ubuntu-latest
+    outputs:
+      is_eligible: ${{ steps.classify-fix.outputs.is_eligible }}
+      fix_class: ${{ steps.classify-fix.outputs.fix_class }}
+    steps:
+      - name: Classify fix class
+        id: classify-fix
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const body = (context.payload.issue.body || '').toLowerCase();
+            const title = (context.payload.issue.title || '').toLowerCase();
+            const text = title + ' ' + body;
+            const labels = (context.payload.issue.labels || []).map(l => l.name.toLowerCase());
+
+            // Fix-class definitions with detection patterns and phase
+            const fixClasses = [
+              {
+                id: 'docs-only',
+                name: 'Documentation / README / sample fix',
+                phase: 1,
+                patterns: [
+                  /(?:doc|documentation|readme|sample|example|guide|migration.?guide)\s+(?:error|wrong|incorrect|outdated|typo|broken|missing|fix)/,
+                  /(?:typo|spelling|grammatical|formatting)\s+(?:in|on|at)\s+(?:doc|readme|sample|comment)/,
+                  /(?:broken|dead|invalid)\s+(?:link|url|href|reference)\s+(?:in|on)\s+(?:doc|readme|sample)/,
+                  /(?:sample|example)\s+(?:code|snippet)\s+(?:doesn.t|does not|won.t|will not)\s+(?:compile|build|work|run)/
+                ]
+              },
+              {
+                id: 'test-only',
+                name: 'Test fix / flaky test',
+                phase: 1,
+                patterns: [
+                  /(?:flaky|intermittent|unstable|failing)\s+(?:test|spec)/,
+                  /(?:test|spec)\s+(?:fail|flaky|intermittent|broken|timeout)/,
+                  /(?:fix|update|repair)\s+(?:test|spec|assertion)/,
+                  /(?:test.?category|test.?filter|live.?test|recorded.?test)\s+(?:issue|error|fail)/
+                ]
+              },
+              {
+                id: 'error-message-fix',
+                name: 'Unclear or incorrect error message',
+                phase: 1,
+                patterns: [
+                  /(?:error|exception)\s+message\s+(?:unclear|confusing|wrong|incorrect|misleading|unhelpful|vague|generic)/,
+                  /(?:unclear|confusing|wrong|misleading|unhelpful|vague)\s+(?:error|exception)\s+message/,
+                  /(?:better|improve|clearer)\s+(?:error|exception)\s+(?:message|description|text)/,
+                  /(?:error|exception)\s+(?:message|text)\s+(?:should|could|needs to)\s+(?:say|mention|include|specify)/
+                ]
+              },
+              {
+                id: 'serializer-mapping-fix',
+                name: 'JSON / model / serialization fix',
+                phase: 2,
+                patterns: [
+                  /(?:json|serializ|deserializ|mapping)\s+(?:error|fail|issue|bug|wrong|incorrect)/,
+                  /(?:model|response|request)\s+(?:serializ|deserializ|mapping|conversion)\s+(?:error|fail|issue)/,
+                  /(?:property|field)\s+(?:not|isn.t)\s+(?:serialized|deserialized|mapped|populated|set)/,
+                  /(?:certificate|cert)\s+(?:serializ|deserializ|pars|format|conversion)\s+(?:error|fail)/
+                ]
+              },
+              {
+                id: 'validation-fix',
+                name: 'Null check / input validation fix',
+                phase: 2,
+                patterns: [
+                  /(?:null|missing)\s+(?:check|validation|guard|reference)\s+(?:needed|missing|should|add)/,
+                  /NullReferenceException.*(?:should|could|needs?\s+to)\s+(?:throw|validate|check)/,
+                  /(?:argument|parameter|input)\s+(?:validation|check)\s+(?:missing|needed|should)/,
+                  /(?:should|could)\s+(?:throw|raise)\s+(?:Argument(?:Null)?Exception|validation)/
+                ]
+              },
+              {
+                id: 'retry-fix',
+                name: 'Retry policy / timeout handling fix',
+                phase: 3,
+                patterns: [
+                  /(?:retry|retries)\s+(?:policy|logic|behavior|not working|fail|issue)/,
+                  /(?:timeout|time.?out)\s+(?:too short|too long|incorrect|wrong|not|issue)/,
+                  /(?:should|could|needs?\s+to)\s+(?:retry|back.?off|exponential)/,
+                  /(?:retry|timeout)\s+(?:config|option|setting|default)\s+(?:wrong|incorrect|issue)/
+                ]
+              }
+            ];
+
+            // Current phase — controls which fix classes are eligible
+            const CURRENT_PHASE = 1;
+
+            let bestMatch = null;
+            let bestScore = 0;
+
+            for (const fc of fixClasses) {
+              let matchCount = 0;
+              for (const pattern of fc.patterns) {
+                if (pattern.test(text)) {
+                  matchCount++;
+                }
+              }
+              if (matchCount > 0 && matchCount > bestScore) {
+                bestScore = matchCount;
+                bestMatch = fc;
+              }
+            }
+
+            const isEligible = bestMatch !== null && bestMatch.phase <= CURRENT_PHASE;
+            const fixClass = bestMatch ? bestMatch.id : 'unknown';
+            const fixName = bestMatch ? bestMatch.name : 'No matching fix class';
+            const fixPhase = bestMatch ? bestMatch.phase : 0;
+
+            core.setOutput('is_eligible', isEligible ? 'true' : 'false');
+            core.setOutput('fix_class', fixClass);
+            core.setOutput('fix_name', fixName);
+            core.setOutput('fix_phase', fixPhase.toString());
+            core.setOutput('match_score', bestScore.toString());
+            core.setOutput('current_phase', CURRENT_PHASE.toString());
+
+            core.info(`Fix class: ${fixClass} (${fixName})`);
+            core.info(`Phase: ${fixPhase}, Current phase: ${CURRENT_PHASE}`);
+            core.info(`Eligible: ${isEligible}, Match score: ${bestScore}`);
+
+      # ── Label eligible issues ──
+      - name: Label auto-fix candidate
+        if: steps.classify-fix.outputs.is_eligible == 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['auto-fix-candidate']
+            });
+            core.info('Added auto-fix-candidate label');
+
+      # ── Label skipped issues ──
+      - name: Label auto-fix skipped
+        if: steps.classify-fix.outputs.is_eligible != 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fixClass = '${{ steps.classify-fix.outputs.fix_class }}';
+            const fixName = '${{ steps.classify-fix.outputs.fix_name }}';
+            const fixPhase = '${{ steps.classify-fix.outputs.fix_phase }}';
+            const currentPhase = '${{ steps.classify-fix.outputs.current_phase }}';
+
+            let reason;
+            if (fixClass === 'unknown') {
+              reason = 'No matching fix class was identified for this issue.';
+            } else {
+              reason = `Detected fix class \`${fixClass}\` (${fixName}) is Phase ${fixPhase}, ` +
+                `but auto-fix is currently limited to Phase ${currentPhase} classes.`;
+            }
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              body: [
+                `⏭️ **Auto-Fix Not Eligible**`,
+                ``,
+                reason,
+                ``,
+                `This issue will be handled by a human engineer.`,
+                ``,
+                `> _This check was performed automatically by Gate 6 – Fix-Class Allowlist._`
+              ].join('\n')
+            });
+
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['auto-fix-skipped']
+            });
+
+            core.info(`Not eligible: ${fixClass} (phase ${fixPhase} > current ${currentPhase})`);
+
+      # ── Log pass ──
+      - name: Gate 6 passed
+        if: steps.classify-fix.outputs.is_eligible == 'true'
+        run: |
+          echo "✅ Gate 6 passed — fix class: ${{ steps.classify-fix.outputs.fix_class }}"
+          echo "Issue #${{ github.event.issue.number }} is eligible for Copilot assignment"
+
+  # ──────────────────────────────────────────────────────────────────
+  # Assign Copilot – Final step after all 6 gates pass
+  # Uses GitHub REST API to assign the Copilot coding agent.
+  # Falls back to GraphQL API if REST fails.
+  # ──────────────────────────────────────────────────────────────────
+  assign-copilot:
+    needs: [gate6-fix-class]
+    if: needs.gate6-fix-class.outputs.is_eligible == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign Copilot to issue
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const fixClass = '${{ needs.gate6-fix-class.outputs.fix_class }}';
+
+            // Method 1: REST API (primary)
+            try {
+              await github.rest.issues.addAssignees({
+                ...context.repo,
+                issue_number: issueNumber,
+                assignees: ['copilot']
+              });
+              core.info(`Assigned Copilot to issue #${issueNumber} via REST API`);
+            } catch (restError) {
+              core.warning(`REST assignment failed: ${restError.message}`);
+
+              // Method 2: GraphQL API (fallback)
+              try {
+                // Find the Copilot actor ID
+                const suggestedResult = await github.graphql(`
+                  query($owner: String!, $repo: String!, $number: Int!) {
+                    repository(owner: $owner, name: $repo) {
+                      issue(number: $number) {
+                        id
+                        suggestedActors(capabilities: [COPILOT], first: 1) {
+                          nodes { id login }
+                        }
+                      }
+                    }
+                  }
+                `, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  number: issueNumber,
+                  headers: { 'GraphQL-Features': 'issues_copilot_assignment_api_support' }
+                });
+
+                const issue = suggestedResult.repository.issue;
+                const copilotActor = issue.suggestedActors.nodes[0];
+
+                if (!copilotActor) {
+                  throw new Error('Copilot actor not found via suggestedActors');
+                }
+
+                await github.graphql(`
+                  mutation($assignableId: ID!, $actorId: ID!) {
+                    replaceActorsForAssignable(input: {
+                      assignableId: $assignableId
+                      actorIds: [$actorId]
+                    }) {
+                      clientMutationId
+                    }
+                  }
+                `, {
+                  assignableId: issue.id,
+                  actorId: copilotActor.id,
+                  headers: { 'GraphQL-Features': 'issues_copilot_assignment_api_support' }
+                });
+
+                core.info(`Assigned Copilot to issue #${issueNumber} via GraphQL API`);
+              } catch (graphqlError) {
+                core.setFailed(`Both REST and GraphQL assignment failed: ${graphqlError.message}`);
+                return;
+              }
+            }
+
+            // Post confirmation comment
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issueNumber,
+              body: [
+                `🤖 **Copilot Coding Agent Assigned**`,
+                ``,
+                `This issue passed all 6 eligibility gates and has been assigned to the Copilot coding agent.`,
+                ``,
+                `| Gate | Result |`,
+                `|---|---|`,
+                `| 1. Duplicate Detection | ✅ Passed |`,
+                `| 2. Version Currency | ✅ Passed |`,
+                `| 3. Information Completeness | ✅ Passed |`,
+                `| 4. Working-as-Designed | ✅ Passed |`,
+                `| 5. Fault Domain | ✅ SDK-side |`,
+                `| 6. Fix Class | ✅ \`${fixClass}\` |`,
+                ``,
+                `Copilot will analyze the codebase, create a fix branch, and open a draft PR.`,
+                `A human reviewer must approve before merge.`,
+                ``,
+                `> _Automated by the KeyVault Bug-to-Copilot pipeline._`
+              ].join('\n')
+            });
+
+            await github.rest.issues.addLabels({
+              ...context.repo,
+              issue_number: issueNumber,
+              labels: ['auto-fix-attempted']
+            });
