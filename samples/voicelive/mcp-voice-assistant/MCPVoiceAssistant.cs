@@ -108,13 +108,13 @@ public class MCPVoiceAssistant : IDisposable
         // MCPApprovalResponseRequestItem is not available for sending approvals from client code.
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("deepwiki", "https://mcp.deepwiki.com/mcp")
         {
-            RequireApproval = MCPApprovalType.Never,
+            RequireApproval = BinaryData.FromObjectAsJson("never"),
             AllowedTools = { "read_wiki_structure", "ask_question" }
         });
 
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("azure_doc", "https://learn.microsoft.com/api/mcp")
         {
-            RequireApproval = MCPApprovalType.Never
+            RequireApproval = BinaryData.FromObjectAsJson("never")
         });
 
         try
