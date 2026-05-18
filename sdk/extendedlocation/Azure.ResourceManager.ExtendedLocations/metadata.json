@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.ExtendedLocation": "2021-08-31-preview"
+  }
+}

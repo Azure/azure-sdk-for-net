@@ -366,6 +366,132 @@ namespace Azure.AI.Projects
             return new EmbeddingConfiguration(modelDeploymentName, embeddingField, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Model Version Definition. </summary>
+        /// <param name="systemData"> System related metadata. </param>
+        /// <param name="blobUri"> URI of the model artifact in blob storage. </param>
+        /// <param name="weightType"> The weight type of the model. </param>
+        /// <param name="baseModel"> Base model asset ID. </param>
+        /// <param name="source"> The source of the model. </param>
+        /// <param name="loraConfig"> Adapter-specific configuration. Required when weight_type is lora; ignored otherwise. May be auto-populated from adapter_config.json when present in the uploaded files — user-provided values take precedence over auto-detected values. </param>
+        /// <param name="artifactProfile"> The artifact profile of the model. </param>
+        /// <param name="warnings"> Service-computed advisory warnings derived from the artifact profile. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The version of the resource. </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <returns> A new <see cref="Projects.ModelVersion"/> instance for mocking. </returns>
+        public static ModelVersion ModelVersion(SystemDataV3 systemData = default, Uri blobUri = default, FoundryModelWeightType? weightType = default, string baseModel = default, ModelSourceData source = default, LoraConfig loraConfig = default, ArtifactProfile artifactProfile = default, IEnumerable<FoundryModelWarning> warnings = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        {
+            warnings ??= new ChangeTrackingList<FoundryModelWarning>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ModelVersion(
+                systemData,
+                blobUri,
+                weightType,
+                baseModel,
+                source,
+                loraConfig,
+                artifactProfile,
+                warnings.ToList(),
+                id,
+                name,
+                version,
+                description,
+                tags,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> System metadata for a resource. </summary>
+        /// <param name="createdAt"> Timestamp of resource creation. </param>
+        /// <param name="createdBy"> Identity that created the resource. </param>
+        /// <param name="createdByType"> Type of identity that created the resource. </param>
+        /// <param name="lastModifiedAt"> Timestamp of last resource modification. </param>
+        /// <returns> A new <see cref="Projects.SystemDataV3"/> instance for mocking. </returns>
+        public static SystemDataV3 SystemDataV3(DateTimeOffset? createdAt = default, string createdBy = default, string createdByType = default, DateTimeOffset? lastModifiedAt = default)
+        {
+            return new SystemDataV3(createdAt, createdBy, createdByType, lastModifiedAt, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Source information for the model. </summary>
+        /// <param name="sourceType"> The source type of the model. </param>
+        /// <param name="jobId"> The job ID that produced this model. </param>
+        /// <returns> A new <see cref="Projects.ModelSourceData"/> instance for mocking. </returns>
+        public static ModelSourceData ModelSourceData(FoundryModelSourceType? sourceType = default, string jobId = default)
+        {
+            return new ModelSourceData(sourceType, jobId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Adapter-specific metadata for LoRA models. Drives serving engine configuration at deployment time. </summary>
+        /// <param name="rank"> LoRA rank (r). Positive integer. Common values: 8, 16, 32, 64. </param>
+        /// <param name="alpha"> LoRA scaling factor (α). Positive integer; typically 2× the rank. </param>
+        /// <param name="targetModules"> Model layers modified by the adapter (e.g., q_proj, v_proj). Auto-detected from adapter_config.json if omitted. </param>
+        /// <param name="dropout"> Dropout rate used during training. Informational — not used at serving time. </param>
+        /// <returns> A new <see cref="Projects.LoraConfig"/> instance for mocking. </returns>
+        public static LoraConfig LoraConfig(int? rank = default, int? alpha = default, IEnumerable<string> targetModules = default, float? dropout = default)
+        {
+            targetModules ??= new ChangeTrackingList<string>();
+
+            return new LoraConfig(rank, alpha, targetModules.ToList(), dropout, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Artifact profile of the model. </summary>
+        /// <param name="category"> The category of the artifact profile. </param>
+        /// <param name="signals"> Signals detected in the model artifact. </param>
+        /// <returns> A new <see cref="Projects.ArtifactProfile"/> instance for mocking. </returns>
+        public static ArtifactProfile ArtifactProfile(FoundryModelArtifactProfileCategory category = default, IEnumerable<FoundryModelArtifactProfileSignal> signals = default)
+        {
+            signals ??= new ChangeTrackingList<FoundryModelArtifactProfileSignal>();
+
+            return new ArtifactProfile(category, signals.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A warning associated with a model. </summary>
+        /// <param name="code"> The warning code. </param>
+        /// <param name="message"> The warning message. </param>
+        /// <returns> A new <see cref="Projects.FoundryModelWarning"/> instance for mocking. </returns>
+        public static FoundryModelWarning FoundryModelWarning(FoundryModelWarningCode? code = default, string message = default)
+        {
+            return new FoundryModelWarning(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateAsyncResponse. </summary>
+        /// <param name="location"> URL to poll for operation status. </param>
+        /// <param name="operationResult"> URL to the operation result, or null if the operation is still in progress. </param>
+        /// <returns> A new <see cref="Projects.CreateAsyncResponse"/> instance for mocking. </returns>
+        public static CreateAsyncResponse CreateAsyncResponse(Uri location = default, Uri operationResult = default)
+        {
+            return new CreateAsyncResponse(location, operationResult, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a request for a pending upload of a model version. </summary>
+        /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
+        /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
+        /// <returns> A new <see cref="Projects.ModelPendingUploadRequest"/> instance for mocking. </returns>
+        public static ModelPendingUploadRequest ModelPendingUploadRequest(string pendingUploadId = default, string connectionName = default)
+        {
+            return new ModelPendingUploadRequest(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the response for a model pending upload request. </summary>
+        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="pendingUploadId"> ID for this upload request. </param>
+        /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
+        /// <returns> A new <see cref="Projects.ModelPendingUploadResponse"/> instance for mocking. </returns>
+        public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
+        {
+            return new ModelPendingUploadResponse(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request to fetch credentials for a model asset. </summary>
+        /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
+        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        {
+            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// Model Deployment Definition
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ModelDeployment"/>.
@@ -586,9 +712,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-        /// <param name="temperature"> The temperature parameter for sampling. </param>
-        /// <param name="topP"> The top-p parameter for nucleus sampling. </param>
-        /// <param name="seed"> The random seed for reproducibility. </param>
+        /// <param name="temperature"> The temperature parameter for sampling. Defaults to 1.0. </param>
+        /// <param name="topP"> The top-p parameter for nucleus sampling. Defaults to 1.0. </param>
+        /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
         /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
         /// <returns> A new <see cref="Evaluation.ModelSamplingParams"/> instance for mocking. </returns>
         public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
@@ -1238,6 +1364,61 @@ namespace Azure.AI.Projects
             return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A single memory item stored in the memory store, containing content and metadata.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Memory.UserProfileMemoryItem"/> and <see cref="Memory.ChatSummaryMemoryItem"/>.
+        /// </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <param name="kind"> The kind of the memory item. </param>
+        /// <returns> A new <see cref="Memory.MemoryItem"/> instance for mocking. </returns>
+        public static MemoryItem MemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
+        {
+            return new UnknownMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                new MemoryItemKind(kind),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="Memory.UserProfileMemoryItem"/> instance for mocking. </returns>
+        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new UserProfileMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.UserProfile,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item containing a summary extracted from conversations. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="Memory.ChatSummaryMemoryItem"/> instance for mocking. </returns>
+        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new ChatSummaryMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.ChatSummary,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Usage statistics of a memory store operation. </summary>
         /// <param name="embeddingTokens"> The number of embedding tokens. </param>
         /// <param name="inputTokens"> The number of input tokens. </param>
@@ -1302,6 +1483,16 @@ namespace Azure.AI.Projects
         public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = default)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response for deleting a memory item from a memory store. </summary>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
+        /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
+        /// <returns> A new <see cref="Projects.DeleteMemoryResponse"/> instance for mocking. </returns>
+        public static DeleteMemoryResponse DeleteMemoryResponse(string name = default, string memoryId = default, bool deleted = default)
+        {
+            return new DeleteMemoryResponse("memory.deleted", name, memoryId, deleted, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Evaluator Metric. </summary>

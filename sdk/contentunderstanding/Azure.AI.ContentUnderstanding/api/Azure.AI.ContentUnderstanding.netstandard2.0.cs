@@ -573,6 +573,13 @@ namespace Azure.AI.ContentUnderstanding
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDefaultsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentUnderstanding.ContentUnderstandingDefaults>> UpdateDefaultsAsync(System.Collections.Generic.IDictionary<string, string> modelDeployments, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class ContentUnderstandingClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddContentUnderstandingClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddContentUnderstandingClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.ContentUnderstanding.ContentUnderstandingClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedContentUnderstandingClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedContentUnderstandingClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.ContentUnderstanding.ContentUnderstandingClientSettings> configureSettings) { throw null; }
+    }
     public partial class ContentUnderstandingClientOptions : Azure.Core.ClientOptions
     {
         public ContentUnderstandingClientOptions(Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions.ServiceVersion version = Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01) { }

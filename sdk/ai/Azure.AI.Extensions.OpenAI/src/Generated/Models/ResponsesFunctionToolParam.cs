@@ -27,18 +27,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        /// <param name="strict"></param>
+        /// <param name="isStrict"></param>
         /// <param name="type"></param>
-        /// <param name="deferLoading"> Whether this function should be deferred and discovered via tool search. </param>
+        /// <param name="shouldDeferLoading"> Whether this function should be deferred and discovered via tool search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesFunctionToolParam(string name, string description, ResponsesEmptyModelParam parameters, bool? strict, string @type, bool? deferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesFunctionToolParam(string name, string description, ResponsesEmptyModelParam parameters, bool? isStrict, string @type, bool? shouldDeferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
-            Strict = strict;
+            IsStrict = isStrict;
             Type = @type;
-            DeferLoading = deferLoading;
+            ShouldDeferLoading = shouldDeferLoading;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,13 +51,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Gets or sets the Parameters. </summary>
         public ResponsesEmptyModelParam Parameters { get; set; }
 
-        /// <summary> Gets or sets the Strict. </summary>
-        public bool? Strict { get; set; }
+        /// <summary> Gets or sets the IsStrict. </summary>
+        public bool? IsStrict { get; set; }
 
         /// <summary> Gets the Type. </summary>
         public string Type { get; } = "function";
 
         /// <summary> Whether this function should be deferred and discovered via tool search. </summary>
-        public bool? DeferLoading { get; set; }
+        public bool? ShouldDeferLoading { get; set; }
     }
 }

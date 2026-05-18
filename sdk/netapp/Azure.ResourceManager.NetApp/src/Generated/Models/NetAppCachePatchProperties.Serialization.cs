@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppCachePatchProperties : IUtf8JsonSerializable, IJsonModel<NetAppCachePatchProperties>
+    /// <summary> The updatable properties of the Cache. </summary>
+    public partial class NetAppCachePatchProperties : IJsonModel<NetAppCachePatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppCachePatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetAppCachePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetAppCachePatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppCachePatchProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppCachePatchProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetAppCachePatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppCachePatchProperties IPersistableModel<NetAppCachePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppCachePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppCachePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppCachePatchProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
@@ -48,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProtocolTypes)
+                foreach (NetAppProtocolType item in ProtocolTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -79,15 +120,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("writeBack"u8);
                 writer.WriteStringValue(WriteBack.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,121 +137,124 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        NetAppCachePatchProperties IJsonModel<NetAppCachePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppCachePatchProperties IJsonModel<NetAppCachePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetAppCachePatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppCachePatchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetAppCachePatchProperties(document.RootElement, options);
         }
 
-        internal static NetAppCachePatchProperties DeserializeNetAppCachePatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetAppCachePatchProperties DeserializeNetAppCachePatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long? size = default;
-            CachePropertiesExportPolicy exportPolicy = default;
+            NetAppCachePropertiesExportPolicy exportPolicy = default;
             IList<NetAppProtocolType> protocolTypes = default;
             NetAppSmbSettings smbSettings = default;
             float? throughputMibps = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             NetAppCifsChangeNotifyState? cifsChangeNotifications = default;
             NetAppEnableWriteBackState? writeBack = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    size = property.Value.GetInt64();
+                    size = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("exportPolicy"u8))
+                if (prop.NameEquals("exportPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exportPolicy = CachePropertiesExportPolicy.DeserializeCachePropertiesExportPolicy(property.Value, options);
+                    exportPolicy = NetAppCachePropertiesExportPolicy.DeserializeNetAppCachePropertiesExportPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("protocolTypes"u8))
+                if (prop.NameEquals("protocolTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NetAppProtocolType> array = new List<NetAppProtocolType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new NetAppProtocolType(item.GetString()));
                     }
                     protocolTypes = array;
                     continue;
                 }
-                if (property.NameEquals("smbSettings"u8))
+                if (prop.NameEquals("smbSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smbSettings = NetAppSmbSettings.DeserializeNetAppSmbSettings(property.Value, options);
+                    smbSettings = NetAppSmbSettings.DeserializeNetAppSmbSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("throughputMibps"u8))
+                if (prop.NameEquals("throughputMibps"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    throughputMibps = property.Value.GetSingle();
+                    throughputMibps = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("keyVaultPrivateEndpointResourceId"u8))
+                if (prop.NameEquals("keyVaultPrivateEndpointResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVaultPrivateEndpointResourceId = new ResourceIdentifier(property.Value.GetString());
+                    keyVaultPrivateEndpointResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cifsChangeNotifications"u8))
+                if (prop.NameEquals("cifsChangeNotifications"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cifsChangeNotifications = new NetAppCifsChangeNotifyState(property.Value.GetString());
+                    cifsChangeNotifications = new NetAppCifsChangeNotifyState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("writeBack"u8))
+                if (prop.NameEquals("writeBack"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    writeBack = new NetAppEnableWriteBackState(property.Value.GetString());
+                    writeBack = new NetAppEnableWriteBackState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppCachePatchProperties(
                 size,
                 exportPolicy,
@@ -220,38 +264,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 keyVaultPrivateEndpointResourceId,
                 cifsChangeNotifications,
                 writeBack,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetAppCachePatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppCachePatchProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetAppCachePatchProperties IPersistableModel<NetAppCachePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppCachePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetAppCachePatchProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppCachePatchProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetAppCachePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
