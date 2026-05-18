@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="response"> The response containing the Models namespace instance. </param>
         public static implicit operator MaintenanceConfigurationAssignmentData(Response<Models.MaintenanceConfigurationAssignmentData> response)
         {
-            if (response == null) return null;
+            if (response == null)
+                return null;
             Models.MaintenanceConfigurationAssignmentData modelsValue = response.Value;
             return modelsValue;
         }

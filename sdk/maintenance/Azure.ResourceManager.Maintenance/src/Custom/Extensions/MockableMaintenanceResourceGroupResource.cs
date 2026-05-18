@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ModelsConfigurationAssignmentAsyncPageable(new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments"));
+            return new ModelsConfigurationAssignmentAsyncPageable(new ConfigurationAssignmentsGetConfigurationAssignmentsAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments"));
         }
 
         /// <summary> List configurationAssignments for resource. </summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ModelsConfigurationAssignmentPageable(new ConfigurationAssignmentsGetAllCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments"));
+            return new ModelsConfigurationAssignmentPageable(new ConfigurationAssignmentsGetConfigurationAssignmentsCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments"));
         }
 
         /// <summary> List configurationAssignments for resource with parent. </summary>

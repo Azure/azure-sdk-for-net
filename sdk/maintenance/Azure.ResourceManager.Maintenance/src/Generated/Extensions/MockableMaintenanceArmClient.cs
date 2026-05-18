@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
+            return new ConfigurationAssignmentsGetConfigurationAssignmentsAsyncCollectionResultOfT(
                 ConfigurationAssignmentsRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.Parent.Name,
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 scope.ResourceType.Type,
                 scope.Name,
                 context,
-                "MockableMaintenanceArmClient.GetAll");
+                "MockableMaintenanceArmClient.GetConfigurationAssignments");
         }
 
         /// <summary>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationAssignmentsGetAllCollectionResultOfT(
+            return new ConfigurationAssignmentsGetConfigurationAssignmentsCollectionResultOfT(
                 ConfigurationAssignmentsRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.Parent.Name,
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 scope.ResourceType.Type,
                 scope.Name,
                 context,
-                "MockableMaintenanceArmClient.GetAll");
+                "MockableMaintenanceArmClient.GetConfigurationAssignments");
         }
 
         /// <summary>

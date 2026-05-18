@@ -1,4 +1,4 @@
 directory: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance
-commit: 4496888f7022cbd5834ee593a13effb8482c3764
-repo: Azure/azure-rest-api-specs
+commit: 1e07bf0ecc33fc90ff54c7bf4d42a86b5e79a218
+repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
