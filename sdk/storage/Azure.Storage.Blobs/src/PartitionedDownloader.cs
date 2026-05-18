@@ -277,7 +277,6 @@ namespace Azure.Storage.Blobs
                 }
                 if (initialLength == totalLength)
                 {
-                    // TODO reenable master crc for oneshot
                     await HandleOneShotDownload(initialResponse, destination, async, cancellationToken)
                         .ConfigureAwait(false);
                     return initialResponse.GetRawResponse();
