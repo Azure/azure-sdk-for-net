@@ -1,4 +1,4 @@
 directory: specification/consumption/resource-manager/Microsoft.Consumption/Consumption
-commit: 2c7cfc76748e0450ce375eeeb7ecc3a04a4dc732
+commit: e472029e99c30ea0d4e3c12efb6cfc6189583772
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
