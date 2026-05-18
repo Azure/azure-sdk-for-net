@@ -70,7 +70,7 @@
     {
       "$id": "6",
       "kind": "constant",
-      "name": "bulletPointsModelContentType",
+      "name": "BulletPointsModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

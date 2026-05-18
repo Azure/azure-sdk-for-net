@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.ApiCenter
     {
         private readonly ClientDiagnostics _apisClientDiagnostics;
         private readonly Apis _apisRestClient;
-        private readonly ClientDiagnostics _apiVersionsClientDiagnostics;
-        private readonly ApiVersions _apiVersionsRestClient;
-        private readonly ClientDiagnostics _deploymentsClientDiagnostics;
-        private readonly Deployments _deploymentsRestClient;
 
         /// <summary> Initializes a new instance of ApiCenterApiCollection for mocking. </summary>
         protected ApiCenterApiCollection()
@@ -45,10 +41,6 @@ namespace Azure.ResourceManager.ApiCenter
             TryGetApiVersion(ApiCenterApiResource.ResourceType, out string apiCenterApiApiVersion);
             _apisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterApiResource.ResourceType.Namespace, Diagnostics);
             _apisRestClient = new Apis(_apisClientDiagnostics, Pipeline, Endpoint, apiCenterApiApiVersion ?? "2024-06-01-preview");
-            _apiVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterApiResource.ResourceType.Namespace, Diagnostics);
-            _apiVersionsRestClient = new ApiVersions(_apiVersionsClientDiagnostics, Pipeline, Endpoint, apiCenterApiApiVersion ?? "2024-06-01-preview");
-            _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterApiResource.ResourceType.Namespace, Diagnostics);
-            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, apiCenterApiApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 

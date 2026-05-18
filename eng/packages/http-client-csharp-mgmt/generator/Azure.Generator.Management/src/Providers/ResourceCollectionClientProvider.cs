@@ -58,7 +58,7 @@ namespace Azure.Generator.Management.Providers
             _resource = resource;
 
             // Initialize client info dictionary using extension method
-            _clientInfos = resourceMetadata.CreateClientInfosMap(this);
+            _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
