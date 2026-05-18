@@ -4,13 +4,16 @@
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
+using System.ComponentModel;
 using System.Reflection;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -76,6 +79,75 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Not.Contain("string eTag"));
         }
 
+        [Test]
+        public void BackwardCompatFactoryMethodIsPreservedForCurrentModelType()
+        {
+            var emptyModel = InputFactory.Model(
+                "EmptyResourceData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [emptyModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(emptyModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var signature = new MethodSignature(
+                "EmptyResourceData",
+                $"Creates an empty resource.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"An empty resource.",
+                [],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))]);
+            var method = new MethodProvider(signature, MethodBodyStatement.Empty, modelFactory);
+
+            Assert.That(Management.Visitors.ModelFactoryVisitor.ShouldPreserveBackwardCompatMethod(method, model.Type), Is.True);
+        }
+
+        [Test]
+        public void AddsLegacyConstructorOverloadWhenPreviousOrderDiffers()
+        {
+            var modelInput = InputFactory.Model(
+                "ConstructorOrderModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("name", InputPrimitiveType.String),
+                    InputFactory.Property("count", InputPrimitiveType.Int32)
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [modelInput]);
+            var model = plugin.Object.TypeFactory.CreateModel(modelInput)!;
+            var fullParameters = model.FullConstructor.Signature.Parameters;
+            Assert.That(fullParameters.Count, Is.GreaterThan(1));
+
+            var previousParameters = fullParameters.Reverse().ToArray();
+            var previousSignature = new ConstructorSignature(
+                model.Type,
+                $"Legacy constructor.",
+                MethodSignatureModifiers.Internal,
+                previousParameters);
+            var previousConstructor = new ConstructorProvider(previousSignature, MethodBodyStatement.Empty, model);
+            var lastContractView = new TestModelFactoryView(model.Name)
+            {
+                ConstructorsToBuild = [previousConstructor]
+            };
+            SetLastContractView(model, lastContractView);
+
+            var originalConstructorCount = model.Constructors.Count;
+            Management.Visitors.ConstructorCompatibilityVisitor.AddLegacyConstructorOverloads(model);
+
+            Assert.That(model.Constructors.Count, Is.EqualTo(originalConstructorCount + 1));
+            var addedConstructor = model.Constructors.Last();
+            Assert.That(addedConstructor.Signature.Parameters.Select(p => p.Name), Is.EqualTo(previousParameters.Select(p => p.Name)));
+            Assert.That(addedConstructor.Signature.Initializer, Is.Not.Null);
+            Assert.That(addedConstructor.Signature.Initializer!.IsBase, Is.False);
+            Assert.That(
+                addedConstructor.Signature.Initializer.Arguments.OfType<VariableExpression>().Select(arg => arg.Declaration.RequestedName),
+                Is.EqualTo(fullParameters.Select(p => p.Name)));
+        }
+
         private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
         {
             typeof(TypeProvider).GetField(
@@ -95,11 +167,15 @@ namespace Azure.Generator.Mgmt.Tests
 
             public MethodProvider[] MethodsToBuild { get; set; } = [];
 
+            public ConstructorProvider[] ConstructorsToBuild { get; set; } = [];
+
             protected override string BuildName() => _name;
 
             protected override string BuildRelativeFilePath() => $"{Name}.cs";
 
             protected override MethodProvider[] BuildMethods() => MethodsToBuild;
+
+            protected override ConstructorProvider[] BuildConstructors() => ConstructorsToBuild;
         }
     }
 }

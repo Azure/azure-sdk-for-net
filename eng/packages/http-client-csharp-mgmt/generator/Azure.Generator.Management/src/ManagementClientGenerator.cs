@@ -74,6 +74,7 @@ namespace Azure.Generator.Management
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new FlattenPropertyVisitor());
+            AddVisitor(new ConstructorCompatibilityVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
