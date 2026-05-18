@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationResponse> GetAllAsync(CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<OperationResponse> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationResponse> GetAll(CancellationToken cancellationToken = default)
+        internal virtual Pageable<OperationResponse> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Reservations;
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The response containing operation information. </summary>
-    public partial class OperationResponse : IJsonModel<OperationResponse>
+    internal partial class OperationResponse : IJsonModel<OperationResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -1,4 +1,4 @@
 directory: specification/reservations/resource-manager/Microsoft.Capacity/Reservations
-commit: a2b4c4c35aee2c516df6aa915c3c5a465d612952
-repo: Azure/azure-rest-api-specs
+commit: b6a1070d37cea314e703c9a78a33cfeece899414
+repo: welovej/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

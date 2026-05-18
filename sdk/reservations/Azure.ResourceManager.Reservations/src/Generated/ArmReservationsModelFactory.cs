@@ -158,35 +158,6 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationResourceName(value, localizedValue, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The response containing operation information. </summary>
-        /// <param name="name"> Name of the operation. </param>
-        /// <param name="isDataAction"> Indicates whether the operation is a data action. </param>
-        /// <param name="display"> Display of the operation. </param>
-        /// <param name="origin"> Origin of the operation. </param>
-        /// <param name="properties"> Properties of the operation. </param>
-        /// <returns> A new <see cref="Models.OperationResponse"/> instance for mocking. </returns>
-        public static OperationResponse OperationResponse(string name = default, bool? isDataAction = default, OperationDisplay display = default, string origin = default, BinaryData properties = default)
-        {
-            return new OperationResponse(
-                name,
-                isDataAction,
-                display,
-                origin,
-                properties,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Information about an operation. </summary>
-        /// <param name="provider"></param>
-        /// <param name="resource"></param>
-        /// <param name="operation"></param>
-        /// <param name="description"></param>
-        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
-        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
-        {
-            return new OperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Quota properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

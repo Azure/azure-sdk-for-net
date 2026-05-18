@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The response containing operation information. </summary>
-    public partial class OperationResponse
+    internal partial class OperationResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

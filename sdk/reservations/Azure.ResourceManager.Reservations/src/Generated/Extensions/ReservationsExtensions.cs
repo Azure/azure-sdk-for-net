@@ -302,12 +302,9 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationResponse> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static AsyncPageable<OperationResponse> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableReservationsTenantResource(tenantResource).GetAllAsync(cancellationToken);
         }
 
@@ -320,12 +317,9 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationResponse> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static Pageable<OperationResponse> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableReservationsTenantResource(tenantResource).GetAll(cancellationToken);
         }
 
