@@ -1,6 +1,6 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.13.0 (2026-05-18)
 
 ### Features Added
 
@@ -9,8 +9,6 @@
 ### Breaking Changes
 
 - `IConfiguration.GetCredential(...)` renamed to `IConfiguration.GetCredentialSettings(...)` and its return type changed from `AuthenticationTokenProvider?` to `CredentialSettings?` (experimental `SCME0002`).
-
-### Bugs Fixed
 
 ### Other Changes
 
