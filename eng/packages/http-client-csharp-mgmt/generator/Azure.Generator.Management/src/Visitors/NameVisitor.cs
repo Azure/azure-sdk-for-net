@@ -78,10 +78,20 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            newName = isAlsoUsedInCreate
-                ? $"{enclosingResourceName}CreateOrUpdateContent"
-                : $"{enclosingResourceName}Patch";
-            type.Update(name: newName);
+            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
+            // When the same model is also used as the Create body we always rename to
+            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
+            // consistent across the SDK surface.
+            if (isAlsoUsedInCreate)
+            {
+                newName = $"{enclosingResourceName}CreateOrUpdateContent";
+                type.Update(name: newName);
+            }
+            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            {
+                newName = $"{enclosingResourceName}Patch";
+                type.Update(name: newName);
+            }
         }
         return base.PreVisitModel(model, type);
     }

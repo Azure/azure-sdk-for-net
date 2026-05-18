@@ -94,7 +94,7 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)
         {
-            // First pass: update primary methods (replace 'properties' param with flattened params, fix body)
+            // Update primary methods (replace 'properties' param with flattened params, fix body)
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
@@ -103,123 +103,6 @@ namespace Azure.Generator.Management.Visitors
                     UpdateModelFactoryMethod(method, propertyNameMap);
                 }
             }
-
-            // Second pass: fix backward-compat overloads whose bodies call primary methods
-            // via InvokeMethodExpression. The primary methods' parameter order may have changed
-            // after flattening, so positional arguments in overloads can be wrong.
-            FixBackwardCompatOverloads(modelFactory.Methods);
-        }
-
-        /// <summary>
-        /// Fixes backward-compat overload methods that call primary model factory methods.
-        /// After flattening reorders the primary method's parameters, the positional arguments
-        /// in these overloads may be in the wrong order. This method rebuilds the argument list
-        /// to match the primary method's current parameter order.
-        /// </summary>
-        internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
-        {
-            // Build a lookup of primary methods by name
-            var primaryMethods = new Dictionary<string, MethodProvider>();
-            foreach (var method in methods)
-            {
-                if (!IsBackwardCompatMethod(method))
-                {
-                    var key = method.Signature.Name;
-                    // Use the one with the most parameters as the primary (latest) method
-                    if (!primaryMethods.TryGetValue(key, out var existing) || method.Signature.Parameters.Count > existing.Signature.Parameters.Count)
-                    {
-                        primaryMethods[key] = method;
-                    }
-                }
-            }
-
-            foreach (var method in methods)
-            {
-                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
-                {
-                    continue;
-                }
-
-                // Look for backward-compat overloads that call another method via InvokeMethodExpression
-                var updatedBodyStatements = new List<MethodBodyStatement>();
-                var bodyUpdated = false;
-                foreach (var statement in method.BodyStatements)
-                {
-                    if (statement is ExpressionStatement expressionStatement
-                        && (expressionStatement.Expression as KeywordExpression)?.Expression is InvokeMethodExpression invokeExpression
-                        && (invokeExpression.MethodName ?? invokeExpression.MethodSignature?.Name) is string calledMethodName
-                        && primaryMethods.TryGetValue(calledMethodName, out var primaryMethod))
-                    {
-                        var primaryParams = primaryMethod.Signature.Parameters;
-                        var invokeArgs = invokeExpression.Arguments;
-                        var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
-
-                        if (invokeSignatureParams is null || invokeSignatureParams.Count != invokeArgs.Count)
-                        {
-                            updatedBodyStatements.Add(statement);
-                            continue;
-                        }
-
-                        // Map: old param name -> argument expression
-                        var argsByName = new Dictionary<string, ValueExpression>(StringComparer.OrdinalIgnoreCase);
-                        for (int i = 0; i < invokeSignatureParams.Count; i++)
-                        {
-                            argsByName[invokeSignatureParams[i].Name] = invokeArgs[i];
-                        }
-
-                        // Rebuild arguments in the current primary method's parameter order,
-                        // tracking whether any reordering actually occurred.
-                        var newArgs = new List<ValueExpression>(primaryParams.Count);
-                        var changed = false;
-                        for (int i = 0; i < primaryParams.Count; i++)
-                        {
-                            if (argsByName.TryGetValue(primaryParams[i].Name, out var arg))
-                            {
-                                newArgs.Add(arg);
-                                if (!changed && (i >= invokeArgs.Count || !ReferenceEquals(arg, invokeArgs[i])))
-                                {
-                                    changed = true;
-                                }
-                            }
-                            else
-                            {
-                                // Parameter not in old call, use named default
-                                newArgs.Add(Snippet.PositionalReference(primaryParams[i], primaryParams[i].DefaultValue ?? Default));
-                                changed = true;
-                            }
-                        }
-
-                        if (changed)
-                        {
-                            updatedBodyStatements.Add(Return(new InvokeMethodExpression(null, primaryMethod.Signature, newArgs)));
-                            bodyUpdated = true;
-                        }
-                        else
-                        {
-                            updatedBodyStatements.Add(statement);
-                        }
-                    }
-                    else
-                    {
-                        updatedBodyStatements.Add(statement);
-                    }
-                }
-
-                if (bodyUpdated)
-                {
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Checks if a method is a backward-compatibility overload by looking for the
-        /// [EditorBrowsable(EditorBrowsableState.Never)] attribute on its signature.
-        /// </summary>
-        internal static bool IsBackwardCompatMethod(MethodProvider method)
-        {
-            return method.Signature.Attributes.Any(a =>
-                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
         }
 
         /// <summary>
@@ -638,7 +521,7 @@ namespace Azure.Generator.Management.Visitors
             // Ensure base model types are flattened first so that inherited properties
             // are in their final state (e.g., safe-flattened single-property models become internal)
             // before this model processes them via GetAllProperties.
-            if (TryGetBaseModelProvider(model, out var baseModel) && !_flattenedModelTypes.ContainsKey(baseModel.Type))
+            if (model.BaseModelProvider is ModelProvider baseModel && !_flattenedModelTypes.ContainsKey(baseModel.Type))
             {
                 FlattenModel(baseModel);
             }
@@ -716,7 +599,7 @@ namespace Azure.Generator.Management.Visitors
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
             }
-            else if (TryGetBaseModelProvider(model, out var flattenedBase) && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
+            else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
             {
                 // This model has no flattenable properties of its own, but its base model was
                 // safe-flattened. The base's public constructor signature changed (e.g. an
@@ -1127,25 +1010,6 @@ namespace Azure.Generator.Management.Visitors
             return false;
         }
 
-        /// <summary>
-        /// Resolves the base <see cref="ModelProvider"/> of a model by looking up its <see cref="TypeProvider.BaseType"/>
-        /// in the type factory. This is preferred over <see cref="ModelProvider.BaseModelProvider"/> because
-        /// <see cref="TypeProvider.BaseType"/> reflects the actual base type that will be emitted, including any
-        /// overrides applied by visitors. <see cref="ModelProvider.BaseModelProvider"/> is computed independently
-        /// and may be stale relative to <see cref="TypeProvider.BaseType"/>, which can cause this visitor to
-        /// flatten inherited properties twice (once via the stale base, once via the actual base).
-        /// </summary>
-        private static bool TryGetBaseModelProvider(ModelProvider model, [NotNullWhen(true)] out ModelProvider? baseModel)
-        {
-            var baseType = model.BaseType;
-            if (baseType is not null && TryGetModelProvider(baseType, out baseModel))
-            {
-                return true;
-            }
-            baseModel = null;
-            return false;
-        }
-
         private class CSharpTypeNameComparer : IEqualityComparer<CSharpType>
         {
             public bool Equals(CSharpType? x, CSharpType? y)
@@ -1200,14 +1064,14 @@ namespace Azure.Generator.Management.Visitors
             // Check base types for inherited flattened properties
             if (TryGetModelProvider(type, out var model))
             {
-                var current = model;
-                while (TryGetBaseModelProvider(current, out var baseModel))
+                var baseModel = model.BaseModelProvider;
+                while (baseModel is not null)
                 {
                     if (_flattenedModelTypes.TryGetValue(baseModel.Type, out propertyNameMap))
                     {
                         return true;
                     }
-                    current = baseModel;
+                    baseModel = baseModel.BaseModelProvider;
                 }
             }
             return false;
