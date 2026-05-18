@@ -34,12 +34,31 @@ namespace Azure.AI.VoiceLive.Tests
     /// </summary>
     public class McpApprovalWorkflowTests : VoiceLiveTestBase
     {
+        // Shadow base TimeoutToken so each MCP test gets its own 3-minute budget,
+        // independent of how long sibling tests ran on the shared class instance.
+        private CancellationTokenSource? _testCts;
+        protected new CancellationToken TimeoutToken => _testCts?.Token ?? base.TimeoutToken;
+
         public McpApprovalWorkflowTests() : base(true)
         {
         }
 
         public McpApprovalWorkflowTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public void ResetMcpTestTimeout()
+        {
+            _testCts?.Dispose();
+            _testCts = new CancellationTokenSource(TimeSpan.FromMinutes(3));
+        }
+
+        [TearDown]
+        public void CleanupMcpTestTimeout()
+        {
+            _testCts?.Dispose();
+            _testCts = null;
         }
 
         private VoiceLiveMcpServerDefinition CreateMicrosoftLearnMcpServer(MCPApprovalType? requireApproval = null)
@@ -279,6 +298,8 @@ namespace Azure.AI.VoiceLive.Tests
             var nextUpdate = await GetNextUpdate<SessionUpdate>(updatesEnum).ConfigureAwait(false);
             TestContext.WriteLine($"📥 Received: {nextUpdate.GetType().Name}");
 
+            bool alreadyHaveInProgress = false;
+
             // Handle different possible outcomes
             if (nextUpdate is SessionUpdateResponseDone responseDone)
             {
@@ -306,10 +327,8 @@ namespace Azure.AI.VoiceLive.Tests
                     }
                     else
                     {
-                        TestContext.WriteLine($"⚠️ Tool was not executed - output and error are both null");
-                        TestContext.WriteLine($"🔍 This might be a service-side issue with MCP tool execution");
-                        Assert.Inconclusive("Tool was not executed after approval was granted. This may be a service-side issue with the MCP server or Voice Live approval workflow.");
-                        return;
+                        TestContext.WriteLine($"⚠️ Tool not yet executed — service will auto-execute after approval, waiting for mcp_call events");
+                        // Fall through to the while loop below — service executes the approved tool automatically
                     }
                 }
                 else
@@ -325,34 +344,51 @@ namespace Azure.AI.VoiceLive.Tests
                 Assert.IsNotNull(approvalItemCreated.Item);
                 // Continue with normal flow - wait for tool execution
             }
+            else if (nextUpdate is SessionUpdateResponseMcpCallInProgress mcpInProgressEarly)
+            {
+                TestContext.WriteLine($"✅ MCP call in progress received immediately after approval for item: {mcpInProgressEarly.ItemId}");
+                Assert.IsNotNull(mcpInProgressEarly.ItemId);
+                alreadyHaveInProgress = true;
+                // Fall through to MCP execution section below - skip waiting for in-progress again
+            }
             else
             {
                 TestContext.WriteLine($"🤔 Unexpected update type: {nextUpdate.GetType().Name}");
-                Assert.Fail($"Expected either SessionUpdateConversationItemCreated or SessionUpdateResponseDone, but got {nextUpdate.GetType().Name}");
+                Assert.Fail($"Expected either SessionUpdateConversationItemCreated, SessionUpdateResponseMcpCallInProgress, or SessionUpdateResponseDone, but got {nextUpdate.GetType().Name}");
                 return;
             }
 
-            // Normal flow: Wait for MCP call execution events
+            // Normal flow: Wait for MCP call execution events, skipping intermediate events
+            // Service may interleave ConversationItemCreated between InProgress and Completed
             TestContext.WriteLine($"🔄 Waiting for MCP call execution...");
 
-            try
+            SessionUpdateResponseMcpCallCompleted? mcpCallCompleted = null;
+            while (mcpCallCompleted == null)
             {
-                var mcpCallInProgress = await GetNextUpdate<SessionUpdateResponseMcpCallInProgress>(updatesEnum).ConfigureAwait(false);
-                Assert.IsNotNull(mcpCallInProgress);
-                Assert.IsNotNull(mcpCallInProgress.ItemId);
-                TestContext.WriteLine($"🔄 MCP call in progress for item: {mcpCallInProgress.ItemId}");
+                var interimUpdate = await GetNextUpdate(updatesEnum).ConfigureAwait(false);
+                TestContext.WriteLine($"⚡ Interim update: {interimUpdate.GetType().Name}");
 
-                var mcpCallCompleted = await GetNextUpdate<SessionUpdateResponseMcpCallCompleted>(updatesEnum).ConfigureAwait(false);
-                Assert.IsNotNull(mcpCallCompleted);
-                Assert.IsNotNull(mcpCallCompleted.ItemId);
-                TestContext.WriteLine($"✅ MCP call completed for item: {mcpCallCompleted.ItemId}");
-            }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("but got SessionUpdateResponseDone"))
-            {
-                TestContext.WriteLine($"⚠️ Response completed before tool execution events could be observed");
-                TestContext.WriteLine($"🔍 This might be due to fast tool execution or service behavior change");
-                Assert.Inconclusive("Tool execution completed faster than expected - unable to observe in-progress events");
-                return;
+                if (interimUpdate is SessionUpdateResponseMcpCallCompleted completed)
+                {
+                    mcpCallCompleted = completed;
+                    Assert.IsNotNull(mcpCallCompleted.ItemId);
+                    TestContext.WriteLine($"✅ MCP call completed for item: {mcpCallCompleted.ItemId}");
+                }
+                else if (interimUpdate is SessionUpdateResponseMcpCallInProgress inProgress && alreadyHaveInProgress)
+                {
+                    // Duplicate in-progress — just log it
+                    TestContext.WriteLine($"🔄 Additional MCP call in progress for item: {inProgress.ItemId}");
+                }
+                else if (interimUpdate is SessionUpdateResponseDone)
+                {
+                    TestContext.WriteLine($"⚠️ Response completed before tool execution events could be observed");
+                    Assert.Inconclusive("Tool execution completed faster than expected - unable to observe in-progress events");
+                    return;
+                }
+                else
+                {
+                    TestContext.WriteLine($"⚡ Skipping intermediate event: {interimUpdate.GetType().Name}");
+                }
             }
 
             // Wait for output item done (tool result)
@@ -375,9 +411,10 @@ namespace Azure.AI.VoiceLive.Tests
             TestContext.WriteLine($"🚀 Starting new response to process tool results...");
             await session.StartResponseAsync().ConfigureAwait(false);
 
-            // Wait for the AI to process and complete the response
+            // Wait for the AI to process and complete the response (skipping response.created and other intermediate events)
             TestContext.WriteLine($"🔄 Waiting for final response completion...");
-            var finalResponseDone = await GetNextUpdate<SessionUpdateResponseDone>(updatesEnum).ConfigureAwait(false);
+            var finalUpdates = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
+            var finalResponseDone = finalUpdates.OfType<SessionUpdateResponseDone>().LastOrDefault();
             Assert.IsNotNull(finalResponseDone);
 
             TestContext.WriteLine("Tool executed successfully after approval");
@@ -444,7 +481,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Service-side issue: require_approval='never' setting may not be working correctly. Tool execution still requires approval even when configured not to.")]
         public async Task ShouldNotRequestApprovalWhenRequireApprovalNever()
         {
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01));
@@ -455,6 +491,12 @@ namespace Azure.AI.VoiceLive.Tests
 
             await using var session = await client.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateMcpListToolsInProgress>(updatesEnum).ConfigureAwait(false);
+            await GetNextUpdate<SessionUpdateMcpListToolsCompleted>(updatesEnum).ConfigureAwait(false);
 
             var userMessage = new UserMessageItem(new InputTextContentPart(
                 "Use Microsoft Learn tools to search for Azure Speech SDK documentation."));
