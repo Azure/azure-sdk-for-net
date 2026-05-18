@@ -294,36 +294,6 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// List all the operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableReservationsTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        internal static AsyncPageable<OperationResponse> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableReservationsTenantResource(tenantResource).GetAllAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableReservationsTenantResource.GetAll(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        internal static Pageable<OperationResponse> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableReservationsTenantResource(tenantResource).GetAll(cancellationToken);
-        }
-
-        /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
         /// <item>
         /// <term> Mocking. </term>

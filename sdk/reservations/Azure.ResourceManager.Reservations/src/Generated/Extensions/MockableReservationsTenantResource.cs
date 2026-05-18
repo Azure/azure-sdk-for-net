@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableReservationsTenantResource : ArmResource
     {
-        private ClientDiagnostics _operationClientDiagnostics;
-        private Operation _operationRestClient;
         private ClientDiagnostics _reservationClientDiagnostics;
         private Reservation _reservationRestClient;
         private ClientDiagnostics _reservationOrderClientDiagnostics;
@@ -43,10 +41,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
         internal MockableReservationsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics OperationClientDiagnostics => _operationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Operation OperationRestClient => _operationRestClient ??= new Operation(OperationClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
 
         private ClientDiagnostics ReservationClientDiagnostics => _reservationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -69,62 +63,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
         public virtual ReservationOrderCollection GetReservationOrders()
         {
             return GetCachedClient(client => new ReservationOrderCollection(client, Id));
-        }
-
-        /// <summary>
-        /// List all the operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/operations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Operation_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual AsyncPageable<OperationResponse> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new OperationGetAllAsyncCollectionResultOfT(OperationRestClient, context, "MockableReservationsTenantResource.GetAll");
-        }
-
-        /// <summary>
-        /// List all the operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/operations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Operation_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual Pageable<OperationResponse> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new OperationGetAllCollectionResultOfT(OperationRestClient, context, "MockableReservationsTenantResource.GetAll");
         }
 
         /// <summary>
