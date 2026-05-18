@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The notification associated with a budget. </summary>
     public partial class BudgetAssociatedNotification
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BudgetAssociatedNotification"/>. </summary>
         /// <param name="isEnabled"> The notification is enabled or not. </param>
@@ -73,8 +45,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="contactGroups"> Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported at Subscription or Resource Group scopes. </param>
         /// <param name="thresholdType"> The type of threshold. </param>
         /// <param name="locale"> Language in which the recipient will receive the notification. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BudgetAssociatedNotification(bool isEnabled, NotificationAlertTriggerType @operator, decimal threshold, IList<string> contactEmails, IList<string> contactRoles, IList<string> contactGroups, NotificationThresholdType? thresholdType, RecipientNotificationLanguageCode? locale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BudgetAssociatedNotification(bool isEnabled, NotificationAlertTriggerType @operator, decimal threshold, IList<string> contactEmails, IList<string> contactRoles, IList<string> contactGroups, NotificationThresholdType? thresholdType, RecipientNotificationLanguageCode? locale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Operator = @operator;
@@ -84,28 +56,30 @@ namespace Azure.ResourceManager.Consumption.Models
             ContactGroups = contactGroups;
             ThresholdType = thresholdType;
             Locale = locale;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BudgetAssociatedNotification"/> for deserialization. </summary>
-        internal BudgetAssociatedNotification()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The notification is enabled or not. </summary>
         public bool IsEnabled { get; set; }
+
         /// <summary> The comparison operator. </summary>
         public NotificationAlertTriggerType Operator { get; set; }
+
         /// <summary> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </summary>
         public decimal Threshold { get; set; }
+
         /// <summary> Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified at the Subscription or Resource Group scopes. All other scopes must have at least one contact email specified. </summary>
         public IList<string> ContactEmails { get; }
+
         /// <summary> Contact roles to send the budget notification to when the threshold is exceeded. </summary>
         public IList<string> ContactRoles { get; }
+
         /// <summary> Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported at Subscription or Resource Group scopes. </summary>
         public IList<string> ContactGroups { get; }
+
         /// <summary> The type of threshold. </summary>
         public NotificationThresholdType? ThresholdType { get; set; }
+
         /// <summary> Language in which the recipient will receive the notification. </summary>
         public RecipientNotificationLanguageCode? Locale { get; set; }
     }

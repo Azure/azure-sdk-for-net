@@ -93,7 +93,7 @@
     {
       "$id": "8",
       "kind": "constant",
-      "name": "smokeTestContentType",
+      "name": "SmokeTestAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -109,7 +109,7 @@
     {
       "$id": "10",
       "kind": "constant",
-      "name": "repeatableActionContentType",
+      "name": "SmokeTestAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -125,7 +125,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "repeatableActionContentType1",
+      "name": "SmokeTestAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
