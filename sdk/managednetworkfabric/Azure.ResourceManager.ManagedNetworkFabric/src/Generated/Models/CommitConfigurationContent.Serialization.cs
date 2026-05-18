@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            CommitStage? commitStage = default;
-            CommitConfigurationPolicy? commitPolicy = default;
+            NetworkFabricCommitStage? commitStage = default;
+            NetworkFabricCommitConfigurationPolicy? commitPolicy = default;
             IList<string> devices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    commitStage = new CommitStage(property.Value.GetString());
+                    commitStage = new NetworkFabricCommitStage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commitPolicy"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    commitPolicy = new CommitConfigurationPolicy(property.Value.GetString());
+                    commitPolicy = new NetworkFabricCommitConfigurationPolicy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("devices"u8))

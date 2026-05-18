@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="pollingType"> Polling type. </param>
         /// <param name="destinations"> List of destination properties to send the filter traffic. </param>
-        internal NetworkTapPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, NetworkTapPollingType? pollingType, IList<NetworkTapPatchableParametersDestinationsItem> destinations) : base(tags, serializedAdditionalRawData)
+        internal NetworkTapPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, NetworkTapPollingType? pollingType, IList<NetworkTapPatchableParametersDestinationsItem> destinations) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Polling type. </summary>

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string annotation = default;
             string hostName = default;
             string serialNumber = default;
-            IdentitySelector identitySelector = default;
+            NetworkFabricIdentitySelector identitySelector = default;
             string version = default;
             string networkDeviceSku = default;
             NetworkDeviceRole? networkDeviceRole = default;
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
-            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
-            IReadOnlyList<CertificateRotationStatus> certificateRotationStatus = default;
+            IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus = default;
+            IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus = default;
             ResourceIdentifier networkFabricId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            identitySelector = IdentitySelector.DeserializeIdentitySelector(property0.Value, options);
+                            identitySelector = NetworkFabricIdentitySelector.DeserializeNetworkFabricIdentitySelector(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -369,10 +369,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                            List<NetworkFabricSecretRotationStatus> array = new List<NetworkFabricSecretRotationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                                array.Add(NetworkFabricSecretRotationStatus.DeserializeNetworkFabricSecretRotationStatus(item, options));
                             }
                             secretRotationStatus = array;
                             continue;
@@ -383,10 +383,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<CertificateRotationStatus> array = new List<CertificateRotationStatus>();
+                            List<NetworkFabricCertificateRotationStatus> array = new List<NetworkFabricCertificateRotationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.CertificateRotationStatus.DeserializeCertificateRotationStatus(item, options));
+                                array.Add(NetworkFabricCertificateRotationStatus.DeserializeNetworkFabricCertificateRotationStatus(item, options));
                             }
                             certificateRotationStatus = array;
                             continue;
@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 configurationState,
                 provisioningState,
                 administrativeState,
-                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
-                certificateRotationStatus ?? new ChangeTrackingList<CertificateRotationStatus>(),
+                secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>(),
+                certificateRotationStatus ?? new ChangeTrackingList<NetworkFabricCertificateRotationStatus>(),
                 networkFabricId,
                 serializedAdditionalRawData);
         }

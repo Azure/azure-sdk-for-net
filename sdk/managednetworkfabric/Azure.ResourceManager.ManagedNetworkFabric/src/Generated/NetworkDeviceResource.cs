@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationStatusResult>> RestartAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkFabricOperationStatusResult>> RestartAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkDeviceRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult>(new NetworkFabricOperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OperationStatusResult> Restart(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkFabricOperationStatusResult> Restart(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkDeviceRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult>(new NetworkFabricOperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>> RunRoCommandAsync(WaitUntil waitUntil, DeviceRoCommand body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>> RunRoCommandAsync(WaitUntil waitUntil, NetworkFabricDeviceReadOnlyCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> RunRoCommand(WaitUntil waitUntil, DeviceRoCommand body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> RunRoCommand(WaitUntil waitUntil, NetworkFabricDeviceReadOnlyCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkDeviceRunRwCommandResult>> RunRwCommandAsync(WaitUntil waitUntil, DeviceRwCommand body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkDeviceRunRwCommandResult>> RunRwCommandAsync(WaitUntil waitUntil, NetworkFabricDeviceReadWriteCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<NetworkDeviceRunRwCommandResult> RunRwCommand(WaitUntil waitUntil, DeviceRwCommand body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkDeviceRunRwCommandResult> RunRwCommand(WaitUntil waitUntil, NetworkFabricDeviceReadWriteCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

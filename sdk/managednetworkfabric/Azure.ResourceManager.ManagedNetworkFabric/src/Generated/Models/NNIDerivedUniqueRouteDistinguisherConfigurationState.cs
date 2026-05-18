@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> NNI Derived Unique Route Distinguisher Configuration State. </summary>
-    public readonly partial struct NNIDerivedUniqueRouteDistinguisherConfigurationState : IEquatable<NNIDerivedUniqueRouteDistinguisherConfigurationState>
+    public readonly partial struct NniDerivedUniqueRouteDistinguisherConfigurationState : IEquatable<NniDerivedUniqueRouteDistinguisherConfigurationState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="NNIDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NNIDerivedUniqueRouteDistinguisherConfigurationState(string value)
+        public NniDerivedUniqueRouteDistinguisherConfigurationState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string DisabledValue = "Disabled";
 
         /// <summary> NNI derived unique route distinguisher configuration state Enabled. </summary>
-        public static NNIDerivedUniqueRouteDistinguisherConfigurationState Enabled { get; } = new NNIDerivedUniqueRouteDistinguisherConfigurationState(EnabledValue);
+        public static NniDerivedUniqueRouteDistinguisherConfigurationState Enabled { get; } = new NniDerivedUniqueRouteDistinguisherConfigurationState(EnabledValue);
         /// <summary> NNI derived unique route distinguisher configuration state Disabled. </summary>
-        public static NNIDerivedUniqueRouteDistinguisherConfigurationState Disabled { get; } = new NNIDerivedUniqueRouteDistinguisherConfigurationState(DisabledValue);
-        /// <summary> Determines if two <see cref="NNIDerivedUniqueRouteDistinguisherConfigurationState"/> values are the same. </summary>
-        public static bool operator ==(NNIDerivedUniqueRouteDistinguisherConfigurationState left, NNIDerivedUniqueRouteDistinguisherConfigurationState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="NNIDerivedUniqueRouteDistinguisherConfigurationState"/> values are not the same. </summary>
-        public static bool operator !=(NNIDerivedUniqueRouteDistinguisherConfigurationState left, NNIDerivedUniqueRouteDistinguisherConfigurationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NNIDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
-        public static implicit operator NNIDerivedUniqueRouteDistinguisherConfigurationState(string value) => new NNIDerivedUniqueRouteDistinguisherConfigurationState(value);
+        public static NniDerivedUniqueRouteDistinguisherConfigurationState Disabled { get; } = new NniDerivedUniqueRouteDistinguisherConfigurationState(DisabledValue);
+        /// <summary> Determines if two <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/> values are the same. </summary>
+        public static bool operator ==(NniDerivedUniqueRouteDistinguisherConfigurationState left, NniDerivedUniqueRouteDistinguisherConfigurationState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/> values are not the same. </summary>
+        public static bool operator !=(NniDerivedUniqueRouteDistinguisherConfigurationState left, NniDerivedUniqueRouteDistinguisherConfigurationState right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
+        public static implicit operator NniDerivedUniqueRouteDistinguisherConfigurationState(string value) => new NniDerivedUniqueRouteDistinguisherConfigurationState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NNIDerivedUniqueRouteDistinguisherConfigurationState other && Equals(other);
+        public override bool Equals(object obj) => obj is NniDerivedUniqueRouteDistinguisherConfigurationState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(NNIDerivedUniqueRouteDistinguisherConfigurationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NniDerivedUniqueRouteDistinguisherConfigurationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

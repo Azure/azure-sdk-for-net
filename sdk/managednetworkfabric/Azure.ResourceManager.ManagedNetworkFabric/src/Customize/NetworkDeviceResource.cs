@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RebootAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
             var operation = await RestartAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
         /// <summary> Backward-compatible shim for Reboot. Use Restart instead for richer result type. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Reboot(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
             var operation = Restart(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
         /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>

@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateRunRoCommandRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRoCommand body)
+        internal RequestUriBuilder CreateRunRoCommandRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadOnlyCommand body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateRunRoCommandRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRoCommand body)
+        internal HttpMessage CreateRunRoCommandRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadOnlyCommand body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RunRoCommandAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRoCommand body, CancellationToken cancellationToken = default)
+        public async Task<Response> RunRoCommandAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadOnlyCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RunRoCommand(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRoCommand body, CancellationToken cancellationToken = default)
+        public Response RunRoCommand(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadOnlyCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateRunRwCommandRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRwCommand body)
+        internal RequestUriBuilder CreateRunRwCommandRequestUri(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadWriteCommand body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateRunRwCommandRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRwCommand body)
+        internal HttpMessage CreateRunRwCommandRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadWriteCommand body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RunRwCommandAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRwCommand body, CancellationToken cancellationToken = default)
+        public async Task<Response> RunRwCommandAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadWriteCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RunRwCommand(string subscriptionId, string resourceGroupName, string networkDeviceName, DeviceRwCommand body, CancellationToken cancellationToken = default)
+        public Response RunRwCommand(string subscriptionId, string resourceGroupName, string networkDeviceName, NetworkFabricDeviceReadWriteCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> DeprovisionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = await DeactivateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
         /// <summary> Backward-compatible shim for Deprovision. Use Deactivate instead for richer result type. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> Deprovision(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = Deactivate(waitUntil, cancellationToken);
-            return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
         /// <summary> Backward-compatible shim for Provision. Use Activate instead for richer result type. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> ProvisionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = await ActivateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
         /// <summary> Backward-compatible shim for Provision. Use Activate instead for richer result type. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> Provision(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = Activate(waitUntil, cancellationToken);
-            return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
         /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = await ReloadConfigurationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
         /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<StateUpdateCommonPostActionResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = ReloadConfiguration(waitUntil, cancellationToken);
-            return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
         /// <summary> Backward-compatible shim for UpdateInfraManagementBfdConfiguration. Use SetInfraManagementBfdConfiguration instead for richer result type. </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<ValidateConfigurationResult>> GetTopologyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = await RetrieveTopologyAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<GetTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
+            return new CompatArmOperation<NetworkFabricTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
         }
 
         /// <summary> Backward-compatible shim for GetTopology. Use RetrieveTopology instead for richer result type. </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<ValidateConfigurationResult> GetTopology(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             var operation = RetrieveTopology(waitUntil, cancellationToken);
-            return new CompatArmOperation<GetTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
+            return new CompatArmOperation<NetworkFabricTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
         }
     }
 }

@@ -64,7 +64,7 @@ rename-mapping:
   ExternalNetwork.properties.networkToNetworkInterconnectId: -|arm-id
   InternalNetwork: NetworkFabricInternalNetwork
   InternetGateway: NetworkFabricInternetGateway
-  InternetGateway.properties.ipv4Address: IpV4Address
+  InternetGateway.properties.ipv4Address: IPv4Address
   InternetGatewayRule: NetworkFabricInternetGatewayRule
   InternetGatewayRule.properties.internetGatewayIds: -|arm-id
   IpCommunity: NetworkFabricIpCommunity
@@ -78,38 +78,63 @@ rename-mapping:
   RoutePolicy: NetworkFabricRoutePolicy
   NetworkInterface: NetworkDeviceInterface
   Action: InternetGatewayRuleAction
+  AclType: NetworkFabricAclType
   AddressFamilyTypeL: NetworkFabricAddressFamilyType
   AdministrativeState: NetworkFabricAdministrativeState
   AnnotationResource: AnnotationResourceProperties
+  BitRate: NetworkFabricBitRate
+  BitRateUnit: NetworkFabricBitRateUnit
   BooleanEnumProperty: NetworkFabricBooleanValue
+  BurstSize: NetworkFabricBurstSize
+  BurstSizeUnit: NetworkFabricBurstSizeUnit
+  CertificateArchiveReference: NetworkFabricCertificateArchiveReference
+  CertificateRotationStatus: NetworkFabricCertificateRotationStatus
+  CommitBatchState: NetworkFabricCommitBatchState
+  CommitConfigurationPolicy: NetworkFabricCommitConfigurationPolicy
+  CommitStage: NetworkFabricCommitStage
   CommonPostActionResponseForDeviceUpdate: DeviceUpdateCommonPostActionResult
   CommonPostActionResponseForStateUpdate: StateUpdateCommonPostActionResult
   ConfigurationState: NetworkFabricConfigurationState
   ConfigurationType: NetworkFabricConfigurationType
   Condition: IPPrefixRuleCondition
   ControllerServices: NetworkFabricControllerServices
+  ControlPlanAclIPMatchCondition: ControlPlaneAclIPMatchCondition
   DestinationProperties: NetworkTapPropertiesDestinationsItem
   DestinationType: NetworkTapDestinationType
   DeviceAdministrativeState: NetworkDeviceAdministrativeState
   DeviceInterfaceProperties: NetworkDeviceInterfaceProperties
+  DeviceRoCommand: NetworkFabricDeviceReadOnlyCommand
+  DeviceRole: NetworkFabricDeviceRole
+  DeviceRwCommand: NetworkFabricDeviceReadWriteCommand
   EnableDisableOnResources: UpdateAdministrativeStateOnResources
   EnableDisableOnResources.resourceIds: -|arm-id
   EnableDisableState: AdministrativeEnableState
   Encapsulation: IsolationDomainEncapsulationType
   EncapsulationType: NetworkTapEncapsulationType
   ErrorResponse: NetworkFabricErrorResult
+  ExtendedVlan: NetworkFabricExtendedVlan
   Extension: StaticRouteConfigurationExtension
   ExternalNetworkPatchPropertiesOptionAProperties: ExternalNetworkPatchOptionAProperties
   ExternalNetworkPropertiesOptionAProperties: ExternalNetworkOptionAProperties
+  FabricLockProperties: NetworkFabricLock
+  FeatureFlagProperties: NetworkFabricFeatureFlag
   InternalNetworkPropertiesBgpConfiguration: InternalNetworkBgpConfiguration
   InternalNetworkPropertiesStaticRouteConfiguration: InternalNetworkStaticRouteConfiguration
   IpCommunityIdList.ipCommunityIds: -|arm-id
   IpExtendedCommunityIdList.ipExtendedCommunityIds: -|arm-id
   GatewayType: InternetGatewayType
+  HeaderAddressProperties: NetworkFabricHeaderAddress
+  IdentitySelector: NetworkFabricIdentitySelector
+  IdentitySelectorPatch: NetworkFabricIdentitySelectorPatch
   FabricSkuType: NetworkFabricSkuType
   InterfaceType: NetworkDeviceInterfaceType
   IpGroupProperties: MatchConfigurationIPGroupProperties
   IPAddressType: NetworkFabricIPAddressType
+  LockConfigurationState: NetworkFabricLockConfigurationState
+  ManagedServiceIdentityPatch: NetworkFabricManagedServiceIdentityPatch
+  ManagedServiceIdentitySelectorType: NetworkFabricManagedIdentitySelectorType
+  ManagedServiceIdentityType: NetworkFabricManagedServiceIdentityType
+  MicroBfdState: NetworkFabricMicroBfdState
   NeighborGroupDestination.ipv4Addresses: -|ip-address
   NetworkDevice.properties.networkRackId: -|arm-id
   NetworkFabricController.properties.workloadManagementNetwork: IsWorkloadManagementNetwork
@@ -117,14 +142,24 @@ rename-mapping:
   NetworkInterfacesList: NetworkDeviceInterfacesList
   NetworkTapRule.properties.networkTapId: -|arm-id
   NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration: NetworkToNetworkInterconnectOptionBLayer3Configuration
+  NNIDerivedUniqueRouteDistinguisherConfigurationState: NniDerivedUniqueRouteDistinguisherConfigurationState
   NfcSku: NetworkFabricControllerSKU
+  OperationStatusResult: NetworkFabricOperationStatusResult
   PollingType: NetworkTapPollingType
   PortCondition: NetworkFabricPortCondition
   PortType: NetworkFabricPortType
   PrefixType: IPMatchConditionPrefixType
   ProvisioningState: NetworkFabricProvisioningState
+  QosConfigurationState: NetworkFabricQosConfigurationState
   RebootProperties: NetworkDeviceRebootContent
   RebootType: NetworkDeviceRebootType
+  RouteType: NetworkFabricRouteType
+  RuleCondition: NetworkFabricRuleCondition
+  SecretArchiveReference: NetworkFabricSecretArchiveReference
+  SecretRotationStatus: NetworkFabricSecretRotationStatus
+  StationConfigurationState: NetworkFabricStationConfigurationState
+  StationConnectionMode: NetworkFabricStationConnectionMode
+  SynchronizationStatus: NetworkFabricSynchronizationStatus
   RuleProperties: InternetGatewayRules
   StatementConditionProperties.ipPrefixId: -|arm-id
   TerminalServerConfiguration.networkDeviceId: -|arm-id
@@ -134,12 +169,14 @@ rename-mapping:
   ValidateAction: NetworkFabricValidateAction
   ValidateConfigurationProperties: ValidateConfigurationContent
   ValidateConfigurationResponse: ValidateConfigurationResult
+  V4OverV6BgpSessionState: NetworkFabricV4OverV6BgpSessionState
+  V6OverV4BgpSessionState: NetworkFabricV6OverV4BgpSessionState
   ArmConfigurationDiffOperationResponse: ArmConfigurationDiffOperationResult
   CommitBatchStatusOperationResponse: CommitBatchStatusOperationResult
   CommitConfigurationResponse: CommitConfigurationResult
   DiscardCommitBatchOperationResponse: DiscardCommitBatchOperationResult
   ExternalNetworkUpdateBfdAdministrativeStateResponse: ExternalNetworkUpdateBfdAdministrativeStateResult
-  GetTopologyResponse: GetTopologyResult
+  GetTopologyResponse: NetworkFabricTopologyResult
   InternalNetworkUpdateBfdAdministrativeStateResponse: InternalNetworkUpdateBfdAdministrativeStateResult
   InternalNetworkUpdateBgpAdministrativeStateResponse: InternalNetworkUpdateBgpAdministrativeStateResult
   NeighborGroupResyncResponse: NeighborGroupResyncResult

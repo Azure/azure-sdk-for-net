@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ExportRoutePolicyInformation exportRoutePolicy = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
-            MicroBfdState? microBfdState = default;
+            NetworkFabricMicroBfdState? microBfdState = default;
             ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            microBfdState = new MicroBfdState(property0.Value.GetString());
+                            microBfdState = new NetworkFabricMicroBfdState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("conditionalDefaultRouteConfiguration"u8))

@@ -29,6 +29,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return NetworkFabricInternetGatewayData(id, name, resourceType, systemData, tags, location, annotation, internetGatewayRuleId, ipv4Address, port, typePropertiesType, networkFabricControllerId, provisioningState);
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string iPV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
+        {
+            return NetworkFabricInternetGatewayData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                annotation: annotation,
+                internetGatewayRuleId: internetGatewayRuleId,
+                iPv4Address: iPV4Address is null ? null : IPAddress.Parse(iPV4Address),
+                port: port,
+                typePropertiesType: typePropertiesType,
+                internetGatewayType: default,
+                networkFabricControllerId: networkFabricControllerId,
+                lastOperationDetails: default,
+                provisioningState: provisioningState);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
@@ -106,6 +128,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 egressAclId: egressAclId,
                 ingressAclId: ingressAclId,
                 microBfdState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress iPv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkDeviceInterfaceData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                identity: default,
+                annotation: annotation,
+                physicalIdentifier: physicalIdentifier,
+                connectedTo: connectedTo,
+                interfaceType: interfaceType,
+                iPv4Address: iPv4Address,
+                ipv6Address: ipv6Address,
+                description: default,
+                additionalDescription: default,
+                lastOperationDetails: default,
+                networkFabricId: default,
+                provisioningState: provisioningState,
+                administrativeState: administrativeState,
+                configurationState: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VpnConfigurationProperties"/>. </summary>

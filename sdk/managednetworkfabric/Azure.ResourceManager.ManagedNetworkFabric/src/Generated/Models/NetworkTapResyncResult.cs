@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
-            Operations = new ChangeTrackingList<OperationStatusResult>();
+            Operations = new ChangeTrackingList<NetworkFabricOperationStatusResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapResyncResult"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapResyncResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkTapResyncResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<NetworkFabricOperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> The end time of the operation. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> The operations list. </summary>
-        public IReadOnlyList<OperationStatusResult> Operations { get; }
+        public IReadOnlyList<NetworkFabricOperationStatusResult> Operations { get; }
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }
         /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>

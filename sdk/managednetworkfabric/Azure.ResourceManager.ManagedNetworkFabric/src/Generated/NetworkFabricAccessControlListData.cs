@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionProperties globalAccessControlListActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<ControlPlaneAclProperties> controlPlaneAclConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, GlobalAccessControlListActionProperties globalAccessControlListActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<ControlPlaneAclProperties> controlPlaneAclConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The last synced timestamp. </summary>
         public DateTimeOffset? LastSyncedOn { get; }
         /// <summary> Access Control List (ACL) Type. </summary>
-        public AclType? AclType { get; set; }
+        public NetworkFabricAclType? AclType { get; set; }
         /// <summary> Device Role. </summary>
-        public DeviceRole? DeviceRole { get; set; }
+        public NetworkFabricDeviceRole? DeviceRole { get; set; }
         /// <summary> Global Access Control List (ACL) actions. </summary>
         internal GlobalAccessControlListActionProperties GlobalAccessControlListActions { get; set; }
         /// <summary> Configuration to enable or disable ACL action count. </summary>

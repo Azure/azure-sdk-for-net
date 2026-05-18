@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             InternetGatewayRuleAction action = default;
             IList<string> addressList = default;
-            RuleCondition? condition = default;
+            NetworkFabricRuleCondition? condition = default;
             IList<string> destinationAddressList = default;
             IList<string> sourceAddressList = default;
-            IList<HeaderAddressProperties> headerAddressList = default;
+            IList<NetworkFabricHeaderAddress> headerAddressList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    condition = new RuleCondition(property.Value.GetString());
+                    condition = new NetworkFabricRuleCondition(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("destinationAddressList"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<HeaderAddressProperties> array = new List<HeaderAddressProperties>();
+                    List<NetworkFabricHeaderAddress> array = new List<NetworkFabricHeaderAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderAddressProperties.DeserializeHeaderAddressProperties(item, options));
+                        array.Add(NetworkFabricHeaderAddress.DeserializeNetworkFabricHeaderAddress(item, options));
                     }
                     headerAddressList = array;
                     continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 condition,
                 destinationAddressList ?? new ChangeTrackingList<string>(),
                 sourceAddressList ?? new ChangeTrackingList<string>(),
-                headerAddressList ?? new ChangeTrackingList<HeaderAddressProperties>(),
+                headerAddressList ?? new ChangeTrackingList<NetworkFabricHeaderAddress>(),
                 serializedAdditionalRawData);
         }
 
