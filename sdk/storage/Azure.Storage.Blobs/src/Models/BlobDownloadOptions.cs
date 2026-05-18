@@ -42,10 +42,9 @@ namespace Azure.Storage.Blobs.Models
         public DownloadTransferValidationOptions TransferValidation { get; set; }
 
         /// <summary>
-        /// Optional. The layout endpoint for this download.
+        /// Optional. The layout endpoint for this download, optimized for locality.
         /// When set, the SDK rewrites the outgoing request URI's
-        /// host/port to the specified endpoint while preserving the original Host
-        /// header for authentication.
+        /// host/port to the specified endpoint while preserving the original Host header.
         /// <para>
         /// Enumerate the pages returned by
         /// <see cref="Specialized.BlobBaseClient.GetLayout(Azure.HttpRange, BlobRequestConditions, System.Threading.CancellationToken)"/>

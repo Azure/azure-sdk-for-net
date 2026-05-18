@@ -29,10 +29,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public DownloadTransferValidationOptions TransferValidation { get; set; }
 
         /// <summary>
-        /// Optional. The layout endpoint for this download.
+        /// Optional. The layout endpoint for this download, optimized for locality.
         /// When set, rewrites the outgoing request URI's host/port to
-        /// the specified endpoint while preserving the original Host
-        /// header for authentication.
+        /// the specified endpoint while preserving the original Host header.
         /// <para>
         /// Enumerate the pages returned by
         /// <see cref="DataLakeFileClient.GetLayout(HttpRange, DataLakeRequestConditions, CancellationToken)"/>
