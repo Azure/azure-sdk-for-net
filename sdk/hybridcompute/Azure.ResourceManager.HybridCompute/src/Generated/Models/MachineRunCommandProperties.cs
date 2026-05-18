@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="MachineRunCommandProperties"/>. </summary>
         public MachineRunCommandProperties()
         {
-            Parameters = new ChangeTrackingList<RunCommandInputContent>();
-            ProtectedParameters = new ChangeTrackingList<RunCommandInputContent>();
+            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
+            ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineRunCommandProperties"/>. </summary>
         /// <param name="source"> The source of the run command script. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <param name="protectedParameters"> The parameters used by the script. </param>
-        /// <param name="isAsyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
+        /// <param name="asyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
         /// <param name="runAsUser"> Specifies the user account on the machine when executing the run command. </param>
         /// <param name="runAsPassword"> Specifies the user account password on the machine when executing the run command. </param>
         /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine run command instance view. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandProperties(MachineRunCommandScriptSource source, IList<RunCommandInputContent> parameters, IList<RunCommandInputContent> protectedParameters, bool? isAsyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, MachineRunCommandInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineRunCommandProperties(MachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, Uri outputBlobUri, Uri errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, MachineRunCommandInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Parameters = parameters;
             ProtectedParameters = protectedParameters;
-            IsAsyncExecution = isAsyncExecution;
+            AsyncExecution = asyncExecution;
             RunAsUser = runAsUser;
             RunAsPassword = runAsPassword;
             TimeoutInSeconds = timeoutInSeconds;
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("parameters")]
-        public IList<RunCommandInputContent> Parameters { get; } = new ChangeTrackingList<RunCommandInputContent>();
+        public IList<RunCommandInputParameter> Parameters { get; } = new ChangeTrackingList<RunCommandInputParameter>();
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("protectedParameters")]
-        public IList<RunCommandInputContent> ProtectedParameters { get; } = new ChangeTrackingList<RunCommandInputContent>();
+        public IList<RunCommandInputParameter> ProtectedParameters { get; } = new ChangeTrackingList<RunCommandInputParameter>();
 
         /// <summary> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </summary>
         [WirePath("asyncExecution")]
-        public bool? IsAsyncExecution { get; set; }
+        public bool? AsyncExecution { get; set; }
 
         /// <summary> Specifies the user account on the machine when executing the run command. </summary>
         [WirePath("runAsUser")]
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </summary>
         [WirePath("outputBlobUri")]
-        public string OutputBlobUri { get; set; }
+        public Uri OutputBlobUri { get; set; }
 
         /// <summary> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </summary>
         [WirePath("errorBlobUri")]
-        public string ErrorBlobUri { get; set; }
+        public Uri ErrorBlobUri { get; set; }
 
         /// <summary> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </summary>
         [WirePath("outputBlobManagedIdentity")]

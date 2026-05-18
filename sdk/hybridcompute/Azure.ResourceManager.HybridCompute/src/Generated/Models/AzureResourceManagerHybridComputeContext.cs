@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(ProductProfileUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ProvisioningIssueProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(RunCommandInputContent))]
+    [ModelReaderWriterBuildable(typeof(RunCommandInputParameter))]
     [ModelReaderWriterBuildable(typeof(RunCommandManagedIdentity))]
     [ModelReaderWriterBuildable(typeof(ServiceExtension))]
     [ModelReaderWriterBuildable(typeof(SettingsGatewayProperties))]

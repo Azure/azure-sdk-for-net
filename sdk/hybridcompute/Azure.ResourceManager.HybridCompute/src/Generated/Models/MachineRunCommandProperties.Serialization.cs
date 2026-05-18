@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
-                foreach (RunCommandInputContent item in Parameters)
+                foreach (RunCommandInputParameter item in Parameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();
-                foreach (RunCommandInputContent item in ProtectedParameters)
+                foreach (RunCommandInputParameter item in ProtectedParameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsAsyncExecution))
+            if (Optional.IsDefined(AsyncExecution))
             {
                 writer.WritePropertyName("asyncExecution"u8);
-                writer.WriteBooleanValue(IsAsyncExecution.Value);
+                writer.WriteBooleanValue(AsyncExecution.Value);
             }
             if (Optional.IsDefined(RunAsUser))
             {
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri"u8);
-                writer.WriteStringValue(OutputBlobUri);
+                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri"u8);
-                writer.WriteStringValue(ErrorBlobUri);
+                writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             MachineRunCommandScriptSource source = default;
-            IList<RunCommandInputContent> parameters = default;
-            IList<RunCommandInputContent> protectedParameters = default;
-            bool? isAsyncExecution = default;
+            IList<RunCommandInputParameter> parameters = default;
+            IList<RunCommandInputParameter> protectedParameters = default;
+            bool? asyncExecution = default;
             string runAsUser = default;
             string runAsPassword = default;
             int? timeoutInSeconds = default;
-            string outputBlobUri = default;
-            string errorBlobUri = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
             RunCommandManagedIdentity outputBlobManagedIdentity = default;
             RunCommandManagedIdentity errorBlobManagedIdentity = default;
             string provisioningState = default;
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<RunCommandInputContent> array = new List<RunCommandInputContent>();
+                    List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputContent.DeserializeRunCommandInputContent(item, options));
+                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<RunCommandInputContent> array = new List<RunCommandInputContent>();
+                    List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputContent.DeserializeRunCommandInputContent(item, options));
+                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                     }
                     protectedParameters = array;
                     continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    isAsyncExecution = prop.Value.GetBoolean();
+                    asyncExecution = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("runAsUser"u8))
@@ -274,12 +274,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("outputBlobUri"u8))
                 {
-                    outputBlobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputBlobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("errorBlobUri"u8))
                 {
-                    errorBlobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    errorBlobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("outputBlobManagedIdentity"u8))
@@ -321,9 +329,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             return new MachineRunCommandProperties(
                 source,
-                parameters ?? new ChangeTrackingList<RunCommandInputContent>(),
-                protectedParameters ?? new ChangeTrackingList<RunCommandInputContent>(),
-                isAsyncExecution,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                asyncExecution,
                 runAsUser,
                 runAsPassword,
                 timeoutInSeconds,

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("properties.parameters")]
-        public IList<RunCommandInputContent> Parameters
+        public IList<RunCommandInputParameter> Parameters
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> The parameters used by the script. </summary>
         [WirePath("properties.protectedParameters")]
-        public IList<RunCommandInputContent> ProtectedParameters
+        public IList<RunCommandInputParameter> ProtectedParameters
         {
             get
             {
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </summary>
         [WirePath("properties.asyncExecution")]
-        public bool? IsAsyncExecution
+        public bool? AsyncExecution
         {
             get
             {
-                return Properties is null ? default : Properties.IsAsyncExecution;
+                return Properties is null ? default : Properties.AsyncExecution;
             }
             set
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     Properties = new MachineRunCommandProperties();
                 }
-                Properties.IsAsyncExecution = value;
+                Properties.AsyncExecution = value;
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </summary>
         [WirePath("properties.outputBlobUri")]
-        public string OutputBlobUri
+        public Uri OutputBlobUri
         {
             get
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </summary>
         [WirePath("properties.errorBlobUri")]
-        public string ErrorBlobUri
+        public Uri ErrorBlobUri
         {
             get
             {
