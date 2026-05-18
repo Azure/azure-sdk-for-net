@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.EventHubs
     {
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly Namespaces _namespacesRestClient;
-        private readonly ClientDiagnostics _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics;
-        private readonly EventHubsDisasterRecoveryAuthorizationRule _eventHubsDisasterRecoveryAuthorizationRuleRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of EventHubsNamespaceCollection for mocking. </summary>
         protected EventHubsNamespaceCollection()
@@ -46,10 +42,6 @@ namespace Azure.ResourceManager.EventHubs
             TryGetApiVersion(EventHubsNamespaceResource.ResourceType, out string eventHubsNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceResource.ResourceType.Namespace, Diagnostics);
             _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2025-05-01-preview");
-            _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _eventHubsDisasterRecoveryAuthorizationRuleRestClient = new EventHubsDisasterRecoveryAuthorizationRule(_eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2025-05-01-preview");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
