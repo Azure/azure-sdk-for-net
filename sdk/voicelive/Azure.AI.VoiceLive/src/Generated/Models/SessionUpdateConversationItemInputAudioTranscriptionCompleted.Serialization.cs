@@ -95,6 +95,26 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("transcript"u8);
             writer.WriteStringValue(Transcript);
+            if (Optional.IsCollectionDefined(Logprobs))
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteStartArray();
+                foreach (LogProbProperties item in Logprobs)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Phrases))
+            {
+                writer.WritePropertyName("phrases"u8);
+                writer.WriteStartArray();
+                foreach (TranscriptionPhrase item in Phrases)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -128,6 +148,8 @@ namespace Azure.AI.VoiceLive
             string itemId = default;
             int contentIndex = default;
             string transcript = default;
+            IList<LogProbProperties> logprobs = default;
+            IList<TranscriptionPhrase> phrases = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -155,6 +177,34 @@ namespace Azure.AI.VoiceLive
                     transcript = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("logprobs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LogProbProperties> array = new List<LogProbProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(LogProbProperties.DeserializeLogProbProperties(item, options));
+                    }
+                    logprobs = array;
+                    continue;
+                }
+                if (prop.NameEquals("phrases"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TranscriptionPhrase> array = new List<TranscriptionPhrase>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(TranscriptionPhrase.DeserializeTranscriptionPhrase(item, options));
+                    }
+                    phrases = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -166,7 +216,9 @@ namespace Azure.AI.VoiceLive
                 additionalBinaryDataProperties,
                 itemId,
                 contentIndex,
-                transcript);
+                transcript,
+                logprobs ?? new ChangeTrackingList<LogProbProperties>(),
+                phrases ?? new ChangeTrackingList<TranscriptionPhrase>());
         }
     }
 }
