@@ -83,12 +83,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubEventType EventType { get; }
 
         /// <summary>
-        /// Allowed service upstream validation
+        /// The connection setting names or configuration section names allowed for abuse protection and signature validation.
         /// </summary>
         public string[] Connections { get; private set; }
 
         /// <summary>
-        /// Allowed service upstream validation.
+        /// The connection setting names or configuration section names allowed for abuse protection and signature validation.
         /// Use <see cref="Connections"/> instead for multiple connections.
         /// If both <see cref="Connection"/> and <see cref="Connections"/> are set, <see cref="Connections"/> takes precedence.
         /// </summary>

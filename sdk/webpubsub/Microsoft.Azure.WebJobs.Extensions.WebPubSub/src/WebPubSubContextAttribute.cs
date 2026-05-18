@@ -14,12 +14,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public class WebPubSubContextAttribute : Attribute
     {
         /// <summary>
-        /// Allowed Web PubSub service connections used for Abuse Protection and signature checks.
+        /// The connection setting names or configuration section names allowed for abuse protection and signature validation.
         /// </summary>
         public string[] Connections { get; set; }
 
         /// <summary>
-        /// Allowed Web PubSub service connection used for Abuse Protection and signature checks.
+        /// The connection setting name or configuration section name allowed for abuse protection and signature validation.
         /// Use <see cref="Connections"/> instead for multiple connections.
         /// If both <see cref="Connection"/> and <see cref="Connections"/> are set, <see cref="Connections"/> takes precedence.
         /// </summary>
