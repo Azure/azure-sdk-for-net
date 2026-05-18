@@ -602,6 +602,121 @@ export function sortResourceMethods(methods: ResourceMethod[]): void {
 }
 
 /**
+ * Assigns non-resource methods to resources based on three matching strategies:
+ * 1. Prefix matching: if the method's operationPath has a prefix that matches a resource's
+ *    resourceIdPattern, the method is moved to that resource as an Action.
+ * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
+ *    it is matched to a valid resource with the same model ID and assigned as a List operation.
+ *    This handles extension resources where list paths have different parent structures.
+ * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
+ *    is extracted from the operation path using RequestPath.resourceType (which includes
+ *    the provider namespace) and compared against each resource's metadata.resourceType.
+ *    The provider hierarchy depth must also match to prevent cross-scope false matches.
+ *    This handles operations from resolveArmResources that lack resourceModelId but share
+ *    a resource type with a known resource.
+ *
+ * @param resources - The list of valid resources
+ * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
+ */
+export function assignNonResourceMethodsToResources(
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[]
+): void {
+  const methodsToRemove = new Set<string>();
+
+  for (const method of nonResourceMethods) {
+    const bestMatch = findLongestPrefixMatch(
+      method.operationPath,
+      resources,
+      (r) => r.metadata.resourceIdPattern,
+      true
+    );
+
+    if (bestMatch) {
+      bestMatch.metadata.methods.push({
+        methodId: method.methodId,
+        kind: ResourceOperationKind.Action,
+        operationPath: method.operationPath,
+        scope: {
+          kind: method.scope.kind,
+          scopeIdPattern: bestMatch.metadata.resourceIdPattern!,
+          scopeResourceType: method.scope.scopeResourceType
+        }
+      });
+      methodsToRemove.add(method.methodId);
+    } else if (method.resourceModelId) {
+      // Prefix matching failed; try matching by resource model ID.
+      const match = resources.find(
+        (r) => r.resourceModelId === method.resourceModelId
+      );
+      if (match) {
+        match.metadata.methods.push({
+          methodId: method.methodId,
+          kind: ResourceOperationKind.List,
+          operationPath: method.operationPath,
+          scope: method.scope
+        });
+        methodsToRemove.add(method.methodId);
+      }
+    } else {
+      // Both prefix and model ID matching failed; try matching by resource type.
+      const operationType = method.operationPath.resourceType;
+      if (operationType !== undefined) {
+        const match = resources.find((r) => {
+          if (
+            !r.metadata.resourceIdPattern ||
+            !method.operationPath.hasSameScopeNesting(
+              r.metadata.resourceIdPattern
+            )
+          ) {
+            return false;
+          }
+          return (
+            r.metadata.resourceType === operationType &&
+            operationPathEndsWithResourceType(
+              method.operationPath,
+              operationType
+            )
+          );
+        });
+        if (match) {
+          match.metadata.methods.push({
+            methodId: method.methodId,
+            kind: ResourceOperationKind.List,
+            operationPath: method.operationPath,
+            scope: method.scope
+          });
+          methodsToRemove.add(method.methodId);
+        }
+      }
+    }
+  }
+
+  if (methodsToRemove.size > 0) {
+    for (let i = nonResourceMethods.length - 1; i >= 0; i--) {
+      if (methodsToRemove.has(nonResourceMethods[i].methodId)) {
+        nonResourceMethods.splice(i, 1);
+      }
+    }
+
+    for (const resource of resources) {
+      sortResourceMethods(resource.metadata.methods);
+    }
+  }
+}
+
+function operationPathEndsWithResourceType(
+  operationPath: RequestPath,
+  resourceType: string
+): boolean {
+  const lastTypeSegment = resourceType.split("/").at(-1);
+  return (
+    lastTypeSegment !== undefined &&
+    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+  );
+}
+
+/**
  * Returns true when the path has a resource instance shape and any variable
  * segments in resource type positions are backed by closed enum parameters.
  * RequestPath can identify those segments structurally, but only the SdkMethod

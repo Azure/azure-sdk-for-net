@@ -195,6 +195,7 @@ Write-Host "Selected $($selectedFolders.Count) SDKs for regeneration"
 Write-Host "`n[3/3] Regenerating ($Parallel parallel jobs)..."
 $totalStart = Get-Date
 $workerScript = Join-Path $PSScriptRoot "Invoke-SdkRegeneration.ps1"
+$formatFullErrorDefinition = ${function:Format-FullError}.ToString()
 
 # Run regeneration (parallel or sequential)
 if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
@@ -206,10 +207,12 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $localSpecRepo = $using:LocalSpecRepoPath
         $saveInputsFlag = $using:SaveInputs
         $debugFlag = $using:DebugGenerator
-        
+        $formatFullError = [scriptblock]::Create($using:formatFullErrorDefinition)
+        Set-Item -Path function:Format-FullError -Value $formatFullError
+
         $result = @{ Library = $folder.Library; Success = $false; Error = ""; Elapsed = 0 }
         $start = Get-Date
-        
+
         try {
             $workerArgs = @{
                 ProjectPath = $folder.Path
@@ -230,21 +233,11 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
             }
         }
         catch {
-            $errorRecord = $_
-            $parts = @($errorRecord.ToString())
-            if ($errorRecord.ScriptStackTrace) {
-                $parts += "PowerShell stack trace:"
-                $parts += $errorRecord.ScriptStackTrace
-            }
-            if ($errorRecord.Exception.StackTrace) {
-                $parts += ".NET exception stack trace:"
-                $parts += $errorRecord.Exception.StackTrace
-            }
-            $result.Error = $parts -join [Environment]::NewLine
+            $result.Error = Format-FullError $_
         }
-        
+
         $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
-        
+
         # Output progress
         if ($result.Success) {
             Write-Host "  $($result.Library): OK ($($result.Elapsed)s)"

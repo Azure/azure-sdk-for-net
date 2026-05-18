@@ -57,6 +57,7 @@ import {
 import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
+import { $lib } from "./lib/lib.js";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -195,6 +196,21 @@ function detectResourcesByPath(
   const identifiedResourceModelIds = new Set(
     resourceEntries.map((entry) => entry.modelId)
   );
+  const unassociatedResourceModelIds = new Set(resourceModelIds);
+  for (const modelId of unassociatedResourceModelIds) {
+    if (identifiedResourceModelIds.has(modelId)) {
+      continue;
+    }
+    const modelName =
+      resourceModelMap.get(modelId)?.name ??
+      models.get(modelId)?.name ??
+      modelId;
+    $lib.reportDiagnostic(sdkContext.program, {
+      code: "resource-model-not-associated-with-arm-resource",
+      format: { modelName },
+      target: NoTarget
+    });
+  }
 
   // Step 2b: classify lifecycle methods (PUT/PATCH/DELETE/HEAD) whose path
   // equals an instance path. Verb-based, no decorator consultation.
@@ -222,23 +238,9 @@ function detectResourcesByPath(
     }
     const opPath = new RequestPath(method.operation.path);
     if (!isResourceInstancePath(sdkMethod, opPath)) continue;
-    // Find the entry whose instance path equals this operation path. If
-    // multiple models share a path (rare), prefer the one whose model is the
-    // request body or response.
-    let matched: ResourceEntry | undefined;
-    for (const entry of resourceEntries) {
-      if (!entry.instancePath.equals(opPath)) continue;
-      if (!matched) {
-        matched = entry;
-        continue;
-      }
-      // Disambiguate: prefer entry whose model is the response/body.
-      const respModelId = getDirectResponseModelId(sdkMethod);
-      if (respModelId === entry.modelId) {
-        matched = entry;
-        break;
-      }
-    }
+    const matched = resourceEntries.find((entry) =>
+      entry.instancePath.equals(opPath)
+    );
     if (!matched) continue;
     matched.explicitResourceName ??= getExplicitResourceName(sdkMethod);
     matched.methods.push({

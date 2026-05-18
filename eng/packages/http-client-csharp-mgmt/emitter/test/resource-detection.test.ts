@@ -1,4 +1,5 @@
 import { beforeEach, describe, it } from "vitest";
+import type { Diagnostic } from "@typespec/compiler";
 import {
   createCSharpSdkContext,
   createEmitterContext,
@@ -1646,6 +1647,12 @@ interface NoGetResources {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const [root] = createModel(sdkContext);
+    const diagnostics: Diagnostic[] = [];
+    const reportDiagnostic = program.reportDiagnostic.bind(program);
+    program.reportDiagnostic = (diagnostic: Diagnostic) => {
+      diagnostics.push(diagnostic);
+      reportDiagnostic(diagnostic);
+    };
 
     // Build ARM provider schema and verify its structure
     // This uses the legacy buildArmProviderSchema which properly filters resources without Get
@@ -1718,6 +1725,16 @@ interface NoGetResources {
       noGetMethods.length,
       0,
       "Should have no NoGetResource operations in non-resource methods"
+    );
+    ok(
+      diagnostics.some(
+        (diagnostic) =>
+          diagnostic.code ===
+            "@azure-typespec/http-client-csharp-mgmt/resource-model-not-associated-with-arm-resource" &&
+          diagnostic.message.includes("Resource model 'NoGetResource'") &&
+          diagnostic.message.includes("no GET operation")
+      ),
+      "Expected warning for resource model without a valid Read GET"
     );
   });
 
