@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput))]
     public abstract partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> for deserialization. </summary>
-        protected MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

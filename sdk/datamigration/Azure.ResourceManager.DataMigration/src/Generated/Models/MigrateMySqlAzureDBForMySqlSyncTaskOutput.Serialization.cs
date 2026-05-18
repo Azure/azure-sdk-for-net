@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput))]
     public abstract partial class MigrateMySqlAzureDBForMySqlSyncTaskOutput : IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutput"/> for deserialization. </summary>
-        protected MigrateMySqlAzureDBForMySqlSyncTaskOutput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MigrateMySqlAzureDBForMySqlSyncTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

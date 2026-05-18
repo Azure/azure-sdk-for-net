@@ -678,6 +678,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             commands ??= new ChangeTrackingList<DataMigrationCommandProperties>();
             clientData ??= new ChangeTrackingDictionary<string, string>();
 
+            // MANUAL EDIT: Restore GA unknown proxy type names for ApiCompat after regeneration.
             return new UnknownProjectTaskProperties(
                 new DataMigrationTaskType(taskType),
                 errors.ToList(),
@@ -5296,4 +5297,3 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
     }
 }
-
