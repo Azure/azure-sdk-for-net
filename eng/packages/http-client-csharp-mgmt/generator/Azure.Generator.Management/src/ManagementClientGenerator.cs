@@ -121,10 +121,6 @@ namespace Azure.Generator.Management
         /// <summary>
         /// Management plane SDKs do not need ConfigurationSchema.json generation.
         /// </summary>
-        public override Task WriteAdditionalFiles(string outputPath)
-        {
-            ModelFactoryVisitor.WriteSuppressedConstructorFactoryCompatibilityFile(outputPath);
-            return Task.CompletedTask;
-        }
+        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
     }
 }
