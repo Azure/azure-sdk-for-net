@@ -44,7 +44,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="currentSegment">The segment currently being read.</param>
         /// <param name="lastConsumable">Last consumable timestamp from the service metadata.</param>
         /// <param name="startTime">Optional inclusive start time for the change feed window.</param>
-        /// <param name="endTime">Optional inclusive end time for the change feed window.</param>
+        /// <param name="endTime">Optional exclusive end time for the change feed window.</param>
         /// <param name="config">Change feed configuration.</param>
         /// <param name="includeNonFinalizedEvents">
         /// Whether the producing run was reading past the finalized watermark. When <c>true</c>,
@@ -96,7 +96,7 @@ namespace Azure.Storage.ChangeFeed.Common
             if (!HasNext())
                 throw new InvalidOperationException("Change feed doesn't have any more events");
 
-            if (_currentSegment.DateTime > _endTime)
+            if (_currentSegment.DateTime >= _endTime)
                 return ChangeFeedEventPageBase<TEvent>.Empty();
 
             int defaultPageSize = _config?.DefaultPageSize ?? 5000;
@@ -145,7 +145,7 @@ namespace Azure.Storage.ChangeFeed.Common
                 return false;
 
             if (_endTime.HasValue)
-                return _currentSegment.DateTime <= _endTime;
+                return _currentSegment.DateTime < _endTime;
 
             return true;
         }

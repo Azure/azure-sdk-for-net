@@ -176,9 +176,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             => new ShareChangeFeedAsyncPageable(this, _maxTransferSize, _includeNonFinalizedEvents);
 
         /// <summary>
-        /// Returns change feed events within the specified time range. Both
-        /// <paramref name="start"/> and <paramref name="end"/> are inclusive — events whose
-        /// <c>EventTime</c> equals either boundary are returned.
+        /// Returns change feed events within the specified time range.
         /// </summary>
         /// <remarks>
         /// Events near the <paramref name="start"/> and <paramref name="end"/> boundaries
@@ -199,9 +197,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         }
 
         /// <summary>
-        /// Returns change feed events within the specified time range. Both
-        /// <paramref name="start"/> and <paramref name="end"/> are inclusive — events whose
-        /// <c>EventTime</c> equals either boundary are returned.
+        /// Returns change feed events within the specified time range.
         /// </summary>
         /// <remarks>
         /// Events near the <paramref name="start"/> and <paramref name="end"/> boundaries

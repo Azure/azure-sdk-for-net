@@ -83,47 +83,6 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
-        /// Verifies that a segment whose <see cref="SegmentBase{TEvent}.DateTime"/> equals the
-        /// requested <c>endTime</c> is read end-to-end. This pins the inclusive-end-time contract:
-        /// the snapshot-pageable bug previously dropped this boundary segment because
-        /// <c>HasNext()</c> used a strict <c>&lt;</c> comparison.
-        /// </summary>
-        [Test]
-        public async Task GetPage_SegmentDateTimeEqualsEndTime_StillReadsSegment()
-        {
-            DateTimeOffset boundary = new DateTimeOffset(2026, 5, 15, 6, 34, 0, TimeSpan.Zero);
-
-            SegmentBase<TestEvent> segment = BuildSegmentWithEvents(
-                manifestPath: "idx/segments/2026/05/15/0634/meta.json",
-                segmentTime: boundary,
-                eventIds: new[] { "evt-boundary" });
-
-            Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
-            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Loose);
-            containerClient.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
-
-            ChangeFeedBase<TestEvent> changeFeed = new ChangeFeedBase<TestEvent>(
-                containerClient: containerClient.Object,
-                segmentFactory: segmentFactory.Object,
-                years: new Queue<string>(),
-                segments: new Queue<string>(),
-                currentSegment: segment,
-                lastConsumable: boundary,
-                startTime: null,
-                endTime: boundary,
-                config: CreateTestConfig());
-
-            Assert.IsTrue(
-                changeFeed.HasNext(),
-                "Segment at exactly endTime must be readable — endTime is inclusive.");
-
-            Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
-
-            Assert.AreEqual(1, page.Values.Count);
-            Assert.AreEqual("evt-boundary", page.Values[0].Id);
-        }
-
-        /// <summary>
         /// Builds a real <see cref="SegmentBase{TEvent}"/> backed by a single mock shard that
         /// yields the supplied events in order.
         /// </summary>

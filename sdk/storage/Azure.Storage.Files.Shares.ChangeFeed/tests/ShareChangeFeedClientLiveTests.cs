@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             foreach (ShareChangeFeedEvent e in events)
             {
                 Assert.GreaterOrEqual(e.EventTime, start, "Event time should be >= start (inclusive)");
-                Assert.LessOrEqual(e.EventTime, end, "Event time should be <= end (inclusive)");
+                Assert.Less(e.EventTime, end, "Event time should be < end (exclusive)");
             }
         }
 

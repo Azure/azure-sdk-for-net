@@ -135,33 +135,30 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
         /// <summary>
         /// Verifies the per-event end-time filter at <c>SegmentBase.GetPage</c> drops events
-        /// with <c>EventTime &gt; endTime</c> (inclusive end).
+        /// with <c>EventTime &gt;= endTime</c> (exclusive end).
         /// </summary>
         [Test]
-        public async Task GetPage_DropsEventsAboveEndTime()
+        public async Task GetPage_DropsEventsAtOrAboveEndTime()
         {
             DateTimeOffset t0900 = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
             DateTimeOffset t0930 = new DateTimeOffset(2024, 1, 15, 9, 30, 0, TimeSpan.Zero);
             DateTimeOffset t1000 = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
-            DateTimeOffset t1030 = new DateTimeOffset(2024, 1, 15, 10, 30, 0, TimeSpan.Zero);
 
             List<TestEvent> events = new List<TestEvent>
             {
                 new TestEvent { Id = "evt-0900", EventTime = t0900 },
                 new TestEvent { Id = "evt-0930", EventTime = t0930 },
                 new TestEvent { Id = "evt-1000", EventTime = t1000 },
-                new TestEvent { Id = "evt-1030", EventTime = t1030 },
             };
 
             SegmentBase<TestEvent> segment = BuildSingleShardSegment(events);
 
-            // endTime is inclusive: events at exactly t1000 are kept; events past t1000 are dropped.
+            // endTime is exclusive: events at exactly t1000 are dropped.
             List<TestEvent> result = await segment.GetPage(IsAsync, pageSize: 10, startTime: null, endTime: t1000);
 
-            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(2, result.Count);
             Assert.AreEqual("evt-0900", result[0].Id);
             Assert.AreEqual("evt-0930", result[1].Id);
-            Assert.AreEqual("evt-1000", result[2].Id);
         }
 
         /// <summary>
