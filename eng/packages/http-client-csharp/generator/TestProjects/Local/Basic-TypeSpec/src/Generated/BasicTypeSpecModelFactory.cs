@@ -293,15 +293,15 @@ namespace BasicTypeSpec
         /// <param name="id"> The unique identifier of the plant. </param>
         /// <param name="height"> The height of the plant in centimeters. </param>
         /// <param name="age"> The age of the tree in years. </param>
-        /// <returns> A new <see cref="BasicTypeSpec.Tree"/> instance for mocking. </returns>
-        public static Tree Tree(string id = default, int height = default, int age = default)
+        /// <returns> A new <see cref="BasicTypeSpec.RenamedTree"/> instance for mocking. </returns>
+        public static RenamedTree RenamedTree(string id = default, int height = default, int age = default)
         {
-            return new Tree("tree", id, height, additionalBinaryDataProperties: null, age);
+            return new RenamedTree("tree", id, height, additionalBinaryDataProperties: null, age);
         }
 
         /// <summary>
         /// Base plant with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BasicTypeSpec.Tree"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BasicTypeSpec.RenamedTree"/>.
         /// </summary>
         /// <param name="species"> The species of plant. </param>
         /// <param name="id"> The unique identifier of the plant. </param>

@@ -440,6 +440,8 @@ model Tree extends Plant {
   age: int32;
 }
 
+@@clientName(Tree, "RenamedTree", "csharp");
+
 
 @route("/hello")
 @doc("Return hi")

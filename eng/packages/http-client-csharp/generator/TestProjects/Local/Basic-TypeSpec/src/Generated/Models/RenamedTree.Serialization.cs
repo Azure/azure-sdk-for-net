@@ -18,10 +18,10 @@ using Azure.Core;
 namespace BasicTypeSpec
 {
     /// <summary> Tree is a specific type of plant. </summary>
-    public partial class Tree : Plant, IJsonModel<Tree>, IXmlSerializable
+    public partial class RenamedTree : Plant, IJsonModel<RenamedTree>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="Tree"/> for deserialization. </summary>
-        internal Tree()
+        /// <summary> Initializes a new instance of <see cref="RenamedTree"/> for deserialization. </summary>
+        internal RenamedTree()
         {
         }
 
@@ -29,28 +29,28 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Plant PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RenamedTree>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTree(document.RootElement, options);
+                        return DeserializeRenamedTree(document.RootElement, options);
                     }
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeTree(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return DeserializeRenamedTree(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Tree)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenamedTree)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RenamedTree>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -72,28 +72,28 @@ namespace BasicTypeSpec
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Tree)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenamedTree)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Tree>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RenamedTree>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Tree IPersistableModel<Tree>.Create(BinaryData data, ModelReaderWriterOptions options) => (Tree)PersistableModelCreateCore(data, options);
+        RenamedTree IPersistableModel<RenamedTree>.Create(BinaryData data, ModelReaderWriterOptions options) => (RenamedTree)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Tree>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RenamedTree>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="tree"> The <see cref="Tree"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Tree tree)
+        /// <param name="renamedTree"> The <see cref="RenamedTree"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RenamedTree renamedTree)
         {
-            if (tree == null)
+            if (renamedTree == null)
             {
                 return null;
             }
-            return RequestContent.Create(tree, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(renamedTree, ModelSerializationExtensions.WireOptions);
         }
 
         /// <summary> Converts the model to RequestContent using the specified format. </summary>
@@ -114,14 +114,14 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Tree"/> from. </param>
-        public static explicit operator Tree(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RenamedTree"/> from. </param>
+        public static explicit operator RenamedTree(Response response)
         {
 
             if (response.Headers.TryGetValue("Content-Type", out string value) && value.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
             {
                 using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-                return DeserializeTree(document.RootElement, ModelSerializationExtensions.WireOptions);
+                return DeserializeRenamedTree(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
 
             using Stream stream = response.ContentStream;
@@ -130,12 +130,12 @@ namespace BasicTypeSpec
                 return default;
             }
 
-            return DeserializeTree(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+            return DeserializeRenamedTree(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Tree>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RenamedTree>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -146,10 +146,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RenamedTree>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Tree)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RenamedTree)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("age"u8);
@@ -158,24 +158,24 @@ namespace BasicTypeSpec
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Tree IJsonModel<Tree>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Tree)JsonModelCreateCore(ref reader, options);
+        RenamedTree IJsonModel<RenamedTree>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RenamedTree)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Plant JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RenamedTree>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Tree)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RenamedTree)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTree(document.RootElement, options);
+            return DeserializeRenamedTree(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Tree DeserializeTree(JsonElement element, ModelReaderWriterOptions options)
+        internal static RenamedTree DeserializeRenamedTree(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -213,7 +213,7 @@ namespace BasicTypeSpec
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Tree(species, id, height, additionalBinaryDataProperties, age);
+            return new RenamedTree(species, id, height, additionalBinaryDataProperties, age);
         }
 
         /// <param name="writer"> The XML writer. </param>
@@ -238,10 +238,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal override void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RenamedTree>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
             {
-                throw new FormatException($"The model {nameof(Tree)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RenamedTree)} does not support writing '{format}' format.");
             }
 
             base.XmlModelWriteCore(writer, options);
@@ -252,7 +252,7 @@ namespace BasicTypeSpec
 
         /// <param name="element"> The xml element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Tree DeserializeTree(XElement element, ModelReaderWriterOptions options)
+        internal static RenamedTree DeserializeRenamedTree(XElement element, ModelReaderWriterOptions options)
         {
             if (element == null)
             {
@@ -289,7 +289,7 @@ namespace BasicTypeSpec
                     continue;
                 }
             }
-            return new Tree(species, id, height, additionalBinaryDataProperties, age);
+            return new RenamedTree(species, id, height, additionalBinaryDataProperties, age);
         }
 
         /// <param name="writer"> The XML writer. </param>

@@ -98,19 +98,19 @@ namespace BasicTypeSpec
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> GetTree(CancellationToken cancellationToken = default)
+        public virtual Response<RenamedTree> GetTree(CancellationToken cancellationToken = default)
         {
             Response result = GetTree(cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
 
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> GetTreeAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RenamedTree>> GetTreeAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetTreeAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
 
         /// <summary>
@@ -170,19 +170,19 @@ namespace BasicTypeSpec
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> GetTreeAsJson(CancellationToken cancellationToken = default)
+        public virtual Response<RenamedTree> GetTreeAsJson(CancellationToken cancellationToken = default)
         {
             Response result = GetTreeAsJson(cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
 
         /// <summary> Get a tree as a plant. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> GetTreeAsJsonAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RenamedTree>> GetTreeAsJsonAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetTreeAsJsonAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
 
         /// <summary>
@@ -252,13 +252,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> UpdateTree(Tree tree, CancellationToken cancellationToken = default)
+        public virtual Response<RenamedTree> UpdateTree(RenamedTree tree, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("X");
             Response result = UpdateTree(content, cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
 
         /// <summary> Update a tree as a plant. </summary>
@@ -266,13 +266,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> UpdateTreeAsync(Tree tree, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RenamedTree>> UpdateTreeAsync(RenamedTree tree, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("X");
             Response result = await UpdateTreeAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
 
         /// <summary>
@@ -342,13 +342,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Tree> UpdateTreeAsJson(Tree tree, CancellationToken cancellationToken = default)
+        public virtual Response<RenamedTree> UpdateTreeAsJson(RenamedTree tree, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("J");
             Response result = UpdateTreeAsJson(content, cancellationToken.ToRequestContext());
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
 
         /// <summary> Update a tree as a plant. </summary>
@@ -356,13 +356,13 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tree"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Tree>> UpdateTreeAsJsonAsync(Tree tree, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RenamedTree>> UpdateTreeAsJsonAsync(RenamedTree tree, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tree, nameof(tree));
 
             using RequestContent content = tree.ToRequestContent("J");
             Response result = await UpdateTreeAsJsonAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Tree)result, result);
+            return Response.FromValue((RenamedTree)result, result);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace BasicTypeSpec
 {
     /// <summary>
     /// Base plant with discriminator
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Tree"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RenamedTree"/>.
     /// </summary>
     public abstract partial class Plant
     {

@@ -841,7 +841,7 @@
     {
       "$id": "76",
       "kind": "constant",
-      "name": "TreeSpecies",
+      "name": "RenamedTreeSpecies",
       "namespace": "BasicTypeSpec",
       "usage": "Input,Output,Json,Xml",
       "valueType": {
@@ -5357,7 +5357,7 @@
     {
       "$id": "426",
       "kind": "model",
-      "name": "Tree",
+      "name": "RenamedTree",
       "namespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.Tree",
       "usage": "Input,Output,Json,Xml",

@@ -17,7 +17,7 @@ namespace BasicTypeSpec
 {
     /// <summary>
     /// Base plant with discriminator
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Tree"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RenamedTree"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownPlant))]
     public abstract partial class Plant : IJsonModel<Plant>, IXmlSerializable
@@ -159,7 +159,7 @@ namespace BasicTypeSpec
                 switch (discriminator.GetString())
                 {
                     case "tree":
-                        return Tree.DeserializeTree(element, options);
+                        return RenamedTree.DeserializeRenamedTree(element, options);
                 }
             }
             return UnknownPlant.DeserializeUnknownPlant(element, options);
@@ -219,7 +219,7 @@ namespace BasicTypeSpec
                 switch ((string)discriminatorElement)
                 {
                     case "tree":
-                        return Tree.DeserializeTree(element, options);
+                        return RenamedTree.DeserializeRenamedTree(element, options);
                 }
             }
             return UnknownPlant.DeserializeUnknownPlant(element, options);
