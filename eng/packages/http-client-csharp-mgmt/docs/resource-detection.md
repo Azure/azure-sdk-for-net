@@ -161,9 +161,9 @@ For each candidate resource model `M` from Step 1:
       prefix is actually a detected resource's instance path and
       identifies which resource the extension is anchored on.
 
-   Any path that fails one of these checks is rejected with a
-   diagnostic naming the offending segment, and the corresponding GET
-   does **not** make `M` a resource. If every GET returning `M` is
+   Any path that fails one of these checks is rejected, and the
+   corresponding GET does **not** make `M` a resource. Path rejection
+   itself does not emit a diagnostic. If every GET returning `M` is
    rejected, `M` has no `Read` and falls through to the
    [no-`Read` diagnostic](#step-2--identify-resource-paths-and-crud-operations)
    in sub-step 6 below.
