@@ -9179,7 +9179,7 @@ namespace Azure.Storage.Blobs.Test
         [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts()
+        public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts_SharedKey()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -9239,6 +9239,175 @@ namespace Azure.Storage.Blobs.Test
             // chunks, which should be 4 rewrites.
             Assert.AreEqual(4, rewrittenRequests.Count,
                 "Expected DataLocalityPolicy to rewrite the host on subsequent chunk requests.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the layout endpoint
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+            }
+        }
+
+        [Ignore("Current preprod test account cannot run OAuth, please enable later with prod test account.")]
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts_OAuth()
+        {
+            // Same end-to-end shape as the shared-key variant, but with a
+            // TokenCredential-backed client.
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port and Host header on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            // OAuth-backed download client pointed at the same blob URI.
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blob.Name
+            };
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+
+            string originalHost = downloadBlob.Uri.Host;
+
+            using (var resultStream = new MemoryStream())
+            {
+                BlobDownloadToOptions downloadOptions = new()
+                {
+                    EnableDataLocality = true,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        InitialTransferSize = 3 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await downloadBlob.DownloadToAsync(resultStream, downloadOptions);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // 20 MB blob, 3 MB initial + 5 MB chunks => 1 initial + 4 rewritten chunks.
+            Assert.AreEqual(4, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on subsequent chunk requests under OAuth.");
+
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
+            {
+                // The URI host and port should have been rewritten to the layout endpoint
+                Assert.AreNotEqual(originalHost, req.RequestHost,
+                    $"Request URI host should be rewritten to layout endpoint, not '{originalHost}'");
+                Assert.Greater(req.RequestPort, 0,
+                    "Request URI port should be set by DataLocalityPolicy");
+
+                // The Host header must preserve the original host
+                Assert.AreEqual(originalHost, req.HostHeaderValue,
+                    $"Host header should be the original host '{originalHost}', not the layout endpoint");
+                Assert.AreNotEqual(req.RequestHost, req.HostHeaderValue,
+                    "Host header should differ from the rewritten URI host");
+            }
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadToAsync_EnableDataLocality_WithRequestAsserts_Sas()
+        {
+            // Same end-to-end shape as the shared-key variant, but the download
+            // client is constructed from a SAS URI.
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Add a tracking policy that sits after DataLocalityPolicy in the pipeline
+            // to capture the rewritten host/port and Host header on each request.
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            // SAS-backed download client (no credential - auth is fully in the URI).
+            Uri sasUri = blob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1));
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(sasUri, options));
+
+            string originalHost = downloadBlob.Uri.Host;
+
+            using (var resultStream = new MemoryStream())
+            {
+                BlobDownloadToOptions downloadOptions = new()
+                {
+                    EnableDataLocality = true,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        InitialTransferSize = 3 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await downloadBlob.DownloadToAsync(resultStream, downloadOptions);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Filter to requests where DataLocalityPolicy rewrote the host
+            // (indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+
+            // 20 MB blob, 3 MB initial + 5 MB chunks => 1 initial + 4 rewritten chunks.
+            Assert.AreEqual(4, rewrittenRequests.Count,
+                "Expected DataLocalityPolicy to rewrite the host on subsequent chunk requests under SAS.");
 
             foreach (DataLocalityTrackingPolicy.RequestInfo req in rewrittenRequests)
             {
