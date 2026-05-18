@@ -76,50 +76,15 @@ export async function updateClients(
 }
 
 /**
- * Builds the ARM provider schema by detecting all resources and non-resource methods.
- * This is the main function that gathers all ARM-related information from the code model
- * and consolidates it into a unified ArmProviderSchema structure.
- *
- * This function is exported for testing purposes and can be called directly from tests
- * to validate the schema structure using the legacy custom resource detection logic.
+ * Builds the path-driven ARM provider schema described in
+ * `docs/resource-detection.md` from TypeSpec resource model annotations,
+ * resource instance paths, and HTTP verbs.
  *
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
  * @returns The unified ARM provider schema containing all resources and non-resource methods
  */
 export function buildArmProviderSchema(
-  sdkContext: CSharpEmitterContext,
-  codeModel: CodeModel
-): ArmProviderSchema {
-  return detectResourcesByPath(sdkContext, codeModel);
-}
-
-/**
- * Path-driven ARM resource detection.
- *
- * Implementation of the design described in
- * `docs/resource-detection.md`. Steps:
- *
- * 1. Find candidate resource models via {@link getAllResourceModels} — models
- *    using ARM templates (`@armResourceInternal` / `@armResourceWithParameter`)
- *    or carrying `@customAzureResource` anywhere in the base-model chain.
- * 2. For each candidate model M, scan all GET methods whose direct (non-paging)
- *    response is exactly M. Each such GET's path is an instance path of M.
- *    Then for every method (any verb) whose `operation.path` equals an instance
- *    path, classify by HTTP verb:
- *      PUT → Create, PATCH → Update, DELETE → Delete, HEAD → CheckExistence,
- *      GET → Read.
- *    Decorators like `@armResourceRead`/`@armResourceCreateOrUpdate`/etc. are
- *    NOT consulted.
- * 3. Resolve parents by walking the instance path up one `/type/{name}` pair
- *    at a time, matching against the detected resource set. Walks that strip
- *    more than one pair before matching indicate a tuple-like ancestor (the
- *    intermediate segments are not modeled as resources).
- * 4. Assign remaining methods with the two-pass algorithm: first Lists by
- *    collection path and response model, then Actions by longest resource
- *    prefix.
- */
-function detectResourcesByPath(
   sdkContext: CSharpEmitterContext,
   codeModel: CodeModel
 ): ArmProviderSchema {
@@ -351,7 +316,18 @@ function detectResourcesByPath(
     }
   }
 
-  // Name constraints from the resource model's `name` property.
+  // Step 4: assign all operations not consumed by Step 2 as List, Action, or
+  // non-resource methods.
+  assignRemainingOperations(
+    detectedResources,
+    nonResourceMethodsArray,
+    allEntries,
+    consumedMethodIds,
+    serviceMethods,
+    identifiedResourceModelIds
+  );
+
+  // Fill metadata that depends on the resource model or final method set.
   for (const resource of detectedResources) {
     const sdkModel = models.get(resource.resourceModelId);
     const typespecModel = sdkModel?.__raw as Model | undefined;
@@ -379,24 +355,6 @@ function detectResourcesByPath(
       };
     }
     resource.metadata.rbacRoles = extractRbacRoles(sdkModel);
-  }
-
-  // Step 4: assign all operations not consumed by Step 2 as List, Action, or
-  // non-resource methods. This is intentionally done in the path-driven flow
-  // rather than by the shared fallback helper so the two-pass design is kept
-  // explicit here.
-  assignRemainingOperations(
-    detectedResources,
-    nonResourceMethodsArray,
-    allEntries,
-    consumedMethodIds,
-    serviceMethods,
-    identifiedResourceModelIds
-  );
-
-  // Compute per-resource API versions after all post-processing so that
-  // merged/moved methods are reflected.
-  for (const resource of detectedResources) {
     resource.metadata.apiVersions = resolveResourceApiVersions(
       resource.metadata.methods,
       serviceMethods
@@ -469,51 +427,36 @@ function assignRemainingOperations(
   serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
   identifiedResourceModelIds: ReadonlySet<string>
 ): void {
-  // Step 4, pass 1: GET + collection<T> can be a List only when the
-  // operation path identifies a collection of a detected resource whose model
-  // is T.
   for (const { method } of allEntries) {
     const methodId = method.crossLanguageDefinitionId;
     if (consumedMethodIds.has(methodId)) continue;
 
+    const operationPath = new RequestPath(method.operation.path);
     const sdkMethod = serviceMethods.get(methodId);
-    if (!sdkMethod || sdkMethod.operation?.verb !== "get") continue;
+    const itemModelId =
+      sdkMethod?.operation?.verb === "get"
+        ? getPagingItemModelIdLocal(sdkMethod)
+        : undefined;
+    const listTarget =
+      itemModelId && identifiedResourceModelIds.has(itemModelId)
+        ? findListTargetResource(resources, operationPath, itemModelId)
+        : undefined;
+    const actionTarget = listTarget
+      ? undefined
+      : findLongestPrefixMatch(
+          operationPath,
+          resources,
+          (resource) => resource.metadata.resourceIdPattern
+        );
 
-    const itemModelId = getPagingItemModelIdLocal(sdkMethod);
-    if (!itemModelId || !identifiedResourceModelIds.has(itemModelId)) continue;
-
-    const operationPath = new RequestPath(method.operation.path);
-    const target = findListTargetResource(
-      resources,
-      operationPath,
-      itemModelId
-    );
-    if (!target) continue;
-
-    target.metadata.methods.push({
-      methodId,
-      kind: ResourceOperationKind.List,
-      operationPath,
-      scope: buildListOperationScope(resources, operationPath)
-    });
-    consumedMethodIds.add(methodId);
-  }
-
-  // Step 4, pass 2: every remaining operation is an Action on the detected
-  // resource with the longest matching instance-path prefix, or a non-resource
-  // method when no detected resource owns the path.
-  for (const { method } of allEntries) {
-    const methodId = method.crossLanguageDefinitionId;
-    if (consumedMethodIds.has(methodId)) continue;
-
-    const operationPath = new RequestPath(method.operation.path);
-    const actionTarget = findLongestPrefixMatch(
-      operationPath,
-      resources,
-      (resource) => resource.metadata.resourceIdPattern
-    );
-
-    if (actionTarget) {
+    if (listTarget) {
+      listTarget.metadata.methods.push({
+        methodId,
+        kind: ResourceOperationKind.List,
+        operationPath,
+        scope: buildListOperationScope(resources, operationPath)
+      });
+    } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
       actionTarget.metadata.methods.push({
         methodId,
@@ -609,6 +552,7 @@ function operationPathEndsWithResourceType(
   );
 }
 
+// Only legacy/built-in operation decorators carry an explicit resource name.
 function getExplicitResourceName(
   method: SdkMethod<SdkHttpOperation> | undefined
 ): string | undefined {

@@ -26,71 +26,9 @@ That contract imposes constraints absent from the generic ARM definition:
   `Resource` instance from an id; the resource is therefore unusable.
 
 Consequently the algorithm below uses **Read existence** as the primary
-signal. `autorest.bicep`-style "create-only" or "extension-only"
-resources (write-only or marked solely by `x-ms-azure-resource` on a
-GET-of-something-else) do not apply to us: a model with no `Read` is not
-a resource in the .NET mgmt sense, regardless of how it is decorated.
-
-`autorest.bicep` ([bicep-types-az](https://github.com/Azure/bicep-types-az))
-remains useful as a sanity-check reference for "what shape is an ARM
-resource", and the path-derived facts in [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
-below are the same ones it relies on. The detection algorithm itself is
-TypeSpec-specific.
-
----
-
-## Ground truth: ARM resources are defined by their paths
-
-ARM defines a resource as an entity addressable by a URL of the form:
-
-```
-/<scope>/providers/<namespace>/<type1>/<name1>/<type2>/<name2>/.../<typeN>/<nameN>
-```
-
-Everything else about the resource graph follows mechanically from this
-shape. The rest of this document is, in effect, instructions for
-reconstructing this picture from the TypeSpec model. The path-derived facts
-are:
-
-- **Resource identity.** A resource corresponds to one such instance path.
-  Two paths that differ in any segment are two different resources.
-- **Resource type.** `<namespace>/<type1>/.../<typeN>`. Type segments occupy
-  the even positions after `/providers/`; name segments occupy the odd
-  positions.
-- **Scope.** Determined entirely by the path prefix preceding the
-  resource's own `/providers/<namespace>/...` segments. An instance path
-  can contain more than one `/providers/<namespace>/` portion (extension
-  resources are anchored on another resource which itself starts with a
-  `/providers/...`), so the relevant split is the **last** occurrence of
-  `/providers/<namespace>/<type>/...` in the path — everything before it
-  is the scope:
-
-  | Path prefix (before the last `/providers/`) | Scope |
-  | --- | --- |
-  | `/` | `Tenant` |
-  | `/providers/Microsoft.Management/managementGroups/{}/` | `ManagementGroup` |
-  | `/subscriptions/{}/` | `Subscription` |
-  | `/subscriptions/{}/resourceGroups/{}/` | `ResourceGroup` |
-  | Any other prefix that is itself another resource's instance path | `Extension` |
-
-- **Parent chain.** Each `type/{name}` pair after the namespace is one level.
-  The parent of `.../typeN-1/{nameN-1}/typeN/{nameN}` is the resource at
-  `.../typeN-1/{nameN-1}`. The top-level resource (only one `type/{name}`
-  pair after `/providers/`) has no resource parent and sits directly under
-  its scope.
-- **Singleton.** A trailing name segment that is a literal (constant), not a
-  `{variable}`, marks the resource as a singleton with that literal as its
-  instance name.
-- **Dynamic resource type.** A type segment that is itself a `{variable}`
-  whose schema is a closed enum expands into one concrete resource per enum
-  value, each inheriting the rest of the path.
-
-In addition, the special case `/subscriptions/{}/resourceGroups/{}` is
-treated as if it were `/subscriptions/{}/providers/Microsoft.Resources/resourceGroups/{}`,
-so resource groups participate in the same model as every other resource.
-
-The remaining sections describe how each piece of the picture is recovered
-from TypeSpec inputs.
+signal. Create-only or extension-only shapes do not apply to us: a model
+with no `Read` is not a resource in the .NET mgmt sense, regardless of how
+it is decorated.
 
 ---
 
@@ -142,8 +80,7 @@ that operation attaches to the nearest detected holder as an `Action`.
    exception.
 2. **The Read fixes the resource's instance path.** Once we know the
    `Read`'s path, the resource's type, scope, parent chain, name
-   parameter, and instance-singletonness all follow from the path under
-   [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths).
+   parameter, and instance-singletonness all follow from that path.
 3. **Verbs determine CRUD kinds, not decorators.** Operation-kind
    decorators (`@armResourceRead`, `@armResourceCreateOrUpdate`,
    `@armResourceUpdate`, `@armResourceDelete`, `@armResourceList`,
@@ -151,13 +88,6 @@ that operation attaches to the nearest detected holder as an `Action`.
    **not consulted** during detection. They are routinely misused; the
    verb and the operation's relationship to the resource's instance
    path/collection path/model are the truth.
-4. **Annotations identify; paths and verbs classify.** The resource
-   templates (`TrackedResource<T>`, `ProxyResource<T>`,
-   `ExtensionResource<T>`) and `@customAzureResource` are trusted in
-   **Step 1** to pick out which TypeSpec models are intended to be
-   resource entities. Everything from Step 2 onward — what is a
-   resource, what the resource's CRUD shape is, what its parent and
-   scope are — is decided by paths and verbs.
 
 ### Step 1 — Identify resource models
 
@@ -188,9 +118,8 @@ For each candidate resource model `M` from Step 1:
    separate resource. This is how the same model can legitimately back
    resources at different scopes.
 
-2. **Validate the path.** A resource's instance path must conform to
-   the [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
-   shape. Walk the path and check, in order:
+2. **Validate the path.** A resource's instance path must conform to the
+   ARM resource path shape. Walk the path and check, in order:
 
    1. The path contains at least one `/providers/<namespace>/...`
       segment. The split point is the **last** occurrence of
@@ -249,13 +178,11 @@ For each candidate resource model `M` from Step 1:
    the expanded resources.
 
 4. **Derive the path-based facts intrinsic to each (expanded)
-   resource.** Apply
-   [*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths)
-   to the instance path to obtain `resourceType`, the trailing `{name}`
-   parameter (or the literal singleton name), the `apiVersion`, and
-   the `scope` from the prefix as classified in sub-step 2.6 above.
-   See [*How a resource is named*](#how-a-resource-is-named). The
-   resource's `parent` is resolved in
+   resource.** Use the validated instance path to obtain `resourceType`,
+   the trailing `{name}` parameter (or the literal singleton name), the
+   `apiVersion`, and the `scope` from the prefix as classified in
+   sub-step 2.6 above. See [*How a resource is named*](#how-a-resource-is-named).
+   The resource's `parent` is resolved in
    [Step 3](#step-3--resolve-parent-relationships) once the full
    resource set is known.
 
@@ -264,15 +191,13 @@ For each candidate resource model `M` from Step 1:
 
    | Verb | Kind |
    | --- | --- |
-| `PUT` | `Create` |
-| `PATCH` | `Update` |
-| `DELETE` | `Delete` |
-| `HEAD` | `CheckExistence` |
+   | `PUT` | `Create` |
+   | `PATCH` | `Update` |
+   | `DELETE` | `Delete` |
+   | `HEAD` | `CheckExistence` |
 
-    Operation-kind decorators are not consulted. If two operations of
-   the same kind hit the same path, emit a diagnostic and pick the one
-   whose model matches the resource model. When the resource came from
-   a dynamic-type expansion, each expanded resource attaches the
+   Operation-kind decorators are not consulted. If the resource came
+   from a dynamic-type expansion, each expanded resource attaches the
    operations that hit *its* concrete path (i.e. with the same enum
    substitution).
 
@@ -283,8 +208,8 @@ For each candidate resource model `M` from Step 1:
 
 After Step 2, the resource set is fixed: a list of resources each with
 `{ model, instance path, type, name, apiVersion, scope,
-Read [, Create] [, CheckExistence] [, Update] [, Delete] }`, where `type` is fully
-constant. `parent` is filled in by Step 3.
+Read [, Create] [, CheckExistence] [, Update] [, Delete] }`, where `type`
+is fully constant. `parent` is filled in by Step 3.
 
 ### Step 3 — Resolve parent relationships
 
@@ -428,8 +353,8 @@ according to its scope prefix.
 
 The scope of a resource is the path prefix before the **last** `/providers/`
 in its instance path, mapped to `Tenant`, `Subscription`, `ResourceGroup`,
-`ManagementGroup`, or `Extension` as defined in
-[*Ground truth*](#ground-truth-arm-resources-are-defined-by-their-paths).
+`ManagementGroup`, or `Extension` as defined by the Step 2 path validation
+rules.
 The "last `/providers/`" qualifier matters because an instance path may
 contain several `/providers/<namespace>/` blocks — for example, an
 extension resource on top of another provider's resource — and only the
@@ -501,27 +426,13 @@ from the `name` property of the resource model and may be overridden via the
 
 ---
 
-## Resources that get filtered out
+## Resource models that are not detected
 
 Under [*Detection algorithm*](#detection-algorithm), a candidate resource
 model that has no service `Read` returning it is not detected as a
 resource at all — Step 2 emits a diagnostic naming the model. This is
 true for singletons as well, because the .NET mgmt SDK contract requires
 every resource client to have a `Get` method (see the introduction).
-
-In addition, a detected resource is removed during post-processing if
-**all** of the following hold after Step 4 has run:
-
-- It has no `Create`, no `Update`, no `Delete`.
-- After [Step 4](#step-4--assign-remaining-operations), no `List` or
-  `Action` is attached to it.
-
-Such a resource has only a `Read` and nothing else — it is a path stub
-with no behavior. Its `Read` is demoted to a non-resource method (an
-extension on the appropriate scope resource).
-
-Each removal emits a diagnostic so the spec author sees why a model that
-looked like a resource did not become one.
 
 ---
 
@@ -537,8 +448,3 @@ The end state expected by the C# generator is two collections:
 
 This is attached to the root client as the `@armProviderSchema` decorator
 and consumed by every later step of the C# generator.
-
-`CheckExistence` is part of the desired schema shape so the resource detection
-algorithm does not misclassify same-resource `HEAD` operations as actions. The
-C# generator may choose not to emit public SDK methods for a kind until that
-kind's API shape is designed.
