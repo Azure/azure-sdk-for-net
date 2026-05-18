@@ -76,9 +76,9 @@ namespace System.ClientModel
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -293,6 +293,7 @@ namespace System.ClientModel.Primitives
         public string? CredentialSource { get { throw null; } set { } }
         public string? this[string key] { get { throw null; } }
         public string? Key { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? TokenProvider { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {
