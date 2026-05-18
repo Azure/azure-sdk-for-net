@@ -12,7 +12,6 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {

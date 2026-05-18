@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Configures a SharePoint connector app registration for the index, enabling document-level permissions from SharePoint. </summary>
     public partial class SharePointConnectorAppRegistration

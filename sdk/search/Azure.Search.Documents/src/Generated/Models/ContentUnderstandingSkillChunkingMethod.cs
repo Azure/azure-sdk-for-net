@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The chunking strategy used by the Content Understanding skill. Default is 'fixedSize'. </summary>
     public readonly partial struct ContentUnderstandingSkillChunkingMethod : IEquatable<ContentUnderstandingSkillChunkingMethod>

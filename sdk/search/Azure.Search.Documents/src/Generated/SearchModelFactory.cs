@@ -1711,7 +1711,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="applicationId"> The application (client) ID of the app registration used to connect to SharePoint. </param>
         /// <param name="federatedCredentialId"> The federated credential ID configured on the app registration. </param>
         /// <param name="tenantId"> The tenant ID of the app registration. If not specified, the tenant of the search service is used. </param>
-        /// <returns> A new <see cref="Models.SharePointConnectorAppRegistration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.SharePointConnectorAppRegistration"/> instance for mocking. </returns>
         public static SharePointConnectorAppRegistration SharePointConnectorAppRegistration(Guid applicationId = default, Guid federatedCredentialId = default, Guid? tenantId = default)
         {
             return new SharePointConnectorAppRegistration(applicationId, federatedCredentialId, tenantId, additionalBinaryDataProperties: null);
