@@ -15,15 +15,30 @@ namespace Azure.Generator.Management.Utilities
         extension(ArmResourceMetadata resourceMetadata)
         {
             /// <summary>
-            /// Creates a dictionary mapping InputClient to RestClientInfo for all distinct clients used by the resource.
+            /// Creates a dictionary mapping InputClient to RestClientInfo for the distinct clients
+            /// actually used by the supplied <paramref name="methods"/>.
             /// </summary>
             /// <param name="clientProvider">The client provider that will own the fields.</param>
+            /// <param name="methods">The subset of resource methods that will be emitted on the
+            /// owning client provider (e.g. only the methods placed on the collection class).
+            /// Passing all of <c>resourceMetadata.Methods</c> here causes unused diagnostics/REST
+            /// client fields to be emitted for operation groups whose operations are not actually
+            /// referenced by the owning class. See https://github.com/Azure/azure-sdk-for-net/issues/59242.</param>
             /// <returns>A dictionary mapping InputClient to RestClientInfo.</returns>
-            internal Dictionary<InputClient, RestClientInfo> CreateClientInfosMap(TypeProvider clientProvider)
+            internal Dictionary<InputClient, RestClientInfo> CreateClientInfosMap(TypeProvider clientProvider, IEnumerable<ResourceMethod> methods)
             {
                 var clientInfos = new Dictionary<InputClient, RestClientInfo>();
 
-                // Create rest client providers and fields for each unique InputClient
+                // Determine the set of InputClients actually referenced by the supplied methods.
+                var referencedClients = new HashSet<InputClient>();
+                foreach (var method in methods)
+                {
+                    referencedClients.Add(method.InputClient);
+                }
+
+                // Iterate resourceMetadata.Methods (rather than `methods`) to preserve the original
+                // declaration order of REST client fields, which keeps regenerated SDK diffs minimal
+                // when this filter is introduced.
                 foreach (var resourceMethod in resourceMetadata.Methods)
                 {
                     if (resourceMethod.Kind == ResourceOperationKind.CheckExistence)
@@ -32,6 +47,10 @@ namespace Azure.Generator.Management.Utilities
                     }
 
                     var inputClient = resourceMethod.InputClient;
+                    if (!referencedClients.Contains(inputClient))
+                    {
+                        continue; // Skip clients not referenced by any emitted method on the owning class
+                    }
                     if (clientInfos.ContainsKey(inputClient))
                     {
                         continue; // Skip if the client is already processed
