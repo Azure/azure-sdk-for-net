@@ -26,7 +26,7 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ### Create a Cost Management Export
 
-This example demonstrates how to create a Cost Management export that delivers actual cost data to a storage container on a weekly schedule, based on the [Azure Bicep reference](https://learn.microsoft.com/en-us/azure/templates/microsoft.costmanagement/exports).
+This example demonstrates how to create a Cost Management export that delivers actual cost data to a storage container on a weekly schedule, based on the [Azure Bicep reference](https://learn.microsoft.com/azure/templates/microsoft.costmanagement/exports).
 
 ```C# Snippet:CostManagementExportBasic
 Infrastructure infra = new();
