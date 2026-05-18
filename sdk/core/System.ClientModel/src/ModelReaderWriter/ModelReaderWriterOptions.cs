@@ -11,7 +11,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ModelReaderWriterOptions
 {
-    private Dictionary<Type, List<object>>? _proxies;
+    private Dictionary<Type, List<object>>? _writeProxies;
+    private Dictionary<Type, List<IDiscriminatorProxy>>? _discriminatorProxies;
 
     private static ModelReaderWriterOptions? s_jsonOptions;
     /// <summary>
@@ -37,11 +38,12 @@ public class ModelReaderWriterOptions
     internal ModelReaderWriterOptions(ModelReaderWriterOptions options)
     {
         Format = options.Format;
-        _proxies = options._proxies;
+        _writeProxies = options._writeProxies;
+        _discriminatorProxies = options._discriminatorProxies;
         IsCoreOwned = true;
     }
 
-    internal bool HasProxies => _proxies?.Count > 0;
+    internal bool HasProxies => (_writeProxies?.Count > 0) || (_discriminatorProxies?.Count > 0);
 
     internal bool IsCoreOwned { get; }
 
@@ -51,19 +53,38 @@ public class ModelReaderWriterOptions
     public string Format { get; }
 
     /// <summary>
-    /// Registers a <see cref="ModelProxy{T}"/> proxy to be used when reading or writing a model.
-    /// Multiple proxies can be registered for the same type to form a chain of responsibility.
-    /// Proxies are consulted in FIFO order (first registered is consulted first).
+    /// Registers a write proxy for the specified type.
+    /// The proxy must implement <see cref="IPersistableModel{T}"/> and will be used
+    /// in place of the original model when writing. One proxy per type is matched at runtime.
     /// </summary>
-    /// <param name="proxy"> The <see cref="ModelProxy{T}"/> proxy that will be used to read or write the model. </param>
-    public void AddProxy<T>(ModelProxy<T> proxy)
+    /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> implementation that will be used to write the model. </param>
+    public void AddProxy<T>(IPersistableModel<T> proxy)
     {
-        _proxies ??= [];
+        _writeProxies ??= [];
 
-        if (!_proxies.TryGetValue(typeof(T), out List<object>? chain))
+        if (!_writeProxies.TryGetValue(typeof(T), out List<object>? chain))
         {
             chain = [];
-            _proxies[typeof(T)] = chain;
+            _writeProxies[typeof(T)] = chain;
+        }
+
+        chain.Add(proxy);
+    }
+
+    /// <summary>
+    /// Registers a <see cref="DiscriminatorProxy{T}"/> for the discriminator read path.
+    /// Multiple discriminator proxies can be registered for the same base type.
+    /// Proxies are consulted in FIFO order (first registered is consulted first).
+    /// </summary>
+    /// <param name="proxy"> The <see cref="DiscriminatorProxy{T}"/> proxy for discriminator-based deserialization. </param>
+    public void AddDiscriminatorProxy<T>(DiscriminatorProxy<T> proxy)
+    {
+        _discriminatorProxies ??= [];
+
+        if (!_discriminatorProxies.TryGetValue(typeof(T), out List<IDiscriminatorProxy>? chain))
+        {
+            chain = [];
+            _discriminatorProxies[typeof(T)] = chain;
         }
 
         chain.Add(proxy);
@@ -75,7 +96,7 @@ public class ModelReaderWriterOptions
     public object? ProxiedModel { get; private set; }
 
     /// <summary>
-    /// Checks whether any proxies are registered for the specified model type <typeparamref name="T"/>.
+    /// Checks whether any write proxies or discriminator proxies are registered for the specified model type <typeparamref name="T"/>.
     /// Use this to decide whether to route deserialization of nested model properties through
     /// <see cref="ModelReaderWriter.Read{T}(BinaryData, ModelReaderWriterOptions)"/> (which performs
     /// full proxy chain resolution) or through the model's own deserialization method.
@@ -84,42 +105,43 @@ public class ModelReaderWriterOptions
     /// <returns> True if one or more proxies are registered for <typeparamref name="T"/>; otherwise, false. </returns>
     public bool HasProxy<T>()
     {
-        return _proxies is not null
-            && _proxies.TryGetValue(typeof(T), out List<object>? chain)
-            && chain.Count > 0;
+        return HasProxy(typeof(T));
     }
 
     /// <summary>
-    /// Checks whether any proxies are registered for the specified model type.
+    /// Checks whether any write proxies or discriminator proxies are registered for the specified model type.
     /// </summary>
     /// <param name="modelType">The model type to check for registered proxies.</param>
     /// <returns> True if one or more proxies are registered for the specified type; otherwise, false. </returns>
     public bool HasProxy(Type modelType)
     {
-        return _proxies is not null
-            && _proxies.TryGetValue(modelType, out List<object>? chain)
-            && chain.Count > 0;
+        if (_writeProxies is not null && _writeProxies.TryGetValue(modelType, out List<object>? wChain) && wChain.Count > 0)
+            return true;
+
+        if (_discriminatorProxies is not null && _discriminatorProxies.TryGetValue(modelType, out List<IDiscriminatorProxy>? dChain) && dChain.Count > 0)
+            return true;
+
+        return false;
     }
 
     /// <summary>
-    /// Resolves the proxy chain for the specified model type on the write path, walking the chain
-    /// in FIFO order (first registered is consulted first), calling <see cref="ModelProxy{T}.CanHandle(T, ModelReaderWriterOptions)"/> on each.
-    /// The first proxy that can handle the model is returned.
-    /// If no proxy is registered or none can handle the model, returns the model itself.
+    /// Resolves the write proxy for the specified model type.
+    /// Returns the first registered proxy for the model's type.
+    /// If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IPersistableModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IPersistableModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain) || chain.Count == 0)
+        if (_writeProxies is null || !_writeProxies.TryGetValue(model.GetType(), out List<object>? chain) || chain.Count == 0)
         {
             return model;
         }
 
-        // Write path: walk chain first-to-last (FIFO), return the first that CanHandle.
+        // Write path: return the first registered proxy that is IPersistableModel<T>.
         foreach (var entry in chain)
         {
-            if (entry is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && entry is IPersistableModel<T> typedProxy)
+            if (entry is IPersistableModel<T> typedProxy)
             {
                 ProxiedModel = model;
                 return typedProxy;
@@ -130,24 +152,23 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves the proxy chain for the specified model type on the write path, walking the chain
-    /// in FIFO order (first registered is consulted first), calling <see cref="ModelProxy{T}.CanHandle(T, ModelReaderWriterOptions)"/> on each
-    /// proxy that also implements <see cref="IJsonModel{T}"/>.
-    /// If no proxy is registered or none can handle the model, returns the model itself.
+    /// Resolves the write proxy for the specified model type, returning the first
+    /// registered proxy that also implements <see cref="IJsonModel{T}"/>.
+    /// If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IJsonModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain))
+        if (_writeProxies is null || !_writeProxies.TryGetValue(model.GetType(), out List<object>? chain))
         {
             return model;
         }
 
-        // Write path: walk chain first-to-last (FIFO), return the first IJsonModel<T> that CanHandle.
+        // Write path: return the first registered proxy that is IJsonModel<T>.
         foreach (var entry in chain)
         {
-            if (entry is IModelProxy proxyBase && proxyBase.CanHandleObject(model, this) && entry is IJsonModel<T> jsonProxy)
+            if (entry is IJsonModel<T> jsonProxy)
             {
                 ProxiedModel = model;
                 return jsonProxy;
@@ -158,10 +179,10 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves a proxy for reading by walking the chain of responsibility in FIFO order.
-    /// Each proxy's <see cref="ModelProxy{T}.CanHandle(BinaryData, ModelReaderWriterOptions)"/> is called
-    /// from first registered to last. If a proxy returns <c>true</c>, its
-    /// <see cref="IPersistableModel{T}.Create(BinaryData, ModelReaderWriterOptions)"/> is called.
+    /// Resolves a discriminator proxy for reading from <see cref="BinaryData"/>.
+    /// Walks the discriminator proxy chain in FIFO order, calling
+    /// <see cref="DiscriminatorProxy{T}.CanHandle(BinaryData)"/> on each.
+    /// If a proxy returns true, its <see cref="IPersistableModel{T}.Create(BinaryData, ModelReaderWriterOptions)"/> is called.
     /// If all proxies decline, the model itself handles the read.
     /// </summary>
     /// <param name="model"> The <see cref="IPersistableModel{T}"/> model instance (used as terminal fallback). </param>
@@ -169,18 +190,18 @@ public class ModelReaderWriterOptions
     /// <returns> The deserialized instance of <typeparamref name="T"/>. </returns>
     internal T? ReadWithChain<T>(IPersistableModel<T> model, BinaryData data)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain) || chain.Count == 0)
+        if (_discriminatorProxies is null || !_discriminatorProxies.TryGetValue(model.GetType(), out List<IDiscriminatorProxy>? chain) || chain.Count == 0)
         {
             return model.Create(data, this);
         }
 
-        // Walk chain first-to-last (FIFO), check CanHandle on each proxy.
+        // Walk chain first-to-last (FIFO), check CanHandle on each discriminator proxy.
         foreach (var entry in chain)
         {
-            if (entry is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
+            if (entry.CanHandleData(data))
             {
                 ProxiedModel = model;
-                return (T?)proxyBase.CreateFromData(data, this);
+                return (T?)entry.CreateFromData(data, this);
             }
         }
 
@@ -190,11 +211,10 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves a proxy for reading from a <see cref="Utf8JsonReader"/> by walking the chain of responsibility
-    /// in FIFO order (first registered is consulted first).
-    /// When proxies exist, the JSON element is read into <see cref="BinaryData"/> once for
-    /// <see cref="ModelProxy{T}.CanHandle(BinaryData, ModelReaderWriterOptions)"/> checks. If a proxy handles it,
-    /// <see cref="IPersistableModel{T}.Create(BinaryData, ModelReaderWriterOptions)"/> is called.
+    /// Resolves a discriminator proxy for reading from a <see cref="Utf8JsonReader"/>.
+    /// If a discriminator proxy is an <see cref="IJsonModel{T}"/>, its
+    /// <see cref="DiscriminatorProxy{T}.CanHandle(ref Utf8JsonReader)"/> is called;
+    /// otherwise <see cref="DiscriminatorProxy{T}.CanHandle(BinaryData)"/> is used.
     /// If all proxies decline, the model itself handles the read using the original reader.
     /// </summary>
     /// <param name="model"> The <see cref="IJsonModel{T}"/> model instance (used as terminal fallback). </param>
@@ -202,23 +222,71 @@ public class ModelReaderWriterOptions
     /// <returns> The deserialized instance of <typeparamref name="T"/>. </returns>
     internal T? ReadWithChain<T>(IJsonModel<T> model, ref Utf8JsonReader reader)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? chain) || chain.Count == 0)
+        if (_discriminatorProxies is null || !_discriminatorProxies.TryGetValue(model.GetType(), out List<IDiscriminatorProxy>? chain) || chain.Count == 0)
         {
             return model.Create(ref reader, this);
         }
 
-        // Snapshot the reader, then read the element into BinaryData for CanHandle checks.
+        // Snapshot the reader for fallback.
         Utf8JsonReader snapshot = reader;
-        using var doc = JsonDocument.ParseValue(ref reader);
-        BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
 
-        // Walk chain first-to-last (FIFO), check CanHandle with the BinaryData.
+        // Check if any proxy in the chain is a JSON model (can use reader-based CanHandle).
+        bool anyJsonProxy = false;
         foreach (var entry in chain)
         {
-            if (entry is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
+            if (entry.IsJsonModel)
             {
-                ProxiedModel = model;
-                return (T?)proxyBase.CreateFromData(data, this);
+                anyJsonProxy = true;
+                break;
+            }
+        }
+
+        if (anyJsonProxy)
+        {
+            // For JSON-model proxies, try reader-based CanHandle first.
+            Utf8JsonReader probeReader = snapshot;
+            foreach (var entry in chain)
+            {
+                if (entry.IsJsonModel)
+                {
+                    Utf8JsonReader checkReader = probeReader;
+                    if (entry.CanHandleReader(ref checkReader))
+                    {
+                        ProxiedModel = model;
+                        Utf8JsonReader createReader = probeReader;
+                        // Advance the original reader past the element
+                        JsonDocument.ParseValue(ref reader);
+                        return (T?)entry.CreateFromReader(ref createReader, this);
+                    }
+                }
+                else
+                {
+                    // Non-JSON discriminator proxies need BinaryData
+                    using var doc = JsonDocument.ParseValue(ref reader);
+                    BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
+                    if (entry.CanHandleData(data))
+                    {
+                        ProxiedModel = model;
+                        return (T?)entry.CreateFromData(data, this);
+                    }
+                    // Reset reader for next iteration — but we've consumed it, so use snapshot
+                    reader = snapshot;
+                }
+            }
+        }
+        else
+        {
+            // All proxies are non-JSON; read into BinaryData once for CanHandle checks.
+            using var doc = JsonDocument.ParseValue(ref reader);
+            BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
+
+            foreach (var entry in chain)
+            {
+                if (entry.CanHandleData(data))
+                {
+                    ProxiedModel = model;
+                    return (T?)entry.CreateFromData(data, this);
+                }
             }
         }
 
@@ -228,9 +296,7 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves a proxy for reading from a <see cref="Utf8JsonReader"/> using a non-generic model reference,
-    /// walking the chain of responsibility in FIFO order with
-    /// <see cref="ModelProxy{T}.CanHandle(BinaryData, ModelReaderWriterOptions)"/> semantics.
+    /// Resolves a discriminator proxy for reading from a <see cref="Utf8JsonReader"/> using a non-generic model reference.
     /// Used by <see cref="JsonModelConverter"/> and <see cref="JsonCollectionReader"/>.
     /// </summary>
     /// <param name="modelType"> The runtime type of the model to look up proxies for. </param>
@@ -239,23 +305,66 @@ public class ModelReaderWriterOptions
     /// <returns> The deserialized instance, or null if deserialization failed. </returns>
     internal object? ReadWithChain(Type modelType, IJsonModel<object> model, ref Utf8JsonReader reader)
     {
-        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<object>? chain) || chain.Count == 0)
+        if (_discriminatorProxies is null || !_discriminatorProxies.TryGetValue(modelType, out List<IDiscriminatorProxy>? chain) || chain.Count == 0)
         {
             return model.Create(ref reader, this);
         }
 
-        // Snapshot the reader, then read the element into BinaryData for CanHandle checks.
+        // Snapshot the reader for fallback.
         Utf8JsonReader snapshot = reader;
-        using var doc = JsonDocument.ParseValue(ref reader);
-        BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
 
-        // Walk chain first-to-last (FIFO) with CanHandle.
+        // Check if any proxy is a JSON model.
+        bool anyJsonProxy = false;
         foreach (var entry in chain)
         {
-            if (entry is IModelProxy proxyBase && proxyBase.CanHandleData(data, this))
+            if (entry.IsJsonModel)
             {
-                ProxiedModel = model;
-                return proxyBase.CreateFromData(data, this);
+                anyJsonProxy = true;
+                break;
+            }
+        }
+
+        if (anyJsonProxy)
+        {
+            Utf8JsonReader probeReader = snapshot;
+            foreach (var entry in chain)
+            {
+                if (entry.IsJsonModel)
+                {
+                    Utf8JsonReader checkReader = probeReader;
+                    if (entry.CanHandleReader(ref checkReader))
+                    {
+                        ProxiedModel = model;
+                        Utf8JsonReader createReader = probeReader;
+                        JsonDocument.ParseValue(ref reader);
+                        return entry.CreateFromReader(ref createReader, this);
+                    }
+                }
+                else
+                {
+                    using var doc = JsonDocument.ParseValue(ref reader);
+                    BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
+                    if (entry.CanHandleData(data))
+                    {
+                        ProxiedModel = model;
+                        return entry.CreateFromData(data, this);
+                    }
+                    reader = snapshot;
+                }
+            }
+        }
+        else
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
+
+            foreach (var entry in chain)
+            {
+                if (entry.CanHandleData(data))
+                {
+                    ProxiedModel = model;
+                    return entry.CreateFromData(data, this);
+                }
             }
         }
 

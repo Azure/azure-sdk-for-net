@@ -108,7 +108,7 @@ internal class ModelReaderWriterSamples
     }
 
     #region Snippet:Readme_Read_Proxy_ClassStub
-    public class OutputModelProxy : ModelProxy<OutputModel>, IJsonModel<OutputModel>
+    public class OutputModelProxy : IJsonModel<OutputModel>
     #endregion
     {
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,23 +121,23 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        public OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        public string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class OutputModelProxyOverride : ModelProxy<OutputModel>, IJsonModel<OutputModel>
+    public class OutputModelProxyOverride : IJsonModel<OutputModel>
     {
         void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -149,24 +149,24 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        public OutputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        public string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
     }
 
     #region Snippet:Readme_Write_Proxy_ClassStub
-    public class InputModelProxy : ModelProxy<InputModel>, IJsonModel<InputModel>
+    public class InputModelProxy : IJsonModel<InputModel>
     #endregion
     {
         void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -179,17 +179,17 @@ internal class ModelReaderWriterSamples
             throw new NotImplementedException();
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        public BinaryData Write(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override InputModel Create(BinaryData data, ModelReaderWriterOptions options)
+        public InputModel Create(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+        public string GetFormatFromOptions(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }

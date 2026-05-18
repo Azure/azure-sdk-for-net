@@ -1,49 +1,56 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Internal non-generic interface for proxy resolution. Required because the generic chain
-/// walkers are called with T=object (STJ converter and ModelReaderWriter.ReadInternal both
-/// erase T), so casting to <see cref="ModelProxy{T}"/> with the real model type is not possible.
+/// Internal non-generic interface for discriminator proxy resolution on the read path.
 /// </summary>
-internal interface IModelProxy
+internal interface IDiscriminatorProxy
 {
-    bool CanHandleData(BinaryData data, ModelReaderWriterOptions options);
-    bool CanHandleObject(object model, ModelReaderWriterOptions options);
+    bool CanHandleData(BinaryData data);
+    bool CanHandleReader(ref Utf8JsonReader reader);
     object CreateFromData(BinaryData data, ModelReaderWriterOptions options);
+    object CreateFromReader(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
+    bool IsJsonModel { get; }
 }
 
 /// <summary>
-/// Abstract base class for model proxies that participate in the chain-of-responsibility
-/// pattern for reading and writing models. Override <see cref="CanHandle(T, ModelReaderWriterOptions)"/> or
-/// <see cref="CanHandle(BinaryData, ModelReaderWriterOptions)"/> to selectively decline
-/// handling specific instances or data.
+/// Abstract base class for discriminator proxies on the read path.
+/// A discriminator proxy is an <see cref="IPersistableModel{T}"/> that provides
+/// deserialization for a specific discriminator variant. Override
+/// <see cref="CanHandle(BinaryData)"/> or <see cref="CanHandle(ref Utf8JsonReader)"/>
+/// to indicate which data this proxy can deserialize.
+/// Under the hood, if this proxy also implements <see cref="IJsonModel{T}"/>,
+/// the framework will prefer calling <see cref="CanHandle(ref Utf8JsonReader)"/>;
+/// otherwise it will call <see cref="CanHandle(BinaryData)"/>.
 /// </summary>
-/// <typeparam name="T">The model type this proxy handles.</typeparam>
-public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
+/// <typeparam name="T">The base model type this proxy deserializes into.</typeparam>
+public abstract class DiscriminatorProxy<T> : IDiscriminatorProxy, IPersistableModel<T>
 {
     /// <summary>
-    /// Determines whether this proxy can handle the specified model instance.
-    /// Used on the write path for per-element proxy selection.
-    /// Override to inspect the model and decline by returning false.
-    /// Default returns true.
-    /// </summary>
-    /// <param name="model">The model instance to check.</param>
-    /// <param name="options">The options for writing.</param>
-    /// <returns>True if this proxy can handle the model; otherwise, false.</returns>
-    public virtual bool CanHandle(T model, ModelReaderWriterOptions options) => true;
-
-    /// <summary>
-    /// Determines whether this proxy can handle reading from the specified data.
-    /// Override to inspect the data and decline by returning false.
-    /// Default returns true.
+    /// Determines whether this proxy can handle reading from the specified binary data.
+    /// Override to inspect the data (e.g. check a discriminator field) and return true
+    /// if this proxy should handle deserialization.
+    /// Default returns false.
     /// </summary>
     /// <param name="data">The data to inspect.</param>
-    /// <param name="options">The options for reading.</param>
     /// <returns>True if this proxy can handle the data; otherwise, false.</returns>
-    public virtual bool CanHandle(BinaryData data, ModelReaderWriterOptions options) => true;
+    public virtual bool CanHandle(BinaryData data) => false;
+
+    /// <summary>
+    /// Determines whether this proxy can handle reading from the specified JSON reader.
+    /// Override to inspect the JSON (e.g. check a discriminator property) and return true
+    /// if this proxy should handle deserialization.
+    /// Default returns false.
+    /// The reader is passed by ref but should not be advanced; implementations should
+    /// only peek at the current state.
+    /// </summary>
+    /// <param name="reader">The JSON reader positioned at the start of the element.</param>
+    /// <returns>True if this proxy can handle the data; otherwise, false.</returns>
+    public virtual bool CanHandle(ref Utf8JsonReader reader) => false;
 
     /// <inheritdoc/>
     public abstract T Create(BinaryData data, ModelReaderWriterOptions options);
@@ -54,12 +61,25 @@ public abstract class ModelProxy<T> : IModelProxy, IPersistableModel<T>
     /// <inheritdoc/>
     public abstract string GetFormatFromOptions(ModelReaderWriterOptions options);
 
-    bool IModelProxy.CanHandleData(BinaryData data, ModelReaderWriterOptions options)
-        => CanHandle(data, options);
+    bool IDiscriminatorProxy.CanHandleData(BinaryData data) => CanHandle(data);
 
-    bool IModelProxy.CanHandleObject(object model, ModelReaderWriterOptions options)
-        => model is T typed && CanHandle(typed, options);
+    bool IDiscriminatorProxy.CanHandleReader(ref Utf8JsonReader reader) => CanHandle(ref reader);
 
-    object IModelProxy.CreateFromData(BinaryData data, ModelReaderWriterOptions options)
+    object IDiscriminatorProxy.CreateFromData(BinaryData data, ModelReaderWriterOptions options)
         => Create(data, options)!;
+
+    object IDiscriminatorProxy.CreateFromReader(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    {
+        if (this is IJsonModel<T> jsonModel)
+        {
+            return jsonModel.Create(ref reader, options)!;
+        }
+
+        // Fallback: read into BinaryData and use IPersistableModel path
+        using var doc = JsonDocument.ParseValue(ref reader);
+        BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
+        return Create(data, options)!;
+    }
+
+    bool IDiscriminatorProxy.IsJsonModel => this is IJsonModel<T>;
 }

@@ -25,7 +25,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         protected virtual bool IsRoundTripOrderDeterministic => true;
 
-        protected virtual ModelProxy<TElement>? Proxy => null;
+        protected virtual IPersistableModel<TElement>? Proxy => null;
 
         protected override string GetJsonFolderName()
         {
