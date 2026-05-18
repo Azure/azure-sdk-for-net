@@ -678,7 +678,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             commands ??= new ChangeTrackingList<DataMigrationCommandProperties>();
             clientData ??= new ChangeTrackingDictionary<string, string>();
 
-            // MANUAL EDIT: Restore GA unknown proxy type names for ApiCompat after regeneration.
             return new UnknownProjectTaskProperties(
                 new DataMigrationTaskType(taskType),
                 errors.ToList(),
@@ -1113,6 +1112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 output.ToList());
         }
 
+        /// <summary> Describes a MongoDB data source. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="isShardingSupported"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>
@@ -2238,6 +2238,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes an error or warning that occurred during a MongoDB migration. </summary>
         /// <param name="code"> The non-localized, machine-readable code that describes the error or warning. </param>
         /// <param name="count"> The number of times the error or warning has occurred. </param>
         /// <param name="message"> The localized, human-readable message that describes the error or warning. </param>
@@ -4980,6 +4981,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataMigrationSkuCapacity(minimum, maximum, @default, scaleType, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes metadata for retrieving price info. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
@@ -4998,6 +5000,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataMigrationSkuCapabilities(name, value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes scaling information of a SKU. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason code for restriction. </param>

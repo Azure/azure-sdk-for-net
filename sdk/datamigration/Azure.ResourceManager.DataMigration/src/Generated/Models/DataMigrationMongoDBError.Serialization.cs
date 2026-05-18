@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ErrorType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string code = default;
             int? count = default;
             string message = default;
-            DataMigrationMongoDBErrorType? @type = default;
+            DataMigrationMongoDBErrorType? errorType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    @type = new DataMigrationMongoDBErrorType(prop.Value.GetString());
+                    errorType = new DataMigrationMongoDBErrorType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataMigrationMongoDBError(code, count, message, @type, additionalBinaryDataProperties);
+            return new DataMigrationMongoDBError(code, count, message, errorType, additionalBinaryDataProperties);
         }
     }
 }

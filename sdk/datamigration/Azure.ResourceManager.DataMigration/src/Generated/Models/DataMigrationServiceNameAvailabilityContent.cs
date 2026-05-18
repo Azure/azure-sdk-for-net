@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The proposed resource name. </param>
-        /// <param name="type"> The resource type chain (e.g. virtualMachines/extensions). </param>
+        /// <param name="resourceType"> The resource type chain (e.g. virtualMachines/extensions). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationServiceNameAvailabilityContent(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataMigrationServiceNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string Name { get; set; }
 
         /// <summary> The resource type chain (e.g. virtualMachines/extensions). </summary>
-        public string Type { get; set; }
+        public string ResourceType { get; set; }
     }
 }

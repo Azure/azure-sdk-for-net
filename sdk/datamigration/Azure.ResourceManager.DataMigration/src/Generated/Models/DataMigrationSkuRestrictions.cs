@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSkuRestrictions"/>. </summary>
-        /// <param name="type"> The type of restrictions. </param>
+        /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason code for restriction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationSkuRestrictions(DataMigrationSkuRestrictionsType? @type, IReadOnlyList<string> values, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataMigrationSkuRestrictions(DataMigrationSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            RestrictionsType = restrictionsType;
             Values = values;
             ReasonCode = reasonCode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of restrictions. </summary>
-        public DataMigrationSkuRestrictionsType? Type { get; }
+        public DataMigrationSkuRestrictionsType? RestrictionsType { get; }
 
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }

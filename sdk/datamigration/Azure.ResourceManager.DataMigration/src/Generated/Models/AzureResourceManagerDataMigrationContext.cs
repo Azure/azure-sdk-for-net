@@ -325,7 +325,6 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(UnknownConnectToSourceSqlServerTaskOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownDatabaseMigrationBaseProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownDatabaseMigrationProperties))]
-    // MANUAL EDIT: Restore GA unknown proxy type names for ApiCompat after regeneration.
     [ModelReaderWriterBuildable(typeof(UnknownCommandProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownMongoDBProgress))]
     [ModelReaderWriterBuildable(typeof(UnknownProjectTaskProperties))]

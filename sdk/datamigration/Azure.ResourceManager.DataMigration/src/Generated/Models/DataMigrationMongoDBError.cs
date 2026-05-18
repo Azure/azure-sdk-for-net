@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="code"> The non-localized, machine-readable code that describes the error or warning. </param>
         /// <param name="count"> The number of times the error or warning has occurred. </param>
         /// <param name="message"> The localized, human-readable message that describes the error or warning. </param>
-        /// <param name="type"> The type of error or warning. </param>
+        /// <param name="errorType"> The type of error or warning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationMongoDBError(string code, int? count, string message, DataMigrationMongoDBErrorType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataMigrationMongoDBError(string code, int? count, string message, DataMigrationMongoDBErrorType? errorType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Count = count;
             Message = message;
-            Type = @type;
+            ErrorType = errorType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string Message { get; }
 
         /// <summary> The type of error or warning. </summary>
-        public DataMigrationMongoDBErrorType? Type { get; }
+        public DataMigrationMongoDBErrorType? ErrorType { get; }
     }
 }

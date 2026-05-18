@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(IsShardingSupported);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ClusterType.ToString());
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             IReadOnlyList<DataMigrationMongoDBDatabaseInfo> databases = default;
             bool isShardingSupported = default;
-            DataMigrationMongoDBClusterType @type = default;
+            DataMigrationMongoDBClusterType clusterType = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DataMigrationMongoDBClusterType(prop.Value.GetString());
+                    clusterType = new DataMigrationMongoDBClusterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataMigrationMongoDBClusterInfo(databases, isShardingSupported, @type, version, additionalBinaryDataProperties);
+            return new DataMigrationMongoDBClusterInfo(databases, isShardingSupported, clusterType, version, additionalBinaryDataProperties);
         }
     }
 }

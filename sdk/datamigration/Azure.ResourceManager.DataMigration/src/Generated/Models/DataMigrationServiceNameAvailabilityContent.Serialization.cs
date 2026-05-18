@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataMigrationServiceNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new DataMigrationServiceNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

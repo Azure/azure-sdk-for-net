@@ -372,11 +372,9 @@ namespace Azure.ResourceManager.DataMigration
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.DataMigrationProjectDatabaseInfo> DatabasesInfo { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public new string Location { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationProjectProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.ServerConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationProjectSourcePlatform? SourcePlatform { get { throw null; } set { } }
-        public new System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.ServerConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationProjectTargetPlatform? TargetPlatform { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -517,12 +515,10 @@ namespace Azure.ResourceManager.DataMigration
         public string AutoStopDelay { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public new string Location { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationServiceProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicKey { get { throw null; } set { } }
         public bool? ShouldDeleteResourcesOnStop { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationServiceSku Sku { get { throw null; } set { } }
-        public new System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string VirtualNicId { get { throw null; } set { } }
         public string VirtualSubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -727,9 +723,7 @@ namespace Azure.ResourceManager.DataMigration
         public SqlMigrationServiceData() { }
         public SqlMigrationServiceData(Azure.Core.AzureLocation location) { }
         public string IntegrationRuntimeState { get { throw null; } }
-        public new string Location { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public new System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2452,7 +2446,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBClusterType ClusterType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBDatabaseInfo> Databases { get { throw null; } }
         public bool IsShardingSupported { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBClusterType Type { get { throw null; } }
         public string Version { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBClusterInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2620,7 +2613,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public int? Count { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBErrorType? ErrorType { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBErrorType? Type { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationMongoDBError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3287,7 +3279,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public DataMigrationServiceNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationServiceNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationServiceNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3472,7 +3463,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         internal DataMigrationSkuCosts() { }
         public string ExtendedUnit { get { throw null; } }
         public string MeterId { get { throw null; } }
-        public string MeterID { get { throw null; } }
         public long? Quantity { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationSkuCosts JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3489,7 +3479,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         internal DataMigrationSkuRestrictions() { }
         public Azure.ResourceManager.DataMigration.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.DataMigrationSkuRestrictionsType? RestrictionsType { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.DataMigrationSkuRestrictionsType? Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
         protected virtual Azure.ResourceManager.DataMigration.Models.DataMigrationSkuRestrictions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

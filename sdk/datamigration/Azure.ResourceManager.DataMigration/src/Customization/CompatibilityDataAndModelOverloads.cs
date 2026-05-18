@@ -51,50 +51,6 @@ namespace Azure.ResourceManager.DataMigration
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary>Backward-compatible model members for GA surface area.</summary>
-    public partial class DataMigrationMongoDBClusterInfo
-    {
-        // Backward-compatible alias for the GA property name.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DataMigrationMongoDBClusterType ClusterType => Type;
-    }
-
-    /// <summary>Backward-compatible model members for GA surface area.</summary>
-    public partial class DataMigrationMongoDBError
-    {
-        // Backward-compatible alias for the GA property name.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DataMigrationMongoDBErrorType? ErrorType => Type;
-    }
-
-    /// <summary>Backward-compatible model members for GA surface area.</summary>
-    public partial class DataMigrationServiceNameAvailabilityContent
-    {
-        // Backward-compatible alias for the GA property name.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ResourceType
-        {
-            get => Type;
-            set => Type = value;
-        }
-    }
-
-    /// <summary>Backward-compatible model members for GA surface area.</summary>
-    public partial class DataMigrationSkuCosts
-    {
-        // Backward-compatible alias for the GA property name.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string MeterId => MeterID;
-    }
-
-    /// <summary>Backward-compatible model members for GA surface area.</summary>
-    public partial class DataMigrationSkuRestrictions
-    {
-        // Backward-compatible alias for the GA property name.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DataMigrationSkuRestrictionsType? RestrictionsType => Type;
-    }
-
     /// <summary>Backward-compatible constructor overloads for GA task inputs.</summary>
     public partial class MigrateSqlServerSqlMITaskInput
     {

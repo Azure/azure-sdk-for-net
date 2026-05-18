@@ -20,27 +20,27 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="isShardingSupported"> Whether the cluster supports sharded collections. </param>
-        /// <param name="type"> The type of data source. </param>
+        /// <param name="clusterType"> The type of data source. </param>
         /// <param name="version"> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </param>
-        internal DataMigrationMongoDBClusterInfo(IEnumerable<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType @type, string version)
+        internal DataMigrationMongoDBClusterInfo(IEnumerable<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType clusterType, string version)
         {
             Databases = databases.ToList();
             IsShardingSupported = isShardingSupported;
-            Type = @type;
+            ClusterType = clusterType;
             Version = version;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="isShardingSupported"> Whether the cluster supports sharded collections. </param>
-        /// <param name="type"> The type of data source. </param>
+        /// <param name="clusterType"> The type of data source. </param>
         /// <param name="version"> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationMongoDBClusterInfo(IReadOnlyList<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType @type, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataMigrationMongoDBClusterInfo(IReadOnlyList<DataMigrationMongoDBDatabaseInfo> databases, bool isShardingSupported, DataMigrationMongoDBClusterType clusterType, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Databases = databases;
             IsShardingSupported = isShardingSupported;
-            Type = @type;
+            ClusterType = clusterType;
             Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public bool IsShardingSupported { get; }
 
         /// <summary> The type of data source. </summary>
-        public DataMigrationMongoDBClusterType Type { get; }
+        public DataMigrationMongoDBClusterType ClusterType { get; }
 
         /// <summary> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </summary>
         public string Version { get; }

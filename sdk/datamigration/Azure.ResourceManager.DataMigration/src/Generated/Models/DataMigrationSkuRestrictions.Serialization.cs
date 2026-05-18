@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 throw new FormatException($"The model {nameof(DataMigrationSkuRestrictions)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(RestrictionsType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationSkuRestrictionsType? @type = default;
+            DataMigrationSkuRestrictionsType? restrictionsType = default;
             IReadOnlyList<string> values = default;
             ResourceSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    @type = new DataMigrationSkuRestrictionsType(prop.Value.GetString());
+                    restrictionsType = new DataMigrationSkuRestrictionsType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataMigrationSkuRestrictions(@type, values ?? new ChangeTrackingList<string>(), reasonCode, additionalBinaryDataProperties);
+            return new DataMigrationSkuRestrictions(restrictionsType, values ?? new ChangeTrackingList<string>(), reasonCode, additionalBinaryDataProperties);
         }
     }
 }
