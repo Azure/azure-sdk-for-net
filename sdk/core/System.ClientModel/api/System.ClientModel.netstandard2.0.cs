@@ -262,14 +262,13 @@ namespace System.ClientModel.Primitives
         public string? CredentialSource { get { throw null; } set { } }
         public string? Key { get { throw null; } set { } }
     }
-    public abstract partial class DiscriminatorProxy<T> : System.ClientModel.Primitives.IPersistableModel<T>
+    public abstract partial class DiscriminatorRouter<T>
     {
-        protected DiscriminatorProxy() { }
+        protected DiscriminatorRouter(System.ClientModel.Primitives.IJsonModel<T> model) { }
+        protected DiscriminatorRouter(System.ClientModel.Primitives.IPersistableModel<T> model) { }
+        public bool IsJsonModel { get { throw null; } }
         public virtual bool CanHandle(System.BinaryData data) { throw null; }
         public virtual bool CanHandle(ref System.Text.Json.Utf8JsonReader reader) { throw null; }
-        public abstract T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        public abstract string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        public abstract System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
     public partial class GetTokenOptions
     {
@@ -490,7 +489,7 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
-        public void AddDiscriminatorProxy<T>(System.ClientModel.Primitives.DiscriminatorProxy<T> proxy) { }
+        public void AddDiscriminatorRouter<T>(System.ClientModel.Primitives.DiscriminatorRouter<T> router) { }
         public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
         public bool HasProxy(System.Type modelType) { throw null; }
         public bool HasProxy<T>() { throw null; }

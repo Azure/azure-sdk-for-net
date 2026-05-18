@@ -356,8 +356,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ReadWithChain_SingleProxy_ReturnsProxyResult()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy = new ChainProxy(handleRead: true);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy);
+            var proxy = new ChainRouter(handleRead: true);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -370,8 +370,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ReadWithChain_ProxyDeclinesWithCanHandle_FallsToModel()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy = new ChainProxy(handleRead: false); // CanHandle returns false = decline
-            options.AddDiscriminatorProxy<SimpleModel>(proxy);
+            var proxy = new ChainRouter(handleRead: false); // CanHandle returns false = decline
+            options.AddDiscriminatorRouter<SimpleModel>(proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -386,11 +386,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ReadWithChain_SecondProxyHandlesAfterFirstDeclines()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);  // will decline (tried first, FIFO)
-            var proxy2 = new ChainProxy(handleRead: true);   // will handle
+            var proxy1 = new ChainRouter(handleRead: false);  // will decline (tried first, FIFO)
+            var proxy2 = new ChainRouter(handleRead: true);   // will handle
 
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -407,11 +407,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ReadWithChain_AllProxiesDecline_ModelHandlesIt()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);
-            var proxy2 = new ChainProxy(handleRead: false);
+            var proxy1 = new ChainRouter(handleRead: false);
+            var proxy2 = new ChainRouter(handleRead: false);
 
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -440,12 +440,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
             // Discriminator proxy only handles data containing "special" — registered first (FIFO)
-            var discriminatorProxy = new TestDiscriminatorProxy("special");
+            var discriminatorProxy = new TestDiscriminatorRouter("special");
             // Default proxy handles everything — registered second (fallback)
-            var defaultProxy = new ChainProxy(handleRead: true);
+            var defaultProxy = new ChainRouter(handleRead: true);
 
-            options.AddDiscriminatorProxy<SimpleModel>(discriminatorProxy);
-            options.AddDiscriminatorProxy<SimpleModel>(defaultProxy);
+            options.AddDiscriminatorRouter<SimpleModel>(discriminatorProxy);
+            options.AddDiscriminatorRouter<SimpleModel>(defaultProxy);
 
             var model = new SimpleModel();
 
@@ -472,11 +472,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ResolveProxy_Write_UsesCanHandle()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);
-            var proxy2 = new ChainProxy(handleRead: false);
+            var proxy1 = new ChainRouter(handleRead: false);
+            var proxy2 = new ChainRouter(handleRead: false);
 
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             // Write uses CanHandle — both have CanHandle(SimpleModel) => true,
             // so the first registered (proxy1) is used since it's checked first (FIFO).
@@ -509,76 +509,109 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         /// <summary>
-        /// A discriminator proxy that can be configured to handle or decline reads.
-        /// The _handleRead flag controls CanHandle(BinaryData) — returning false means "I can't handle this."
+        /// A tracking IJsonModel that records when Create/Write are called.
+        /// Used as the model held by test routers.
         /// </summary>
-        private class ChainProxy : DiscriminatorProxy<SimpleModel>, IJsonModel<SimpleModel>
+        private class TrackingJsonModel : IJsonModel<SimpleModel>
         {
-            private readonly bool _handleRead;
             public bool CreateWasCalled { get; private set; }
+            public bool WriteWasCalled { get; private set; }
             public object? CapturedProxiedModelOnCreate { get; private set; }
-
-            public ChainProxy(bool handleRead)
-            {
-                _handleRead = handleRead;
-            }
-
-            public override bool CanHandle(BinaryData data)
-            {
-                return _handleRead;
-            }
-
-            public override bool CanHandle(ref Utf8JsonReader reader)
-            {
-                return _handleRead;
-            }
+            public object? CapturedOnWrite { get; private set; }
+            public List<object?> AllCapturedOnCreate { get; } = new();
 
             public void Reset()
             {
                 CreateWasCalled = false;
+                WriteWasCalled = false;
                 CapturedProxiedModelOnCreate = null;
-            }
-
-            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
-            {
-                CreateWasCalled = true;
-                CapturedProxiedModelOnCreate = options.ProxiedModel;
-                return new SimpleModel();
+                CapturedOnWrite = null;
+                AllCapturedOnCreate.Clear();
             }
 
             SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 CreateWasCalled = true;
                 CapturedProxiedModelOnCreate = options.ProxiedModel;
+                AllCapturedOnCreate.Add(options.ProxiedModel);
                 using var doc = JsonDocument.ParseValue(ref reader);
                 return new SimpleModel();
             }
 
             void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
+                WriteWasCalled = true;
+                CapturedOnWrite = options.ProxiedModel;
                 writer.WriteStartObject();
                 writer.WriteEndObject();
             }
 
-            public override BinaryData Write(ModelReaderWriterOptions options)
-                => ModelReaderWriter.Write(this, options);
+            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                CreateWasCalled = true;
+                CapturedProxiedModelOnCreate = options.ProxiedModel;
+                AllCapturedOnCreate.Add(options.ProxiedModel);
+                return new SimpleModel();
+            }
 
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+            {
+                WriteWasCalled = true;
+                CapturedOnWrite = options.ProxiedModel;
+                return BinaryData.FromString("{}");
+            }
+
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         /// <summary>
-        /// A discriminator proxy that peeks at the data to check for a discriminator value.
+        /// A discriminator router that can be configured to handle or decline reads.
+        /// The _handleRead flag controls CanHandle — returning false means "I can't handle this."
+        /// </summary>
+        private class ChainRouter : DiscriminatorRouter<SimpleModel>
+        {
+            private readonly bool _handleRead;
+            public TrackingJsonModel HeldModel { get; }
+
+            public ChainRouter(bool handleRead) : this(handleRead, new TrackingJsonModel())
+            {
+            }
+
+            public ChainRouter(bool handleRead, TrackingJsonModel model) : base(model)
+            {
+                _handleRead = handleRead;
+                HeldModel = model;
+            }
+
+            public bool CreateWasCalled => HeldModel.CreateWasCalled;
+            public object? CapturedProxiedModelOnCreate => HeldModel.CapturedProxiedModelOnCreate;
+
+            public override bool CanHandle(BinaryData data) => _handleRead;
+            public override bool CanHandle(ref Utf8JsonReader reader) => _handleRead;
+
+            public void Reset() => HeldModel.Reset();
+        }
+
+        /// <summary>
+        /// A discriminator router that peeks at the data to check for a discriminator value.
         /// Returns false from CanHandle if the discriminator doesn't match.
         /// </summary>
-        private class TestDiscriminatorProxy : DiscriminatorProxy<SimpleModel>, IJsonModel<SimpleModel>
+        private class TestDiscriminatorRouter : DiscriminatorRouter<SimpleModel>
         {
             private readonly string _discriminatorValue;
-            public bool CreateWasCalled { get; private set; }
+            public TrackingJsonModel HeldModel { get; }
 
-            public TestDiscriminatorProxy(string discriminatorValue)
+            public TestDiscriminatorRouter(string discriminatorValue) : this(discriminatorValue, new TrackingJsonModel())
+            {
+            }
+
+            public TestDiscriminatorRouter(string discriminatorValue, TrackingJsonModel model) : base(model)
             {
                 _discriminatorValue = discriminatorValue;
+                HeldModel = model;
             }
+
+            public bool CreateWasCalled => HeldModel.CreateWasCalled;
 
             public override bool CanHandle(BinaryData data)
             {
@@ -587,94 +620,40 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             public override bool CanHandle(ref Utf8JsonReader reader)
             {
-                // Peek at the JSON to check discriminator
                 var copy = reader;
                 using var doc = JsonDocument.ParseValue(ref copy);
                 return doc.RootElement.TryGetProperty("type", out var typeProp)
                     && typeProp.GetString() == _discriminatorValue;
             }
 
-            public void Reset()
-            {
-                CreateWasCalled = false;
-            }
-
-            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
-            {
-                CreateWasCalled = true;
-                return new SimpleModel();
-            }
-
-            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                CreateWasCalled = true;
-                using var doc = JsonDocument.ParseValue(ref reader);
-                return new SimpleModel();
-            }
-
-            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            {
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
-
-            public override BinaryData Write(ModelReaderWriterOptions options)
-                => ModelReaderWriter.Write(this, options);
-
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public void Reset() => HeldModel.Reset();
         }
 
         /// <summary>
-        /// A proxy that captures ProxiedModel at every interaction point (Write, Create(BinaryData), Create(ref reader)).
-        /// Used to verify the ProxiedModel contract. Works as both write proxy and discriminator proxy.
+        /// A router that captures ProxiedModel at every interaction point.
+        /// Used to verify the ProxiedModel contract. Works as both write proxy and discriminator router.
         /// </summary>
-        private class ProxiedModelCapturingProxy : DiscriminatorProxy<SimpleModel>, IJsonModel<SimpleModel>
+        private class ProxiedModelCapturingRouter : DiscriminatorRouter<SimpleModel>
         {
-            public object? CapturedOnWrite { get; private set; }
-            public object? CapturedOnCreateBinaryData { get; private set; }
-            public object? CapturedOnCreateReader { get; private set; }
-            public List<object?> AllCapturedOnCreateReader { get; } = new();
+            public TrackingJsonModel HeldModel { get; }
+            public object? CapturedOnWrite => HeldModel.CapturedOnWrite;
+            public object? CapturedOnCreateBinaryData => HeldModel.CapturedProxiedModelOnCreate;
+            public object? CapturedOnCreateReader => HeldModel.CapturedProxiedModelOnCreate;
+            public List<object?> AllCapturedOnCreateReader => HeldModel.AllCapturedOnCreate;
 
-            public void Reset()
+            public ProxiedModelCapturingRouter() : this(new TrackingJsonModel())
             {
-                CapturedOnWrite = null;
-                CapturedOnCreateBinaryData = null;
-                CapturedOnCreateReader = null;
-                AllCapturedOnCreateReader.Clear();
+            }
+
+            public ProxiedModelCapturingRouter(TrackingJsonModel model) : base(model)
+            {
+                HeldModel = model;
             }
 
             public override bool CanHandle(BinaryData data) => true;
-
             public override bool CanHandle(ref Utf8JsonReader reader) => true;
 
-            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            {
-                CapturedOnWrite = options.ProxiedModel;
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
-
-            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
-            {
-                CapturedOnCreateBinaryData = options.ProxiedModel;
-                return new SimpleModel();
-            }
-
-            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                CapturedOnCreateReader = options.ProxiedModel;
-                AllCapturedOnCreateReader.Add(options.ProxiedModel);
-                using var doc = JsonDocument.ParseValue(ref reader);
-                return new SimpleModel();
-            }
-
-            public override BinaryData Write(ModelReaderWriterOptions options)
-            {
-                CapturedOnWrite = options.ProxiedModel;
-                return BinaryData.FromString("{}");
-            }
-
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public void Reset() => HeldModel.Reset();
         }
 
         #region ProxiedModel Contract Tests
@@ -683,8 +662,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsSetToOriginalModel_DuringProxyWrite()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy = new ProxiedModelCapturingProxy();
-            options.AddDiscriminatorProxy<SimpleModel>(proxy);
+            var proxy = new ProxiedModelCapturingRouter();
+            options.AddProxy<SimpleModel>(proxy.HeldModel);
 
             var model = new SimpleModel();
             ModelReaderWriter.Write(model, options);
@@ -698,8 +677,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsSetToOriginalModel_DuringProxyCreateBinaryData()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy = new ProxiedModelCapturingProxy();
-            options.AddDiscriminatorProxy<SimpleModel>(proxy);
+            var proxy = new ProxiedModelCapturingRouter();
+            options.AddDiscriminatorRouter<SimpleModel>(proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -714,8 +693,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsSetToOriginalModel_DuringProxyCreateReader()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy = new ProxiedModelCapturingProxy();
-            options.AddDiscriminatorProxy<SimpleModel>(proxy);
+            var proxy = new ProxiedModelCapturingRouter();
+            options.AddDiscriminatorRouter<SimpleModel>(proxy);
 
             var model = new SimpleModel();
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes("{}");
@@ -748,8 +727,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsStillSetAfterSuccessfulProxyRead()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy = new ProxiedModelCapturingProxy();
-            options.AddDiscriminatorProxy<SimpleModel>(proxy);
+            var proxy = new ProxiedModelCapturingRouter();
+            options.AddDiscriminatorRouter<SimpleModel>(proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -766,10 +745,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsNull_WhenAllProxiesDecline_AndModelHandlesRead()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);
-            var proxy2 = new ChainProxy(handleRead: false);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            var proxy1 = new ChainRouter(handleRead: false);
+            var proxy2 = new ChainRouter(handleRead: false);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -784,11 +763,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsCorrectForEachProxy_InChain()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: true);   // will handle (tried first, FIFO)
-            var proxy2 = new ChainProxy(handleRead: false);  // never reached
+            var proxy1 = new ChainRouter(handleRead: true);   // will handle (tried first, FIFO)
+            var proxy2 = new ChainRouter(handleRead: false);  // never reached
 
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -806,11 +785,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsCorrectForEachProxy_InChain_ReaderPath()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: true);   // will handle (tried first, FIFO)
-            var proxy2 = new ChainProxy(handleRead: false);  // never reached
+            var proxy1 = new ChainRouter(handleRead: true);   // will handle (tried first, FIFO)
+            var proxy2 = new ChainRouter(handleRead: false);  // never reached
 
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes("{}");
@@ -830,8 +809,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsSetPerElement_InCollection()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy = new ProxiedModelCapturingProxy();
-            options.AddDiscriminatorProxy<SimpleModel>(proxy);
+            var proxy = new ProxiedModelCapturingRouter();
+            options.AddDiscriminatorRouter<SimpleModel>(proxy);
 
             // Read a JSON array with 3 elements — each element should set ProxiedModel
             var json = "[{},{},{}]";
@@ -873,11 +852,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void JsonModelConverter_Read_ChainSecondProxyHandlesAfterFirstDeclines()
         {
             var mrwOptions = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);  // declines via CanHandle
-            var proxy2 = new ChainProxy(handleRead: true);   // handles
+            var proxy1 = new ChainRouter(handleRead: false);  // declines via CanHandle
+            var proxy2 = new ChainRouter(handleRead: true);   // handles
 
-            mrwOptions.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            mrwOptions.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            mrwOptions.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            mrwOptions.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var stjOptions = new JsonSerializerOptions();
             stjOptions.Converters.Add(new JsonModelConverter(mrwOptions));
@@ -895,11 +874,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void JsonModelConverter_Read_AllProxiesDecline_ModelHandles()
         {
             var mrwOptions = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);
-            var proxy2 = new ChainProxy(handleRead: false);
+            var proxy1 = new ChainRouter(handleRead: false);
+            var proxy2 = new ChainRouter(handleRead: false);
 
-            mrwOptions.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            mrwOptions.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            mrwOptions.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            mrwOptions.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var stjOptions = new JsonSerializerOptions();
             stjOptions.Converters.Add(new JsonModelConverter(mrwOptions));
@@ -915,11 +894,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void JsonModelConverter_Read_DiscriminatorPattern()
         {
             var mrwOptions = new ModelReaderWriterOptions("J");
-            var discriminatorProxy = new TestDiscriminatorProxy("special");
-            var defaultProxy = new ChainProxy(handleRead: true);
+            var discriminatorProxy = new TestDiscriminatorRouter("special");
+            var defaultProxy = new ChainRouter(handleRead: true);
 
-            mrwOptions.AddDiscriminatorProxy<SimpleModel>(discriminatorProxy);
-            mrwOptions.AddDiscriminatorProxy<SimpleModel>(defaultProxy);
+            mrwOptions.AddDiscriminatorRouter<SimpleModel>(discriminatorProxy);
+            mrwOptions.AddDiscriminatorRouter<SimpleModel>(defaultProxy);
 
             var stjOptions = new JsonSerializerOptions();
             stjOptions.Converters.Add(new JsonModelConverter(mrwOptions));
@@ -1020,11 +999,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ReadWithChain_NonGeneric_SecondProxyHandles()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);
-            var proxy2 = new ChainProxy(handleRead: true);
+            var proxy1 = new ChainRouter(handleRead: false);
+            var proxy2 = new ChainRouter(handleRead: true);
 
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
             var jsonBytes = Text.Encoding.UTF8.GetBytes("{}");
@@ -1042,11 +1021,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ReadWithChain_NonGeneric_AllDecline_ModelHandles()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: false);
-            var proxy2 = new ChainProxy(handleRead: false);
+            var proxy1 = new ChainRouter(handleRead: false);
+            var proxy2 = new ChainRouter(handleRead: false);
 
-            options.AddDiscriminatorProxy<SimpleModel>(proxy1);
-            options.AddDiscriminatorProxy<SimpleModel>(proxy2);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
+            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
 
             var model = new SimpleModel();
             var jsonBytes = Text.Encoding.UTF8.GetBytes("{}");
@@ -1068,11 +1047,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void CollectionRead_WithChain_PerElementDiscrimination()
         {
             var options = new ModelReaderWriterOptions("J");
-            var discriminatorProxy = new TestDiscriminatorProxy("special");
-            var defaultProxy = new ChainProxy(handleRead: true);
+            var discriminatorProxy = new TestDiscriminatorRouter("special");
+            var defaultProxy = new ChainRouter(handleRead: true);
 
-            options.AddDiscriminatorProxy<SimpleModel>(discriminatorProxy);
-            options.AddDiscriminatorProxy<SimpleModel>(defaultProxy);
+            options.AddDiscriminatorRouter<SimpleModel>(discriminatorProxy);
+            options.AddDiscriminatorRouter<SimpleModel>(defaultProxy);
 
             // Read a list where elements differ — the chain should route per-element
             var json = "[{\"type\":\"special\"},{\"type\":\"other\"},{\"type\":\"special\"}]";
