@@ -925,7 +925,7 @@ namespace Azure.Storage.Blobs
         /// download chunk range. Utilizes binary search.
         /// </summary>
         /// <param name="chunkRange">
-        /// The download chunk range to intersect. Must have <see cref="HttpRange.Length"/> set.
+        /// The download chunk range to intersect.
         /// </param>
         /// <param name="layoutSegments">
         /// Non-overlapping sorted layout segments produced by <see cref="ToBlobLayoutSegments"/>.

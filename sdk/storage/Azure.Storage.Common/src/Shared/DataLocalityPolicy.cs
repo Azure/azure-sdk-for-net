@@ -20,7 +20,7 @@ namespace Azure.Storage
     /// </remarks>
     internal class DataLocalityPolicy : HttpPipelineSynchronousPolicy
     {
-        internal const string LayoutEndpointKey = "LayoutEndpoint";
+        internal const string LayoutEndpointKey = "Azure.Storage.LayoutEndpoint";
 
         public static DataLocalityPolicy Shared { get; } = new DataLocalityPolicy();
 
