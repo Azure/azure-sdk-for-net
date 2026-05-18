@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
     {
         private ClientDiagnostics _accountsClientDiagnostics;
         private Accounts _accountsRestClient;
-        private ClientDiagnostics _deletedAccountsClientDiagnostics;
-        private DeletedAccounts _deletedAccountsRestClient;
         private ClientDiagnostics _commitmentPlanOperationGroupClientDiagnostics;
         private CommitmentPlanOperationGroup _commitmentPlanOperationGroupRestClient;
         private ClientDiagnostics _cognitiveServicesClientClientDiagnostics;
         private CognitiveServicesClient _cognitiveServicesClientRestClient;
+        private ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private DeletedAccounts _deletedAccountsRestClient;
         private ClientDiagnostics _resourceSkusOperationGroupClientDiagnostics;
         private ResourceSkusOperationGroup _resourceSkusOperationGroupRestClient;
         private ClientDiagnostics _usagesOperationGroupClientDiagnostics;
@@ -58,10 +58,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
 
         private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
 
-        private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
-
         private ClientDiagnostics CommitmentPlanOperationGroupClientDiagnostics => _commitmentPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CommitmentPlanOperationGroup CommitmentPlanOperationGroupRestClient => _commitmentPlanOperationGroupRestClient ??= new CommitmentPlanOperationGroup(CommitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
@@ -69,6 +65,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         private ClientDiagnostics CognitiveServicesClientClientDiagnostics => _cognitiveServicesClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+
+        private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
 
         private ClientDiagnostics ResourceSkusOperationGroupClientDiagnostics => _resourceSkusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -163,6 +163,71 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             return GetCognitiveServicesDeletedAccounts().Get(location, resourceGroupName, accountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionRaiPolicies in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionRaiPolicies and their operations over a SubscriptionRaiPolicyResource. </returns>
+        public virtual SubscriptionRaiPolicyCollection GetSubscriptionRaiPolicies()
+        {
+            return GetCachedClient(client => new SubscriptionRaiPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified Content Filters associated with the Subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/raiPolicy/{raiPolicyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionRaiPolicy_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="raiPolicyName"> The name of the RaiPolicy associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionRaiPolicyResource>> GetSubscriptionRaiPolicyAsync(string raiPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
+
+            return await GetSubscriptionRaiPolicies().GetAsync(raiPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Content Filters associated with the Subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/raiPolicy/{raiPolicyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionRaiPolicy_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="raiPolicyName"> The name of the RaiPolicy associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionRaiPolicyResource> GetSubscriptionRaiPolicy(string raiPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
+
+            return GetSubscriptionRaiPolicies().Get(raiPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RaiExternalSafetyProviderSchemas in the <see cref="SubscriptionResource"/>. </summary>
