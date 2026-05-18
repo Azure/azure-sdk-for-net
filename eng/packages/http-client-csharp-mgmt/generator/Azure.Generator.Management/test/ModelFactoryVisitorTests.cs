@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -102,6 +103,73 @@ namespace Azure.Generator.Mgmt.Tests
             var method = new MethodProvider(signature, MethodBodyStatement.Empty, modelFactory);
 
             Assert.That(Management.Visitors.ModelFactoryVisitor.ShouldPreserveBackwardCompatMethod(method, model.Type), Is.True);
+
+            var lastContractView = new TestModelFactoryView(modelFactory.Name)
+            {
+                MethodsToBuild = [method]
+            };
+            SetLastContractView(modelFactory, lastContractView);
+
+            var currentMethods = new List<MethodProvider>();
+            Management.Visitors.ModelFactoryVisitor.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
+
+            Assert.That(currentMethods, Has.Count.EqualTo(1));
+            Assert.That(currentMethods[0].Signature.Name, Is.EqualTo("EmptyResourceData"));
+        }
+
+        [Test]
+        public void PreviousFactoryMethodOrderIsPreservedWhenCurrentOrderDiffers()
+        {
+            var modelInput = InputFactory.Model(
+                "ReorderedResourceData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("name", InputPrimitiveType.String),
+                    InputFactory.Property("count", InputPrimitiveType.Int32)
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [modelInput]);
+            var model = plugin.Object.TypeFactory.CreateModel(modelInput)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var nameParameter = new ParameterProvider("name", $"Name description", typeof(string));
+            var countParameter = new ParameterProvider("count", $"Count description", typeof(int));
+            var currentSignature = new MethodSignature(
+                "ReorderedResourceData",
+                $"Creates a reordered resource.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A reordered resource.",
+                [nameParameter, countParameter]);
+            var currentMethod = new MethodProvider(currentSignature, MethodBodyStatement.Empty, modelFactory);
+
+            var previousSignature = new MethodSignature(
+                "ReorderedResourceData",
+                $"Creates a reordered resource.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A reordered resource.",
+                [countParameter, nameParameter]);
+            var previousMethod = new MethodProvider(previousSignature, MethodBodyStatement.Empty, modelFactory);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name)
+            {
+                MethodsToBuild = [previousMethod]
+            };
+            SetLastContractView(modelFactory, lastContractView);
+
+            var currentMethods = new List<MethodProvider> { currentMethod };
+            Management.Visitors.ModelFactoryVisitor.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
+
+            Assert.That(currentMethods, Has.Count.EqualTo(2));
+            var addedMethod = currentMethods[1];
+            Assert.That(addedMethod.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[] { "count", "name" }));
+
+            modelFactory.Update(methods: currentMethods);
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("ReorderedResourceData(int count, string name)"));
+            Assert.That(rendered, Does.Contain("return ReorderedResourceData(name, count);"));
         }
 
         [Test]
