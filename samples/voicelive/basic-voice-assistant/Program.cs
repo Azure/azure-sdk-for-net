@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive.Samples
     ///     - Microsoft.Extensions.Configuration
     ///     - System.CommandLine
     /// </remarks>
-    public class SampleProgram
+    public class Program
     {
         /// <summary>
         /// Main entry point for the Voice Assistant sample.
@@ -151,7 +151,7 @@ namespace Azure.AI.VoiceLive.Samples
                 }
             });
 
-            var logger = loggerFactory.CreateLogger<SampleProgram>();
+            var logger = loggerFactory.CreateLogger<Program>();
 
             // Validate credentials
             if (string.IsNullOrEmpty(apiKey) && !useTokenCredential)
