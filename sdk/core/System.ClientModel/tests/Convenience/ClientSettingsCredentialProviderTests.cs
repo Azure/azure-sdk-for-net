@@ -45,8 +45,8 @@ public class ClientSettingsCredentialProviderTests
         settings.CredentialProvider = provider;
 
         Assert.That(settings.Credential, Is.Not.Null);
-        Assert.That(settings.Credential!.CredentialProvider, Is.SameAs(provider),
-            "Setting ClientSettings.CredentialProvider must propagate to Credential.CredentialProvider.");
+        Assert.That(settings.Credential!.TokenProvider, Is.SameAs(provider),
+            "Setting ClientSettings.CredentialProvider must propagate to Credential.TokenProvider.");
     }
 
     [Test]
@@ -60,10 +60,10 @@ public class ClientSettingsCredentialProviderTests
 
         var provider = new StubTokenProvider("new-location");
         // Direct mutation of the new home — the legacy property reads through.
-        settings.Credential!.CredentialProvider = provider;
+        settings.Credential!.TokenProvider = provider;
 
         Assert.That(settings.CredentialProvider, Is.SameAs(provider),
-            "ClientSettings.CredentialProvider getter must reflect Credential.CredentialProvider when set.");
+            "ClientSettings.CredentialProvider getter must reflect Credential.TokenProvider when set.");
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class ClientSettingsCredentialProviderTests
 
         settings.Credential = new CredentialSettings(section)
         {
-            CredentialProvider = provider,
+            TokenProvider = provider,
         };
 
         Assert.That(settings.CredentialProvider, Is.SameAs(provider));
@@ -115,11 +115,11 @@ public class ClientSettingsCredentialProviderTests
     }
 
     [Test]
-    public void DI_AddClient_WhenConfigureSettingsAssignsCredentialProviderOnNewLocation_DoesNotInvokeResolver()
+    public void DI_AddClient_WhenConfigureSettingsAssignsTokenProviderOnNewLocation_DoesNotInvokeResolver()
     {
         // Regression: the DI guard `if (settings.CredentialProvider is null)`
         // must observe a provider placed by configureSettings into the new
-        // Credential.CredentialProvider location. Without the unified
+        // Credential.TokenProvider location. Without the unified
         // getter, the guard would see null and re-run the resolver pipeline,
         // potentially erasing the user's value with a null result.
         var builder = Host.CreateEmptyApplicationBuilder(null);
@@ -135,16 +135,16 @@ public class ClientSettingsCredentialProviderTests
         var supplied = new StubTokenProvider("by-configure-on-credential");
         builder.AddClient<TestClient, TestClientSettings>(
             "TestClient",
-            settings => settings.Credential!.CredentialProvider = supplied);
+            settings => settings.Credential!.TokenProvider = supplied);
 
         using IHost host = builder.Build();
         TestClient client = host.Services.GetRequiredService<TestClient>();
 
-        Assert.That(client.Settings.Credential!.CredentialProvider, Is.SameAs(supplied));
+        Assert.That(client.Settings.Credential!.TokenProvider, Is.SameAs(supplied));
         Assert.That(client.Settings.CredentialProvider, Is.SameAs(supplied),
             "Unified getter must surface the new-location value through the legacy property.");
         Assert.That(ThrowingResolver.CallCount, Is.EqualTo(0),
-            "Resolver must not run when configureSettings supplied a provider on Credential.CredentialProvider.");
+            "Resolver must not run when configureSettings supplied a provider on Credential.TokenProvider.");
     }
 
     [Test]
@@ -152,7 +152,7 @@ public class ClientSettingsCredentialProviderTests
     {
         // Top-down integration: a matching resolver claims the credential
         // section, GetClientSettings stores the provider, and the dual-write
-        // surfaces it on both Credential.CredentialProvider and the legacy
+        // surfaces it on both Credential.TokenProvider and the legacy
         // ClientSettings.CredentialProvider — same instance from both reads.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
@@ -170,7 +170,7 @@ public class ClientSettingsCredentialProviderTests
 
         Assert.That(settings.CredentialProvider, Is.Not.Null);
         Assert.That(settings.Credential, Is.Not.Null);
-        Assert.That(settings.Credential!.CredentialProvider, Is.SameAs(settings.CredentialProvider),
+        Assert.That(settings.Credential!.TokenProvider, Is.SameAs(settings.CredentialProvider),
             "Both locations must surface the same instance after resolution completes.");
     }
 
@@ -225,7 +225,7 @@ public class ClientSettingsCredentialProviderTests
         {
             Interlocked.Increment(ref CallCount);
             throw new InvalidOperationException(
-                "Resolver should not run — DI guard must observe the value placed on Credential.CredentialProvider.");
+                "Resolver should not run — DI guard must observe the value placed on Credential.TokenProvider.");
         }
     }
 

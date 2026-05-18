@@ -32,7 +32,7 @@ public class CredentialResolverTests
     {
         // Section exists but no resolver chain is supplied. GetCredentialSettings
         // returns a populated CredentialSettings (so callers can still read
-        // Key/CredentialSource/AdditionalProperties) with CredentialProvider
+        // Key/CredentialSource/AdditionalProperties) with TokenProvider
         // set to null, distinguishing "section is there but unclaimed" from
         // "section is missing" (which still returns null).
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
@@ -44,7 +44,7 @@ public class CredentialResolverTests
         CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential");
 
         Assert.That(cred, Is.Not.Null);
-        Assert.That(cred!.CredentialProvider, Is.Null);
+        Assert.That(cred!.TokenProvider, Is.Null);
         Assert.That(cred.CredentialSource, Is.EqualTo("testcredential"));
     }
 
@@ -62,7 +62,7 @@ public class CredentialResolverTests
 
         CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", first, second);
 
-        Assert.That(cred?.CredentialProvider, Is.SameAs(first.LastProvider));
+        Assert.That(cred?.TokenProvider, Is.SameAs(first.LastProvider));
         Assert.That(second.WasCalled, Is.False);
     }
 
@@ -79,7 +79,7 @@ public class CredentialResolverTests
 
         CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", first, second);
 
-        Assert.That(cred?.CredentialProvider, Is.SameAs(second.LastProvider));
+        Assert.That(cred?.TokenProvider, Is.SameAs(second.LastProvider));
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class CredentialResolverTests
     {
         // Missing section is the ONLY case in which GetCredentialSettings returns
         // null; any other "no provider" case returns a CredentialSettings
-        // with CredentialProvider == null.
+        // with TokenProvider == null.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>());
         CredentialSettings? cred = config.GetCredentialSettings(
             "TestClient:Credential",
@@ -219,10 +219,10 @@ public class CredentialResolverTests
 
         Assert.That(c1, Is.Not.Null);
         Assert.That(c2, Is.Not.Null);
-        Assert.That(((StubTokenProvider)c1!.CredentialProvider!).Name, Is.EqualTo("A"));
-        Assert.That(((StubTokenProvider)c2!.CredentialProvider!).Name, Is.EqualTo("B"),
+        Assert.That(((StubTokenProvider)c1!.TokenProvider!).Name, Is.EqualTo("A"));
+        Assert.That(((StubTokenProvider)c2!.TokenProvider!).Name, Is.EqualTo("B"),
             "Second chain (different resolver type) should produce its own provider; the cache must not leak across distinct resolver sets.");
-        Assert.That(c1.CredentialProvider, Is.Not.SameAs(c2.CredentialProvider));
+        Assert.That(c1.TokenProvider, Is.Not.SameAs(c2.TokenProvider));
     }
 
     [Test]
@@ -242,7 +242,7 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
 
-        Assert.That(c1?.CredentialProvider, Is.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
     }
 
     [Test]
@@ -263,7 +263,7 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
 
-        Assert.That(c1?.CredentialProvider, Is.Not.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
     }
 
     [Test]
@@ -280,7 +280,7 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
 
-        Assert.That(c1?.CredentialProvider, Is.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
         Assert.That(resolver.CallCount, Is.EqualTo(1));
     }
 
@@ -301,7 +301,7 @@ public class CredentialResolverTests
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolvers,
             s => s["TenantId"] = "b");
 
-        Assert.That(c1?.CredentialProvider, Is.Not.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
         Assert.That(resolver.CallCount, Is.EqualTo(2));
     }
 
@@ -412,7 +412,7 @@ public class CredentialResolverTests
         CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", resolver);
 
         Assert.That(cred, Is.Not.Null);
-        Assert.That(cred!.CredentialProvider, Is.Not.Null);
+        Assert.That(cred!.TokenProvider, Is.Not.Null);
         Assert.That(resolver.LastTenantId, Is.EqualTo("real-tenant"));
     }
 
@@ -435,7 +435,7 @@ public class CredentialResolverTests
             section => section["ClientId"] = "client-override");
 
         Assert.That(cred, Is.Not.Null);
-        Assert.That(cred!.CredentialProvider, Is.Not.Null);
+        Assert.That(cred!.TokenProvider, Is.Not.Null);
         Assert.That(resolver.LastTenantId, Is.EqualTo("real-tenant"));
         Assert.That(resolver.LastClientId, Is.EqualTo("client-override"));
     }
@@ -525,7 +525,7 @@ public class CredentialResolverTests
             resolverA, new MatchAllNamedBResolver());
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolverA);
 
-        Assert.That(c1?.CredentialProvider, Is.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
     }
 
     [Test]
@@ -545,7 +545,7 @@ public class CredentialResolverTests
             nonMatching, matching);
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", matching);
 
-        Assert.That(c1?.CredentialProvider, Is.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
     }
 
     // -------- Cache key behavior: comprehensive coverage --------
@@ -563,7 +563,7 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
 
-        Assert.That(c1?.CredentialProvider, Is.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.SameAs(c2?.TokenProvider));
     }
 
     [Test]
@@ -581,7 +581,7 @@ public class CredentialResolverTests
         CredentialSettings? cA = config.GetCredentialSettings("A:Credential", resolver);
         CredentialSettings? cB = config.GetCredentialSettings("B:Credential", resolver);
 
-        Assert.That(cA?.CredentialProvider, Is.Not.SameAs(cB?.CredentialProvider));
+        Assert.That(cA?.TokenProvider, Is.Not.SameAs(cB?.TokenProvider));
     }
 
     [Test]
@@ -596,7 +596,7 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
 
-        Assert.That(c1?.CredentialProvider, Is.Not.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
     }
 
     [Test]
@@ -611,9 +611,9 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedAResolver());
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", new MatchAllNamedBResolver());
 
-        Assert.That(((StubTokenProvider)c1!.CredentialProvider!).Name, Is.EqualTo("A"));
-        Assert.That(((StubTokenProvider)c2!.CredentialProvider!).Name, Is.EqualTo("B"));
-        Assert.That(c1.CredentialProvider, Is.Not.SameAs(c2.CredentialProvider));
+        Assert.That(((StubTokenProvider)c1!.TokenProvider!).Name, Is.EqualTo("A"));
+        Assert.That(((StubTokenProvider)c2!.TokenProvider!).Name, Is.EqualTo("B"));
+        Assert.That(c1.TokenProvider, Is.Not.SameAs(c2.TokenProvider));
     }
 
     [Test]
@@ -632,8 +632,8 @@ public class CredentialResolverTests
         CredentialSettings? ab = config.GetCredentialSettings("TestClient:Credential", a, b);
         CredentialSettings? ba = config.GetCredentialSettings("TestClient:Credential", b, a);
 
-        Assert.That(((StubTokenProvider)ab!.CredentialProvider!).Name, Is.EqualTo("A"));
-        Assert.That(((StubTokenProvider)ba!.CredentialProvider!).Name, Is.EqualTo("B"));
+        Assert.That(((StubTokenProvider)ab!.TokenProvider!).Name, Is.EqualTo("A"));
+        Assert.That(((StubTokenProvider)ba!.TokenProvider!).Name, Is.EqualTo("B"));
     }
 
     [Test]
@@ -648,9 +648,9 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
 
-        Assert.That(c1?.CredentialProvider, Is.Not.Null);
-        Assert.That(c2?.CredentialProvider, Is.Not.Null);
-        Assert.That(c1!.CredentialProvider, Is.Not.SameAs(c2!.CredentialProvider),
+        Assert.That(c1?.TokenProvider, Is.Not.Null);
+        Assert.That(c2?.TokenProvider, Is.Not.Null);
+        Assert.That(c1!.TokenProvider, Is.Not.SameAs(c2!.TokenProvider),
             "Disposable providers must never be cached — a disposed cached instance handed back to a later caller would throw ObjectDisposedException.");
         Assert.That(resolver.CallCount, Is.EqualTo(2));
     }
@@ -667,7 +667,7 @@ public class CredentialResolverTests
         CredentialSettings? c1 = config.GetCredentialSettings("TestClient:Credential", resolver);
         CredentialSettings? c2 = config.GetCredentialSettings("TestClient:Credential", resolver);
 
-        Assert.That(c1?.CredentialProvider, Is.Not.SameAs(c2?.CredentialProvider));
+        Assert.That(c1?.TokenProvider, Is.Not.SameAs(c2?.TokenProvider));
         Assert.That(resolver.CallCount, Is.EqualTo(2));
     }
 
@@ -675,7 +675,7 @@ public class CredentialResolverTests
     public void Cache_NoMatchingResolver_DoesNotPolluteCache()
     {
         // The "no resolver matched" case used to surface as a null return;
-        // it now surfaces as a CredentialSettings whose CredentialProvider
+        // it now surfaces as a CredentialSettings whose TokenProvider
         // is null. The cache must not memoize that miss in the resolver-keyed
         // table — a subsequent call with a matching resolver must produce a
         // real provider.
@@ -688,12 +688,12 @@ public class CredentialResolverTests
 
         CredentialSettings? miss = config.GetCredentialSettings("TestClient:Credential", nonMatching);
         Assert.That(miss, Is.Not.Null);
-        Assert.That(miss!.CredentialProvider, Is.Null);
+        Assert.That(miss!.TokenProvider, Is.Null);
 
         // A subsequent call with a matching resolver must NOT see a stale null.
         CredentialSettings? hit = config.GetCredentialSettings("TestClient:Credential", matching);
-        Assert.That(hit?.CredentialProvider, Is.Not.Null);
-        Assert.That(((StubTokenProvider)hit!.CredentialProvider!).Name, Is.EqualTo("A"));
+        Assert.That(hit?.TokenProvider, Is.Not.Null);
+        Assert.That(((StubTokenProvider)hit!.TokenProvider!).Name, Is.EqualTo("A"));
     }
 
     [Test]
@@ -718,7 +718,7 @@ public class CredentialResolverTests
         Assert.That(second, Is.SameAs(first),
             "Inline-only CredentialSettings must be cached and shared across calls for the same section content.");
         Assert.That(first!.Key, Is.EqualTo("inline-key-value"));
-        Assert.That(first.CredentialProvider, Is.Null);
+        Assert.That(first.TokenProvider, Is.Null);
     }
 
     [Test]
@@ -927,16 +927,16 @@ public class CredentialResolverTests
     // SCM intentionally does not auto-synthesize an AuthenticationTokenProvider
     // for inline ApiKey configurations. The source of truth for inline ApiKey
     // is CredentialSettings.Key, which the consuming library reads directly
-    // when CredentialProvider is null. Customer resolvers are still free to
+    // when TokenProvider is null. Customer resolvers are still free to
     // claim ApiKey sections (e.g., to fetch the key from a vault and produce
     // a refreshable provider) and run before SCM gives up and leaves
-    // CredentialProvider null.
+    // TokenProvider null.
 
     [Test]
     public void GetCredentialSettings_ApiKeySource_NoResolvers_ReturnsSettingsWithKeyAndNullProvider()
     {
         // SCM does not produce a built-in provider for inline ApiKey configs.
-        // The standalone caller reads cred.Key directly when CredentialProvider
+        // The standalone caller reads cred.Key directly when TokenProvider
         // is null. The CredentialSource is normalized to "apikeycredential".
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
@@ -947,7 +947,7 @@ public class CredentialResolverTests
         CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential");
 
         Assert.That(cred, Is.Not.Null);
-        Assert.That(cred!.CredentialProvider, Is.Null);
+        Assert.That(cred!.TokenProvider, Is.Null);
         Assert.That(cred.Key, Is.EqualTo("secret-key"));
         Assert.That(cred.CredentialSource, Is.EqualTo("apikeycredential"));
     }
@@ -967,7 +967,7 @@ public class CredentialResolverTests
 
         CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", customer);
 
-        Assert.That(cred?.CredentialProvider, Is.SameAs(customer.LastProvider));
+        Assert.That(cred?.TokenProvider, Is.SameAs(customer.LastProvider));
         Assert.That(cred!.Key, Is.EqualTo("config-key"));
     }
 
@@ -989,16 +989,16 @@ public class CredentialResolverTests
         CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", nonMatching);
 
         Assert.That(cred, Is.Not.Null);
-        Assert.That(cred!.CredentialProvider, Is.Null);
+        Assert.That(cred!.TokenProvider, Is.Null);
         Assert.That(cred.Key, Is.EqualTo("secret-key"));
     }
 
     [Test]
     public void GetClientSettings_ApiKeySource_WithEmptyResolverChain_LeavesCredentialProviderNull()
     {
-        // GetClientSettings must NOT synthesize a CredentialProvider for an
+        // GetClientSettings must NOT synthesize a TokenProvider for an
         // inline ApiKey config. The library consuming the settings is
-        // responsible for reading Credential.Key when CredentialProvider is
+        // responsible for reading Credential.Key when TokenProvider is
         // null.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {

@@ -70,7 +70,7 @@ internal static class CredentialCache
 
         CredentialSettings created = new(mergedSection)
         {
-            CredentialProvider = provider,
+            TokenProvider = provider,
         };
 
         // Defensive: if the produced provider owns disposable resources, do not
@@ -91,7 +91,7 @@ internal static class CredentialCache
     /// <summary>
     /// Returns a cached <see cref="CredentialSettings"/> for the inline
     /// credential data in <paramref name="mergedSection"/> — the no-resolver
-    /// match path. The settings has <see cref="CredentialSettings.CredentialProvider"/>
+    /// match path. The settings has <see cref="CredentialSettings.TokenProvider"/>
     /// set to <see langword="null"/> and exposes the section's bound
     /// metadata (<c>Key</c>, <c>CredentialSource</c>, <c>AdditionalProperties</c>,
     /// indexer). Repeated calls for the same section content return the same

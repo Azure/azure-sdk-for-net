@@ -9,9 +9,8 @@ namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Internal core resolution logic shared by the public
-/// <c>GetCredentialSettings</c> overloads, <c>GetCredentialSettings</c> overloads,
-/// <c>GetClientSettings&lt;T&gt;</c> overloads, and the DI <c>AddClient</c>
-/// auto-resolve hook.
+/// <c>GetCredentialSettings</c> overloads, <c>GetClientSettings&lt;T&gt;</c>
+/// overloads, and the DI <c>AddClient</c> auto-resolve hook.
 /// </summary>
 [Experimental("SCME0002")]
 internal static class CredentialResolverEngine
@@ -21,7 +20,7 @@ internal static class CredentialResolverEngine
     /// optionally applying <paramref name="configureOverrides"/> to a
     /// writable overlay of <paramref name="credentialSection"/>) and returns
     /// a cached <see cref="CredentialSettings"/> bound to the section the
-    /// chain saw, with <see cref="CredentialSettings.CredentialProvider"/>
+    /// chain saw, with <see cref="CredentialSettings.TokenProvider"/>
     /// populated when a resolver matches. When no resolver matches, returns
     /// the cached inline-only settings for that section. Returns
     /// <see langword="null"/> only when the section does not exist. The

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ComponentModel;
@@ -25,12 +25,12 @@ public abstract class ClientSettings
     /// </summary>
     public AuthenticationTokenProvider? CredentialProvider
     {
-        get => Credential?.CredentialProvider;
+        get => Credential?.TokenProvider;
         set
         {
             if (Credential is not null)
             {
-                Credential.CredentialProvider = value;
+                Credential.TokenProvider = value;
             }
         }
     }

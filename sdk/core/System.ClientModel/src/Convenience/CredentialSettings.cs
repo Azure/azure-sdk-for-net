@@ -84,5 +84,5 @@ public sealed class CredentialSettings
     /// <summary>
     /// Gets or sets the <see cref="AuthenticationTokenProvider"/> for this credential.
     /// </summary>
-    public AuthenticationTokenProvider? CredentialProvider { get; set; }
+    public AuthenticationTokenProvider? TokenProvider { get; set; }
 }

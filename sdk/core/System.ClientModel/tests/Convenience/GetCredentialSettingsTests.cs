@@ -131,7 +131,7 @@ public class GetCredentialSettingsTests
     public void GetCredentialSettings_OverridesRemovingCredentialSourceAndKey_StillReturnsSettings()
     {
         // Even when overrides null out CredentialSource and Key, the section
-        // still exists, so a CredentialSettings is returned. CredentialProvider
+        // still exists, so a CredentialSettings is returned. TokenProvider
         // is null (no resolver claims a section without a CredentialSource)
         // and the bound metadata reflects the overlay.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
@@ -150,7 +150,7 @@ public class GetCredentialSettingsTests
             });
 
         Assert.That(settings, Is.Not.Null);
-        Assert.That(settings!.CredentialProvider, Is.Null);
+        Assert.That(settings!.TokenProvider, Is.Null);
         Assert.That(settings.Key, Is.Null);
         Assert.That(settings.CredentialSource, Is.Null);
     }

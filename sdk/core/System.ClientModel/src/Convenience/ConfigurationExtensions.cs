@@ -40,7 +40,7 @@ public static class ConfigurationExtensions
         where T : ClientSettings, new()
     {
         T settings = configuration.GetClientSettings<T>(sectionName);
-        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers)?.CredentialProvider;
+        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers)?.TokenProvider;
         return settings;
     }
 
@@ -59,7 +59,7 @@ public static class ConfigurationExtensions
         where T : ClientSettings, new()
     {
         T settings = configuration.GetClientSettings<T>(sectionName);
-        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers, configureOverrides)?.CredentialProvider;
+        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers, configureOverrides)?.TokenProvider;
         return settings;
     }
 
@@ -77,13 +77,13 @@ public static class ConfigurationExtensions
     /// treated as the credential section itself (not a parent client
     /// section). The returned settings expose the inline
     /// <see cref="CredentialSettings.Key"/> (for ApiKey sections) and the
-    /// resolver-supplied <see cref="CredentialSettings.CredentialProvider"/>
+    /// resolver-supplied <see cref="CredentialSettings.TokenProvider"/>
     /// (for token sections, when a resolver matches), so standalone callers
     /// can dispatch on either without binding a <see cref="ClientSettings"/>.
     /// Returns <see langword="null"/> only when the named section does not
     /// exist; when the section exists but no resolver claims it, returns a
     /// populated <see cref="CredentialSettings"/> with
-    /// <see cref="CredentialSettings.CredentialProvider"/> set to
+    /// <see cref="CredentialSettings.TokenProvider"/> set to
     /// <see langword="null"/>. Never throws.
     /// </summary>
     public static CredentialSettings? GetCredentialSettings(
@@ -97,11 +97,11 @@ public static class ConfigurationExtensions
     /// a <see cref="CredentialSettings"/> populated with both the bound
     /// metadata (<c>Key</c>, <c>CredentialSource</c>,
     /// <c>AdditionalProperties</c>) and the resolver-supplied
-    /// <see cref="CredentialSettings.CredentialProvider"/>. The supplied
+    /// <see cref="CredentialSettings.TokenProvider"/>. The supplied
     /// <paramref name="sectionName"/> is treated as the credential section
     /// itself. Returns <see langword="null"/> only when the named section
     /// does not exist; when the section exists but no resolver claims it,
-    /// returns settings with <see cref="CredentialSettings.CredentialProvider"/>
+    /// returns settings with <see cref="CredentialSettings.TokenProvider"/>
     /// set to <see langword="null"/>. Never throws.
     /// </summary>
     public static CredentialSettings? GetCredentialSettings(
@@ -122,7 +122,7 @@ public static class ConfigurationExtensions
     /// Applies <paramref name="configureOverrides"/> to a writable overlay of
     /// the named credential section, then walks the supplied
     /// <see cref="CredentialResolver"/> chain to populate
-    /// <see cref="CredentialSettings.CredentialProvider"/>. Unlike
+    /// <see cref="CredentialSettings.TokenProvider"/>. Unlike
     /// <see cref="GetClientSettings{T}(IConfiguration, string, IEnumerable{CredentialResolver}, Action{IConfigurationSection})"/>
     /// — which binds the surrounding <c>ClientSettings</c> from the original
     /// (non-overlaid) configuration and only feeds the overlay to the
@@ -297,7 +297,7 @@ public static class ConfigurationExtensions
             IConfigurationSection credentialSection = builder.ConfigurationSection.GetSection("Credential");
             settings.CredentialProvider = CredentialResolverEngine
                 .Resolve(credentialSection, resolvers, builder.ConfigureCredentialAction)
-                ?.CredentialProvider;
+                ?.TokenProvider;
         }
 
         return settings;
