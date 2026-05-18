@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(MountFileShareConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkInterfaceResourceNames))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OSSapConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceData))]
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(UnknownSingleServerCustomResourceNames))]
     [ModelReaderWriterBuildable(typeof(UnknownThreeTierCustomResourceNames))]
     [ModelReaderWriterBuildable(typeof(UpdateSapVirtualInstanceProperties))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineResourceNames))]
     public partial class AzureResourceManagerWorkloadsSapVirtualInstanceContext : ModelReaderWriterContext
     {

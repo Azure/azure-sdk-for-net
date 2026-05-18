@@ -54,6 +54,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("InsightSummary")] public partial class InsightSummary { }
 [CodeGenType("InsightType")] public readonly partial struct InsightType { }
 [CodeGenType("ListVersionsRequestType")] public readonly partial struct ListVersionsRequestType { }
+[CodeGenType("ModelSamplingParams")] public partial class ModelSamplingParams { }
 [CodeGenType("MonthlyRecurrenceSchedule")] public partial class MonthlyRecurrenceSchedule { }
 [CodeGenType("OneTimeTrigger")] public partial class OneTimeTrigger { }
 [CodeGenType("OperationStatus")] public readonly partial struct OperationStatus { }
@@ -73,7 +74,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("ScheduleProvisioningStatus")] public readonly partial struct ScheduleProvisioningStatus { }
 [CodeGenType("ScheduleRun")] public partial class ScheduleRun { }
 [CodeGenType("ScheduleTaskType")] public readonly partial struct ScheduleTaskType { }
-[CodeGenType("RedTeamTargetConfig")] public abstract partial class TargetConfig { }
+[CodeGenType("TargetConfig")] public abstract partial class TargetConfig { }
 [CodeGenType("TaxonomyCategory")] public partial class TaxonomyCategory { }
 [CodeGenType("TaxonomySubCategory")] public partial class TaxonomySubCategory { }
 [CodeGenType("TriggerType")] internal readonly partial struct TriggerType { }
@@ -86,5 +87,5 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("UnknownInsightSample")] internal partial class UnknownInsightSample { }
 [CodeGenType("UnknownRecurrenceSchedule")] internal partial class UnknownRecurrenceSchedule { }
 [CodeGenType("UnknownScheduleTask")] internal partial class UnknownScheduleTask { }
-[CodeGenType("UnknownRedTeamTargetConfig")] internal partial class UnknownTargetConfig { }
+[CodeGenType("UnknownTargetConfig")] internal partial class UnknownTargetConfig { }
 [CodeGenType("UnknownTrigger")] internal partial class UnknownTrigger { }

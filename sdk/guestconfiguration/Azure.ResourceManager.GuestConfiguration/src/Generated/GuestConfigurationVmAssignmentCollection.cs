@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.GuestConfiguration
     {
         private readonly ClientDiagnostics _guestConfigurationAssignmentsClientDiagnostics;
         private readonly GuestConfigurationAssignments _guestConfigurationAssignmentsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationAssignmentReportsClientDiagnostics;
+        private readonly GuestConfigurationAssignmentReports _guestConfigurationAssignmentReportsRestClient;
 
         /// <summary> Initializes a new instance of GuestConfigurationVmAssignmentCollection for mocking. </summary>
         protected GuestConfigurationVmAssignmentCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             TryGetApiVersion(GuestConfigurationVmAssignmentResource.ResourceType, out string guestConfigurationVmAssignmentApiVersion);
             _guestConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReports(_guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

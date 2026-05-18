@@ -58,7 +58,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName: "myHostedAgent1",
+            agentName: "myHostedAgent",
             options: creationOptions);
         #endregion
         #region Snippet:Sample_WaitForDeployment_HostedAgent_Async
@@ -73,7 +73,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
-        AgentEndpointConfiguration config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }
@@ -88,7 +88,12 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        ProjectOpenAIClientOptions responsesOptions = new()
+        {
+            AgentName = agentVersion.Name
+        };
+        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -137,7 +142,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
-        AgentEndpointConfiguration config = new()
+        AgentEndpointConfig config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }
@@ -152,7 +157,12 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        ProjectOpenAIClientOptions responsesOptions = new()
+        {
+            AgentName = agentVersion.Name
+        };
+        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
         ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
         #endregion

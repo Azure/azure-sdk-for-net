@@ -147,8 +147,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             logVolumeProperties.ThroughputMibps = 6;
             logVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
             logVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            foreach (var rule in _nfs41ExportPolicyRuleList)
-            { logVolumeProperties.ExportRules.Add(rule); }
+            logVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_nfs41ExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(logVolumeProperties);
 
             string dataVolumeName = $"{volumeGroupName}-data-1";
@@ -161,8 +160,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             dataVolumeProperties.ThroughputMibps = 6;
             dataVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
             dataVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            foreach (var rule in _nfs41ExportPolicyRuleList)
-            { dataVolumeProperties.ExportRules.Add(rule); }
+            dataVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_nfs41ExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(dataVolumeProperties);
 
             string sharedVolumeName = $"{volumeGroupName}-shared-1";
@@ -175,17 +173,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             sharedVolumeProperties.ThroughputMibps = 6;
             sharedVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
             sharedVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            foreach (var rule in _nfs41ExportPolicyRuleList)
-            { sharedVolumeProperties.ExportRules.Add(rule); }
+            sharedVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_nfs41ExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(sharedVolumeProperties);
 
             IList<NetAppVolumePlacementRule> globalPlacementRules = new List<NetAppVolumePlacementRule> { new NetAppVolumePlacementRule("key1", "value1") };
 
             NetAppVolumeGroupData volumeGroupDetailsData = new();
             volumeGroupDetailsData.Location = _volumeGroupLocation;
-            volumeGroupDetailsData.GroupMetaData = new() { GroupDescription = "group description", ApplicationType = NetAppApplicationType.SapHana, ApplicationIdentifier = "SH1" };
-            foreach (var rule in globalPlacementRules)
-            { volumeGroupDetailsData.GroupMetaData.GlobalPlacementRules.Add(rule); }
+            volumeGroupDetailsData.GroupMetaData = new("group description", NetAppApplicationType.SapHana, "SH1", globalPlacementRules, null, serializedAdditionalRawData: null);
             volumeGroupDetailsData.Volumes.InitializeFrom(volumeGroupVolumeProperties);
 
             NetAppVolumeGroupResource volumeGroupDetails = (await volumeGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupDetailsData)).Value;

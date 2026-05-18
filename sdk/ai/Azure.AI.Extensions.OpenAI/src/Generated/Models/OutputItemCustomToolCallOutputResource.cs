@@ -22,7 +22,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public OutputItemCustomToolCallOutputResource(string callId, BinaryData output, ResponsesFunctionCallOutputStatus status) : base(AgentResponseItemKind.CustomToolCallOutput)
+        public OutputItemCustomToolCallOutputResource(string callId, BinaryData output, ResponsesFunctionCallOutputStatusEnum status) : base(AgentResponseItemKind.CustomToolCallOutput)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));
@@ -48,7 +48,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemCustomToolCallOutputResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, BinaryData output, ResponsesFunctionCallOutputStatus status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemCustomToolCallOutputResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, BinaryData output, ResponsesFunctionCallOutputStatusEnum status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;
@@ -105,7 +105,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public ResponsesFunctionCallOutputStatus Status { get; set; }
+        public ResponsesFunctionCallOutputStatusEnum Status { get; set; }
 
         /// <summary> The identifier of the actor that created the item. </summary>
         public string CreatedBy { get; set; }

@@ -16,15 +16,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="storageSettings"> Storage Settings. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="storageSettings"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DataProtectionBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
         {
             Argument.AssertNotNull(storageSettings, nameof(storageSettings));
-
             StorageSettings = storageSettings.ToList();
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
-            ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
+            ReplicatedRegions = new ChangeTrackingList<Azure.Core.AzureLocation>();
         }
 
         /// <summary> Is vault protected by resource guard. </summary>

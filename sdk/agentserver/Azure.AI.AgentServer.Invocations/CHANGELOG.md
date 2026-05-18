@@ -1,13 +1,14 @@
 # Release History
 
-## 1.0.0-beta.4 (2026-05-15)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
-- Unhandled exceptions now include the `x-platform-error-source` header classifying error
-  origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
-  (developer handler failure) per container-image-spec §8. Platform errors include
-  `x-platform-error-detail` with diagnostic context.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.0.0-beta.3 (2026-04-22)
 

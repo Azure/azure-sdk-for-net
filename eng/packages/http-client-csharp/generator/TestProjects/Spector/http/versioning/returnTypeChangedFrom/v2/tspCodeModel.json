@@ -91,7 +91,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "TestRequestContentType2",
+      "name": "testContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -107,7 +107,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "TestRequestContentType3",
+      "name": "TestRequestContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {

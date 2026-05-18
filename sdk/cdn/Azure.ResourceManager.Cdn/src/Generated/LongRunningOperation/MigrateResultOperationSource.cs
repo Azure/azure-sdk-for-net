@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.Cdn
         MigrateResult IOperationSource<MigrateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return MigrateResult.DeserializeMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MigrateResult result = MigrateResult.DeserializeMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Cdn
         async ValueTask<MigrateResult> IOperationSource<MigrateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return MigrateResult.DeserializeMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MigrateResult result = MigrateResult.DeserializeMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

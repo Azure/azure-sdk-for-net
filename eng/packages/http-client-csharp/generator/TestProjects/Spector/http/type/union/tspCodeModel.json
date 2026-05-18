@@ -474,7 +474,7 @@
     {
       "$id": "44",
       "kind": "constant",
-      "name": "GetAccept",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -490,7 +490,7 @@
     {
       "$id": "46",
       "kind": "constant",
-      "name": "GetAccept1",
+      "name": "sendContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -506,7 +506,7 @@
     {
       "$id": "48",
       "kind": "constant",
-      "name": "GetAccept2",
+      "name": "getContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -522,7 +522,7 @@
     {
       "$id": "50",
       "kind": "constant",
-      "name": "GetAccept3",
+      "name": "sendContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -538,7 +538,7 @@
     {
       "$id": "52",
       "kind": "constant",
-      "name": "GetAccept4",
+      "name": "getContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -554,7 +554,7 @@
     {
       "$id": "54",
       "kind": "constant",
-      "name": "GetAccept5",
+      "name": "sendContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -570,7 +570,7 @@
     {
       "$id": "56",
       "kind": "constant",
-      "name": "GetAccept6",
+      "name": "getContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -586,7 +586,7 @@
     {
       "$id": "58",
       "kind": "constant",
-      "name": "GetAccept7",
+      "name": "sendContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -602,7 +602,7 @@
     {
       "$id": "60",
       "kind": "constant",
-      "name": "GetAccept8",
+      "name": "getContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -618,7 +618,7 @@
     {
       "$id": "62",
       "kind": "constant",
-      "name": "GetAccept9",
+      "name": "sendContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -634,7 +634,7 @@
     {
       "$id": "64",
       "kind": "constant",
-      "name": "GetAccept10",
+      "name": "getContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -650,7 +650,7 @@
     {
       "$id": "66",
       "kind": "constant",
-      "name": "GetAccept11",
+      "name": "sendContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -666,7 +666,7 @@
     {
       "$id": "68",
       "kind": "constant",
-      "name": "GetAccept12",
+      "name": "getContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -682,7 +682,7 @@
     {
       "$id": "70",
       "kind": "constant",
-      "name": "GetAccept13",
+      "name": "sendContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -698,7 +698,7 @@
     {
       "$id": "72",
       "kind": "constant",
-      "name": "GetAccept14",
+      "name": "getContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -714,7 +714,7 @@
     {
       "$id": "74",
       "kind": "constant",
-      "name": "GetAccept15",
+      "name": "sendContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -730,7 +730,7 @@
     {
       "$id": "76",
       "kind": "constant",
-      "name": "GetAccept16",
+      "name": "getContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -746,7 +746,7 @@
     {
       "$id": "78",
       "kind": "constant",
-      "name": "GetAccept17",
+      "name": "sendContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -762,7 +762,7 @@
     {
       "$id": "80",
       "kind": "constant",
-      "name": "GetAccept18",
+      "name": "getContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -778,7 +778,7 @@
     {
       "$id": "82",
       "kind": "constant",
-      "name": "GetAccept19",
+      "name": "sendContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {

@@ -163,7 +163,7 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             string name = default;
             AgentObjectVersions versions = default;
-            AgentEndpointConfiguration agentEndpoint = default;
+            AgentEndpointConfig agentEndpoint = default;
             AgentIdentity instanceIdentity = default;
             AgentIdentity blueprint = default;
             AgentBlueprintReference blueprintReference = default;
@@ -197,7 +197,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    agentEndpoint = AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
+                    agentEndpoint = AgentEndpointConfig.DeserializeAgentEndpointConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instance_identity"u8))

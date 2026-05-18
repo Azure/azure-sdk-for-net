@@ -1,5 +1,5 @@
 directory: specification/cognitiveservices/Speech.Transcription
-commit: d6252ab190c48cbb78b72e32404fa03043430624
+commit: 6bd84f27b7a056fc6e916e2e9fefa9fdba1d72d2
 repo: Azure/azure-rest-api-specs
 additionalDirectories: []
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

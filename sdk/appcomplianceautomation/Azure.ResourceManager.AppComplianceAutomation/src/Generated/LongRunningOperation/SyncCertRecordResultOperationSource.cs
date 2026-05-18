@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         SyncCertRecordResult IOperationSource<SyncCertRecordResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return SyncCertRecordResult.DeserializeSyncCertRecordResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SyncCertRecordResult result = SyncCertRecordResult.DeserializeSyncCertRecordResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         async ValueTask<SyncCertRecordResult> IOperationSource<SyncCertRecordResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SyncCertRecordResult.DeserializeSyncCertRecordResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SyncCertRecordResult result = SyncCertRecordResult.DeserializeSyncCertRecordResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

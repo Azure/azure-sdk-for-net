@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary></summary>
-    internal partial class NetworkSiblingSetOperationSource : IOperationSource<NetworkSiblingSet>
+    internal class NetworkSiblingSetOperationSource : IOperationSource<NetworkSiblingSet>
     {
-        /// <summary></summary>
-        internal NetworkSiblingSetOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NetworkSiblingSet IOperationSource<NetworkSiblingSet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return NetworkSiblingSet.DeserializeNetworkSiblingSet(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return NetworkSiblingSet.DeserializeNetworkSiblingSet(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NetworkSiblingSet> IOperationSource<NetworkSiblingSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return NetworkSiblingSet.DeserializeNetworkSiblingSet(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return NetworkSiblingSet.DeserializeNetworkSiblingSet(document.RootElement);
         }
     }
 }

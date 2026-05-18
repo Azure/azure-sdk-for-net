@@ -16,7 +16,6 @@ namespace Azure.Generator.Management
         private const string ArmProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@armProviderSchema";
         private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
         private const string ClientOptionDecoratorName = "Azure.ClientGenerator.Core.@clientOption";
-        private const string HasClientNameOverrideDecoratorName = "Azure.ResourceManager.@hasClientNameOverride";
         private const string DisableSafeFlattenKey = "disable-safe-flatten";
         private const string CSharpScope = "csharp";
 
@@ -24,8 +23,6 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
         private HashSet<InputModelType>? _safeFlattenDisabledModels;
-        private HashSet<InputModelType>? _clientNameOverriddenModels;
-        private HashSet<InputServiceMethod>? _clientNameOverriddenMethods;
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
@@ -176,67 +173,6 @@ namespace Azure.Generator.Management
                     {
                         // not a boolean — ignore
                     }
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Set of input models for which the user has supplied a <c>@@clientName</c> override
-        /// (csharp scope or unscoped). The mgmt emitter stamps a synthetic
-        /// <c>Azure.ResourceManager.@hasClientNameOverride</c> decorator on these models so the
-        /// generator can detect them without re-running TCGC scope resolution.
-        /// </summary>
-        internal HashSet<InputModelType> ClientNameOverriddenModels => _clientNameOverriddenModels ??= BuildClientNameOverriddenModels();
-
-        private HashSet<InputModelType> BuildClientNameOverriddenModels()
-        {
-            var result = new HashSet<InputModelType>();
-            foreach (var model in InputNamespace.Models)
-            {
-                if (HasClientNameOverrideMarker(model.Decorators))
-                {
-                    result.Add(model);
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Set of service methods whose underlying TypeSpec operation carries a user-supplied
-        /// <c>@@clientName</c> override (csharp scope or unscoped). The marker is stamped onto
-        /// the underlying <see cref="InputOperation"/>'s decorators by the mgmt emitter, because
-        /// <see cref="InputServiceMethod"/> itself has no <c>Decorators</c> property.
-        /// </summary>
-        internal HashSet<InputServiceMethod> ClientNameOverriddenMethods => _clientNameOverriddenMethods ??= BuildClientNameOverriddenMethods();
-
-        private HashSet<InputServiceMethod> BuildClientNameOverriddenMethods()
-        {
-            var result = new HashSet<InputServiceMethod>();
-            foreach (var client in InputNamespace.Clients)
-            {
-                foreach (var method in client.Methods)
-                {
-                    if (HasClientNameOverrideMarker(method.Operation.Decorators))
-                    {
-                        result.Add(method);
-                    }
-                }
-            }
-            return result;
-        }
-
-        private static bool HasClientNameOverrideMarker(IReadOnlyList<InputDecoratorInfo>? decorators)
-        {
-            if (decorators is null)
-            {
-                return false;
-            }
-            foreach (var decorator in decorators)
-            {
-                if (string.Equals(decorator.Name, HasClientNameOverrideDecoratorName, StringComparison.Ordinal))
-                {
-                    return true;
                 }
             }
             return false;

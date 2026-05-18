@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppProtocolType : IEquatable<NetAppProtocolType>
     {
         private readonly string _value;
-        /// <summary> NFSv3 protocol type. </summary>
-        private const string Nfsv3Value = "NFSv3";
-        /// <summary> NFSv4 protocol type. </summary>
-        private const string Nfsv4Value = "NFSv4";
-        /// <summary> SMB protocol type. </summary>
-        private const string SmbValue = "SMB";
 
         /// <summary> Initializes a new instance of <see cref="NetAppProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppProtocolType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string Nfsv3Value = "NFSv3";
+        private const string Nfsv4Value = "NFSv4";
+        private const string SmbValue = "SMB";
 
         /// <summary> NFSv3 protocol type. </summary>
         public static NetAppProtocolType Nfsv3 { get; } = new NetAppProtocolType(Nfsv3Value);
-
         /// <summary> NFSv4 protocol type. </summary>
         public static NetAppProtocolType Nfsv4 { get; } = new NetAppProtocolType(Nfsv4Value);
-
         /// <summary> SMB protocol type. </summary>
         public static NetAppProtocolType Smb { get; } = new NetAppProtocolType(SmbValue);
-
         /// <summary> Determines if two <see cref="NetAppProtocolType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppProtocolType left, NetAppProtocolType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NetAppProtocolType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppProtocolType left, NetAppProtocolType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetAppProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppProtocolType"/>. </summary>
         public static implicit operator NetAppProtocolType(string value) => new NetAppProtocolType(value);
 
-        /// <summary> Converts a string to a <see cref="NetAppProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetAppProtocolType?(string value) => value == null ? null : new NetAppProtocolType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppProtocolType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NetAppProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

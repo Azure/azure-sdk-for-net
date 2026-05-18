@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary></summary>
     public partial class NetAppSubvolumeInfoResource : IJsonModel<NetAppSubvolumeInfoData>
     {
-        private static IJsonModel<NetAppSubvolumeInfoData> s_dataDeserializationInstance;
+        private static NetAppSubvolumeInfoData s_dataDeserializationInstance;
+        private static NetAppSubvolumeInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<NetAppSubvolumeInfoData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppSubvolumeInfoData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppSubvolumeInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppSubvolumeInfoData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppSubvolumeInfoData IJsonModel<NetAppSubvolumeInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NetAppSubvolumeInfoData IJsonModel<NetAppSubvolumeInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppSubvolumeInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppSubvolumeInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppSubvolumeInfoData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppSubvolumeInfoData IPersistableModel<NetAppSubvolumeInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppSubvolumeInfoData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppSubvolumeInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NetAppSubvolumeInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppSubvolumeInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

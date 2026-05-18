@@ -19,19 +19,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleZonePreference"/>. </summary>
         /// <param name="zone"> The zone identifier. </param>
+        /// <param name="rank"> The rank of this zone in the priority order. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zone"/> is null. </exception>
-        public ComputeScheduleZonePreference(string zone)
+        public ComputeScheduleZonePreference(string zone, int rank)
         {
             Argument.AssertNotNull(zone, nameof(zone));
 
             Zone = zone;
+            Rank = rank;
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleZonePreference"/>. </summary>
         /// <param name="zone"> The zone identifier. </param>
         /// <param name="rank"> The rank of this zone in the priority order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeScheduleZonePreference(string zone, int? rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleZonePreference(string zone, int rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Zone = zone;
             Rank = rank;
@@ -42,6 +44,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string Zone { get; }
 
         /// <summary> The rank of this zone in the priority order. </summary>
-        public int? Rank { get; set; }
+        public int Rank { get; }
     }
 }

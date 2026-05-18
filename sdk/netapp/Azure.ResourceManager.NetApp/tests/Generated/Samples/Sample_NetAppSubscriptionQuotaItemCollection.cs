@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
@@ -28,15 +27,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myRG";
+            string accountName = "myAccount";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // get the collection of this NetAppSubscriptionQuotaItemResource
-            AzureLocation location = new AzureLocation("eastus");
-            NetAppSubscriptionQuotaItemCollection collection = subscriptionResource.GetNetAppSubscriptionQuotaItems(location);
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation
             string quotaLimitName = "poolsPerAccount";
@@ -61,15 +61,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myRG";
+            string accountName = "myAccount";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // get the collection of this NetAppSubscriptionQuotaItemResource
-            AzureLocation location = new AzureLocation("eastus");
-            NetAppSubscriptionQuotaItemCollection collection = subscriptionResource.GetNetAppSubscriptionQuotaItems(location);
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation and iterate over the result
             await foreach (NetAppSubscriptionQuotaItemResource item in collection.GetAllAsync())
@@ -96,15 +97,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myRG";
+            string accountName = "myAccount";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // get the collection of this NetAppSubscriptionQuotaItemResource
-            AzureLocation location = new AzureLocation("eastus");
-            NetAppSubscriptionQuotaItemCollection collection = subscriptionResource.GetNetAppSubscriptionQuotaItems(location);
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation
             string quotaLimitName = "poolsPerAccount";
@@ -125,15 +127,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myRG";
+            string accountName = "myAccount";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // get the collection of this NetAppSubscriptionQuotaItemResource
-            AzureLocation location = new AzureLocation("eastus");
-            NetAppSubscriptionQuotaItemCollection collection = subscriptionResource.GetNetAppSubscriptionQuotaItems(location);
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation
             string quotaLimitName = "poolsPerAccount";

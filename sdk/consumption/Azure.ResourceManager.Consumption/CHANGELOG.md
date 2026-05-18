@@ -6,14 +6,9 @@
 
 ### Breaking Changes
 
-- Obsoleted `BillingAccountConsumptionResource`, `BillingCustomerConsumptionResource`, `BillingProfileConsumptionResource`, `ManagementGroupBillingPeriodConsumptionResource`, `ReservationConsumptionResource`, `ReservationOrderConsumptionResource`, `SubscriptionBillingPeriodConsumptionResource`, `TenantBillingPeriodConsumptionResource` as they are no longer supported in the TypeSpec-based SDK. The signatures are preserved for source/binary compatibility, but invoking any of their members now throws `NotSupportedException`. Use the corresponding extension methods on the parent scopes instead.
-- Obsoleted `ConsumptionCreditSummary` and `PriceSheetResult` types. The signatures are preserved for source/binary compatibility, but constructing them or invoking their members now throws `NotSupportedException`. Use `ConsumptionCreditSummaryData` and `PriceSheetResultData` instead.
-
 ### Bugs Fixed
 
 ### Other Changes
-
-- Migrated from AutoRest to TypeSpec-based code generation.
 
 ## 1.1.0 (2026-04-21)
 

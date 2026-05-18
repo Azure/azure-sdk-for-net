@@ -1482,7 +1482,7 @@ EvaluationTaxonomy evalTaxonomyInput = new(agentTaxonomyInput)
 {
     Description = "Taxonomy for red teaming evaluation"
 };
-EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, taxonomy: evalTaxonomyInput);
+EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, body: evalTaxonomyInput);
 DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
 string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{agentVersion.Name}.json");
 BinaryData taxonomyJson = ((IJsonModel<EvaluationTaxonomy>)taxonomy).Write(ModelReaderWriterOptions.Json);

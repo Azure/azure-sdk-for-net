@@ -99,10 +99,10 @@ namespace Azure.AI.Extensions.OpenAI
 #endif
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(IsStrict))
+            if (Optional.IsDefined(Strict))
             {
                 writer.WritePropertyName("strict"u8);
-                writer.WriteBooleanValue(IsStrict.Value);
+                writer.WriteBooleanValue(Strict.Value);
             }
             else
             {
@@ -153,7 +153,7 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string description = default;
             IDictionary<string, BinaryData> schema = default;
-            bool? isStrict = default;
+            bool? strict = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,10 +188,10 @@ namespace Azure.AI.Extensions.OpenAI
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        isStrict = null;
+                        strict = null;
                         continue;
                     }
-                    isStrict = prop.Value.GetBoolean();
+                    strict = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,7 +199,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesStructuredOutputDefinition(name, description, schema, isStrict, additionalBinaryDataProperties);
+            return new ResponsesStructuredOutputDefinition(name, description, schema, strict, additionalBinaryDataProperties);
         }
     }
 }

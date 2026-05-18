@@ -28,7 +28,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         FooActionResult IOperationSource<FooActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return FooActionResult.DeserializeFooActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            FooActionResult result = FooActionResult.DeserializeFooActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         async ValueTask<FooActionResult> IOperationSource<FooActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return FooActionResult.DeserializeFooActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            FooActionResult result = FooActionResult.DeserializeFooActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

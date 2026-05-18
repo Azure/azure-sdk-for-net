@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary></summary>
     public partial class NetAppCacheResource : IJsonModel<NetAppCacheData>
     {
-        private static IJsonModel<NetAppCacheData> s_dataDeserializationInstance;
+        private static NetAppCacheData s_dataDeserializationInstance;
+        private static NetAppCacheData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<NetAppCacheData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppCacheData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppCacheData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppCacheData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppCacheData IJsonModel<NetAppCacheData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NetAppCacheData IJsonModel<NetAppCacheData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppCacheData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppCacheData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppCacheData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppCacheData IPersistableModel<NetAppCacheData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppCacheData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppCacheData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NetAppCacheData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppCacheData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

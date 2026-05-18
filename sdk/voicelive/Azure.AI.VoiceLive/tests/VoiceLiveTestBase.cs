@@ -89,10 +89,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         protected async Task<byte[]> GenerateTestAudio(string text)
         {
-#if NET462
-            Assert.Ignore("Microsoft.CognitiveServices.Speech native binaries are not supported on net462.");
-            return null!;
-#else
             var of = SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm;
             var sc = SpeechConfig.FromEndpoint(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
             sc.SetSpeechSynthesisOutputFormat(of);
@@ -109,7 +105,6 @@ namespace Azure.AI.VoiceLive.Tests
 
                 return result.AudioData;
             }
-#endif
         }
 
         /// <summary>

@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                apiCenterServiceProvisioningState is null ? default : new ApiCenterServiceProperties(apiCenterServiceProvisioningState, default, default),
+                default,
                 identity);
         }
     }

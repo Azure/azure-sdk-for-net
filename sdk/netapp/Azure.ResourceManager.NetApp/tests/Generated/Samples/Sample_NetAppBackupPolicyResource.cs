@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBackupPolicyResource netAppBackupPolicy = client.GetNetAppBackupPolicyResource(netAppBackupPolicyResourceId);
 
             // invoke the operation
-            NetAppBackupPolicyPatch patch = new NetAppBackupPolicyPatch()
+            NetAppBackupPolicyPatch patch = new NetAppBackupPolicyPatch(new AzureLocation("westus"))
             {
                 DailyBackupsToKeep = 5,
                 WeeklyBackupsToKeep = 10,

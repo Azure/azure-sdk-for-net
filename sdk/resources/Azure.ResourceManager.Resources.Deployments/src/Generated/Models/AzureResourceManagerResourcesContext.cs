@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ProviderResourceType))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StatusMessage))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetResource))]
     [ModelReaderWriterBuildable(typeof(TemplateHashResult))]

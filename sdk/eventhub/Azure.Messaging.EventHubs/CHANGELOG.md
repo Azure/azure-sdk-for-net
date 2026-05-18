@@ -2,19 +2,11 @@
 
 ## 5.13.0-beta.1 (Unreleased)
 
-### Acknowledgments
-
-Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
-
-- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
-
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-
-- Fixed a bug where `EventHubBufferedProducerClient` could get stuck during `FlushAsync` or `CloseAsync` until `MaximumWaitTime` elapsed.
 
 ### Other Changes
 

@@ -7,18 +7,15 @@
 .DESCRIPTION
     Builds the provisioning generator locally and regenerates SDK folders using TypeSpec.
     Does NOT modify package.json files or create versioned packages.
-    By default (when -Services is omitted), regenerates ALL provisioning SDKs.
-    Use -Services to regenerate one or more specific libraries by exact
-    library folder name (e.g., "Azure.Provisioning.KeyVault").
+    By default, regenerates ALL provisioning SDKs. Use -Services to limit scope.
+
+    Pattern matching: The -Services parameter uses substring matching.
+    For example, "Key" matches both "KeyVault" and "MyKeyService".
+    Use wildcards for more precise matching (e.g., "KeyVault*").
 
 .PARAMETER Services
-    One or more library folder names to regenerate (e.g.,
-    "Azure.Provisioning.KeyVault"). Each value must match an SDK folder
-    name exactly (case-insensitive). Omit -Services to regenerate ALL
-    provisioning SDKs.
-
-    Exact matching avoids the common pitfall where a substring like
-    "Container" also picks up ContainerInstance, ContainerService, etc.
+    One or more service name patterns to regenerate (e.g., "KeyVault", "Compute").
+    Supports wildcards. Case-insensitive. Uses substring matching.
 
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
@@ -54,18 +51,16 @@
     The powershell-yaml module will be auto-installed if not present.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1
-    # Regenerates ALL provisioning SDKs.
+    .\RegenSdkLocal.ps1 -Services "KeyVault"
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Azure.Provisioning.KeyVault"
-    # Exact match against the SDK folder name.
+    .\RegenSdkLocal.ps1 -Services "KeyVault","Compute","Network"
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Azure.Provisioning.KeyVault","Azure.Provisioning.Batch" -Parallel 8
+    .\RegenSdkLocal.ps1 -Services "Key*" -Parallel 8
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Azure.Provisioning.KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
+    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
 #>
 
 param(
@@ -247,19 +242,11 @@ foreach ($tspFile in $tspFiles) {
 
 Write-Host "Found $($provisioningSdkFolders.Count) provisioning SDK folders"
 
-# Apply services filter: each value must match an SDK folder name exactly
-# (case-insensitive). Throws if any value matches no folder.
+# Apply services filter
 if ($Services -and $Services.Count -gt 0) {
-    $unmatched = @($Services | Where-Object {
-        $name = $_
-        -not ($provisioningSdkFolders | Where-Object { $_.Library -ieq $name })
-    })
-    if ($unmatched.Count -gt 0) {
-        throw "No provisioning SDK folder matched: $($unmatched -join ', '). Pass the exact library folder name, e.g., 'Azure.Provisioning.KeyVault'."
-    }
     $provisioningSdkFolders = @($provisioningSdkFolders | Where-Object {
         $folder = $_
-        $null -ne ($Services | Where-Object { $folder.Library -ieq $_ })
+        $Services | Where-Object { $folder.Library -like "*$_*" -or $folder.Service -like "*$_*" }
     })
     Write-Host "Filtered to $($provisioningSdkFolders.Count) matching: $($Services -join ', ')"
 }

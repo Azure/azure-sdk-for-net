@@ -143,10 +143,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
         var properties = RemoveDuplicatePropertiesAndStripVirtual(model, baseSystemType, baseSystemPropertyNames);
         model.Update(properties: properties);
-        if (TryGetRequiredBaseConstructorParameters(baseSystemType, out var baseParameters))
-        {
-            UpdatePublicConstructor(model, baseParameters);
-        }
 
         if (deferSerialization)
         {
@@ -190,38 +186,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // the same field the serialization code will find.
         FixRawDataFieldReference(model);
 
-        // If the regular base chain transitively reaches a system base type whose
-        // public ctor requires parameters (e.g. TrackedResourceData(AzureLocation)),
-        // ensure this model also exposes a matching public ctor that chains to it.
-        // The direct-system-base case is handled by Update(); this covers grand-child
-        // and deeper descendants such as PATCH models reparented under a sibling
-        // resource via @@hierarchyBuilding.
-        var systemBaseAncestor = FindInheritableSystemBaseAncestor(model);
-        if (systemBaseAncestor is not null && TryGetRequiredBaseConstructorParameters(systemBaseAncestor, out var baseParameters))
-        {
-            UpdatePublicConstructor(model, baseParameters);
-        }
-
         // Defer serialization return type fixes to VisitType to avoid triggering lazy
         // serialization method building during PreVisitModel (which can cause infinite
         // recursion for discriminated models).
         _pendingSerializationReturnTypeFix.Add(model);
 
         _regularUpdated.Add(model);
-    }
-
-    private static InheritableSystemObjectModelProvider? FindInheritableSystemBaseAncestor(ModelProvider model)
-    {
-        var current = model.BaseModelProvider;
-        while (current is not null)
-        {
-            if (current is InheritableSystemObjectModelProvider { IsSystemBase: true } systemBase)
-            {
-                return systemBase;
-            }
-            current = current.BaseModelProvider;
-        }
-        return null;
     }
 
     private static void FixRawDataFieldReference(ModelProvider model)
@@ -353,6 +323,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             if (provider is MrwSerializationTypeDefinition serializationTypeDefinition)
             {
+                bool returnTypeChanged = false;
                 foreach (var method in serializationTypeDefinition.Methods.Where(
                     m => _methodNamesToFixReturnType.Contains(m.Signature.Name)
                          && m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override)))
@@ -361,28 +332,25 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                     if (currentReturnType is not null && !currentReturnType.Equals(systemBaseType))
                     {
                         method.Signature.Update(returnType: systemBaseType);
+                        returnTypeChanged = true;
                     }
                 }
 
-                // The *Core methods return the system base type (e.g., ResourceData), so the
-                // explicit interface implementations that call them need a cast to the
-                // discriminator base (the method's declared return type, e.g., PolyDeviceData).
-                // Always run regardless of whether we changed the *Core return type, because
-                // newer MTG versions may already emit the Core methods returning the system
-                // base directly while still emitting the IPersistableModel<T>.Create body with
-                // an incorrect cast to the containing unknown class (e.g., (UnknownPolyDevice)).
-                FixExplicitInterfaceCreateMethods(serializationTypeDefinition);
+                // When the *Core methods' return type was changed to the system base type,
+                // the explicit interface implementations that call them need a cast to the
+                // model type (e.g., (PolyDeviceData)JsonModelCreateCore(ref reader, options)).
+                if (returnTypeChanged)
+                {
+                    FixExplicitInterfaceCreateMethods(serializationTypeDefinition);
+                }
             }
         }
     }
 
     /// <summary>
-    /// Ensures the explicit interface Create methods (IJsonModel&lt;T&gt;.Create,
-    /// IPersistableModel&lt;T&gt;.Create) cast the result of *Core to the method's declared
-    /// return type T (the discriminated base, e.g., PolyDeviceData). MTG may emit no cast
-    /// or an incorrect cast to the containing class (e.g., (UnknownPolyDevice)); the latter
-    /// throws InvalidCastException at runtime when the discriminator dispatch returns a
-    /// different concrete subtype.
+    /// Adds a cast to the explicit interface Create methods (IJsonModel&lt;T&gt;.Create,
+    /// IPersistableModel&lt;T&gt;.Create) when their body expressions return the system base
+    /// type (e.g., ResourceData) instead of the expected model type (e.g., PolyDeviceData).
     /// </summary>
     private static void FixExplicitInterfaceCreateMethods(MrwSerializationTypeDefinition serializationTypeDefinition)
     {
@@ -391,25 +359,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                  && m.Signature.ExplicitInterface is not null
                  && m.BodyExpression is not null))
         {
+            // Cast to the method's declared return type (the discriminated base, e.g., PolyDeviceData)
+            // rather than the model type (e.g., UnknownPolyDevice), because the deserialization
+            // factory can return any derived type.
             var returnType = method.Signature.ReturnType;
-            if (returnType is null)
+            if (returnType is not null)
             {
-                continue;
+                method.Update(bodyExpression: method.BodyExpression!.CastTo(returnType));
             }
-
-            // Strip any existing cast on the body before applying the correct one to avoid
-            // double-casts and to overwrite an MTG-emitted (UnknownXxx) cast.
-            var inner = method.BodyExpression is CastExpression existingCast
-                ? existingCast.Inner
-                : method.BodyExpression!;
-
-            // Skip if already cast to the right type.
-            if (method.BodyExpression is CastExpression { } cast && cast.Type.Equals(returnType))
-            {
-                continue;
-            }
-
-            method.Update(bodyExpression: inner.CastTo(returnType));
         }
     }
 
@@ -455,77 +412,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var statement = rawDataField.Assign(model.FullConstructor.Signature.Parameters.Single(f => f.Name.Equals(RawDataParameterName))).Terminate();
         MethodBodyStatement[] updatedBody = [statement, .. body!];
         model.FullConstructor.Update(bodyStatements: updatedBody);
-    }
-
-    private static void UpdatePublicConstructor(ModelProvider model, IReadOnlyList<ParameterProvider> baseParameters)
-    {
-        var publicConstructor = model.Constructors.SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-        if (publicConstructor is null)
-        {
-            return;
-        }
-
-        var baseParameterNames = new HashSet<string>(baseParameters.Select(p => p.Name), StringComparer.OrdinalIgnoreCase);
-        var updatedParameters = new List<ParameterProvider>();
-        var updated = false;
-
-        foreach (var baseParameter in baseParameters)
-        {
-            var existingParameter = publicConstructor.Signature.Parameters
-                .SingleOrDefault(parameter => parameter.Name.Equals(baseParameter.Name, StringComparison.OrdinalIgnoreCase));
-            if (existingParameter is null || existingParameter.Type != baseParameter.Type)
-            {
-                updated = true;
-                updatedParameters.Add(baseParameter);
-            }
-            else
-            {
-                updatedParameters.Add(existingParameter);
-            }
-        }
-
-        foreach (var parameter in publicConstructor.Signature.Parameters)
-        {
-            if (baseParameterNames.Contains(parameter.Name))
-            {
-                continue;
-            }
-            updatedParameters.Add(parameter);
-        }
-
-        var existingInitializer = publicConstructor.Signature.Initializer;
-        var initializerArgs = baseParameters
-            .Select(baseParameter => (ValueExpression)updatedParameters.Single(p => p.Name.Equals(baseParameter.Name, StringComparison.OrdinalIgnoreCase)))
-            .ToArray();
-
-        updated |= existingInitializer is null
-            || !existingInitializer.IsBase
-            || existingInitializer.Arguments.Count != initializerArgs.Length;
-
-        if (!updated)
-        {
-            return;
-        }
-
-        var updatedSignature = new ConstructorSignature(
-            publicConstructor.Signature.Type,
-            publicConstructor.Signature.Description,
-            publicConstructor.Signature.Modifiers,
-            updatedParameters,
-            publicConstructor.Signature.Attributes,
-            new ConstructorInitializer(true, initializerArgs));
-
-        publicConstructor.Update(signature: updatedSignature);
-    }
-
-    private static bool TryGetRequiredBaseConstructorParameters(
-        InheritableSystemObjectModelProvider baseSystemType,
-        [NotNullWhen(true)] out IReadOnlyList<ParameterProvider>? parameters)
-    {
-        parameters = baseSystemType.Constructors
-            .SingleOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-            ?.Signature.Parameters;
-        return parameters is { Count: > 0 };
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";

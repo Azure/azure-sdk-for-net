@@ -167,7 +167,6 @@ namespace Azure.ResourceManager.DevCenter
     [ModelReaderWriterBuildable(typeof(NetworkConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(NetworkConnectionUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(NetworkProperties))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpoint))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointCollection))]
     [ModelReaderWriterBuildable(typeof(PoolListResult))]

@@ -335,11 +335,12 @@ namespace Azure.ResourceManager.NetApp.Tests
         /// Drives the full bucket lifecycle (create -&gt; get -&gt; exists / get-if-exists -&gt;
         /// list -&gt; update -&gt; generate-credentials -&gt; delete) on a single parent volume.
         ///
-        /// TODO: Re-record after MPG migration. The current assets only contain the previous
-        /// ANFBucketTests recordings; this consolidated lifecycle test has a different recording
-        /// session name and asset-name generation order, so playback cannot reuse those sessions.
+        /// The freshly-generated self-signed certificate sent as <c>Server.CertificateObject</c>
+        /// (and the access/secret key pair returned from <c>GenerateCredentialsAsync</c>) are
+        /// redacted before they hit the recording via the bucket-only JSONPath body sanitizers
+        /// registered in the <see cref="NetAppBucketTests(bool)"/> constructor, so this test is
+        /// safe to run in playback as well as live.
         /// </summary>
-        [Ignore("Pending re-recording after MPG migration: old ANFBucketTests assets do not match the consolidated BucketLifecycleCrud flow.")]
         [RecordedTest]
         public async Task BucketLifecycleCrud()
         {

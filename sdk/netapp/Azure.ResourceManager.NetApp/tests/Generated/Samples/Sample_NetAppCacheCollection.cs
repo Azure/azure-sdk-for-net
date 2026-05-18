@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             string cacheName = "cache1";
-            NetAppCacheData data = new NetAppCacheData(new AzureLocation("eastus"), new CacheProperties(
+            NetAppCacheData data = new NetAppCacheData(new AzureLocation("eastus"), new NetAppCacheProperties(
                 "cache-west-us2-01",
                 107374182400L,
                 new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/cacheVnet/subnets/cacheSubnet1"),

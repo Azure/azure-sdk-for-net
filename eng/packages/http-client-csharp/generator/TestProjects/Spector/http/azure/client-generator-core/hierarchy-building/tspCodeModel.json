@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType",
+      "name": "updatePetAsAnimalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType1",
+      "name": "updatePetAsAnimalContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType2",
+      "name": "updateDogAsAnimalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType3",
+      "name": "updateDogAsAnimalContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType4",
+      "name": "updatePetAsPetContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType5",
+      "name": "updatePetAsPetContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType6",
+      "name": "updateDogAsPetContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType7",
+      "name": "updateDogAsPetContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -166,7 +166,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType8",
+      "name": "updateDogAsDogContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -182,7 +182,7 @@
     {
       "$id": "23",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType9",
+      "name": "updateDogAsDogContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

@@ -18,10 +18,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleZoneAllocationPolicy"/>. </summary>
-        /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
-        public ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy distributionStrategy)
+        public ComputeScheduleZoneAllocationPolicy()
         {
-            DistributionStrategy = distributionStrategy;
             ZonePreferences = new ChangeTrackingList<ComputeScheduleZonePreference>();
         }
 
@@ -29,7 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
         /// <param name="zonePreferences"> The zone preferences for allocation priority. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy distributionStrategy, IList<ComputeScheduleZonePreference> zonePreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy? distributionStrategy, IList<ComputeScheduleZonePreference> zonePreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DistributionStrategy = distributionStrategy;
             ZonePreferences = zonePreferences;
@@ -37,7 +35,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The distribution strategy for zone allocation. </summary>
-        public ComputeScheduleDistributionStrategy DistributionStrategy { get; }
+        public ComputeScheduleDistributionStrategy? DistributionStrategy { get; set; }
 
         /// <summary> The zone preferences for allocation priority. </summary>
         public IList<ComputeScheduleZonePreference> ZonePreferences { get; }

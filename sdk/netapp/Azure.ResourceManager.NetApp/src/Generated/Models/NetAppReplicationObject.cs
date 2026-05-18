@@ -8,15 +8,43 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Replication properties. </summary>
     public partial class NetAppReplicationObject
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
         public NetAppReplicationObject()
@@ -36,8 +64,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="externalReplicationSetupInfo"> Contains human-readable instructions on what the next step is to finish the external replication setup. </param>
         /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
         /// <param name="relationshipStatus"> The status of the Volume Replication. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, NetAppExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, NetAppMirrorState? mirrorState, VolumeReplicationRelationshipStatus? relationshipStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, NetAppExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, NetAppMirrorState? mirrorState, VolumeReplicationRelationshipStatus? relationshipStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -50,33 +78,24 @@ namespace Azure.ResourceManager.NetApp.Models
             ExternalReplicationSetupInfo = externalReplicationSetupInfo;
             MirrorState = mirrorState;
             RelationshipStatus = relationshipStatus;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
-
         /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
-
         /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
         public RemotePath RemotePath { get; set; }
-
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; set; }
-
         /// <summary> A list of destination replications. </summary>
         public IReadOnlyList<NetAppDestinationReplication> DestinationReplications { get; }
-
         /// <summary> Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup. </summary>
         public NetAppExternalReplicationSetupStatus? ExternalReplicationSetupStatus { get; }
-
         /// <summary> Contains human-readable instructions on what the next step is to finish the external replication setup. </summary>
         public string ExternalReplicationSetupInfo { get; }
-
         /// <summary> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
         public NetAppMirrorState? MirrorState { get; }
-
         /// <summary> The status of the Volume Replication. </summary>
         public VolumeReplicationRelationshipStatus? RelationshipStatus { get; }
     }

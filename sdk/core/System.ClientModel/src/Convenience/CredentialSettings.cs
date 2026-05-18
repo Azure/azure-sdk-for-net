@@ -12,8 +12,6 @@ namespace System.ClientModel.Primitives;
 [Experimental("SCME0002")]
 public sealed class CredentialSettings
 {
-    private readonly IConfigurationSection? _section;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="CredentialSettings"/> class.
     /// </summary>
@@ -25,23 +23,10 @@ public sealed class CredentialSettings
             return;
         }
 
-        _section = section;
         CredentialSource = section["CredentialSource"];
         Key = section["Key"];
         AdditionalProperties = section.GetSection("AdditionalProperties");
     }
-
-    /// <summary>
-    /// Reads an arbitrary value from the underlying credential configuration
-    /// section. Library authors can extend the credential schema with custom
-    /// properties (for example, a service-specific name or region) and surface
-    /// them via extension methods that read through this indexer, without
-    /// exposing the underlying <see cref="IConfigurationSection"/>. Supports
-    /// the standard configuration <c>:</c> delimiter for nested paths. Returns
-    /// <see langword="null"/> when no section was bound or if the specified value does not exist.
-    /// </summary>
-    /// <param name="key">The configuration key to read, relative to the credential section.</param>
-    public string? this[string key] => _section?[key];
 
     /// <summary>
     /// Gets or sets the source of the credential.

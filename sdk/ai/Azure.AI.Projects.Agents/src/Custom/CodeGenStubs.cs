@@ -55,6 +55,8 @@ public partial class ProjectsAgentRecord
 [CodeGenType("VectorStoreFileAttributes")] internal partial class InternalVectorStoreFileAttributes { }
 [CodeGenType("WebSearchPreviewToolSearchContextSize")] internal readonly partial struct WebSearchPreviewToolSearchContextSize { }
 [CodeGenType("ComputerTool")] internal partial class InternalComputerTool { }
+[CodeGenType("EmptyModelParam")] internal partial class InternalEmptyModelParam { }
 [CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }
 [CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
-[CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }
+[CodeGenType("ToolSearchExecutionType")] internal readonly partial struct InternalToolSearchExecutionType { }
+[CodeGenType("ToolSearchToolParam")] internal partial class InternalToolSearchToolParam { }

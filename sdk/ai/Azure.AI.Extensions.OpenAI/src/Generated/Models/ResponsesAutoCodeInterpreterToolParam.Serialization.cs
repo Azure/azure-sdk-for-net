@@ -71,7 +71,7 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesAutoCodeInterpreterToolParam)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Type);
             if (Optional.IsCollectionDefined(FileIds))
             {
                 writer.WritePropertyName("file_ids"u8);
@@ -139,7 +139,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            string kind = default;
+            string @type = default;
             IList<string> fileIds = default;
             ResponsesContainerMemoryLimit? memoryLimit = default;
             ResponsesContainerNetworkPolicyParam networkPolicy = default;
@@ -148,7 +148,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    kind = prop.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("file_ids"u8))
@@ -196,7 +196,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesAutoCodeInterpreterToolParam(kind, fileIds ?? new ChangeTrackingList<string>(), memoryLimit, networkPolicy, additionalBinaryDataProperties);
+            return new ResponsesAutoCodeInterpreterToolParam(@type, fileIds ?? new ChangeTrackingList<string>(), memoryLimit, networkPolicy, additionalBinaryDataProperties);
         }
     }
 }

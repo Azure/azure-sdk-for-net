@@ -75,7 +75,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "BasicActionContentType",
+      "name": "basicActionContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -91,7 +91,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "BasicActionContentType1",
+      "name": "basicActionContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

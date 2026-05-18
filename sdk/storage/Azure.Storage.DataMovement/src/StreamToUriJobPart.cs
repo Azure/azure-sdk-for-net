@@ -285,6 +285,7 @@ namespace Azure.Storage.DataMovement
                 // Report bytes written before completion
                 await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
                 await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             else
             {
@@ -385,24 +386,19 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CompleteTransferAsync(StorageResourceItemProperties sourceProperties)
         {
-            try
-            {
-                // Apply necessary transfer completions on the destination.
-                await _destinationResource.CompleteTransferAsync(
-                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
-                    completeTransferOptions: new() { SourceProperties = sourceProperties },
-                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
-                // Dispose the handlers
-                await CleanUpHandlersAsync().ConfigureAwait(false);
+            // Apply necessary transfer completions on the destination.
+            await _destinationResource.CompleteTransferAsync(
+                overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
+                completeTransferOptions: new() { SourceProperties = sourceProperties },
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                // Set completion status to completed
-                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
-            }
+            // Dispose the handlers
+            await CleanUpHandlersAsync().ConfigureAwait(false);
+
+            // Set completion status to completed
+            await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
         }
 
         private async Task QueueStageBlockRequests(

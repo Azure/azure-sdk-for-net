@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
     public partial class ComputeScheduleZoneAllocationPolicy : IJsonModel<ComputeScheduleZoneAllocationPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputeScheduleZoneAllocationPolicy"/> for deserialization. </summary>
-        internal ComputeScheduleZoneAllocationPolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ComputeScheduleZoneAllocationPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -79,8 +74,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(ComputeScheduleZoneAllocationPolicy)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("distributionStrategy"u8);
-            writer.WriteStringValue(DistributionStrategy.ToString());
+            if (Optional.IsDefined(DistributionStrategy))
+            {
+                writer.WritePropertyName("distributionStrategy"u8);
+                writer.WriteStringValue(DistributionStrategy.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(ZonePreferences))
             {
                 writer.WritePropertyName("zonePreferences"u8);
@@ -133,13 +131,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            ComputeScheduleDistributionStrategy distributionStrategy = default;
+            ComputeScheduleDistributionStrategy? distributionStrategy = default;
             IList<ComputeScheduleZonePreference> zonePreferences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("distributionStrategy"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     distributionStrategy = new ComputeScheduleDistributionStrategy(prop.Value.GetString());
                     continue;
                 }

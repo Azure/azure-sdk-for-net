@@ -11,13 +11,13 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesAzureAISearchTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
-        /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureAISearch"/> is null. </exception>
-        public ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base(ToolType.AzureAiSearch)
+        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureAiSearch"/> is null. </exception>
+        public ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAiSearch) : base(ToolType.AzureAiSearch)
         {
-            Argument.AssertNotNull(azureAISearch, nameof(azureAISearch));
+            Argument.AssertNotNull(azureAiSearch, nameof(azureAiSearch));
 
-            AzureAISearch = azureAISearch;
+            AzureAiSearch = azureAiSearch;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
@@ -25,12 +25,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        internal ResponsesAzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesAzureAISearchToolResource azureAISearch) : base(@type, additionalBinaryDataProperties)
+        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
+        internal ResponsesAzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesAzureAISearchToolResource azureAiSearch) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            AzureAISearch = azureAISearch;
+            AzureAiSearch = azureAiSearch;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
@@ -40,6 +40,6 @@ namespace Azure.AI.Extensions.OpenAI
         public string Description { get; set; }
 
         /// <summary> The azure ai search index resource. </summary>
-        public ResponsesAzureAISearchToolResource AzureAISearch { get; set; }
+        public ResponsesAzureAISearchToolResource AzureAiSearch { get; set; }
     }
 }

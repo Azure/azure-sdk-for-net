@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent CancelOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds = null, string correlationId = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult CancelOperationsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleFlexProperties ComputeScheduleFlexProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile> vmSizeProfiles = null, Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleOSType osType = default(Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleOSType), Azure.ResourceManager.ComputeSchedule.Models.ComputeSchedulePriorityProfile priorityProfile = null, Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZoneAllocationPolicy zoneAllocationPolicy = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile ComputeScheduleVmSizeProfile(string name = null, int? rank = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZoneAllocationPolicy ComputeScheduleZoneAllocationPolicy(Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleDistributionStrategy distributionStrategy = default(Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleDistributionStrategy), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference> zonePreferences = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference ComputeScheduleZonePreference(string zone = null, int? rank = default(int?)) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile ComputeScheduleVmSizeProfile(string name = null, int rank = 0) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZoneAllocationPolicy ComputeScheduleZoneAllocationPolicy(Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleDistributionStrategy? distributionStrategy = default(Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleDistributionStrategy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference> zonePreferences = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference ComputeScheduleZonePreference(string zone = null, int rank = 0) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.CreateResourceOperationResult CreateResourceOperationResult(string description = null, string type = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = null, string resourceType = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.DeleteResourceOperationResult DeleteResourceOperationResult(string description = null, string type = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
@@ -692,9 +692,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ComputeScheduleVmSizeProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile>
     {
-        public ComputeScheduleVmSizeProfile(string name) { }
+        public ComputeScheduleVmSizeProfile(string name, int rank) { }
         public string Name { get { throw null; } }
-        public int? Rank { get { throw null; } set { } }
+        public int Rank { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleVmSizeProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -707,8 +707,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ComputeScheduleZoneAllocationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZoneAllocationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZoneAllocationPolicy>
     {
-        public ComputeScheduleZoneAllocationPolicy(Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleDistributionStrategy distributionStrategy) { }
-        public Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleDistributionStrategy DistributionStrategy { get { throw null; } }
+        public ComputeScheduleZoneAllocationPolicy() { }
+        public Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleDistributionStrategy? DistributionStrategy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference> ZonePreferences { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZoneAllocationPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -722,8 +722,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ComputeScheduleZonePreference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference>
     {
-        public ComputeScheduleZonePreference(string zone) { }
-        public int? Rank { get { throw null; } set { } }
+        public ComputeScheduleZonePreference(string zone, int rank) { }
+        public int Rank { get { throw null; } }
         public string Zone { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeSchedule.Models.ComputeScheduleZonePreference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

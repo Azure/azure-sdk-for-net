@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct EnableNetAppSubvolume : IEquatable<EnableNetAppSubvolume>
     {
         private readonly string _value;
-        /// <summary> subvolumes are enabled. </summary>
-        private const string EnabledValue = "Enabled";
-        /// <summary> subvolumes are not enabled. </summary>
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="EnableNetAppSubvolume"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnableNetAppSubvolume(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
 
         /// <summary> subvolumes are enabled. </summary>
         public static EnableNetAppSubvolume Enabled { get; } = new EnableNetAppSubvolume(EnabledValue);
-
         /// <summary> subvolumes are not enabled. </summary>
         public static EnableNetAppSubvolume Disabled { get; } = new EnableNetAppSubvolume(DisabledValue);
-
         /// <summary> Determines if two <see cref="EnableNetAppSubvolume"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnableNetAppSubvolume left, EnableNetAppSubvolume right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EnableNetAppSubvolume"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnableNetAppSubvolume left, EnableNetAppSubvolume right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EnableNetAppSubvolume"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnableNetAppSubvolume"/>. </summary>
         public static implicit operator EnableNetAppSubvolume(string value) => new EnableNetAppSubvolume(value);
 
-        /// <summary> Converts a string to a <see cref="EnableNetAppSubvolume"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EnableNetAppSubvolume?(string value) => value == null ? null : new EnableNetAppSubvolume(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnableNetAppSubvolume other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EnableNetAppSubvolume other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

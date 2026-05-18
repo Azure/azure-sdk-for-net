@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,442 +16,208 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionLegacyUsageDetail : ConsumptionUsageDetail
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyUsageDetail"/>. </summary>
-        /// <param name="properties"> Properties for legacy usage details. </param>
-        internal ConsumptionLegacyUsageDetail(LegacyUsageDetailProperties properties) : base(UsageDetailsKind.Legacy)
+        internal ConsumptionLegacyUsageDetail()
         {
-            Properties = properties;
+            Kind = UsageDetailsKind.Legacy;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyUsageDetail"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of usage details. </param>
-        /// <param name="eTag"> The etag for the resource. </param>
+        /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> Properties for legacy usage details. </param>
-        internal ConsumptionLegacyUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags, LegacyUsageDetailProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="billingAccountId"> Billing Account identifier. </param>
+        /// <param name="billingAccountName"> Billing Account Name. </param>
+        /// <param name="billingPeriodStartOn"> The billing period start date. </param>
+        /// <param name="billingPeriodEndOn"> The billing period end date. </param>
+        /// <param name="billingProfileId"> Billing Profile identifier. </param>
+        /// <param name="billingProfileName"> Billing Profile Name. </param>
+        /// <param name="accountOwnerId"> Account Owner Id. </param>
+        /// <param name="accountName"> Account Name. </param>
+        /// <param name="subscriptionId"> Subscription guid. </param>
+        /// <param name="subscriptionName"> Subscription name. </param>
+        /// <param name="on"> Date for the usage record. </param>
+        /// <param name="product"> Product name for the consumed service or purchase. Not available for Marketplace. </param>
+        /// <param name="partNumber"> Part Number of the service used. Can be used to join with the price sheet. Not available for marketplace. </param>
+        /// <param name="meterId"> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </param>
+        /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
+        /// <param name="quantity"> The usage quantity. </param>
+        /// <param name="effectivePrice"> Effective Price that's charged for the usage. </param>
+        /// <param name="cost"> The amount of cost before tax. </param>
+        /// <param name="unitPrice"> Unit Price is the price applicable to you. (your EA or other contract price). </param>
+        /// <param name="billingCurrency"> Billing Currency. </param>
+        /// <param name="resourceLocation"> Resource Location. </param>
+        /// <param name="consumedService"> Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace usage. </param>
+        /// <param name="resourceId"> Unique identifier of the Azure Resource Manager usage detail resource. </param>
+        /// <param name="resourceName"> Resource Name. </param>
+        /// <param name="serviceInfo1"> Service-specific metadata. </param>
+        /// <param name="serviceInfo2"> Legacy field with optional service-specific metadata. </param>
+        /// <param name="additionalInfo"> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied. </param>
+        /// <param name="invoiceSection"> Invoice Section Name. </param>
+        /// <param name="costCenter"> The cost center of this department if it is a department and a cost center is provided. </param>
+        /// <param name="resourceGroup"> Resource Group Name. </param>
+        /// <param name="reservationId"> ARM resource id of the reservation. Only applies to records relevant to reservations. </param>
+        /// <param name="reservationName"> User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records relevant to reservations. </param>
+        /// <param name="productOrderId"> Product Order Id. For reservations this is the Reservation Order ID. </param>
+        /// <param name="productOrderName"> Product Order Name. For reservations this is the SKU that was purchased. </param>
+        /// <param name="offerId"> Offer Id. Ex: MS-AZR-0017P, MS-AZR-0148P. </param>
+        /// <param name="isAzureCreditEligible"> Is Azure Credit Eligible. </param>
+        /// <param name="term"> Term (in months). 1 month for monthly recurring purchase. 12 months for a 1 year reservation. 36 months for a 3 year reservation. </param>
+        /// <param name="publisherName"> Publisher Name. </param>
+        /// <param name="publisherType"> Publisher Type. </param>
+        /// <param name="planName"> Plan Name. </param>
+        /// <param name="chargeType"> Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund. </param>
+        /// <param name="frequency"> Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and UsageBased for charges based on how much a service is used. </param>
+        /// <param name="payGPrice"> Retail price for the resource. </param>
+        /// <param name="benefitId"> Unique identifier for the applicable benefit. </param>
+        /// <param name="benefitName"> Name of the applicable benefit. </param>
+        /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
+        internal ConsumptionLegacyUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? @on, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel) : base(id, name, resourceType, systemData, kind, etag, tags, serializedAdditionalRawData)
         {
-            Properties = properties;
+            BillingAccountId = billingAccountId;
+            BillingAccountName = billingAccountName;
+            BillingPeriodStartOn = billingPeriodStartOn;
+            BillingPeriodEndOn = billingPeriodEndOn;
+            BillingProfileId = billingProfileId;
+            BillingProfileName = billingProfileName;
+            AccountOwnerId = accountOwnerId;
+            AccountName = accountName;
+            SubscriptionId = subscriptionId;
+            SubscriptionName = subscriptionName;
+            On = @on;
+            Product = product;
+            PartNumber = partNumber;
+            MeterId = meterId;
+            MeterDetails = meterDetails;
+            Quantity = quantity;
+            EffectivePrice = effectivePrice;
+            Cost = cost;
+            UnitPrice = unitPrice;
+            BillingCurrency = billingCurrency;
+            ResourceLocation = resourceLocation;
+            ConsumedService = consumedService;
+            ResourceId = resourceId;
+            ResourceName = resourceName;
+            ServiceInfo1 = serviceInfo1;
+            ServiceInfo2 = serviceInfo2;
+            AdditionalInfo = additionalInfo;
+            InvoiceSection = invoiceSection;
+            CostCenter = costCenter;
+            ResourceGroup = resourceGroup;
+            ReservationId = reservationId;
+            ReservationName = reservationName;
+            ProductOrderId = productOrderId;
+            ProductOrderName = productOrderName;
+            OfferId = offerId;
+            IsAzureCreditEligible = isAzureCreditEligible;
+            Term = term;
+            PublisherName = publisherName;
+            PublisherType = publisherType;
+            PlanName = planName;
+            ChargeType = chargeType;
+            Frequency = frequency;
+            PayGPrice = payGPrice;
+            BenefitId = benefitId;
+            BenefitName = benefitName;
+            PricingModel = pricingModel;
+            Kind = kind;
         }
-
-        /// <summary> Properties for legacy usage details. </summary>
-        internal LegacyUsageDetailProperties Properties { get; }
 
         /// <summary> Billing Account identifier. </summary>
-        public string BillingAccountId
-        {
-            get
-            {
-                return Properties.BillingAccountId;
-            }
-        }
-
+        public string BillingAccountId { get; }
         /// <summary> Billing Account Name. </summary>
-        public string BillingAccountName
-        {
-            get
-            {
-                return Properties.BillingAccountName;
-            }
-        }
-
+        public string BillingAccountName { get; }
         /// <summary> The billing period start date. </summary>
-        public DateTimeOffset? BillingPeriodStartOn
-        {
-            get
-            {
-                return Properties.BillingPeriodStartOn;
-            }
-        }
-
+        public DateTimeOffset? BillingPeriodStartOn { get; }
         /// <summary> The billing period end date. </summary>
-        public DateTimeOffset? BillingPeriodEndOn
-        {
-            get
-            {
-                return Properties.BillingPeriodEndOn;
-            }
-        }
-
+        public DateTimeOffset? BillingPeriodEndOn { get; }
         /// <summary> Billing Profile identifier. </summary>
-        public string BillingProfileId
-        {
-            get
-            {
-                return Properties.BillingProfileId;
-            }
-        }
-
+        public string BillingProfileId { get; }
         /// <summary> Billing Profile Name. </summary>
-        public string BillingProfileName
-        {
-            get
-            {
-                return Properties.BillingProfileName;
-            }
-        }
-
+        public string BillingProfileName { get; }
         /// <summary> Account Owner Id. </summary>
-        public string AccountOwnerId
-        {
-            get
-            {
-                return Properties.AccountOwnerId;
-            }
-        }
-
+        public string AccountOwnerId { get; }
         /// <summary> Account Name. </summary>
-        public string AccountName
-        {
-            get
-            {
-                return Properties.AccountName;
-            }
-        }
-
+        public string AccountName { get; }
         /// <summary> Subscription guid. </summary>
-        public string SubscriptionId
-        {
-            get
-            {
-                return Properties.SubscriptionId;
-            }
-        }
-
+        public string SubscriptionId { get; }
         /// <summary> Subscription name. </summary>
-        public string SubscriptionName
-        {
-            get
-            {
-                return Properties.SubscriptionName;
-            }
-        }
-
+        public string SubscriptionName { get; }
         /// <summary> Date for the usage record. </summary>
-        public DateTimeOffset? On
-        {
-            get
-            {
-                return Properties.On;
-            }
-        }
-
+        public DateTimeOffset? On { get; }
         /// <summary> Product name for the consumed service or purchase. Not available for Marketplace. </summary>
-        public string Product
-        {
-            get
-            {
-                return Properties.Product;
-            }
-        }
-
+        public string Product { get; }
         /// <summary> Part Number of the service used. Can be used to join with the price sheet. Not available for marketplace. </summary>
-        public string PartNumber
-        {
-            get
-            {
-                return Properties.PartNumber;
-            }
-        }
-
+        public string PartNumber { get; }
         /// <summary> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </summary>
-        public Guid? MeterId
-        {
-            get
-            {
-                return Properties.MeterId;
-            }
-        }
-
+        public Guid? MeterId { get; }
         /// <summary> The details about the meter. By default this is not populated, unless it's specified in $expand. </summary>
-        public ConsumptionMeterDetailsInfo MeterDetails
-        {
-            get
-            {
-                return Properties.MeterDetails;
-            }
-        }
-
+        public ConsumptionMeterDetailsInfo MeterDetails { get; }
         /// <summary> The usage quantity. </summary>
-        public decimal? Quantity
-        {
-            get
-            {
-                return Properties.Quantity;
-            }
-        }
-
+        public decimal? Quantity { get; }
         /// <summary> Effective Price that's charged for the usage. </summary>
-        public decimal? EffectivePrice
-        {
-            get
-            {
-                return Properties.EffectivePrice;
-            }
-        }
-
+        public decimal? EffectivePrice { get; }
         /// <summary> The amount of cost before tax. </summary>
-        public decimal? Cost
-        {
-            get
-            {
-                return Properties.Cost;
-            }
-        }
-
+        public decimal? Cost { get; }
         /// <summary> Unit Price is the price applicable to you. (your EA or other contract price). </summary>
-        public decimal? UnitPrice
-        {
-            get
-            {
-                return Properties.UnitPrice;
-            }
-        }
-
+        public decimal? UnitPrice { get; }
         /// <summary> Billing Currency. </summary>
-        public string BillingCurrency
-        {
-            get
-            {
-                return Properties.BillingCurrency;
-            }
-        }
-
+        public string BillingCurrency { get; }
         /// <summary> Resource Location. </summary>
-        public string ResourceLocation
-        {
-            get
-            {
-                return Properties.ResourceLocation;
-            }
-        }
-
+        public string ResourceLocation { get; }
         /// <summary> Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace usage. </summary>
-        public string ConsumedService
-        {
-            get
-            {
-                return Properties.ConsumedService;
-            }
-        }
-
+        public string ConsumedService { get; }
         /// <summary> Unique identifier of the Azure Resource Manager usage detail resource. </summary>
-        public string ResourceId
-        {
-            get
-            {
-                return Properties.ResourceId;
-            }
-        }
-
+        public string ResourceId { get; }
         /// <summary> Resource Name. </summary>
-        public string ResourceName
-        {
-            get
-            {
-                return Properties.ResourceName;
-            }
-        }
-
+        public string ResourceName { get; }
         /// <summary> Service-specific metadata. </summary>
-        public string ServiceInfo1
-        {
-            get
-            {
-                return Properties.ServiceInfo1;
-            }
-        }
-
+        public string ServiceInfo1 { get; }
         /// <summary> Legacy field with optional service-specific metadata. </summary>
-        public string ServiceInfo2
-        {
-            get
-            {
-                return Properties.ServiceInfo2;
-            }
-        }
-
+        public string ServiceInfo2 { get; }
         /// <summary> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied. </summary>
-        public string AdditionalInfo
-        {
-            get
-            {
-                return Properties.AdditionalInfo;
-            }
-        }
-
+        public string AdditionalInfo { get; }
         /// <summary> Invoice Section Name. </summary>
-        public string InvoiceSection
-        {
-            get
-            {
-                return Properties.InvoiceSection;
-            }
-        }
-
+        public string InvoiceSection { get; }
         /// <summary> The cost center of this department if it is a department and a cost center is provided. </summary>
-        public string CostCenter
-        {
-            get
-            {
-                return Properties.CostCenter;
-            }
-        }
-
+        public string CostCenter { get; }
         /// <summary> Resource Group Name. </summary>
-        public string ResourceGroup
-        {
-            get
-            {
-                return Properties.ResourceGroup;
-            }
-        }
-
+        public string ResourceGroup { get; }
         /// <summary> ARM resource id of the reservation. Only applies to records relevant to reservations. </summary>
-        public string ReservationId
-        {
-            get
-            {
-                return Properties.ReservationId;
-            }
-        }
-
+        public string ReservationId { get; }
         /// <summary> User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records relevant to reservations. </summary>
-        public string ReservationName
-        {
-            get
-            {
-                return Properties.ReservationName;
-            }
-        }
-
+        public string ReservationName { get; }
         /// <summary> Product Order Id. For reservations this is the Reservation Order ID. </summary>
-        public string ProductOrderId
-        {
-            get
-            {
-                return Properties.ProductOrderId;
-            }
-        }
-
+        public string ProductOrderId { get; }
         /// <summary> Product Order Name. For reservations this is the SKU that was purchased. </summary>
-        public string ProductOrderName
-        {
-            get
-            {
-                return Properties.ProductOrderName;
-            }
-        }
-
+        public string ProductOrderName { get; }
         /// <summary> Offer Id. Ex: MS-AZR-0017P, MS-AZR-0148P. </summary>
-        public string OfferId
-        {
-            get
-            {
-                return Properties.OfferId;
-            }
-        }
-
+        public string OfferId { get; }
         /// <summary> Is Azure Credit Eligible. </summary>
-        public bool? IsAzureCreditEligible
-        {
-            get
-            {
-                return Properties.IsAzureCreditEligible;
-            }
-        }
-
+        public bool? IsAzureCreditEligible { get; }
         /// <summary> Term (in months). 1 month for monthly recurring purchase. 12 months for a 1 year reservation. 36 months for a 3 year reservation. </summary>
-        public string Term
-        {
-            get
-            {
-                return Properties.Term;
-            }
-        }
-
+        public string Term { get; }
         /// <summary> Publisher Name. </summary>
-        public string PublisherName
-        {
-            get
-            {
-                return Properties.PublisherName;
-            }
-        }
-
+        public string PublisherName { get; }
         /// <summary> Publisher Type. </summary>
-        public string PublisherType
-        {
-            get
-            {
-                return Properties.PublisherType;
-            }
-        }
-
+        public string PublisherType { get; }
         /// <summary> Plan Name. </summary>
-        public string PlanName
-        {
-            get
-            {
-                return Properties.PlanName;
-            }
-        }
-
+        public string PlanName { get; }
         /// <summary> Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund. </summary>
-        public string ChargeType
-        {
-            get
-            {
-                return Properties.ChargeType;
-            }
-        }
-
+        public string ChargeType { get; }
         /// <summary> Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and UsageBased for charges based on how much a service is used. </summary>
-        public string Frequency
-        {
-            get
-            {
-                return Properties.Frequency;
-            }
-        }
-
+        public string Frequency { get; }
         /// <summary> Retail price for the resource. </summary>
-        public decimal? PayGPrice
-        {
-            get
-            {
-                return Properties.PayGPrice;
-            }
-        }
-
+        public decimal? PayGPrice { get; }
         /// <summary> Unique identifier for the applicable benefit. </summary>
-        public string BenefitId
-        {
-            get
-            {
-                return Properties.BenefitId;
-            }
-        }
-
+        public string BenefitId { get; }
         /// <summary> Name of the applicable benefit. </summary>
-        public string BenefitName
-        {
-            get
-            {
-                return Properties.BenefitName;
-            }
-        }
-
+        public string BenefitName { get; }
         /// <summary> Identifier that indicates how the meter is priced. </summary>
-        public ConsumptionPricingModelType? PricingModel
-        {
-            get
-            {
-                return Properties.PricingModel;
-            }
-        }
+        public ConsumptionPricingModelType? PricingModel { get; }
     }
 }

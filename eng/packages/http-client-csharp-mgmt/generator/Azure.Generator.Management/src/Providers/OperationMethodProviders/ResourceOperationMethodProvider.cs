@@ -230,7 +230,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new MethodSignature(
                 _methodName,
                 _description,
-                GetMethodModifiers(),
+                _convenienceMethod.Signature.Modifiers,
                 ReturnType,
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
@@ -239,25 +239,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
-        }
-
-        private MethodSignatureModifiers GetMethodModifiers()
-        {
-            var modifiers = _convenienceMethod.Signature.Modifiers;
-            if (_serviceMethod is not InputLongRunningPagingServiceMethod)
-            {
-                return modifiers;
-            }
-
-            // LRO paging support is not finalized for management SDKs yet. Keep only
-            // these operation methods internal until the public API shape is ready.
-            return (modifiers
-                & ~MethodSignatureModifiers.Public
-                & ~MethodSignatureModifiers.Protected
-                & ~MethodSignatureModifiers.Private
-                & ~MethodSignatureModifiers.Virtual
-                & ~MethodSignatureModifiers.Override)
-                | MethodSignatureModifiers.Internal;
         }
 
         private TryExpression BuildTryExpression()

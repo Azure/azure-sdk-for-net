@@ -64,7 +64,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 TranscriptionResult result = response.Value;
 
                 Console.WriteLine($"ProfanityFilterMode.{filterMode}:");
-                var channelPhrases = result.CombinedPhrases.First();
+                var channelPhrases = result.PhrasesByChannel.First();
                 Console.WriteLine($"  {channelPhrases.Text}");
                 Console.WriteLine();
             }

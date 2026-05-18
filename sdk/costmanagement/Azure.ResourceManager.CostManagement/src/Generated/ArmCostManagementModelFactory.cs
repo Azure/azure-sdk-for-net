@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="category">
+        /// <param name="budgetCategory">
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost.
         /// Required for CategoryType(s): Cost.
         /// </param>
-        /// <param name="timeGrain">
+        /// <param name="budgetTimeGrain">
         /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.BudgetData"/> instance for mocking. </returns>
-        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? category = default, float? amount = default, TimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
+        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? budgetCategory = default, float? amount = default, TimeGrainType? budgetTimeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
         {
             return new BudgetData(
                 id,
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    category.GetValueOrDefault(),
+                budgetCategory is null && amount is null && budgetTimeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
+                    budgetCategory.GetValueOrDefault(),
                     amount,
-                    timeGrain.GetValueOrDefault(),
+                    budgetTimeGrain.GetValueOrDefault(),
                     timePeriod,
                     filter,
                     currentSpend,
@@ -894,16 +894,6 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new TargetCostAllocationEntity(resourceType, name, additionalBinaryDataProperties: null, values.ToList(), policyType);
         }
 
-        /// <summary> The cost allocation rule check name availability response. </summary>
-        /// <param name="nameAvailable"> Whether this rule name is available. </param>
-        /// <param name="reason"> The reason this name is not available. </param>
-        /// <param name="message"> Error message if the name is not available. </param>
-        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
-        {
-            return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// The properties of the benefit recommendations.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SingleScopeBenefitRecommendationProperties"/> and <see cref="Models.SharedScopeBenefitRecommendationProperties"/>.
@@ -1605,6 +1595,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CostManagementExportData CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag)
         {
+            runHistoryValue ??= new ChangeTrackingList<ExportRun>();
 
             return new CostManagementExportData(
                 id,
@@ -1612,19 +1603,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                format is null && deliveryInfoDestination is null && definition is null && runHistoryValue is null && partitionData is null && nextRunTimeEstimate is null && schedule is null ? default : new ExportProperties(
-                    format,
-                    new ExportDeliveryInfo(deliveryInfoDestination, default),
-                    definition,
-                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
-                    partitionData,
-                    default,
-                    default,
-                    default,
-                    nextRunTimeEstimate,
-                    default,
-                    default,
-                    schedule),
+                default,
                 default,
                 default,
                 eTag);
@@ -1641,7 +1620,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommonExportProperties CommonExportProperties(ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
         {
-            return CommonExportProperties(format: format, deliveryInfoDestination: deliveryInfoDestination, definition: definition, runHistoryValue: runHistoryValue, partitionData: partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate: nextRunTimeEstimate, systemSuspensionContext: default);
+            return CommonExportProperties(format, deliveryInfoDestination, definition, runHistoryValue, partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate, systemSuspensionContext: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>
@@ -1669,20 +1648,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                executionType is null && status is null && submittedBy is null && submittedOn is null && processingStartOn is null && processingEndOn is null && fileName is null && runSettings is null && error is null ? default : new ExportRunProperties(
-                    executionType,
-                    status,
-                    submittedBy,
-                    submittedOn,
-                    processingStartOn,
-                    processingEndOn,
-                    default,
-                    default,
-                    fileName,
-                    default,
-                    runSettings,
-                    error,
-                    default),
+                default,
                 eTag);
         }
 
@@ -1705,6 +1671,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScheduledActionData ScheduledActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IEnumerable<ScheduledActionFileFormat> fileFormats, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, ResourceIdentifier scope, ScheduledActionStatus? status, ResourceIdentifier viewId, ETag? eTag, ScheduledActionKind? kind)
         {
+            fileFormats ??= new ChangeTrackingList<ScheduledActionFileFormat>();
 
             return new ScheduledActionData(
                 id,
@@ -1712,16 +1679,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
-                    displayName,
-                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
-                    notification,
-                    notificationEmail,
-                    schedule,
-                    scope,
-                    status,
-                    viewId,
-                    default),
+                default,
                 eTag,
                 kind);
         }

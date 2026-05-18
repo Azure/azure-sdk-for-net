@@ -14518,17 +14518,13 @@
     {
       "$id": "1200",
       "kind": "model",
-      "name": "JobResourceCustomUpdate",
+      "name": "JobResourceUpdateParameter",
       "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.JobResourceUpdateParameter",
       "usage": "Input,Json",
       "decorators": [
         {
           "name": "Azure.ResourceManager.@armProviderNamespace",
-          "arguments": {}
-        },
-        {
-          "name": "Azure.ResourceManager.@hasClientNameOverride",
           "arguments": {}
         }
       ],
@@ -16289,10 +16285,6 @@
             "decorators": [
               {
                 "name": "Azure.ResourceManager.@armProviderNamespace",
-                "arguments": {}
-              },
-              {
-                "name": "Azure.ResourceManager.@hasClientNameOverride",
                 "arguments": {}
               }
             ],
@@ -27793,10 +27785,6 @@
                   {
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
-                    "arguments": {}
                   }
                 ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
@@ -37876,10 +37864,6 @@
                   {
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
-                    "arguments": {}
                   }
                 ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
@@ -42386,7 +42370,7 @@
             {
               "$id": "2949",
               "kind": "paging",
-              "name": "GetZoosCustom",
+              "name": "listBySubscription",
               "accessibility": "public",
               "apiVersions": [
                 "2024-04-01",
@@ -42395,7 +42379,7 @@
               "doc": "List Zoo resources by subscription ID",
               "operation": {
                 "$id": "2950",
-                "name": "GetZoosCustom",
+                "name": "listBySubscription",
                 "resourceName": "Zoo",
                 "doc": "List Zoo resources by subscription ID",
                 "accessibility": "public",
@@ -42550,10 +42534,6 @@
                 "decorators": [
                   {
                     "name": "Azure.ResourceManager.@armResourceList",
-                    "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
                     "arguments": {}
                   }
                 ],
@@ -61744,10 +61724,6 @@
                   {
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
-                    "arguments": {}
                   }
                 ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
@@ -63115,10 +63091,6 @@
                 "decorators": [
                   {
                     "name": "Azure.ResourceManager.@armResourceUpdate",
-                    "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
                     "arguments": {}
                   }
                 ],
@@ -92101,10 +92073,6 @@
                   {
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
-                    "arguments": {}
                   }
                 ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
@@ -92460,10 +92428,6 @@
                 "decorators": [
                   {
                     "name": "Azure.ResourceManager.@armResourceDelete",
-                    "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
                     "arguments": {}
                   }
                 ],
@@ -92831,10 +92795,6 @@
                   {
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
-                    "arguments": {}
                   }
                 ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
@@ -93190,10 +93150,6 @@
                 "decorators": [
                   {
                     "name": "Azure.ResourceManager.@armResourceDelete",
-                    "arguments": {}
-                  },
-                  {
-                    "name": "Azure.ResourceManager.@hasClientNameOverride",
                     "arguments": {}
                   }
                 ],

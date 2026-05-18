@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Quota report record properties. </summary>
     public partial class NetAppVolumeQuotaReport
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReport"/>. </summary>
         internal NetAppVolumeQuotaReport()
@@ -28,8 +57,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="quotaLimitTotalInKiBs"> Specifies the total size limit in kibibytes for the user/group quota. </param>
         /// <param name="percentageUsed"> Percentage of used size compared to total size. </param>
         /// <param name="isDerivedQuota"> Flag to indicate whether the quota is derived from default quota. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeQuotaReport(NetAppVolumeQuotaType? quotaType, string quotaTarget, long? quotaLimitUsedInKiBs, long? quotaLimitTotalInKiBs, float? percentageUsed, bool? isDerivedQuota, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeQuotaReport(NetAppVolumeQuotaType? quotaType, string quotaTarget, long? quotaLimitUsedInKiBs, long? quotaLimitTotalInKiBs, float? percentageUsed, bool? isDerivedQuota, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuotaType = quotaType;
             QuotaTarget = quotaTarget;
@@ -37,24 +66,19 @@ namespace Azure.ResourceManager.NetApp.Models
             QuotaLimitTotalInKiBs = quotaLimitTotalInKiBs;
             PercentageUsed = percentageUsed;
             IsDerivedQuota = isDerivedQuota;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of quota. </summary>
         public NetAppVolumeQuotaType? QuotaType { get; }
-
         /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; }
-
         /// <summary> Specifies the current usage in kibibytes for the user/group quota. </summary>
         public long? QuotaLimitUsedInKiBs { get; }
-
         /// <summary> Specifies the total size limit in kibibytes for the user/group quota. </summary>
         public long? QuotaLimitTotalInKiBs { get; }
-
         /// <summary> Percentage of used size compared to total size. </summary>
         public float? PercentageUsed { get; }
-
         /// <summary> Flag to indicate whether the quota is derived from default quota. </summary>
         public bool? IsDerivedQuota { get; }
     }

@@ -43,8 +43,6 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(CommonExportProperties))]
     [ModelReaderWriterBuildable(typeof(CostAllocationEntity))]
     [ModelReaderWriterBuildable(typeof(CostAllocationProportion))]
-    [ModelReaderWriterBuildable(typeof(CostAllocationRuleCheckNameAvailabilityRequest))]
-    [ModelReaderWriterBuildable(typeof(CostAllocationRuleCheckNameAvailabilityResponse))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleData))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleDetails))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleList))]

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthBotProperties HealthBotProperties(string provisioningState, Uri botManagementPortalLink, HealthBotKeyVaultProperties keyVaultProperties)
         {
-            return HealthBotProperties(provisioningState: provisioningState, botManagementPortalLink: botManagementPortalLink, keyVaultProperties: keyVaultProperties, accessControlMethod: default);
+            return HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod: default);
         }
     }
 }

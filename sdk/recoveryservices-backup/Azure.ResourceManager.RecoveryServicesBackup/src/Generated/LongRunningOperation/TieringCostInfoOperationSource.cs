@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         TieringCostInfo IOperationSource<TieringCostInfo>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return TieringCostInfo.DeserializeTieringCostInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            TieringCostInfo result = TieringCostInfo.DeserializeTieringCostInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         async ValueTask<TieringCostInfo> IOperationSource<TieringCostInfo>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return TieringCostInfo.DeserializeTieringCostInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            TieringCostInfo result = TieringCostInfo.DeserializeTieringCostInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

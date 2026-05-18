@@ -44,7 +44,7 @@
     {
       "$id": "4",
       "kind": "constant",
-      "name": "GetAccept",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -60,7 +60,7 @@
     {
       "$id": "6",
       "kind": "constant",
-      "name": "GetAccept1",
+      "name": "putContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -76,7 +76,7 @@
     {
       "$id": "8",
       "kind": "constant",
-      "name": "GetAccept2",
+      "name": "postContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -92,7 +92,7 @@
     {
       "$id": "10",
       "kind": "constant",
-      "name": "GetAccept3",
+      "name": "postContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

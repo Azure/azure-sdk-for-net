@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.CostManagement
         CostDetailsOperationResults IOperationSource<CostDetailsOperationResults>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return CostDetailsOperationResults.DeserializeCostDetailsOperationResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CostDetailsOperationResults result = CostDetailsOperationResults.DeserializeCostDetailsOperationResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.CostManagement
         async ValueTask<CostDetailsOperationResults> IOperationSource<CostDetailsOperationResults>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return CostDetailsOperationResults.DeserializeCostDetailsOperationResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CostDetailsOperationResults result = CostDetailsOperationResults.DeserializeCostDetailsOperationResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

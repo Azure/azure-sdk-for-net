@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Nginx
 {
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.Nginx
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPackage))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallSettings))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallStatus))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerNginxContext : ModelReaderWriterContext
     {
     }

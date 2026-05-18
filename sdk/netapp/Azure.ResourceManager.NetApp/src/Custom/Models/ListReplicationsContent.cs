@@ -3,20 +3,16 @@
 
 #nullable disable
 
-using System.ComponentModel;
+#pragma warning disable CS1591
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class ListReplicationsContent
     {
-        // Backward-compat: Exclude shipped in GA as an alias for the generated
-        // ExcludeReplicationsFilter property. Keep it hidden from IntelliSense.
-        /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ExcludeReplicationsFilter? Exclude
+        public ExcludeReplicationsFilter? ExcludeReplicationsFilter
         {
-            get => ExcludeReplicationsFilter;
-            set => ExcludeReplicationsFilter = value;
+            get => Exclude;
+            set => Exclude = value;
         }
     }
 }

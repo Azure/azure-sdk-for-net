@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Playwright.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PlaywrightWorkspaceProperties properties)
         {
-            return PlaywrightWorkspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, identity: default);
+            return PlaywrightWorkspaceData(id, name, resourceType, systemData, tags, location, properties, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightWorkspaceProperties"/>. </summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Playwright.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId)
         {
-            return PlaywrightWorkspaceProperties(provisioningState: provisioningState, dataplaneUri: dataplaneUri, regionalAffinity: regionalAffinity, localAuth: localAuth, workspaceId: workspaceId, reporting: default, storageUri: default);
+            return PlaywrightWorkspaceProperties(provisioningState, dataplaneUri, regionalAffinity, localAuth, workspaceId, reporting: default, storageUri: default);
         }
     }
 }

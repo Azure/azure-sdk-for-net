@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
 
@@ -19,9 +20,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultProperties"/>. </summary>
-        internal DataProtectionDeletedBackupVaultProperties()
+        /// <param name="storageSettings"> Storage Settings. </param>
+        internal DataProtectionDeletedBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
         {
-            StorageSettings = new ChangeTrackingList<DataProtectionBackupStorageSetting>();
+            StorageSettings = storageSettings.ToList();
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
             ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
         }

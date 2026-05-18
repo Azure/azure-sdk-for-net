@@ -448,6 +448,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
+            containers ??= new ChangeTrackingList<ContainerInstanceContainer>();
+            imageRegistryCredentials ??= new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
+            volumes ??= new ChangeTrackingList<ContainerVolume>();
+            subnetIds ??= new ChangeTrackingList<ContainerGroupSubnetId>();
+            initContainers ??= new ChangeTrackingList<InitContainerDefinitionContent>();
+            extensions ??= new ChangeTrackingList<DeploymentExtensionSpec>();
 
             return new ContainerGroupData(
                 id,
@@ -459,30 +465,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 zones.ToList(),
                 identity,
-                provisioningState is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null ? default : new ContainerGroupPropertiesProperties(
-                    provisioningState,
-                    default,
-                    (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
-                    (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
-                    restartPolicy,
-                    ipAddress,
-                    default,
-                    (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
-                    instanceView,
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
-                    (subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(),
-                    dnsConfig,
-                    sku,
-                    encryptionProperties,
-                    (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
-                    (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
-                    priority,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
@@ -526,6 +509,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerGroupProvisioningState? containerGroupProvisioningState, IEnumerable<ContainerGroupSecretReference> secretReferences, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? containerGroupOSType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IEnumerable<string> zones)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
+            secretReferences ??= new ChangeTrackingList<ContainerGroupSecretReference>();
+            containers ??= new ChangeTrackingList<ContainerInstanceContainer>();
+            imageRegistryCredentials ??= new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
+            volumes ??= new ChangeTrackingList<ContainerVolume>();
+            subnetIds ??= new ChangeTrackingList<ContainerGroupSubnetId>();
+            initContainers ??= new ChangeTrackingList<InitContainerDefinitionContent>();
+            extensions ??= new ChangeTrackingList<DeploymentExtensionSpec>();
             zones ??= new ChangeTrackingList<string>();
 
             return new ContainerGroupData(
@@ -538,30 +528,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 zones.ToList(),
                 identity,
-                secretReferences is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && containerGroupOSType is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null && identityAcls is null && containerGroupProfile is null && standbyPoolProfile is null && isCreatedFromStandbyPool is null ? default : new ContainerGroupPropertiesProperties(
-                    default,
-                    (secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>()).ToList(),
-                    (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
-                    (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
-                    restartPolicy,
-                    ipAddress,
-                    containerGroupOSType,
-                    (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
-                    instanceView,
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
-                    (subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(),
-                    dnsConfig,
-                    sku,
-                    encryptionProperties,
-                    (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
-                    (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
-                    priority,
-                    identityAcls,
-                    containerGroupProfile,
-                    standbyPoolProfile,
-                    isCreatedFromStandbyPool,
-                    default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupPatch"/>. </summary>
@@ -606,20 +573,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerInstanceContainer ContainerInstanceContainer(string name, string image, IEnumerable<string> command, IEnumerable<ContainerPort> ports, IEnumerable<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IEnumerable<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext, IDictionary<string, string> configMapKeyValuePairs)
         {
+            command ??= new ChangeTrackingList<string>();
+            ports ??= new ChangeTrackingList<ContainerPort>();
+            environmentVariables ??= new ChangeTrackingList<ContainerEnvironmentVariable>();
+            volumeMounts ??= new ChangeTrackingList<ContainerVolumeMount>();
+            configMapKeyValuePairs ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerInstanceContainer(name, image is null && command is null && ports is null && environmentVariables is null && instanceView is null && resources is null && volumeMounts is null && livenessProbe is null && readinessProbe is null && securityContext is null && configMapKeyValuePairs is null ? default : new ContainerProperties(
-                image,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (ports ?? new ChangeTrackingList<ContainerPort>()).ToList(),
-                (environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>()).ToList(),
-                instanceView,
-                resources,
-                (volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(),
-                livenessProbe,
-                readinessProbe,
-                securityContext,
-                new ConfigMap(configMapKeyValuePairs ?? new ChangeTrackingDictionary<string, string>(), default),
-                default), additionalBinaryDataProperties: null);
+            return new ContainerInstanceContainer(name, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InitContainerDefinitionContent"/>. </summary>
@@ -634,15 +594,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InitContainerDefinitionContent InitContainerDefinitionContent(string name, string image, IEnumerable<string> command, IEnumerable<ContainerEnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IEnumerable<ContainerVolumeMount> volumeMounts, ContainerSecurityContextDefinition securityContext)
         {
+            command ??= new ChangeTrackingList<string>();
+            environmentVariables ??= new ChangeTrackingList<ContainerEnvironmentVariable>();
+            volumeMounts ??= new ChangeTrackingList<ContainerVolumeMount>();
 
-            return new InitContainerDefinitionContent(name, image is null && command is null && environmentVariables is null && instanceView is null && volumeMounts is null && securityContext is null ? default : new InitContainerPropertiesDefinition(
-                image,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>()).ToList(),
-                instanceView,
-                (volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(),
-                securityContext,
-                default), additionalBinaryDataProperties: null);
+            return new InitContainerDefinitionContent(name, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.NGroupData"/>. </summary>
@@ -777,20 +733,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerInstanceContainer ContainerInstanceContainer(string name, string image, IEnumerable<string> command, IEnumerable<ContainerPort> ports, IEnumerable<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IEnumerable<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext)
         {
+            command ??= new ChangeTrackingList<string>();
+            ports ??= new ChangeTrackingList<ContainerPort>();
+            environmentVariables ??= new ChangeTrackingList<ContainerEnvironmentVariable>();
+            volumeMounts ??= new ChangeTrackingList<ContainerVolumeMount>();
 
-            return new ContainerInstanceContainer(name, image is null && command is null && ports is null && environmentVariables is null && instanceView is null && resources is null && volumeMounts is null && livenessProbe is null && readinessProbe is null && securityContext is null ? default : new ContainerProperties(
-                image,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (ports ?? new ChangeTrackingList<ContainerPort>()).ToList(),
-                (environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>()).ToList(),
-                instanceView,
-                resources,
-                (volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(),
-                livenessProbe,
-                readinessProbe,
-                securityContext,
-                default,
-                default), additionalBinaryDataProperties: null);
+            return new ContainerInstanceContainer(name, default, additionalBinaryDataProperties: null);
         }
     }
 }

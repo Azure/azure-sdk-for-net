@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Invocations;
-using Microsoft.OpenTelemetry;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
@@ -29,42 +26,17 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // Your existing services.
             builder.Services.AddSingleton<ISummarizationService, OpenAISummarizationService>();
 
-            // Core middleware: x-request-id correlation, x-platform-server header, request logging.
-            builder.Services.AddAgentServerCore();
-
-            // Invocations protocol: services and handler.
+            // Register the Invocations SDK services and your handler.
             builder.Services.AddInvocationsServer();
             builder.Services.AddScoped<InvocationHandler, SummarizationHandler>();
 
-            // Health probe.
-            builder.Services.AddHealthChecks();
-
-            // Observability: Microsoft OpenTelemetry distro with traces and metrics.
-            // Auto-detects Azure Monitor (APPLICATIONINSIGHTS_CONNECTION_STRING) and
-            // OTLP (OTEL_EXPORTER_OTLP_ENDPOINT) exporters from environment variables.
-            var otel = builder.Services.AddOpenTelemetry();
-            otel.UseMicrosoftOpenTelemetry(options => { });
-            otel.WithTracing(tracing =>
-                {
-                    tracing.AddSource("Azure.AI.AgentServer.Invocations");
-                })
-                .WithMetrics(metrics =>
-                {
-                    metrics.AddMeter("Azure.AI.AgentServer.Invocations");
-                });
-
             var app = builder.Build();
-
-            // Core middleware pipeline.
-            app.UseAgentServerCore();
-
-            // Health probe endpoint.
-            app.MapHealthChecks("/readiness");
 
             // Your existing endpoints.
             app.MapGet("/", () => "My existing app");
+            app.MapGet("/readiness", () => Results.Ok());
 
-            // Invocations protocol endpoints.
+            // Map the Invocations protocol endpoints.
             app.MapInvocationsServer();
 
             app.Run();

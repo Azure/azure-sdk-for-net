@@ -57,6 +57,7 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
         #region Snippet:Sample_Agents_StreamLogs_HostedAgentLogStreaming
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
+            isolationKey: "key_1",
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
@@ -96,6 +97,7 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
         Console.WriteLine($"Deployed hosted agent {agentVersion.Name}, version {agentVersion.Version}.");
         ProjectAgentSession session = agentsClient.CreateSession(
             agentName: agentVersion.Name,
+            isolationKey: "key_1",
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         SessionLogEvent logEvent = agentsClient.GetSessionLogStream(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);

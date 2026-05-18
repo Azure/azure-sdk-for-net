@@ -44,7 +44,7 @@
     {
       "$id": "4",
       "kind": "constant",
-      "name": "TestContentType",
+      "name": "testContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -60,7 +60,7 @@
     {
       "$id": "6",
       "kind": "constant",
-      "name": "TestContentType1",
+      "name": "testContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

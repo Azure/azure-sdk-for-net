@@ -7,68 +7,49 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
     /// This action is triggered when a certificate conflict occurs. A conflict arises if you try to create a new bucket while one or more already exist on the server, or if you update a bucket when multiple buckets are present. This happens because a single certificate is shared among all buckets on the same server.
+    ///
     /// Note: This applies both to certificates provided directly via the certificateObject property and to those retrieved from Azure Key Vault. Details for the latter case are specified in the akvDetails.certificateAkvDetails section.
     /// </summary>
     public readonly partial struct NetAppOnCertificateConflictAction : IEquatable<NetAppOnCertificateConflictAction>
     {
         private readonly string _value;
-        /// <summary> Update the existing certificate regardless of whether there is a conflict or not. This means all buckets on the server will now use the new certificate. </summary>
-        private const string UpdateValue = "Update";
-        /// <summary> Fail the operation if a conflict occurs, meaning the bucket operation will fail, and the existing certificate will continue to be in use. </summary>
-        private const string FailValue = "Fail";
 
         /// <summary> Initializes a new instance of <see cref="NetAppOnCertificateConflictAction"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppOnCertificateConflictAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string UpdateValue = "Update";
+        private const string FailValue = "Fail";
 
         /// <summary> Update the existing certificate regardless of whether there is a conflict or not. This means all buckets on the server will now use the new certificate. </summary>
         public static NetAppOnCertificateConflictAction Update { get; } = new NetAppOnCertificateConflictAction(UpdateValue);
-
         /// <summary> Fail the operation if a conflict occurs, meaning the bucket operation will fail, and the existing certificate will continue to be in use. </summary>
         public static NetAppOnCertificateConflictAction Fail { get; } = new NetAppOnCertificateConflictAction(FailValue);
-
         /// <summary> Determines if two <see cref="NetAppOnCertificateConflictAction"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppOnCertificateConflictAction left, NetAppOnCertificateConflictAction right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NetAppOnCertificateConflictAction"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppOnCertificateConflictAction left, NetAppOnCertificateConflictAction right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetAppOnCertificateConflictAction"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppOnCertificateConflictAction"/>. </summary>
         public static implicit operator NetAppOnCertificateConflictAction(string value) => new NetAppOnCertificateConflictAction(value);
 
-        /// <summary> Converts a string to a <see cref="NetAppOnCertificateConflictAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetAppOnCertificateConflictAction?(string value) => value == null ? null : new NetAppOnCertificateConflictAction(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppOnCertificateConflictAction other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NetAppOnCertificateConflictAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

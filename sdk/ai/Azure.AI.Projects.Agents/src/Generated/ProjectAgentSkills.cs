@@ -169,28 +169,28 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Creates a skill from a zip package. </summary>
-        /// <param name="content"> The zip package used to create the skill. </param>
+        /// <param name="body"> The zip package used to create the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentsSkill> CreateSkillFromPackage(BinaryData content, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> CreateSkillFromPackage(BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = CreateSkillFromPackage(BinaryContent.Create(content), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateSkillFromPackage(BinaryContent.Create(body), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a skill from a zip package. </summary>
-        /// <param name="content"> The zip package used to create the skill. </param>
+        /// <param name="body"> The zip package used to create the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentsSkill>> CreateSkillFromPackageAsync(BinaryData content, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> CreateSkillFromPackageAsync(BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = await CreateSkillFromPackageAsync(BinaryContent.Create(content), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateSkillFromPackageAsync(BinaryContent.Create(body), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 

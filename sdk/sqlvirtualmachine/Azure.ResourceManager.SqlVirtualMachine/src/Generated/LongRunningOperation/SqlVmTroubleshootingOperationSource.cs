@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         SqlVmTroubleshooting IOperationSource<SqlVmTroubleshooting>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return SqlVmTroubleshooting.DeserializeSqlVmTroubleshooting(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SqlVmTroubleshooting result = SqlVmTroubleshooting.DeserializeSqlVmTroubleshooting(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         async ValueTask<SqlVmTroubleshooting> IOperationSource<SqlVmTroubleshooting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SqlVmTroubleshooting.DeserializeSqlVmTroubleshooting(document.RootElement, ModelSerializationExtensions.WireOptions);
+            SqlVmTroubleshooting result = SqlVmTroubleshooting.DeserializeSqlVmTroubleshooting(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

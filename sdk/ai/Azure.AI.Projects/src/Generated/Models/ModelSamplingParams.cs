@@ -14,14 +14,22 @@ namespace Azure.AI.Projects.Evaluation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/>. </summary>
-        public ModelSamplingParams()
+        /// <param name="temperature"> The temperature parameter for sampling. </param>
+        /// <param name="topP"> The top-p parameter for nucleus sampling. </param>
+        /// <param name="seed"> The random seed for reproducibility. </param>
+        /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
+        public ModelSamplingParams(float temperature, float topP, int seed, int maxCompletionTokens)
         {
+            Temperature = temperature;
+            TopP = topP;
+            Seed = seed;
+            MaxCompletionTokens = maxCompletionTokens;
         }
 
         /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/>. </summary>
-        /// <param name="temperature"> The temperature parameter for sampling. Defaults to 1.0. </param>
-        /// <param name="topP"> The top-p parameter for nucleus sampling. Defaults to 1.0. </param>
-        /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
+        /// <param name="temperature"> The temperature parameter for sampling. </param>
+        /// <param name="topP"> The top-p parameter for nucleus sampling. </param>
+        /// <param name="seed"> The random seed for reproducibility. </param>
         /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ModelSamplingParams(float temperature, float topP, int seed, int maxCompletionTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -33,13 +41,13 @@ namespace Azure.AI.Projects.Evaluation
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The temperature parameter for sampling. Defaults to 1.0. </summary>
+        /// <summary> The temperature parameter for sampling. </summary>
         public float Temperature { get; set; }
 
-        /// <summary> The top-p parameter for nucleus sampling. Defaults to 1.0. </summary>
+        /// <summary> The top-p parameter for nucleus sampling. </summary>
         public float TopP { get; set; }
 
-        /// <summary> The random seed for reproducibility. Defaults to 42. </summary>
+        /// <summary> The random seed for reproducibility. </summary>
         public int Seed { get; set; }
 
         /// <summary> The maximum number of tokens allowed in the completion. </summary>

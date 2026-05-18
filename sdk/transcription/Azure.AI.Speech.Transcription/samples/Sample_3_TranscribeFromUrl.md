@@ -31,7 +31,7 @@ TranscriptionResult result = response.Value;
 Console.WriteLine($"Transcribed audio from URL: {audioUrl}");
 Console.WriteLine($"Duration: {result.Duration}");
 
-var channelPhrases = result.CombinedPhrases.First();
+var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
 ```
 

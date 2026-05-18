@@ -81,11 +81,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             writer.WritePropertyName("zone"u8);
             writer.WriteStringValue(Zone);
-            if (Optional.IsDefined(Rank))
-            {
-                writer.WritePropertyName("rank"u8);
-                writer.WriteNumberValue(Rank.Value);
-            }
+            writer.WritePropertyName("rank"u8);
+            writer.WriteNumberValue(Rank);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             string zone = default;
-            int? rank = default;
+            int rank = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,10 +137,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("rank"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     rank = prop.Value.GetInt32();
                     continue;
                 }

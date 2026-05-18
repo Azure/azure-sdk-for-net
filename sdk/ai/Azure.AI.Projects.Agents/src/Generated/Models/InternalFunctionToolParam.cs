@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -28,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"></param>
         /// <param name="deferLoading"> Whether this function should be deferred and discovered via tool search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFunctionToolParam(string name, string description, EmptyModelParam parameters, bool? strict, string @type, bool? deferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalFunctionToolParam(string name, string description, InternalEmptyModelParam parameters, bool? strict, string @type, bool? deferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -46,7 +45,7 @@ namespace Azure.AI.Projects.Agents
         public string Description { get; set; }
 
         /// <summary> Gets or sets the Parameters. </summary>
-        public EmptyModelParam Parameters { get; set; }
+        public InternalEmptyModelParam Parameters { get; set; }
 
         /// <summary> Gets or sets the Strict. </summary>
         public bool? Strict { get; set; }

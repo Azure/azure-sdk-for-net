@@ -7,6 +7,8 @@ namespace Azure.AI.Projects.Agents
     /// <summary></summary>
     public enum FoundryFeaturesOptInKeys
     {
+        /// <summary> SkillsV1Preview. </summary>
+        SkillsV1Preview,
         /// <summary> EvaluationsV1Preview. </summary>
         EvaluationsV1Preview,
         /// <summary> SchedulesV1Preview. </summary>
@@ -19,13 +21,7 @@ namespace Azure.AI.Projects.Agents
         MemoryStoresV1Preview,
         /// <summary> ToolboxesV1Preview. </summary>
         ToolboxesV1Preview,
-        /// <summary> SkillsV1Preview. </summary>
-        SkillsV1Preview,
         /// <summary> DataGenerationJobsV1Preview. </summary>
-        DataGenerationJobsV1Preview,
-        /// <summary> ModelsV1Preview. </summary>
-        ModelsV1Preview,
-        /// <summary> AgentsOptimizationV1Preview. </summary>
-        AgentsOptimizationV1Preview
+        DataGenerationJobsV1Preview
     }
 }

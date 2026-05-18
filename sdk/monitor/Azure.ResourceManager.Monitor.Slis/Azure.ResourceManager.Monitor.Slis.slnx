@@ -1,5 +1,0 @@
-
-<Solution>
-  <Project Path="src/Azure.ResourceManager.Monitor.Slis.csproj" />
-  <Project Path="tests/Azure.ResourceManager.Monitor.Slis.Tests.csproj" />
-</Solution>

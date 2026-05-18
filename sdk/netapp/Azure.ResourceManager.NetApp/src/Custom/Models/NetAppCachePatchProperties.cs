@@ -3,10 +3,12 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     [CodeGenType("CacheUpdateProperties")]
-    public partial class NetAppCachePatchProperties { }
+    public partial class NetAppCachePatchProperties
+    {
+    }
 }

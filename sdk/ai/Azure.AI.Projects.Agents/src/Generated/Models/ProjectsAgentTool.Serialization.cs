@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="FabricIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="ToolboxSearchPreviewTool"/>, and <see cref="ToolSearchTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="FabricIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, and <see cref="ToolboxSearchPreviewTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class ProjectsAgentTool : IJsonModel<ProjectsAgentTool>
@@ -184,7 +184,7 @@ namespace Azure.AI.Projects.Agents
                     case "namespace":
                         return InternalNamespaceToolParam.DeserializeInternalNamespaceToolParam(element, options);
                     case "tool_search":
-                        return ToolSearchTool.DeserializeToolSearchTool(element, options);
+                        return InternalToolSearchToolParam.DeserializeInternalToolSearchToolParam(element, options);
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);

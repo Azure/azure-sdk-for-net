@@ -630,28 +630,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                namespaceName is null && isEnabled is null && isCritical is null && subscriptionId is null && region is null && metricId is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && scaleUnit is null && dataCenter is null ? default : new NotificationHubNamespaceProperties(
-                    namespaceName,
-                    default,
-                    default,
-                    isEnabled,
-                    isCritical,
-                    subscriptionId,
-                    region,
-                    metricId,
-                    createdOn,
-                    updatedOn,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    serviceBusEndpoint,
-                    default,
-                    scaleUnit,
-                    dataCenter,
-                    default,
-                    default),
+                default,
                 sku);
         }
 
@@ -715,17 +694,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                primaryKey is null && secondaryKey is null && keyName is null && modifiedOn is null && createdOn is null && claimType is null && claimValue is null && revision is null ? default : new SharedAccessAuthorizationRuleProperties(
-                    default,
-                    primaryKey,
-                    secondaryKey,
-                    keyName,
-                    modifiedOn,
-                    createdOn,
-                    claimType,
-                    claimValue,
-                    revision,
-                    default),
+                default,
                 tags);
         }
 
@@ -750,7 +719,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NotificationHubData NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku)
         {
-            return NotificationHubData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, notificationHubName: notificationHubName, registrationTtl: registrationTtl, authorizationRules: authorizationRules, apnsCredential: apnsCredential, wnsCredential: wnsCredential, gcmCredential: gcmCredential, mpnsCredential: mpnsCredential, admCredential: admCredential, baiduCredential: baiduCredential, browserCredential: default, xiaomiCredential: default, fcmV1Credential: default, dailyMaxActiveDevices: default, sku: sku);
+            return NotificationHubData(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules, apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, browserCredential: default, xiaomiCredential: default, fcmV1Credential: default, dailyMaxActiveDevices: default, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPatch"/>. </summary>
@@ -774,7 +743,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NotificationHubPatch NotificationHubPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku)
         {
-            return NotificationHubPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, notificationHubName: notificationHubName, registrationTtl: registrationTtl, authorizationRules: authorizationRules, apnsCredential: apnsCredential, wnsCredential: wnsCredential, gcmCredential: gcmCredential, mpnsCredential: mpnsCredential, admCredential: admCredential, baiduCredential: baiduCredential, browserCredential: default, xiaomiCredential: default, fcmV1Credential: default, dailyMaxActiveDevices: default, sku: sku);
+            return NotificationHubPatch(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules, apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, browserCredential: default, xiaomiCredential: default, fcmV1Credential: default, dailyMaxActiveDevices: default, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubTestSendResult"/>. </summary>
@@ -832,17 +801,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                admCredential is null && apnsCredential is null && baiduCredential is null && gcmCredential is null && mpnsCredential is null && wnsCredential is null ? default : new PnsCredentials(
-                    admCredential,
-                    apnsCredential,
-                    baiduCredential,
-                    default,
-                    gcmCredential,
-                    mpnsCredential,
-                    wnsCredential,
-                    default,
-                    default,
-                    default),
+                default,
                 tags);
         }
     }

@@ -12,28 +12,56 @@ param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
+# Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+$SEMVER_REGEX = "^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*))?)?$"
+
 function ToSemVer($version){
-    try {
-        $sv = [AzureEngSemanticVersion]::new($version)
-        if (!$sv.IsSemVerFormat) {
-            if ($ExitOnError) {
-                throw "Unable to convert $version to valid semver and hard exit on error is enabled. Exiting."
-            }
-            return $null
+    if ($version -match $SEMVER_REGEX)
+    {
+        if(-not $matches['prelabel']) {
+            # artifically provide these values for non-prereleases to enable easy sorting of them later than prereleases.
+            $prelabel = "zzz"
+            $prenumber = 999;
+            $isPre = $false;
         }
-        return $sv
+        else {
+            $prelabel = $matches["prelabel"]
+            $prenumber = 0
+
+            # some older packages don't have a prenumber, should handle this
+            if($matches["prenumber"]){
+                $prenumber = [int]$matches["prenumber"]
+            }
+
+            $isPre = $true;
+        }
+
+        New-Object PSObject -Property @{
+            Major = [int]$matches['major']
+            Minor = [int]$matches['minor']
+            Patch = [int]$matches['patch']
+            PrereleaseLabel = $prelabel
+            PrereleaseNumber = $prenumber
+            IsPrerelease = $isPre
+            RawVersion = $version
+        }
     }
-    catch {
-        if ($ExitOnError) {
+    else
+    {
+        if ($ExitOnError)
+        {
             throw "Unable to convert $version to valid semver and hard exit on error is enabled. Exiting."
         }
-        return $null
+        else
+        {
+            return $null
+        }
     }
 }
 
 function SortSemVersions($versions)
 {
-    return $versions | Sort-Object -Descending
+    return $versions | Sort-Object -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber -Descending
 }
 
 function Sort-Versions

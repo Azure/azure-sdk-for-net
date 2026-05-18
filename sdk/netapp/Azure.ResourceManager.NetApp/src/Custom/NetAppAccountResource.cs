@@ -4,22 +4,20 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
+#pragma warning disable CS1591
+
 namespace Azure.ResourceManager.NetApp
 {
-    // [EditorBrowsable(Never)] attributes belong on the individual legacy methods (GetVaults/GetVaultsAsync) below,
-    // not on the class declaration. Attributes on partial declarations are merged into the combined type, which would
-    // otherwise hide the entire NetAppAccountResource (a primary public API) from IntelliSense.
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NetAppAccountResource : ArmResource
     {
         private VaultsRestOperations _vaultsRestClient;
@@ -133,89 +131,56 @@ namespace Azure.ResourceManager.NetApp
             return GetNetAppAccountBackups().Get(backupName, cancellationToken);
         }
 
-        /// <summary> Migrate the backups under a NetApp account to backup vault. </summary>
-        /// <param name="waitUntil"> Completion mode. </param>
-        /// <param name="body"> The body of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> MigrateBackupsBackupsUnderAccountAsync(WaitUntil waitUntil, BackupsMigrationContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppResourceQuotaLimitsAccountAsync(string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            return await MigrateBackupsAsync(waitUntil, body, cancellationToken).ConfigureAwait(false);
+            Response<NetAppSubscriptionQuotaItemResource> response = await GetNetAppSubscriptionQuotaItemAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(ToLegacyQuotaItem(response.Value?.Data), response.GetRawResponse());
         }
 
-        /// <summary> Migrate the backups under a NetApp account to backup vault. </summary>
-        /// <param name="waitUntil"> Completion mode. </param>
-        /// <param name="body"> The body of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation MigrateBackupsBackupsUnderAccount(WaitUntil waitUntil, BackupsMigrationContent body, CancellationToken cancellationToken = default)
-        {
-            return MigrateBackups(waitUntil, body, cancellationToken);
-        }
-
-        // The following six methods existed on NetAppAccountResource in v1.15 because the
-        // SubscriptionQuotaItem resource was account-scoped at that time. The current spec moved
-        // it to subscription/location scope, so the methods can no longer route to a real
-        // operation; they are retained as Obsolete throwing stubs purely to keep the v1.15
-        // ApiCompat surface intact. Callers should use the subscription-scoped extension methods
-        // (e.g. SubscriptionResource.GetNetAppSubscriptionQuotaItems(AzureLocation)).
-
-        /// <summary> Gets a collection of NetAppSubscriptionQuotaItemResources in the NetAppAccountResource (v1.15 surface). </summary>
-        [Obsolete("This collection is no longer account-scoped. Use SubscriptionResource.GetNetAppSubscriptionQuotaItems(AzureLocation) instead.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems()
-        {
-            throw new NotSupportedException("NetAppSubscriptionQuotaItem is no longer scoped under NetAppAccountResource. Use SubscriptionResource.GetNetAppSubscriptionQuotaItems(AzureLocation) instead.");
-        }
-
-        /// <summary> Gets a NetAppSubscriptionQuotaItem (v1.15 surface). </summary>
-        [Obsolete("This method is no longer account-scoped. Use SubscriptionResource.GetNetAppSubscriptionQuotaItem(AzureLocation, string) instead.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Response<NetAppSubscriptionQuotaItemResource> GetNetAppSubscriptionQuotaItem(string quotaLimitName, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("NetAppSubscriptionQuotaItem is no longer scoped under NetAppAccountResource. Use SubscriptionResource.GetNetAppSubscriptionQuotaItem(AzureLocation, string) instead.");
-        }
-
-        /// <summary> Gets a NetAppSubscriptionQuotaItem (v1.15 surface). </summary>
-        [Obsolete("This method is no longer account-scoped. Use SubscriptionResource.GetNetAppSubscriptionQuotaItemAsync(AzureLocation, string) instead.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("NetAppSubscriptionQuotaItem is no longer scoped under NetAppAccountResource. Use SubscriptionResource.GetNetAppSubscriptionQuotaItemAsync(AzureLocation, string) instead.");
-        }
-
-        /// <summary> Gets account quota limits (v1.15 surface). </summary>
-        [Obsolete("Use GetNetAppResourceQuotaLimitsAccounts() returning NetAppResourceQuotaLimitsAccountResource instead.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccounts(CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("This POCO-returning overload is no longer supported. Use GetNetAppResourceQuotaLimitsAccounts() instead.");
-        }
-
-        /// <summary> Gets account quota limits (v1.15 surface). </summary>
-        [Obsolete("Use GetNetAppResourceQuotaLimitsAccounts() returning NetAppResourceQuotaLimitsAccountResource instead.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("This POCO-returning overload is no longer supported. Use GetNetAppResourceQuotaLimitsAccounts() instead.");
-        }
-
-        /// <summary> Get account quota limit (v1.15 surface). </summary>
-        [Obsolete("Use GetNetAppResourceQuotaLimitsAccountResource(name).Get() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccount(string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This POCO-returning overload is no longer supported. Use GetNetAppResourceQuotaLimitsAccountResource(name).Get() instead.");
+            Response<NetAppSubscriptionQuotaItemResource> response = GetNetAppSubscriptionQuotaItem(quotaLimitName, cancellationToken);
+            return Response.FromValue(ToLegacyQuotaItem(response.Value?.Data), response.GetRawResponse());
         }
 
-        /// <summary> Get account quota limit (v1.15 surface). </summary>
-        [Obsolete("Use GetNetAppResourceQuotaLimitsAccountResource(name).GetAsync() instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppResourceQuotaLimitsAccountAsync(string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccountsAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This POCO-returning overload is no longer supported. Use GetNetAppResourceQuotaLimitsAccountResource(name).GetAsync() instead.");
+            IEnumerable<Page<NetAppSubscriptionQuotaItem>> Pages()
+            {
+                foreach (Page<NetAppSubscriptionQuotaItemResource> page in GetNetAppSubscriptionQuotaItems().GetAll(cancellationToken).AsPages())
+                {
+                    yield return Page<NetAppSubscriptionQuotaItem>.FromValues(page.Values.Select(item => ToLegacyQuotaItem(item.Data)).ToList(), page.ContinuationToken, page.GetRawResponse());
+                }
+            }
+
+            return AsyncPageable<NetAppSubscriptionQuotaItem>.FromPages(Pages());
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccounts(CancellationToken cancellationToken = default)
+        {
+            IEnumerable<Page<NetAppSubscriptionQuotaItem>> Pages()
+            {
+                foreach (Page<NetAppSubscriptionQuotaItemResource> page in GetNetAppSubscriptionQuotaItems().GetAll(cancellationToken).AsPages())
+                {
+                    yield return Page<NetAppSubscriptionQuotaItem>.FromValues(page.Values.Select(item => ToLegacyQuotaItem(item.Data)).ToList(), page.ContinuationToken, page.GetRawResponse());
+                }
+            }
+
+            return Pageable<NetAppSubscriptionQuotaItem>.FromPages(Pages());
+        }
+
+        private static NetAppSubscriptionQuotaItem ToLegacyQuotaItem(NetAppSubscriptionQuotaItemData data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            return new NetAppSubscriptionQuotaItem(data.Id, data.Name, data.ResourceType, data.SystemData, data.Current, data.Default, data.Usage);
         }
     }
 }

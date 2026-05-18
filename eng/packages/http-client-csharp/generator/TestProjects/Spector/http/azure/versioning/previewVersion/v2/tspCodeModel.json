@@ -74,7 +74,7 @@
     {
       "$id": "6",
       "kind": "constant",
-      "name": "GetWidgetAccept",
+      "name": "getWidgetContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -122,7 +122,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "GetWidgetAccept1",
+      "name": "updateWidgetColorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -138,7 +138,7 @@
     {
       "$id": "14",
       "kind": "constant",
-      "name": "GetWidgetAccept2",
+      "name": "listWidgetsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

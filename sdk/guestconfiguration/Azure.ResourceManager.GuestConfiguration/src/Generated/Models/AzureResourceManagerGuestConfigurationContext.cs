@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.GuestConfiguration
     [ModelReaderWriterBuildable(typeof(GuestConfigurationVmssVmInfo))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationVMwarevSphereAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(LcmConfigurationSetting))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerGuestConfigurationContext : ModelReaderWriterContext
     {
     }

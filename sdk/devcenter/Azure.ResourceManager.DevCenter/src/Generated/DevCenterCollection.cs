@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.DevCenter
     {
         private readonly ClientDiagnostics _devCentersClientDiagnostics;
         private readonly DevCenters _devCentersRestClient;
+        private readonly ClientDiagnostics _imagesClientDiagnostics;
+        private readonly Images _imagesRestClient;
 
         /// <summary> Initializes a new instance of DevCenterCollection for mocking. </summary>
         protected DevCenterCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.DevCenter
             TryGetApiVersion(DevCenterResource.ResourceType, out string devCenterApiVersion);
             _devCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterResource.ResourceType.Namespace, Diagnostics);
             _devCentersRestClient = new DevCenters(_devCentersClientDiagnostics, Pipeline, Endpoint, devCenterApiVersion ?? "2026-01-01-preview");
+            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterResource.ResourceType.Namespace, Diagnostics);
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, devCenterApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

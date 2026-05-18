@@ -19,19 +19,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleVmSizeProfile"/>. </summary>
         /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
+        /// <param name="rank"> The rank of this VM size in the priority order. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ComputeScheduleVmSizeProfile(string name)
+        public ComputeScheduleVmSizeProfile(string name, int rank)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            Rank = rank;
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleVmSizeProfile"/>. </summary>
         /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
         /// <param name="rank"> The rank of this VM size in the priority order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeScheduleVmSizeProfile(string name, int? rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleVmSizeProfile(string name, int rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Rank = rank;
@@ -42,6 +44,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string Name { get; }
 
         /// <summary> The rank of this VM size in the priority order. </summary>
-        public int? Rank { get; set; }
+        public int Rank { get; }
     }
 }

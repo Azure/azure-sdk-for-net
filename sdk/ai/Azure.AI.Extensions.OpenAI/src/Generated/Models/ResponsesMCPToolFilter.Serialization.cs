@@ -85,10 +85,10 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsReadOnly))
+            if (Optional.IsDefined(ReadOnly))
             {
                 writer.WritePropertyName("read_only"u8);
-                writer.WriteBooleanValue(IsReadOnly.Value);
+                writer.WriteBooleanValue(ReadOnly.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             IList<string> toolNames = default;
-            bool? isReadOnly = default;
+            bool? readOnly = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    isReadOnly = prop.Value.GetBoolean();
+                    readOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesMCPToolFilter(toolNames ?? new ChangeTrackingList<string>(), isReadOnly, additionalBinaryDataProperties);
+            return new ResponsesMCPToolFilter(toolNames ?? new ChangeTrackingList<string>(), readOnly, additionalBinaryDataProperties);
         }
     }
 }

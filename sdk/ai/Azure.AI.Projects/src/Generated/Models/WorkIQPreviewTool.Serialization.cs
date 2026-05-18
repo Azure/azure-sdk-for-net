@@ -76,8 +76,6 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("project_connection_id"u8);
-            writer.WriteStringValue(ProjectConnectionId);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -88,6 +86,8 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            writer.WritePropertyName("work_iq_preview"u8);
+            writer.WriteObjectValue(WorkIqPreview, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,19 +117,14 @@ namespace Azure.AI.Projects
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string projectConnectionId = default;
             string name = default;
             string description = default;
+            WorkIQPreviewToolParameters workIqPreview = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("project_connection_id"u8))
-                {
-                    projectConnectionId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -142,12 +137,17 @@ namespace Azure.AI.Projects
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("work_iq_preview"u8))
+                {
+                    workIqPreview = WorkIQPreviewToolParameters.DeserializeWorkIQPreviewToolParameters(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, projectConnectionId, name, description);
+            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, name, description, workIqPreview);
         }
     }
 }

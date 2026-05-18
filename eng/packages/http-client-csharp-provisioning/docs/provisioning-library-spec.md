@@ -369,36 +369,6 @@ public static class ResourceVersions
 }
 ```
 
-### Tuple Resources (Multi-Segment Names)
-
-A "regular" ARM resource is uniquely identified by its **scope/parent + a single `name`**. Some ARM resource types, however, have a path with several variable segments and no single deployable parent — identifying one instance requires a **tuple** of values.
-
-**Example.** `Microsoft.Compute/locations/publishers/artifacttypes/types/versions` (the resource type backing `VirtualMachineExtensionImageResource` in `Azure.ResourceManager.Compute`) needs the 4-tuple `(location, publisherName, type, version)` to identify a single instance — see the [Bicep reference page](https://learn.microsoft.com/azure/templates/microsoft.compute/locations/publishers/artifacttypes/types/versions). Its mgmt collection ctor reflects this:
-
-```csharp
-internal VirtualMachineExtensionImageCollection(
-    ArmClient client,
-    ResourceIdentifier id,        // parent scope = subscription
-    AzureLocation location,       // extra tuple component #1
-    string publisherName)         // extra tuple component #2
-    : base(client, id) { ... }
-```
-
-The remaining two components (`type`, `version`) are then passed to `Get(...)`.
-
-**How Bicep represents these.** The Bicep / ARM-template schema for a multi-segment resource type still exposes a single `name: string` property. ARM splits that string on `/` and binds each piece to the corresponding `{...}` placeholder in the resource type's path, in order. The number of `/`-separated parts in `name` must equal the number of variable segments in the type:
-
-```bicep
-resource extImg 'Microsoft.Compute/locations/publishers/artifacttypes/types/versions@2024-11-01' existing = {
-  name: '${location}/${publisherName}/${typeName}/${version}'
-  // e.g. 'westus/Microsoft.Compute.Extensions/CustomScript/1.10.5'
-}
-```
-
-The `parent:` shortcut is just sugar for prepending the parent's `name` segments. For tuple resources where there is no single deployable parent (typically read-only catalog resources like the example above), `parent:` cannot be used — the full slash-joined `name` (and, when needed, an explicit `scope:`) is the only way to identify the instance.
-
-**Implication for the provisioning generator.** A tuple resource cannot be modeled with a single `Parent` reference plus a leaf `Name`. The generated `Name` `BicepValue<string>` must accept (or be composed from) the full slash-joined identifier. Tuple-shaped resource types in ARM are predominantly read-only catalogs and therefore typically surfaced via `FromExisting(...)` rather than as deployable constructs.
-
 ---
 
 ## 4. Model Types (ProvisionableConstruct)

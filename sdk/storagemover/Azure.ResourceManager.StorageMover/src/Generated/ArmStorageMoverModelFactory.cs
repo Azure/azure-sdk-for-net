@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName)
         {
-            return AzureStorageBlobContainerEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, storageAccountResourceId: storageAccountResourceId, blobContainerName: blobContainerName);
+            return AzureStorageBlobContainerEndpointProperties(description, endpointKind: default, provisioningState, storageAccountResourceId, blobContainerName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NfsMountEndpointProperties"/>. </summary>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export)
         {
-            return NfsMountEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, host: host, nfsVersion: nfsVersion, export: export);
+            return NfsMountEndpointProperties(description, endpointKind: default, provisioningState, host, nfsVersion, export);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>. </summary>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
-            return AzureStorageSmbFileShareEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, storageAccountResourceId: storageAccountResourceId, fileShareName: fileShareName);
+            return AzureStorageSmbFileShareEndpointProperties(description, endpointKind: default, provisioningState, storageAccountResourceId, fileShareName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SmbMountEndpointProperties"/>. </summary>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SmbMountEndpointProperties SmbMountEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string host, string shareName, AzureKeyVaultSmbCredentials credentials)
         {
-            return SmbMountEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, host: host, shareName: shareName, credentials: credentials);
+            return SmbMountEndpointProperties(description, endpointKind: default, provisioningState, host, shareName, credentials);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageNfsFileShareEndpointProperties"/>. </summary>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageNfsFileShareEndpointProperties AzureStorageNfsFileShareEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
-            return AzureStorageNfsFileShareEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, storageAccountResourceId: storageAccountResourceId, fileShareName: fileShareName);
+            return AzureStorageNfsFileShareEndpointProperties(description, endpointKind: default, provisioningState, storageAccountResourceId, fileShareName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureMultiCloudConnectorEndpointProperties"/>. </summary>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureMultiCloudConnectorEndpointProperties AzureMultiCloudConnectorEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId)
         {
-            return AzureMultiCloudConnectorEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, multiCloudConnectorId: multiCloudConnectorId, awsS3BucketId: awsS3BucketId);
+            return AzureMultiCloudConnectorEndpointProperties(description, endpointKind: default, provisioningState, multiCloudConnectorId, awsS3BucketId);
         }
     }
 }

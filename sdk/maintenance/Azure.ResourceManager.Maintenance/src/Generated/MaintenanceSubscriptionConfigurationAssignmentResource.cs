@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Maintenance
     {
         private readonly ClientDiagnostics _configurationAssignmentsForSubscriptionsClientDiagnostics;
         private readonly ConfigurationAssignmentsForSubscriptions _configurationAssignmentsForSubscriptionsRestClient;
+        private readonly ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
+        private readonly ConfigurationAssignmentsWithinSubscription _configurationAssignmentsWithinSubscriptionRestClient;
         private readonly MaintenanceConfigurationAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/configurationAssignments";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.Maintenance
             TryGetApiVersion(ResourceType, out string maintenanceSubscriptionConfigurationAssignmentApiVersion);
             _configurationAssignmentsForSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
             _configurationAssignmentsForSubscriptionsRestClient = new ConfigurationAssignmentsForSubscriptions(_configurationAssignmentsForSubscriptionsClientDiagnostics, Pipeline, Endpoint, maintenanceSubscriptionConfigurationAssignmentApiVersion ?? "2023-10-01-preview");
+            _configurationAssignmentsWithinSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
+            _configurationAssignmentsWithinSubscriptionRestClient = new ConfigurationAssignmentsWithinSubscription(_configurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, Endpoint, maintenanceSubscriptionConfigurationAssignmentApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 

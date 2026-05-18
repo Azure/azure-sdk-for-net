@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             {
                 volumeData.ProtocolTypes.Add(protocolType);
             }
-            volumeData.ExportRules.Add(_defaultExportPolicyRule);
+            volumeData.ExportPolicy.Rules.Add(_defaultExportPolicyRule);
             return volumeData;
         }
 
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             volumeData.DataProtection = dataProtection;
             if (!string.IsNullOrWhiteSpace(snapshotId))
             {
-                volumeData.SnapshotId = new ResourceIdentifier(snapshotId);
+                volumeData.SnapshotId = snapshotId;
             }
             if (!string.IsNullOrWhiteSpace(backupId))
             {
-                volumeData.BackupId = new ResourceIdentifier(backupId);
+                volumeData.BackupId = backupId;
             }
             if (protocolTypes != null)
             {

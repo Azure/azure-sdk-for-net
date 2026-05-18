@@ -505,7 +505,6 @@ namespace Azure.AI.VoiceLive.Tests
             await silenceTask1.ConfigureAwait(false);
 
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
-            await GetNextUpdate<SessionUpdateInputAudioBufferCleared>(updatesEnum).ConfigureAwait(false);
 
             var (silenceTask2, cts2) = await SendAudioAsync(session, "Computer, how old are you?", TimeoutToken).ConfigureAwait(false);
             cts2.Cancel();
@@ -564,7 +563,6 @@ namespace Azure.AI.VoiceLive.Tests
             }
 
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
-            await GetNextUpdate<SessionUpdateInputAudioBufferCleared>(updatesEnum).ConfigureAwait(false);
 
             // Now send audio:
             var (silenceTask, cts) = await SendAudioAsync(session, "What is the weather like?", TimeoutToken).ConfigureAwait(false);

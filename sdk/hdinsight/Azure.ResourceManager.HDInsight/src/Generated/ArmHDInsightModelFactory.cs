@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure;
@@ -20,30 +19,6 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHDInsightModelFactory
     {
-
-        /// <summary> The HDInsight cluster application. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties of the application. </param>
-        /// <param name="eTag"> The ETag for the application. </param>
-        /// <param name="tags"> The tags for the application. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
-        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightApplicationProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HDInsightApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                eTag,
-                tags);
-        }
 
         /// <param name="computeRoles"> The list of roles in the cluster. </param>
         /// <param name="installScriptActions"> The list of install script actions. </param>
@@ -221,37 +196,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 privateIPAllocationMethod,
                 new ResourceId(subnetId, null),
                 null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The HDInsight cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties of the cluster. </param>
-        /// <param name="eTag"> The ETag for the resource. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <param name="identity"> The identity of the cluster, if configured. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HDInsightClusterProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new HDInsightClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag,
-                zones.ToList(),
-                identity);
         }
 
         /// <param name="clusterVersion"> The version of the cluster. </param>
@@ -886,8 +830,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="properties"> The properties of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, HDInsightClusterProperties properties, ManagedServiceIdentity identity)
+        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, IEnumerable<string> zones = default, HDInsightClusterProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -901,7 +844,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 tags,
                 location,
                 properties,
-                etag,
+                default,
                 zones.ToList(),
                 identity);
         }
@@ -936,8 +879,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="tags"> The tags for the application. </param>
         /// <param name="properties"> The properties of the application. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, HDInsightApplicationProperties properties)
+        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, HDInsightApplicationProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -948,7 +890,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties,
-                etag,
+                default,
                 tags);
         }
     }

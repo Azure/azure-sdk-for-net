@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.OracleDatabase
         CloudAccountActivationLinks IOperationSource<CloudAccountActivationLinks>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CloudAccountActivationLinks result = CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.OracleDatabase
         async ValueTask<CloudAccountActivationLinks> IOperationSource<CloudAccountActivationLinks>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CloudAccountActivationLinks result = CloudAccountActivationLinks.DeserializeCloudAccountActivationLinks(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct DesiredRansomwareProtectionState : IEquatable<DesiredRansomwareProtectionState>
     {
         private readonly string _value;
-        /// <summary> Advanced Ransomware Protection is disabled. </summary>
-        private const string DisabledValue = "Disabled";
-        /// <summary> Advanced Ransomware Protection is enabled. </summary>
-        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="DesiredRansomwareProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DesiredRansomwareProtectionState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string DisabledValue = "Disabled";
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Advanced Ransomware Protection is disabled. </summary>
         public static DesiredRansomwareProtectionState Disabled { get; } = new DesiredRansomwareProtectionState(DisabledValue);
-
         /// <summary> Advanced Ransomware Protection is enabled. </summary>
         public static DesiredRansomwareProtectionState Enabled { get; } = new DesiredRansomwareProtectionState(EnabledValue);
-
         /// <summary> Determines if two <see cref="DesiredRansomwareProtectionState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DesiredRansomwareProtectionState left, DesiredRansomwareProtectionState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DesiredRansomwareProtectionState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DesiredRansomwareProtectionState left, DesiredRansomwareProtectionState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DesiredRansomwareProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DesiredRansomwareProtectionState"/>. </summary>
         public static implicit operator DesiredRansomwareProtectionState(string value) => new DesiredRansomwareProtectionState(value);
 
-        /// <summary> Converts a string to a <see cref="DesiredRansomwareProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DesiredRansomwareProtectionState?(string value) => value == null ? null : new DesiredRansomwareProtectionState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DesiredRansomwareProtectionState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DesiredRansomwareProtectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.Subscription.Models
     public readonly partial struct SubscriptionWorkload : IEquatable<SubscriptionWorkload>
     {
         private readonly string _value;
-        /// <summary> Production. </summary>
-        private const string ProductionValue = "Production";
-        /// <summary> DevTest. </summary>
-        private const string DevTestValue = "DevTest";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionWorkload"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionWorkload(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ProductionValue = "Production";
+        private const string DevTestValue = "DevTest";
 
         /// <summary> Production. </summary>
         public static SubscriptionWorkload Production { get; } = new SubscriptionWorkload(ProductionValue);
-
         /// <summary> DevTest. </summary>
         public static SubscriptionWorkload DevTest { get; } = new SubscriptionWorkload(DevTestValue);
-
         /// <summary> Determines if two <see cref="SubscriptionWorkload"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionWorkload left, SubscriptionWorkload right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SubscriptionWorkload"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionWorkload left, SubscriptionWorkload right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SubscriptionWorkload"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionWorkload"/>. </summary>
         public static implicit operator SubscriptionWorkload(string value) => new SubscriptionWorkload(value);
 
-        /// <summary> Converts a string to a <see cref="SubscriptionWorkload"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SubscriptionWorkload?(string value) => value == null ? null : new SubscriptionWorkload(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionWorkload other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SubscriptionWorkload other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

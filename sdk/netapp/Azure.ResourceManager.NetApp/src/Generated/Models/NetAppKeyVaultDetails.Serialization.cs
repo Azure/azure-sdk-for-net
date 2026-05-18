@@ -9,62 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NetApp;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Specifies the Azure Key Vault settings. These are used when
-    /// a) retrieving the bucket server certificate, and
-    /// b) storing the bucket credentials
-    /// Notes:
-    /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item></list>
-    /// <list type="number"><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
-    /// </summary>
-    public partial class NetAppKeyVaultDetails : IJsonModel<NetAppKeyVaultDetails>
+    public partial class NetAppKeyVaultDetails : IUtf8JsonSerializable, IJsonModel<NetAppKeyVaultDetails>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetAppKeyVaultDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetAppKeyVaultDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppKeyVaultDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppKeyVaultDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppKeyVaultDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppKeyVaultDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppKeyVaultDetails IPersistableModel<NetAppKeyVaultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppKeyVaultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppKeyVaultDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -76,11 +28,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppKeyVaultDetails)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(CertificateKeyVaultDetails))
             {
                 writer.WritePropertyName("certificateAkvDetails"u8);
@@ -91,15 +44,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("credentialsAkvDetails"u8);
                 writer.WriteObjectValue(CredentialsKeyVaultDetails, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,60 +61,88 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppKeyVaultDetails IJsonModel<NetAppKeyVaultDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetAppKeyVaultDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppKeyVaultDetails IJsonModel<NetAppKeyVaultDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppKeyVaultDetails)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetAppKeyVaultDetails(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetAppKeyVaultDetails DeserializeNetAppKeyVaultDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetAppKeyVaultDetails DeserializeNetAppKeyVaultDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CertificateKeyVaultDetails certificateKeyVaultDetails = default;
-            CredentialsKeyVaultDetails credentialsKeyVaultDetails = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            CertificateKeyVaultDetails certificateAkvDetails = default;
+            CredentialsKeyVaultDetails credentialsAkvDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("certificateAkvDetails"u8))
+                if (property.NameEquals("certificateAkvDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateKeyVaultDetails = CertificateKeyVaultDetails.DeserializeCertificateKeyVaultDetails(prop.Value, options);
+                    certificateAkvDetails = CertificateKeyVaultDetails.DeserializeCertificateKeyVaultDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("credentialsAkvDetails"u8))
+                if (property.NameEquals("credentialsAkvDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credentialsKeyVaultDetails = CredentialsKeyVaultDetails.DeserializeCredentialsKeyVaultDetails(prop.Value, options);
+                    credentialsAkvDetails = CredentialsKeyVaultDetails.DeserializeCredentialsKeyVaultDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new NetAppKeyVaultDetails(certificateKeyVaultDetails, credentialsKeyVaultDetails, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetAppKeyVaultDetails(certificateAkvDetails, credentialsAkvDetails, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppKeyVaultDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppKeyVaultDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetAppKeyVaultDetails IPersistableModel<NetAppKeyVaultDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNetAppKeyVaultDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppKeyVaultDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppKeyVaultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

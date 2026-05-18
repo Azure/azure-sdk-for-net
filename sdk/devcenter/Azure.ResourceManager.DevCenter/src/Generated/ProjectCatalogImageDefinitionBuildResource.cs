@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.DevCenter
     {
         private readonly ClientDiagnostics _projectCatalogImageDefinitionBuildClientDiagnostics;
         private readonly ProjectCatalogImageDefinitionBuild _projectCatalogImageDefinitionBuildRestClient;
+        private readonly ClientDiagnostics _projectCatalogImageDefinitionBuildsClientDiagnostics;
+        private readonly ProjectCatalogImageDefinitionBuilds _projectCatalogImageDefinitionBuildsRestClient;
         private readonly ImageDefinitionBuildData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/catalogs/imageDefinitions/builds";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.DevCenter
             TryGetApiVersion(ResourceType, out string projectCatalogImageDefinitionBuildApiVersion);
             _projectCatalogImageDefinitionBuildClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
             _projectCatalogImageDefinitionBuildRestClient = new ProjectCatalogImageDefinitionBuild(_projectCatalogImageDefinitionBuildClientDiagnostics, Pipeline, Endpoint, projectCatalogImageDefinitionBuildApiVersion ?? "2026-01-01-preview");
+            _projectCatalogImageDefinitionBuildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            _projectCatalogImageDefinitionBuildsRestClient = new ProjectCatalogImageDefinitionBuilds(_projectCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, Endpoint, projectCatalogImageDefinitionBuildApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope)
         {
-            return UserAssignedIdentityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, tenantId: tenantId, principalId: principalId, clientId: clientId, isolationScope: isolationScope, assignmentRestrictionsProviders: default);
+            return UserAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, isolationScope, assignmentRestrictionsProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope)
         {
-            return UserAssignedIdentityPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, tags: tags, tenantId: tenantId, principalId: principalId, clientId: clientId, isolationScope: isolationScope, assignmentRestrictionsProviders: default);
+            return UserAssignedIdentityPatch(id, name, resourceType, systemData, location, tags, tenantId, principalId, clientId, isolationScope, assignmentRestrictionsProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/>. </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IEnumerable<string> audiences)
         {
-            return FederatedIdentityCredentialData(id: id, name: name, resourceType: resourceType, systemData: systemData, issuerUri: issuerUri, subject: subject, audiences: audiences, claimsMatchingExpression: default);
+            return FederatedIdentityCredentialData(id, name, resourceType, systemData, issuerUri, subject, audiences, claimsMatchingExpression: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/>. </summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId)
         {
-            return UserAssignedIdentityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, tenantId: tenantId, principalId: principalId, clientId: clientId, isolationScope: default, assignmentRestrictionsProviders: default);
+            return UserAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, isolationScope: default, assignmentRestrictionsProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId)
         {
-            return UserAssignedIdentityPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, tags: tags, tenantId: tenantId, principalId: principalId, clientId: clientId, isolationScope: default, assignmentRestrictionsProviders: default);
+            return UserAssignedIdentityPatch(id, name, resourceType, systemData, location, tags, tenantId, principalId, clientId, isolationScope: default, assignmentRestrictionsProviders: default);
         }
     }
 }

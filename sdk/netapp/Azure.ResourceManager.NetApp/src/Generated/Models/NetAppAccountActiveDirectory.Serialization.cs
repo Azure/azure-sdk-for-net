@@ -10,55 +10,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.ResourceManager.NetApp;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Active Directory. </summary>
-    public partial class NetAppAccountActiveDirectory : IJsonModel<NetAppAccountActiveDirectory>
+    public partial class NetAppAccountActiveDirectory : IUtf8JsonSerializable, IJsonModel<NetAppAccountActiveDirectory>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetAppAccountActiveDirectory PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetAppAccountActiveDirectory(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountActiveDirectory>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppAccountActiveDirectory>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppAccountActiveDirectory IPersistableModel<NetAppAccountActiveDirectory>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppAccountActiveDirectory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppAccountActiveDirectory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,15 +29,23 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ActiveDirectoryId))
             {
-                writer.WritePropertyName("activeDirectoryId"u8);
-                writer.WriteStringValue(ActiveDirectoryId);
+                if (ActiveDirectoryId != null)
+                {
+                    writer.WritePropertyName("activeDirectoryId"u8);
+                    writer.WriteStringValue(ActiveDirectoryId);
+                }
+                else
+                {
+                    writer.WriteNull("activeDirectoryId");
+                }
             }
             if (Optional.IsDefined(Username))
             {
@@ -129,13 +96,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("backupOperators"u8);
                 writer.WriteStartArray();
-                foreach (string item in BackupOperators)
+                foreach (var item in BackupOperators)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -144,13 +106,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("administrators"u8);
                 writer.WriteStartArray();
-                foreach (string item in Administrators)
+                foreach (var item in Administrators)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -184,13 +141,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("securityOperators"u8);
                 writer.WriteStartArray();
-                foreach (string item in SecurityOperators)
+                foreach (var item in SecurityOperators)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -220,15 +172,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("preferredServersForLdapClient"u8);
                 writer.WriteStringValue(PreferredServersForLdapClient);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -237,27 +189,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppAccountActiveDirectory IJsonModel<NetAppAccountActiveDirectory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetAppAccountActiveDirectory JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppAccountActiveDirectory IJsonModel<NetAppAccountActiveDirectory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetAppAccountActiveDirectory(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetAppAccountActiveDirectory DeserializeNetAppAccountActiveDirectory(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetAppAccountActiveDirectory DeserializeNetAppAccountActiveDirectory(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -277,222 +224,203 @@ namespace Azure.ResourceManager.NetApp.Models
             IPAddress kdcIP = default;
             string adName = default;
             string serverRootCACertificate = default;
-            bool? isAesEncryptionEnabled = default;
-            bool? isLdapSigningEnabled = default;
+            bool? aesEncryption = default;
+            bool? ldapSigning = default;
             IList<string> securityOperators = default;
-            bool? isLdapOverTlsEnabled = default;
+            bool? ldapOverTls = default;
             bool? allowLocalNfsUsersWithLdap = default;
             bool? encryptDCConnections = default;
             NetAppLdapSearchScopeConfiguration ldapSearchScope = default;
             string preferredServersForLdapClient = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("activeDirectoryId"u8))
+                if (property.NameEquals("activeDirectoryId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         activeDirectoryId = null;
                         continue;
                     }
-                    activeDirectoryId = prop.Value.GetString();
+                    activeDirectoryId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("username"u8))
+                if (property.NameEquals("username"u8))
                 {
-                    username = prop.Value.GetString();
+                    username = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("password"u8))
+                if (property.NameEquals("password"u8))
                 {
-                    password = prop.Value.GetString();
+                    password = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("domain"u8))
+                if (property.NameEquals("domain"u8))
                 {
-                    domain = prop.Value.GetString();
+                    domain = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dns"u8))
+                if (property.NameEquals("dns"u8))
                 {
-                    dns = prop.Value.GetString();
+                    dns = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new NetAppAccountActiveDirectoryStatus(prop.Value.GetString());
+                    status = new NetAppAccountActiveDirectoryStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("statusDetails"u8))
+                if (property.NameEquals("statusDetails"u8))
                 {
-                    statusDetails = prop.Value.GetString();
+                    statusDetails = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("smbServerName"u8))
+                if (property.NameEquals("smbServerName"u8))
                 {
-                    smbServerName = prop.Value.GetString();
+                    smbServerName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("organizationalUnit"u8))
+                if (property.NameEquals("organizationalUnit"u8))
                 {
-                    organizationalUnit = prop.Value.GetString();
+                    organizationalUnit = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("site"u8))
+                if (property.NameEquals("site"u8))
                 {
-                    site = prop.Value.GetString();
+                    site = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("backupOperators"u8))
+                if (property.NameEquals("backupOperators"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     backupOperators = array;
                     continue;
                 }
-                if (prop.NameEquals("administrators"u8))
+                if (property.NameEquals("administrators"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     administrators = array;
                     continue;
                 }
-                if (prop.NameEquals("kdcIP"u8))
+                if (property.NameEquals("kdcIP"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kdcIP = IPAddress.Parse(prop.Value.GetString());
+                    kdcIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("adName"u8))
+                if (property.NameEquals("adName"u8))
                 {
-                    adName = prop.Value.GetString();
+                    adName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("serverRootCACertificate"u8))
+                if (property.NameEquals("serverRootCACertificate"u8))
                 {
-                    serverRootCACertificate = prop.Value.GetString();
+                    serverRootCACertificate = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("aesEncryption"u8))
+                if (property.NameEquals("aesEncryption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAesEncryptionEnabled = prop.Value.GetBoolean();
+                    aesEncryption = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("ldapSigning"u8))
+                if (property.NameEquals("ldapSigning"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLdapSigningEnabled = prop.Value.GetBoolean();
+                    ldapSigning = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("securityOperators"u8))
+                if (property.NameEquals("securityOperators"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     securityOperators = array;
                     continue;
                 }
-                if (prop.NameEquals("ldapOverTLS"u8))
+                if (property.NameEquals("ldapOverTLS"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLdapOverTlsEnabled = prop.Value.GetBoolean();
+                    ldapOverTls = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("allowLocalNfsUsersWithLdap"u8))
+                if (property.NameEquals("allowLocalNfsUsersWithLdap"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowLocalNfsUsersWithLdap = prop.Value.GetBoolean();
+                    allowLocalNfsUsersWithLdap = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("encryptDCConnections"u8))
+                if (property.NameEquals("encryptDCConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptDCConnections = prop.Value.GetBoolean();
+                    encryptDCConnections = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("ldapSearchScope"u8))
+                if (property.NameEquals("ldapSearchScope"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ldapSearchScope = NetAppLdapSearchScopeConfiguration.DeserializeNetAppLdapSearchScopeConfiguration(prop.Value, options);
+                    ldapSearchScope = NetAppLdapSearchScopeConfiguration.DeserializeNetAppLdapSearchScopeConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("preferredServersForLdapClient"u8))
+                if (property.NameEquals("preferredServersForLdapClient"u8))
                 {
-                    preferredServersForLdapClient = prop.Value.GetString();
+                    preferredServersForLdapClient = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppAccountActiveDirectory(
                 activeDirectoryId,
                 username,
@@ -509,15 +437,46 @@ namespace Azure.ResourceManager.NetApp.Models
                 kdcIP,
                 adName,
                 serverRootCACertificate,
-                isAesEncryptionEnabled,
-                isLdapSigningEnabled,
+                aesEncryption,
+                ldapSigning,
                 securityOperators ?? new ChangeTrackingList<string>(),
-                isLdapOverTlsEnabled,
+                ldapOverTls,
                 allowLocalNfsUsersWithLdap,
                 encryptDCConnections,
                 ldapSearchScope,
                 preferredServersForLdapClient,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppAccountActiveDirectory>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetAppAccountActiveDirectory IPersistableModel<NetAppAccountActiveDirectory>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNetAppAccountActiveDirectory(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppAccountActiveDirectory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

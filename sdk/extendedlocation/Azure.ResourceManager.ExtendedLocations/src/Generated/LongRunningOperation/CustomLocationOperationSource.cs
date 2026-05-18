@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ExtendedLocations
 {
-    /// <summary></summary>
-    internal partial class CustomLocationOperationSource : IOperationSource<CustomLocationResource>
+    internal class CustomLocationOperationSource : IOperationSource<CustomLocationResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal CustomLocationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         CustomLocationResource IOperationSource<CustomLocationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CustomLocationData data = CustomLocationData.DeserializeCustomLocationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<CustomLocationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerExtendedLocationsContext.Default);
             return new CustomLocationResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<CustomLocationResource> IOperationSource<CustomLocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CustomLocationData data = CustomLocationData.DeserializeCustomLocationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CustomLocationResource(_client, data);
+            var data = ModelReaderWriter.Read<CustomLocationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerExtendedLocationsContext.Default);
+            return await Task.FromResult(new CustomLocationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

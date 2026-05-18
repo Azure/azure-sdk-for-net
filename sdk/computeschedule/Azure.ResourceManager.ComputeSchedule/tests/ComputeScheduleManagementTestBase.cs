@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         protected AzureLocation Location { get; private set; }
         protected GenericResourceCollection _genericResourceCollection;
         protected ResourceGroupResource DefaultResourceGroupResource;
-        private const string NetworkResourceApiVersion = "2025-07-01";
 
         protected ComputeScheduleManagementTestBase(bool isAsync)
             : base(isAsync)
@@ -44,10 +43,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                ArmClientOptions options = new();
-                options.SetApiVersion("Microsoft.Network/virtualNetworks", NetworkResourceApiVersion);
-                options.SetApiVersion("Microsoft.Network/networkInterfaces", NetworkResourceApiVersion);
-                Client = GetArmClient(options);
+                Client = GetArmClient();
                 SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
                 DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
                 DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);

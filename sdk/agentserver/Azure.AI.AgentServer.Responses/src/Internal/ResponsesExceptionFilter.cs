@@ -39,168 +39,93 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
         {
             _logger.LogWarning(ex, "Payload validation failed with {ErrorCount} error(s)", ex.Errors.Count);
             RecordException(Activity.Current, ex);
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.PayloadValidation(ex),
-                PlatformHeaders.ErrorSourceUser);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.PayloadValidation(ex));
         }
         catch (ResponseValidationException ex)
         {
-            // Handler produced invalid output — developer bug (upstream)
+            // Response validation errors are developer bugs — log full details but never expose to caller
             _logger.LogError(ex,
                 "Response validation failed with {ErrorCount} error(s): {Errors}",
                 ex.Errors.Count,
                 string.Join("; ", ex.Errors.Select(e => $"{e.Path}: {e.Message}")));
             RecordException(Activity.Current, ex);
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.ServerError(),
-                PlatformHeaders.ErrorSourceUpstream);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.ServerError());
         }
         catch (BadRequestException ex)
         {
-            // Bad request — always caller's fault regardless of who throws it
-            // (our validation, storage 400/409 mapped by StorageErrorMapper, handler rejection)
             _logger.LogWarning(ex, "Invalid request");
             RecordException(Activity.Current, ex);
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.InvalidRequest(ex.Message, code: ex.Code, param: ex.ParamName),
-                PlatformHeaders.ErrorSourceUser);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.InvalidRequest(ex.Message, code: ex.Code, param: ex.ParamName));
         }
         catch (ResourceNotFoundException ex)
         {
-            // Resource doesn't exist — caller asked for something that isn't there
             _logger.LogWarning(ex, "Resource not found");
             RecordException(Activity.Current, ex);
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.NotFound(ex.Message, code: ex.Code, param: ex.Param),
-                PlatformHeaders.ErrorSourceUser);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.NotFound(ex.Message, code: ex.Code, param: ex.Param));
         }
         catch (ResponsesApiException ex)
         {
-            // Data flag set → platform (StorageErrorMapper 5xx, persistence infra failure)
-            // Data flag absent → upstream (ThrowBadHandler, handler protocol violation)
             _logger.LogWarning(ex, "API error");
             RecordException(Activity.Current, ex);
-            bool isPlatform = ex.Data.Contains(StorageErrorMapper.PlatformErrorDataKey);
-            var source = isPlatform
-                ? PlatformHeaders.ErrorSourcePlatform
-                : PlatformHeaders.ErrorSourceUpstream;
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.FromApiException(ex),
-                source, isPlatform ? FormatErrorDetail(ex) : null);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.FromApiException(ex));
         }
         catch (BadHttpRequestException ex)
         {
-            // Framework-level bad request — malformed HTTP
+            // Framework-thrown bad request — log detail internally, expose safe message
             _logger.LogWarning(ex, "Invalid request (framework)");
             RecordException(Activity.Current, ex);
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.InvalidRequest("The request was invalid."),
-                PlatformHeaders.ErrorSourceUser);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.InvalidRequest("The request was invalid."));
         }
         catch (ArgumentException ex)
         {
-            // Parameter binding failure — caller's input is wrong
+            // Framework argument validation — log detail internally, expose safe message
             _logger.LogWarning(ex, "Invalid argument");
             RecordException(Activity.Current, ex);
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.InvalidRequest("The request contained an invalid parameter."),
-                PlatformHeaders.ErrorSourceUser);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.InvalidRequest("The request contained an invalid parameter."));
         }
         catch (OperationCanceledException) when (context.HttpContext.RequestAborted.IsCancellationRequested)
         {
-            // Client disconnected — no response needed, no error classification
+            // Client disconnected — no response needed
             return Results.StatusCode(499);
         }
         catch (OperationCanceledException ex)
         {
-            // Non-client cancellation: Data flag set → platform (our infra timeout),
-            // absent → upstream (handler's own CTS/timeout)
+            // Application-level cancellation (timeout, explicit cancel) — treat as server error
             _logger.LogError(ex, "Operation cancelled unexpectedly");
             RecordException(Activity.Current, ex);
-            bool isPlatform = ex.Data.Contains(StorageErrorMapper.PlatformErrorDataKey);
-            var source = isPlatform
-                ? PlatformHeaders.ErrorSourcePlatform
-                : PlatformHeaders.ErrorSourceUpstream;
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.ServerError(),
-                source, isPlatform ? FormatErrorDetail(ex) : null);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.ServerError());
         }
         catch (Exception ex)
         {
-            // All other exceptions: Data flag set → platform (tagged by storage pipeline),
-            // absent → upstream (developer's handler code)
             _logger.LogError(ex, "Unhandled exception in endpoint handler");
             RecordException(Activity.Current, ex);
-            bool isPlatform = ex.Data.Contains(StorageErrorMapper.PlatformErrorDataKey);
-            var source = isPlatform
-                ? PlatformHeaders.ErrorSourcePlatform
-                : PlatformHeaders.ErrorSourceUpstream;
-            return EnrichErrorResponse(context.HttpContext, ApiErrorFactory.ServerError(),
-                source, isPlatform ? FormatErrorDetail(ex) : null);
+            return EnrichWithRequestId(context.HttpContext, ApiErrorFactory.ServerError());
         }
     }
 
     /// <summary>
-    /// Maximum length for the <c>x-platform-error-detail</c> header value.
-    /// Keeps the header within safe limits for reverse proxies and load balancers
-    /// while preserving enough of the stack trace to be diagnostically useful.
+    /// Wraps an error <see cref="IResult"/> so that <c>error.additional_info.request_id</c>
+    /// is set to the resolved <c>x-request-id</c> value from the current request context.
+    /// Only applies if the result is a JSON <see cref="ApiErrorResponse"/> and the property
+    /// is not already set.
     /// </summary>
-    private const int MaxErrorDetailLength = 2048;
-
-    /// <summary>
-    /// Formats an exception for the <c>x-platform-error-detail</c> header.
-    /// Unwraps <see cref="AggregateException"/> (which adds noise without diagnostic
-    /// value), uses <see cref="Exception.ToString()"/> for full stack trace context,
-    /// and truncates to <see cref="MaxErrorDetailLength"/>.
-    /// </summary>
-    private static string FormatErrorDetail(Exception ex)
+    private static IResult EnrichWithRequestId(HttpContext httpContext, IResult result)
     {
-        // Unwrap AggregateException — they just wrap the real exception(s)
-        var unwrapped = ex;
-        if (ex is AggregateException agg)
+        if (result is not ApiErrorResult errorResult)
         {
-            unwrapped = agg.InnerExceptions.Count == 1
-                ? agg.InnerExceptions[0]
-                : agg.Flatten();
+            return result;
         }
 
-        var detail = unwrapped.ToString();
-
-        if (detail.Length > MaxErrorDetailLength)
+        var requestId = GetRequestId(httpContext);
+        if (string.IsNullOrEmpty(requestId))
         {
-            detail = string.Concat(detail.AsSpan(0, MaxErrorDetailLength - 14), "...[truncated]");
+            return result;
         }
 
-        return detail;
-    }
-
-    /// <summary>
-    /// Enriches an error <see cref="IResult"/> with request ID correlation and
-    /// error source classification headers per container-image-spec §8.
-    /// </summary>
-    private static IResult EnrichErrorResponse(
-        HttpContext httpContext,
-        IResult result,
-        string errorSource,
-        string? errorDetail = null)
-    {
-        // Set error source classification headers
-        httpContext.Response.OnStarting(state =>
+        var error = errorResult.ErrorResponse.Error;
+        if (!error.AdditionalInfo.ContainsKey("request_id"))
         {
-            var (ctx, source, detail) = ((HttpContext, string, string?))state;
-            ctx.Response.Headers[PlatformHeaders.ErrorSource] = source;
-            if (!string.IsNullOrEmpty(detail))
-            {
-                ctx.Response.Headers[PlatformHeaders.ErrorDetail] = detail;
-            }
-
-            return Task.CompletedTask;
-        }, (httpContext, errorSource, errorDetail));
-
-        // Enrich error body with request ID
-        if (result is ApiErrorResult errorResult)
-        {
-            var requestId = GetRequestId(httpContext);
-            if (!string.IsNullOrEmpty(requestId))
-            {
-                var error = errorResult.ErrorResponse.Error;
-                if (!error.AdditionalInfo.ContainsKey("request_id"))
-                {
-                    error.AdditionalInfo["request_id"] = BinaryData.FromObjectAsJson(requestId);
-                }
-            }
+            error.AdditionalInfo["request_id"] = BinaryData.FromObjectAsJson(requestId);
         }
 
         return result;

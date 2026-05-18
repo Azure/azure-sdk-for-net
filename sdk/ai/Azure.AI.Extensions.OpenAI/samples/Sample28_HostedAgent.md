@@ -109,7 +109,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-    agentName: "myHostedAgent1",
+    agentName: "myHostedAgent",
     options: creationOptions);
 ```
 
@@ -145,7 +145,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
-AgentEndpointConfiguration config = new()
+AgentEndpointConfig config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = { AgentEndpointProtocol.Responses }
@@ -162,7 +162,7 @@ Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
-AgentEndpointConfiguration config = new()
+AgentEndpointConfig config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = { AgentEndpointProtocol.Responses }
@@ -177,18 +177,29 @@ ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClien
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-6. Create the response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method.
+6. Create the response client to communicate with an Agent and get the response.
+**Note:** In this scenario we cannot use the `ProjectOpenAIClient` from `projectClient.ProjectOpenAIClient` property as we need to access customized endpoint, for the Agent, we have created. We set its name in `ProjectOpenAIClientOptions`.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectOpenAIClientOptions responsesOptions = new()
+{
+    AgentName = agentVersion.Name
+};
+ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
+ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
 ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectOpenAIClientOptions responsesOptions = new()
+{
+    AgentName = agentVersion.Name
+};
+ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
+ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```

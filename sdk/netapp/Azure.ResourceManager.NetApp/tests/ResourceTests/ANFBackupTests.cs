@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.NetApp.Tests
         //public static new AzureLocation DefaultLocation = AzureLocation.WestUS2;
         //public static new AzureLocation DefaultLocation = AzureLocation.EastUS2;
         public static new AzureLocation DefaultLocationString = DefaultLocation;
+        internal NetAppAccountBackupCollection _accountBackupCollection;
+        internal NetAppVolumeBackupCollection _volumeBackupCollection;
         internal NetAppVolumeResource _volumeResource;
 
         internal NetAppBackupVaultCollection _backupVaultCollection { get => _netAppAccount.GetNetAppBackupVaults(); }
@@ -50,6 +52,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             var volumeName = Recording.GenerateAssetName("volumeName-");
             await CreateVirtualNetwork(location: DefaultLocation);
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
+            _accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
+            _volumeBackupCollection = _volumeResource.GetNetAppVolumeBackups();
         }
 
         [TearDown]
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 bool exists = await _capacityPoolCollection.ExistsAsync(_capacityPool.Id.Name);
                 CapacityPoolCollection poolCollection = _netAppAccount.GetCapacityPools();
                 List<CapacityPoolResource> poolList = await poolCollection.GetAllAsync().ToEnumerableAsync();
+                string lastBackupName = string.Empty;
                 foreach (CapacityPoolResource pool in poolList)
                 {
                     NetAppVolumeCollection volumeCollection = pool.GetNetAppVolumes();
@@ -90,10 +95,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        // TODO: Re-record after MPG migration. Recording was captured against api-version 2022-11-01 which used
-        // GET /backupStatus; the new TypeSpec-generated client targets api-version 2025-12-15-preview and
-        // calls GET /latestBackupStatus/current, causing a recording URL mismatch.
-        [Ignore("Pending re-recording after MPG migration: backupStatus URL/api-version drift.")]
+        //[Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteBackup()
         {
@@ -143,9 +145,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             await LiveDelay(5000);
 
             //Check status again
-            NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusAsync()).Value;
+            NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetBackupStatusAsync()).Value;
             Assert.IsNotNull(backupStatus);
-            Assert.AreEqual("Idle", backupStatus.VolumeBackupRelationshipStatus?.ToString());
+            Assert.AreEqual("Idle", backupStatus.RelationshipStatus?.ToString());
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
             await LiveDelay(120000);
 
@@ -298,8 +300,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 else if (backup.Id.Name.Equals(backupName2))
                     backup2Resource3 = backup;
             }
-            backupResource3.Should().BeEquivalentTo(backupResource2, options => options.IncludingAllDeclaredProperties().Excluding(o => o.Data.SystemData));
-            backup2Resource3.Should().BeEquivalentTo(backup2Resource2, options => options.IncludingAllDeclaredProperties().Excluding(o => o.Data.SystemData));
+            backupResource3.Should().BeEquivalentTo(backupResource2, options => options.Excluding(o => o.Data.SystemData));
+            backup2Resource3.Should().BeEquivalentTo(backup2Resource2, options => options.Excluding(o => o.Data.SystemData));
         }
 
         [RecordedTest]
@@ -347,10 +349,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _backupCollection.ExistsAsync(backupName + "1"));
 
             //Get backup status
-            NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusAsync()).Value;
+            NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusBackupAsync()).Value;
             Assert.IsNotNull(backupStatus);
             //we need creation to finish else we cannot cleanup
-            Assert.AreEqual("Idle", backupStatus.VolumeBackupRelationshipStatus?.ToString());
+            Assert.AreEqual("Idle", backupStatus.RelationshipStatus?.ToString());
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
         }
 
@@ -420,9 +422,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             await LiveDelay(40000);
         }
 
-        // TODO: Re-record after MPG migration. The new client uses OData-style $filter query parameter while
-        // the existing recording used the legacy volumeResourceId query parameter, causing a recording URL mismatch.
-        [Ignore("Pending re-recording after MPG migration: $filter vs volumeResourceId query parameter drift.")]
         [RecordedTest]
         public async Task ListBackupsPerVolumeWithBackupVault()
         {
@@ -475,7 +474,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(vol2backupResource);
             Assert.AreEqual(vol2backupName, vol2backupResource.Id.Name);
 
-            //await WaitForBackupSucceeded(_backupCollection, backupName);
+            //await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
             ////Validate
             NetAppBackupVaultBackupResource backupResource2 = await _backupCollection.GetAsync(backupName);
             Assert.IsNotNull(backupResource2);
@@ -515,6 +514,63 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Assert.AreEqual(backupPatch.Label, backupResource4.Data.Label);
         }
 
+        private async Task WaitForBackupSucceeded(NetAppVolumeBackupCollection volumeBackupCollection, string backupName)
+        {
+            Console.WriteLine($"WaitForBackupSucceeded for Backup {volumeBackupCollection.Id}/backups/{backupName}");
+            var maxDelay = TimeSpan.FromSeconds(500);
+            int count = 0;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                maxDelay = TimeSpan.FromMilliseconds(50);
+            }
+            Console.WriteLine($"...decorrelated maxdelay {maxDelay}");
+            IEnumerable<TimeSpan> delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(20), retryCount: 500)
+                    .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount)
+
+            Polly.Retry.AsyncRetryPolicy<bool> retryPolicy = Policy
+                .HandleResult<bool>(false) // retry if delegate executed asynchronously returns false
+                .WaitAndRetryAsync(delay);
+
+            try
+            {
+                await retryPolicy.ExecuteAsync(async () =>
+                    {
+                        count++;
+                        NetAppVolumeBackupResource backup = await volumeBackupCollection.GetAsync(backupName);
+                        Console.WriteLine($"{DateTime.Now.ToLongTimeString()} GetBackupStatus run: {count} provisioning state is {backup.Data.ProvisioningState}");
+                        if (backup.Data.ProvisioningState.Equals("Succeeded") || backup.Data.ProvisioningState.Equals("Failed"))
+                        {
+                            //Check status as well
+                            NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetBackupStatusAsync()).Value;
+                            if (backup.Data.ProvisioningState.Equals("Failed"))  //we want to report the backupStatus and FailureReason
+                            {
+                                //no use retrying
+                                throw new Exception($"Backup failed ProvisioningState: {backup.Data.ProvisioningState} FailureReason: \"{backup.Data.FailureReason}\" BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.ErrorMessage: \"{backupStatus.ErrorMessage}\",  BackupStatus.Relationship status {backupStatus.RelationshipStatus}");
+                            }
+                            Console.WriteLine($"Get BackupStatus state run {count} BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.RelationshipStatus: {backupStatus.RelationshipStatus}");
+                            if (backupStatus.MirrorState == NetAppMirrorState.Mirrored)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Final Throw {ex.Message}");
+                throw;
+            }
+        }
+
         private async Task WaitForBackupSucceeded(NetAppBackupVaultBackupCollection backupCollection, string backupName)
         {
             Console.WriteLine($"WaitForBackupSucceeded for Backup {backupCollection.Id}/backups/{backupName}");
@@ -542,13 +598,13 @@ namespace Azure.ResourceManager.NetApp.Tests
                     if (backup.Data.ProvisioningState.Equals("Succeeded") || backup.Data.ProvisioningState.Equals("Failed"))
                     {
                         //Check status as well
-                        NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusAsync()).Value;
+                        NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusBackupAsync()).Value;
                         if (backup.Data.ProvisioningState.Equals("Failed"))  //we want to report the backupStatus and FailureReason
                         {
                             //no use retrying
-                            throw new Exception($"Backup failed ProvisioningState: {backup.Data.ProvisioningState} FailureReason: \"{backup.Data.FailureReason}\" BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.ErrorMessage: \"{backupStatus.ErrorMessage}\",  BackupStatus.Relationship status {backupStatus.VolumeBackupRelationshipStatus}");
+                            throw new Exception($"Backup failed ProvisioningState: {backup.Data.ProvisioningState} FailureReason: \"{backup.Data.FailureReason}\" BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.ErrorMessage: \"{backupStatus.ErrorMessage}\",  BackupStatus.Relationship status {backupStatus.RelationshipStatus}");
                         }
-                        Console.WriteLine($"Get BackupStatus state run {count} BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.RelationshipStatus: {backupStatus.VolumeBackupRelationshipStatus}");
+                        Console.WriteLine($"Get BackupStatus state run {count} BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.RelationshipStatus: {backupStatus.RelationshipStatus}");
                         if (backupStatus.MirrorState == NetAppMirrorState.Mirrored)
                         {
                             return true;
@@ -597,8 +653,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                     count++;
 
                     //Check status as well
-                    NetAppRestoreStatus restoreStatus = (await volumeResource.GetVolumeLatestRestoreStatusAsync()).Value;
-                    Console.WriteLine($"Get RestoreStatus state volume: {volumeResource.Id} run {count} RestoreStatus.MirrorState {restoreStatus.MirrorState}, RestoreStatus.RelationsShip status {restoreStatus.VolumeRestoreRelationshipStatus}");
+                    NetAppRestoreStatus restoreStatus = (await volumeResource.GetVolumeLatestRestoreStatusBackupAsync()).Value;
+                    Console.WriteLine($"Get RestoreStatus state volume: {volumeResource.Id} run {count} RestoreStatus.MirrorState {restoreStatus.MirrorState}, RestoreStatus.RelationsShip status {restoreStatus.RelationshipStatus}");
                     if (restoreStatus.MirrorState == NetAppMirrorState.Mirrored)
                     {
                         return true;

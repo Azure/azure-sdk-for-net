@@ -304,11 +304,6 @@ extends:
         - job: Initialize
           steps:
           - checkout: self
-
-          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
-            parameters:
-              TokenOwners:
-                - Azure
           
           - task: UseNode@1
             displayName: 'Install Node.js'
@@ -360,7 +355,7 @@ extends:
 
           - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
             parameters:
-              BaseRepoOwner: Azure
+              BaseRepoOwner: azure-sdk
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
               CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber)
@@ -368,7 +363,6 @@ extends:
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
               # To accomodate scheduled runs and retries, we want to overwrite any existing changes on the branch
               PushArgs: --force
-              AuthToken: $(GH_TOKEN)
 
           - task: PowerShell@2
             displayName: Get generation job matrix
@@ -396,17 +390,13 @@ extends:
             matrix: $[dependencies.Initialize.outputs['generate_matrix.matrix']]
           variables:
             matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
+            AzureSdkRepoName: $[format('azure-sdk/{0}', split(variables['Build.Repository.Name'], '/')[1])]
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
           - checkout: self
-
-          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
-            parameters:
-              TokenOwners:
-                - Azure
-
           - pwsh: |
-              git fetch origin $(branchName)
+              git remote add azure-sdk https://github.com/$(AzureSdkRepoName).git
+              git fetch azure-sdk $(branchName)
               git switch $(branchName)
             displayName: 'Checkout PR branch $(branchName)'  
 
@@ -438,13 +428,12 @@ extends:
 
           - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
             parameters:
-              BaseRepoOwner: Azure
+              BaseRepoOwner: azure-sdk
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
               CommitMsg: Update SDK code $(JobKey)
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
-              AuthToken: $(GH_TOKEN)
 
         - job: Create_PR
           displayName: Create PR
@@ -457,11 +446,6 @@ extends:
             emitterIdentifier: $[stageDependencies.Build.Build.outputs['set_branch_name.emitterIdentifier']]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-
-          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
-            parameters:
-              TokenOwners:
-                - Azure
 
           - pwsh: |
               $generateJobResult = '$(generateJobResult)'
@@ -548,9 +532,9 @@ extends:
                 -RepoOwner '$(RepoOwner)'
                 -RepoName '$(RepoName)'
                 -BaseBranch '$(pullRequestTargetBranch)'
-                -PROwner 'Azure'
+                -PROwner 'azure-sdk'
                 -PRBranch '$(branchName)'
-                -AuthToken '$(GH_TOKEN)'
+                -AuthToken '$(azuresdk-github-pat)'
                 -PRTitle '$(PullRequestTitle)'
                 -PRBody '$(PullRequestBody)'
                 -OpenAsDraft $$(OpenAsDraft)

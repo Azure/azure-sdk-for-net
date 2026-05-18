@@ -11,7 +11,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Monitor
       safeName: AzureResourceManagerMonitor
-    - name: Azure.ResourceManager.Monitor.Slis
-      safeName: AzureResourceManagerMonitorSlis
     - name: Azure.Provisioning.Monitor
       safeName: AzureProvisioningMonitor

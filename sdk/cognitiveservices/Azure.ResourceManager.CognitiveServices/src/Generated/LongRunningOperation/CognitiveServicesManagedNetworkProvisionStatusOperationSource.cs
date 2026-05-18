@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.CognitiveServices
         CognitiveServicesManagedNetworkProvisionStatus IOperationSource<CognitiveServicesManagedNetworkProvisionStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return CognitiveServicesManagedNetworkProvisionStatus.DeserializeCognitiveServicesManagedNetworkProvisionStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CognitiveServicesManagedNetworkProvisionStatus result = CognitiveServicesManagedNetworkProvisionStatus.DeserializeCognitiveServicesManagedNetworkProvisionStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.CognitiveServices
         async ValueTask<CognitiveServicesManagedNetworkProvisionStatus> IOperationSource<CognitiveServicesManagedNetworkProvisionStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return CognitiveServicesManagedNetworkProvisionStatus.DeserializeCognitiveServicesManagedNetworkProvisionStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CognitiveServicesManagedNetworkProvisionStatus result = CognitiveServicesManagedNetworkProvisionStatus.DeserializeCognitiveServicesManagedNetworkProvisionStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

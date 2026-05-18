@@ -13,10 +13,8 @@ namespace Azure.AI.Projects
         private readonly string _value;
         /// <summary> No pending upload. </summary>
         private const string NoneValue = "None";
-        /// <summary> Deprecated: the service never read this value and silently ignored it. Use TemporaryBlobReference instead. </summary>
+        /// <summary> Blob Reference is the only supported type. </summary>
         private const string BlobReferenceValue = "BlobReference";
-        /// <summary> Temporary blob reference. </summary>
-        private const string TemporaryBlobReferenceValue = "TemporaryBlobReference";
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,11 +29,8 @@ namespace Azure.AI.Projects
         /// <summary> No pending upload. </summary>
         public static PendingUploadType None { get; } = new PendingUploadType(NoneValue);
 
-        /// <summary> Deprecated: the service never read this value and silently ignored it. Use TemporaryBlobReference instead. </summary>
+        /// <summary> Blob Reference is the only supported type. </summary>
         public static PendingUploadType BlobReference { get; } = new PendingUploadType(BlobReferenceValue);
-
-        /// <summary> Temporary blob reference. </summary>
-        public static PendingUploadType TemporaryBlobReference { get; } = new PendingUploadType(TemporaryBlobReferenceValue);
 
         /// <summary> Determines if two <see cref="PendingUploadType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

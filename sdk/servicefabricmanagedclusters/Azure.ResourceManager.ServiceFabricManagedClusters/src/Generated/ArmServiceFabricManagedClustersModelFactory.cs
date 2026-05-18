@@ -848,6 +848,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedClusterData ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSkuName? skuName, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IEnumerable<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IEnumerable<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IEnumerable<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IEnumerable<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, int? maxUnusedVersionsToKeep, bool? isIPv6Enabled, string subnetId, IEnumerable<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IEnumerable<ManagedClusterSubnet> auxiliarySubnets, IEnumerable<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, ETag? etag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
+            clusterCertificateThumbprints ??= new ChangeTrackingList<BinaryData>();
+            loadBalancingRules ??= new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
+            networkSecurityRules ??= new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
+            clients ??= new ChangeTrackingList<ManagedClusterClientCertificate>();
+            fabricSettings ??= new ChangeTrackingList<ClusterFabricSettingsSection>();
+            addOnFeatures ??= new ChangeTrackingList<ManagedClusterAddOnFeature>();
+            ipTags ??= new ChangeTrackingList<ManagedClusterIPTag>();
+            auxiliarySubnets ??= new ChangeTrackingList<ManagedClusterSubnet>();
+            serviceEndpoints ??= new ChangeTrackingList<ManagedClusterServiceEndpoint>();
 
             return new ServiceFabricManagedClusterData(
                 id,
@@ -857,54 +866,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                dnsName is null && fqdn is null && ipv4Address is null && clusterId is null && clusterState is null && clusterCertificateThumbprints is null && clientConnectionPort is null && httpGatewayConnectionPort is null && adminUserName is null && adminPassword is null && loadBalancingRules is null && isRdpAccessAllowed is null && networkSecurityRules is null && clients is null && azureActiveDirectory is null && fabricSettings is null && provisioningState is null && clusterCodeVersion is null && clusterUpgradeMode is null && clusterUpgradeCadence is null && addOnFeatures is null && isAutoOSUpgradeEnabled is null && hasZoneResiliency is null && maxUnusedVersionsToKeep is null && isIPv6Enabled is null && subnetId is null && ipTags is null && ipv6Address is null && isServicePublicIPEnabled is null && auxiliarySubnets is null && serviceEndpoints is null && zonalUpdateMode is null && useCustomVnet is null && publicIPPrefixId is null && publicIPv6PrefixId is null && ddosProtectionPlanId is null && upgradeDescription is null && httpGatewayTokenAuthConnectionPort is null && isHttpGatewayExclusiveAuthModeEnabled is null ? default : new ManagedClusterProperties(
-                    dnsName,
-                    fqdn,
-                    ipv4Address,
-                    clusterId,
-                    clusterState,
-                    (clusterCertificateThumbprints ?? new ChangeTrackingList<BinaryData>()).ToList(),
-                    clientConnectionPort,
-                    httpGatewayConnectionPort,
-                    adminUserName,
-                    adminPassword,
-                    (loadBalancingRules ?? new ChangeTrackingList<ManagedClusterLoadBalancingRule>()).ToList(),
-                    isRdpAccessAllowed,
-                    (networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>()).ToList(),
-                    (clients ?? new ChangeTrackingList<ManagedClusterClientCertificate>()).ToList(),
-                    azureActiveDirectory,
-                    (fabricSettings ?? new ChangeTrackingList<ClusterFabricSettingsSection>()).ToList(),
-                    provisioningState,
-                    clusterCodeVersion,
-                    clusterUpgradeMode,
-                    clusterUpgradeCadence,
-                    (addOnFeatures ?? new ChangeTrackingList<ManagedClusterAddOnFeature>()).ToList(),
-                    isAutoOSUpgradeEnabled,
-                    hasZoneResiliency,
-                    new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.GetValueOrDefault(), default),
-                    isIPv6Enabled,
-                    subnetId,
-                    (ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>()).ToList(),
-                    ipv6Address,
-                    isServicePublicIPEnabled,
-                    (auxiliarySubnets ?? new ChangeTrackingList<ManagedClusterSubnet>()).ToList(),
-                    (serviceEndpoints ?? new ChangeTrackingList<ManagedClusterServiceEndpoint>()).ToList(),
-                    zonalUpdateMode,
-                    useCustomVnet,
-                    publicIPPrefixId,
-                    publicIPv6PrefixId,
-                    ddosProtectionPlanId,
-                    upgradeDescription,
-                    httpGatewayTokenAuthConnectionPort,
-                    isHttpGatewayExclusiveAuthModeEnabled,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                etag,
-                skuName is null ? default : new ServiceFabricManagedClustersSku(skuName.GetValueOrDefault(), default));
+                default,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedClusterVersion"/>. </summary>
@@ -1006,6 +970,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets, IEnumerable<NodeTypeVmssExtension> vmExtensions, IEnumerable<ResourceIdentifier> userAssignedIdentities, bool? isStateless, bool? hasMultiplePlacementGroups, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IEnumerable<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IEnumerable<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IEnumerable<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IDictionary<string, string> tags)
         {
+            placementProperties ??= new ChangeTrackingDictionary<string, string>();
+            capacities ??= new ChangeTrackingDictionary<string, string>();
+            vmSecrets ??= new ChangeTrackingList<NodeTypeVaultSecretGroup>();
+            vmExtensions ??= new ChangeTrackingList<NodeTypeVmssExtension>();
+            userAssignedIdentities ??= new ChangeTrackingList<ResourceIdentifier>();
+            frontendConfigurations ??= new ChangeTrackingList<NodeTypeFrontendConfiguration>();
+            networkSecurityRules ??= new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
+            additionalDataDisks ??= new ChangeTrackingList<NodeTypeVmssDataDisk>();
+            zones ??= new ChangeTrackingList<string>();
+            vmSetupActions ??= new ChangeTrackingList<VmSetupAction>();
+            natConfigurations ??= new ChangeTrackingList<NodeTypeNatConfig>();
+            additionalNetworkInterfaceConfigurations ??= new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceFabricManagedNodeTypeData(
@@ -1014,62 +990,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                isPrimary is null && vmInstanceCount is null && dataDiskSizeInGB is null && dataDiskType is null && dataDiskLetter is null && placementProperties is null && capacities is null && applicationPorts is null && ephemeralPorts is null && vmSize is null && vmImagePublisher is null && vmImageOffer is null && vmImageSku is null && vmImageVersion is null && vmSecrets is null && vmExtensions is null && userAssignedIdentities is null && isStateless is null && hasMultiplePlacementGroups is null && frontendConfigurations is null && networkSecurityRules is null && additionalDataDisks is null && isEncryptionAtHostEnabled is null && provisioningState is null && isAcceleratedNetworkingEnabled is null && useDefaultPublicLoadBalancer is null && useTempDataDisk is null && isOverProvisioningEnabled is null && zones is null && isSpotVm is null && hostGroupId is null && useEphemeralOSDisk is null && spotRestoreTimeout is null && evictionPolicy is null && vmImageResourceId is null && subnetId is null && vmSetupActions is null && securityType is null && isSecureBootEnabled is null && isNodePublicIPEnabled is null && isNodePublicIPv6Enabled is null && vmSharedGalleryImageId is null && natGatewayId is null && natConfigurations is null && vmImagePlan is null && serviceArtifactReferenceId is null && dscpConfigurationId is null && additionalNetworkInterfaceConfigurations is null && computerNamePrefix is null ? default : new ServiceFabricManagedNodeTypeProperties(
-                    isPrimary.GetValueOrDefault(),
-                    vmInstanceCount.GetValueOrDefault(),
-                    dataDiskSizeInGB,
-                    dataDiskType,
-                    dataDiskLetter,
-                    placementProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    capacities ?? new ChangeTrackingDictionary<string, string>(),
-                    applicationPorts,
-                    ephemeralPorts,
-                    vmSize,
-                    vmImagePublisher,
-                    vmImageOffer,
-                    vmImageSku,
-                    vmImageVersion,
-                    (vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>()).ToList(),
-                    (vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>()).ToList(),
-                    new VmManagedIdentity((userAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
-                    isStateless,
-                    hasMultiplePlacementGroups,
-                    (frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>()).ToList(),
-                    (networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>()).ToList(),
-                    (additionalDataDisks ?? new ChangeTrackingList<NodeTypeVmssDataDisk>()).ToList(),
-                    isEncryptionAtHostEnabled,
-                    provisioningState,
-                    isAcceleratedNetworkingEnabled,
-                    useDefaultPublicLoadBalancer,
-                    useTempDataDisk,
-                    isOverProvisioningEnabled,
-                    (zones ?? new ChangeTrackingList<string>()).ToList(),
-                    isSpotVm,
-                    hostGroupId,
-                    useEphemeralOSDisk,
-                    spotRestoreTimeout,
-                    evictionPolicy,
-                    vmImageResourceId,
-                    subnetId,
-                    (vmSetupActions ?? new ChangeTrackingList<VmSetupAction>()).ToList(),
-                    securityType,
-                    default,
-                    isSecureBootEnabled,
-                    isNodePublicIPEnabled,
-                    isNodePublicIPv6Enabled,
-                    vmSharedGalleryImageId,
-                    natGatewayId,
-                    (natConfigurations ?? new ChangeTrackingList<NodeTypeNatConfig>()).ToList(),
-                    vmImagePlan,
-                    serviceArtifactReferenceId,
-                    dscpConfigurationId,
-                    (additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>()).ToList(),
-                    computerNamePrefix,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
+                default,
                 tags,
                 sku);
         }

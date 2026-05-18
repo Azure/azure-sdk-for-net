@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.NetApp.Samples
                         GroupId = 1000L,
                     },
                 },
-                Server = new BucketServerProperties
+                Server = new NetAppBucketServerProperties
                 {
                     Fqdn = "fullyqualified.domainname.com",
                     CertificateObject = "<REDACTED>",
                     OnCertificateConflictAction = NetAppOnCertificateConflictAction.Update,
                 },
-                Permissions = BucketPermissions.ReadOnly,
+                Permissions = NetAppBucketPermission.ReadOnly,
             };
             ArmOperation<NetAppBucketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
             NetAppBucketResource result = lro.Value;

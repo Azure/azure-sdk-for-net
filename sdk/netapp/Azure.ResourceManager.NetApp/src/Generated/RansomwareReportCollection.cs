@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -25,33 +24,31 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class RansomwareReportCollection : ArmCollection, IEnumerable<RansomwareReportResource>, IAsyncEnumerable<RansomwareReportResource>
     {
-        private readonly ClientDiagnostics _ransomwareReportsClientDiagnostics;
-        private readonly RansomwareReports _ransomwareReportsRestClient;
+        private readonly ClientDiagnostics _ransomwareReportClientDiagnostics;
+        private readonly RansomwareReportsRestOperations _ransomwareReportRestClient;
 
-        /// <summary> Initializes a new instance of RansomwareReportCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RansomwareReportCollection"/> class for mocking. </summary>
         protected RansomwareReportCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RansomwareReportCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RansomwareReportCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RansomwareReportCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _ransomwareReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", RansomwareReportResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RansomwareReportResource.ResourceType, out string ransomwareReportApiVersion);
-            _ransomwareReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", RansomwareReportResource.ResourceType.Namespace, Diagnostics);
-            _ransomwareReportsRestClient = new RansomwareReports(_ransomwareReportsClientDiagnostics, Pipeline, Endpoint, ransomwareReportApiVersion ?? "2026-01-15-preview");
-            ValidateResourceId(id);
+            _ransomwareReportRestClient = new RansomwareReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ransomwareReportApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetAppVolumeResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetAppVolumeResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetAppVolumeResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -60,42 +57,38 @@ namespace Azure.ResourceManager.NetApp
         /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ransomwareReportName"> The name of the ransomware report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ransomwareReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         public virtual async Task<Response<RansomwareReportResource>> GetAsync(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ransomwareReportName, nameof(ransomwareReportName));
 
-            using DiagnosticScope scope = _ransomwareReportsClientDiagnostics.CreateScope("RansomwareReportCollection.Get");
+            using var scope = _ransomwareReportClientDiagnostics.CreateScope("RansomwareReportCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _ransomwareReportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RansomwareReportData> response = Response.FromValue(RansomwareReportData.FromResponse(result), result);
+                var response = await _ransomwareReportRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new RansomwareReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -111,42 +104,38 @@ namespace Azure.ResourceManager.NetApp
         /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ransomwareReportName"> The name of the ransomware report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ransomwareReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         public virtual Response<RansomwareReportResource> Get(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ransomwareReportName, nameof(ransomwareReportName));
 
-            using DiagnosticScope scope = _ransomwareReportsClientDiagnostics.CreateScope("RansomwareReportCollection.Get");
+            using var scope = _ransomwareReportClientDiagnostics.CreateScope("RansomwareReportCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _ransomwareReportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<RansomwareReportData> response = Response.FromValue(RansomwareReportData.FromResponse(result), result);
+                var response = _ransomwareReportRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new RansomwareReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -163,36 +152,30 @@ namespace Azure.ResourceManager.NetApp
         /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data"
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RansomwareReportResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RansomwareReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RansomwareReportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<RansomwareReportData, RansomwareReportResource>(new RansomwareReportsGetAllAsyncCollectionResultOfT(
-                _ransomwareReportsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Parent.Name,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "RansomwareReportCollection.GetAll"), data => new RansomwareReportResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ransomwareReportRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ransomwareReportRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RansomwareReportResource(Client, RansomwareReportData.DeserializeRansomwareReportData(e)), _ransomwareReportClientDiagnostics, Pipeline, "RansomwareReportCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,16 +185,20 @@ namespace Azure.ResourceManager.NetApp
         /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data"
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,69 +206,45 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="RansomwareReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RansomwareReportResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<RansomwareReportData, RansomwareReportResource>(new RansomwareReportsGetAllCollectionResultOfT(
-                _ransomwareReportsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Parent.Name,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "RansomwareReportCollection.GetAll"), data => new RansomwareReportResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ransomwareReportRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ransomwareReportRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RansomwareReportResource(Client, RansomwareReportData.DeserializeRansomwareReportData(e)), _ransomwareReportClientDiagnostics, Pipeline, "RansomwareReportCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ransomwareReportName"> The name of the ransomware report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ransomwareReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ransomwareReportName, nameof(ransomwareReportName));
 
-            using DiagnosticScope scope = _ransomwareReportsClientDiagnostics.CreateScope("RansomwareReportCollection.Exists");
+            using var scope = _ransomwareReportClientDiagnostics.CreateScope("RansomwareReportCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _ransomwareReportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<RansomwareReportData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RansomwareReportData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RansomwareReportData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _ransomwareReportRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,50 +258,36 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ransomwareReportName"> The name of the ransomware report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ransomwareReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         public virtual Response<bool> Exists(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ransomwareReportName, nameof(ransomwareReportName));
 
-            using DiagnosticScope scope = _ransomwareReportsClientDiagnostics.CreateScope("RansomwareReportCollection.Exists");
+            using var scope = _ransomwareReportClientDiagnostics.CreateScope("RansomwareReportCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _ransomwareReportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<RansomwareReportData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RansomwareReportData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RansomwareReportData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _ransomwareReportRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,54 +301,38 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ransomwareReportName"> The name of the ransomware report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ransomwareReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         public virtual async Task<NullableResponse<RansomwareReportResource>> GetIfExistsAsync(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ransomwareReportName, nameof(ransomwareReportName));
 
-            using DiagnosticScope scope = _ransomwareReportsClientDiagnostics.CreateScope("RansomwareReportCollection.GetIfExists");
+            using var scope = _ransomwareReportClientDiagnostics.CreateScope("RansomwareReportCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _ransomwareReportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<RansomwareReportData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RansomwareReportData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RansomwareReportData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _ransomwareReportRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<RansomwareReportResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new RansomwareReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -413,54 +346,38 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/ransomwareReports/{ransomwareReportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RansomwareReports_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RansomwareReports_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ransomwareReportName"> The name of the ransomware report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ransomwareReportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ransomwareReportName"/> is null. </exception>
         public virtual NullableResponse<RansomwareReportResource> GetIfExists(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ransomwareReportName, nameof(ransomwareReportName));
 
-            using DiagnosticScope scope = _ransomwareReportsClientDiagnostics.CreateScope("RansomwareReportCollection.GetIfExists");
+            using var scope = _ransomwareReportClientDiagnostics.CreateScope("RansomwareReportCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _ransomwareReportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<RansomwareReportData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RansomwareReportData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RansomwareReportData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _ransomwareReportRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ransomwareReportName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<RansomwareReportResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new RansomwareReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -480,7 +397,6 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RansomwareReportResource> IAsyncEnumerable<RansomwareReportResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

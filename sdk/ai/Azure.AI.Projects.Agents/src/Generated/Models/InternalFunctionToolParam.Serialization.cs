@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -143,7 +142,7 @@ namespace Azure.AI.Projects.Agents
             }
             string name = default;
             string description = default;
-            EmptyModelParam parameters = default;
+            InternalEmptyModelParam parameters = default;
             bool? strict = default;
             string @type = default;
             bool? deferLoading = default;
@@ -172,7 +171,7 @@ namespace Azure.AI.Projects.Agents
                         parameters = null;
                         continue;
                     }
-                    parameters = EmptyModelParam.DeserializeEmptyModelParam(prop.Value, options);
+                    parameters = InternalEmptyModelParam.DeserializeInternalEmptyModelParam(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("strict"u8))

@@ -7,40 +7,102 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The ConsumptionLegacyReservationRecommendation. </summary>
+    /// <summary> Legacy reservation recommendation. </summary>
     public partial class ConsumptionLegacyReservationRecommendation : ConsumptionReservationRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
-        /// <param name="properties"></param>
-        internal ConsumptionLegacyReservationRecommendation(LegacyReservationRecommendationProperties properties) : base(ReservationRecommendationKind.Legacy)
+        /// <param name="scope"> Shared or single recommendation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        internal ConsumptionLegacyReservationRecommendation(string scope)
         {
-            Properties = properties;
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            Scope = scope;
+            SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
+            Kind = ReservationRecommendationKind.Legacy;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
-        /// <param name="eTag"> The etag for the resource. </param>
+        /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        /// <param name="properties"></param>
-        internal ConsumptionLegacyReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, LegacyReservationRecommendationProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, sku, eTag, tags, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="normalizedSize"> The normalized Size. </param>
+        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="term"> RI recommendations in one or three year terms. </param>
+        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
+        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
+        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
+        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
+        /// <param name="firstUsageOn"> The usage date for looking back. </param>
+        /// <param name="scope"> Shared or single recommendation. </param>
+        /// <param name="skuProperties"> List of sku properties. </param>
+        internal ConsumptionLegacyReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, AzureLocation? location, string sku, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, decimal? costWithNoReservedInstances, decimal? recommendedQuantity, decimal? totalCostWithReservedInstances, decimal? netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties) : base(id, name, resourceType, systemData, kind, location, sku, etag, tags, serializedAdditionalRawData)
         {
-            Properties = properties;
+            LookBackPeriod = lookBackPeriod;
+            InstanceFlexibilityRatio = instanceFlexibilityRatio;
+            InstanceFlexibilityGroup = instanceFlexibilityGroup;
+            NormalizedSize = normalizedSize;
+            RecommendedQuantityNormalized = recommendedQuantityNormalized;
+            MeterId = meterId;
+            Term = term;
+            CostWithNoReservedInstances = costWithNoReservedInstances;
+            RecommendedQuantity = recommendedQuantity;
+            TotalCostWithReservedInstances = totalCostWithReservedInstances;
+            NetSavings = netSavings;
+            FirstUsageOn = firstUsageOn;
+            Scope = scope;
+            SkuProperties = skuProperties;
+            Kind = kind;
         }
 
-        /// <summary> Gets the Properties. </summary>
-        public LegacyReservationRecommendationProperties Properties { get; }
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/> for deserialization. </summary>
+        internal ConsumptionLegacyReservationRecommendation()
+        {
+        }
+
+        /// <summary> The number of days of usage to look back for recommendation. </summary>
+        public string LookBackPeriod { get; }
+        /// <summary> The instance Flexibility Ratio. </summary>
+        public float? InstanceFlexibilityRatio { get; }
+        /// <summary> The instance Flexibility Group. </summary>
+        public string InstanceFlexibilityGroup { get; }
+        /// <summary> The normalized Size. </summary>
+        public string NormalizedSize { get; }
+        /// <summary> The recommended Quantity Normalized. </summary>
+        public float? RecommendedQuantityNormalized { get; }
+        /// <summary> The meter id (GUID). </summary>
+        public Guid? MeterId { get; }
+        /// <summary> RI recommendations in one or three year terms. </summary>
+        public string Term { get; }
+        /// <summary> The total amount of cost without reserved instances. </summary>
+        public decimal? CostWithNoReservedInstances { get; }
+        /// <summary> Recommended quality for reserved instances. </summary>
+        public decimal? RecommendedQuantity { get; }
+        /// <summary> The total amount of cost with reserved instances. </summary>
+        public decimal? TotalCostWithReservedInstances { get; }
+        /// <summary> Total estimated savings with reserved instances. </summary>
+        public decimal? NetSavings { get; }
+        /// <summary> The usage date for looking back. </summary>
+        public DateTimeOffset? FirstUsageOn { get; }
+        /// <summary> Shared or single recommendation. </summary>
+        internal string Scope { get; set; }
+        /// <summary> List of sku properties. </summary>
+        public IReadOnlyList<ConsumptionSkuProperty> SkuProperties { get; }
     }
 }

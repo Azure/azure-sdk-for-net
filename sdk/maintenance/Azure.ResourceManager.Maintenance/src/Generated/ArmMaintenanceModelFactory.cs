@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery)
         {
-            return MaintenanceConfigurationData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, @namespace: @namespace, extensionProperties: extensionProperties, maintenanceScope: maintenanceScope, visibility: visibility, installPatches: default, startOn: startOn, expireOn: expireOn, duration: duration, timeZone: timeZone, recurEvery: recurEvery, tags: tags);
+            return MaintenanceConfigurationData(id, name, resourceType, systemData, location, @namespace, extensionProperties, maintenanceScope, visibility, installPatches: default, startOn, expireOn, duration, timeZone, recurEvery, tags);
         }
     }
 }

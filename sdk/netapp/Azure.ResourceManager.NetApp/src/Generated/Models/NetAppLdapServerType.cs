@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppLdapServerType : IEquatable<NetAppLdapServerType>
     {
         private readonly string _value;
-        /// <summary> The volume should use Active Directory for LDAP connections. </summary>
-        private const string ActiveDirectoryValue = "ActiveDirectory";
-        /// <summary> The volume should use OpenLDAP for LDAP connections. </summary>
-        private const string OpenLdapValue = "OpenLDAP";
 
         /// <summary> Initializes a new instance of <see cref="NetAppLdapServerType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppLdapServerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ActiveDirectoryValue = "ActiveDirectory";
+        private const string OpenLdapValue = "OpenLDAP";
 
         /// <summary> The volume should use Active Directory for LDAP connections. </summary>
         public static NetAppLdapServerType ActiveDirectory { get; } = new NetAppLdapServerType(ActiveDirectoryValue);
-
         /// <summary> The volume should use OpenLDAP for LDAP connections. </summary>
         public static NetAppLdapServerType OpenLdap { get; } = new NetAppLdapServerType(OpenLdapValue);
-
         /// <summary> Determines if two <see cref="NetAppLdapServerType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppLdapServerType left, NetAppLdapServerType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NetAppLdapServerType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppLdapServerType left, NetAppLdapServerType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetAppLdapServerType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppLdapServerType"/>. </summary>
         public static implicit operator NetAppLdapServerType(string value) => new NetAppLdapServerType(value);
 
-        /// <summary> Converts a string to a <see cref="NetAppLdapServerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetAppLdapServerType?(string value) => value == null ? null : new NetAppLdapServerType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppLdapServerType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NetAppLdapServerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

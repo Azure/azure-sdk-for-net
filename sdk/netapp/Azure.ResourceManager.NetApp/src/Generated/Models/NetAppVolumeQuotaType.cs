@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppVolumeQuotaType : IEquatable<NetAppVolumeQuotaType>
     {
         private readonly string _value;
-        /// <summary> Default user quota. </summary>
-        private const string DefaultUserQuotaValue = "DefaultUserQuota";
-        /// <summary> Default group quota. </summary>
-        private const string DefaultGroupQuotaValue = "DefaultGroupQuota";
-        /// <summary> Individual user quota. </summary>
-        private const string IndividualUserQuotaValue = "IndividualUserQuota";
-        /// <summary> Individual group quota. </summary>
-        private const string IndividualGroupQuotaValue = "IndividualGroupQuota";
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppVolumeQuotaType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string DefaultUserQuotaValue = "DefaultUserQuota";
+        private const string DefaultGroupQuotaValue = "DefaultGroupQuota";
+        private const string IndividualUserQuotaValue = "IndividualUserQuota";
+        private const string IndividualGroupQuotaValue = "IndividualGroupQuota";
 
         /// <summary> Default user quota. </summary>
         public static NetAppVolumeQuotaType DefaultUserQuota { get; } = new NetAppVolumeQuotaType(DefaultUserQuotaValue);
-
         /// <summary> Default group quota. </summary>
         public static NetAppVolumeQuotaType DefaultGroupQuota { get; } = new NetAppVolumeQuotaType(DefaultGroupQuotaValue);
-
         /// <summary> Individual user quota. </summary>
         public static NetAppVolumeQuotaType IndividualUserQuota { get; } = new NetAppVolumeQuotaType(IndividualUserQuotaValue);
-
         /// <summary> Individual group quota. </summary>
         public static NetAppVolumeQuotaType IndividualGroupQuota { get; } = new NetAppVolumeQuotaType(IndividualGroupQuotaValue);
-
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppVolumeQuotaType left, NetAppVolumeQuotaType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppVolumeQuotaType left, NetAppVolumeQuotaType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetAppVolumeQuotaType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppVolumeQuotaType"/>. </summary>
         public static implicit operator NetAppVolumeQuotaType(string value) => new NetAppVolumeQuotaType(value);
 
-        /// <summary> Converts a string to a <see cref="NetAppVolumeQuotaType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetAppVolumeQuotaType?(string value) => value == null ? null : new NetAppVolumeQuotaType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppVolumeQuotaType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NetAppVolumeQuotaType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.EdgeActions
         EdgeActionVersionCode IOperationSource<EdgeActionVersionCode>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return EdgeActionVersionCode.DeserializeEdgeActionVersionCode(document.RootElement, ModelSerializationExtensions.WireOptions);
+            EdgeActionVersionCode result = EdgeActionVersionCode.DeserializeEdgeActionVersionCode(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.EdgeActions
         async ValueTask<EdgeActionVersionCode> IOperationSource<EdgeActionVersionCode>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return EdgeActionVersionCode.DeserializeEdgeActionVersionCode(document.RootElement, ModelSerializationExtensions.WireOptions);
+            EdgeActionVersionCode result = EdgeActionVersionCode.DeserializeEdgeActionVersionCode(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

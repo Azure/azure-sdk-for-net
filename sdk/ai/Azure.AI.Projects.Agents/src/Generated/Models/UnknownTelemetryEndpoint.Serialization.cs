@@ -103,8 +103,8 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             TelemetryEndpointKind kind = default;
-            IList<ExportedDataTypes> exportedDataTypes = default;
-            TelemetryEndpointAuthentication authentication = default;
+            IList<TelemetryDataKind> data = default;
+            TelemetryEndpointAuth auth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -115,12 +115,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("data"u8))
                 {
-                    List<ExportedDataTypes> array = new List<ExportedDataTypes>();
+                    List<TelemetryDataKind> array = new List<TelemetryDataKind>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new ExportedDataTypes(item.GetString()));
+                        array.Add(new TelemetryDataKind(item.GetString()));
                     }
-                    exportedDataTypes = array;
+                    data = array;
                     continue;
                 }
                 if (prop.NameEquals("auth"u8))
@@ -129,7 +129,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    authentication = TelemetryEndpointAuthentication.DeserializeTelemetryEndpointAuthentication(prop.Value, options);
+                    auth = TelemetryEndpointAuth.DeserializeTelemetryEndpointAuth(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownTelemetryEndpoint(kind, exportedDataTypes, authentication, additionalBinaryDataProperties);
+            return new UnknownTelemetryEndpoint(kind, data, auth, additionalBinaryDataProperties);
         }
     }
 }

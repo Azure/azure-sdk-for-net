@@ -4,13 +4,11 @@
 
 ### Features Added
 
-- Added `ResourceSyncRuleCollection`, `ResourceSyncRuleResource`, and `ResourceSyncRuleData` for managing Resource Sync Rules.
-- Added `FindTargetResourceGroup` and `FindTargetResourceGroupAsync` methods to `CustomLocationResource`.
-- Added `GetOperations` and `GetOperationsAsync` extension methods on `TenantResource`.
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
-
-- Migrated SDK generation from AutoRest/Swagger to TypeSpec.
 
 ## 1.1.2 (2026-04-24)
 

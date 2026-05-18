@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         ReportFixResult IOperationSource<ReportFixResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ReportFixResult.DeserializeReportFixResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ReportFixResult result = ReportFixResult.DeserializeReportFixResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         async ValueTask<ReportFixResult> IOperationSource<ReportFixResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ReportFixResult.DeserializeReportFixResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ReportFixResult result = ReportFixResult.DeserializeReportFixResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }
