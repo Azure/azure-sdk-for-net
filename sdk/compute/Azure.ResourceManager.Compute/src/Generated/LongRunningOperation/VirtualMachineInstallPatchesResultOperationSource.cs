@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Compute
         VirtualMachineInstallPatchesResult IOperationSource<VirtualMachineInstallPatchesResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualMachineInstallPatchesResult result = VirtualMachineInstallPatchesResult.DeserializeVirtualMachineInstallPatchesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return VirtualMachineInstallPatchesResult.DeserializeVirtualMachineInstallPatchesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Compute
         async ValueTask<VirtualMachineInstallPatchesResult> IOperationSource<VirtualMachineInstallPatchesResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualMachineInstallPatchesResult result = VirtualMachineInstallPatchesResult.DeserializeVirtualMachineInstallPatchesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return VirtualMachineInstallPatchesResult.DeserializeVirtualMachineInstallPatchesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

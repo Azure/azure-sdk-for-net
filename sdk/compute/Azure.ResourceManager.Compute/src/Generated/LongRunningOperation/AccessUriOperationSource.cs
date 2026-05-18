@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Compute
         AccessUri IOperationSource<AccessUri>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AccessUri result = AccessUri.DeserializeAccessUri(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return AccessUri.DeserializeAccessUri(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Compute
         async ValueTask<AccessUri> IOperationSource<AccessUri>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AccessUri result = AccessUri.DeserializeAccessUri(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return AccessUri.DeserializeAccessUri(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

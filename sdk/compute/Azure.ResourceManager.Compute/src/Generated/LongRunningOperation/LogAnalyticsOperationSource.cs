@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Compute
         LogAnalytics IOperationSource<LogAnalytics>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            LogAnalytics result = LogAnalytics.DeserializeLogAnalytics(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return LogAnalytics.DeserializeLogAnalytics(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Compute
         async ValueTask<LogAnalytics> IOperationSource<LogAnalytics>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            LogAnalytics result = LogAnalytics.DeserializeLogAnalytics(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return LogAnalytics.DeserializeLogAnalytics(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

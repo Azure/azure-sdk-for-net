@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Compute
         VirtualMachineCaptureResult IOperationSource<VirtualMachineCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualMachineCaptureResult result = VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Compute
         async ValueTask<VirtualMachineCaptureResult> IOperationSource<VirtualMachineCaptureResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualMachineCaptureResult result = VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

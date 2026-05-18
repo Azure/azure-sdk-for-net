@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _virtualMachinesClientDiagnostics;
         private readonly VirtualMachines _virtualMachinesRestClient;
-        private readonly ClientDiagnostics _virtualMachinesSubscriptionClientDiagnostics;
-        private readonly VirtualMachinesSubscription _virtualMachinesSubscriptionRestClient;
         private readonly VirtualMachineData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachines";
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(ResourceType, out string virtualMachineApiVersion);
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-11-01");
-            _virtualMachinesSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _virtualMachinesSubscriptionRestClient = new VirtualMachinesSubscription(_virtualMachinesSubscriptionClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

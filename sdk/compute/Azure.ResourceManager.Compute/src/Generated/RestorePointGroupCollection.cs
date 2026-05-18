@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _restorePointCollectionsClientDiagnostics;
         private readonly RestorePointCollections _restorePointCollectionsRestClient;
-        private readonly ClientDiagnostics _restorePointCollectionsSubscriptionClientDiagnostics;
-        private readonly RestorePointCollectionsSubscription _restorePointCollectionsSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of RestorePointGroupCollection for mocking. </summary>
         protected RestorePointGroupCollection()
@@ -45,8 +43,6 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(RestorePointGroupResource.ResourceType, out string restorePointGroupApiVersion);
             _restorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointGroupResource.ResourceType.Namespace, Diagnostics);
             _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Endpoint, restorePointGroupApiVersion ?? "2025-11-01");
-            _restorePointCollectionsSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointGroupResource.ResourceType.Namespace, Diagnostics);
-            _restorePointCollectionsSubscriptionRestClient = new RestorePointCollectionsSubscription(_restorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Endpoint, restorePointGroupApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

@@ -4046,6 +4046,14 @@ namespace Azure.ResourceManager.Compute.Models
             return new PirSharedGalleryResourceData(name, location, additionalBinaryDataProperties: null, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, null));
         }
 
+        /// <summary> The identifier information of shared gallery. </summary>
+        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
+        /// <returns> A new <see cref="Models.SharedGalleryIdentifier"/> instance for mocking. </returns>
+        public static SharedGalleryIdentifier SharedGalleryIdentifier(string uniqueId = default)
+        {
+            return new SharedGalleryIdentifier(uniqueId, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The Resource model definition. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
@@ -4197,6 +4205,14 @@ namespace Azure.ResourceManager.Compute.Models
         public static PirCommunityGalleryResourceData PirCommunityGalleryResourceData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default)
         {
             return new PirCommunityGalleryResourceData(name, location, resourceType, uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The identifier information of community gallery. </summary>
+        /// <param name="uniqueId"> The unique id of this community gallery. </param>
+        /// <returns> A new <see cref="Models.CommunityGalleryIdentifier"/> instance for mocking. </returns>
+        public static CommunityGalleryIdentifier CommunityGalleryIdentifier(string uniqueId = default)
+        {
+            return new CommunityGalleryIdentifier(uniqueId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="name"> Resource name. </param>

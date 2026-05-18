@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetsClientDiagnostics;
         private readonly VirtualMachineScaleSets _virtualMachineScaleSetsRestClient;
-        private readonly ClientDiagnostics _virtualMachineScaleSetsSubscriptionClientDiagnostics;
-        private readonly VirtualMachineScaleSetsSubscription _virtualMachineScaleSetsSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetCollection for mocking. </summary>
         protected VirtualMachineScaleSetCollection()
@@ -45,8 +43,6 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(VirtualMachineScaleSetResource.ResourceType, out string virtualMachineScaleSetApiVersion);
             _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSets(_virtualMachineScaleSetsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetApiVersion ?? "2025-11-01");
-            _virtualMachineScaleSetsSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetsSubscriptionRestClient = new VirtualMachineScaleSetsSubscription(_virtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

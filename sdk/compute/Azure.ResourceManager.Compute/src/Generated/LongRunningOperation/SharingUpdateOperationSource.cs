@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Compute
         SharingUpdate IOperationSource<SharingUpdate>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SharingUpdate result = SharingUpdate.DeserializeSharingUpdate(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SharingUpdate.DeserializeSharingUpdate(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Compute
         async ValueTask<SharingUpdate> IOperationSource<SharingUpdate>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SharingUpdate result = SharingUpdate.DeserializeSharingUpdate(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SharingUpdate.DeserializeSharingUpdate(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
