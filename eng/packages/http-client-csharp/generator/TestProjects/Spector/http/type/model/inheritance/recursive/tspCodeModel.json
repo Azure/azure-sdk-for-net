@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "putContentType",
+      "name": "PutContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "getContentType",
+      "name": "PutContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
