@@ -13,33 +13,33 @@ namespace Azure.Storage.Blobs.Batch.Models
     internal readonly partial struct BatchAccessTier : IEquatable<BatchAccessTier>
     {
         private readonly string _value;
-        /// <summary> The hot P4 tier. </summary>
+        /// <summary> The P4 access tier. </summary>
         private const string P4Value = "P4";
-        /// <summary> The hot P6 tier. </summary>
+        /// <summary> The P6 access tier. </summary>
         private const string P6Value = "P6";
-        /// <summary> The hot P10 tier. </summary>
+        /// <summary> The P10 access tier. </summary>
         private const string P10Value = "P10";
-        /// <summary> The hot P15 tier. </summary>
+        /// <summary> The P15 access tier. </summary>
         private const string P15Value = "P15";
-        /// <summary> The hot P20 tier. </summary>
+        /// <summary> The P20 access tier. </summary>
         private const string P20Value = "P20";
-        /// <summary> The hot P30 tier. </summary>
+        /// <summary> The P30 access tier. </summary>
         private const string P30Value = "P30";
-        /// <summary> The hot P40 tier. </summary>
+        /// <summary> The P40 access tier. </summary>
         private const string P40Value = "P40";
-        /// <summary> The hot P50 tier. </summary>
+        /// <summary> The P50 access tier. </summary>
         private const string P50Value = "P50";
-        /// <summary> The hot P60 tier. </summary>
+        /// <summary> The P60 access tier. </summary>
         private const string P60Value = "P60";
-        /// <summary> The hot P70 tier. </summary>
+        /// <summary> The P70 access tier. </summary>
         private const string P70Value = "P70";
-        /// <summary> The hot P80 tier. </summary>
+        /// <summary> The P80 access tier. </summary>
         private const string P80Value = "P80";
-        /// <summary> The hot access tier. </summary>
+        /// <summary> The Hot access tier. </summary>
         private const string HotValue = "Hot";
-        /// <summary> The cool access tier. </summary>
+        /// <summary> The Cool access tier. </summary>
         private const string CoolValue = "Cool";
-        /// <summary> The archive access tier. </summary>
+        /// <summary> The Archive access tier. </summary>
         private const string ArchiveValue = "Archive";
         /// <summary> The Premium access tier. </summary>
         private const string PremiumValue = "Premium";
@@ -55,46 +55,46 @@ namespace Azure.Storage.Blobs.Batch.Models
             _value = value;
         }
 
-        /// <summary> The hot P4 tier. </summary>
+        /// <summary> The P4 access tier. </summary>
         public static BatchAccessTier P4 { get; } = new BatchAccessTier(P4Value);
 
-        /// <summary> The hot P6 tier. </summary>
+        /// <summary> The P6 access tier. </summary>
         public static BatchAccessTier P6 { get; } = new BatchAccessTier(P6Value);
 
-        /// <summary> The hot P10 tier. </summary>
+        /// <summary> The P10 access tier. </summary>
         public static BatchAccessTier P10 { get; } = new BatchAccessTier(P10Value);
 
-        /// <summary> The hot P15 tier. </summary>
+        /// <summary> The P15 access tier. </summary>
         public static BatchAccessTier P15 { get; } = new BatchAccessTier(P15Value);
 
-        /// <summary> The hot P20 tier. </summary>
+        /// <summary> The P20 access tier. </summary>
         public static BatchAccessTier P20 { get; } = new BatchAccessTier(P20Value);
 
-        /// <summary> The hot P30 tier. </summary>
+        /// <summary> The P30 access tier. </summary>
         public static BatchAccessTier P30 { get; } = new BatchAccessTier(P30Value);
 
-        /// <summary> The hot P40 tier. </summary>
+        /// <summary> The P40 access tier. </summary>
         public static BatchAccessTier P40 { get; } = new BatchAccessTier(P40Value);
 
-        /// <summary> The hot P50 tier. </summary>
+        /// <summary> The P50 access tier. </summary>
         public static BatchAccessTier P50 { get; } = new BatchAccessTier(P50Value);
 
-        /// <summary> The hot P60 tier. </summary>
+        /// <summary> The P60 access tier. </summary>
         public static BatchAccessTier P60 { get; } = new BatchAccessTier(P60Value);
 
-        /// <summary> The hot P70 tier. </summary>
+        /// <summary> The P70 access tier. </summary>
         public static BatchAccessTier P70 { get; } = new BatchAccessTier(P70Value);
 
-        /// <summary> The hot P80 tier. </summary>
+        /// <summary> The P80 access tier. </summary>
         public static BatchAccessTier P80 { get; } = new BatchAccessTier(P80Value);
 
-        /// <summary> The hot access tier. </summary>
+        /// <summary> The Hot access tier. </summary>
         public static BatchAccessTier Hot { get; } = new BatchAccessTier(HotValue);
 
-        /// <summary> The cool access tier. </summary>
+        /// <summary> The Cool access tier. </summary>
         public static BatchAccessTier Cool { get; } = new BatchAccessTier(CoolValue);
 
-        /// <summary> The archive access tier. </summary>
+        /// <summary> The Archive access tier. </summary>
         public static BatchAccessTier Archive { get; } = new BatchAccessTier(ArchiveValue);
 
         /// <summary> The Premium access tier. </summary>

@@ -9,9 +9,9 @@ namespace Azure.Storage.Blobs.Batch.Models
 {
     internal enum DeleteSnapshotsOptionType
     {
-        /// <summary> The delete snapshots include option is only. </summary>
+        /// <summary> Only delete the snapshots. </summary>
         Only,
-        /// <summary> The delete snapshots include option is include. </summary>
+        /// <summary> Delete the blob and snapshots. </summary>
         Include
     }
 }
