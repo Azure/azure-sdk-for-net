@@ -8,7 +8,7 @@
 
 ### Breaking Changes
 
-- `IConfiguration.GetCredential(...)` now returns `CredentialSettings?` instead of `AuthenticationTokenProvider?` (experimental `SCME0002`).
+- `IConfiguration.GetCredential(...)` renamed to `IConfiguration.GetCredentialSettings(...)` and its return type changed from `AuthenticationTokenProvider?` to `CredentialSettings?` (experimental `SCME0002`).
 
 ### Bugs Fixed
 

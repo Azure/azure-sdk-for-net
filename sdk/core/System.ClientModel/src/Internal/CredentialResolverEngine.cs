@@ -9,7 +9,7 @@ namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Internal core resolution logic shared by the public
-/// <c>GetCredential</c> overloads, <c>GetCredentialSettings</c> overloads,
+/// <c>GetCredentialSettings</c> overloads, <c>GetCredentialSettings</c> overloads,
 /// <c>GetClientSettings&lt;T&gt;</c> overloads, and the DI <c>AddClient</c>
 /// auto-resolve hook.
 /// </summary>

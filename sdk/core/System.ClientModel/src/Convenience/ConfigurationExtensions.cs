@@ -40,7 +40,7 @@ public static class ConfigurationExtensions
         where T : ClientSettings, new()
     {
         T settings = configuration.GetClientSettings<T>(sectionName);
-        settings.CredentialProvider ??= configuration.GetCredential($"{sectionName}:Credential", resolvers)?.CredentialProvider;
+        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers)?.CredentialProvider;
         return settings;
     }
 
@@ -59,7 +59,7 @@ public static class ConfigurationExtensions
         where T : ClientSettings, new()
     {
         T settings = configuration.GetClientSettings<T>(sectionName);
-        settings.CredentialProvider ??= configuration.GetCredential($"{sectionName}:Credential", resolvers, configureOverrides)?.CredentialProvider;
+        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers, configureOverrides)?.CredentialProvider;
         return settings;
     }
 
@@ -86,10 +86,10 @@ public static class ConfigurationExtensions
     /// <see cref="CredentialSettings.CredentialProvider"/> set to
     /// <see langword="null"/>. Never throws.
     /// </summary>
-    public static CredentialSettings? GetCredential(
+    public static CredentialSettings? GetCredentialSettings(
         this IConfiguration configuration,
         string sectionName)
-        => configuration.GetCredential(sectionName, Array.Empty<CredentialResolver>());
+        => configuration.GetCredentialSettings(sectionName, Array.Empty<CredentialResolver>());
 
     /// <summary>
     /// Walks the supplied <see cref="CredentialResolver"/> chain in order
@@ -104,7 +104,7 @@ public static class ConfigurationExtensions
     /// returns settings with <see cref="CredentialSettings.CredentialProvider"/>
     /// set to <see langword="null"/>. Never throws.
     /// </summary>
-    public static CredentialSettings? GetCredential(
+    public static CredentialSettings? GetCredentialSettings(
         this IConfiguration configuration,
         string sectionName,
         params CredentialResolver[] resolvers)
@@ -135,7 +135,7 @@ public static class ConfigurationExtensions
     /// does not exist; overrides cannot synthesize a credential into a
     /// missing section. Never throws.
     /// </summary>
-    public static CredentialSettings? GetCredential(
+    public static CredentialSettings? GetCredentialSettings(
         this IConfiguration configuration,
         string sectionName,
         IEnumerable<CredentialResolver> resolvers,

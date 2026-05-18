@@ -111,7 +111,7 @@ public class ConfigurationAndDISamples
         // TryResolve returns true wins. The returned CredentialSettings
         // exposes the resolved provider via Credential.CredentialProvider
         // and the inline ApiKey via Credential.Key.
-        CredentialSettings? credential = configuration.GetCredential(
+        CredentialSettings? credential = configuration.GetCredentialSettings(
             "MyClient:Credential",
             new MyCredentialResolver());
 

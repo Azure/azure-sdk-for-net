@@ -214,7 +214,7 @@ public class MyCredentialResolver : CredentialResolver
 }
 ```
 
-Use `IConfiguration.GetCredential` to walk a chain of resolvers against the
+Use `IConfiguration.GetCredentialSettings` to walk a chain of resolvers against the
 named section. The first resolver whose `TryResolve` returns `true` wins. The
 returned `CredentialSettings` exposes the resolved provider via
 `CredentialProvider` and the inline ApiKey via `Key`.
@@ -228,7 +228,7 @@ configuration.AddJsonFile("appsettings.json");
 // TryResolve returns true wins. The returned CredentialSettings
 // exposes the resolved provider via Credential.CredentialProvider
 // and the inline ApiKey via Credential.Key.
-CredentialSettings? credential = configuration.GetCredential(
+CredentialSettings? credential = configuration.GetCredentialSettings(
     "MyClient:Credential",
     new MyCredentialResolver());
 ```
