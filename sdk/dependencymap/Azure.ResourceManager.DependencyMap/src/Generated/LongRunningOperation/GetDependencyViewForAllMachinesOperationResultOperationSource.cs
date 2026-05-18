@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.DependencyMap
         GetDependencyViewForAllMachinesOperationResult IOperationSource<GetDependencyViewForAllMachinesOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GetDependencyViewForAllMachinesOperationResult result = GetDependencyViewForAllMachinesOperationResult.DeserializeGetDependencyViewForAllMachinesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return GetDependencyViewForAllMachinesOperationResult.DeserializeGetDependencyViewForAllMachinesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.DependencyMap
         async ValueTask<GetDependencyViewForAllMachinesOperationResult> IOperationSource<GetDependencyViewForAllMachinesOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GetDependencyViewForAllMachinesOperationResult result = GetDependencyViewForAllMachinesOperationResult.DeserializeGetDependencyViewForAllMachinesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return GetDependencyViewForAllMachinesOperationResult.DeserializeGetDependencyViewForAllMachinesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
