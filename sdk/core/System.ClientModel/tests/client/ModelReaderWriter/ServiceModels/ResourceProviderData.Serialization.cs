@@ -62,15 +62,8 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (options.HasProxy<ProviderResourceType>())
-                        {
-                            var data = BinaryData.FromString(item.GetRawText());
-                            array.Add(ModelReaderWriter.Read<ProviderResourceType>(data, options));
-                        }
-                        else
-                        {
-                            array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
-                        }
+                        var data = BinaryData.FromString(item.GetRawText());
+                        array.Add(ModelReaderWriter.Read<ProviderResourceType>(data, options));
                     }
                     resourceTypes = array;
                     continue;

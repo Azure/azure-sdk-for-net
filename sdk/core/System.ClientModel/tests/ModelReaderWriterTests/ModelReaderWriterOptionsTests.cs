@@ -178,7 +178,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void AddProxy_MultipleProxiesForSameType_FormChain()
+        public void AddProxy_MultipleCallsForSameType_LastWins()
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy1 = new JsonModelProxy();
@@ -187,17 +187,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             options.AddProxy<JsonModel>(proxy1);
             options.AddProxy<JsonModel>(proxy2);
 
-            // HasProxy confirms proxies are registered
-            Assert.IsTrue(options.HasProxy<JsonModel>());
-
-            // ResolveProxy returns first (FIFO)
+            // Last AddProxy wins (single slot, replacement semantics)
             var model = new JsonModel();
             var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
-            Assert.AreSame(proxy1, resolved);
+            Assert.AreSame(proxy2, resolved);
         }
 
         [Test]
-        public void ResolveProxy_ReturnsFirstRegistered()
+        public void ResolveProxy_ReturnsLastRegistered()
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy1 = new JsonModelProxy();
@@ -208,12 +205,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             var model = new JsonModel();
             var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
-            Assert.AreSame(proxy1, resolved);
+            Assert.AreSame(proxy2, resolved);
             Assert.AreSame(model, options.ProxiedModel);
         }
 
         [Test]
-        public void ResolveProxy_IJsonModel_ReturnsFirstRegistered()
+        public void ResolveProxy_IJsonModel_ReturnsLastRegistered()
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy1 = new JsonModelProxy();
@@ -224,7 +221,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             var model = new JsonModel();
             var resolved = options.ResolveProxy<JsonModel>((IJsonModel<JsonModel>)model);
-            Assert.AreSame(proxy1, resolved);
+            Assert.AreSame(proxy2, resolved);
             Assert.AreSame(model, options.ProxiedModel);
         }
 
@@ -246,19 +243,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             options.AddProxy<JsonModel>(proxy);
 
-            Assert.IsTrue(options.HasProxy<JsonModel>());
-
             var model = new JsonModel();
             var resolvedFromModel = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
             Assert.AreSame(proxy, resolvedFromModel);
-        }
-
-        [Test]
-        public void HasProxy_NoProxies_ReturnsFalse()
-        {
-            var options = new ModelReaderWriterOptions("J");
-
-            Assert.IsFalse(options.HasProxy<JsonModel>());
         }
 
         [Test]
@@ -274,36 +261,31 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             // Internal copy shares the same proxy chain
             var copied = new ModelReaderWriterOptions(options);
             Assert.IsTrue(copied.HasProxies);
-            Assert.IsTrue(copied.HasProxy<JsonModel>());
         }
 
         [TestCase("J")]
         [TestCase("W")]
-        public void Write_WithMultipleProxies_UsesFirstRegistered(string format)
+        public void Write_WithProxy_UsesRegisteredProxy(string format)
         {
             var options = new ModelReaderWriterOptions(format);
-            var proxy1 = new JsonModelProxy();
-            var proxy2 = new JsonModelProxy();
+            var proxy = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>(proxy);
 
-            _optionsMap.Add(proxy1, options);
-            ModelReaderWriter.Write(proxy1, options);
+            _optionsMap.Add(proxy, options);
+            ModelReaderWriter.Write(proxy, options);
         }
 
         [TestCase("J")]
         [TestCase("W")]
-        public void Read_WithMultipleProxies_UsesFirstRegistered(string format)
+        public void Read_WithProxy_UsesRegisteredProxy(string format)
         {
             var options = new ModelReaderWriterOptions(format);
-            var proxy1 = new JsonModelProxy();
-            var proxy2 = new JsonModelProxy();
+            var proxy = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>(proxy);
 
-            _optionsMap.Add(proxy1, options);
+            _optionsMap.Add(proxy, options);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, options);
         }
 
@@ -920,7 +902,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void JsonModelConverter_Write_UsesFirstRegisteredProxy()
+        public void JsonModelConverter_Write_UsesLastRegisteredProxy()
         {
             var mrwOptions = new ModelReaderWriterOptions("J");
             var proxy1 = new SelectiveWriteProxy(canWrite: true);
@@ -935,18 +917,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var model = new SimpleModel();
             string json = JsonSerializer.Serialize<IJsonModel<object>>((IJsonModel<object>)(object)model, stjOptions);
 
-            Assert.IsTrue(proxy1.WriteWasCalled,
-                "proxy1 should have handled the write as the first registered proxy.");
-            Assert.IsFalse(proxy2.WriteWasCalled,
-                "proxy2 should not have been called since proxy1 was first.");
+            Assert.IsFalse(proxy1.WriteWasCalled,
+                "proxy1 should not have been called since proxy2 replaced it.");
+            Assert.IsTrue(proxy2.WriteWasCalled,
+                "proxy2 should have handled the write as the last registered proxy.");
         }
 
         #endregion
 
-        #region ResolveProxy write path — first registered wins
+        #region ResolveProxy write path — last registered wins
 
         [Test]
-        public void ResolveProxy_Write_FirstRegisteredWins()
+        public void ResolveProxy_Write_LastRegisteredWins()
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy1 = new SelectiveWriteProxy(canWrite: true);
@@ -958,8 +940,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var model = new SimpleModel();
             var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
 
-            Assert.AreSame(proxy1, resolved,
-                "ResolveProxy should return the first registered proxy.");
+            Assert.AreSame(proxy2, resolved,
+                "ResolveProxy should return the last registered proxy.");
         }
 
         [Test]
@@ -975,7 +957,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ResolveProxy_IJsonModel_FirstRegisteredWins()
+        public void ResolveProxy_IJsonModel_LastRegisteredWins()
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy1 = new SelectiveWriteProxy(canWrite: true);
@@ -987,8 +969,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var model = new SimpleModel();
             var resolved = options.ResolveProxy<SimpleModel>((IJsonModel<SimpleModel>)model);
 
-            Assert.AreSame(proxy1, resolved,
-                "IJsonModel ResolveProxy should return the first registered proxy.");
+            Assert.AreSame(proxy2, resolved,
+                "IJsonModel ResolveProxy should return the last registered proxy.");
         }
 
         #endregion

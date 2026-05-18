@@ -273,7 +273,6 @@ namespace System.ClientModel.Primitives
     {
         protected DiscriminatorRouter(System.ClientModel.Primitives.IJsonModel<T> model) { }
         protected DiscriminatorRouter(System.ClientModel.Primitives.IPersistableModel<T> model) { }
-        public bool IsJsonModel { get { throw null; } }
         public virtual bool CanHandle(System.BinaryData data) { throw null; }
         public virtual bool CanHandle(ref System.Text.Json.Utf8JsonReader reader) { throw null; }
     }
@@ -506,9 +505,8 @@ namespace System.ClientModel.Primitives
         public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
         public void AddDiscriminatorRouter<T>(System.ClientModel.Primitives.DiscriminatorRouter<T> router) { }
+        public void AddProxy<T>(System.ClientModel.Primitives.IJsonModel<T> proxy) { }
         public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
-        public bool HasProxy(System.Type modelType) { throw null; }
-        public bool HasProxy<T>() { throw null; }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
         public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
     }

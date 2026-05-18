@@ -55,7 +55,7 @@ public abstract class DiscriminatorRouter<T> : IDiscriminatorRouter
     /// <summary>
     /// Gets whether the held model implements <see cref="IJsonModel{T}"/>.
     /// </summary>
-    public bool IsJsonModel { get; }
+    internal bool IsJsonModel { get; }
 
     /// <summary>
     /// Determines whether this router can handle reading from the specified binary data.

@@ -65,6 +65,18 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
+    /// Registers a proxy for the specified type. The proxy is used for both write and read
+    /// (as a fallback after discriminator routers). Only one proxy per type is stored;
+    /// calling this again for the same type replaces the previous proxy.
+    /// </summary>
+    /// <param name="proxy"> The <see cref="IJsonModel{T}"/> implementation that will be used as the proxy. </param>
+    public void AddProxy<T>(IJsonModel<T> proxy)
+    {
+        _proxies ??= [];
+        _proxies[typeof(T)] = proxy;
+    }
+
+    /// <summary>
     /// Registers a <see cref="DiscriminatorRouter{T}"/> for the discriminator read path.
     /// Multiple routers can be registered for the same base type.
     /// Routers are consulted in FIFO order (first registered is consulted first).
@@ -87,32 +99,6 @@ public class ModelReaderWriterOptions
     /// Gets the model that is currently being proxied.
     /// </summary>
     public object? ProxiedModel { get; private set; }
-
-    /// <summary>
-    /// Checks whether any proxies or discriminator routers are registered for the specified model type <typeparamref name="T"/>.
-    /// </summary>
-    /// <typeparam name="T">The model type to check for registered proxies.</typeparam>
-    /// <returns> True if one or more proxies or routers are registered for <typeparamref name="T"/>; otherwise, false. </returns>
-    public bool HasProxy<T>()
-    {
-        return HasProxy(typeof(T));
-    }
-
-    /// <summary>
-    /// Checks whether any proxies or discriminator routers are registered for the specified model type.
-    /// </summary>
-    /// <param name="modelType">The model type to check for registered proxies.</param>
-    /// <returns> True if one or more proxies or routers are registered for the specified type; otherwise, false. </returns>
-    public bool HasProxy(Type modelType)
-    {
-        if (_proxies is not null && _proxies.ContainsKey(modelType))
-            return true;
-
-        if (_routers is not null && _routers.TryGetValue(modelType, out List<IDiscriminatorRouter>? chain) && chain.Count > 0)
-            return true;
-
-        return false;
-    }
 
     /// <summary>
     /// Resolves the write proxy for the specified model type.
