@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Client options for clients in this library. </summary>
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_01_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_01_01_Preview;
 
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
