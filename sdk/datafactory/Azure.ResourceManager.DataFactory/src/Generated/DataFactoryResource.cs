@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.DataFactory
         private readonly Factories _factoriesRestClient;
         private readonly ClientDiagnostics _dataFlowDebugSessionClientDiagnostics;
         private readonly DataFlowDebugSession _dataFlowDebugSessionRestClient;
+        private readonly ClientDiagnostics _pipelineRunsClientDiagnostics;
+        private readonly PipelineRuns _pipelineRunsRestClient;
         private readonly ClientDiagnostics _exposureControlClientDiagnostics;
         private readonly ExposureControl _exposureControlRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _pipelineRunsClientDiagnostics;
-        private readonly PipelineRuns _pipelineRunsRestClient;
+        private readonly ClientDiagnostics _activityRunsClientDiagnostics;
+        private readonly ActivityRuns _activityRunsRestClient;
         private readonly ClientDiagnostics _triggerRunsClientDiagnostics;
         private readonly TriggerRuns _triggerRunsRestClient;
         private readonly ClientDiagnostics _triggersClientDiagnostics;
         private readonly Triggers _triggersRestClient;
-        private readonly ClientDiagnostics _integrationRuntimeNodesClientDiagnostics;
-        private readonly IntegrationRuntimeNodes _integrationRuntimeNodesRestClient;
         private readonly DataFactoryData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories";
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.DataFactory
             _factoriesRestClient = new Factories(_factoriesClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _dataFlowDebugSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _dataFlowDebugSessionRestClient = new DataFlowDebugSession(_dataFlowDebugSessionClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _pipelineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            _pipelineRunsRestClient = new PipelineRuns(_pipelineRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _exposureControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _exposureControlRestClient = new ExposureControl(_exposureControlClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _pipelineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _pipelineRunsRestClient = new PipelineRuns(_pipelineRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _activityRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            _activityRunsRestClient = new ActivityRuns(_activityRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _triggerRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _triggerRunsRestClient = new TriggerRuns(_triggerRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _integrationRuntimeNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _integrationRuntimeNodesRestClient = new IntegrationRuntimeNodes(_integrationRuntimeNodesClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -520,6 +520,104 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CancelAsync(string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, isRecursive, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Cancel(string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, isRecursive, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -1448,6 +1546,116 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByPipelineRun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PipelineActivityRunsResult>> QueryByPipelineRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.QueryByPipelineRun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityRunsRestClient.CreateQueryByPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PipelineActivityRunsResult> response = Response.FromValue(PipelineActivityRunsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByPipelineRun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PipelineActivityRunsResult> QueryByPipelineRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.QueryByPipelineRun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityRunsRestClient.CreateQueryByPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PipelineActivityRunsResult> response = Response.FromValue(PipelineActivityRunsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get list of exposure control features for specific factory.
         /// <list type="bullet">
         /// <item>
@@ -1746,456 +1954,6 @@ namespace Azure.ResourceManager.DataFactory
                 HttpMessage message = _triggersRestClient.CreateQueryByFactoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryTriggerQueryResult> response = Response.FromValue(DataFactoryTriggerQueryResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the IP address of self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}/ipAddress. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_GetIpAddress. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<IntegrationRuntimeNodeIpAddress>> GetIpAddressAsync(string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.GetIpAddress");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IntegrationRuntimeNodeIpAddress> response = Response.FromValue(IntegrationRuntimeNodeIpAddress.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the IP address of self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}/ipAddress. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_GetIpAddress. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<IntegrationRuntimeNodeIpAddress> GetIpAddress(string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.GetIpAddress");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<IntegrationRuntimeNodeIpAddress> response = Response.FromValue(IntegrationRuntimeNodeIpAddress.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesDelete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DeleteAsync(string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesDelete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Delete(string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesGet. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> GetAsync(string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesGet. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SelfHostedIntegrationRuntimeNode> Get(string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates a self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="content"> The parameters for updating an integration runtime node. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/>, <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> UpdateAsync(string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates a self-hosted integration runtime node.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataFactoryResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="factoryName"></param>
-        /// <param name="integrationRuntimeName"></param>
-        /// <param name="nodeName"> The integration runtime node name. </param>
-        /// <param name="content"> The parameters for updating an integration runtime node. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/>, <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SelfHostedIntegrationRuntimeNode> Update(string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, factoryName, integrationRuntimeName, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

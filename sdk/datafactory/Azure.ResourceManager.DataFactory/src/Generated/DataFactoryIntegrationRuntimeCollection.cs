@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.DataFactory
         private readonly IntegrationRuntimes _integrationRuntimesRestClient;
         private readonly ClientDiagnostics _integrationRuntimeClientDiagnostics;
         private readonly IntegrationRuntime _integrationRuntimeRestClient;
+        private readonly ClientDiagnostics _integrationRuntimeNodesClientDiagnostics;
+        private readonly IntegrationRuntimeNodes _integrationRuntimeNodesRestClient;
         private readonly ClientDiagnostics _integrationRuntimeObjectMetadataClientDiagnostics;
         private readonly IntegrationRuntimeObjectMetadata _integrationRuntimeObjectMetadataRestClient;
 
@@ -47,6 +49,8 @@ namespace Azure.ResourceManager.DataFactory
             _integrationRuntimesRestClient = new IntegrationRuntimes(_integrationRuntimesClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryIntegrationRuntimeResource.ResourceType.Namespace, Diagnostics);
             _integrationRuntimeRestClient = new IntegrationRuntime(_integrationRuntimeClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
+            _integrationRuntimeNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryIntegrationRuntimeResource.ResourceType.Namespace, Diagnostics);
+            _integrationRuntimeNodesRestClient = new IntegrationRuntimeNodes(_integrationRuntimeNodesClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeObjectMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryIntegrationRuntimeResource.ResourceType.Namespace, Diagnostics);
             _integrationRuntimeObjectMetadataRestClient = new IntegrationRuntimeObjectMetadata(_integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             ValidateResourceId(id);

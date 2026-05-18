@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.DataFactory
         DataFactoryIntegrationRuntimeStatusResult IOperationSource<DataFactoryIntegrationRuntimeStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataFactoryIntegrationRuntimeStatusResult result = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.DataFactory
         async ValueTask<DataFactoryIntegrationRuntimeStatusResult> IOperationSource<DataFactoryIntegrationRuntimeStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataFactoryIntegrationRuntimeStatusResult result = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

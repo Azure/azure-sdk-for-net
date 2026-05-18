@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.DataFactory/factories/", false);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/integrationRuntimes/", false);
             uri.AppendPath(integrationRuntimeName, true);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.DataFactory/factories/", false);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/integrationRuntimes/", false);
             uri.AppendPath(integrationRuntimeName, true);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.DataFactory/factories/", false);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/integrationRuntimes/", false);
             uri.AppendPath(integrationRuntimeName, true);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.DataFactory/factories/", false);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/integrationRuntimes/", false);
             uri.AppendPath(integrationRuntimeName, true);

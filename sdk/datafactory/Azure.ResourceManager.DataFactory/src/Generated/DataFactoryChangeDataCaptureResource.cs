@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DataFactory
                 };
                 HttpMessage message = _changeDataCaptureRestClient.CreateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<string> response = Response.FromValue(ModelReaderWriter.Read<string>(result.Content), result);
+                Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DataFactory
                 };
                 HttpMessage message = _changeDataCaptureRestClient.CreateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<string> response = Response.FromValue(ModelReaderWriter.Read<string>(result.Content), result);
+                Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

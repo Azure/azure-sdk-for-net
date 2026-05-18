@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.DataFactory
     {
         private readonly ClientDiagnostics _triggersClientDiagnostics;
         private readonly Triggers _triggersRestClient;
+        private readonly ClientDiagnostics _triggerRunsClientDiagnostics;
+        private readonly TriggerRuns _triggerRunsRestClient;
 
         /// <summary> Initializes a new instance of DataFactoryTriggerCollection for mocking. </summary>
         protected DataFactoryTriggerCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.DataFactory
             TryGetApiVersion(DataFactoryTriggerResource.ResourceType, out string dataFactoryTriggerApiVersion);
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryTriggerResource.ResourceType.Namespace, Diagnostics);
             _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
+            _triggerRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryTriggerResource.ResourceType.Namespace, Diagnostics);
+            _triggerRunsRestClient = new TriggerRuns(_triggerRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

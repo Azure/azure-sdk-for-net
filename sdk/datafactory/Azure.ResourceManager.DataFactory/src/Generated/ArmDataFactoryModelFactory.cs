@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="purviewResourceId"> Purview resource id. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity of the factory. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, string purviewResourceId = default, IDictionary<string, string> tags = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, string purviewResourceId = default, ETag? eTag = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encryption,
                     publicNetworkAccess,
                     null),
-                tags,
                 eTag,
+                tags,
                 identity);
         }
 
@@ -9384,7 +9384,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 id,
                 name,
                 @type,
-                eTag,
+                eTag?.ToString(),
                 additionalBinaryDataProperties: null,
                 properties);
         }
@@ -17290,7 +17290,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 id,
                 name,
                 @type,
-                eTag,
+                eTag?.ToString(),
                 additionalBinaryDataProperties: null,
                 properties);
         }
@@ -17457,8 +17457,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encryption,
                     publicNetworkAccess,
                     default),
-                tags,
                 eTag,
+                tags,
                 identity);
         }
 

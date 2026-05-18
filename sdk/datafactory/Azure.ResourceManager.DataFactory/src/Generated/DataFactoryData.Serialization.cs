@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.DataFactory
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation location = default;
             FactoryProperties properties = default;
-            IDictionary<string, string> tags = default;
             ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -201,6 +201,15 @@ namespace Azure.ResourceManager.DataFactory
                     properties = FactoryProperties.DeserializeFactoryProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("eTag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -220,15 +229,6 @@ namespace Azure.ResourceManager.DataFactory
                         }
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("eTag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.DataFactory
                 additionalBinaryDataProperties,
                 location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity);
         }
     }

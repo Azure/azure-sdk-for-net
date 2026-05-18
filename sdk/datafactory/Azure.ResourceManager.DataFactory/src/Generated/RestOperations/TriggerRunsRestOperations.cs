@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.DataFactory/factories/", false);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.DataFactory/factories/", false);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);

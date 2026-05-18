@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.DataFactory
         SsisObjectMetadataStatusResult IOperationSource<SsisObjectMetadataStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SsisObjectMetadataStatusResult result = SsisObjectMetadataStatusResult.DeserializeSsisObjectMetadataStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SsisObjectMetadataStatusResult.DeserializeSsisObjectMetadataStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.DataFactory
         async ValueTask<SsisObjectMetadataStatusResult> IOperationSource<SsisObjectMetadataStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SsisObjectMetadataStatusResult result = SsisObjectMetadataStatusResult.DeserializeSsisObjectMetadataStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SsisObjectMetadataStatusResult.DeserializeSsisObjectMetadataStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

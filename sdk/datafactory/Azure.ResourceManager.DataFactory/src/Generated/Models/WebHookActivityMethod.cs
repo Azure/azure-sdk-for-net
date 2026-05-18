@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         private readonly string _value;
         /// <summary> POST. </summary>
-        private const string POSTValue = "POST";
+        private const string PostValue = "POST";
 
         /// <summary> Initializes a new instance of <see cref="WebHookActivityMethod"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> POST. </summary>
-        public static WebHookActivityMethod POST { get; } = new WebHookActivityMethod(POSTValue);
+        public static WebHookActivityMethod Post { get; } = new WebHookActivityMethod(PostValue);
 
         /// <summary> Determines if two <see cref="WebHookActivityMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
