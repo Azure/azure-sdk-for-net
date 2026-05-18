@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return Client.GetSubscriptionResource(Id).GetDeletedAppConfigurationStoresAsync(cancellationToken);
@@ -25,6 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<DeletedAppConfigurationStoreResource> GetAll(CancellationToken cancellationToken = default)
         {
             return Client.GetSubscriptionResource(Id).GetDeletedAppConfigurationStores(cancellationToken);
