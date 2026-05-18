@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
 directory: "specification/storage/Microsoft.BlobStorage"
-commit: 429070c0ccabb99101b2ed783c784051d165ee63
+commit: 9677878c58918001b376cb6979ac711e3735d307
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

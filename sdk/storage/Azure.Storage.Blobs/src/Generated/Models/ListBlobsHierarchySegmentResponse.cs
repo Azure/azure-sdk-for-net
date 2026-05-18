@@ -7,18 +7,18 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An enumeration of blobs. </summary>
+    /// <summary> The result of the List Blobs Hierarchical API. </summary>
     internal partial class ListBlobsHierarchySegmentResponse
     {
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
-        /// <param name="segment"> The blob segment. </param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, BlobHierarchyListSegment segment)
+        /// <param name="hierarchicalList"> The list of hierarchical blobs. </param>
+        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, BlobHierarchyList hierarchicalList)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
-            Segment = segment;
+            HierarchicalList = hierarchicalList;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
@@ -26,11 +26,11 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="containerName"> The container name. </param>
         /// <param name="delimiter"> The delimiter of the blobs. </param>
         /// <param name="prefix"> The prefix of the blobs. </param>
-        /// <param name="marker"> The marker of the blobs. </param>
-        /// <param name="maxResults"> The max results of the blobs. </param>
-        /// <param name="segment"> The blob segment. </param>
-        /// <param name="nextMarker"> The next marker of the blobs. </param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string delimiter, string prefix, string marker, int? maxResults, BlobHierarchyListSegment segment, string nextMarker)
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set returned with this operation. </param>
+        /// <param name="maxResults"> The maximum number of blobs to be returned with this operation. </param>
+        /// <param name="hierarchicalList"> The list of hierarchical blobs. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
+        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string delimiter, string prefix, string marker, int? maxResults, BlobHierarchyList hierarchicalList, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Models
             Prefix = prefix;
             Marker = marker;
             MaxResults = maxResults;
-            Segment = segment;
+            HierarchicalList = hierarchicalList;
             NextMarker = nextMarker;
         }
 
@@ -54,16 +54,16 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The prefix of the blobs. </summary>
         public string Prefix { get; }
 
-        /// <summary> The marker of the blobs. </summary>
+        /// <summary> An opaque string value that identifies the portion of the result set returned with this operation. </summary>
         public string Marker { get; }
 
-        /// <summary> The max results of the blobs. </summary>
+        /// <summary> The maximum number of blobs to be returned with this operation. </summary>
         public int? MaxResults { get; }
 
-        /// <summary> The blob segment. </summary>
-        public BlobHierarchyListSegment Segment { get; }
+        /// <summary> The list of hierarchical blobs. </summary>
+        public BlobHierarchyList HierarchicalList { get; }
 
-        /// <summary> The next marker of the blobs. </summary>
+        /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </summary>
         public string NextMarker { get; }
     }
 }

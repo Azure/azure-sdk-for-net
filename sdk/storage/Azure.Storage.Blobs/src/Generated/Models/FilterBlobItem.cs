@@ -7,12 +7,12 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The filter blob item. </summary>
+    /// <summary> The filtered blob item. </summary>
     internal partial class FilterBlobItem
     {
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/>. </summary>
         /// <param name="name"> The name of the blob. </param>
-        /// <param name="containerName"> The properties of the blob. </param>
+        /// <param name="containerName"> The name of the container. </param>
         internal FilterBlobItem(string name, string containerName)
         {
             Name = name;
@@ -21,8 +21,8 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/>. </summary>
         /// <param name="name"> The name of the blob. </param>
-        /// <param name="containerName"> The properties of the blob. </param>
-        /// <param name="tags"> The metadata of the blob. </param>
+        /// <param name="containerName"> The name of the container. </param>
+        /// <param name="tags"> The tags of the blob. </param>
         /// <param name="versionId"> The version ID of the blob. </param>
         /// <param name="isCurrentVersion"> Whether it is the current version of the blob. </param>
         internal FilterBlobItem(string name, string containerName, BlobTags tags, string versionId, bool? isCurrentVersion)
@@ -37,10 +37,10 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The name of the blob. </summary>
         public string Name { get; }
 
-        /// <summary> The properties of the blob. </summary>
+        /// <summary> The name of the container. </summary>
         public string ContainerName { get; }
 
-        /// <summary> The metadata of the blob. </summary>
+        /// <summary> The tags of the blob. </summary>
         public BlobTags Tags { get; }
 
         /// <summary> The version ID of the blob. </summary>

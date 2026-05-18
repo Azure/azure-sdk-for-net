@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] The Create operation creates a new append blob.
+        /// [Protocol Method] Creates a new append blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -54,24 +54,24 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -92,7 +92,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Create operation creates a new append blob.
+        /// [Protocol Method] Creates a new append blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -100,24 +100,24 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -137,26 +137,26 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Create operation creates a new append blob. </summary>
+        /// <summary> Creates a new append blob. </summary>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Create(IDictionary<string, string> metadata = default, int? timeout = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
@@ -164,26 +164,26 @@ namespace Azure.Storage.Blobs
             return Create(metadata, timeout, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Create operation creates a new append blob. </summary>
+        /// <summary> Creates a new append blob. </summary>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> CreateAsync(IDictionary<string, string> metadata = default, int? timeout = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
@@ -192,7 +192,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Append Block operation commits a new block of data to the end of an append blob.
+        /// [Protocol Method] Uploads a new block of data to the end of an append blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -201,18 +201,18 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -235,7 +235,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Append Block operation commits a new block of data to the end of an append blob.
+        /// [Protocol Method] Uploads a new block of data to the end of an append blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -244,18 +244,18 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -277,21 +277,21 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Append Block operation commits a new block of data to the end of an append blob. </summary>
+        /// <summary> Uploads a new block of data to the end of an append blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> The body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -301,21 +301,21 @@ namespace Azure.Storage.Blobs
             return AppendBlock(contentLength, RequestContent.Create(body), timeout, transactionalContentMD5, transactionalContentCrc64, leaseId, maxSize, appendPosition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Append Block operation commits a new block of data to the end of an append blob. </summary>
+        /// <summary> Uploads a new block of data to the end of an append blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="body"> The body of the request. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -326,38 +326,38 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Append Block From URL operation creates a new block to be committed as part of an append blob where the contents are read from a URL.
+        /// [Protocol Method] Uploads a new block of data from the specified URL to the end of an append blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -378,38 +378,38 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Append Block From URL operation creates a new block to be committed as part of an append blob where the contents are read from a URL.
+        /// [Protocol Method] Uploads a new block of data from the specified URL to the end of an append blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -429,32 +429,32 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Append Block From URL operation creates a new block to be committed as part of an append blob where the contents are read from a URL. </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
+        /// <summary> Uploads a new block of data from the specified URL to the end of an append blob. </summary>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AppendBlockFromUrl(string sourceUrl, long contentLength, string sourceRange = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, BinaryData transactionalContentMD5 = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
@@ -462,32 +462,32 @@ namespace Azure.Storage.Blobs
             return AppendBlockFromUrl(sourceUrl, contentLength, sourceRange, sourceContentMd5, sourceContentCrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, maxSize, appendPosition, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Append Block From URL operation creates a new block to be committed as part of an append blob where the contents are read from a URL. </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
+        /// <summary> Uploads a new block of data from the specified URL to the end of an append blob. </summary>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="maxSize"> Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="maxSize"> The max length of the blob. If the operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified, the request will fail with MaxBlobSizeConditionNotMet. </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AppendBlockFromUrlAsync(string sourceUrl, long contentLength, string sourceRange = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, BinaryData transactionalContentMD5 = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? maxSize = default, long? appendPosition = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
@@ -496,17 +496,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
+        /// [Protocol Method] Seals the append blob to make it read-only.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -527,17 +527,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
+        /// [Protocol Method] Seals the append blob to make it read-only.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -557,11 +557,11 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Seals the append blob to make it read-only. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Seal(int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, long? appendPosition = default, CancellationToken cancellationToken = default)
@@ -569,11 +569,11 @@ namespace Azure.Storage.Blobs
             return Seal(timeout, leaseId, requestConditions, appendPosition, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Seals the append blob to make it read-only. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="appendPosition"> Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed). </param>
+        /// <param name="appendPosition"> A byte offset where the operation will only succeed if the append position is equal. If not, the request will fail with AppendPositionConditionNotMet. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> SealAsync(int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, long? appendPosition = default, CancellationToken cancellationToken = default)

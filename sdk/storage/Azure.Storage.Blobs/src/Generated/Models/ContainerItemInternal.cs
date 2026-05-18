@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"> The name of the container. </param>
-        /// <param name="deleted"> Whether the container is deleted. </param>
+        /// <param name="deleted"> Whether the container is soft-deleted. </param>
         /// <param name="version"> The version of the container. </param>
         /// <param name="properties"> The properties of the container. </param>
         /// <param name="metadata"> The metadata of the container. </param>
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The name of the container. </summary>
         public string Name { get; }
 
-        /// <summary> Whether the container is deleted. </summary>
+        /// <summary> Whether the container is soft-deleted. </summary>
         public bool? Deleted { get; }
 
         /// <summary> The version of the container. </summary>

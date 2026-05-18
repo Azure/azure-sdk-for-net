@@ -15,7 +15,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
+    /// <summary> Geo-replication information for the secondary storage service. </summary>
     public partial class BlobGeoReplication : IPersistableModel<BlobGeoReplication>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="BlobGeoReplication"/> for deserialization. </summary>

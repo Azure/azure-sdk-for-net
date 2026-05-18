@@ -10,43 +10,43 @@ using System.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The result of a Filter Blobs API call. </summary>
+    /// <summary> The result of the Find Blobs by Tags API. </summary>
     internal partial class FilterBlobSegment
     {
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
-        /// <param name="where"> The filter for the blobs. </param>
-        /// <param name="blobs"> The blob segment. </param>
-        internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobs)
+        /// <param name="where"> The filter expression for the blobs. </param>
+        /// <param name="blobItems"> The list of filtered blobs. </param>
+        internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobItems)
         {
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
-            Blobs = blobs.ToList();
+            BlobItems = blobItems.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
-        /// <param name="where"> The filter for the blobs. </param>
-        /// <param name="blobs"> The blob segment. </param>
-        /// <param name="nextMarker"> The next marker of the blobs. </param>
-        internal FilterBlobSegment(string serviceEndpoint, string @where, IList<FilterBlobItem> blobs, string nextMarker)
+        /// <param name="where"> The filter expression for the blobs. </param>
+        /// <param name="blobItems"> The list of filtered blobs. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
+        internal FilterBlobSegment(string serviceEndpoint, string @where, IList<FilterBlobItem> blobItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
-            Blobs = blobs;
+            BlobItems = blobItems;
             NextMarker = nextMarker;
         }
 
         /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
 
-        /// <summary> The filter for the blobs. </summary>
+        /// <summary> The filter expression for the blobs. </summary>
         public string Where { get; }
 
-        /// <summary> The blob segment. </summary>
-        public IList<FilterBlobItem> Blobs { get; }
+        /// <summary> The list of filtered blobs. </summary>
+        public IList<FilterBlobItem> BlobItems { get; }
 
-        /// <summary> The next marker of the blobs. </summary>
+        /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </summary>
         public string NextMarker { get; }
     }
 }

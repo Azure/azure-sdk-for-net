@@ -46,35 +46,35 @@ namespace Azure.Storage.Blobs
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] The Create operation creates a new page blob.
+        /// [Protocol Method] Creates a new page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="tier"> Optional. Indicates the tier to be set on the page blob. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -95,35 +95,35 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Create operation creates a new page blob.
+        /// [Protocol Method] Creates a new page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="tier"> Optional. Indicates the tier to be set on the page blob. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -143,29 +143,29 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Create operation creates a new page blob. </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
+        /// <summary> Creates a new page blob. </summary>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="tier"> Optional. Indicates the tier to be set on the page blob. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Create(long size, IDictionary<string, string> metadata = default, int? timeout = default, PremiumPageBlobAccessTier? tier = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
@@ -173,29 +173,29 @@ namespace Azure.Storage.Blobs
             return Create(size, metadata, timeout, tier?.ToString(), blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Create operation creates a new page blob. </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
+        /// <summary> Creates a new page blob. </summary>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
         /// <param name="metadata"> The metadata headers. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="tier"> Optional. Indicates the tier to be set on the page blob. </param>
-        /// <param name="blobContentType"> Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentEncoding"> Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentLanguage"> Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="blobContentMd5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="blobCacheControl"> Optional. Sets the blob's cache control. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
+        /// <param name="blobContentType"> Specifies the blob's Content-Type. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentEncoding"> Specifies the blob's Content-Encoding. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentLanguage"> Specifies the blob's Content-Language. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="blobContentMd5"> The MD5 hash of the blob content that is stored as a property on the blob. Note: This hash is not validated. </param>
+        /// <param name="blobCacheControl"> Specifies the blob's Cache-Control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="blobContentDisposition"> Optional. Sets the blob's content disposition. If specified, this property is stored with the blob and returned with a read request. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="blobContentDisposition"> Specifies the blob's Content-Disposition. If specified, this property is stored with the blob and returned with a read request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
-        /// <param name="blobTagsString"> Optional.  Used to set blob tags in various blob operations. </param>
-        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
-        /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
-        /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="blobTagsString"> The blob tags. </param>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> CreateAsync(long size, IDictionary<string, string> metadata = default, int? timeout = default, PremiumPageBlobAccessTier? tier = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
@@ -204,7 +204,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Upload Pages operation writes a range of pages to a page blob
+        /// [Protocol Method] Writes a range of pages to the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -212,21 +212,21 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Upload Pages operation writes a range of pages to a page blob
+        /// [Protocol Method] Writes a range of pages to the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -257,21 +257,21 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -293,23 +293,23 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Upload Pages operation writes a range of pages to a page blob. </summary>
+        /// <summary> Writes a range of pages to the specified page blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="body"> The body of the request. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -319,23 +319,23 @@ namespace Azure.Storage.Blobs
             return UploadPages(contentLength, range, RequestContent.Create(body), transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Upload Pages operation writes a range of pages to a page blob. </summary>
+        /// <summary> Writes a range of pages to the specified page blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="body"> The body of the request. </param>
-        /// <param name="transactionalContentMD5"> Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was uploaded. </param>
-        /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
+        /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -346,25 +346,25 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Clear Pages operation clears a range of pages from a page blob
+        /// [Protocol Method] Clears a range of pages from the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -385,25 +385,25 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Clear Pages operation clears a range of pages from a page blob
+        /// [Protocol Method] Clears a range of pages from the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -423,19 +423,19 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Clear Pages operation clears a range of pages from a page blob. </summary>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Clears a range of pages from the specified page blob. </summary>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ClearPages(string range, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
@@ -443,19 +443,19 @@ namespace Azure.Storage.Blobs
             return ClearPages(range, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Clear Pages operation clears a range of pages from a page blob. </summary>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Clears a range of pages from the specified page blob. </summary>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> ClearPagesAsync(string range, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
@@ -464,39 +464,39 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL.
+        /// [Protocol Method] Writes a range of pages to the specified page blob where the contents are read from a URL.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -517,39 +517,39 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL.
+        /// [Protocol Method] Writes a range of pages to the specified page blob where the contents are read from a URL.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -569,33 +569,33 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL. </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
+        /// <summary> Writes a range of pages to the specified page blob where the contents are read from a URL. </summary>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response UploadPagesFromUrl(string sourceUrl, string sourceRange, long contentLength, string range, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
@@ -603,33 +603,33 @@ namespace Azure.Storage.Blobs
             return UploadPagesFromUrl(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Upload Pages operation writes a range of pages to a page blob where the contents are read from a URL. </summary>
-        /// <param name="sourceUrl"> Specify a URL to the copy source. </param>
-        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
+        /// <summary> Writes a range of pages to the specified page blob where the contents are read from a URL. </summary>
+        /// <param name="sourceUrl"> Specifies the URL of the source. </param>
+        /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
-        /// <param name="range"> Bytes of data in the specified range. </param>
-        /// <param name="sourceContentMd5"> Specify the md5 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
-        /// <param name="ifSequenceNumberLessThan"> Specify this header value to operate only on a blob if it has a sequence number less than the specified. </param>
-        /// <param name="ifSequenceNumberEqualTo"> Specify this header value to operate only on a blob if it has the specified sequence number. </param>
+        /// <param name="ifSequenceNumberLessThanOrEqualTo"> Specify this value to operate only on a blob if it has a sequence number less than or equal to the specified. </param>
+        /// <param name="ifSequenceNumberLessThan"> Specify this value to operate only on a blob if it has a sequence number less than the specified. </param>
+        /// <param name="ifSequenceNumberEqualTo"> Specify this value to operate only on a blob if it has the specified sequence number. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="sourceIfMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="sourceIfNoneMatch"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
-        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
-        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="sourceIfModifiedSince"> Specify this value to operate only on a source blob if it has been modified since the specified date-time. </param>
+        /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date-time. </param>
+        /// <param name="sourceIfMatch"> Specify this value to operate only on a source blob with a matching Etag value. </param>
+        /// <param name="sourceIfNoneMatch"> Specify this value to operate only on a source blob with a non-matching Etag value. </param>
+        /// <param name="copySourceAuthorization"> Only the Bearer authorization scheme is supported, and the value must be a valid OAuth access token for the copy source. </param>
+        /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
+        /// <param name="sourceEncryptionKey"> Specifies the encryption key to use to decrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the source encryption key is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> UploadPagesFromUrlAsync(string sourceUrl, string sourceRange, long contentLength, string range, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
@@ -638,21 +638,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob.
+        /// [Protocol Method] Returns the list of valid page ranges for the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -673,21 +673,21 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob.
+        /// [Protocol Method] Returns the list of valid page ranges for the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -707,15 +707,15 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob. </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <summary> Returns the list of valid page ranges for the specified page blob. </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PageList> GetPageRanges(string snapshot = default, int? timeout = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
@@ -724,15 +724,15 @@ namespace Azure.Storage.Blobs
             return Response.FromValue((PageList)result, result);
         }
 
-        /// <summary> The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page blob. </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <summary> Returns the list of valid page ranges for the specified page blob. </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PageList>> GetPageRangesAsync(string snapshot = default, int? timeout = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
@@ -742,23 +742,23 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob or snapshot of a page blob.
+        /// [Protocol Method] Returns the list of page ranges in the diff between the specified page blob and the specified previous snapshot.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="prevsnapshot"> Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016. </param>
-        /// <param name="prevSnapshotUrl"> Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
+        /// <param name="prevSnapshotUrl"> Specifies the previous snapshot URL to be compared in the diff. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -779,23 +779,23 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob or snapshot of a page blob.
+        /// [Protocol Method] Returns the list of page ranges in the diff between the specified page blob and the specified previous snapshot.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="prevsnapshot"> Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016. </param>
-        /// <param name="prevSnapshotUrl"> Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
+        /// <param name="prevSnapshotUrl"> Specifies the previous snapshot URL to be compared in the diff. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -815,17 +815,17 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob or snapshot of a page blob. </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="prevsnapshot"> Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016. </param>
-        /// <param name="prevSnapshotUrl"> Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <summary> Returns the list of page ranges in the diff between the specified page blob and the specified previous snapshot. </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
+        /// <param name="prevSnapshotUrl"> Specifies the previous snapshot URL to be compared in the diff. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PageList> GetPageRangesDiff(string snapshot = default, int? timeout = default, string prevsnapshot = default, string prevSnapshotUrl = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
@@ -834,17 +834,17 @@ namespace Azure.Storage.Blobs
             return Response.FromValue((PageList)result, result);
         }
 
-        /// <summary> The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob or snapshot of a page blob. </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="prevsnapshot"> Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016. </param>
-        /// <param name="prevSnapshotUrl"> Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot. </param>
-        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <summary> Returns the list of page ranges in the diff between the specified page blob and the specified previous snapshot. </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
+        /// <param name="prevSnapshotUrl"> Specifies the previous snapshot URL to be compared in the diff. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PageList>> GetPageRangesDiffAsync(string snapshot = default, int? timeout = default, string prevsnapshot = default, string prevSnapshotUrl = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
@@ -854,22 +854,22 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Resize operation increases the size of the page blob to the specified size.
+        /// [Protocol Method] Changes the size of the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -890,22 +890,22 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Resize operation increases the size of the page blob to the specified size.
+        /// [Protocol Method] Changes the size of the specified page blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -925,16 +925,16 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Resize operation increases the size of the page blob to the specified size. </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Changes the size of the specified page blob. </summary>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Resize(long size, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
@@ -942,16 +942,16 @@ namespace Azure.Storage.Blobs
             return Resize(size, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Resize operation increases the size of the page blob to the specified size. </summary>
-        /// <param name="size"> This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned to a 512-byte boundary. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Changes the size of the specified page blob. </summary>
+        /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional.  Version 2019-07-07 and later.  Specifies the encryption key to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
-        /// <param name="encryptionKeySha256"> Optional.  Version 2019-07-07 and later.  Specifies the SHA256 hash of the encryption key used to encrypt the data provided in the request. This header is only used for encryption with a customer-provided key. If the request is authenticated with a client token, this header should be specified using the SHA256 hash of the encryption key. </param>
-        /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
-        /// <param name="encryptionScope"> Optional.  Version 2019-07-07 and later.  Specifies the encryption scope to use to encrypt the data provided in the request. If not specified, the request will be encrypted with the root account key. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionScope"> Specifies the encryption scope used to encrypt the data. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> ResizeAsync(long size, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
@@ -960,19 +960,19 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Update Sequence Number operation sets the blob's sequence number. The operation will fail if the specified sequence number is less than the current sequence number of the blob.
+        /// [Protocol Method] Updates the sequence number of the specified page blob. The operation will fail if the specified sequence number is less than the current sequence number of the blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob's sequence number. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -993,19 +993,19 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Update Sequence Number operation sets the blob's sequence number. The operation will fail if the specified sequence number is less than the current sequence number of the blob.
+        /// [Protocol Method] Updates the sequence number of the specified page blob. The operation will fail if the specified sequence number is less than the current sequence number of the blob.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob's sequence number. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1025,13 +1025,13 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Update Sequence Number operation sets the blob's sequence number. The operation will fail if the specified sequence number is less than the current sequence number of the blob. </summary>
-        /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob's sequence number. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Updates the sequence number of the specified page blob. The operation will fail if the specified sequence number is less than the current sequence number of the blob. </summary>
+        /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SetSequenceNumber(SequenceNumberAction sequenceNumberAction, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, CancellationToken cancellationToken = default)
@@ -1039,13 +1039,13 @@ namespace Azure.Storage.Blobs
             return SetSequenceNumber(sequenceNumberAction.ToSerialString(), timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Update Sequence Number operation sets the blob's sequence number. The operation will fail if the specified sequence number is less than the current sequence number of the blob. </summary>
-        /// <param name="sequenceNumberAction"> Required if the x-ms-blob-sequence-number header is set for the request. This property applies to page blobs only. This property indicates how the service should modify the blob's sequence number. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Updates the sequence number of the specified page blob. The operation will fail if the specified sequence number is less than the current sequence number of the blob. </summary>
+        /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> SetSequenceNumberAsync(SequenceNumberAction sequenceNumberAction, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, CancellationToken cancellationToken = default)
@@ -1054,17 +1054,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31.
+        /// [Protocol Method] Copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1085,17 +1085,17 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// [Protocol Method] The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31.
+        /// [Protocol Method] Copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1115,11 +1115,11 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary> The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31. </summary>
-        /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. </summary>
+        /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response CopyIncremental(string copySource, int? timeout = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
@@ -1127,11 +1127,11 @@ namespace Azure.Storage.Blobs
             return CopyIncremental(copySource, timeout, requestConditions, ifTags, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can be read or copied from as usual. This API is supported since REST version 2016-05-31. </summary>
-        /// <param name="copySource"> Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. </summary>
+        /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> CopyIncrementalAsync(string copySource, int? timeout = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)

@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Azure Analytics Logging settings. </summary>
+    /// <summary> Azure Analytics logging settings. </summary>
     public partial class BlobAnalyticsLogging
     {
         /// <summary> The version of the logging properties. </summary>

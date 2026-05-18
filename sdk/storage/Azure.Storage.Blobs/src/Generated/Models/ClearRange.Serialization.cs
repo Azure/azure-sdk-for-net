@@ -15,7 +15,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The clear range. </summary>
+    /// <summary> A clear range. </summary>
     internal partial class ClearRange : IPersistableModel<ClearRange>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="ClearRange"/> for deserialization. </summary>

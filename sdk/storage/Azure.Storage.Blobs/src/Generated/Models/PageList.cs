@@ -10,7 +10,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents a page list. </summary>
+    /// <summary> The result of the Get Pages API. </summary>
     internal partial class PageList
     {
         /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
         /// <param name="pageRange"> The page ranges. </param>
         /// <param name="clearRange"> The clear ranges. </param>
-        /// <param name="nextMarker"> The next marker. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
         internal PageList(IList<PageRange> pageRange, IList<ClearRange> clearRange, string nextMarker)
         {
             PageRange = pageRange;
@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The clear ranges. </summary>
         public IList<ClearRange> ClearRange { get; }
 
-        /// <summary> The next marker. </summary>
+        /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </summary>
         public string NextMarker { get; }
     }
 }

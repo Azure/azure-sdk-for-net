@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/>. </summary>
         /// <param name="policyStartsOn"> The date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
-        /// <param name="permissions"> The permissions for acl the policy. </param>
+        /// <param name="permissions"> The permissions for the policy. </param>
         internal BlobAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions)
         {
             PolicyStartsOn = policyStartsOn;
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The date-time the policy expires. </summary>
         public DateTimeOffset? PolicyExpiresOn { get; set; }
 
-        /// <summary> The permissions for acl the policy. </summary>
+        /// <summary> The permissions for the policy. </summary>
         public string Permissions { get; set; }
     }
 }

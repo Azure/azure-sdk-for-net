@@ -11,7 +11,7 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         /// <param name="queryType"> Required. The type of the provided query expression. </param>
-        /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
+        /// <param name="expression"> The query expression. The maximum size of the query expression is 256KiB. </param>
         public QueryRequest(string queryType, string expression)
         {
             QueryType = queryType;
@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         /// <param name="queryType"> Required. The type of the provided query expression. </param>
-        /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
+        /// <param name="expression"> The query expression. The maximum size of the query expression is 256KiB. </param>
         /// <param name="inputSerialization"> The input serialization settings. </param>
         /// <param name="outputSerialization"> The output serialization settings. </param>
         internal QueryRequest(string queryType, string expression, QuerySerialization inputSerialization, QuerySerialization outputSerialization)

@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
         Pending,
         /// <summary> The copy operation succeeded. </summary>
         Success,
-        /// <summary> The copy operation is aborted. </summary>
+        /// <summary> The copy operation was aborted. </summary>
         Aborted,
         /// <summary> The copy operation failed. </summary>
         Failed

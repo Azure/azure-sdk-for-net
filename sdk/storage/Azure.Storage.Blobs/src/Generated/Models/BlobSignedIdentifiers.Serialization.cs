@@ -17,7 +17,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents an array of signed identifiers. </summary>
+    /// <summary> List of signed identifiers. </summary>
     internal partial class BlobSignedIdentifiers : IPersistableModel<BlobSignedIdentifiers>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="BlobSignedIdentifiers"/> for deserialization. </summary>

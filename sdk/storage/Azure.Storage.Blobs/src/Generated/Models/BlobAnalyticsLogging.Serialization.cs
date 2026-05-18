@@ -15,7 +15,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Azure Analytics Logging settings. </summary>
+    /// <summary> Azure Analytics logging settings. </summary>
     public partial class BlobAnalyticsLogging : IPersistableModel<BlobAnalyticsLogging>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

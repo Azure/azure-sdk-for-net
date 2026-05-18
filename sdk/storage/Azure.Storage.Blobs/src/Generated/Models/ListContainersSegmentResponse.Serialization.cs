@@ -17,7 +17,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The list container segment response. </summary>
+    /// <summary> The result of the List Containers API. </summary>
     internal partial class ListContainersSegmentResponse : IPersistableModel<ListContainersSegmentResponse>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/> for deserialization. </summary>

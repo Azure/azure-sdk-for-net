@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The SKU types. </summary>
+    /// <summary> The account SKU. </summary>
     public enum SkuName
     {
         /// <summary> The standard LRS SKU. </summary>

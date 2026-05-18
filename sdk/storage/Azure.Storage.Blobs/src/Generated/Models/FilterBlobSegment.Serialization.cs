@@ -17,7 +17,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The result of a Filter Blobs API call. </summary>
+    /// <summary> The result of the Find Blobs by Tags API. </summary>
     internal partial class FilterBlobSegment : IPersistableModel<FilterBlobSegment>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/> for deserialization. </summary>
@@ -126,7 +126,7 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteValue(Where);
             writer.WriteEndElement();
             writer.WriteStartElement("Blobs");
-            foreach (FilterBlobItem item in Blobs)
+            foreach (FilterBlobItem item in BlobItems)
             {
                 writer.WriteStartElement("Blob");
                 writer.WriteObjectValue(item, options);
@@ -152,7 +152,7 @@ namespace Azure.Storage.Blobs.Models
 
             string serviceEndpoint = default;
             string @where = default;
-            IList<FilterBlobItem> blobs = default;
+            IList<FilterBlobItem> blobItems = default;
             string nextMarker = default;
 
             foreach (var attr in element.Attributes())
@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.Models
                     {
                         array.Add(FilterBlobItem.DeserializeFilterBlobItem(e, options));
                     }
-                    blobs = array;
+                    blobItems = array;
                     continue;
                 }
                 if (localName == "NextMarker")
@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker);
+            return new FilterBlobSegment(serviceEndpoint, @where, blobItems, nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

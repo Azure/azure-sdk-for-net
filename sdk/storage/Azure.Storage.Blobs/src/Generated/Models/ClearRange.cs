@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The clear range. </summary>
+    /// <summary> A clear range. </summary>
     internal partial class ClearRange
     {
         /// <summary> Initializes a new instance of <see cref="ClearRange"/>. </summary>

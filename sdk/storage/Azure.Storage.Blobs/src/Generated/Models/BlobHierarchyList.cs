@@ -12,20 +12,20 @@ using Azure.Storage.Blobs;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Represents an array of blobs. </summary>
-    internal partial class BlobHierarchyListSegment
+    internal partial class BlobHierarchyList
     {
-        /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobHierarchyList"/>. </summary>
         /// <param name="blobItems"> The blob items. </param>
-        internal BlobHierarchyListSegment(IEnumerable<BlobItemInternal> blobItems)
+        internal BlobHierarchyList(IEnumerable<BlobItemInternal> blobItems)
         {
             BlobItems = blobItems.ToList();
             BlobPrefixes = new ChangeTrackingList<BlobPrefix>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobHierarchyListSegment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobHierarchyList"/>. </summary>
         /// <param name="blobItems"> The blob items. </param>
         /// <param name="blobPrefixes"> The blob prefixes. </param>
-        internal BlobHierarchyListSegment(IList<BlobItemInternal> blobItems, IList<BlobPrefix> blobPrefixes)
+        internal BlobHierarchyList(IList<BlobItemInternal> blobItems, IList<BlobPrefix> blobPrefixes)
         {
             BlobItems = blobItems;
             BlobPrefixes = blobPrefixes;

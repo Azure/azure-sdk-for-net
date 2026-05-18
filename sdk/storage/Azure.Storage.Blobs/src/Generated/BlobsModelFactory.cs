@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Models
                 cors.ToList());
         }
 
-        /// <summary> Azure Analytics Logging settings. </summary>
+        /// <summary> Azure Analytics logging settings. </summary>
         /// <param name="version"></param>
         /// <param name="delete"></param>
         /// <param name="read"></param>
@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> The retention policy. </summary>
-        /// <param name="enabled"> Whether to enable the retention policy. </param>
+        /// <param name="enabled"> Whether the policy is enabled. </param>
         /// <param name="days"> The number of days to retain the logs. </param>
         /// <param name="allowPermanentDelete"> Whether to allow permanent delete. </param>
         /// <returns> A new <see cref="Models.BlobRetentionPolicy"/> instance for mocking. </returns>
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> The metrics properties. </summary>
         /// <param name="version"> The version of the metrics properties. </param>
-        /// <param name="enabled"> Whether it is enabled. </param>
+        /// <param name="enabled"> Whether the metrics are enabled. </param>
         /// <param name="includeApis"> Whether to include API in the metrics. </param>
         /// <param name="retentionPolicy"> The retention policy of the metrics. </param>
         /// <returns> A new <see cref="Models.BlobMetrics"/> instance for mocking. </returns>
@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
         }
 
-        /// <summary> CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain. </summary>
+        /// <summary> A Cross-Origin Resource Sharing (CORS) rule. </summary>
         /// <param name="allowedOrigins"></param>
         /// <param name="allowedMethods"></param>
         /// <param name="allowedHeaders"></param>
@@ -94,7 +94,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
         }
 
-        /// <summary> The signed identifier. </summary>
+        /// <summary> A signed identifier. </summary>
         /// <param name="id"></param>
         /// <param name="accessPolicy"></param>
         /// <returns> A new <see cref="Models.BlobSignedIdentifier"/> instance for mocking. </returns>
@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Represents an access policy. </summary>
         /// <param name="policyStartsOn"> The date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
-        /// <param name="permissions"> The permissions for acl the policy. </param>
+        /// <param name="permissions"> The permissions for the policy. </param>
         /// <returns> A new <see cref="Models.BlobAccessPolicy"/> instance for mocking. </returns>
         public static BlobAccessPolicy BlobAccessPolicy(DateTimeOffset? policyStartsOn = default, DateTimeOffset? policyExpiresOn = default, string permissions = default)
         {

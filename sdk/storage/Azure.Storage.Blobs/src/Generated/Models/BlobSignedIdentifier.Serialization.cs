@@ -15,7 +15,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The signed identifier. </summary>
+    /// <summary> A signed identifier. </summary>
     public partial class BlobSignedIdentifier : IPersistableModel<BlobSignedIdentifier>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

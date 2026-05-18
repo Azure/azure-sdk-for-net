@@ -11,7 +11,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobRetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="BlobRetentionPolicy"/>. </summary>
-        /// <param name="enabled"> Whether to enable the retention policy. </param>
+        /// <param name="enabled"> Whether the policy is enabled. </param>
         /// <param name="days"> The number of days to retain the logs. </param>
         /// <param name="allowPermanentDelete"> Whether to allow permanent delete. </param>
         internal BlobRetentionPolicy(bool enabled, int? days, bool? allowPermanentDelete)
@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
             AllowPermanentDelete = allowPermanentDelete;
         }
 
-        /// <summary> Whether to enable the retention policy. </summary>
+        /// <summary> Whether the policy is enabled. </summary>
         public bool Enabled { get; set; }
 
         /// <summary> The number of days to retain the logs. </summary>

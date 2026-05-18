@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The signed identifier. </summary>
+    /// <summary> A signed identifier. </summary>
     public partial class BlobSignedIdentifier
     {
         /// <summary> The unique ID for the signed identifier. </summary>

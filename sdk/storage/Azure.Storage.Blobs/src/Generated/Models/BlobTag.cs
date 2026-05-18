@@ -10,7 +10,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The blob tags. </summary>
+    /// <summary> A key-value pair associated with a blob. </summary>
     internal partial class BlobTag
     {
         /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>

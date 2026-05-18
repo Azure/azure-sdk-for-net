@@ -12,11 +12,11 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents an array of signed identifiers. </summary>
+    /// <summary> List of signed identifiers. </summary>
     internal partial class BlobSignedIdentifiers
     {
         /// <summary> Initializes a new instance of <see cref="BlobSignedIdentifiers"/>. </summary>
-        /// <param name="items"> The array of signed identifiers. </param>
+        /// <param name="items"> The list of signed identifiers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="items"/> is null. </exception>
         public BlobSignedIdentifiers(IEnumerable<BlobSignedIdentifier> items)
         {
@@ -26,13 +26,13 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobSignedIdentifiers"/>. </summary>
-        /// <param name="items"> The array of signed identifiers. </param>
+        /// <param name="items"> The list of signed identifiers. </param>
         internal BlobSignedIdentifiers(IList<BlobSignedIdentifier> items)
         {
             Items = items;
         }
 
-        /// <summary> The array of signed identifiers. </summary>
+        /// <summary> The list of signed identifiers. </summary>
         public IList<BlobSignedIdentifier> Items { get; }
     }
 }

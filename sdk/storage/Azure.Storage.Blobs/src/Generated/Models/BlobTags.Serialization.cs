@@ -17,7 +17,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents blob tags. </summary>
+    /// <summary> A list of blob tags. </summary>
     internal partial class BlobTags : IPersistableModel<BlobTags>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="BlobTags"/> for deserialization. </summary>

@@ -15,7 +15,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The filter blob item. </summary>
+    /// <summary> The filtered blob item. </summary>
     internal partial class FilterBlobItem : IPersistableModel<FilterBlobItem>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/> for deserialization. </summary>

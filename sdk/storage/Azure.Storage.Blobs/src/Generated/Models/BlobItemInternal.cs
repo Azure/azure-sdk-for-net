@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="name"> The name of the blob. </param>
         /// <param name="deleted"> Whether the blob is deleted. </param>
         /// <param name="snapshot"> The snapshot of the blob. </param>
-        /// <param name="versionId"> The version id of the blob. </param>
+        /// <param name="versionId"> The version ID of the blob. </param>
         /// <param name="isCurrentVersion"> Whether the blob is the current version. </param>
         /// <param name="properties"> The properties of the blob. </param>
         /// <param name="metadata"> The metadata of the blob. </param>
@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The snapshot of the blob. </summary>
         public string Snapshot { get; }
 
-        /// <summary> The version id of the blob. </summary>
+        /// <summary> The version ID of the blob. </summary>
         public string VersionId { get; }
 
         /// <summary> Whether the blob is the current version. </summary>

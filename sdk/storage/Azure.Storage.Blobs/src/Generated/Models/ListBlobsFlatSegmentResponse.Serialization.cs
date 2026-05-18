@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -16,7 +17,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An enumeration of blobs. </summary>
+    /// <summary> The result of the List Blobs API. </summary>
     internal partial class ListBlobsFlatSegmentResponse : IPersistableModel<ListBlobsFlatSegmentResponse>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/> for deserialization. </summary>
@@ -143,7 +144,12 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("Blobs");
-            writer.WriteObjectValue(Segment, options);
+            foreach (BlobItemInternal item in BlobItems)
+            {
+                writer.WriteStartElement("Blob");
+                writer.WriteObjectValue(item, options);
+                writer.WriteEndElement();
+            }
             writer.WriteEndElement();
             if (Optional.IsDefined(NextMarker))
             {
@@ -167,7 +173,7 @@ namespace Azure.Storage.Blobs.Models
             string prefix = default;
             string marker = default;
             int? maxResults = default;
-            BlobFlatListSegment segment = default;
+            IList<BlobItemInternal> blobItems = default;
             string nextMarker = default;
 
             foreach (var attr in element.Attributes())
@@ -205,7 +211,12 @@ namespace Azure.Storage.Blobs.Models
                 }
                 if (localName == "Blobs")
                 {
-                    segment = BlobFlatListSegment.DeserializeBlobFlatListSegment(child, options);
+                    List<BlobItemInternal> array = new List<BlobItemInternal>();
+                    foreach (var e in child.Elements("Blob"))
+                    {
+                        array.Add(BlobItemInternal.DeserializeBlobItemInternal(e, options));
+                    }
+                    blobItems = array;
                     continue;
                 }
                 if (localName == "NextMarker")
@@ -220,7 +231,7 @@ namespace Azure.Storage.Blobs.Models
                 prefix,
                 marker,
                 maxResults,
-                segment,
+                blobItems,
                 nextMarker);
         }
 

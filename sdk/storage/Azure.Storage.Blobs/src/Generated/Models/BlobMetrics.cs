@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary> Initializes a new instance of <see cref="BlobMetrics"/>. </summary>
         /// <param name="version"> The version of the metrics properties. </param>
-        /// <param name="enabled"> Whether it is enabled. </param>
+        /// <param name="enabled"> Whether the metrics are enabled. </param>
         /// <param name="includeApis"> Whether to include API in the metrics. </param>
         /// <param name="retentionPolicy"> The retention policy of the metrics. </param>
         internal BlobMetrics(string version, bool enabled, bool? includeApis, BlobRetentionPolicy retentionPolicy)
@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> The version of the metrics properties. </summary>
         public string Version { get; set; }
 
-        /// <summary> Whether it is enabled. </summary>
+        /// <summary> Whether the metrics are enabled. </summary>
         public bool Enabled { get; set; }
 
         /// <summary> Whether to include API in the metrics. </summary>

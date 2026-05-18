@@ -15,7 +15,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents a single block in a block blob. It describes the block's ID and size. </summary>
+    /// <summary> Represents a single block in a block blob. </summary>
     public readonly partial struct BlobBlock : IPersistableModel<BlobBlock>, IPersistableModel<object>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

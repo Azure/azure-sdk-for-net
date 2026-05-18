@@ -16,7 +16,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An enumeration of blobs. </summary>
+    /// <summary> The result of the List Blobs Hierarchical API. </summary>
     internal partial class ListBlobsHierarchySegmentResponse : IPersistableModel<ListBlobsHierarchySegmentResponse>, IXmlSerializable
     {
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/> for deserialization. </summary>
@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("Blobs");
-            writer.WriteObjectValue(Segment, options);
+            writer.WriteObjectValue(HierarchicalList, options);
             writer.WriteEndElement();
             if (Optional.IsDefined(NextMarker))
             {
@@ -174,7 +174,7 @@ namespace Azure.Storage.Blobs.Models
             string prefix = default;
             string marker = default;
             int? maxResults = default;
-            BlobHierarchyListSegment segment = default;
+            BlobHierarchyList hierarchicalList = default;
             string nextMarker = default;
 
             foreach (var attr in element.Attributes())
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 if (localName == "Blobs")
                 {
-                    segment = BlobHierarchyListSegment.DeserializeBlobHierarchyListSegment(child, options);
+                    hierarchicalList = BlobHierarchyList.DeserializeBlobHierarchyList(child, options);
                     continue;
                 }
                 if (localName == "NextMarker")
@@ -233,7 +233,7 @@ namespace Azure.Storage.Blobs.Models
                 prefix,
                 marker,
                 maxResults,
-                segment,
+                hierarchicalList,
                 nextMarker);
         }
 

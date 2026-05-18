@@ -12,11 +12,11 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents blob tags. </summary>
+    /// <summary> A list of blob tags. </summary>
     internal partial class BlobTags
     {
         /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
-        /// <param name="blobTagSet"> Represents the blob tags. </param>
+        /// <param name="blobTagSet"> A list of blob tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTagSet"/> is null. </exception>
         public BlobTags(IEnumerable<BlobTag> blobTagSet)
         {
@@ -26,13 +26,13 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
-        /// <param name="blobTagSet"> Represents the blob tags. </param>
+        /// <param name="blobTagSet"> A list of blob tags. </param>
         internal BlobTags(IList<BlobTag> blobTagSet)
         {
             BlobTagSet = blobTagSet;
         }
 
-        /// <summary> Represents the blob tags. </summary>
+        /// <summary> A list of blob tags. </summary>
         public IList<BlobTag> BlobTagSet { get; }
     }
 }

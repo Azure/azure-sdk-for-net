@@ -17,7 +17,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents a page list. </summary>
+    /// <summary> The result of the Get Pages API. </summary>
     internal partial class PageList : IPersistableModel<PageList>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>
