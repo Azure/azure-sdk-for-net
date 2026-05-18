@@ -702,6 +702,7 @@ namespace Azure.Generator.Mgmt.Tests
         [Test]
         public void TestBackwardCompatDictionaryArgumentUsesConcreteDictionaryForInterfaceMismatch()
         {
+            ManagementMockHelpers.LoadMockPlugin();
             var oldIconFileUrisParam = new ParameterProvider("iconFileUris", $"", typeof(IDictionary<string, string>));
             var expectedType = new CSharpType(typeof(IReadOnlyDictionary<string, string>));
             var buildParameterArgument = typeof(ModelFactoryBackwardCompatHelper).GetMethod(

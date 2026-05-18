@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
@@ -51,17 +50,7 @@ namespace Azure.Generator.Management
         {
             if (provider is ModelFactoryProvider modelFactory)
             {
-                var methods = modelFactory.Methods.ToList();
-                ModelFactoryVisitor.AddBackwardCompatMethodsFromLastContractView(modelFactory, methods);
-                if (methods.Count != modelFactory.Methods.Count)
-                {
-                    modelFactory.Update(methods: methods);
-                }
-
-                // Model factory back-compat overloads can be synthesized from LastContractView
-                // after normal visitors run. Repair them here so the final methods being written
-                // preserve arguments that were moved into flattened model properties.
-                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory);
             }
 
             return base.GetWriter(provider);
@@ -123,7 +112,7 @@ namespace Azure.Generator.Management
         /// </summary>
         public override Task WriteAdditionalFiles(string outputPath)
         {
-            ModelFactoryVisitor.WriteSuppressedConstructorFactoryCompatibilityFile(outputPath);
+            ModelFactoryBackwardCompatHelper.WriteSuppressedConstructorFactoryCompatibilityFile(outputPath);
             return Task.CompletedTask;
         }
     }
