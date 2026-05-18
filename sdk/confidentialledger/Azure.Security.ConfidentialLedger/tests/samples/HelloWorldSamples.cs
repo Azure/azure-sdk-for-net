@@ -295,5 +295,56 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
         }
+
+        [Test]
+        public void WebFrontendQueuedSubmission()
+        {
+            #region Snippet:CreateClientWebFrontend
+
+#if SNIPPET
+            var ledgerClient = new ConfidentialLedgerClient(
+                ledgerEndpoint: new Uri("https://my-ledger-url.confidential-ledger.azure.com"),
+                credential: new DefaultAzureCredential(),
+                options: new ConfidentialLedgerClientOptions { UseWebFrontend = true });
+#else
+            var ledgerClient = new ConfidentialLedgerClient(
+                ledgerEndpoint: TestEnvironment.ConfidentialLedgerUrl,
+                credential: TestEnvironment.Credential,
+                options: new ConfidentialLedgerClientOptions { UseWebFrontend = true });
+#endif
+
+            #endregion
+
+            #region Snippet:PostLedgerEntryWaitUntilStarted
+
+            // When UseWebFrontend = true and waitUntil is Started, the SDK accepts a 202 Accepted
+            // response and returns an operation whose Id is the gateway-assigned operationId.
+            Operation operation = ledgerClient.PostLedgerEntry(
+                waitUntil: WaitUntil.Started,
+                RequestContent.Create(new { contents = "Hello from the Web Frontend!" }));
+
+            string operationId = operation.Id;
+            Console.WriteLine($"Submitted ledger entry. Operation Id: {operationId}");
+
+            // The application can persist operationId and exit. The submission is durable on the
+            // server for up to 24 hours.
+
+            #endregion
+
+            #region Snippet:RehydratePostLedgerEntryOperation
+
+            // Later, in a different process or after a restart, resume polling with the saved
+            // operation Id. Rehydration performs no I/O until you start polling.
+            Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
+
+            Response completed = resumed.WaitForCompletionResponse();
+
+            // Once committed, Operation.Id flips to the CCF transaction Id.
+            string transactionId = resumed.Id;
+            Console.WriteLine($"Operation {operationId} committed as transaction {transactionId}");
+            Console.WriteLine($"Final status: {completed.Status}");
+
+            #endregion
+        }
     }
 }
