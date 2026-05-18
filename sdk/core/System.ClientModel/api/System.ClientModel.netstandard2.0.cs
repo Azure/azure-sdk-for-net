@@ -262,14 +262,6 @@ namespace System.ClientModel.Primitives
         public string? CredentialSource { get { throw null; } set { } }
         public string? Key { get { throw null; } set { } }
     }
-    public abstract partial class DiscriminatorRouter
-    {
-        protected DiscriminatorRouter() { }
-        public virtual bool CanHandle(System.BinaryData data) { throw null; }
-        public virtual bool CanHandle(ref System.Text.Json.Utf8JsonReader reader) { throw null; }
-        public virtual object? Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual object? Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class GetTokenOptions
     {
         public const string AuthorizationUrlPropertyName = "authorizationUrl";
@@ -489,7 +481,6 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
-        public void AddDiscriminatorRouter<T>(System.ClientModel.Primitives.DiscriminatorRouter router) { }
         public void AddProxy<T>(System.ClientModel.Primitives.IJsonModel<T> proxy) { }
         public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
