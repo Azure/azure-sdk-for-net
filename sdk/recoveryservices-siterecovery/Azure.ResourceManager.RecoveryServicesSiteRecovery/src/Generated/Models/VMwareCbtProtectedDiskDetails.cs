@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="confidentialDiskEncryptionSetId"> The ConfidentialDiskEncryptionSet ARM Id. </param>
         /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
         /// <param name="seedBlobUri"> The uri of the seed blob. </param>
         /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
         /// <param name="diskSizeInGB"> The target disk size in GB. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, int? sectorSizeInBytes, long? iops, long? throughputInMbps, long? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string confidentialDiskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, int? sectorSizeInBytes, long? iops, long? throughputInMbps, long? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LogStorageAccountId = logStorageAccountId;
             LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
             DiskEncryptionSetId = diskEncryptionSetId;
+            ConfidentialDiskEncryptionSetId = confidentialDiskEncryptionSetId;
             SeedManagedDiskId = seedManagedDiskId;
             SeedBlobUri = seedBlobUri;
             TargetManagedDiskId = targetManagedDiskId;
@@ -93,6 +95,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; }
+
+        /// <summary> The ConfidentialDiskEncryptionSet ARM Id. </summary>
+        public string ConfidentialDiskEncryptionSetId { get; }
 
         /// <summary> The ARM Id of the seed managed disk. </summary>
         public string SeedManagedDiskId { get; }

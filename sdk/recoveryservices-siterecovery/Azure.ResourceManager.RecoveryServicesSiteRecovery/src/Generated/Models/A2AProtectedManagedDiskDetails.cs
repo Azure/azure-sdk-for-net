@@ -53,8 +53,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
+        /// <param name="recoveryNetworkAccessPolicy"> The network access policy for the recovery managed disk. </param>
+        /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
+        /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, DiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, DiskPublicNetworkAccess? recoveryPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -84,6 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             KekKeyVaultArmId = kekKeyVaultArmId;
             FailoverDiskName = failoverDiskName;
             TfoDiskName = tfoDiskName;
+            RecoveryNetworkAccessPolicy = recoveryNetworkAccessPolicy;
+            RecoveryDiskAccessId = recoveryDiskAccessId;
+            RecoveryPublicNetworkAccess = recoveryPublicNetworkAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -170,5 +176,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The test failover name for the managed disk. </summary>
         public string TfoDiskName { get; set; }
+
+        /// <summary> The network access policy for the recovery managed disk. </summary>
+        public DiskNetworkAccessPolicy? RecoveryNetworkAccessPolicy { get; set; }
+
+        /// <summary> The recovery disk access Arm Id. </summary>
+        public string RecoveryDiskAccessId { get; set; }
+
+        /// <summary> The public network access setting for the recovery managed disk. </summary>
+        public DiskPublicNetworkAccess? RecoveryPublicNetworkAccess { get; set; }
     }
 }

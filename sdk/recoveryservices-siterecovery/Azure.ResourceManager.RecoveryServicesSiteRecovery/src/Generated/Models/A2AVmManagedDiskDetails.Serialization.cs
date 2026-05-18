@@ -106,6 +106,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo, options);
             }
+            if (Optional.IsDefined(RecoveryNetworkAccessPolicy))
+            {
+                writer.WritePropertyName("recoveryNetworkAccessPolicy"u8);
+                writer.WriteStringValue(RecoveryNetworkAccessPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(RecoveryDiskAccessId))
+            {
+                writer.WritePropertyName("recoveryDiskAccessId"u8);
+                writer.WriteStringValue(RecoveryDiskAccessId);
+            }
+            if (Optional.IsDefined(RecoveryPublicNetworkAccess))
+            {
+                writer.WritePropertyName("recoveryPublicNetworkAccess"u8);
+                writer.WriteStringValue(RecoveryPublicNetworkAccess.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,6 +170,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string recoveryTargetDiskAccountType = default;
             ResourceIdentifier recoveryDiskEncryptionSetId = default;
             SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            DiskNetworkAccessPolicy? recoveryNetworkAccessPolicy = default;
+            string recoveryDiskAccessId = default;
+            DiskPublicNetworkAccess? recoveryPublicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -201,6 +219,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("recoveryNetworkAccessPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryNetworkAccessPolicy = new DiskNetworkAccessPolicy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("recoveryDiskAccessId"u8))
+                {
+                    recoveryDiskAccessId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryPublicNetworkAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPublicNetworkAccess = new DiskPublicNetworkAccess(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -214,6 +255,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryTargetDiskAccountType,
                 recoveryDiskEncryptionSetId,
                 diskEncryptionInfo,
+                recoveryNetworkAccessPolicy,
+                recoveryDiskAccessId,
+                recoveryPublicNetworkAccess,
                 additionalBinaryDataProperties);
         }
     }

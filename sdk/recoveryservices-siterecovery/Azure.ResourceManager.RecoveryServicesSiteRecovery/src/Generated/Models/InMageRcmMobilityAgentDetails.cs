@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageRcmMobilityAgentDetails()
         {
             ReasonsBlockingUpgrade = new ChangeTrackingList<AgentUpgradeBlockedReason>();
-            AgentReinstallState = new ChangeTrackingList<MobilityAgentReinstallType>();
             ReasonsBlockingReinstall = new ChangeTrackingList<AgentReinstallBlockedReason>();
             ReasonsBlockingReinstallDetails = new ChangeTrackingList<InMageRcmAgentReinstallBlockingErrorDetails>();
         }
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="reasonsBlockingReinstall"> whether reinstall is possible or not. </param>
         /// <param name="reasonsBlockingReinstallDetails"> whether reinstall is possible or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, IReadOnlyList<MobilityAgentReinstallType> agentReinstallState, string lastAgentReinstallType, string agentReinstallJobId, string agentReinstallAttemptToVersion, string osFamilyName, string distroName, string distroNameForWhichAgentIsInstalled, bool? isAgentUpgradeable, bool? isAgentReinstallRequired, bool? isLastReinstallSuccessful, IReadOnlyList<AgentReinstallBlockedReason> reasonsBlockingReinstall, IReadOnlyList<InMageRcmAgentReinstallBlockingErrorDetails> reasonsBlockingReinstallDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, MobilityAgentReinstallType? agentReinstallState, string lastAgentReinstallType, string agentReinstallJobId, string agentReinstallAttemptToVersion, string osFamilyName, string distroName, string distroNameForWhichAgentIsInstalled, bool? isAgentUpgradeable, bool? isAgentReinstallRequired, bool? isLastReinstallSuccessful, IReadOnlyList<AgentReinstallBlockedReason> reasonsBlockingReinstall, IReadOnlyList<InMageRcmAgentReinstallBlockingErrorDetails> reasonsBlockingReinstallDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             LatestVersion = latestVersion;
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string IsUpgradeable { get; }
 
         /// <summary> The agent auto reinstall state. </summary>
-        public IReadOnlyList<MobilityAgentReinstallType> AgentReinstallState { get; }
+        public MobilityAgentReinstallType? AgentReinstallState { get; }
 
         /// <summary> The last agent reinstall type. </summary>
         public string LastAgentReinstallType { get; }

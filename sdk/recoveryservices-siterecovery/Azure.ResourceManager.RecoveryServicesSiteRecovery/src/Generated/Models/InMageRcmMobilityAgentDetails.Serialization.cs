@@ -129,15 +129,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("isUpgradeable"u8);
                 writer.WriteStringValue(IsUpgradeable);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AgentReinstallState))
+            if (options.Format != "W" && Optional.IsDefined(AgentReinstallState))
             {
                 writer.WritePropertyName("agentReinstallState"u8);
-                writer.WriteStartArray();
-                foreach (MobilityAgentReinstallType item in AgentReinstallState)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(AgentReinstallState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(LastAgentReinstallType))
             {
@@ -256,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DateTimeOffset? lastHeartbeatReceivedOn = default;
             IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default;
             string isUpgradeable = default;
-            IReadOnlyList<MobilityAgentReinstallType> agentReinstallState = default;
+            MobilityAgentReinstallType? agentReinstallState = default;
             string lastAgentReinstallType = default;
             string agentReinstallJobId = default;
             string agentReinstallAttemptToVersion = default;
@@ -348,12 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<MobilityAgentReinstallType> array = new List<MobilityAgentReinstallType>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new MobilityAgentReinstallType(item.GetString()));
-                    }
-                    agentReinstallState = array;
+                    agentReinstallState = new MobilityAgentReinstallType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastAgentReinstallType"u8))
@@ -457,7 +447,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 lastHeartbeatReceivedOn,
                 reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>(),
                 isUpgradeable,
-                agentReinstallState ?? new ChangeTrackingList<MobilityAgentReinstallType>(),
+                agentReinstallState,
                 lastAgentReinstallType,
                 agentReinstallJobId,
                 agentReinstallAttemptToVersion,

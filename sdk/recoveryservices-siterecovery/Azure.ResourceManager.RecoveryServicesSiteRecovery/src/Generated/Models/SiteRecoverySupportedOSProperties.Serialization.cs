@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(SupportedOSListInternal))
+            if (Optional.IsCollectionDefined(SupportedOSList))
             {
                 writer.WritePropertyName("supportedOsList"u8);
                 writer.WriteStartArray();
-                foreach (SiteRecoverySupportedOSProperty item in SupportedOSListInternal)
+                foreach (SiteRecoverySupportedOSProperty item in SupportedOSList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            IList<SiteRecoverySupportedOSProperty> supportedOSListInternal = default;
+            IList<SiteRecoverySupportedOSProperty> supportedOSList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         array.Add(SiteRecoverySupportedOSProperty.DeserializeSiteRecoverySupportedOSProperty(item, options));
                     }
-                    supportedOSListInternal = array;
+                    supportedOSList = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SiteRecoverySupportedOSProperties(supportedOSListInternal ?? new ChangeTrackingList<SiteRecoverySupportedOSProperty>(), additionalBinaryDataProperties);
+            return new SiteRecoverySupportedOSProperties(supportedOSList ?? new ChangeTrackingList<SiteRecoverySupportedOSProperty>(), additionalBinaryDataProperties);
         }
     }
 }

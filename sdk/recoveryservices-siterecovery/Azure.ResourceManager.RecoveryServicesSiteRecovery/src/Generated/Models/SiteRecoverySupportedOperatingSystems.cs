@@ -43,14 +43,5 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
-
-        /// <summary> The supported operating systems property list. </summary>
-        public IList<SiteRecoverySupportedOSProperty> SupportedOSListInternal
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SupportedOSListInternal;
-            }
-        }
     }
 }

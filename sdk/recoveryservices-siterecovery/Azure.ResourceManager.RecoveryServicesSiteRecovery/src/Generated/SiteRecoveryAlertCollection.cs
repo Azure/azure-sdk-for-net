@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             TryGetApiVersion(SiteRecoveryAlertResource.ResourceType, out string siteRecoveryAlertApiVersion);
             _resourceName = resourceName;
             _replicationAlertSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryAlertResource.ResourceType.Namespace, Diagnostics);
-            _replicationAlertSettingsRestClient = new ReplicationAlertSettings(_replicationAlertSettingsClientDiagnostics, Pipeline, Endpoint, siteRecoveryAlertApiVersion ?? "2026-01-01");
+            _replicationAlertSettingsRestClient = new ReplicationAlertSettings(_replicationAlertSettingsClientDiagnostics, Pipeline, Endpoint, siteRecoveryAlertApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>

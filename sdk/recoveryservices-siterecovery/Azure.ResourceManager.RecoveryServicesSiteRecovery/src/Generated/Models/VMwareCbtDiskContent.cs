@@ -44,12 +44,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="confidentialDiskEncryptionSetId"> The ConfidentialDiskEncryptionSet ARM Id. </param>
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="iops"> The number of IOPS allowed for Premium V2 and Ultra disks. </param>
         /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
         /// <param name="diskSizeInGB"> The target disk size in GB. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes, long? iops, long? throughputInMbps, long? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string confidentialDiskEncryptionSetId, int? sectorSizeInBytes, long? iops, long? throughputInMbps, long? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             DiskType = diskType;
@@ -57,6 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LogStorageAccountId = logStorageAccountId;
             LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
             DiskEncryptionSetId = diskEncryptionSetId;
+            ConfidentialDiskEncryptionSetId = confidentialDiskEncryptionSetId;
             SectorSizeInBytes = sectorSizeInBytes;
             Iops = iops;
             ThroughputInMbps = throughputInMbps;
@@ -81,6 +83,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
+
+        /// <summary> The ConfidentialDiskEncryptionSet ARM Id. </summary>
+        public string ConfidentialDiskEncryptionSetId { get; set; }
 
         /// <summary> The logical sector size (in bytes), 512 by default. </summary>
         public int? SectorSizeInBytes { get; set; }

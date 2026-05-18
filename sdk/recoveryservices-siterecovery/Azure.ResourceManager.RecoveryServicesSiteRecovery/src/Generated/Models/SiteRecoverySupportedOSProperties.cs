@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSProperties"/>. </summary>
         internal SiteRecoverySupportedOSProperties()
         {
-            SupportedOSListInternal = new ChangeTrackingList<SiteRecoverySupportedOSProperty>();
+            SupportedOSList = new ChangeTrackingList<SiteRecoverySupportedOSProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSProperties"/>. </summary>
-        /// <param name="supportedOSListInternal"> The supported operating systems property list. </param>
+        /// <param name="supportedOSList"> The supported operating systems property list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoverySupportedOSProperties(IList<SiteRecoverySupportedOSProperty> supportedOSListInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteRecoverySupportedOSProperties(IList<SiteRecoverySupportedOSProperty> supportedOSList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SupportedOSListInternal = supportedOSListInternal;
+            SupportedOSList = supportedOSList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The supported operating systems property list. </summary>
-        public IList<SiteRecoverySupportedOSProperty> SupportedOSListInternal { get; }
+        public IList<SiteRecoverySupportedOSProperty> SupportedOSList { get; }
     }
 }

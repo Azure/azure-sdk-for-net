@@ -437,8 +437,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
+        /// <param name="recoveryNetworkAccessPolicy"> The network access policy for the recovery managed disk. </param>
+        /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
+        /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
         /// <returns> A new <see cref="Models.A2AProtectedManagedDiskDetails"/> instance for mocking. </returns>
-        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = default, ResourceIdentifier recoveryResourceGroupId = default, ResourceIdentifier recoveryTargetDiskId = default, ResourceIdentifier recoveryReplicaDiskId = default, ResourceIdentifier recoveryOrignalTargetDiskId = default, string recoveryReplicaDiskAccountType = default, string recoveryTargetDiskAccountType = default, ResourceIdentifier recoveryDiskEncryptionSetId = default, ResourceIdentifier primaryDiskEncryptionSetId = default, string diskName = default, long? diskCapacityInBytes = default, ResourceIdentifier primaryStagingAzureStorageAccountId = default, string diskType = default, bool? isResyncRequired = default, int? monitoringPercentageCompletion = default, string monitoringJobType = default, double? dataPendingInStagingStorageAccountInMB = default, double? dataPendingAtSourceAgentInMB = default, string diskState = default, IEnumerable<string> allowedDiskLevelOperation = default, bool? isDiskEncrypted = default, string secretIdentifier = default, ResourceIdentifier dekKeyVaultArmId = default, bool? isDiskKeyEncrypted = default, string keyIdentifier = default, ResourceIdentifier kekKeyVaultArmId = default, string failoverDiskName = default, string tfoDiskName = default)
+        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = default, ResourceIdentifier recoveryResourceGroupId = default, ResourceIdentifier recoveryTargetDiskId = default, ResourceIdentifier recoveryReplicaDiskId = default, ResourceIdentifier recoveryOrignalTargetDiskId = default, string recoveryReplicaDiskAccountType = default, string recoveryTargetDiskAccountType = default, ResourceIdentifier recoveryDiskEncryptionSetId = default, ResourceIdentifier primaryDiskEncryptionSetId = default, string diskName = default, long? diskCapacityInBytes = default, ResourceIdentifier primaryStagingAzureStorageAccountId = default, string diskType = default, bool? isResyncRequired = default, int? monitoringPercentageCompletion = default, string monitoringJobType = default, double? dataPendingInStagingStorageAccountInMB = default, double? dataPendingAtSourceAgentInMB = default, string diskState = default, IEnumerable<string> allowedDiskLevelOperation = default, bool? isDiskEncrypted = default, string secretIdentifier = default, ResourceIdentifier dekKeyVaultArmId = default, bool? isDiskKeyEncrypted = default, string keyIdentifier = default, ResourceIdentifier kekKeyVaultArmId = default, string failoverDiskName = default, string tfoDiskName = default, DiskNetworkAccessPolicy? recoveryNetworkAccessPolicy = default, string recoveryDiskAccessId = default, DiskPublicNetworkAccess? recoveryPublicNetworkAccess = default)
         {
             allowedDiskLevelOperation ??= new ChangeTrackingList<string>();
 
@@ -471,6 +474,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 kekKeyVaultArmId,
                 failoverDiskName,
                 tfoDiskName,
+                recoveryNetworkAccessPolicy,
+                recoveryDiskAccessId,
+                recoveryPublicNetworkAccess,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1506,6 +1512,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskState"> The disk state. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="confidentialDiskEncryptionSetId"> The ConfidentialDiskEncryptionSet ARM Id. </param>
         /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
         /// <param name="seedBlobUri"> The uri of the seed blob. </param>
         /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
@@ -1521,7 +1528,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
         /// <param name="diskSizeInGB"> The target disk size in GB. </param>
         /// <returns> A new <see cref="Models.InMageRcmProtectedDiskDetails"/> instance for mocking. </returns>
-        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = default, string diskName = default, string isOSDisk = default, long? capacityInBytes = default, RecoveryServicesSiteRecoveryDiskState? diskState = default, ResourceIdentifier logStorageAccountId = default, ResourceIdentifier diskEncryptionSetId = default, string seedManagedDiskId = default, Uri seedBlobUri = default, string targetManagedDiskId = default, SiteRecoveryDiskAccountType? diskType = default, double? dataPendingInLogDataStoreInMB = default, double? dataPendingAtSourceAgentInMB = default, string isInitialReplicationComplete = default, InMageRcmSyncDetails irDetails = default, InMageRcmSyncDetails resyncDetails = default, string customTargetDiskName = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
+        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = default, string diskName = default, string isOSDisk = default, long? capacityInBytes = default, RecoveryServicesSiteRecoveryDiskState? diskState = default, ResourceIdentifier logStorageAccountId = default, ResourceIdentifier diskEncryptionSetId = default, string confidentialDiskEncryptionSetId = default, string seedManagedDiskId = default, Uri seedBlobUri = default, string targetManagedDiskId = default, SiteRecoveryDiskAccountType? diskType = default, double? dataPendingInLogDataStoreInMB = default, double? dataPendingAtSourceAgentInMB = default, string isInitialReplicationComplete = default, InMageRcmSyncDetails irDetails = default, InMageRcmSyncDetails resyncDetails = default, string customTargetDiskName = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
         {
             return new InMageRcmProtectedDiskDetails(
                 diskId,
@@ -1531,6 +1538,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 diskState,
                 logStorageAccountId,
                 diskEncryptionSetId,
+                confidentialDiskEncryptionSetId,
                 seedManagedDiskId,
                 seedBlobUri,
                 targetManagedDiskId,
@@ -1606,10 +1614,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="reasonsBlockingReinstall"> whether reinstall is possible or not. </param>
         /// <param name="reasonsBlockingReinstallDetails"> whether reinstall is possible or not. </param>
         /// <returns> A new <see cref="Models.InMageRcmMobilityAgentDetails"/> instance for mocking. </returns>
-        public static InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version = default, string latestVersion = default, string latestAgentReleaseDate = default, string driverVersion = default, string latestUpgradableVersionWithoutReboot = default, DateTimeOffset? agentVersionExpireOn = default, DateTimeOffset? driverVersionExpireOn = default, DateTimeOffset? lastHeartbeatReceivedOn = default, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default, string isUpgradeable = default, IEnumerable<MobilityAgentReinstallType> agentReinstallState = default, string lastAgentReinstallType = default, string agentReinstallJobId = default, string agentReinstallAttemptToVersion = default, string osFamilyName = default, string distroName = default, string distroNameForWhichAgentIsInstalled = default, bool? isAgentUpgradeable = default, bool? isAgentReinstallRequired = default, bool? isLastReinstallSuccessful = default, IEnumerable<AgentReinstallBlockedReason> reasonsBlockingReinstall = default, IEnumerable<InMageRcmAgentReinstallBlockingErrorDetails> reasonsBlockingReinstallDetails = default)
+        public static InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version = default, string latestVersion = default, string latestAgentReleaseDate = default, string driverVersion = default, string latestUpgradableVersionWithoutReboot = default, DateTimeOffset? agentVersionExpireOn = default, DateTimeOffset? driverVersionExpireOn = default, DateTimeOffset? lastHeartbeatReceivedOn = default, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default, string isUpgradeable = default, MobilityAgentReinstallType? agentReinstallState = default, string lastAgentReinstallType = default, string agentReinstallJobId = default, string agentReinstallAttemptToVersion = default, string osFamilyName = default, string distroName = default, string distroNameForWhichAgentIsInstalled = default, bool? isAgentUpgradeable = default, bool? isAgentReinstallRequired = default, bool? isLastReinstallSuccessful = default, IEnumerable<AgentReinstallBlockedReason> reasonsBlockingReinstall = default, IEnumerable<InMageRcmAgentReinstallBlockingErrorDetails> reasonsBlockingReinstallDetails = default)
         {
             reasonsBlockingUpgrade ??= new ChangeTrackingList<AgentUpgradeBlockedReason>();
-            agentReinstallState ??= new ChangeTrackingList<MobilityAgentReinstallType>();
             reasonsBlockingReinstall ??= new ChangeTrackingList<AgentReinstallBlockedReason>();
             reasonsBlockingReinstallDetails ??= new ChangeTrackingList<InMageRcmAgentReinstallBlockingErrorDetails>();
 
@@ -1624,7 +1631,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 lastHeartbeatReceivedOn,
                 reasonsBlockingUpgrade.ToList(),
                 isUpgradeable,
-                agentReinstallState.ToList(),
+                agentReinstallState,
                 lastAgentReinstallType,
                 agentReinstallJobId,
                 agentReinstallAttemptToVersion,
@@ -2018,8 +2025,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
         /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
+        /// <param name="recoveryNetworkAccessPolicy"> The network access policy for the recovery managed disk. </param>
+        /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
+        /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
         /// <returns> A new <see cref="Models.A2AVmManagedDiskDetails"/> instance for mocking. </returns>
-        public static A2AVmManagedDiskDetails A2AVmManagedDiskDetails(string diskId = default, ResourceIdentifier primaryStagingAzureStorageAccountId = default, ResourceIdentifier recoveryResourceGroupId = default, string recoveryReplicaDiskAccountType = default, string recoveryTargetDiskAccountType = default, ResourceIdentifier recoveryDiskEncryptionSetId = default, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default)
+        public static A2AVmManagedDiskDetails A2AVmManagedDiskDetails(string diskId = default, ResourceIdentifier primaryStagingAzureStorageAccountId = default, ResourceIdentifier recoveryResourceGroupId = default, string recoveryReplicaDiskAccountType = default, string recoveryTargetDiskAccountType = default, ResourceIdentifier recoveryDiskEncryptionSetId = default, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default, DiskNetworkAccessPolicy? recoveryNetworkAccessPolicy = default, string recoveryDiskAccessId = default, DiskPublicNetworkAccess? recoveryPublicNetworkAccess = default)
         {
             return new A2AVmManagedDiskDetails(
                 diskId,
@@ -2029,6 +2039,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryTargetDiskAccountType,
                 recoveryDiskEncryptionSetId,
                 diskEncryptionInfo,
+                recoveryNetworkAccessPolicy,
+                recoveryDiskAccessId,
+                recoveryPublicNetworkAccess,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2296,18 +2309,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="confidentialDiskEncryptionSetId"> The ConfidentialDiskEncryptionSet ARM Id. </param>
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="iops"> The number of IOPS allowed for Premium V2 and Ultra disks. </param>
         /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
         /// <param name="diskSizeInGB"> The target disk size in GB. </param>
         /// <returns> A new <see cref="Models.InMageRcmDiskContent"/> instance for mocking. </returns>
-        public static InMageRcmDiskContent InMageRcmDiskContent(string diskId = default, ResourceIdentifier logStorageAccountId = default, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
+        public static InMageRcmDiskContent InMageRcmDiskContent(string diskId = default, ResourceIdentifier logStorageAccountId = default, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = default, string confidentialDiskEncryptionSetId = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
         {
             return new InMageRcmDiskContent(
                 diskId,
                 logStorageAccountId,
                 diskType,
                 diskEncryptionSetId,
+                confidentialDiskEncryptionSetId,
                 sectorSizeInBytes,
                 iops,
                 throughputInMbps,
@@ -2319,17 +2334,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="confidentialDiskEncryptionSetId"> The ConfidentialDiskEncryptionSet ARM Id. </param>
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="iops"> The number of IOPS allowed for Premium V2 and Ultra disks. </param>
         /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
         /// <param name="diskSizeInGB"> The target disk size in GB. </param>
         /// <returns> A new <see cref="Models.InMageRcmDisksDefaultContent"/> instance for mocking. </returns>
-        public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId = default, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
+        public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId = default, SiteRecoveryDiskAccountType diskType = default, ResourceIdentifier diskEncryptionSetId = default, string confidentialDiskEncryptionSetId = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
         {
             return new InMageRcmDisksDefaultContent(
                 logStorageAccountId,
                 diskType,
                 diskEncryptionSetId,
+                confidentialDiskEncryptionSetId,
                 sectorSizeInBytes,
                 iops,
                 throughputInMbps,
@@ -5098,6 +5115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="confidentialDiskEncryptionSetId"> The ConfidentialDiskEncryptionSet ARM Id. </param>
         /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
         /// <param name="seedBlobUri"> The uri of the seed blob. </param>
         /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
@@ -5109,7 +5127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
         /// <param name="diskSizeInGB"> The target disk size in GB. </param>
         /// <returns> A new <see cref="Models.VMwareCbtProtectedDiskDetails"/> instance for mocking. </returns>
-        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = default, string diskName = default, SiteRecoveryDiskAccountType? diskType = default, string diskPath = default, string isOSDisk = default, long? capacityInBytes = default, ResourceIdentifier logStorageAccountId = default, string logStorageAccountSasSecretName = default, ResourceIdentifier diskEncryptionSetId = default, string seedManagedDiskId = default, Uri seedBlobUri = default, string targetManagedDiskId = default, Uri targetBlobUri = default, string targetDiskName = default, GatewayOperationDetails gatewayOperationDetails = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
+        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = default, string diskName = default, SiteRecoveryDiskAccountType? diskType = default, string diskPath = default, string isOSDisk = default, long? capacityInBytes = default, ResourceIdentifier logStorageAccountId = default, string logStorageAccountSasSecretName = default, ResourceIdentifier diskEncryptionSetId = default, string confidentialDiskEncryptionSetId = default, string seedManagedDiskId = default, Uri seedBlobUri = default, string targetManagedDiskId = default, Uri targetBlobUri = default, string targetDiskName = default, GatewayOperationDetails gatewayOperationDetails = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
         {
             return new VMwareCbtProtectedDiskDetails(
                 diskId,
@@ -5121,6 +5139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 logStorageAccountId,
                 logStorageAccountSasSecretName,
                 diskEncryptionSetId,
+                confidentialDiskEncryptionSetId,
                 seedManagedDiskId,
                 seedBlobUri,
                 targetManagedDiskId,
@@ -5333,12 +5352,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="confidentialDiskEncryptionSetId"> The ConfidentialDiskEncryptionSet ARM Id. </param>
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="iops"> The number of IOPS allowed for Premium V2 and Ultra disks. </param>
         /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
         /// <param name="diskSizeInGB"> The target disk size in GB. </param>
         /// <returns> A new <see cref="Models.VMwareCbtDiskContent"/> instance for mocking. </returns>
-        public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId = default, SiteRecoveryDiskAccountType? diskType = default, string isOSDisk = default, ResourceIdentifier logStorageAccountId = default, string logStorageAccountSasSecretName = default, ResourceIdentifier diskEncryptionSetId = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
+        public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId = default, SiteRecoveryDiskAccountType? diskType = default, string isOSDisk = default, ResourceIdentifier logStorageAccountId = default, string logStorageAccountSasSecretName = default, ResourceIdentifier diskEncryptionSetId = default, string confidentialDiskEncryptionSetId = default, int? sectorSizeInBytes = default, long? iops = default, long? throughputInMbps = default, long? diskSizeInGB = default)
         {
             return new VMwareCbtDiskContent(
                 diskId,
@@ -5347,6 +5367,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 logStorageAccountId,
                 logStorageAccountSasSecretName,
                 diskEncryptionSetId,
+                confidentialDiskEncryptionSetId,
                 sectorSizeInBytes,
                 iops,
                 throughputInMbps,
@@ -7438,6 +7459,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.A2AProtectedManagedDiskDetails"/>. </summary>
+        /// <param name="diskId"> The managed disk Arm id. </param>
+        /// <param name="recoveryResourceGroupId"> The recovery disk resource group Arm Id. </param>
+        /// <param name="recoveryTargetDiskId"> Recovery target disk Arm Id. </param>
+        /// <param name="recoveryReplicaDiskId"> Recovery replica disk Arm Id. </param>
+        /// <param name="recoveryOrignalTargetDiskId"> Recovery original target disk Arm Id. </param>
+        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
+        /// <param name="primaryDiskEncryptionSetId"> The primary disk encryption set Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
+        /// <param name="diskType"> The type of disk. </param>
+        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
+        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
+        /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
+        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
+        /// <param name="diskState"> The disk state. </param>
+        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
+        /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
+        /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
+        /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
+        /// <param name="isDiskKeyEncrypted"> A value indicating whether disk key got encrypted or not. </param>
+        /// <param name="keyIdentifier"> The key URL / identifier (KEK). </param>
+        /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
+        /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
+        /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
+        /// <returns> A new <see cref="Models.A2AProtectedManagedDiskDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IEnumerable<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
+        {
+            return A2AProtectedManagedDiskDetails(diskId: diskId, recoveryResourceGroupId: recoveryResourceGroupId, recoveryTargetDiskId: recoveryTargetDiskId, recoveryReplicaDiskId: recoveryReplicaDiskId, recoveryOrignalTargetDiskId: recoveryOrignalTargetDiskId, recoveryReplicaDiskAccountType: recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType: recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId: recoveryDiskEncryptionSetId, primaryDiskEncryptionSetId: primaryDiskEncryptionSetId, diskName: diskName, diskCapacityInBytes: diskCapacityInBytes, primaryStagingAzureStorageAccountId: primaryStagingAzureStorageAccountId, diskType: diskType, isResyncRequired: isResyncRequired, monitoringPercentageCompletion: monitoringPercentageCompletion, monitoringJobType: monitoringJobType, dataPendingInStagingStorageAccountInMB: dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, diskState: diskState, allowedDiskLevelOperation: allowedDiskLevelOperation, isDiskEncrypted: isDiskEncrypted, secretIdentifier: secretIdentifier, dekKeyVaultArmId: dekKeyVaultArmId, isDiskKeyEncrypted: isDiskKeyEncrypted, keyIdentifier: keyIdentifier, kekKeyVaultArmId: kekKeyVaultArmId, failoverDiskName: failoverDiskName, tfoDiskName: tfoDiskName, recoveryNetworkAccessPolicy: default, recoveryDiskAccessId: default, recoveryPublicNetworkAccess: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.A2AUnprotectedDiskDetails"/>. </summary>
         /// <param name="diskLunId"> The source lun Id for the data disk. </param>
         /// <param name="diskAutoProtectionStatus"> A value indicating whether the disk auto protection is enabled. </param>
@@ -7475,6 +7532,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 additionalBinaryDataProperties: null,
                 name,
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.A2AVmManagedDiskDetails"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Arm Id. </param>
+        /// <param name="recoveryResourceGroupId"> The target resource group Arm Id. </param>
+        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
+        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
+        /// <returns> A new <see cref="Models.A2AVmManagedDiskDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2AVmManagedDiskDetails A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo)
+        {
+            return A2AVmManagedDiskDetails(diskId: diskId, primaryStagingAzureStorageAccountId: primaryStagingAzureStorageAccountId, recoveryResourceGroupId: recoveryResourceGroupId, recoveryReplicaDiskAccountType: recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType: recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId: recoveryDiskEncryptionSetId, diskEncryptionInfo: diskEncryptionInfo, recoveryNetworkAccessPolicy: default, recoveryDiskAccessId: default, recoveryPublicNetworkAccess: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AEnableProtectionContent"/>. </summary>
@@ -7647,7 +7719,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmDiskContent InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes)
         {
-            return InMageRcmDiskContent(diskId: diskId, logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return InMageRcmDiskContent(diskId: diskId, logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDisksDefaultContent"/>. </summary>
@@ -7659,7 +7731,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes)
         {
-            return InMageRcmDisksDefaultContent(logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return InMageRcmDisksDefaultContent(logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmEnableProtectionContent"/>. </summary>
@@ -7737,7 +7809,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, RecoveryServicesSiteRecoveryDiskState? diskState, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails, string customTargetDiskName, int? sectorSizeInBytes)
         {
-            return InMageRcmProtectedDiskDetails(diskId: diskId, diskName: diskName, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, diskState: diskState, logStorageAccountId: logStorageAccountId, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, diskType: diskType, dataPendingInLogDataStoreInMB: dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, isInitialReplicationComplete: isInitialReplicationComplete, irDetails: irDetails, resyncDetails: resyncDetails, customTargetDiskName: customTargetDiskName, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return InMageRcmProtectedDiskDetails(diskId: diskId, diskName: diskName, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, diskState: diskState, logStorageAccountId: logStorageAccountId, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, diskType: diskType, dataPendingInLogDataStoreInMB: dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, isInitialReplicationComplete: isInitialReplicationComplete, irDetails: irDetails, resyncDetails: resyncDetails, customTargetDiskName: customTargetDiskName, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmReplicationDetails"/>. </summary>
@@ -7833,7 +7905,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes)
         {
-            return VMwareCbtDiskContent(diskId: diskId, diskType: diskType, isOSDisk: isOSDisk, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return VMwareCbtDiskContent(diskId: diskId, diskType: diskType, isOSDisk: isOSDisk, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtEnableMigrationContent"/>. </summary>
@@ -8056,7 +8128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, int? sectorSizeInBytes)
         {
-            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: gatewayOperationDetails, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: gatewayOperationDetails, sectorSizeInBytes: sectorSizeInBytes, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtUpdateDiskContent"/>. </summary>
@@ -8236,7 +8308,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmDiskContent InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
         {
-            return InMageRcmDiskContent(diskId: diskId, logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return InMageRcmDiskContent(diskId: diskId, logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmDisksDefaultContent"/>. </summary>
@@ -8247,7 +8319,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmDisksDefaultContent InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId)
         {
-            return InMageRcmDisksDefaultContent(logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return InMageRcmDisksDefaultContent(logStorageAccountId: logStorageAccountId, diskType: diskType, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmEnableProtectionContent"/>. </summary>
@@ -8332,7 +8404,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
         {
-            return InMageRcmProtectedDiskDetails(diskId: diskId, diskName: diskName, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, diskState: default, logStorageAccountId: logStorageAccountId, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, diskType: diskType, dataPendingInLogDataStoreInMB: dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, isInitialReplicationComplete: isInitialReplicationComplete, irDetails: irDetails, resyncDetails: resyncDetails, customTargetDiskName: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return InMageRcmProtectedDiskDetails(diskId: diskId, diskName: diskName, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, diskState: default, logStorageAccountId: logStorageAccountId, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, diskType: diskType, dataPendingInLogDataStoreInMB: dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, isInitialReplicationComplete: isInitialReplicationComplete, irDetails: irDetails, resyncDetails: resyncDetails, customTargetDiskName: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InMageRcmReplicationDetails"/>. </summary>
@@ -8416,7 +8488,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtDiskContent VMwareCbtDiskContent(string diskId, SiteRecoveryDiskAccountType? diskType, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId)
         {
-            return VMwareCbtDiskContent(diskId: diskId, diskType: diskType, isOSDisk: isOSDisk, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return VMwareCbtDiskContent(diskId: diskId, diskType: diskType, isOSDisk: isOSDisk, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtEnableMigrationContent"/>. </summary>
@@ -8634,7 +8706,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails)
         {
-            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: gatewayOperationDetails, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: gatewayOperationDetails, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VMwareCbtTestMigrateContent"/>. </summary>
@@ -8955,7 +9027,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName)
         {
-            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
+            return VMwareCbtProtectedDiskDetails(diskId: diskId, diskName: diskName, diskType: diskType, diskPath: diskPath, isOSDisk: isOSDisk, capacityInBytes: capacityInBytes, logStorageAccountId: logStorageAccountId, logStorageAccountSasSecretName: logStorageAccountSasSecretName, diskEncryptionSetId: diskEncryptionSetId, confidentialDiskEncryptionSetId: default, seedManagedDiskId: seedManagedDiskId, seedBlobUri: seedBlobUri, targetManagedDiskId: targetManagedDiskId, targetBlobUri: targetBlobUri, targetDiskName: targetDiskName, gatewayOperationDetails: default, sectorSizeInBytes: default, iops: default, throughputInMbps: default, diskSizeInGB: default);
         }
     }
 }

@@ -66,63 +66,63 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 
         private ClientDiagnostics ReplicationProtectedItemsClientDiagnostics => _replicationProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectedItems ReplicationProtectedItemsRestClient => _replicationProtectedItemsRestClient ??= new ReplicationProtectedItems(ReplicationProtectedItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationProtectedItems ReplicationProtectedItemsRestClient => _replicationProtectedItemsRestClient ??= new ReplicationProtectedItems(ReplicationProtectedItemsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationProtectionClustersClientDiagnostics => _replicationProtectionClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectionClusters ReplicationProtectionClustersRestClient => _replicationProtectionClustersRestClient ??= new ReplicationProtectionClusters(ReplicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationProtectionClusters ReplicationProtectionClustersRestClient => _replicationProtectionClustersRestClient ??= new ReplicationProtectionClusters(ReplicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationNetworksClientDiagnostics => _replicationNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationNetworks ReplicationNetworksRestClient => _replicationNetworksRestClient ??= new ReplicationNetworks(ReplicationNetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationNetworks ReplicationNetworksRestClient => _replicationNetworksRestClient ??= new ReplicationNetworks(ReplicationNetworksClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationNetworkMappingsClientDiagnostics => _replicationNetworkMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationNetworkMappings ReplicationNetworkMappingsRestClient => _replicationNetworkMappingsRestClient ??= new ReplicationNetworkMappings(ReplicationNetworkMappingsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationNetworkMappings ReplicationNetworkMappingsRestClient => _replicationNetworkMappingsRestClient ??= new ReplicationNetworkMappings(ReplicationNetworkMappingsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationProtectionContainersClientDiagnostics => _replicationProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectionContainers ReplicationProtectionContainersRestClient => _replicationProtectionContainersRestClient ??= new ReplicationProtectionContainers(ReplicationProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationProtectionContainers ReplicationProtectionContainersRestClient => _replicationProtectionContainersRestClient ??= new ReplicationProtectionContainers(ReplicationProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationMigrationItemsClientDiagnostics => _replicationMigrationItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationMigrationItems ReplicationMigrationItemsRestClient => _replicationMigrationItemsRestClient ??= new ReplicationMigrationItems(ReplicationMigrationItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationMigrationItems ReplicationMigrationItemsRestClient => _replicationMigrationItemsRestClient ??= new ReplicationMigrationItems(ReplicationMigrationItemsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationProtectionContainerMappingsClientDiagnostics => _replicationProtectionContainerMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationProtectionContainerMappings ReplicationProtectionContainerMappingsRestClient => _replicationProtectionContainerMappingsRestClient ??= new ReplicationProtectionContainerMappings(ReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationProtectionContainerMappings ReplicationProtectionContainerMappingsRestClient => _replicationProtectionContainerMappingsRestClient ??= new ReplicationProtectionContainerMappings(ReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationRecoveryServicesProvidersClientDiagnostics => _replicationRecoveryServicesProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationRecoveryServicesProviders ReplicationRecoveryServicesProvidersRestClient => _replicationRecoveryServicesProvidersRestClient ??= new ReplicationRecoveryServicesProviders(ReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationRecoveryServicesProviders ReplicationRecoveryServicesProvidersRestClient => _replicationRecoveryServicesProvidersRestClient ??= new ReplicationRecoveryServicesProviders(ReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationStorageClassificationsClientDiagnostics => _replicationStorageClassificationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationStorageClassifications ReplicationStorageClassificationsRestClient => _replicationStorageClassificationsRestClient ??= new ReplicationStorageClassifications(ReplicationStorageClassificationsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationStorageClassifications ReplicationStorageClassificationsRestClient => _replicationStorageClassificationsRestClient ??= new ReplicationStorageClassifications(ReplicationStorageClassificationsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationStorageClassificationMappingsClientDiagnostics => _replicationStorageClassificationMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationStorageClassificationMappings ReplicationStorageClassificationMappingsRestClient => _replicationStorageClassificationMappingsRestClient ??= new ReplicationStorageClassificationMappings(ReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationStorageClassificationMappings ReplicationStorageClassificationMappingsRestClient => _replicationStorageClassificationMappingsRestClient ??= new ReplicationStorageClassificationMappings(ReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationvCentersClientDiagnostics => _replicationvCentersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationvCenters ReplicationvCentersRestClient => _replicationvCentersRestClient ??= new ReplicationvCenters(ReplicationvCentersClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationvCenters ReplicationvCentersRestClient => _replicationvCentersRestClient ??= new ReplicationvCenters(ReplicationvCentersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationJobsClientDiagnostics => _replicationJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationJobs ReplicationJobsRestClient => _replicationJobsRestClient ??= new ReplicationJobs(ReplicationJobsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationJobs ReplicationJobsRestClient => _replicationJobsRestClient ??= new ReplicationJobs(ReplicationJobsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationAppliancesClientDiagnostics => _replicationAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationAppliances ReplicationAppliancesRestClient => _replicationAppliancesRestClient ??= new ReplicationAppliances(ReplicationAppliancesClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationAppliances ReplicationAppliancesRestClient => _replicationAppliancesRestClient ??= new ReplicationAppliances(ReplicationAppliancesClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics SupportedOperatingSystemsClientDiagnostics => _supportedOperatingSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SupportedOperatingSystems SupportedOperatingSystemsRestClient => _supportedOperatingSystemsRestClient ??= new SupportedOperatingSystems(SupportedOperatingSystemsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private SupportedOperatingSystems SupportedOperatingSystemsRestClient => _supportedOperatingSystemsRestClient ??= new SupportedOperatingSystems(SupportedOperatingSystemsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ReplicationVaultHealthClientDiagnostics => _replicationVaultHealthClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReplicationVaultHealth ReplicationVaultHealthRestClient => _replicationVaultHealthRestClient ??= new ReplicationVaultHealth(ReplicationVaultHealthClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private ReplicationVaultHealth ReplicationVaultHealthRestClient => _replicationVaultHealthRestClient ??= new ReplicationVaultHealth(ReplicationVaultHealthClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         /// <summary> Gets a collection of ReplicationProtectionIntents in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceName"> The resourceName for the resource. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1218,7 +1218,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1335,7 +1335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1627,7 +1627,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1685,7 +1685,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1767,7 +1767,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1817,7 +1817,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1867,7 +1867,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2021,7 +2021,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>

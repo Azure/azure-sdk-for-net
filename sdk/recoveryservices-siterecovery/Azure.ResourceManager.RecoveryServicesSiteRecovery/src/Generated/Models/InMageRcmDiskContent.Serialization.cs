@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
+            if (Optional.IsDefined(ConfidentialDiskEncryptionSetId))
+            {
+                writer.WritePropertyName("confidentialDiskEncryptionSetId"u8);
+                writer.WriteStringValue(ConfidentialDiskEncryptionSetId);
+            }
             if (Optional.IsDefined(SectorSizeInBytes))
             {
                 writer.WritePropertyName("sectorSizeInBytes"u8);
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier logStorageAccountId = default;
             SiteRecoveryDiskAccountType diskType = default;
             ResourceIdentifier diskEncryptionSetId = default;
+            string confidentialDiskEncryptionSetId = default;
             int? sectorSizeInBytes = default;
             long? iops = default;
             long? throughputInMbps = default;
@@ -186,6 +192,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         continue;
                     }
                     diskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("confidentialDiskEncryptionSetId"u8))
+                {
+                    confidentialDiskEncryptionSetId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sectorSizeInBytes"u8))
@@ -234,6 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 logStorageAccountId,
                 diskType,
                 diskEncryptionSetId,
+                confidentialDiskEncryptionSetId,
                 sectorSizeInBytes,
                 iops,
                 throughputInMbps,

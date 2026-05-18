@@ -42,8 +42,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
         /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
+        /// <param name="recoveryNetworkAccessPolicy"> The network access policy for the recovery managed disk. </param>
+        /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
+        /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, DiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, DiskPublicNetworkAccess? recoveryPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
@@ -52,6 +55,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
             RecoveryDiskEncryptionSetId = recoveryDiskEncryptionSetId;
             DiskEncryptionInfo = diskEncryptionInfo;
+            RecoveryNetworkAccessPolicy = recoveryNetworkAccessPolicy;
+            RecoveryDiskAccessId = recoveryDiskAccessId;
+            RecoveryPublicNetworkAccess = recoveryPublicNetworkAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,5 +81,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The recovery disk encryption information (for one / single pass flows). </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
+
+        /// <summary> The network access policy for the recovery managed disk. </summary>
+        public DiskNetworkAccessPolicy? RecoveryNetworkAccessPolicy { get; set; }
+
+        /// <summary> The recovery disk access Arm Id. </summary>
+        public string RecoveryDiskAccessId { get; set; }
+
+        /// <summary> The public network access setting for the recovery managed disk. </summary>
+        public DiskPublicNetworkAccess? RecoveryPublicNetworkAccess { get; set; }
     }
 }
