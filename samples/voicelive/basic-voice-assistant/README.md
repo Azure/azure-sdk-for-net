@@ -1,3 +1,14 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-ai-voicelive
+name: Azure VoiceLive Basic Voice Assistant sample for .NET
+description: Sample demonstrating fundamental capabilities of the Azure VoiceLive SDK with natural conversation and interruption handling.
+---
+
 # Basic Voice Assistant Sample
 
 This sample demonstrates the fundamental capabilities of the Azure VoiceLive SDK by creating a basic voice assistant that can engage in natural conversation with proper interruption handling. This serves as the foundational example that showcases the core value proposition of unified speech-to-speech interaction.
@@ -31,7 +42,7 @@ These methods eliminate the need to manually construct and populate `ClientEvent
 
 ## Prerequisites
 
-- .NET 8.0 or later
+- .NET 10.0 or later
 - Azure VoiceLive API key or Azure credential
 - Microphone and speakers/headphones
 - Audio drivers properly installed
