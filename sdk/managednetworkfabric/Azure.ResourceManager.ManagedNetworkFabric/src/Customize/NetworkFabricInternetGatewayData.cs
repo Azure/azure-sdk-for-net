@@ -32,10 +32,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> IPv4 Address of Internet Gateway. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("IPv4Address is deprecated, use IPV4Address instead")]
-        public IPAddress IPv4Address { get; }
-
-        /// <summary> IPv4 Address of Internet Gateway. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string IPV4Address => IPv4Address?.ToString();
+        public IPAddress IPv4Address => IPAddress.TryParse(IPV4Address, out IPAddress address) ? address : null;
     }
 }

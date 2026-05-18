@@ -26,7 +26,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, IPAddress ipv4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
         {
-            return NetworkFabricInternetGatewayData(id, name, resourceType, systemData, tags, location, annotation, internetGatewayRuleId, ipv4Address, port, typePropertiesType, networkFabricControllerId, provisioningState);
+            return NetworkFabricInternetGatewayData(id, name, resourceType, systemData, tags, location, annotation, internetGatewayRuleId, ipv4Address?.ToString(), port, typePropertiesType, networkFabricControllerId, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ResourceIdentifier internetGatewayRuleId = null, IPAddress iPv4Address = null, int? port = null, InternetGatewayType typePropertiesType = default, InternetGatewayType? internetGatewayType = null, ResourceIdentifier networkFabricControllerId = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null)
+        {
+            return NetworkFabricInternetGatewayData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                annotation: annotation,
+                internetGatewayRuleId: internetGatewayRuleId,
+                ipV4Address: iPv4Address?.ToString(),
+                port: port,
+                typePropertiesType: typePropertiesType,
+                internetGatewayType: internetGatewayType,
+                networkFabricControllerId: networkFabricControllerId,
+                lastOperationDetails: lastOperationDetails,
+                provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
@@ -42,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 location: location,
                 annotation: annotation,
                 internetGatewayRuleId: internetGatewayRuleId,
-                iPv4Address: iPV4Address is null ? null : IPAddress.Parse(iPV4Address),
+                ipV4Address: iPV4Address,
                 port: port,
                 typePropertiesType: typePropertiesType,
                 internetGatewayType: default,
@@ -144,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 physicalIdentifier: physicalIdentifier,
                 connectedTo: connectedTo,
                 interfaceType: interfaceType,
-                iPv4Address: iPv4Address,
+                ipv4Address: iPv4Address,
                 ipv6Address: ipv6Address,
                 description: default,
                 additionalDescription: default,

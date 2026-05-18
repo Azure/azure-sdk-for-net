@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
         /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
         /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
-        /// <param name="iPv4Address"> IPv4Address of the interface. </param>
+        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
         /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="description"> Description of the interface. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress iPv4Address, string ipv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Annotation = annotation;
             PhysicalIdentifier = physicalIdentifier;
             ConnectedTo = connectedTo;
             InterfaceType = interfaceType;
-            IPv4Address = iPv4Address;
+            IPv4Address = ipv4Address;
             IPv6Address = ipv6Address;
             Description = description;
             AdditionalDescription = additionalDescription;
