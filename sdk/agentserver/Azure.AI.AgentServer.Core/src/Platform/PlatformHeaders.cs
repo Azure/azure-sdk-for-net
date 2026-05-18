@@ -15,6 +15,11 @@ namespace Azure.AI.AgentServer.Core;
 ///   <item><see cref="ServerVersion"/> — server SDK identity.</item>
 ///   <item><see cref="SessionId"/> — resolved session ID (when applicable).</item>
 /// </list>
+/// <para><b>Error response headers</b> (set on 4xx/5xx responses):</para>
+/// <list type="bullet">
+///   <item><see cref="ErrorSource"/> — classifies error origin (<c>user</c>, <c>platform</c>, or <c>upstream</c>).</item>
+///   <item><see cref="ErrorDetail"/> — internal diagnostic detail for platform telemetry.</item>
+/// </list>
 /// <para><b>Request headers</b> (set by the platform or client):</para>
 /// <list type="bullet">
 ///   <item><see cref="RequestId"/> — client-provided correlation ID (echoed back on the response).</item>
@@ -76,6 +81,39 @@ public static class PlatformHeaders
     /// Logged for diagnostic correlation with upstream Azure SDK callers.
     /// </summary>
     public const string ClientRequestId = "x-ms-client-request-id";
+
+    /// <summary>
+    /// The <c>x-platform-error-source</c> header — classifies every error response
+    /// so the platform can route actionable errors to the right team.
+    /// Present on all 4xx/5xx responses from protocol endpoints.
+    /// Values: <c>user</c>, <c>platform</c>, <c>upstream</c>.
+    /// </summary>
+    public const string ErrorSource = "x-platform-error-source";
+
+    /// <summary>
+    /// The <c>x-platform-error-detail</c> header — internal diagnostic detail
+    /// for platform telemetry. Not intended for end-user display.
+    /// Present on error responses when additional diagnostic context is available.
+    /// </summary>
+    public const string ErrorDetail = "x-platform-error-detail";
+
+    /// <summary>
+    /// Error source value indicating the caller's input is invalid.
+    /// The caller can fix the request and retry.
+    /// </summary>
+    public const string ErrorSourceUser = "user";
+
+    /// <summary>
+    /// Error source value indicating the error was caused by the SDK, library,
+    /// or a platform dependency — not by the caller or the developer's handler.
+    /// </summary>
+    public const string ErrorSourcePlatform = "platform";
+
+    /// <summary>
+    /// Error source value indicating the developer's handler code or an external
+    /// service it called failed or returned incorrect behaviour.
+    /// </summary>
+    public const string ErrorSourceUpstream = "upstream";
 
     /// <summary>
     /// Key used to store the resolved request ID in <see cref="Microsoft.AspNetCore.Http.HttpContext.Items"/>.

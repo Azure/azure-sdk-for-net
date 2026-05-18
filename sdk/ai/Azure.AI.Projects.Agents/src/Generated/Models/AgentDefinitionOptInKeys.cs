@@ -14,6 +14,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> ContainerAgentsV1Preview. </summary>
         ContainerAgentsV1Preview,
         /// <summary> AgentEndpointV1Preview. </summary>
-        AgentEndpointV1Preview
+        AgentEndpointV1Preview,
+        /// <summary> CodeAgentsV1Preview. </summary>
+        CodeAgentsV1Preview
     }
 }

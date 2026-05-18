@@ -87,7 +87,8 @@ public class ConfigurationAndDISamples
 
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.AddClient<MyClient, MyClientSettings>("MyClient")
-            .PostConfigure(settings => settings.CredentialProvider = new MyTokenProvider());
+            .ConfigureCredential(credential =>
+                credential["Key"] = Environment.GetEnvironmentVariable("MY_API_KEY"));
 
         IServiceProvider provider = builder.Services.BuildServiceProvider();
 
@@ -124,8 +125,7 @@ public class ConfigurationAndDISamples
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
         // Register the resolver once. AddClient/AddKeyedClient will then
-        // auto-resolve credentials from the registered resolver chain — no
-        // PostConfigure(settings => settings.CredentialProvider = ...) needed.
+        // auto-resolve credentials from the registered resolver chain.
         builder.AddCredentialResolver<MyCredentialResolver>();
         builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
