@@ -104,8 +104,8 @@ public class MCPVoiceAssistant : IDisposable
         sessionOptions.Modalities.Add(InteractionModality.Text);
         sessionOptions.Modalities.Add(InteractionModality.Audio);
 
-        // Register MCP servers — both set to never require approval since
-        // MCPApprovalResponseRequestItem is not available for sending approvals from client code.
+        // Register MCP servers.
+        // Match Java sample behavior: deepwiki is auto-approved, azure_doc requires user approval.
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("deepwiki", "https://mcp.deepwiki.com/mcp")
         {
             RequireApproval = BinaryData.FromObjectAsJson("never"),
@@ -114,7 +114,7 @@ public class MCPVoiceAssistant : IDisposable
 
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("azure_doc", "https://learn.microsoft.com/api/mcp")
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never")
+            RequireApproval = BinaryData.FromObjectAsJson("always")
         });
 
         try
@@ -192,6 +192,10 @@ public class MCPVoiceAssistant : IDisposable
                 Console.WriteLine("[MCP] Tool call failed");
                 break;
 
+            case SessionUpdateConversationItemCreated itemCreated:
+                await HandleConversationItemCreatedAsync(itemCreated, cancellationToken).ConfigureAwait(false);
+                break;
+
             case SessionUpdateConversationItemInputAudioTranscriptionCompleted transcription:
                 Console.WriteLine($"[User]: {transcription.Transcript}");
                 _logger.LogInformation("User: {Transcript}", transcription.Transcript);
@@ -243,6 +247,66 @@ public class MCPVoiceAssistant : IDisposable
                 Console.WriteLine($"Error: {errorEvent.Error?.Message}");
                 break;
         }
+    }
+
+    private async Task HandleConversationItemCreatedAsync(
+        SessionUpdateConversationItemCreated itemCreated,
+        CancellationToken cancellationToken)
+    {
+        switch (itemCreated.Item)
+        {
+            case SessionResponseMcpApprovalRequestItem approvalItem:
+                Console.WriteLine("[MCP] Approval requested");
+                Console.WriteLine($"  Server: {approvalItem.ServerLabel}");
+                Console.WriteLine($"  Tool: {approvalItem.Name}");
+                Console.WriteLine($"  Arguments: {approvalItem.Arguments}");
+
+                bool approve = GetUserApproval();
+                await SendMcpApprovalResponseAsync(approvalItem.Id, approve, cancellationToken).ConfigureAwait(false);
+                Console.WriteLine($"[MCP] Approval {(approve ? "granted" : "denied")}");
+                break;
+
+            case SessionResponseMcpCallItem mcpCallItem:
+                _logger.LogInformation("MCP call item created: {Server}/{Tool} ({ItemId})",
+                    mcpCallItem.ServerLabel, mcpCallItem.Name, mcpCallItem.Id);
+                break;
+        }
+    }
+
+    private static bool GetUserApproval()
+    {
+        while (true)
+        {
+            Console.Write("Approve MCP call? (y/n): ");
+            string? input = Console.ReadLine()?.Trim().ToLowerInvariant();
+            if (input == "y")
+            {
+                return true;
+            }
+
+            if (input == "n")
+            {
+                return false;
+            }
+
+            Console.WriteLine("Invalid input. Type 'y' to approve or 'n' to deny.");
+        }
+    }
+
+    private async Task SendMcpApprovalResponseAsync(string approvalRequestId, bool approve, CancellationToken cancellationToken)
+    {
+        var payload = new
+        {
+            type = "conversation.item.create",
+            item = new
+            {
+                type = "mcp_approval_response",
+                approval_request_id = approvalRequestId,
+                approve
+            }
+        };
+
+        await _session!.SendCommandAsync(BinaryData.FromObjectAsJson(payload), cancellationToken).ConfigureAwait(false);
     }
 
     public void Dispose()
