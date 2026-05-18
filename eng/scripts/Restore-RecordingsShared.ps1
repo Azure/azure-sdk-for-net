@@ -172,12 +172,15 @@ foreach ($t in $tags) {
     if ($LASTEXITCODE -ne 0) { $missingTags += $t }
 }
 if ($missingTags.Count -gt 0) {
-    $chunks = for ($i = 0; $i -lt $missingTags.Count; $i += $FetchChunkSize) {
-        ,@($missingTags[$i..([Math]::Min($i+$FetchChunkSize-1, $missingTags.Count-1))])
+    $chunks = @()
+    for ($i = 0; $i -lt $missingTags.Count; $i += $FetchChunkSize) {
+        $end = [Math]::Min($i + $FetchChunkSize - 1, $missingTags.Count - 1)
+        $chunks += ,@($missingTags[$i..$end])
     }
     $chunkIdx = 0
     foreach ($chunk in $chunks) {
         $chunkIdx++
+        $chunk = @($chunk)
         $refspecs = $chunk | ForEach-Object { "+refs/tags/${_}:refs/tags/${_}" }
         Write-Host "Fetching chunk $chunkIdx/$($chunks.Count) ($($chunk.Count) tags)..."
         $fetchArgs = @('fetch','--depth=1','--no-tags','origin') + $refspecs
