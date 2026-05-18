@@ -96,29 +96,27 @@ public class CredentialResolverTests
     }
 
     [Test]
-    public void CredentialCache_NullMergedSection_ReturnsNullWithoutInvokingFactory()
+    public void CredentialCache_NullMergedSection_ReturnsNullWithoutInvokingResolver()
     {
         // The engine guards against null/!Exists() sections before reaching the cache,
         // so in production mergedSection is always non-null. CredentialSectionHasher
         // returns an empty key string only for a null section; if that ever happens
         // (e.g., a future caller bypasses the engine), the cache must not invoke the
-        // factory: a resolver expecting an IConfigurationSection cannot produce a
+        // resolver: a resolver expecting an IConfigurationSection cannot produce a
         // meaningful provider from null. Pin that contract here.
         Type cacheType = typeof(AuthenticationTokenProvider).Assembly
             .GetType("System.ClientModel.Primitives.CredentialCache", throwOnError: true)!;
-        MethodInfo getOrTryCreate = cacheType.GetMethod(
-            "GetOrTryCreate", BindingFlags.Public | BindingFlags.Static)!;
+        MethodInfo getOrTryResolve = cacheType.GetMethod(
+            "GetOrTryResolve", BindingFlags.Public | BindingFlags.Static)!;
 
-        bool factoryInvoked = false;
-        Func<IConfigurationSection, CredentialResolver, AuthenticationTokenProvider?> factory =
-            (_, _) => { factoryInvoked = true; return null; };
+        var resolver = new ScopedRecordingResolver("Anything", "x");
 
-        var result = getOrTryCreate.Invoke(
+        var result = getOrTryResolve.Invoke(
             null,
-            new object?[] { null, new ScopedRecordingResolver("Anything", "x"), factory });
+            new object?[] { null, resolver });
 
         Assert.That(result, Is.Null);
-        Assert.That(factoryInvoked, Is.False, "factory must not run when the merged section is null");
+        Assert.That(resolver.WasCalled, Is.False, "resolver must not run when the merged section is null");
     }
 
     [Test]
@@ -678,8 +676,9 @@ public class CredentialResolverTests
     {
         // The "no resolver matched" case used to surface as a null return;
         // it now surfaces as a CredentialSettings whose CredentialProvider
-        // is null. The cache must not memoize that miss — a subsequent call
-        // with a matching resolver must produce a real provider.
+        // is null. The cache must not memoize that miss in the resolver-keyed
+        // table — a subsequent call with a matching resolver must produce a
+        // real provider.
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["TestClient:Credential:CredentialSource"] = "Unknown",
@@ -695,6 +694,55 @@ public class CredentialResolverTests
         CredentialSettings? hit = config.GetCredential("TestClient:Credential", matching);
         Assert.That(hit?.CredentialProvider, Is.Not.Null);
         Assert.That(((StubTokenProvider)hit!.CredentialProvider!).Name, Is.EqualTo("A"));
+    }
+
+    [Test]
+    public void Cache_InlineApiKey_NoResolverMatch_ReturnsSameCachedSettings()
+    {
+        // Inline ApiKey path: the credential lives directly on the section as
+        // Key/CredentialSource and no resolver claims it. Pin that the engine
+        // returns the SAME cached CredentialSettings instance on repeated
+        // calls with the same section content, so the inline-credential path
+        // benefits from caching too.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "inline-key-value",
+        });
+
+        CredentialSettings? first = config.GetCredential("TestClient:Credential");
+        CredentialSettings? second = config.GetCredential("TestClient:Credential");
+
+        Assert.That(first, Is.Not.Null);
+        Assert.That(second, Is.Not.Null);
+        Assert.That(second, Is.SameAs(first),
+            "Inline-only CredentialSettings must be cached and shared across calls for the same section content.");
+        Assert.That(first!.Key, Is.EqualTo("inline-key-value"));
+        Assert.That(first.CredentialProvider, Is.Null);
+    }
+
+    [Test]
+    public void Cache_InlineApiKey_DifferentSectionContent_GetsDifferentCachedSettings()
+    {
+        // Sanity: distinct section content must produce distinct cached
+        // entries (the cache key is content-based, not name-based).
+        IConfigurationRoot configA = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "key-A",
+        });
+        IConfigurationRoot configB = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "ApiKey",
+            ["TestClient:Credential:Key"] = "key-B",
+        });
+
+        CredentialSettings? a = configA.GetCredential("TestClient:Credential");
+        CredentialSettings? b = configB.GetCredential("TestClient:Credential");
+
+        Assert.That(a, Is.Not.SameAs(b));
+        Assert.That(a!.Key, Is.EqualTo("key-A"));
+        Assert.That(b!.Key, Is.EqualTo("key-B"));
     }
 
     // -------- DI: cache interaction with the auto-resolve path --------
