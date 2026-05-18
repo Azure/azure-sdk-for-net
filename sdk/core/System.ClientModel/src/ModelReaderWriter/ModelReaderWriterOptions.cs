@@ -77,12 +77,12 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Registers a <see cref="DiscriminatorRouter{T}"/> for the discriminator read path.
+    /// Registers a <see cref="DiscriminatorRouter"/> for the discriminator read path.
     /// Multiple routers can be registered for the same base type.
     /// Routers are consulted in FIFO order (first registered is consulted first).
     /// </summary>
-    /// <param name="router"> The <see cref="DiscriminatorRouter{T}"/> for discriminator-based deserialization. </param>
-    public void AddDiscriminatorRouter<T>(DiscriminatorRouter<T> router)
+    /// <param name="router"> The <see cref="DiscriminatorRouter"/> for discriminator-based deserialization. </param>
+    public void AddDiscriminatorRouter<T>(DiscriminatorRouter router)
     {
         _routers ??= [];
 
@@ -192,28 +192,34 @@ public class ModelReaderWriterOptions
 
             foreach (var entry in chain)
             {
-                if (entry.IsJsonModel)
+                // Try reader-based CanHandle first
+                Utf8JsonReader checkReader = snapshot;
+                if (entry.CanHandleReader(ref checkReader))
                 {
-                    Utf8JsonReader checkReader = snapshot;
-                    if (entry.CanHandleReader(ref checkReader))
+                    ProxiedModel = model;
+                    Utf8JsonReader createReader = snapshot;
+                    object? result = entry.CreateFromReader(ref createReader, this);
+                    if (result is not null)
                     {
-                        ProxiedModel = model;
-                        Utf8JsonReader createReader = snapshot;
                         JsonDocument.ParseValue(ref reader); // advance original past element
-                        return (T?)entry.CreateFromReader(ref createReader, this);
+                        return (T?)result;
                     }
                 }
                 else
                 {
-                    // Non-JSON router needs BinaryData
+                    // Try BinaryData path: materialize and check CanHandleData
                     Utf8JsonReader materializeReader = snapshot;
                     using var doc = JsonDocument.ParseValue(ref materializeReader);
                     BinaryData data = BinaryData.FromString(doc.RootElement.GetRawText());
                     if (entry.CanHandleData(data))
                     {
                         ProxiedModel = model;
-                        JsonDocument.ParseValue(ref reader); // advance original past element
-                        return (T?)entry.CreateFromData(data, this);
+                        object? result = entry.CreateFromData(data, this);
+                        if (result is not null)
+                        {
+                            JsonDocument.ParseValue(ref reader);
+                            return (T?)result;
+                        }
                     }
                 }
             }
@@ -254,15 +260,16 @@ public class ModelReaderWriterOptions
 
             foreach (var entry in chain)
             {
-                if (entry.IsJsonModel)
+                Utf8JsonReader checkReader = snapshot;
+                if (entry.CanHandleReader(ref checkReader))
                 {
-                    Utf8JsonReader checkReader = snapshot;
-                    if (entry.CanHandleReader(ref checkReader))
+                    ProxiedModel = model;
+                    Utf8JsonReader createReader = snapshot;
+                    object? result = entry.CreateFromReader(ref createReader, this);
+                    if (result is not null)
                     {
-                        ProxiedModel = model;
-                        Utf8JsonReader createReader = snapshot;
                         JsonDocument.ParseValue(ref reader);
-                        return entry.CreateFromReader(ref createReader, this);
+                        return result;
                     }
                 }
                 else
@@ -273,8 +280,12 @@ public class ModelReaderWriterOptions
                     if (entry.CanHandleData(data))
                     {
                         ProxiedModel = model;
-                        JsonDocument.ParseValue(ref reader);
-                        return entry.CreateFromData(data, this);
+                        object? result = entry.CreateFromData(data, this);
+                        if (result is not null)
+                        {
+                            JsonDocument.ParseValue(ref reader);
+                            return result;
+                        }
                     }
                 }
             }

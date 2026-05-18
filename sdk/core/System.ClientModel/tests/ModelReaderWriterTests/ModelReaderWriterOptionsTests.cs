@@ -129,9 +129,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
         }
 
-        private static Dictionary<Type, List<object>>? GetProxies(ModelReaderWriterOptions passedInOptions)
+        private static Dictionary<Type, object>? GetProxies(ModelReaderWriterOptions passedInOptions)
         {
-            return passedInOptions.GetType().GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions) as Dictionary<Type, List<object>>;
+            return passedInOptions.GetType().GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions) as Dictionary<Type, object>;
         }
 
         private class JsonModelProxy : IJsonModel<JsonModel>
@@ -450,30 +450,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(defaultProxy.CreateWasCalled); // handled it
         }
 
-        [Test]
-        public void ResolveProxy_Write_UsesCanHandle()
-        {
-            var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainRouter(handleRead: false);
-            var proxy2 = new ChainRouter(handleRead: false);
-
-            options.AddDiscriminatorRouter<SimpleModel>(proxy1);
-            options.AddDiscriminatorRouter<SimpleModel>(proxy2);
-
-            // Write uses CanHandle — both have CanHandle(SimpleModel) => true,
-            // so the first registered (proxy1) is used since it's checked first (FIFO).
-            var model = new SimpleModel();
-            var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
-            Assert.AreSame(proxy1, resolved);
-        }
-
         /// <summary>
         /// Simple model without AssertOptions logic, used for chain tests.
         /// </summary>
         private class SimpleModel : IJsonModel<SimpleModel>
         {
             SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-                => new SimpleModel();
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                return new SimpleModel();
+            }
 
             SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
                 => new SimpleModel();
@@ -550,7 +536,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         /// A discriminator router that can be configured to handle or decline reads.
         /// The _handleRead flag controls CanHandle — returning false means "I can't handle this."
         /// </summary>
-        private class ChainRouter : DiscriminatorRouter<SimpleModel>
+        private class ChainRouter : DiscriminatorRouter
         {
             private readonly bool _handleRead;
             public TrackingJsonModel HeldModel { get; }
@@ -559,7 +545,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
             }
 
-            public ChainRouter(bool handleRead, TrackingJsonModel model) : base(model)
+            public ChainRouter(bool handleRead, TrackingJsonModel model)
             {
                 _handleRead = handleRead;
                 HeldModel = model;
@@ -571,6 +557,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             public override bool CanHandle(BinaryData data) => _handleRead;
             public override bool CanHandle(ref Utf8JsonReader reader) => _handleRead;
 
+            public override object? Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => ((IJsonModel<SimpleModel>)HeldModel).Create(ref reader, options);
+
+            public override object? Create(BinaryData data, ModelReaderWriterOptions options)
+                => ((IPersistableModel<SimpleModel>)HeldModel).Create(data, options);
+
             public void Reset() => HeldModel.Reset();
         }
 
@@ -578,7 +570,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         /// A discriminator router that peeks at the data to check for a discriminator value.
         /// Returns false from CanHandle if the discriminator doesn't match.
         /// </summary>
-        private class TestDiscriminatorRouter : DiscriminatorRouter<SimpleModel>
+        private class TestDiscriminatorRouter : DiscriminatorRouter
         {
             private readonly string _discriminatorValue;
             public TrackingJsonModel HeldModel { get; }
@@ -587,7 +579,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
             }
 
-            public TestDiscriminatorRouter(string discriminatorValue, TrackingJsonModel model) : base(model)
+            public TestDiscriminatorRouter(string discriminatorValue, TrackingJsonModel model)
             {
                 _discriminatorValue = discriminatorValue;
                 HeldModel = model;
@@ -608,6 +600,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     && typeProp.GetString() == _discriminatorValue;
             }
 
+            public override object? Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => ((IJsonModel<SimpleModel>)HeldModel).Create(ref reader, options);
+
+            public override object? Create(BinaryData data, ModelReaderWriterOptions options)
+                => ((IPersistableModel<SimpleModel>)HeldModel).Create(data, options);
+
             public void Reset() => HeldModel.Reset();
         }
 
@@ -615,7 +613,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         /// A router that captures ProxiedModel at every interaction point.
         /// Used to verify the ProxiedModel contract. Works as both write proxy and discriminator router.
         /// </summary>
-        private class ProxiedModelCapturingRouter : DiscriminatorRouter<SimpleModel>
+        private class ProxiedModelCapturingRouter : DiscriminatorRouter
         {
             public TrackingJsonModel HeldModel { get; }
             public object? CapturedOnWrite => HeldModel.CapturedOnWrite;
@@ -627,13 +625,19 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             {
             }
 
-            public ProxiedModelCapturingRouter(TrackingJsonModel model) : base(model)
+            public ProxiedModelCapturingRouter(TrackingJsonModel model)
             {
                 HeldModel = model;
             }
 
             public override bool CanHandle(BinaryData data) => true;
             public override bool CanHandle(ref Utf8JsonReader reader) => true;
+
+            public override object? Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => ((IJsonModel<SimpleModel>)HeldModel).Create(ref reader, options);
+
+            public override object? Create(BinaryData data, ModelReaderWriterOptions options)
+                => ((IPersistableModel<SimpleModel>)HeldModel).Create(data, options);
 
             public void Reset() => HeldModel.Reset();
         }
