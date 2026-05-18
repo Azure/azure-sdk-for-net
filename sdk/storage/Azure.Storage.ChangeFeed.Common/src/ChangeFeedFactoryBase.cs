@@ -86,13 +86,22 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="continuation">Serialized continuation token from a previous page, or null for a fresh start.</param>
         /// <param name="async">Whether to use async APIs.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="disableEventTimeFilter">
+        /// When <c>true</c>, <paramref name="startTime"/>/<paramref name="endTime"/> are used only
+        /// to select which segments to enumerate; the per-event <c>EventTime</c> predicate and the
+        /// segment-boundary end gate are not applied, so every row in the selected segments is
+        /// produced. Used by the snapshot-range reader, which bounds the read by container version
+        /// id rather than event time. Defaults to <c>false</c> (the time-window contract used by
+        /// <c>GetChanges(start, end)</c> is unchanged).
+        /// </param>
         /// <returns>A <see cref="ChangeFeedBase{TEvent}"/> positioned and ready to produce events.</returns>
         public async Task<ChangeFeedBase<TEvent>> BuildChangeFeed(
             DateTimeOffset? startTime,
             DateTimeOffset? endTime,
             string continuation,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            bool disableEventTimeFilter = false)
         {
             DateTimeOffset lastConsumable;
             Queue<string> years = new Queue<string>();
@@ -189,7 +198,8 @@ namespace Azure.Storage.ChangeFeed.Common
                 startTime,
                 endTime,
                 _config,
-                _includeNonFinalizedEvents);
+                _includeNonFinalizedEvents,
+                disableEventTimeFilter);
         }
 
         /// <summary>

@@ -59,6 +59,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             long beginCvId = beginMeta.CvId;
             long endCvId = endMeta.CvId;
+
+            // The log-window times bound only which Avro segments are read. Rows inside those
+            // segments are filtered solely by container version id (see SnapshotEventFilter):
+            // disableEventTimeFilter keeps the segment selection but suppresses any per-event
+            // EventTime filtering, which would otherwise drop every row when the begin/end log
+            // windows fall in the same minute bucket.
             DateTimeOffset startTime = beginMeta.MinLogWindowForNextSnapshot;
             DateTimeOffset endTime = endMeta.MaxLogWindowForCurrentSnapshot;
 
@@ -72,7 +78,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 endTime,
                 continuation: null,
                 async: false,
-                cancellationToken: default)
+                cancellationToken: default,
+                disableEventTimeFilter: true)
                 .EnsureCompleted();
 
             int pageSize = pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize;
