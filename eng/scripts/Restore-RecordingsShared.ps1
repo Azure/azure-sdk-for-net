@@ -183,7 +183,9 @@ if ($missingTags.Count -gt 0) {
         $chunk = @($chunk)
         $refspecs = $chunk | ForEach-Object { "+refs/tags/${_}:refs/tags/${_}" }
         Write-Host "Fetching chunk $chunkIdx/$($chunks.Count) ($($chunk.Count) tags)..."
-        $fetchArgs = @('fetch','--depth=1','--no-tags','origin') + $refspecs
+        # Note: full history (not --depth=1) so `git clone --local` can hardlink objects
+        # for per-package materialization instead of falling back to upload-pack (~2x faster).
+        $fetchArgs = @('fetch','--no-tags','origin') + $refspecs
         Invoke-Git -Cwd $SharedRepoPath -GitArgs $fetchArgs
     }
 }
