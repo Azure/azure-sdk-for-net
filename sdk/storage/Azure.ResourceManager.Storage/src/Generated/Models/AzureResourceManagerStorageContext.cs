@@ -101,7 +101,6 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(ListQueueResource))]
     [ModelReaderWriterBuildable(typeof(ListQueueServices))]
     [ModelReaderWriterBuildable(typeof(ListTableResource))]
-    [ModelReaderWriterBuildable(typeof(ListTableServices))]
     [ModelReaderWriterBuildable(typeof(LocalUserKeys))]
     [ModelReaderWriterBuildable(typeof(LocalUserProperties))]
     [ModelReaderWriterBuildable(typeof(LocalUserRegeneratePasswordResult))]

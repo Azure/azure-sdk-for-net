@@ -15,7 +15,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The FileServiceItems. </summary>
-    public partial class FileServiceItems : IJsonModel<FileServiceItems>
+    internal partial class FileServiceItems : IJsonModel<FileServiceItems>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
