@@ -1,14 +1,14 @@
 # Release History
 
-## 1.0.0-beta.24 (Unreleased)
+## 1.0.0-beta.24 (2026-05-15)
 
 ### Features Added
 
-### Breaking Changes
+- Added `PlatformHeaders.ErrorSource` (`x-platform-error-source`), `PlatformHeaders.ErrorDetail`
+  (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
+  `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.
 
-### Bugs Fixed
-
-### Other Changes
+- Replaced `Azure.Monitor.OpenTelemetry.AspNetCore` with the unified `Microsoft.OpenTelemetry` distro for telemetry. The new distro auto-detects Azure Monitor and OTLP exporters from environment variables and eliminates the need for duplicate-instrumentation guards.
 
 ## 1.0.0-beta.23 (2026-04-22)
 

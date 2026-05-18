@@ -89,7 +89,14 @@ namespace Azure.AI.Agents.Persistent
                 throw new FormatException($"The model {nameof(UploadFileRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("file"u8);
-            writer.WriteBase64StringValue(Data.ToArray(), "D");
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
             if (Optional.IsDefined(Filename))
@@ -147,7 +154,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (prop.NameEquals("file"u8))
                 {
-                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    data = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("purpose"u8))

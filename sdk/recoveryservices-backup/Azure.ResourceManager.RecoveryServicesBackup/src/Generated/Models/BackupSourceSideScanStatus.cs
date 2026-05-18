@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupSourceSideScanStatus : IEquatable<BackupSourceSideScanStatus>
     {
         private readonly string _value;
+        /// <summary> Source side scan is configured. </summary>
         private const string ConfiguredValue = "Configured";
+        /// <summary> Source side scan is not configured. </summary>
         private const string NotConfiguredValue = "NotConfigured";
+        /// <summary> Source side scan is not applicable. </summary>
         private const string NotApplicableValue = "NotApplicable";
 
         /// <summary> Initializes a new instance of <see cref="BackupSourceSideScanStatus"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _value = value;
         }
 
-        /// <summary> Gets the Configured. </summary>
+        /// <summary> Source side scan is configured. </summary>
         public static BackupSourceSideScanStatus Configured { get; } = new BackupSourceSideScanStatus(ConfiguredValue);
 
-        /// <summary> Gets the NotConfigured. </summary>
+        /// <summary> Source side scan is not configured. </summary>
         public static BackupSourceSideScanStatus NotConfigured { get; } = new BackupSourceSideScanStatus(NotConfiguredValue);
 
-        /// <summary> Gets the NotApplicable. </summary>
+        /// <summary> Source side scan is not applicable. </summary>
         public static BackupSourceSideScanStatus NotApplicable { get; } = new BackupSourceSideScanStatus(NotApplicableValue);
 
         /// <summary> Determines if two <see cref="BackupSourceSideScanStatus"/> values are the same. </summary>

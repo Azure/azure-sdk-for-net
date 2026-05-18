@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -57,6 +58,35 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.Core.armResourceType"] = typeof(ResourceType),
         };
 
+        private static readonly IReadOnlyDictionary<string, Type> _azureResourceManagerFrameworkTypes = new KeyValuePair<string, Type>[]
+        {
+            CreateFrameworkTypeMapping(typeof(ArmClient)),
+            CreateFrameworkTypeMapping(typeof(ArmClientOptions)),
+            CreateFrameworkTypeMapping(typeof(ArmCollection)),
+            CreateFrameworkTypeMapping(typeof(ArmResource)),
+            CreateFrameworkTypeMapping(typeof(ResourceData), "Azure.ResourceManager.Resources.Models.ResourceData"),
+            CreateFrameworkTypeMapping(typeof(TrackedResourceData), "Azure.ResourceManager.Resources.Models.TrackedResourceData"),
+        }.ToDictionary(mapping => mapping.Key, mapping => mapping.Value);
+
+        private static readonly IReadOnlyDictionary<string, Type> _fullyQualifiedNameToFrameworkTypeMap =
+            CreateFrameworkTypeMap();
+
+        private static IReadOnlyDictionary<string, Type> CreateFrameworkTypeMap()
+        {
+            var result = new Dictionary<string, Type>(_azureResourceManagerFrameworkTypes);
+            foreach (var frameworkType in _idToSystemTypeMap.Values.Select(type => type.FrameworkType)
+                .Concat(_idToPrimitiveTypeMap.Values.Select(type => type.FrameworkType))
+                .Distinct())
+            {
+                result[frameworkType.FullName!] = frameworkType;
+            }
+
+            return result;
+        }
+
+        private static KeyValuePair<string, Type> CreateFrameworkTypeMapping(Type frameworkType, string? fullyQualifiedName = null)
+            => new(fullyQualifiedName ?? frameworkType.FullName!, frameworkType);
+
         public static bool TryGetPrimitiveType(string crossLanguageDefinitionId, [MaybeNullWhen(false)] out CSharpType primitiveType)
             => _idToPrimitiveTypeMap.TryGetValue(crossLanguageDefinitionId, out primitiveType);
 
@@ -96,6 +126,9 @@ namespace Azure.Generator.Management.Primitives
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
+
+        public static bool TryGetFrameworkType(string fullyQualifiedTypeName, [MaybeNullWhen(false)] out Type frameworkType)
+            => _fullyQualifiedNameToFrameworkTypeMap.TryGetValue(fullyQualifiedTypeName, out frameworkType);
 
         // The comparison could be CSharpType from Azure.ResourceManager, which is a framework type
         // and CSharpType from InheritableSystemObjectModelProvider, which is not a framework type, they should still be equal if namespace and name match

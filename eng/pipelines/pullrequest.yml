@@ -5,7 +5,7 @@ pr:
     - feature/*
     - hotfix/*
     - release/*
-    - pipelinev3*
+    - sdkauto/*
   paths:
     include:
     - "*"

@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, payload != null ? RequestContent.Create(payload?.ToString()) : null, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateDeleteRequest(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, payload != null ? RequestContent.Create(payload?.ToString()) : null, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
