@@ -26123,7 +26123,7 @@
                     "$id": "2017",
                     "methodId": "MgmtTypeSpec.TrafficProfiles.list",
                     "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles",
                     "scope": {
                       "$id": "2018",
                       "kind": "ResourceGroup",
@@ -26530,22 +26530,10 @@
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/publicSharedConfigs/{configName}",
                       "scopeResourceType": "Microsoft.Resources/subscriptions"
                     }
-                  },
-                  {
-                    "$id": "2067",
-                    "methodId": "MgmtTypeSpec.PublicSharedConfigs.list",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/sharedConfigs",
-                    "scope": {
-                      "$id": "2068",
-                      "kind": "Subscription",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}",
-                      "scopeResourceType": "Microsoft.Resources/subscriptions"
-                    }
                   }
                 ],
                 "scope": {
-                  "$id": "2069",
+                  "$id": "2067",
                   "kind": "Subscription",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}",
                   "scopeResourceType": "Microsoft.Resources/subscriptions"
@@ -26564,9 +26552,21 @@
                 "resourceType": "MgmtTypeSpec/sharedConfigs",
                 "methods": [
                   {
-                    "$id": "2070",
+                    "$id": "2068",
                     "methodId": "MgmtTypeSpec.SharedConfigs.createOrUpdate",
                     "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
+                    "scope": {
+                      "$id": "2069",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "2070",
+                    "methodId": "MgmtTypeSpec.SharedConfigs.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                     "scope": {
                       "$id": "2071",
@@ -26577,8 +26577,8 @@
                   },
                   {
                     "$id": "2072",
-                    "methodId": "MgmtTypeSpec.SharedConfigs.get",
-                    "kind": "Read",
+                    "methodId": "MgmtTypeSpec.SharedConfigs.delete",
+                    "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
                     "scope": {
                       "$id": "2073",
@@ -26589,14 +26589,14 @@
                   },
                   {
                     "$id": "2074",
-                    "methodId": "MgmtTypeSpec.SharedConfigs.delete",
-                    "kind": "Delete",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
+                    "methodId": "MgmtTypeSpec.PublicSharedConfigs.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/sharedConfigs",
                     "scope": {
                       "$id": "2075",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                      "kind": "Subscription",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                      "scopeResourceType": "Microsoft.Resources/subscriptions"
                     }
                   },
                   {
@@ -27125,7 +27125,7 @@
                     "scope": {
                       "$id": "2143",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/{parentType}/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
@@ -27137,7 +27137,7 @@
                     "scope": {
                       "$id": "2145",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/{parentType}/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
@@ -27149,7 +27149,7 @@
                     "scope": {
                       "$id": "2147",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/{parentType}/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   }
@@ -27184,7 +27184,7 @@
                     "scope": {
                       "$id": "2150",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/{parentType}/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
@@ -27196,7 +27196,7 @@
                     "scope": {
                       "$id": "2152",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/{parentType}/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
@@ -27208,7 +27208,7 @@
                     "scope": {
                       "$id": "2154",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/{parentType}/{parentName}/eventGridPrivateEndpointConnections/{eventGridPrivateEndpointConnectionName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   }
@@ -72058,12 +72058,12 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
-              "doc": "List a TrafficProfile",
+              "doc": "List TrafficProfile resources by resource group",
               "operation": {
                 "$id": "4531",
                 "name": "list",
                 "resourceName": "TrafficProfile",
-                "doc": "List a TrafficProfile",
+                "doc": "List TrafficProfile resources by resource group",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -72302,12 +72302,17 @@
                 ],
                 "httpMethod": "GET",
                 "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles",
                 "bufferResponse": true,
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.TrafficProfiles.list",
-                "decorators": [],
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceList",
+                    "arguments": {}
+                  }
+                ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
