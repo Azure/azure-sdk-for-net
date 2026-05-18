@@ -103,7 +103,7 @@ namespace Azure.Generator.Mgmt.Tests
                 Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))]);
             var method = new MethodProvider(signature, MethodBodyStatement.Empty, modelFactory);
 
-            Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.ShouldPreserveBackwardCompatMethod(method, model.Type), Is.True);
+            Assert.That(Management.Visitors.ModelFactoryVisitor.ShouldPreserveBackwardCompatMethod(method, model.Type), Is.True);
 
             var lastContractView = new TestModelFactoryView(modelFactory.Name)
             {
@@ -112,7 +112,7 @@ namespace Azure.Generator.Mgmt.Tests
             SetLastContractView(modelFactory, lastContractView);
 
             var currentMethods = new List<MethodProvider>();
-            Management.Visitors.ModelFactoryBackwardCompatHelper.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
+            Management.Visitors.ModelFactoryVisitor.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
 
             Assert.That(currentMethods, Has.Count.EqualTo(1));
             Assert.That(currentMethods[0].Signature.Name, Is.EqualTo("EmptyResourceData"));
@@ -161,7 +161,7 @@ namespace Azure.Generator.Mgmt.Tests
             SetLastContractView(modelFactory, lastContractView);
 
             var currentMethods = new List<MethodProvider> { currentMethod };
-            Management.Visitors.ModelFactoryBackwardCompatHelper.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
+            Management.Visitors.ModelFactoryVisitor.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
 
             Assert.That(currentMethods, Has.Count.EqualTo(2));
             var addedMethod = currentMethods[1];
@@ -203,7 +203,7 @@ namespace Azure.Generator.Mgmt.Tests
             try
             {
                 var currentMethods = new List<MethodProvider>();
-                Management.Visitors.ModelFactoryBackwardCompatHelper.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
+                Management.Visitors.ModelFactoryVisitor.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
 
                 Assert.That(currentMethods, Has.Count.EqualTo(1));
                 var addedMethod = currentMethods[0];
@@ -216,7 +216,7 @@ namespace Azure.Generator.Mgmt.Tests
                 Assert.That(rendered, Does.Contain("null,"));
                 Assert.That(rendered, Does.Contain("properties);"));
 
-                Management.Visitors.ModelFactoryBackwardCompatHelper.WriteSuppressedConstructorFactoryCompatibilityFile(outputDirectory);
+                Management.Visitors.ModelFactoryVisitor.WriteSuppressedConstructorFactoryCompatibilityFile(outputDirectory);
                 var compatibilityContent = File.ReadAllText(compatibilityFile);
                 Assert.That(compatibilityContent, Does.Contain("public static global::Samples.Models.FileServiceUsageData FileServiceUsageData(global::Azure.Core.ResourceIdentifier id, string name, global::Azure.Core.ResourceType resourceType, global::Azure.ResourceManager.Models.SystemData systemData, global::Samples.Models.FileServiceUsageProperties properties)"));
                 Assert.That(compatibilityContent, Does.Contain("return new global::Samples.Models.FileServiceUsageData(id, name, resourceType, systemData, null, properties);"));
