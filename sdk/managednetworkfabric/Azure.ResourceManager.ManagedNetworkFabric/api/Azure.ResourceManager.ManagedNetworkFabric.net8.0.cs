@@ -870,7 +870,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricInternetGatewayData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>
     {
-        [System.ObsoleteAttribute("This constructor is obsolete and will be removed in a future version.")]
         public NetworkFabricInternetGatewayData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType typePropertiesType, Azure.Core.ResourceIdentifier networkFabricControllerId) { }
         public string Annotation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InternetGatewayRuleId { get { throw null; } set { } }

@@ -52,6 +52,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
+        /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerId"/> is null. </exception>
+        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
+        {
+            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
+
+            TypePropertiesType = typePropertiesType;
+            NetworkFabricControllerId = networkFabricControllerId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // property type. These shims preserve the v1.1.2 constructor and property signatures.
     public partial class NetworkFabricInternetGatewayData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="typePropertiesType"> Type of Gateway. </param>
-        /// <param name="networkFabricControllerId"> Resource ID of the network fabric controller. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
-        {
-            TypePropertiesType = typePropertiesType;
-            NetworkFabricControllerId = networkFabricControllerId;
-        }
+        // /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
+        // /// <param name="location"> The location. </param>
+        // /// <param name="typePropertiesType"> Type of Gateway. </param>
+        // /// <param name="networkFabricControllerId"> Resource ID of the network fabric controller. </param>
+        // [EditorBrowsable(EditorBrowsableState.Never)]
+        // [Obsolete("This constructor is obsolete and will be removed in a future version.")]
+        // public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
+        // {
+        //     TypePropertiesType = typePropertiesType;
+        //     NetworkFabricControllerId = networkFabricControllerId;
+        // }
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
