@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="authConfig"> The authentication configuration for the cluster. </param>
         /// <param name="encryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, MongoClusterStorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, AuthConfigProperties authConfig, EncryptionProperties encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, MongoClusterStorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, AuthConfigProperties authConfig, EncryptionProperties encryption, MongoClusterNetworkBypassMode? networkBypassMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             InfrastructureVersion = infrastructureVersion;
             AuthConfig = authConfig;
             Encryption = encryption;
+            NetworkBypassMode = networkBypassMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -135,6 +137,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> The encryption configuration for the cluster. Depends on identity being configured. </summary>
         internal EncryptionProperties Encryption { get; set; }
+
+        /// <summary> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </summary>
+        public MongoClusterNetworkBypassMode? NetworkBypassMode { get; set; }
 
         /// <summary> The target high availability mode requested for the cluster. </summary>
         public HighAvailabilityMode? HighAvailabilityTargetMode
