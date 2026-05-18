@@ -113,6 +113,8 @@ jobs:
               }
 
               // --- Signal 2: Error signature hash match (max 50 pts) ---
+              // A signature with only 1 component (e.g. just "RequestFailedException")
+              // is too generic — score it lower to avoid false positives.
               if (hasSig === 'true') {
                 const crypto = require('crypto');
                 const otherExceptions = [...new Set(
@@ -131,7 +133,11 @@ jobs:
                       .update(otherSig).digest('hex').slice(0, 16)
                   : '';
                 if (sigHash && otherHash && sigHash === otherHash) {
-                  score += 50;
+                  const sigComponents = otherSig.split('|').length;
+                  // Full 50 pts only if signature has ≥2 distinct components
+                  // (e.g. exception + stack method). Single-component matches
+                  // like just "RequestFailedException" only get 20 pts.
+                  score += sigComponents >= 2 ? 50 : 20;
                 }
               }
 
@@ -148,7 +154,7 @@ jobs:
               }
             }
 
-            const THRESHOLD = 50;
+            const THRESHOLD = 60;
             const isDuplicate = bestScore >= THRESHOLD;
 
             core.setOutput('is_duplicate', isDuplicate ? 'true' : 'false');
