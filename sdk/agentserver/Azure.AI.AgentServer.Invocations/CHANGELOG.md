@@ -1,5 +1,34 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+- WebSocket protocol support — `InvocationHandler` now exposes a virtual
+  `HandleWebSocketAsync(WebSocket, InvocationContext, CancellationToken)`
+  method. Handlers that override it serve `/invocations_ws` alongside
+  `POST /invocations` on the same host. Handlers that do not override it
+  cause the endpoint to short-circuit to HTTP 404, matching the Python
+  "route not registered" 404 behaviour for hosts without a registered
+  WS handler.
+- The SDK accepts the upgrade for you (`AcceptWebSocketAsync`), maps
+  clean handler returns to RFC 6455 close code `1000` (`NormalClosure`)
+  and uncaught handler exceptions to close code `1011`
+  (`InternalServerError`), and preserves handler-initiated close codes
+  unchanged.
+- Per-connection observability — emits an OpenTelemetry
+  `websocket_session` span with
+  `azure.ai.agentserver.invocations_ws.session_id`,
+  `azure.ai.agentserver.invocations_ws.close_code`, and
+  `azure.ai.agentserver.invocations_ws.duration_ms` attributes, plus a
+  structured close-event log line carrying the same fields.
+- Session ID honours `FOUNDRY_AGENT_SESSION_ID` so HTTP and WebSocket
+  transports on the same container report the same session, falling
+  back to a fresh UUID when the platform does not inject one.
+- WebSocket Ping/Pong keep-alive is configured via the new
+  `WS_KEEPALIVE_INTERVAL` environment variable (see
+  `Azure.AI.AgentServer.Core` 1.0.0-beta.25); disabled by default.
+
 ## 1.0.0-beta.4 (2026-05-15)
 
 ### Features Added

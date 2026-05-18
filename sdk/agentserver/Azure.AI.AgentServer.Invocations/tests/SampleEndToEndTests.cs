@@ -298,6 +298,51 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
+    //  README WebSocket sample — invocations_ws end-to-end
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task ReadMe_WebSocketEchoHandler_EchoesTextFrame_AndClosesCleanly()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddInvocationsServer();
+        builder.Services.AddScoped<InvocationHandler, Snippets.ReadMeSnippets.WebSocketEchoHandler>();
+
+        var app = builder.Build();
+        app.UseWebSockets();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            var wsClient = server.CreateWebSocketClient();
+            var uri = new Uri(server.BaseAddress, "invocations_ws");
+            using var ws = await wsClient.ConnectAsync(uri, CancellationToken.None);
+
+            var payload = Encoding.UTF8.GetBytes("ping");
+            await ws.SendAsync(payload, System.Net.WebSockets.WebSocketMessageType.Text,
+                endOfMessage: true, CancellationToken.None);
+
+            var buffer = new byte[1024];
+            var received = await ws.ReceiveAsync(buffer, CancellationToken.None);
+            Assert.That(received.MessageType, Is.EqualTo(System.Net.WebSockets.WebSocketMessageType.Text));
+            Assert.That(Encoding.UTF8.GetString(buffer, 0, received.Count), Is.EqualTo("ping"));
+
+            await ws.CloseOutputAsync(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+                "client done", CancellationToken.None);
+
+            var close = await ws.ReceiveAsync(buffer, CancellationToken.None);
+            Assert.That(close.MessageType, Is.EqualTo(System.Net.WebSockets.WebSocketMessageType.Close));
+            Assert.That(ws.CloseStatus, Is.EqualTo(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure));
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
     //  Test Infrastructure
     // ═══════════════════════════════════════════════════════════════════
 

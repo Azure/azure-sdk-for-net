@@ -57,7 +57,7 @@ For more control over the host (adding services, configuring middleware, composi
 
 ### InvocationHandler
 
-The abstract base class you subclass. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`) return 404 by default and can be overridden as needed.
+The abstract base class you subclass. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`, `HandleWebSocketAsync`) return 404 / refuse the upgrade by default and can be overridden as needed.
 
 ### InvocationContext
 
@@ -83,6 +83,59 @@ When you need to add services, configure middleware, or compose multiple protoco
 ### Handler lifetime
 
 Handlers registered via `AddInvocations<THandler>()` or `InvocationsServer.Run<THandler>()` are resolved per request by default (scoped lifetime). Instance fields on your `InvocationHandler` subclass will not persist across requests. Store long-lived state in separate services or storage keyed by `InvocationContext.SessionId` or `InvocationContext.InvocationId`, or register a singleton handler explicitly if you require a single shared instance.
+
+### WebSocket protocol (`invocations_ws`)
+
+The same host that serves `POST /invocations` also exposes a WebSocket transport at `/invocations_ws`. Container authors do not install or import a second package — overriding `InvocationHandler.HandleWebSocketAsync` is the only step. A multi-protocol agent shares one host, one session, and one process.
+
+```C# Snippet:Invocations_ReadMe_WebSocketHandler
+public class WebSocketEchoHandler : InvocationHandler
+{
+    public override Task HandleAsync(
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
+    {
+        response.StatusCode = StatusCodes.Status200OK;
+        return Task.CompletedTask;
+    }
+
+    public override async Task HandleWebSocketAsync(
+        WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
+    {
+        var buffer = new byte[4096];
+        while (webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
+        {
+            var received = await webSocket.ReceiveAsync(buffer, cancellationToken);
+            if (received.MessageType == WebSocketMessageType.Close)
+            {
+                break;
+            }
+            await webSocket.SendAsync(
+                new ArraySegment<byte>(buffer, 0, received.Count),
+                received.MessageType,
+                received.EndOfMessage,
+                cancellationToken);
+        }
+    }
+}
+```
+
+What the SDK does for you when you override `HandleWebSocketAsync`:
+
+- Registers the `/invocations_ws` route on the same host as `/invocations` and `/readiness`.
+- Calls `AcceptWebSocketAsync` before invoking your handler.
+- Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection survives Azure APIM / Azure Load Balancer's ~4-minute idle timeout without any extra application traffic. Disabled by default.
+- Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
+- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`, and records the same fields as OpenTelemetry span attributes on a per-connection `websocket_session` span.
+- When the handler does **not** override `HandleWebSocketAsync`, an upgrade attempt receives HTTP `404 Not Found` — symmetric to the Python "route not registered" 404 behaviour.
+
+The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
+
+#### WebSocket configuration
+
+| Environment variable | Default | Description |
+|---|---|---|
+| `WS_KEEPALIVE_INTERVAL` | unset → disabled | Integer seconds between RFC 6455 Ping frames. `0` (or unset) disables protocol-level keep-alive. |
 
 ## Examples
 

@@ -21,6 +21,7 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
         Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", null);
+        Environment.SetEnvironmentVariable("WS_KEEPALIVE_INTERVAL", null);
         Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
         FoundryEnvironment.Reload();
     }
@@ -171,6 +172,49 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "not-a-number");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    // ---------------------------------------------------------------
+    // WebSocketKeepAliveInterval (driven by WS_KEEPALIVE_INTERVAL env var)
+    // ---------------------------------------------------------------
+
+    [Test]
+    public void WebSocketKeepAliveInterval_ReturnsInfinite_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.WebSocketKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    [Test]
+    public void WebSocketKeepAliveInterval_ReturnsParsedValue_WhenSet()
+    {
+        Environment.SetEnvironmentVariable("WS_KEEPALIVE_INTERVAL", "45");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.WebSocketKeepAliveInterval, Is.EqualTo(TimeSpan.FromSeconds(45)));
+    }
+
+    [Test]
+    public void WebSocketKeepAliveInterval_ReturnsInfinite_WhenZero()
+    {
+        Environment.SetEnvironmentVariable("WS_KEEPALIVE_INTERVAL", "0");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.WebSocketKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    [Test]
+    public void WebSocketKeepAliveInterval_ReturnsInfinite_WhenNegative()
+    {
+        Environment.SetEnvironmentVariable("WS_KEEPALIVE_INTERVAL", "-10");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.WebSocketKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    [Test]
+    public void WebSocketKeepAliveInterval_ReturnsInfinite_WhenUnparseable()
+    {
+        Environment.SetEnvironmentVariable("WS_KEEPALIVE_INTERVAL", "thirty");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.WebSocketKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
     }
 
     // ---------------------------------------------------------------

@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.AspNetCore.Http;
 
 namespace Azure.AI.AgentServer.Invocations;
@@ -128,6 +129,76 @@ internal class InvocationsActivitySource
 
         // Baggage for downstream correlation (§4.3)
         activity.SetBaggage("azure.ai.agentserver.invocation_id", context.InvocationId);
+        activity.SetBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
+
+        // x-request-id propagation (if present in headers)
+        if (headers.TryGetValue(PlatformHeaders.RequestId, out var requestId))
+        {
+            var requestIdStr = requestId.ToString();
+            if (!string.IsNullOrEmpty(requestIdStr))
+            {
+                activity.SetTag("azure.ai.agentserver.x-request-id",
+                    requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
+                activity.SetBaggage(PlatformHeaders.RequestId,
+                    requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
+            }
+        }
+
+        return activity;
+    }
+
+    /// <summary>
+    /// Starts a tracing span for an <c>/invocations_ws</c> WebSocket connection.
+    /// Models a per-connection <c>websocket_session</c> span (mirroring the Python
+    /// design) with the same GenAI and namespaced attributes used for HTTP
+    /// invocations so HTTP and WS traces line up in the portal.
+    /// </summary>
+    /// <param name="context">The per-connection invocation context.</param>
+    /// <param name="headers">The upgrade request headers (for trace propagation).</param>
+    /// <returns>An <see cref="Activity"/> if a listener is registered, otherwise <c>null</c>.</returns>
+    public virtual Activity? StartWebSocketSessionActivity(
+        InvocationContext context,
+        IHeaderDictionary headers)
+    {
+        var agentName = FoundryEnvironment.AgentName;
+        var agentVersion = FoundryEnvironment.AgentVersion;
+
+        var activity = _activitySource.StartActivity(
+            "websocket_session",
+            ActivityKind.Server);
+
+        if (activity is null)
+        {
+            return null;
+        }
+
+        activity.SetTag("service.name", "azure.ai.agentserver");
+        activity.SetTag("gen_ai.provider.name", "AzureAI Hosted Agents");
+        activity.SetTag("gen_ai.operation.name", "websocket_session");
+        activity.SetTag("gen_ai.agent.id", BuildAgentId(agentName, agentVersion));
+
+        if (!string.IsNullOrEmpty(context.SessionId))
+        {
+            activity.SetTag("microsoft.session.id", context.SessionId);
+        }
+
+        if (!string.IsNullOrEmpty(agentName))
+        {
+            activity.SetTag("gen_ai.agent.name", agentName);
+        }
+
+        if (!string.IsNullOrEmpty(agentVersion))
+        {
+            activity.SetTag("gen_ai.agent.version", agentVersion);
+        }
+
+        // Namespaced WS-specific tags (matched 1:1 with the Python spec).
+        activity.SetTag(InvocationsWebSocketConstants.AttrSpanSessionId, context.SessionId ?? string.Empty);
+
+        // Cross-protocol correlation
+        activity.SetTag("microsoft.foundry.project.id", FoundryEnvironment.ProjectArmId ?? string.Empty);
+
+        // Baggage for downstream correlation
         activity.SetBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
 
         // x-request-id propagation (if present in headers)

@@ -1,5 +1,22 @@
 # Release History
 
+## 1.0.0-beta.25 (Unreleased)
+
+### Features Added
+
+- Added `FoundryEnvironment.WebSocketKeepAliveInterval` (sourced from the
+  `WS_KEEPALIVE_INTERVAL` environment variable) for the new
+  `invocations_ws` (WebSocket) protocol. Wired through
+  `AgentHostMiddlewareExtensions.UseAgentServerCore` into Kestrel's
+  `WebSocketOptions.KeepAliveInterval`, so a positive value emits RFC 6455
+  protocol-level Ping frames (opcode `0x9`) that keep idle WebSocket
+  connections alive through Azure APIM / Azure Load Balancer's ~4-minute
+  idle timeout. Disabled by default (`Timeout.InfiniteTimeSpan`).
+- `UseAgentServerCore` now also calls `IApplicationBuilder.UseWebSockets`,
+  so any protocol library that hosts WebSocket endpoints (e.g., the
+  Invocations `/invocations_ws` endpoint) works out of the box without
+  the consumer having to wire `UseWebSockets` themselves.
+
 ## 1.0.0-beta.24 (2026-05-15)
 
 ### Features Added

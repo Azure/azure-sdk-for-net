@@ -48,6 +48,7 @@ namespace Azure.AI.AgentServer.Core
         public static string? ProjectEndpoint { get { throw null; } }
         public static string? SessionId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
+        public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
     }
     public partial class IsolationContext
     {
