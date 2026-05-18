@@ -79,12 +79,16 @@ public static class ConfigurationExtensions
 
     /// <summary>
     /// Resolves an <see cref="AuthenticationTokenProvider"/> for the named
-    /// credential section. The supplied <paramref name="sectionName"/> is
-    /// treated as the credential section itself (not a parent client
-    /// section). This overload always returns <see langword="null"/>
-    /// because no <see cref="CredentialResolver"/> chain has been supplied —
-    /// use the overload that accepts resolvers to participate in resolution.
-    /// Never throws.
+    /// credential section by walking the supplied
+    /// <see cref="CredentialResolver"/> chain (first match wins). The
+    /// supplied <paramref name="sectionName"/> is treated as the credential
+    /// section itself (not a parent client section). Returns
+    /// <see langword="null"/> if no resolver claimed the section. Inline
+    /// API-key configurations (with <c>CredentialSource: ApiKey</c> and a
+    /// non-empty <c>Key</c>) are not synthesized into a provider here — the
+    /// source of truth is <see cref="CredentialSettings.Key"/>, which the
+    /// consuming library reads directly when <c>CredentialProvider</c> is
+    /// <see langword="null"/>. Never throws.
     /// </summary>
     public static AuthenticationTokenProvider? GetCredential(
         this IConfiguration configuration,

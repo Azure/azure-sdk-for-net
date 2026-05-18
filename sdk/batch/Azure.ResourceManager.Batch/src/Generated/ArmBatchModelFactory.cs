@@ -32,6 +32,32 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchEndpointAccessProfile(defaultAction, ipRules.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
+        /// <param name="groupIds"> The value has one and only one group id. </param>
+        /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}. </param>
+        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchPrivateEndpointConnectionProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default, BatchPrivateLinkServiceConnectionState connectionState = default, ResourceIdentifier privateEndpointId = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && groupIds is null && connectionState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, null), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, null),
+                eTag,
+                tags);
+        }
+
         /// <summary> The private link service connection state of the private endpoint connection. </summary>
         /// <param name="status"> The status of the Batch private endpoint connection. </param>
         /// <param name="description"> Description of the private Connection state. </param>
@@ -127,6 +153,79 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchApplicationPackageActivateContent BatchApplicationPackageActivateContent(string format = default)
         {
             return new BatchApplicationPackageActivateContent(format, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
+        /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
+        /// <param name="createdOn"> The creation time of the pool. </param>
+        /// <param name="provisioningState"> The current state of the pool. </param>
+        /// <param name="provisioningStateTransitOn"> The time at which the pool entered its current state. </param>
+        /// <param name="allocationState"> Whether the pool is resizing. </param>
+        /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
+        /// <param name="vmSize"> For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
+        /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
+        /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
+        /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
+        /// <param name="autoScaleRun"> This property is set only if the pool automatically scales, i.e. autoScaleSettings are used. </param>
+        /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </param>
+        /// <param name="networkConfiguration"> The network configuration for a pool. </param>
+        /// <param name="taskSlotsPerNode"> The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
+        /// <param name="taskSchedulingPolicy"> If not specified, the default is spread. </param>
+        /// <param name="userAccounts"> The list of user accounts to be created on each node in the pool. </param>
+        /// <param name="metadata"> The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
+        /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
+        /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
+        /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
+        /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
+        /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
+        /// <param name="deploymentVmConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
+        /// <param name="identity"> The type of identity used for the Batch Pool. </param>
+        /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default, BatchVmConfiguration deploymentVmConfiguration = default, ManagedServiceIdentity identity = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchAccountPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null && deploymentVmConfiguration is null ? default : new PoolProperties(
+                    displayName,
+                    lastModifiedOn,
+                    createdOn,
+                    provisioningState,
+                    provisioningStateTransitOn,
+                    allocationState,
+                    allocationStateTransitionOn,
+                    vmSize,
+                    new BatchDeploymentConfiguration(deploymentVmConfiguration, null),
+                    currentDedicatedNodes,
+                    currentLowPriorityNodes,
+                    scaleSettings,
+                    autoScaleRun,
+                    interNodeCommunication,
+                    networkConfiguration,
+                    taskSlotsPerNode,
+                    taskSchedulingPolicy,
+                    (userAccounts ?? new ChangeTrackingList<BatchUserAccount>()).ToList(),
+                    (metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>()).ToList(),
+                    startTask,
+                    (applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>()).ToList(),
+                    resizeOperationStatus,
+                    (mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>()).ToList(),
+                    upgradePolicy,
+                    null),
+                identity,
+                eTag,
+                tags);
         }
 
         /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
@@ -580,10 +679,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="groupIds"> The value has one and only one group id. </param>
         /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, BatchPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, BatchPrivateLinkServiceConnectionState connectionState = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            groupIds ??= new ChangeTrackingList<string>();
 
             return new BatchPrivateEndpointConnectionData(
                 id,
@@ -591,8 +690,8 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                etag,
                 tags);
         }
 
@@ -666,8 +765,14 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
+                state is null && format is null && storageUri is null && storageUriExpireOn is null && lastActivatedOn is null ? default : new ApplicationPackageProperties(
+                    state,
+                    format,
+                    storageUri,
+                    storageUriExpireOn,
+                    lastActivatedOn,
+                    default),
+                etag,
                 tags);
         }
 
@@ -738,13 +843,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
         /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
-        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, BatchVmConfiguration deploymentVmConfiguration = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, string> tags, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchVmConfiguration deploymentVmConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IEnumerable<BatchUserAccount> userAccounts, IEnumerable<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IEnumerable<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IEnumerable<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            userAccounts ??= new ChangeTrackingList<BatchUserAccount>();
-            metadata ??= new ChangeTrackingList<BatchAccountPoolMetadataItem>();
-            applicationPackages ??= new ChangeTrackingList<BatchApplicationPackageReference>();
-            mountConfiguration ??= new ChangeTrackingList<BatchMountConfiguration>();
 
             return new BatchAccountPoolData(
                 id,
@@ -752,9 +854,34 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
+                    displayName,
+                    lastModifiedOn,
+                    createdOn,
+                    provisioningState,
+                    provisioningStateTransitOn,
+                    allocationState,
+                    allocationStateTransitionOn,
+                    vmSize,
+                    new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
+                    currentDedicatedNodes,
+                    currentLowPriorityNodes,
+                    scaleSettings,
+                    autoScaleRun,
+                    interNodeCommunication,
+                    networkConfiguration,
+                    taskSlotsPerNode,
+                    taskSchedulingPolicy,
+                    (userAccounts ?? new ChangeTrackingList<BatchUserAccount>()).ToList(),
+                    (metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>()).ToList(),
+                    startTask,
+                    (applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>()).ToList(),
+                    resizeOperationStatus,
+                    (mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>()).ToList(),
+                    upgradePolicy,
+                    default),
                 identity,
-                default,
+                etag,
                 tags);
         }
 

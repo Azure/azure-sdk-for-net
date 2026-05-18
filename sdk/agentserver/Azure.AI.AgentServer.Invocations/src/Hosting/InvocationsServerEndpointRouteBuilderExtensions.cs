@@ -45,7 +45,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             InvocationHandler invocationHandler) =>
         {
             await handler.HandleInvokeAsync(httpContext, invocationHandler);
-        });
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         // GET /invocations/{invocationId} — get invocation result
         group.MapGet("/invocations/{invocationId}", async (
@@ -55,7 +55,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             InvocationHandler invocationHandler) =>
         {
             await handler.HandleGetAsync(httpContext, invocationId, invocationHandler);
-        });
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         // POST /invocations/{invocationId}/cancel — cancel invocation
         group.MapPost("/invocations/{invocationId}/cancel", async (
@@ -65,7 +65,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             InvocationHandler invocationHandler) =>
         {
             await handler.HandleCancelAsync(httpContext, invocationId, invocationHandler);
-        });
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         // GET /invocations/docs/openapi.json — OpenAPI spec
         group.MapGet("/invocations/docs/openapi.json", async (
@@ -74,7 +74,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             InvocationHandler invocationHandler) =>
         {
             await handler.HandleGetOpenApiAsync(httpContext, invocationHandler);
-        });
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
         group.WithTags("Invocations");
 

@@ -117,7 +117,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolboxSearchPreviewTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, <see cref="Agents.ToolboxSearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -521,40 +521,34 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> A WorkIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
         /// <returns> A new <see cref="Agents.WorkIQPreviewTool"/> instance for mocking. </returns>
-        public static WorkIQPreviewTool WorkIQPreviewTool(string name = default, string description = default, WorkIQPreviewToolParameters workIqPreview = default)
+        public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default, string name = default, string description = default)
         {
-            return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, name, description, workIqPreview);
+            return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, projectConnectionId, name, description);
         }
 
-        /// <summary> The WorkIQ tool parameters. </summary>
-        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <returns> A new <see cref="Agents.WorkIQPreviewToolParameters"/> instance for mocking. </returns>
-        public static WorkIQPreviewToolParameters WorkIQPreviewToolParameters(string projectConnectionId = default)
-        {
-            return new WorkIQPreviewToolParameters(projectConnectionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FabricIQPreviewTool. </summary>
-        /// <param name="fabricIqPreview"> The FabricIQ tool parameters. </param>
-        /// <returns> A new <see cref="Agents.FabricIQPreviewTool"/> instance for mocking. </returns>
-        public static FabricIQPreviewTool FabricIQPreviewTool(FabricIQPreviewToolParameters fabricIqPreview = default)
-        {
-            return new FabricIQPreviewTool(ToolType.FabricIqPreview, additionalBinaryDataProperties: null, fabricIqPreview);
-        }
-
-        /// <summary> The FabricIQPreviewToolParameters. </summary>
+        /// <summary> A FabricIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
         /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
-        /// <returns> A new <see cref="Agents.FabricIQPreviewToolParameters"/> instance for mocking. </returns>
-        public static FabricIQPreviewToolParameters FabricIQPreviewToolParameters(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <returns> A new <see cref="Agents.FabricIQPreviewTool"/> instance for mocking. </returns>
+        public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default, string name = default, string description = default)
         {
-            return new FabricIQPreviewToolParameters(projectConnectionId, serverLabel, serverUrl, requireApproval, additionalBinaryDataProperties: null);
+            return new FabricIQPreviewTool(
+                ToolType.FabricIqPreview,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                serverUrl,
+                requireApproval,
+                name,
+                description);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -612,6 +606,23 @@ namespace Azure.AI.Projects.Agents
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The EmptyModelParam. </summary>
+        /// <returns> A new <see cref="OpenAI.EmptyModelParam"/> instance for mocking. </returns>
+        public static EmptyModelParam EmptyModelParam()
+        {
+            return new EmptyModelParam(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tool search tool. </summary>
+        /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
+        /// <param name="description"></param>
+        /// <param name="parameters"></param>
+        /// <returns> A new <see cref="Agents.ToolSearchTool"/> instance for mocking. </returns>
+        public static ToolSearchTool ToolSearchTool(ToolSearchExecutionType? execution = default, string description = default, EmptyModelParam parameters = default)
+        {
+            return new ToolSearchTool(ToolType.ToolSearch, additionalBinaryDataProperties: null, execution, description, parameters);
+        }
+
         /// <summary> A record mapping for a single protocol and its version. </summary>
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
@@ -632,13 +643,19 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Code-based deployment configuration for a hosted agent. </summary>
         /// <param name="runtime"> The runtime identifier for code execution (e.g., 'python_3_11', 'python_3_12', 'python_3_13'). </param>
         /// <param name="entryPoint"> The entry point command and arguments for the code execution. </param>
+        /// <param name="dependencyResolution">
+        /// How package dependencies are resolved at deployment time. Defaults to `bundled`,
+        /// where the caller bundles all dependencies into the uploaded zip and the service
+        /// performs no remote build. `remote_build` instructs the service to build
+        /// dependencies remotely from the manifest included in the uploaded zip.
+        /// </param>
         /// <param name="contentHash"> The SHA-256 hex digest of the uploaded code zip. Set by the service from the `x-ms-code-zip-sha256` request header; read-only in responses and never accepted in request payloads. </param>
         /// <returns> A new <see cref="Agents.CodeConfiguration"/> instance for mocking. </returns>
-        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default, string contentHash = default)
+        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default, CodeDependencyResolution dependencyResolution = default, string contentHash = default)
         {
             entryPoint ??= new ChangeTrackingList<string>();
 
-            return new CodeConfiguration(runtime, entryPoint.ToList(), contentHash, additionalBinaryDataProperties: null);
+            return new CodeConfiguration(runtime, entryPoint.ToList(), dependencyResolution, contentHash, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
@@ -656,14 +673,14 @@ namespace Azure.AI.Projects.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OtlpTelemetryEndpoint"/>.
         /// </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <returns> A new <see cref="Agents.TelemetryEndpoint"/> instance for mocking. </returns>
-        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default)
+        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default)
         {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
+            exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
-            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), data.ToList(), auth, additionalBinaryDataProperties: null);
+            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), exportedDataTypes.ToList(), authentication, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -671,10 +688,10 @@ namespace Azure.AI.Projects.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
         /// </summary>
         /// <param name="type"> The authentication type. </param>
-        /// <returns> A new <see cref="Agents.TelemetryEndpointAuth"/> instance for mocking. </returns>
-        public static TelemetryEndpointAuth TelemetryEndpointAuth(string @type = default)
+        /// <returns> A new <see cref="Agents.TelemetryEndpointAuthentication"/> instance for mocking. </returns>
+        public static TelemetryEndpointAuthentication TelemetryEndpointAuthentication(string @type = default)
         {
-            return new UnknownTelemetryEndpointAuth(new TelemetryEndpointAuthType(@type), additionalBinaryDataProperties: null);
+            return new UnknownTelemetryEndpointAuthentication(new TelemetryEndpointAuthenticationKind(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
@@ -684,23 +701,23 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
         public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
         {
-            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthType.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
+            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
         }
 
         /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
         /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
         {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
+            exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
             return new OtlpTelemetryEndpoint(
                 TelemetryEndpointKind.OTLP,
-                data.ToList(),
-                auth,
+                exportedDataTypes.ToList(),
+                authentication,
                 additionalBinaryDataProperties: null,
                 endpoint,
                 protocol);
@@ -803,17 +820,17 @@ namespace Azure.AI.Projects.Agents
             return new ManagedAgentIdentityBlueprintReference(AgentBlueprintReferenceType.ManagedAgentIdentityBlueprint, additionalBinaryDataProperties: null, blueprintId);
         }
 
-        /// <summary> The AgentEndpointConfig. </summary>
+        /// <summary> The AgentEndpointConfiguration. </summary>
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocols"> The protocols that the agent supports. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
-        /// <returns> A new <see cref="Agents.AgentEndpointConfig"/> instance for mocking. </returns>
-        public static AgentEndpointConfig AgentEndpointConfig(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
+        /// <returns> A new <see cref="Agents.AgentEndpointConfiguration"/> instance for mocking. </returns>
+        public static AgentEndpointConfiguration AgentEndpointConfiguration(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
         {
             protocols ??= new ChangeTrackingList<AgentEndpointProtocol>();
             authorizationSchemes ??= new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
 
-            return new AgentEndpointConfig(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
+            return new AgentEndpointConfiguration(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The VersionSelector. </summary>
@@ -859,36 +876,10 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The EntraAuthorizationScheme. </summary>
-        /// <param name="isolationKeySource"></param>
         /// <returns> A new <see cref="Agents.EntraAuthorizationScheme"/> instance for mocking. </returns>
-        public static EntraAuthorizationScheme EntraAuthorizationScheme(IsolationKeySource isolationKeySource = default)
+        public static EntraAuthorizationScheme EntraAuthorizationScheme()
         {
-            return new EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType.Entra, additionalBinaryDataProperties: null, isolationKeySource);
-        }
-
-        /// <summary>
-        /// The IsolationKeySource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.EntraIsolationKeySource"/> and <see cref="Agents.HeaderIsolationKeySource"/>.
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <returns> A new <see cref="Agents.IsolationKeySource"/> instance for mocking. </returns>
-        public static IsolationKeySource IsolationKeySource(string kind = default)
-        {
-            return new UnknownIsolationKeySource(new IsolationKeySourceKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The EntraIsolationKeySource. </summary>
-        /// <returns> A new <see cref="Agents.EntraIsolationKeySource"/> instance for mocking. </returns>
-        public static EntraIsolationKeySource EntraIsolationKeySource()
-        {
-            return new EntraIsolationKeySource(IsolationKeySourceKind.Entra, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The HeaderIsolationKeySource. </summary>
-        /// <returns> A new <see cref="Agents.HeaderIsolationKeySource"/> instance for mocking. </returns>
-        public static HeaderIsolationKeySource HeaderIsolationKeySource()
-        {
-            return new HeaderIsolationKeySource(IsolationKeySourceKind.Header, additionalBinaryDataProperties: null);
+            return new EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType.Entra, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BotServiceAuthorizationScheme. </summary>
@@ -1182,7 +1173,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <returns> A new <see cref="Agents.PatchAgentOptions"/> instance for mocking. </returns>
-        public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfig agentEndpoint = default, AgentCard agentCard = default)
+        public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default)
         {
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
         }
