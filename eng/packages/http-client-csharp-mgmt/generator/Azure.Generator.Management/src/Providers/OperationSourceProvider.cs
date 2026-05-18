@@ -5,12 +5,15 @@ using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -95,8 +98,7 @@ namespace Azure.Generator.Management.Providers
                 body = new MethodBodyStatement[]
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
-                    Declare("result", _resultType, Static(_resultType).Invoke($"Deserialize{_resultType.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()), out var resultVariable),
-                    Return(resultVariable),
+                    Return(BuildDeserializeNonResource(documentVariable)),
                 };
             }
 
@@ -132,12 +134,40 @@ namespace Azure.Generator.Management.Providers
                 body = new MethodBodyStatement[]
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream))]), out var documentVariable),
-                    Declare("result", _resultType, Static(_resultType).Invoke($"Deserialize{_resultType.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()), out var resultVariable),
-                    Return(resultVariable),
+                    Return(BuildDeserializeNonResource(documentVariable)),
                 };
             }
 
             return new MethodProvider(signature, body, this);
+        }
+
+        // Deserialize the document into _resultType.
+        // For framework/cross-assembly types (e.g. OperationStatusResult, defined in Azure.ResourceManager), the
+        // generated `Deserialize{TypeName}` factory method is internal to the defining assembly and not callable from
+        // consumer SDKs, so we must use ModelReaderWriter.Read<T>(...) with the SDK's generated ModelReaderWriterContext.
+        // For SDK-generated model types, the factory is accessible and is preferred.
+        private ValueExpression BuildDeserializeNonResource(VariableExpression documentVariable)
+        {
+            var rootElement = documentVariable.Property(nameof(JsonDocument.RootElement));
+            var wireOptions = Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>();
+
+            if (_resultType.IsFrameworkType)
+            {
+                // new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText()))
+                var binaryData = New.Instance(
+                    typeof(BinaryData),
+                    Static(typeof(Encoding)).Property(nameof(Encoding.UTF8)).Invoke(
+                        nameof(Encoding.UTF8.GetBytes),
+                        rootElement.Invoke(nameof(JsonElement.GetRawText))));
+
+                return Static(typeof(ModelReaderWriter)).Invoke(
+                    nameof(ModelReaderWriter.Read),
+                    [binaryData, wireOptions, ModelReaderWriterContextSnippets.Default],
+                    [_resultType],
+                    false);
+            }
+
+            return Static(_resultType).Invoke($"Deserialize{_resultType.Name}", rootElement, wireOptions);
         }
 
         protected override FieldProvider[] BuildFields()
