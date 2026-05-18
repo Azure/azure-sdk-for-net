@@ -32,6 +32,15 @@ namespace Azure.Storage.ChangeFeed.Common
         private DateTimeOffset? _startTime;
         private DateTimeOffset? _endTime;
         private readonly bool _includeNonFinalizedEvents;
+
+        /// <summary>
+        /// When <c>true</c>, <see cref="_startTime"/>/<see cref="_endTime"/> bound only which
+        /// segments are enumerated; no per-event <c>EventTime</c> filtering and no segment-boundary
+        /// end gate are applied, so every row in the selected segments is produced. Set by the
+        /// snapshot-range reader, which bounds the read by container version id instead.
+        /// </summary>
+        private readonly bool _disableEventTimeFilter;
+
         private bool _empty;
 
         /// <summary>
@@ -51,6 +60,11 @@ namespace Azure.Storage.ChangeFeed.Common
         /// emitted pages will not include a continuation token (resumption is not supported in
         /// this mode because non-finalized segments may change between reads).
         /// </param>
+        /// <param name="disableEventTimeFilter">
+        /// When <c>true</c>, <paramref name="startTime"/>/<paramref name="endTime"/> bound only
+        /// which segments are enumerated; the per-event <c>EventTime</c> predicate and the
+        /// segment-boundary end gate are not applied. Used by the snapshot-range reader.
+        /// </param>
         public ChangeFeedBase(
             BlobContainerClient containerClient,
             SegmentFactoryBase<TEvent> segmentFactory,
@@ -61,7 +75,8 @@ namespace Azure.Storage.ChangeFeed.Common
             DateTimeOffset? startTime,
             DateTimeOffset? endTime,
             ChangeFeedConfiguration<TEvent> config,
-            bool includeNonFinalizedEvents = false)
+            bool includeNonFinalizedEvents = false,
+            bool disableEventTimeFilter = false)
         {
             _containerClient = containerClient;
             _segmentFactory = segmentFactory;
@@ -73,6 +88,7 @@ namespace Azure.Storage.ChangeFeed.Common
             _endTime = endTime;
             _config = config;
             _includeNonFinalizedEvents = includeNonFinalizedEvents;
+            _disableEventTimeFilter = disableEventTimeFilter;
             _empty = false;
         }
 
@@ -96,7 +112,10 @@ namespace Azure.Storage.ChangeFeed.Common
             if (!HasNext())
                 throw new InvalidOperationException("Change feed doesn't have any more events");
 
-            if (_currentSegment.DateTime >= _endTime)
+            // In snapshot mode the enumerated segment set is already bounded by the log window;
+            // skipping the boundary segment here would drop the segment whose bucket DateTime
+            // equals endTime — exactly the degenerate same-minute window the snapshot reader hits.
+            if (!_disableEventTimeFilter && _currentSegment.DateTime >= _endTime)
                 return ChangeFeedEventPageBase<TEvent>.Empty();
 
             int defaultPageSize = _config?.DefaultPageSize ?? 5000;
@@ -110,11 +129,13 @@ namespace Azure.Storage.ChangeFeed.Common
             // and continue filling the page until the requested size is reached or no segments remain.
             while (events.Count < pageSize && HasNext())
             {
+                // Snapshot mode reads every row in the selected segments and filters by
+                // container version id downstream, so suppress the per-event time predicate.
                 List<TEvent> newEvents = await _currentSegment.GetPage(
                     async,
                     remainingEvents,
-                    _startTime,
-                    _endTime,
+                    _disableEventTimeFilter ? null : _startTime,
+                    _disableEventTimeFilter ? null : _endTime,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -144,7 +165,10 @@ namespace Azure.Storage.ChangeFeed.Common
             if (_empty || _segments.Count == 0 && _years.Count == 0 && !_currentSegment.HasNext())
                 return false;
 
-            if (_endTime.HasValue)
+            // Snapshot mode relies solely on the enumerated segment set (already bounded by the
+            // log window) to terminate; applying the end gate here would skip the boundary
+            // segment when the begin/end log windows fall in the same minute bucket.
+            if (_endTime.HasValue && !_disableEventTimeFilter)
                 return _currentSegment.DateTime < _endTime;
 
             return true;
