@@ -32,24 +32,11 @@ namespace Azure.Generator.Management.Visitors
 
                         updatedMethods.Add(method);
                     }
-                    else if (returnType is not null && ShouldPreserveBackwardCompatMethod(method, returnType))
-                    {
-                        updatedMethods.Add(method);
-                    }
                 }
                 modelFactory.Update(methods: updatedMethods);
                 return modelFactory;
             }
             return base.VisitType(type);
-        }
-
-        internal static bool ShouldPreserveBackwardCompatMethod(MethodProvider method, CSharpType returnType)
-        {
-            // Previous model-factory overloads may target models whose public read-only members are
-            // supplied by custom partial classes. The generator cannot see those custom members, but
-            // it must still preserve the previous hidden overload while the return type still exists.
-            return ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
-                && ManagementClientGenerator.Instance.OutputLibrary.IsModelType(returnType);
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
