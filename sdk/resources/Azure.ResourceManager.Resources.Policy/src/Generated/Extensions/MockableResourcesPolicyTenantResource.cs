@@ -23,10 +23,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
     {
         private ClientDiagnostics _policyAssignmentsClientDiagnostics;
         private PolicyAssignments _policyAssignmentsRestClient;
-        private ClientDiagnostics _policyDefinitionVersionsClientDiagnostics;
-        private PolicyDefinitionVersions _policyDefinitionVersionsRestClient;
-        private ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
-        private PolicySetDefinitionVersions _policySetDefinitionVersionsRestClient;
 
         /// <summary> Initializes a new instance of MockableResourcesPolicyTenantResource for mocking. </summary>
         protected MockableResourcesPolicyTenantResource()
@@ -43,14 +39,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         private ClientDiagnostics PolicyAssignmentsClientDiagnostics => _policyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PolicyAssignments PolicyAssignmentsRestClient => _policyAssignmentsRestClient ??= new PolicyAssignments(PolicyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics PolicyDefinitionVersionsClientDiagnostics => _policyDefinitionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PolicyDefinitionVersions PolicyDefinitionVersionsRestClient => _policyDefinitionVersionsRestClient ??= new PolicyDefinitionVersions(PolicyDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics PolicySetDefinitionVersionsClientDiagnostics => _policySetDefinitionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PolicySetDefinitionVersions PolicySetDefinitionVersionsRestClient => _policySetDefinitionVersionsRestClient ??= new PolicySetDefinitionVersions(PolicySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
         /// <summary> Gets a collection of DataPolicyManifests in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of DataPolicyManifests and their operations over a DataPolicyManifestResource. </returns>
@@ -509,182 +497,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation lists all the built-in policy definition versions for all built-in policy definitions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/listPolicyDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitionVersionsOperationGroup_ListAllBuiltins. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyDefinitionVersionListResult>> GetAllBuiltinsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyDefinitionVersionsRestClient.CreateGetAllBuiltinsRequest(context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyDefinitionVersionListResult> response = Response.FromValue(PolicyDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation lists all the built-in policy definition versions for all built-in policy definitions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/listPolicyDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitionVersionsOperationGroup_ListAllBuiltins. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyDefinitionVersionListResult> GetAllBuiltins(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicyDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicyDefinitionVersionsRestClient.CreateGetAllBuiltinsRequest(context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyDefinitionVersionListResult> response = Response.FromValue(PolicyDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation lists all the built-in policy set definition versions for all built-in policy set definitions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAllBuiltins. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicySetDefinitionVersionListResult>> GetAllBuiltinsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicySetDefinitionVersionsRestClient.CreateGetAllBuiltinsRequest(context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation lists all the built-in policy set definition versions for all built-in policy set definitions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/listPolicySetDefinitionVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersionsOperationGroup_ListAllBuiltins. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicySetDefinitionVersionListResult> GetAllBuiltins(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = PolicySetDefinitionVersionsClientDiagnostics.CreateScope("MockableResourcesPolicyTenantResource.GetAllBuiltins");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PolicySetDefinitionVersionsRestClient.CreateGetAllBuiltinsRequest(context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicySetDefinitionVersionListResult> response = Response.FromValue(PolicySetDefinitionVersionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {
