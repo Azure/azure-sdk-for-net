@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Binary. </summary>
         private const string BinaryValue = "Binary";
         /// <summary> SASL. </summary>
-        private const string SASLValue = "SASL";
+        private const string SaslValue = "SASL";
         /// <summary> HTTP. </summary>
-        private const string HTTPValue = "HTTP ";
+        private const string HttpValue = "HTTP ";
 
         /// <summary> Initializes a new instance of <see cref="SparkThriftTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SparkThriftTransportProtocol Binary { get; } = new SparkThriftTransportProtocol(BinaryValue);
 
         /// <summary> SASL. </summary>
-        public static SparkThriftTransportProtocol SASL { get; } = new SparkThriftTransportProtocol(SASLValue);
+        public static SparkThriftTransportProtocol Sasl { get; } = new SparkThriftTransportProtocol(SaslValue);
 
         /// <summary> HTTP. </summary>
-        public static SparkThriftTransportProtocol HTTP { get; } = new SparkThriftTransportProtocol(HTTPValue);
+        public static SparkThriftTransportProtocol Http { get; } = new SparkThriftTransportProtocol(HttpValue);
 
         /// <summary> Determines if two <see cref="SparkThriftTransportProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

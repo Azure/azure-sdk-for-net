@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryParameterDictionaryHelper.ToRequestContent(parameters), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
+                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryParameterDictionaryHelper.ToRequestContent(parameters) /* TODO(#59298): generator emitted invalid call */, referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PipelineCreateRunResult> response = Response.FromValue(PipelineCreateRunResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryParameterDictionaryHelper.ToRequestContent(parameters), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
+                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryParameterDictionaryHelper.ToRequestContent(parameters) /* TODO(#59298): generator emitted invalid call */, referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PipelineCreateRunResult> response = Response.FromValue(PipelineCreateRunResult.FromResponse(result), result);
                 if (response.Value == null)

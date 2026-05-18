@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    datasetCompressionType = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    datasetCompressionType = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("level"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    level = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    level = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

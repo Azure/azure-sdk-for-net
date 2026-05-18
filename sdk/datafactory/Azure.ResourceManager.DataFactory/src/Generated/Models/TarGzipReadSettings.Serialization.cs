@@ -15,51 +15,51 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The TarGZip compression read settings. </summary>
-    public partial class TarGZipReadSettings : CompressionReadSettings, IJsonModel<TarGZipReadSettings>
+    public partial class TarGzipReadSettings : CompressionReadSettings, IJsonModel<TarGzipReadSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override CompressionReadSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TarGZipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTarGZipReadSettings(document.RootElement, options);
+                        return DeserializeTarGzipReadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TarGZipReadSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TarGZipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TarGZipReadSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TarGZipReadSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TarGzipReadSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TarGZipReadSettings IPersistableModel<TarGZipReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => (TarGZipReadSettings)PersistableModelCreateCore(data, options);
+        TarGzipReadSettings IPersistableModel<TarGzipReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => (TarGzipReadSettings)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TarGZipReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TarGzipReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TarGZipReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TarGzipReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TarGZipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TarGZipReadSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
@@ -85,24 +85,24 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TarGZipReadSettings IJsonModel<TarGZipReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TarGZipReadSettings)JsonModelCreateCore(ref reader, options);
+        TarGzipReadSettings IJsonModel<TarGzipReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TarGzipReadSettings)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override CompressionReadSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TarGZipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TarGZipReadSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTarGZipReadSettings(document.RootElement, options);
+            return DeserializeTarGzipReadSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TarGZipReadSettings DeserializeTarGZipReadSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static TarGzipReadSettings DeserializeTarGzipReadSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    preserveCompressionFileNameAsFolder = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    preserveCompressionFileNameAsFolder = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new TarGZipReadSettings(@type, additionalProperties, preserveCompressionFileNameAsFolder);
+            return new TarGzipReadSettings(@type, additionalProperties, preserveCompressionFileNameAsFolder);
         }
     }
 }

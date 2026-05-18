@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText())); /* TODO(#59298): generator emitted wrong local name */
                 }
             }
             return new DatabricksSparkPythonActivity(

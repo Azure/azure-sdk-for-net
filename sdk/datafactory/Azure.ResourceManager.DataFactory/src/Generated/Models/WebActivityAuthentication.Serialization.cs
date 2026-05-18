@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    username = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("resource"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    resource = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    resource = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("userTenant"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userTenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    userTenant = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

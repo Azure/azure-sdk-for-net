@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    useTempDB = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
+                    useTempDB = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("interimSchemaName"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    interimSchemaName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    interimSchemaName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("keys"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    keys = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(prop.Value.GetRawText());
+                    keys = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

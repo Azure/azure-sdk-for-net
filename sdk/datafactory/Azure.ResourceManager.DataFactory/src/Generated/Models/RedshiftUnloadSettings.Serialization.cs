@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("bucketName"u8))
                 {
-                    bucketName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    bucketName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

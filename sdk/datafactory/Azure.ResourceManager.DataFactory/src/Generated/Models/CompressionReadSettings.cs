@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Compression read settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ZipDeflateReadSettings"/>, <see cref="TarReadSettings"/>, and <see cref="TarGZipReadSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ZipDeflateReadSettings"/>, <see cref="TarReadSettings"/>, and <see cref="TarGzipReadSettings"/>.
     /// </summary>
     public abstract partial class CompressionReadSettings
     {

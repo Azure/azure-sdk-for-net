@@ -9384,7 +9384,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 id,
                 name,
                 @type,
-                eTag?.ToString(),
+                eTag,
                 additionalBinaryDataProperties: null,
                 properties);
         }
@@ -11207,7 +11207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Compression read settings.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ZipDeflateReadSettings"/>, <see cref="Models.TarReadSettings"/>, and <see cref="Models.TarGZipReadSettings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ZipDeflateReadSettings"/>, <see cref="Models.TarReadSettings"/>, and <see cref="Models.TarGzipReadSettings"/>.
         /// </summary>
         /// <param name="type"> The Compression setting type. </param>
         /// <param name="additionalProperties"></param>
@@ -11244,12 +11244,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The TarGZip compression read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
-        /// <returns> A new <see cref="Models.TarGZipReadSettings"/> instance for mocking. </returns>
-        public static TarGZipReadSettings TarGZipReadSettings(IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<bool> preserveCompressionFileNameAsFolder = default)
+        /// <returns> A new <see cref="Models.TarGzipReadSettings"/> instance for mocking. </returns>
+        public static TarGzipReadSettings TarGzipReadSettings(IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<bool> preserveCompressionFileNameAsFolder = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new TarGZipReadSettings("TarGZipReadSettings", additionalProperties, preserveCompressionFileNameAsFolder);
+            return new TarGzipReadSettings("TarGZipReadSettings", additionalProperties, preserveCompressionFileNameAsFolder);
         }
 
         /// <summary>
@@ -17290,7 +17290,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 id,
                 name,
                 @type,
-                eTag?.ToString(),
+                eTag,
                 additionalBinaryDataProperties: null,
                 properties);
         }
@@ -17524,7 +17524,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 name,
                 default,
                 eTag?.ToString(),
-                additionalBinaryDataProperties: null,
+                additionalBinaryDataProperties: null, /* TODO(#59298): ETag? to string */
                 properties);
         }
 
@@ -17544,7 +17544,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 name,
                 default,
                 eTag?.ToString(),
-                additionalBinaryDataProperties: null,
+                additionalBinaryDataProperties: null, /* TODO(#59298): ETag? to string */
                 properties);
         }
 

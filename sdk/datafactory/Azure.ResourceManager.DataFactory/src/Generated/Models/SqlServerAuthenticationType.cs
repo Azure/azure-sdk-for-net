@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         private readonly string _value;
         /// <summary> SQL. </summary>
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         /// <summary> Windows. </summary>
         private const string WindowsValue = "Windows";
         /// <summary> UserAssignedManagedIdentity. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL. </summary>
-        public static SqlServerAuthenticationType SQL { get; } = new SqlServerAuthenticationType(SQLValue);
+        public static SqlServerAuthenticationType Sql { get; } = new SqlServerAuthenticationType(SqlValue);
 
         /// <summary> Windows. </summary>
         public static SqlServerAuthenticationType Windows { get; } = new SqlServerAuthenticationType(WindowsValue);

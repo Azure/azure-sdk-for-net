@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("packagePath"u8))
                 {
-                    packagePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    packagePath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("packageName"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("packageContent"u8))
                 {
-                    packageContent = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    packageContent = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("packageLastModifiedDate"u8))

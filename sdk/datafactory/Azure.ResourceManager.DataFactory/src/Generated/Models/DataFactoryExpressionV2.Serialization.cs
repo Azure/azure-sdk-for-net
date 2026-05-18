@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    v2Value = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    v2Value = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("operators"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryElement<string>> array = new List<DataFactoryElement<string>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<DataFactoryElement<string>>(item.GetRawText()));
+                        array.Add(default(DataFactoryElement<string>) /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */);
                     }
                     operators = array;
                     continue;

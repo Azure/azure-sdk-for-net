@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         private readonly string _value;
         /// <summary> GET. </summary>
-        private const string GETValue = "GET";
+        private const string GetValue = "GET";
         /// <summary> POST. </summary>
-        private const string POSTValue = "POST";
+        private const string PostValue = "POST";
         /// <summary> PUT. </summary>
-        private const string PUTValue = "PUT";
+        private const string PutValue = "PUT";
         /// <summary> DELETE. </summary>
-        private const string DELETEValue = "DELETE";
+        private const string DeleteValue = "DELETE";
 
         /// <summary> Initializes a new instance of <see cref="WebActivityMethod"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> GET. </summary>
-        public static WebActivityMethod GET { get; } = new WebActivityMethod(GETValue);
+        public static WebActivityMethod Get { get; } = new WebActivityMethod(GetValue);
 
         /// <summary> POST. </summary>
-        public static WebActivityMethod POST { get; } = new WebActivityMethod(POSTValue);
+        public static WebActivityMethod Post { get; } = new WebActivityMethod(PostValue);
 
         /// <summary> PUT. </summary>
-        public static WebActivityMethod PUT { get; } = new WebActivityMethod(PUTValue);
+        public static WebActivityMethod Put { get; } = new WebActivityMethod(PutValue);
 
         /// <summary> DELETE. </summary>
-        public static WebActivityMethod DELETE { get; } = new WebActivityMethod(DELETEValue);
+        public static WebActivityMethod Delete { get; } = new WebActivityMethod(DeleteValue);
 
         /// <summary> Determines if two <see cref="WebActivityMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

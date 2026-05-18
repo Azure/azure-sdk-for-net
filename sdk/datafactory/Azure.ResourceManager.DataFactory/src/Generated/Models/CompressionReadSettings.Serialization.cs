@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Compression read settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ZipDeflateReadSettings"/>, <see cref="TarReadSettings"/>, and <see cref="TarGZipReadSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ZipDeflateReadSettings"/>, <see cref="TarReadSettings"/>, and <see cref="TarGzipReadSettings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCompressionReadSettings))]
     public abstract partial class CompressionReadSettings : IJsonModel<CompressionReadSettings>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "TarReadSettings":
                         return TarReadSettings.DeserializeTarReadSettings(element, options);
                     case "TarGZipReadSettings":
-                        return TarGZipReadSettings.DeserializeTarGZipReadSettings(element, options);
+                        return TarGzipReadSettings.DeserializeTarGzipReadSettings(element, options);
                 }
             }
             return UnknownCompressionReadSettings.DeserializeUnknownCompressionReadSettings(element, options);

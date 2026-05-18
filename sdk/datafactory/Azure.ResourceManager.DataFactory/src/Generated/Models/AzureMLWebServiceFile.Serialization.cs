@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("filePath"u8))
                 {
-                    filePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    filePath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

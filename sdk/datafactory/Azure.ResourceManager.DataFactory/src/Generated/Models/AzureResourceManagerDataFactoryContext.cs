@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(SynapseSparkJobReference))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TabularSource))]
-    [ModelReaderWriterBuildable(typeof(TarGZipReadSettings))]
+    [ModelReaderWriterBuildable(typeof(TarGzipReadSettings))]
     [ModelReaderWriterBuildable(typeof(TarReadSettings))]
     [ModelReaderWriterBuildable(typeof(TeamDeskLinkedService))]
     [ModelReaderWriterBuildable(typeof(TeamDeskLinkedServiceTypeProperties))]
