@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DataBox
     {
         private readonly ClientDiagnostics _jobResourcesClientDiagnostics;
         private readonly JobResources _jobResourcesRestClient;
-        private readonly ClientDiagnostics _dataBoxClientClientDiagnostics;
-        private readonly DataBoxClient _dataBoxClientRestClient;
 
         /// <summary> Initializes a new instance of DataBoxJobCollection for mocking. </summary>
         protected DataBoxJobCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.DataBox
             TryGetApiVersion(DataBoxJobResource.ResourceType, out string dataBoxJobApiVersion);
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
             _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
-            _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
-            _dataBoxClientRestClient = new DataBoxClient(_dataBoxClientClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
