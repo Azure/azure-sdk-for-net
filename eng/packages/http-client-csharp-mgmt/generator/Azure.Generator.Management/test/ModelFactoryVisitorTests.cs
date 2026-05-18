@@ -13,6 +13,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -170,6 +171,62 @@ namespace Azure.Generator.Mgmt.Tests
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("ReorderedResourceData(int count, string name)"));
             Assert.That(rendered, Does.Contain("return ReorderedResourceData(name, count);"));
+        }
+
+        [Test]
+        public void MissingFactoryMethodCanBeRestoredFromApiBaselineForCustomizedResourceData()
+        {
+            var propertiesInput = InputFactory.Model(
+                "FileServiceUsageProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+            var dataInput = InputFactory.Model(
+                "FileServiceUsageData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [propertiesInput, dataInput]);
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesInput)!;
+            _ = plugin.Object.TypeFactory.CreateModel(dataInput)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            modelFactory.Update(methods: []);
+
+            var outputDirectory = Management.ManagementClientGenerator.Instance.Configuration.OutputDirectory;
+            var apiDirectory = Path.Combine(outputDirectory, "api");
+            Directory.CreateDirectory(apiDirectory);
+            var apiFile = Path.Combine(apiDirectory, "sample-library.net10.0.cs");
+            var customizeDirectory = Path.Combine(outputDirectory, "src", "Customize");
+            Directory.CreateDirectory(customizeDirectory);
+            var customizeFile = Path.Combine(customizeDirectory, "sample-libraryModelFactory.cs");
+            var compatibilityFile = Path.Combine(outputDirectory, "src", "Generated", $"{modelFactory.Name}.Compatibility.cs");
+            File.WriteAllText(apiFile, "        public static Samples.Models.FileServiceUsageData FileServiceUsageData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Samples.Models.FileServiceUsageProperties properties) { throw null; }");
+            File.WriteAllText(customizeFile, """[CodeGenSuppress("FileServiceUsageData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(FileServiceUsageProperties))]""");
+            try
+            {
+                var currentMethods = new List<MethodProvider>();
+                Management.Visitors.ModelFactoryVisitor.AddBackwardCompatMethodsFromLastContractView(modelFactory, currentMethods);
+
+                Assert.That(currentMethods, Has.Count.EqualTo(1));
+                var addedMethod = currentMethods[0];
+                Assert.That(addedMethod.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[] { "id", "name", "resourceType", "systemData", "properties" }));
+
+                modelFactory.Update(methods: currentMethods);
+                var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+                Assert.That(rendered, Does.Contain("FileServiceUsageData(global::Azure.Core.ResourceIdentifier id, string name, global::Azure.Core.ResourceType resourceType, global::Azure.ResourceManager.Models.SystemData systemData, global::Samples.Models.FileServiceUsageProperties properties)"));
+                Assert.That(rendered, Does.Contain("return new global::Samples.Models.FileServiceUsageData("));
+                Assert.That(rendered, Does.Contain("null,"));
+                Assert.That(rendered, Does.Contain("properties);"));
+
+                Management.Visitors.ModelFactoryVisitor.WriteSuppressedConstructorFactoryCompatibilityFile(outputDirectory);
+                var compatibilityContent = File.ReadAllText(compatibilityFile);
+                Assert.That(compatibilityContent, Does.Contain("public static global::Samples.Models.FileServiceUsageData FileServiceUsageData(global::Azure.Core.ResourceIdentifier id, string name, global::Azure.Core.ResourceType resourceType, global::Azure.ResourceManager.Models.SystemData systemData, global::Samples.Models.FileServiceUsageProperties properties)"));
+                Assert.That(compatibilityContent, Does.Contain("return new global::Samples.Models.FileServiceUsageData(id, name, resourceType, systemData, null, properties);"));
+            }
+            finally
+            {
+                File.Delete(apiFile);
+                File.Delete(customizeFile);
+                File.Delete(compatibilityFile);
+            }
         }
 
         [Test]
