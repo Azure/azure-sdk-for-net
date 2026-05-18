@@ -390,10 +390,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="operationsContentContents"> Operations content. </param>
-        /// <returns> A new <see cref="ProviderHub.OperationsPutContentData"/> instance for mocking. </returns>
-        public static OperationsPutContentData OperationsPutContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LocalizedOperationDefinition> operationsContentContents = default)
+        /// <returns> A new <see cref="Models.OperationsPutContent"/> instance for mocking. </returns>
+        public static OperationsPutContent OperationsPutContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LocalizedOperationDefinition> operationsContentContents = default)
         {
-            return new OperationsPutContentData(
+            return new OperationsPutContent(
                 id,
                 name,
                 resourceType,
