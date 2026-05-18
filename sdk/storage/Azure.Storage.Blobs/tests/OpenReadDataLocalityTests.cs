@@ -446,7 +446,7 @@ namespace Azure.Storage.Blobs.Test
             VerifyGetPropertiesNotCalled(blockClient);
         }
 
-        // ---- helpers --------------------------------------------------------
+        #region Helpers
 
         private Mock<BlobBaseClient> CreateMockBlobBaseClient()
         {
@@ -639,7 +639,9 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        // ---- mock plumbing (intentionally local to this fixture) -----------
+        #endregion
+
+        #region Mock Plumbing
 
         private class MockAsyncPageable : AsyncPageable<BlobLayoutInfo>
         {
@@ -741,5 +743,7 @@ namespace Azure.Storage.Blobs.Test
                 }, rawResponse);
             }
         }
+
+        #endregion
     }
 }

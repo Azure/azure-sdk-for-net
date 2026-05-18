@@ -3478,32 +3478,32 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
+                    ETag etag;
+                    long blobContentLength;
+                    Metadata bootstrapMetadata;
+                    BlobLayoutSegmentCacheValue? seedCacheValue = null;
+                    BlobLayoutInfo layoutProperties = null;
+
                     // When data locality is enabled, GetLayout returns ETag/length/metadata
                     // AND the layout segments, so we don't also need GetProperties on the success path.
                     // On either data locality disabled or a soft GetLayout failure, we fall
                     // through to a single GetProperties.
-                    ETag etag;
-                    long blobContentLength;
-                    Metadata bootstrapMetadata;
-                    BlobLayoutSegmentCacheValue? seedLayout = null;
-                    BlobLayoutInfo localityHeaders = null;
-
                     if (enableDataLocality)
                     {
                         BlobLayoutSegment[] seedSegments;
-                        (localityHeaders, seedSegments) = await FetchLayoutInternal(
+                        (layoutProperties, seedSegments) = await FetchLayoutInternal(
                             range: default,
                             conditions,
                             async,
                             cancellationToken).ConfigureAwait(false);
-                        seedLayout = new BlobLayoutSegmentCacheValue(seedSegments);
+                        seedCacheValue = new BlobLayoutSegmentCacheValue(seedSegments);
                     }
 
-                    if (localityHeaders != null)
+                    if (layoutProperties != null)
                     {
-                        etag = localityHeaders.ETag;
-                        blobContentLength = localityHeaders.BlobContentLength;
-                        bootstrapMetadata = localityHeaders.Metadata;
+                        etag = layoutProperties.ETag;
+                        blobContentLength = layoutProperties.BlobContentLength;
+                        bootstrapMetadata = layoutProperties.Metadata;
                     }
                     else
                     {
@@ -3547,10 +3547,10 @@ namespace Azure.Storage.Blobs.Specialized
                         layoutCache = new AutoRefreshingCache<BlobLayoutSegmentCacheValue>(
                             acquire: async (acquireAsync, ct) =>
                             {
-                                if (seedLayout.HasValue)
+                                if (seedCacheValue.HasValue)
                                 {
-                                    BlobLayoutSegmentCacheValue seed = seedLayout.Value;
-                                    seedLayout = null;
+                                    BlobLayoutSegmentCacheValue seed = seedCacheValue.Value;
+                                    seedCacheValue = null;
                                     if (seed.ExpiresOn > DateTimeOffset.UtcNow)
                                     {
                                         return seed;
@@ -5634,20 +5634,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="GetLayoutAsync"/>.
         /// Eagerly materializes all layout items into a sorted array, and also
         /// returns the first page's <see cref="BlobLayoutInfo"/> so callers can
-        /// read response headers (ETag, BlobContentLength, Metadata) from the
-        /// layout call directly when bootstrapping a download.
+        /// read response properties from the layout call directly when bootstrapping a download.
         /// Returns (null, null) on a soft failure. When the service indicates
         /// the blob has no layout (e.g. a 204 with no segments), Segments is
         /// an empty array so the cache can store the answer for the full TTL.
-        /// Callers that only need segments can discard Headers.
+        /// Callers that only need segments can discard Properties.
         /// </summary>
-        internal async Task<(BlobLayoutInfo Headers, BlobLayoutSegment[] Segments)> FetchLayoutInternal(
+        internal async Task<(BlobLayoutInfo Properties, BlobLayoutSegment[] Segments)> FetchLayoutInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
-            BlobLayoutInfo headers = null;
+            BlobLayoutInfo properties = null;
             List<BlobLayoutSegment> allSegments = new();
             try
             {
@@ -5655,7 +5654,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     await foreach (BlobLayoutInfo layoutInfo in GetLayoutAsync(range, conditions, cancellationToken).ConfigureAwait(false))
                     {
-                        headers ??= layoutInfo;
+                        properties ??= layoutInfo;
                         allSegments.AddRange(layoutInfo.ToBlobLayoutSegments());
                     }
                 }
@@ -5663,7 +5662,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     foreach (BlobLayoutInfo layoutInfo in GetLayout(range, conditions, cancellationToken))
                     {
-                        headers ??= layoutInfo;
+                        properties ??= layoutInfo;
                         allSegments.AddRange(layoutInfo.ToBlobLayoutSegments());
                     }
                 }
@@ -5676,7 +5675,7 @@ namespace Azure.Storage.Blobs.Specialized
                 return (null, null);
             }
 
-            return (headers, allSegments.ToArray());
+            return (properties, allSegments.ToArray());
         }
         #endregion GetLayout
 
