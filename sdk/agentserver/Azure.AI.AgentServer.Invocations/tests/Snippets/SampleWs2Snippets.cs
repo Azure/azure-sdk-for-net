@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Invocations SampleWs2_WebSocketBidirectionalStreaming.md.
+    /// Code snippets backing Invocations SampleWs2_BidirectionalStreaming.md.
     /// Compiled to prevent rot.
     /// </summary>
     [TestFixture]

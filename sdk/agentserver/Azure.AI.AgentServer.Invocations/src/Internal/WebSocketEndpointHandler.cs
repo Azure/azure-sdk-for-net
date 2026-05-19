@@ -91,7 +91,7 @@ internal sealed class WebSocketEndpointHandler
 
         // Propagate invocation/session/x-request-id baggage onto the current request
         // Activity for downstream correlation. Reuses the same helper the HTTP
-        // `POST /invocations` endpoint uses (#59050) so HTTP and WS paths produce
+        // `POST /invocations` endpoint uses so HTTP and WS paths produce
         // the same baggage shape. No framework-level WS span is created — ASP.NET
         // Core auto-propagates the inbound W3C trace context to the request
         // Activity, so any spans the handler starts inherit it directly.

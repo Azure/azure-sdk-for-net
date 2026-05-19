@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Invocations SampleWs1_WebSocketEcho.md. Compiled to prevent rot.
+    /// Code snippets backing Invocations SampleWs1_Echo.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
