@@ -7,7 +7,7 @@ The handler runs two responsibilities in parallel:
 1. **Reader** — consumes inbound JSON frames (prompts and control messages) on the main loop and dispatches them. Multiple prompts may arrive while previous ones are still streaming.
 2. **Per-prompt streamer** — one fire-and-forget task per prompt; streams generated tokens back at its own pace. Multiple generations can run in parallel and run *independently* of any inbound traffic. A `cancel` control message interrupts an in-flight stream mid-flight.
 
-> **Keep-alive is not an application concern.** The SDK configures Kestrel to send WebSocket protocol-level Ping frames (RFC 6455 opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds. That is enough to survive Azure APIM / Azure Load Balancer's ~4-minute idle timeout without your handler having to push any application-level heartbeats of its own.
+> **Keep-alive is not an application concern.** The SDK configures Kestrel to send WebSocket protocol-level Ping frames (RFC 6455 opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds. That is enough to survive upstream proxy / load-balancer idle timeouts without your handler having to push any application-level heartbeats of its own.
 
 ## Wire protocol (JSON over text frames)
 
@@ -237,11 +237,11 @@ websocat ws://localhost:8088/invocations_ws
 - **Read loop never blocks the streamer.** The streamer runs on a separately scheduled `Task` (the `_ = StreamTokensAsync(...)` discard). The read loop returns immediately so the next prompt or `cancel` is dispatched without waiting for the previous generation to finish.
 - **Per-prompt cancellation.** Each streamer gets a `CancellationTokenSource` linked to the connection-level CTS. The handler keeps a `ConcurrentDictionary<string, CancellationTokenSource>` keyed by client-supplied prompt id so a `cancel` message can interrupt a single in-flight stream without affecting the others.
 - **Graceful shutdown.** On `{"type":"bye"}` the handler cancels the connection-level CTS, breaks the read loop, drains any remaining streamers (their linked tokens inherit the cancel), and returns — the SDK then sends RFC 6455 close code `1000` (`NormalClosure`).
-- **No application-level heartbeat.** Set `WS_KEEPALIVE_INTERVAL=30` in your container env to have Kestrel emit RFC 6455 Ping frames every 30 s. Idle connections through APIM / Azure Load Balancer's 4-minute timeout stay alive without any application traffic.
+- **No application-level heartbeat.** Set `WS_KEEPALIVE_INTERVAL=30` in your container env to have Kestrel emit RFC 6455 Ping frames every 30 s. Idle connections stay alive across upstream proxy / load-balancer idle timeouts without any application traffic.
 - **Concurrent writes.** `ClientWebSocket.SendAsync` is documented as "one send at a time" — `BidirectionalStreamingHandler` enforces this naturally because all writes (from the read loop and from the streamers) are serialised onto the same `WebSocket` via the framework's per-socket lock. For higher fan-out, gate writes through a `Channel<T>` or `SemaphoreSlim`.
 
 ## Configuration
 
 | Environment variable | Default | Description |
 |---|---|---|
-| `WS_KEEPALIVE_INTERVAL` | unset → disabled | Integer seconds between RFC 6455 protocol-level Ping frames. `30` is a comfortable default for connections behind APIM. |
+| `WS_KEEPALIVE_INTERVAL` | unset → disabled | Integer seconds between RFC 6455 protocol-level Ping frames. `30` is a comfortable default for connections behind an idle-timeout-aware intermediary. |

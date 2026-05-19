@@ -72,8 +72,7 @@ public static class FoundryEnvironment
     /// positive value emits RFC 6455 protocol-level Ping frames (opcode
     /// <c>0x9</c>) at the configured cadence. The Foundry hosting platform
     /// auto-injects this env var; configure it locally to test long-lived WS
-    /// connections through idle-timeout-aware intermediaries (e.g., APIM,
-    /// Azure Load Balancer).
+    /// connections through upstream proxy / load-balancer idle timeouts.
     /// </remarks>
     public static TimeSpan WebSocketKeepAliveInterval { get; private set; }
 

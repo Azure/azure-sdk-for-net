@@ -20,8 +20,8 @@
   `AgentHostMiddlewareExtensions.UseAgentServerCore` into Kestrel's
   `WebSocketOptions.KeepAliveInterval`, so a positive value emits RFC 6455
   protocol-level Ping frames (opcode `0x9`) that keep idle WebSocket
-  connections alive through Azure APIM / Azure Load Balancer's ~4-minute
-  idle timeout. Disabled by default (`Timeout.InfiniteTimeSpan`).
+  connections alive across upstream proxy / load-balancer idle timeouts.
+  Disabled by default (`Timeout.InfiniteTimeSpan`).
 - `UseAgentServerCore` now also calls `IApplicationBuilder.UseWebSockets`,
   so any protocol library that hosts WebSocket endpoints (e.g., the
   Invocations `/invocations_ws` endpoint) works out of the box without

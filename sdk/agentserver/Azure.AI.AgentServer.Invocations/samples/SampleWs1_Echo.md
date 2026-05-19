@@ -104,7 +104,7 @@ ws.onopen    = () => ws.send("hello from the browser");
 
 | Environment variable | Default | Description |
 |---|---|---|
-| `WS_KEEPALIVE_INTERVAL` | unset → disabled | Integer seconds between RFC 6455 protocol-level Ping frames. Set to a small positive value (e.g. `30`) to survive APIM / Azure Load Balancer's ~4-minute idle timeout on quiet connections. |
+| `WS_KEEPALIVE_INTERVAL` | unset → disabled | Integer seconds between RFC 6455 protocol-level Ping frames. Set to a small positive value (e.g. `30`) to survive upstream proxy / load-balancer idle timeouts on quiet connections. |
 
 ## Next
 
