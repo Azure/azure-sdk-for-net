@@ -4656,7 +4656,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="callerDisplayName"> Display name of caller. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
-        /// <param name="onBehalfOfCallee"> The communication identifier of the callee for the "on behalf of" call. </param>
+        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
