@@ -812,7 +812,6 @@ interface ChildResources {
       normalizeSchemaForComparison(armProviderSchemaResult)
     );
   });
-
   it("should assign non-resource list methods to resource by resourceModelId", () => {
     // This test directly validates assignNonResourceMethodsToResources with crafted data
     // that mirrors the Maintenance SDK emitter output. The actual issue arises from
