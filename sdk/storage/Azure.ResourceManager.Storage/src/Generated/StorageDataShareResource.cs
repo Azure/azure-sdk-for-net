@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -211,12 +212,12 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The updated properties of the Storage DataShare. </param>
+        /// <param name="patch"> The updated properties of the Storage DataShare. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageDataShareResource>> UpdateAsync(WaitUntil waitUntil, StorageDataShareData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<StorageDataShareResource>> UpdateAsync(WaitUntil waitUntil, StorageDataSharePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Update");
             scope.Start();
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataShareData.ToRequestContent(data), context);
+                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataSharePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<StorageDataShareResource> operation = new StorageArmOperation<StorageDataShareResource>(
                     new StorageDataShareOperationSource(Client),
@@ -270,12 +271,12 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The updated properties of the Storage DataShare. </param>
+        /// <param name="patch"> The updated properties of the Storage DataShare. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StorageDataShareResource> Update(WaitUntil waitUntil, StorageDataShareData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<StorageDataShareResource> Update(WaitUntil waitUntil, StorageDataSharePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _dataSharesClientDiagnostics.CreateScope("StorageDataShareResource.Update");
             scope.Start();
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataShareData.ToRequestContent(data), context);
+                HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataSharePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<StorageDataShareResource> operation = new StorageArmOperation<StorageDataShareResource>(
                     new StorageDataShareOperationSource(Client),
@@ -436,7 +437,7 @@ namespace Azure.ResourceManager.Storage
                 else
                 {
                     StorageDataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    StorageDataShareData patch = new StorageDataShareData(current.Location, current.Properties);
+                    StorageDataSharePatch patch = new StorageDataSharePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -484,7 +485,7 @@ namespace Azure.ResourceManager.Storage
                 else
                 {
                     StorageDataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    StorageDataShareData patch = new StorageDataShareData(current.Location, current.Properties);
+                    StorageDataSharePatch patch = new StorageDataSharePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -531,7 +532,7 @@ namespace Azure.ResourceManager.Storage
                 else
                 {
                     StorageDataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    StorageDataShareData patch = new StorageDataShareData(current.Location, current.Properties);
+                    StorageDataSharePatch patch = new StorageDataSharePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<StorageDataShareResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -574,7 +575,7 @@ namespace Azure.ResourceManager.Storage
                 else
                 {
                     StorageDataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    StorageDataShareData patch = new StorageDataShareData(current.Location, current.Properties);
+                    StorageDataSharePatch patch = new StorageDataSharePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<StorageDataShareResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -616,7 +617,7 @@ namespace Azure.ResourceManager.Storage
                 else
                 {
                     StorageDataShareData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    StorageDataShareData patch = new StorageDataShareData(current.Location, current.Properties);
+                    StorageDataSharePatch patch = new StorageDataSharePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -662,7 +663,7 @@ namespace Azure.ResourceManager.Storage
                 else
                 {
                     StorageDataShareData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    StorageDataShareData patch = new StorageDataShareData(current.Location, current.Properties);
+                    StorageDataSharePatch patch = new StorageDataSharePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

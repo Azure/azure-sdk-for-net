@@ -529,15 +529,6 @@ namespace Azure.ResourceManager.Storage.Models
                 connectionState is null && provisioningState is null && privateEndpointId is null ? default : new StoragePrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null));
         }
 
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Models.StoragePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static StoragePrivateEndpointConnectionProperties StoragePrivateEndpointConnectionProperties(string privateEndpointId = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default)
-        {
-            return new StoragePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Blob restore status. </summary>
         /// <param name="status"> The status of blob restore progress. Possible values are: - InProgress: Indicates that blob restore is ongoing. - Complete: Indicates that blob restore has been completed successfully. - Failed: Indicates that blob restore is failed. </param>
         /// <param name="failureReason"> Failure reason when blob restore is failed. </param>
@@ -1364,6 +1355,48 @@ namespace Azure.ResourceManager.Storage.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The properties of the Storage Connector. </param>
+        /// <returns> A new <see cref="Models.StorageConnectorPatch"/> instance for mocking. </returns>
+        public static StorageConnectorPatch StorageConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, StorageConnectorPropertiesUpdate properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageConnectorPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                properties);
+        }
+
+        /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.TrackedResourceUpdate"/> instance for mocking. </returns>
+        public static TrackedResourceUpdate TrackedResourceUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TrackedResourceUpdate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags);
+        }
+
         /// <summary> Test existing connection request properties. </summary>
         /// <param name="uniqueId"> The uniqueId of the storage connector as returned by the server. </param>
         /// <returns> A new <see cref="Models.TestExistingConnectionContent"/> instance for mocking. </returns>
@@ -1447,6 +1480,51 @@ namespace Azure.ResourceManager.Storage.Models
                 assets.ToList(),
                 provisioningState,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A DataShare is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The properties of the Storage DataShare. </param>
+        /// <returns> A new <see cref="Models.StorageDataSharePatch"/> instance for mocking. </returns>
+        public static StorageDataSharePatch StorageDataSharePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, StorageDataSharePropertiesUpdate properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageDataSharePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                properties);
+        }
+
+        /// <summary> The storage datashare properties. </summary>
+        /// <param name="description"> Arbitrary description of this Data Share. Max 250 characters. </param>
+        /// <param name="accessPolicies">
+        /// List of access policies that specify the permission allowed to a managed identity.
+        /// For Create - This property is required and cannot be null. If no access policies are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing access policies are left unchanged.
+        /// If provided with a non-null value, the existing access policies are replaced with the specified list.
+        /// </param>
+        /// <param name="assets">
+        /// List of assets that specify the properties of the shared resources.
+        /// For Create - This property is required and cannot be null. If no assets are provided at creation time, specify an empty array.
+        /// For Update - This property is optional. If set to null or not passed, the existing assets are left unchanged.
+        /// If provided with a non-null value, the existing assets are replaced with the specified list.
+        /// </param>
+        /// <returns> A new <see cref="Models.StorageDataSharePropertiesUpdate"/> instance for mocking. </returns>
+        public static StorageDataSharePropertiesUpdate StorageDataSharePropertiesUpdate(string description = default, IEnumerable<StorageDataShareAccessPolicy> accessPolicies = default, IEnumerable<StorageDataShareAsset> assets = default)
+        {
+            accessPolicies ??= new ChangeTrackingList<StorageDataShareAccessPolicy>();
+            assets ??= new ChangeTrackingList<StorageDataShareAsset>();
+
+            return new StorageDataSharePropertiesUpdate(description, accessPolicies.ToList(), assets.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A list of private link resources. </summary>
