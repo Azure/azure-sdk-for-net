@@ -8,6 +8,8 @@ public enum ResourceOperationKind
 {
     /// <summary> A custom action operation. </summary>
     Action,
+    /// <summary> A check existence operation. </summary>
+    CheckExistence,
     /// <summary> A create or update operation. </summary>
     Create,
     /// <summary> A delete operation. </summary>
