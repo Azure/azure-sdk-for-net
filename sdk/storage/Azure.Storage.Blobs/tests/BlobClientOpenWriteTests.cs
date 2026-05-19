@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Tests
                     break;
                 }
 
-                string blockId = Shared.StorageExtensions.GenerateBlockId(position);
+                string blockId = BlobExtensions.GenerateBlockId();
                 await blockClient.StageBlockAsync(blockId, new MemoryStream(buffer, 0, lastReadSize));
                 blockIds.Add(blockId);
             }
