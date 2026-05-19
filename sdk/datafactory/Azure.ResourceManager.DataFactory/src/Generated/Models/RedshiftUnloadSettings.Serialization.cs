@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </summary>
-    internal partial class RedshiftUnloadSettings : IJsonModel<RedshiftUnloadSettings>
+    public partial class RedshiftUnloadSettings : IJsonModel<RedshiftUnloadSettings>
     {
         /// <summary> Initializes a new instance of <see cref="RedshiftUnloadSettings"/> for deserialization. </summary>
         internal RedshiftUnloadSettings()

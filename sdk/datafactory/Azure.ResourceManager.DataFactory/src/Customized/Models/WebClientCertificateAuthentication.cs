@@ -10,21 +10,23 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebBasicAuthentication
+    public partial class WebClientCertificateAuthentication
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret Password { get; set; }
 
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public DataFactorySecret Pfx { get; set; }
+
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public WebBasicAuthentication(DataFactoryElement<string> uri, DataFactoryElement<string> username, DataFactorySecret password)
-            : this(uri, username)
+        public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecret pfx, DataFactorySecret password)
+            : base(uri)
         {
+            Pfx = pfx;
             Password = password;
         }
     }

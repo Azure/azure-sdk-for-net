@@ -16,9 +16,16 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlServerLinkedService
+    public partial class SsisAccessCredential
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret Password { get; set; }
+
+        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
+        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password)
+            : this(domain, userName, new ChangeTrackingDictionary<string, BinaryData>())
+        {
+            Password = password;
+        }
     }
 }

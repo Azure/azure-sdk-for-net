@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IntegrationRuntimeLicenseType? LicenseType { get; set; }
 
         /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-        internal IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
+        public IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
 
         /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
         public IntegrationRuntimeDataProxyProperties DataProxyProperties { get; set; }

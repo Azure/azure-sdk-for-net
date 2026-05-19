@@ -10,15 +10,20 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapTableLinkedService
+    public partial class WebBasicAuthentication
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret Password { get; set; }
+
+        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
+        public WebBasicAuthentication(DataFactoryElement<string> uri, DataFactoryElement<string> username, DataFactorySecret password)
+            : base(uri, WebAuthenticationType.Basic)
+        {
+            Password = password;
+        }
     }
 }

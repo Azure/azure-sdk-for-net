@@ -16,9 +16,16 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CustomActivity
+    public partial class AzureMLWebServiceFile
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactoryLinkedServiceReference ResourceLinkedService { get; set; }
+        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+
+        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
+        public AzureMLWebServiceFile(DataFactoryElement<string> filePath, DataFactoryLinkedServiceReference linkedServiceName)
+            : this(filePath, new ChangeTrackingDictionary<string, BinaryData>())
+        {
+            LinkedServiceName = linkedServiceName;
+        }
     }
 }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Log location settings. </summary>
-    internal partial class LogLocationSettings : IJsonModel<LogLocationSettings>
+    public partial class LogLocationSettings : IJsonModel<LogLocationSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

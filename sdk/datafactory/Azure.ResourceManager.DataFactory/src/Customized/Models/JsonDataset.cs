@@ -16,9 +16,15 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapOdpLinkedService
+    public partial class JsonDataset
     {
+        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
+        public JsonDataset(DataFactoryLinkedServiceReference linkedServiceName)
+            : base(linkedServiceName)
+        {
+        }
+
         /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret Password { get; set; }
+        public new DataFactoryElement<BinaryData> Schema { get; set; }
     }
 }

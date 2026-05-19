@@ -11,17 +11,22 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AvroDataset
+    public partial class SapTableLinkedService
     {
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AvroDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        /// <summary> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DataFactoryElement<string> SncMode
         {
+            get { return SncFlag.ToString(); }
+            set { SncFlag = Boolean.Parse(value.ToString()); }
         }
+
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public DataFactorySecret Password { get; set; }
     }
 }

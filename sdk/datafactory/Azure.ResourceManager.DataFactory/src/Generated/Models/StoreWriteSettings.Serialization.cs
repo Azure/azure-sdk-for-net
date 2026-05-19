@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownStoreWriteSettings))]
     public abstract partial class StoreWriteSettings : IJsonModel<StoreWriteSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/> for deserialization. </summary>
-        internal StoreWriteSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StoreWriteSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

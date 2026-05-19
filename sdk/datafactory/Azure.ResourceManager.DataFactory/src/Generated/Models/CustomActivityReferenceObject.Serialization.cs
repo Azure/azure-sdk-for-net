@@ -14,7 +14,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Reference objects for custom activity. </summary>
-    internal partial class CustomActivityReferenceObject : IJsonModel<CustomActivityReferenceObject>
+    public partial class CustomActivityReferenceObject : IJsonModel<CustomActivityReferenceObject>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

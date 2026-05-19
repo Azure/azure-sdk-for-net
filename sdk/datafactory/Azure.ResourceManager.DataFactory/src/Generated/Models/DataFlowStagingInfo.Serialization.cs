@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Staging info for execute data flow activity. </summary>
-    internal partial class DataFlowStagingInfo : IJsonModel<DataFlowStagingInfo>
+    public partial class DataFlowStagingInfo : IJsonModel<DataFlowStagingInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

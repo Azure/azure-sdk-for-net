@@ -11,21 +11,25 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisExecutionCredential
+    public partial class SqlServerLinkedService
     {
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecretString Password { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SsisExecutionCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecretString password)
-            : this(domain, userName)
+        /// <summary> Initializes a new instance of <see cref="SqlServerLinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public SqlServerLinkedService(DataFactoryElement<string> connectionString)
         {
-            Password = password;
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            ConnectionString = connectionString;
         }
+
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public DataFactorySecret Password { get; set; }
     }
 }

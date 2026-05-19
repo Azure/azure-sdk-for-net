@@ -16,12 +16,15 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class JsonDataset
+    public partial class AvroDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public JsonDataset(DataFactoryLinkedServiceReference linkedServiceName)
+        public AvroDataset(DataFactoryLinkedServiceReference linkedServiceName)
             : base(linkedServiceName)
         {
         }
+
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public new DataFactoryElement<BinaryData> Schema { get; set; }
     }
 }

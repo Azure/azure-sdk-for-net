@@ -14,7 +14,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-    internal partial class IntegrationRuntimeCustomSetupScriptProperties : IJsonModel<IntegrationRuntimeCustomSetupScriptProperties>
+    public partial class IntegrationRuntimeCustomSetupScriptProperties : IJsonModel<IntegrationRuntimeCustomSetupScriptProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

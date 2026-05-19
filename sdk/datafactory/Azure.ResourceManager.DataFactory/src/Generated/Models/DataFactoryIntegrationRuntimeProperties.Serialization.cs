@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDataFactoryIntegrationRuntimeProperties))]
     public abstract partial class DataFactoryIntegrationRuntimeProperties : IJsonModel<DataFactoryIntegrationRuntimeProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeProperties"/> for deserialization. </summary>
-        internal DataFactoryIntegrationRuntimeProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryIntegrationRuntimeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

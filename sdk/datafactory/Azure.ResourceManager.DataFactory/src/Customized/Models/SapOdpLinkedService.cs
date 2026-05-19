@@ -16,16 +16,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisAccessCredential
+    public partial class SapOdpLinkedService
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret Password { get; set; }
 
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password)
-            : this(domain, userName)
-        {
-            Password = password;
-        }
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public DataFactoryElement<string> SncMode { get; set; }
     }
 }

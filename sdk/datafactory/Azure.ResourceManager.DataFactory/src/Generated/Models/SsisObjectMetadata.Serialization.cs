@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownSsisObjectMetadata))]
     public abstract partial class SsisObjectMetadata : IJsonModel<SsisObjectMetadata>
     {
-        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/> for deserialization. </summary>
-        internal SsisObjectMetadata()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SsisObjectMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

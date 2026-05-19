@@ -16,19 +16,15 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebClientCertificateAuthentication
+    public partial class SsisExecutionCredential
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret Password { get; set; }
-
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret Pfx { get; set; }
+        public DataFactorySecretString Password { get; set; }
 
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecret pfx, DataFactorySecret password)
-            : this(uri)
+        public SsisExecutionCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecretString password)
+            : this(domain, userName, new ChangeTrackingDictionary<string, BinaryData>())
         {
-            Pfx = pfx;
             Password = password;
         }
     }
