@@ -105,7 +105,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "firstContentType",
+      "name": "FirstContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -121,7 +121,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "firstContentType1",
+      "name": "FirstContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -137,7 +137,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "secondContentType",
+      "name": "FirstContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -153,7 +153,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "secondContentType1",
+      "name": "FirstContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {

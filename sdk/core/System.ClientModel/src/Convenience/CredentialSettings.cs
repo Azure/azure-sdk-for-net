@@ -80,4 +80,9 @@ public sealed class CredentialSettings
     /// Gets or sets additional properties for the credential.
     /// </summary>
     public IConfigurationSection? AdditionalProperties { get; set; }
+
+    /// <summary>
+    /// Gets or sets the <see cref="AuthenticationTokenProvider"/> for this credential.
+    /// </summary>
+    public AuthenticationTokenProvider? TokenProvider { get; set; }
 }

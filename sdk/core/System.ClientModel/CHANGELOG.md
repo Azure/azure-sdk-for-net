@@ -1,6 +1,6 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.13.0 (2026-05-18)
+
+### Features Added
+
+- Added `CredentialSettings.TokenProvider` to hold the resolved `AuthenticationTokenProvider` for the credential.
+
+### Breaking Changes
+
+- `IConfiguration.GetCredential(...)` renamed to `IConfiguration.GetCredentialSettings(...)` and its return type changed from `AuthenticationTokenProvider?` to `CredentialSettings?` (experimental `SCME0002`).
+
+### Other Changes
+
+- `ClientSettings.CredentialProvider` will be removed in a future release; migrate to `settings.Credential.TokenProvider` (experimental `SCME0002`).
 
 ## 1.12.0 (2026-05-12)
 

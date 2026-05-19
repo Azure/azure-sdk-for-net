@@ -136,7 +136,7 @@ namespace Azure.AI.Extensions.OpenAI
             string callId = default;
             ResponsesToolSearchExecutionType execution = default;
             IList<ResponsesTool> tools = default;
-            ResponsesFunctionCallOutputStatusEnum status = default;
+            ResponsesFunctionCallOutputStatus status = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToResponsesFunctionCallOutputStatusEnum();
+                    status = prop.Value.GetString().ToResponsesFunctionCallOutputStatus();
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
