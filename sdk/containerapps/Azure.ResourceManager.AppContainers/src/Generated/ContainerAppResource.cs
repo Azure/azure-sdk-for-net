@@ -1433,6 +1433,39 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppAuthConfigs().Get(authConfigName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerAppDetectors in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppDetectors and their operations over a ContainerAppDetectorResource. </returns>
+        public virtual ContainerAppDetectorCollection GetContainerAppDetectors()
+        {
+            return GetCachedClient(client => new ContainerAppDetectorCollection(client, Id));
+        }
+
+        /// <summary> Get a diagnostics result of a Container App. </summary>
+        /// <param name="detectorName"> Name of the detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppDetectorResource>> GetContainerAppDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            return await GetContainerAppDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a diagnostics result of a Container App. </summary>
+        /// <param name="detectorName"> Name of the detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppDetectorResource> GetContainerAppDetector(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            return GetContainerAppDetectors().Get(detectorName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of AppResiliencies in the <see cref="ContainerAppResource"/>. </summary>
         /// <returns> An object representing collection of AppResiliencies and their operations over a AppResiliencyResource. </returns>
         public virtual AppResiliencyCollection GetAppResiliencies()
@@ -1497,39 +1530,6 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             return GetContainerAppDetectorPropertyRevisions().Get(revisionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppDetectors in the <see cref="ContainerAppResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppDetectors and their operations over a ContainerAppDetectorResource. </returns>
-        public virtual ContainerAppDetectorCollection GetContainerAppDetectors()
-        {
-            return GetCachedClient(client => new ContainerAppDetectorCollection(client, Id));
-        }
-
-        /// <summary> Get a diagnostics result of a Container App. </summary>
-        /// <param name="detectorName"> Name of the detector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppDetectorResource>> GetContainerAppDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            return await GetContainerAppDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a diagnostics result of a Container App. </summary>
-        /// <param name="detectorName"> Name of the detector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppDetectorResource> GetContainerAppDetector(string detectorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-
-            return GetContainerAppDetectors().Get(detectorName, cancellationToken);
         }
     }
 }

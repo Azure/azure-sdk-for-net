@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class ContainerAppManagedEnvironmentDetectors
+    internal partial class ManagedEnvironmentDiagnostics
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentDetectors for mocking. </summary>
-        protected ContainerAppManagedEnvironmentDetectors()
+        /// <summary> Initializes a new instance of ManagedEnvironmentDiagnostics for mocking. </summary>
+        protected ManagedEnvironmentDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentDetectors. </summary>
+        /// <summary> Initializes a new instance of ManagedEnvironmentDiagnostics. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ContainerAppManagedEnvironmentDetectors(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ManagedEnvironmentDiagnostics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

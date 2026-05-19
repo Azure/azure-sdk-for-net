@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class ContainerAppConnectedEnvironmentCertificates
+    internal partial class ConnectedEnvironmentsCertificates
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentCertificates for mocking. </summary>
-        protected ContainerAppConnectedEnvironmentCertificates()
+        /// <summary> Initializes a new instance of ConnectedEnvironmentsCertificates for mocking. </summary>
+        protected ConnectedEnvironmentsCertificates()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentCertificates. </summary>
+        /// <summary> Initializes a new instance of ConnectedEnvironmentsCertificates. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ContainerAppConnectedEnvironmentCertificates(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ConnectedEnvironmentsCertificates(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

@@ -1681,6 +1681,78 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Certificate used for Custom Domain bindings of Container Apps in a Managed Environment. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Certificate resource specific properties. </param>
+        /// <returns> A new <see cref="AppContainers.ContainerAppCertificateData"/> instance for mocking. </returns>
+        public static ContainerAppCertificateData ContainerAppCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerAppCertificateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContainerAppCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> Certificate resource specific properties. </summary>
+        /// <param name="provisioningState"> Provisioning state of the certificate. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
+        /// <param name="certificateKeyVaultProperties"> Properties for a certificate stored in a Key Vault. </param>
+        /// <param name="password"> Certificate password. </param>
+        /// <param name="subjectName"> Subject name of the certificate. </param>
+        /// <param name="subjectAlternativeNames"> Subject alternative names the certificate applies to. </param>
+        /// <param name="value"> PFX or PEM blob. </param>
+        /// <param name="issuer"> Certificate issuer. </param>
+        /// <param name="issueOn"> Certificate issue Date. </param>
+        /// <param name="expireOn"> Certificate expiration date. </param>
+        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <param name="isValid"> Is the certificate valid?. </param>
+        /// <param name="publicKeyHash"> Public key hash. </param>
+        /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
+        /// <returns> A new <see cref="Models.ContainerAppCertificateProperties"/> instance for mocking. </returns>
+        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
+        {
+            subjectAlternativeNames ??= new ChangeTrackingList<string>();
+
+            return new ContainerAppCertificateProperties(
+                provisioningState,
+                deploymentErrors,
+                certificateKeyVaultProperties,
+                password,
+                subjectName,
+                subjectAlternativeNames.ToList(),
+                value,
+                issuer,
+                issueOn,
+                expireOn,
+                thumbprint,
+                isValid,
+                publicKeyHash,
+                certificateType,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A certificate to update. </summary>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <returns> A new <see cref="Models.ContainerAppCertificatePatch"/> instance for mocking. </returns>
+        public static ContainerAppCertificatePatch ContainerAppCertificatePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContainerAppCertificatePatch(tags, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2535,78 +2607,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static BuildToken BuildToken(string token = default, DateTimeOffset? expiresOn = default)
         {
             return new BuildToken(token, expiresOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Certificate used for Custom Domain bindings of Container Apps in a Managed Environment. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Certificate resource specific properties. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppCertificateData"/> instance for mocking. </returns>
-        public static ContainerAppCertificateData ContainerAppCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerAppCertificateProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerAppCertificateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties);
-        }
-
-        /// <summary> Certificate resource specific properties. </summary>
-        /// <param name="provisioningState"> Provisioning state of the certificate. </param>
-        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="certificateKeyVaultProperties"> Properties for a certificate stored in a Key Vault. </param>
-        /// <param name="password"> Certificate password. </param>
-        /// <param name="subjectName"> Subject name of the certificate. </param>
-        /// <param name="subjectAlternativeNames"> Subject alternative names the certificate applies to. </param>
-        /// <param name="value"> PFX or PEM blob. </param>
-        /// <param name="issuer"> Certificate issuer. </param>
-        /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expireOn"> Certificate expiration date. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="isValid"> Is the certificate valid?. </param>
-        /// <param name="publicKeyHash"> Public key hash. </param>
-        /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
-        /// <returns> A new <see cref="Models.ContainerAppCertificateProperties"/> instance for mocking. </returns>
-        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
-        {
-            subjectAlternativeNames ??= new ChangeTrackingList<string>();
-
-            return new ContainerAppCertificateProperties(
-                provisioningState,
-                deploymentErrors,
-                certificateKeyVaultProperties,
-                password,
-                subjectName,
-                subjectAlternativeNames.ToList(),
-                value,
-                issuer,
-                issueOn,
-                expireOn,
-                thumbprint,
-                isValid,
-                publicKeyHash,
-                certificateType,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A certificate to update. </summary>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <returns> A new <see cref="Models.ContainerAppCertificatePatch"/> instance for mocking. </returns>
-        public static ContainerAppCertificatePatch ContainerAppCertificatePatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerAppCertificatePatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

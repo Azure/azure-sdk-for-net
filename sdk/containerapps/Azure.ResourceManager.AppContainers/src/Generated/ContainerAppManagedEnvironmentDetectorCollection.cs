@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDetectorCollection : ArmCollection, IEnumerable<ContainerAppManagedEnvironmentDetectorResource>, IAsyncEnumerable<ContainerAppManagedEnvironmentDetectorResource>
     {
-        private readonly ClientDiagnostics _containerAppManagedEnvironmentDetectorsClientDiagnostics;
-        private readonly ContainerAppManagedEnvironmentDetectors _containerAppManagedEnvironmentDetectorsRestClient;
+        private readonly ClientDiagnostics _managedEnvironmentDiagnosticsClientDiagnostics;
+        private readonly ManagedEnvironmentDiagnostics _managedEnvironmentDiagnosticsRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentDetectorCollection for mocking. </summary>
         protected ContainerAppManagedEnvironmentDetectorCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppManagedEnvironmentDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerAppManagedEnvironmentDetectorResource.ResourceType, out string containerAppManagedEnvironmentDetectorApiVersion);
-            _containerAppManagedEnvironmentDetectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentDetectorResource.ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentDetectorsRestClient = new ContainerAppManagedEnvironmentDetectors(_containerAppManagedEnvironmentDetectorsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDetectorApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentDetectorResource.ResourceType.Namespace, Diagnostics);
+            _managedEnvironmentDiagnosticsRestClient = new ManagedEnvironmentDiagnostics(_managedEnvironmentDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDetectorApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Get");
+            using DiagnosticScope scope = _managedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Get");
+            using DiagnosticScope scope = _managedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_ListDetectors. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_ListDetectors. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppManagedEnvironmentDetectorResource>(new ContainerAppManagedEnvironmentDetectorsGetDetectorsAsyncCollectionResultOfT(
-                _containerAppManagedEnvironmentDetectorsRestClient,
+            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppManagedEnvironmentDetectorResource>(new ManagedEnvironmentDiagnosticsGetDetectorsAsyncCollectionResultOfT(
+                _managedEnvironmentDiagnosticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_ListDetectors. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_ListDetectors. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppManagedEnvironmentDetectorResource>(new ContainerAppManagedEnvironmentDetectorsGetDetectorsCollectionResultOfT(
-                _containerAppManagedEnvironmentDetectorsRestClient,
+            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppManagedEnvironmentDetectorResource>(new ManagedEnvironmentDiagnosticsGetDetectorsCollectionResultOfT(
+                _managedEnvironmentDiagnosticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Exists");
+            using DiagnosticScope scope = _managedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Exists");
+            using DiagnosticScope scope = _managedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _managedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetDetector. </description>
+        /// <description> ContainerAppManagedEnvironmentDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _managedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;

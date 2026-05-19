@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Certificates_GetCertificates. </description>
+        /// <description> ManagedEnvironmentCertificates_GetCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Certificates_GetCertificates. </description>
+        /// <description> ManagedEnvironmentCertificates_GetCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Certificates_UpdateCertificates. </description>
+        /// <description> ManagedEnvironmentCertificates_UpdateCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Certificates_UpdateCertificates. </description>
+        /// <description> ManagedEnvironmentCertificates_UpdateCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Certificates_DeleteCertificates. </description>
+        /// <description> ManagedEnvironmentCertificates_DeleteCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Certificates_DeleteCertificates. </description>
+        /// <description> ManagedEnvironmentCertificates_DeleteCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

@@ -1185,6 +1185,39 @@ namespace Azure.ResourceManager.AppContainers
             return GetJavaComponents().Get(name, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentCertificates in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentCertificates and their operations over a ContainerAppManagedEnvironmentCertificateResource. </returns>
+        public virtual ContainerAppManagedEnvironmentCertificateCollection GetContainerAppManagedEnvironmentCertificates()
+        {
+            return GetCachedClient(client => new ContainerAppManagedEnvironmentCertificateCollection(client, Id));
+        }
+
+        /// <summary> Get the specified Certificate. </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppManagedEnvironmentCertificateResource>> GetContainerAppManagedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return await GetContainerAppManagedEnvironmentCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified Certificate. </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppManagedEnvironmentCertificateResource> GetContainerAppManagedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return GetContainerAppManagedEnvironmentCertificates().Get(certificateName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentDaprComponents in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentDaprComponents and their operations over a ContainerAppManagedEnvironmentDaprComponentResource. </returns>
         public virtual ContainerAppManagedEnvironmentDaprComponentCollection GetContainerAppManagedEnvironmentDaprComponents()
@@ -1348,39 +1381,6 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             return GetContainerAppManagedEnvironmentStorages().Get(storageName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppManagedEnvironmentCertificates in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppManagedEnvironmentCertificates and their operations over a ContainerAppManagedEnvironmentCertificateResource. </returns>
-        public virtual ContainerAppManagedEnvironmentCertificateCollection GetContainerAppManagedEnvironmentCertificates()
-        {
-            return GetCachedClient(client => new ContainerAppManagedEnvironmentCertificateCollection(client, Id));
-        }
-
-        /// <summary> Get the specified Certificate. </summary>
-        /// <param name="certificateName"> Name of the Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppManagedEnvironmentCertificateResource>> GetContainerAppManagedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            return await GetContainerAppManagedEnvironmentCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the specified Certificate. </summary>
-        /// <param name="certificateName"> Name of the Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppManagedEnvironmentCertificateResource> GetContainerAppManagedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            return GetContainerAppManagedEnvironmentCertificates().Get(certificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppPrivateEndpointConnections in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
