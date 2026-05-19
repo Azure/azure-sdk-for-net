@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -25,51 +25,49 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingAssociatedTenantCollection : ArmCollection, IEnumerable<BillingAssociatedTenantResource>, IAsyncEnumerable<BillingAssociatedTenantResource>
     {
-        private readonly ClientDiagnostics _billingAssociatedTenantAssociatedTenantsClientDiagnostics;
-        private readonly AssociatedTenantsRestOperations _billingAssociatedTenantAssociatedTenantsRestClient;
+        private readonly ClientDiagnostics _associatedTenantsClientDiagnostics;
+        private readonly AssociatedTenants _associatedTenantsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAssociatedTenantCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingAssociatedTenantCollection for mocking. </summary>
         protected BillingAssociatedTenantCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAssociatedTenantCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAssociatedTenantCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingAssociatedTenantCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingAssociatedTenantAssociatedTenantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingAssociatedTenantResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingAssociatedTenantResource.ResourceType, out string billingAssociatedTenantAssociatedTenantsApiVersion);
-            _billingAssociatedTenantAssociatedTenantsRestClient = new AssociatedTenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingAssociatedTenantAssociatedTenantsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingAssociatedTenantResource.ResourceType, out string billingAssociatedTenantApiVersion);
+            _associatedTenantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingAssociatedTenantResource.ResourceType.Namespace, Diagnostics);
+            _associatedTenantsRestClient = new AssociatedTenants(_associatedTenantsClientDiagnostics, Pipeline, Endpoint, billingAssociatedTenantApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update an associated tenant for the billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +75,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="data"> An associated tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BillingAssociatedTenantResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string associatedTenantName, BillingAssociatedTenantData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _billingAssociatedTenantAssociatedTenantsRestClient.CreateOrUpdateAsync(Id.Name, associatedTenantName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingAssociatedTenantResource>(new BillingAssociatedTenantOperationSource(Client), _billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, _billingAssociatedTenantAssociatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Name, associatedTenantName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Name, associatedTenantName, BillingAssociatedTenantData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
+                    new BillingAssociatedTenantOperationSource(Client),
+                    _associatedTenantsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +116,16 @@ namespace Azure.ResourceManager.Billing
         /// Create or update an associated tenant for the billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +133,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="data"> An associated tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BillingAssociatedTenantResource> CreateOrUpdate(WaitUntil waitUntil, string associatedTenantName, BillingAssociatedTenantData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _billingAssociatedTenantAssociatedTenantsRestClient.CreateOrUpdate(Id.Name, associatedTenantName, data, cancellationToken);
-                var operation = new BillingArmOperation<BillingAssociatedTenantResource>(new BillingAssociatedTenantOperationSource(Client), _billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, _billingAssociatedTenantAssociatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Name, associatedTenantName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Name, associatedTenantName, BillingAssociatedTenantData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
+                    new BillingAssociatedTenantOperationSource(Client),
+                    _associatedTenantsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +174,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets an associated tenant by ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingAssociatedTenantResource>> GetAsync(string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Get");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingAssociatedTenantAssociatedTenantsRestClient.GetAsync(Id.Name, associatedTenantName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Name, associatedTenantName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +223,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets an associated tenant by ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingAssociatedTenantResource> Get(string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Get");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingAssociatedTenantAssociatedTenantsRestClient.Get(Id.Name, associatedTenantName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Name, associatedTenantName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,102 +272,142 @@ namespace Azure.ResourceManager.Billing
         /// Lists the associated tenants that can collaborate with the billing account on commerce activities like viewing and downloading invoices, managing payments, making purchases, and managing or provisioning licenses.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="includeRevoked"> Can be used to get revoked associated tenants. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingAssociatedTenantResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingAssociatedTenantResource> GetAllAsync(BillingAssociatedTenantCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingAssociatedTenantResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingAssociatedTenantResource> GetAllAsync(bool? includeRevoked = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingAssociatedTenantCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingAssociatedTenantAssociatedTenantsRestClient.CreateListByBillingAccountRequest(Id.Name, options.IncludeRevoked, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingAssociatedTenantAssociatedTenantsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.IncludeRevoked, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingAssociatedTenantResource(Client, BillingAssociatedTenantData.DeserializeBillingAssociatedTenantData(e)), _billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, "BillingAssociatedTenantCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new AssociatedTenantsGetByBillingAccountAsyncCollectionResultOfT(
+                _associatedTenantsRestClient,
+                Id.Name,
+                includeRevoked,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingAssociatedTenantCollection.GetAll"), data => new BillingAssociatedTenantResource(Client, data));
         }
 
         /// <summary>
         /// Lists the associated tenants that can collaborate with the billing account on commerce activities like viewing and downloading invoices, managing payments, making purchases, and managing or provisioning licenses.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="includeRevoked"> Can be used to get revoked associated tenants. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingAssociatedTenantResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingAssociatedTenantResource> GetAll(BillingAssociatedTenantCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingAssociatedTenantResource> GetAll(bool? includeRevoked = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingAssociatedTenantCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingAssociatedTenantAssociatedTenantsRestClient.CreateListByBillingAccountRequest(Id.Name, options.IncludeRevoked, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingAssociatedTenantAssociatedTenantsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.IncludeRevoked, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingAssociatedTenantResource(Client, BillingAssociatedTenantData.DeserializeBillingAssociatedTenantData(e)), _billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, "BillingAssociatedTenantCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new AssociatedTenantsGetByBillingAccountCollectionResultOfT(
+                _associatedTenantsRestClient,
+                Id.Name,
+                includeRevoked,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingAssociatedTenantCollection.GetAll"), data => new BillingAssociatedTenantResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Exists");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingAssociatedTenantAssociatedTenantsRestClient.GetAsync(Id.Name, associatedTenantName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Name, associatedTenantName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingAssociatedTenantData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAssociatedTenantData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,36 +421,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Exists");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingAssociatedTenantAssociatedTenantsRestClient.Get(Id.Name, associatedTenantName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Name, associatedTenantName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingAssociatedTenantData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAssociatedTenantData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,38 +478,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingAssociatedTenantResource>> GetIfExistsAsync(string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.GetIfExists");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingAssociatedTenantAssociatedTenantsRestClient.GetAsync(Id.Name, associatedTenantName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Name, associatedTenantName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingAssociatedTenantData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAssociatedTenantData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingAssociatedTenantResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,38 +539,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associatedTenantName"> The ID that uniquely identifies a tenant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associatedTenantName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associatedTenantName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingAssociatedTenantResource> GetIfExists(string associatedTenantName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(associatedTenantName, nameof(associatedTenantName));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.GetIfExists");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingAssociatedTenantAssociatedTenantsRestClient.Get(Id.Name, associatedTenantName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Name, associatedTenantName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingAssociatedTenantData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAssociatedTenantData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingAssociatedTenantResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -484,17 +598,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingAssociatedTenantResource> IEnumerable<BillingAssociatedTenantResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingAssociatedTenantResource> IAsyncEnumerable<BillingAssociatedTenantResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

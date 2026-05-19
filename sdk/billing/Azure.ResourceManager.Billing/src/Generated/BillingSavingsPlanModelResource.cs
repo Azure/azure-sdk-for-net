@@ -7,46 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingSavingsPlanModel along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingSavingsPlanModelResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingSavingsPlanModelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SavingsPlanOrderModelResource"/> using the GetBillingSavingsPlanModel method.
+    /// A class representing a BillingSavingsPlanModel along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingSavingsPlanModelResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SavingsPlanOrderModelResource"/> using the GetBillingSavingsPlanModels method.
     /// </summary>
     public partial class BillingSavingsPlanModelResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingSavingsPlanModelResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="savingsPlanOrderId"> The savingsPlanOrderId. </param>
-        /// <param name="savingsPlanId"> The savingsPlanId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string savingsPlanOrderId, string savingsPlanId)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingSavingsPlanModelSavingsPlansClientDiagnostics;
-        private readonly SavingsPlansRestOperations _billingSavingsPlanModelSavingsPlansRestClient;
+        private readonly ClientDiagnostics _savingsPlansClientDiagnostics;
+        private readonly SavingsPlans _savingsPlansRestClient;
         private readonly BillingSavingsPlanModelData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/savingsPlanOrders/savingsPlans";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingSavingsPlanModelResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingSavingsPlanModelResource for mocking. </summary>
         protected BillingSavingsPlanModelResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingSavingsPlanModelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSavingsPlanModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingSavingsPlanModelResource(ArmClient client, BillingSavingsPlanModelData data) : this(client, data.Id)
@@ -55,72 +46,93 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingSavingsPlanModelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSavingsPlanModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingSavingsPlanModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingSavingsPlanModelSavingsPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingSavingsPlanModelSavingsPlansApiVersion);
-            _billingSavingsPlanModelSavingsPlansRestClient = new SavingsPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingSavingsPlanModelSavingsPlansApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingSavingsPlanModelApiVersion);
+            _savingsPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _savingsPlansRestClient = new SavingsPlans(_savingsPlansClientDiagnostics, Pipeline, Endpoint, billingSavingsPlanModelApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingSavingsPlanModelData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="savingsPlanOrderId"> The savingsPlanOrderId. </param>
+        /// <param name="savingsPlanId"> The savingsPlanId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string savingsPlanOrderId, string savingsPlanId)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get savings plan by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingSavingsPlanModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingSavingsPlanModelResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingSavingsPlanModelResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Get");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccountAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,34 +146,42 @@ namespace Azure.ResourceManager.Billing
         /// Get savings plan by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingSavingsPlanModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingSavingsPlanModelResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<BillingSavingsPlanModelResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Get");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Get");
             scope.Start();
             try
             {
-                var response = _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccount(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -175,20 +195,20 @@ namespace Azure.ResourceManager.Billing
         /// Update savings plan by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_UpdateByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanModels_UpdateByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingSavingsPlanModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,14 +220,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Update");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Update");
             scope.Start();
             try
             {
-                var response = await _billingSavingsPlanModelSavingsPlansRestClient.UpdateByBillingAccountAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSavingsPlanModelResource>(new BillingSavingsPlanModelOperationSource(Client), _billingSavingsPlanModelSavingsPlansClientDiagnostics, Pipeline, _billingSavingsPlanModelSavingsPlansRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlansRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingSavingsPlanModelPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingSavingsPlanModelResource> operation = new BillingArmOperation<BillingSavingsPlanModelResource>(
+                    new BillingSavingsPlanModelOperationSource(Client),
+                    _savingsPlansClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -221,20 +254,20 @@ namespace Azure.ResourceManager.Billing
         /// Update savings plan by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_UpdateByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanModels_UpdateByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingSavingsPlanModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,14 +279,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Update");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.Update");
             scope.Start();
             try
             {
-                var response = _billingSavingsPlanModelSavingsPlansRestClient.UpdateByBillingAccount(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new BillingArmOperation<BillingSavingsPlanModelResource>(new BillingSavingsPlanModelOperationSource(Client), _billingSavingsPlanModelSavingsPlansClientDiagnostics, Pipeline, _billingSavingsPlanModelSavingsPlansRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlansRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingSavingsPlanModelPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingSavingsPlanModelResource> operation = new BillingArmOperation<BillingSavingsPlanModelResource>(
+                    new BillingSavingsPlanModelOperationSource(Client),
+                    _savingsPlansClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -267,35 +313,45 @@ namespace Azure.ResourceManager.Billing
         /// Validate savings plan patch by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_ValidateUpdateByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanModels_ValidateUpdateByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingSavingsPlanModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SavingsPlanValidateResult>> ValidateUpdateByBillingAccountAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanValidateResult>> ValidateUpdateByBillingAccountAsync(SavingsPlanUpdateValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.ValidateUpdateByBillingAccount");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.ValidateUpdateByBillingAccount");
             scope.Start();
             try
             {
-                var response = await _billingSavingsPlanModelSavingsPlansRestClient.ValidateUpdateByBillingAccountAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlansRestClient.CreateValidateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateRequest.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -309,35 +365,45 @@ namespace Azure.ResourceManager.Billing
         /// Validate savings plan patch by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_ValidateUpdateByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanModels_ValidateUpdateByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingSavingsPlanModelResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SavingsPlanValidateResult> ValidateUpdateByBillingAccount(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanValidateResult> ValidateUpdateByBillingAccount(SavingsPlanUpdateValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.ValidateUpdateByBillingAccount");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.ValidateUpdateByBillingAccount");
             scope.Start();
             try
             {
-                var response = _billingSavingsPlanModelSavingsPlansRestClient.ValidateUpdateByBillingAccount(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlansRestClient.CreateValidateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateRequest.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -347,27 +413,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -377,28 +423,34 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.AddTag");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccountAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
+                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingSavingsPlanModelPatch();
-                    foreach (var tag in current.Tags)
+                    BillingSavingsPlanModelData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingSavingsPlanModelPatch patch = new BillingSavingsPlanModelPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingSavingsPlanModelResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -409,27 +461,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -439,28 +471,34 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.AddTag");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccount(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
+                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingSavingsPlanModelPatch();
-                    foreach (var tag in current.Tags)
+                    BillingSavingsPlanModelData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingSavingsPlanModelPatch patch = new BillingSavingsPlanModelPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<BillingSavingsPlanModelResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -471,53 +509,39 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<BillingSavingsPlanModelResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.SetTags");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccountAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
+                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingSavingsPlanModelPatch();
+                    BillingSavingsPlanModelData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingSavingsPlanModelPatch patch = new BillingSavingsPlanModelPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingSavingsPlanModelResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -528,53 +552,39 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<BillingSavingsPlanModelResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.SetTags");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccount(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
+                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingSavingsPlanModelPatch();
+                    BillingSavingsPlanModelData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingSavingsPlanModelPatch patch = new BillingSavingsPlanModelPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<BillingSavingsPlanModelResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -585,27 +595,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -613,28 +603,34 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.RemoveTag");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccountAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
+                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingSavingsPlanModelPatch();
-                    foreach (var tag in current.Tags)
+                    BillingSavingsPlanModelData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingSavingsPlanModelPatch patch = new BillingSavingsPlanModelPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingSavingsPlanModelResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -645,27 +641,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlans_GetByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSavingsPlanModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -673,28 +649,34 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingSavingsPlanModelSavingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.RemoveTag");
+            using DiagnosticScope scope = _savingsPlansClientDiagnostics.CreateScope("BillingSavingsPlanModelResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingSavingsPlanModelSavingsPlansRestClient.GetByBillingAccount(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
+                    return Response.FromValue(new BillingSavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingSavingsPlanModelPatch();
-                    foreach (var tag in current.Tags)
+                    BillingSavingsPlanModelData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingSavingsPlanModelPatch patch = new BillingSavingsPlanModelPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<BillingSavingsPlanModelResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -1,14 +1,20 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
+## 2.0.0-beta.1 (Unreleased)
 
 ### Breaking Changes
 
-### Bugs Fixed
+- Migrated from AutoRest/Swagger to TypeSpec-based code generation. This is a major rebuild of the public API surface:
+  - Many resource and model types have been renamed to follow current ARM .NET design guidelines (for example, the `Operation` model has been renamed to `BillingOperationInfo`).
+  - The `BillingAccountCollectionGetAllOptions` and related parameter-options classes have been removed; the corresponding collection `GetAll` overloads now take individual filter parameters that match the underlying ARM contract.
+  - Several wrapper resources whose ARM paths are shared across multiple scopes (for example `BillingRoleAssignment`, `BillingRoleDefinition`, `Customer`, `EnrollmentAccount`, `Invoice`, `PaymentMethod`, `BillingSubscription`) are now generated per parent scope. Use the new scope-specific accessors (for example `GetBillingAccountBillingRoleAssignments`, `GetBillingProfileBillingRoleAssignments`).
+  - Resource long-running operations (`Update`, `Delete`, `CreateOrUpdate`) now use canonical `ArmOperation`/`ArmOperation<T>` return types throughout.
+  - Several enumerations and models have been renamed for non-ambiguity (for example `ReservationPurchaseRequestPropertiesReservedResourceProperties.InstanceFlexibility` is now exposed as `ReservedInstanceFlexibility` to avoid a clash with the directly flattened property).
+- The `SubscriptionRenewalTermDetails.TermDuration` property is now `string` (ISO8601 duration format), matching the underlying spec and the sibling `BillingSubscriptionData.TermDuration` / `BillingSubscriptionProperties.TermDuration` properties. Previously it was incorrectly exposed as `TimeSpan?` by the legacy generator.
 
 ### Other Changes
+
+- Underlying generator switched to the `@azure-typespec/http-client-csharp-mgmt` emitter; generation is driven by `tsp-location.yaml` and the TypeSpec spec under `specification/billing/resource-manager/Microsoft.Billing/Billing`.
 
 ## 1.2.2 (2026-04-20)
 

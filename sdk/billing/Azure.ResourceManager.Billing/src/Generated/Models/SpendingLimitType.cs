@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,77 +15,122 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct SpendingLimitType : IEquatable<SpendingLimitType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> FreeAccount. </summary>
+        private const string FreeAccountValue = "FreeAccount";
+        /// <summary> Sandbox. </summary>
+        private const string SandboxValue = "Sandbox";
+        /// <summary> AzureForStudents. </summary>
+        private const string AzureForStudentsValue = "AzureForStudents";
+        /// <summary> AcademicSponsorship. </summary>
+        private const string AcademicSponsorshipValue = "AcademicSponsorship";
+        /// <summary> AzureConsumptionCredit. </summary>
+        private const string AzureConsumptionCreditValue = "AzureConsumptionCredit";
+        /// <summary> AzurePassSponsorship. </summary>
+        private const string AzurePassSponsorshipValue = "AzurePassSponsorship";
+        /// <summary> MpnSponsorship. </summary>
+        private const string MpnSponsorshipValue = "MpnSponsorship";
+        /// <summary> MSDN. </summary>
+        private const string MSDNValue = "MSDN";
+        /// <summary> NonProfitSponsorship. </summary>
+        private const string NonProfitSponsorshipValue = "NonProfitSponsorship";
+        /// <summary> Sponsorship. </summary>
+        private const string SponsorshipValue = "Sponsorship";
+        /// <summary> StartupSponsorship. </summary>
+        private const string StartupSponsorshipValue = "StartupSponsorship";
+        /// <summary> AzureForStudentsStarter. </summary>
+        private const string AzureForStudentsStarterValue = "AzureForStudentsStarter";
+        /// <summary> VisualStudio. </summary>
+        private const string VisualStudioValue = "VisualStudio";
 
         /// <summary> Initializes a new instance of <see cref="SpendingLimitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SpendingLimitType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string NoneValue = "None";
-        private const string FreeAccountValue = "FreeAccount";
-        private const string SandboxValue = "Sandbox";
-        private const string AzureForStudentsValue = "AzureForStudents";
-        private const string AcademicSponsorshipValue = "AcademicSponsorship";
-        private const string AzureConsumptionCreditValue = "AzureConsumptionCredit";
-        private const string AzurePassSponsorshipValue = "AzurePassSponsorship";
-        private const string MpnSponsorshipValue = "MpnSponsorship";
-        private const string MsdnValue = "MSDN";
-        private const string NonProfitSponsorshipValue = "NonProfitSponsorship";
-        private const string SponsorshipValue = "Sponsorship";
-        private const string StartupSponsorshipValue = "StartupSponsorship";
-        private const string AzureForStudentsStarterValue = "AzureForStudentsStarter";
-        private const string VisualStudioValue = "VisualStudio";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static SpendingLimitType Other { get; } = new SpendingLimitType(OtherValue);
+
         /// <summary> None. </summary>
         public static SpendingLimitType None { get; } = new SpendingLimitType(NoneValue);
+
         /// <summary> FreeAccount. </summary>
         public static SpendingLimitType FreeAccount { get; } = new SpendingLimitType(FreeAccountValue);
+
         /// <summary> Sandbox. </summary>
         public static SpendingLimitType Sandbox { get; } = new SpendingLimitType(SandboxValue);
+
         /// <summary> AzureForStudents. </summary>
         public static SpendingLimitType AzureForStudents { get; } = new SpendingLimitType(AzureForStudentsValue);
+
         /// <summary> AcademicSponsorship. </summary>
         public static SpendingLimitType AcademicSponsorship { get; } = new SpendingLimitType(AcademicSponsorshipValue);
+
         /// <summary> AzureConsumptionCredit. </summary>
         public static SpendingLimitType AzureConsumptionCredit { get; } = new SpendingLimitType(AzureConsumptionCreditValue);
+
         /// <summary> AzurePassSponsorship. </summary>
         public static SpendingLimitType AzurePassSponsorship { get; } = new SpendingLimitType(AzurePassSponsorshipValue);
+
         /// <summary> MpnSponsorship. </summary>
         public static SpendingLimitType MpnSponsorship { get; } = new SpendingLimitType(MpnSponsorshipValue);
+
         /// <summary> MSDN. </summary>
-        public static SpendingLimitType Msdn { get; } = new SpendingLimitType(MsdnValue);
+        public static SpendingLimitType MSDN { get; } = new SpendingLimitType(MSDNValue);
+
         /// <summary> NonProfitSponsorship. </summary>
         public static SpendingLimitType NonProfitSponsorship { get; } = new SpendingLimitType(NonProfitSponsorshipValue);
+
         /// <summary> Sponsorship. </summary>
         public static SpendingLimitType Sponsorship { get; } = new SpendingLimitType(SponsorshipValue);
+
         /// <summary> StartupSponsorship. </summary>
         public static SpendingLimitType StartupSponsorship { get; } = new SpendingLimitType(StartupSponsorshipValue);
+
         /// <summary> AzureForStudentsStarter. </summary>
         public static SpendingLimitType AzureForStudentsStarter { get; } = new SpendingLimitType(AzureForStudentsStarterValue);
+
         /// <summary> VisualStudio. </summary>
         public static SpendingLimitType VisualStudio { get; } = new SpendingLimitType(VisualStudioValue);
+
         /// <summary> Determines if two <see cref="SpendingLimitType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SpendingLimitType left, SpendingLimitType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SpendingLimitType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SpendingLimitType left, SpendingLimitType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SpendingLimitType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SpendingLimitType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SpendingLimitType(string value) => new SpendingLimitType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SpendingLimitType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SpendingLimitType?(string value) => value == null ? null : new SpendingLimitType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SpendingLimitType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SpendingLimitType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

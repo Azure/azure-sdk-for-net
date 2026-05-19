@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
     public partial class BillingAppliedScopeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingAppliedScopeProperties"/>. </summary>
         public BillingAppliedScopeProperties()
@@ -57,31 +28,30 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="subscriptionId"> Fully-qualified identifier of the subscription where the benefit is applied. </param>
         /// <param name="resourceGroupId"> Fully-qualified identifier of the resource group where the benefit is applied. </param>
         /// <param name="displayName"> Display name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAppliedScopeProperties(Guid? tenantId, ResourceIdentifier managementGroupId, string subscriptionId, ResourceIdentifier resourceGroupId, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingAppliedScopeProperties(Guid? tenantId, ResourceIdentifier managementGroupId, string subscriptionId, ResourceIdentifier resourceGroupId, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             ManagementGroupId = managementGroupId;
             SubscriptionId = subscriptionId;
             ResourceGroupId = resourceGroupId;
             DisplayName = displayName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Tenant ID where the savings plan where the benefit is applied. </summary>
-        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
+
         /// <summary> Fully-qualified identifier of the management group where the benefit is applied. </summary>
-        [WirePath("managementGroupId")]
         public ResourceIdentifier ManagementGroupId { get; set; }
+
         /// <summary> Fully-qualified identifier of the subscription where the benefit is applied. </summary>
-        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
+
         /// <summary> Fully-qualified identifier of the resource group where the benefit is applied. </summary>
-        [WirePath("resourceGroupId")]
         public ResourceIdentifier ResourceGroupId { get; set; }
+
         /// <summary> Display name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

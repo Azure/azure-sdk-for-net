@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> It is an organizational hierarchy within a billing account to administer and manage azure costs. </summary>
     public partial class BillingEnrollmentAccountProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingEnrollmentAccountProperties"/>. </summary>
-        public BillingEnrollmentAccountProperties()
+        internal BillingEnrollmentAccountProperties()
         {
         }
 
@@ -61,8 +32,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> The status of the enrollment account. </param>
         /// <param name="startOn"> The date from which the enrollment account became valid and functional. </param>
         /// <param name="endOn"> The date of expiration of the enrollment account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingEnrollmentAccountProperties(string costCenter, string displayName, string departmentDisplayName, string departmentId, bool? isDevTestEnabled, string accountOwner, string authType, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingEnrollmentAccountProperties(string costCenter, string displayName, string departmentDisplayName, string departmentId, bool? isDevTestEnabled, string accountOwner, string authType, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CostCenter = costCenter;
             DisplayName = displayName;
@@ -74,38 +45,37 @@ namespace Azure.ResourceManager.Billing.Models
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The cost center associated with the enrollment account. </summary>
-        [WirePath("costCenter")]
-        public string CostCenter { get; set; }
+        public string CostCenter { get; }
+
         /// <summary> The name of the enrollment account. </summary>
-        [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
+
         /// <summary> The name of the department under which the enrollment account exists. </summary>
-        [WirePath("departmentDisplayName")]
         public string DepartmentDisplayName { get; }
+
         /// <summary> The ID that uniquely identifies the department. </summary>
-        [WirePath("departmentId")]
         public string DepartmentId { get; }
+
         /// <summary> Boolean flag which enables subscribers to run development and testing workloads on Azure at special Dev/Test rates. </summary>
-        [WirePath("isDevTestEnabled")]
-        public bool? IsDevTestEnabled { get; set; }
+        public bool? IsDevTestEnabled { get; }
+
         /// <summary> The owner of the enrollment account. </summary>
-        [WirePath("accountOwner")]
         public string AccountOwner { get; }
+
         /// <summary> The authorization type of the enrollment account. </summary>
-        [WirePath("authType")]
         public string AuthType { get; }
+
         /// <summary> The status of the enrollment account. </summary>
-        [WirePath("status")]
         public string Status { get; }
+
         /// <summary> The date from which the enrollment account became valid and functional. </summary>
-        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The date of expiration of the enrollment account. </summary>
-        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; }
     }
 }

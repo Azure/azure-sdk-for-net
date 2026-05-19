@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal class BillingProfileOperationSource : IOperationSource<BillingProfileResource>
+    /// <summary></summary>
+    internal partial class BillingProfileOperationSource : IOperationSource<BillingProfileResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal BillingProfileOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         BillingProfileResource IOperationSource<BillingProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            BillingProfileData data = BillingProfileData.DeserializeBillingProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BillingProfileResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<BillingProfileResource> IOperationSource<BillingProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
-            return await Task.FromResult(new BillingProfileResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            BillingProfileData data = BillingProfileData.DeserializeBillingProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BillingProfileResource(_client, data);
         }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Billing
 {
-    public partial class BillingEnrollmentAccountRoleDefinitionResource : IJsonModel<BillingRoleDefinitionData>
+    /// <summary></summary>
+    public partial class BillingEnrollmentAccountRoleDefinitionResource : IJsonModel<BillingEnrollmentAccountRoleDefinitionData>
     {
-        private static BillingRoleDefinitionData s_dataDeserializationInstance;
-        private static BillingRoleDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BillingEnrollmentAccountRoleDefinitionData> s_dataDeserializationInstance;
 
-        void IJsonModel<BillingRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingRoleDefinitionData>)Data).Write(writer, options);
+        private static IJsonModel<BillingEnrollmentAccountRoleDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BillingEnrollmentAccountRoleDefinitionData();
 
-        BillingRoleDefinitionData IJsonModel<BillingRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingRoleDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<BillingEnrollmentAccountRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingEnrollmentAccountRoleDefinitionData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<BillingRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingRoleDefinitionData>(Data, options, AzureResourceManagerBillingContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingEnrollmentAccountRoleDefinitionData IJsonModel<BillingEnrollmentAccountRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BillingRoleDefinitionData IPersistableModel<BillingRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingRoleDefinitionData>(data, options, AzureResourceManagerBillingContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BillingEnrollmentAccountRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingEnrollmentAccountRoleDefinitionData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingRoleDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingEnrollmentAccountRoleDefinitionData IPersistableModel<BillingEnrollmentAccountRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingEnrollmentAccountRoleDefinitionData>(data, options, AzureResourceManagerBillingContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingEnrollmentAccountRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

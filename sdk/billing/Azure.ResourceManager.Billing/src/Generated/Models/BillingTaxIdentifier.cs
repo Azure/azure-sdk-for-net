@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> A tax identifier for the billing account. </summary>
     public partial class BillingTaxIdentifier
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingTaxIdentifier"/>. </summary>
         public BillingTaxIdentifier()
@@ -52,35 +23,34 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingTaxIdentifier"/>. </summary>
         /// <param name="id"> The id of the tax identifier. </param>
-        /// <param name="identifierType"> The type of the tax identifier. </param>
+        /// <param name="type"> The type of the tax identifier. </param>
         /// <param name="scope"> The scope of the tax identifier. </param>
         /// <param name="country"> The country of the tax identifier. </param>
         /// <param name="status"> The status of the tax identifier. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTaxIdentifier(string id, BillingTaxIdentifierType? identifierType, string scope, string country, BillingTaxIdentifierStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingTaxIdentifier(string id, BillingTaxIdentifierType? @type, string scope, string country, BillingTaxIdentifierStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            IdentifierType = identifierType;
+            Type = @type;
             Scope = scope;
             Country = country;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The id of the tax identifier. </summary>
-        [WirePath("id")]
         public string Id { get; set; }
+
         /// <summary> The type of the tax identifier. </summary>
-        [WirePath("type")]
-        public BillingTaxIdentifierType? IdentifierType { get; set; }
+        public BillingTaxIdentifierType? Type { get; set; }
+
         /// <summary> The scope of the tax identifier. </summary>
-        [WirePath("scope")]
         public string Scope { get; set; }
+
         /// <summary> The country of the tax identifier. </summary>
-        [WirePath("country")]
         public string Country { get; set; }
+
         /// <summary> The status of the tax identifier. </summary>
-        [WirePath("status")]
         public BillingTaxIdentifierStatus? Status { get; set; }
     }
 }

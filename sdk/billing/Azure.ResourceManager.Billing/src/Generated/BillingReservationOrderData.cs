@@ -13,166 +13,213 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary>
-    /// A class representing the BillingReservationOrder data model.
-    /// Details of a reservation order being returned.
-    /// </summary>
+    /// <summary> Details of a reservation order being returned. </summary>
     public partial class BillingReservationOrderData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingReservationOrderData"/>. </summary>
-        public BillingReservationOrderData()
+        internal BillingReservationOrderData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Reservations = new ChangeTrackingList<BillingReservationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingReservationOrderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties associated to this reservation order. </param>
+        /// <param name="eTag"></param>
         /// <param name="tags"> Tags for this reservation. </param>
-        /// <param name="displayName"> Friendly name for user to easily identified the reservation order. </param>
-        /// <param name="enrollmentId"> Enrollment id of the reservation order. </param>
-        /// <param name="customerId"> Fully-qualified identifier of the customerId where the benefit is applied. Present only for Enterprise Agreement PartnerLed customers. </param>
-        /// <param name="billingProfileId"> Billing profile Id associated to this reservation order. </param>
-        /// <param name="billingAccountId"> Billing account Id associated to this reservation order. </param>
-        /// <param name="requestOn"> This is the DateTime when the reservation order was initially requested for purchase. </param>
-        /// <param name="createdOn"> This is the DateTime when the reservation order was created. </param>
-        /// <param name="expireOn"> This is the date when the reservation order will expire. </param>
-        /// <param name="reservationExpireOn"> This is the date-time when the reservation order will expire. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
-        /// <param name="originalQuantity"> Total original quantity of the skus purchased in the reservation order. </param>
-        /// <param name="term"> The term of the reservation, e.g. P1Y. </param>
-        /// <param name="provisioningState"> The provisioning state of the reservation, e.g. Succeeded. </param>
-        /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="planInformation"> Information describing the type of billing plan for this reservation order. </param>
-        /// <param name="reservations"></param>
-        /// <param name="reviewedOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
-        /// <param name="extendedStatusInfo"> Extended status information for the reservation. </param>
-        /// <param name="productCode"> Represents UPN. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? etag, IDictionary<string, string> tags, string displayName, string enrollmentId, ResourceIdentifier customerId, ResourceIdentifier billingProfileId, ResourceIdentifier billingAccountId, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, string term, string provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IList<BillingReservationData> reservations, DateTimeOffset? reviewedOn, ReservationExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReservationOrderProperty properties, int? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             Tags = tags;
-            DisplayName = displayName;
-            EnrollmentId = enrollmentId;
-            CustomerId = customerId;
-            BillingProfileId = billingProfileId;
-            BillingAccountId = billingAccountId;
-            RequestOn = requestOn;
-            CreatedOn = createdOn;
-            ExpireOn = expireOn;
-            ReservationExpireOn = reservationExpireOn;
-            BenefitStartOn = benefitStartOn;
-            OriginalQuantity = originalQuantity;
-            Term = term;
-            ProvisioningState = provisioningState;
-            BillingPlan = billingPlan;
-            PlanInformation = planInformation;
-            Reservations = reservations;
-            ReviewedOn = reviewedOn;
-            ExtendedStatusInfo = extendedStatusInfo;
-            ProductCode = productCode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the e tag. </summary>
-        [WirePath("etag")]
-        public int? ETag { get; set; }
+        /// <summary> The properties associated to this reservation order. </summary>
+        internal ReservationOrderProperty Properties { get; }
+
+        /// <summary> Gets the ETag. </summary>
+        public int? ETag { get; }
+
         /// <summary> Tags for this reservation. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Friendly name for user to easily identified the reservation order. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> Enrollment id of the reservation order. </summary>
-        [WirePath("properties.enrollmentId")]
-        public string EnrollmentId { get; set; }
+        public string EnrollmentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnrollmentId;
+            }
+        }
+
         /// <summary> Fully-qualified identifier of the customerId where the benefit is applied. Present only for Enterprise Agreement PartnerLed customers. </summary>
-        [WirePath("properties.customerId")]
-        public ResourceIdentifier CustomerId { get; set; }
+        public string CustomerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerId;
+            }
+        }
+
         /// <summary> Billing profile Id associated to this reservation order. </summary>
-        [WirePath("properties.billingProfileId")]
-        public ResourceIdentifier BillingProfileId { get; set; }
+        public string BillingProfileId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingProfileId;
+            }
+        }
+
         /// <summary> Billing account Id associated to this reservation order. </summary>
-        [WirePath("properties.billingAccountId")]
-        public ResourceIdentifier BillingAccountId { get; set; }
+        public string BillingAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingAccountId;
+            }
+        }
+
         /// <summary> This is the DateTime when the reservation order was initially requested for purchase. </summary>
-        [WirePath("properties.requestDateTime")]
-        public DateTimeOffset? RequestOn { get; set; }
+        public DateTimeOffset? RequestOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestOn;
+            }
+        }
+
         /// <summary> This is the DateTime when the reservation order was created. </summary>
-        [WirePath("properties.createdDateTime")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> This is the date when the reservation order will expire. </summary>
-        [WirePath("properties.expiryDate")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+        }
+
         /// <summary> This is the date-time when the reservation order will expire. </summary>
-        [WirePath("properties.expiryDateTime")]
-        public DateTimeOffset? ReservationExpireOn { get; set; }
+        public DateTimeOffset? ReservationExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservationExpireOn;
+            }
+        }
+
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
-        [WirePath("properties.benefitStartTime")]
-        public DateTimeOffset? BenefitStartOn { get; set; }
+        public DateTimeOffset? BenefitStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitStartOn;
+            }
+        }
+
         /// <summary> Total original quantity of the skus purchased in the reservation order. </summary>
-        [WirePath("properties.originalQuantity")]
-        public int? OriginalQuantity { get; set; }
+        public int? OriginalQuantity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginalQuantity;
+            }
+        }
+
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
-        [WirePath("properties.term")]
-        public string Term { get; }
+        public string Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+        }
+
         /// <summary> The provisioning state of the reservation, e.g. Succeeded. </summary>
-        [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Represent the billing plans. </summary>
-        [WirePath("properties.billingPlan")]
-        public ReservationBillingPlan? BillingPlan { get; set; }
+        public ReservationBillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+        }
+
         /// <summary> Information describing the type of billing plan for this reservation order. </summary>
-        [WirePath("properties.planInformation")]
-        public ReservationOrderBillingPlanInformation PlanInformation { get; set; }
-        /// <summary> Gets the reservations. </summary>
-        [WirePath("properties.reservations")]
-        public IList<BillingReservationData> Reservations { get; }
+        public ReservationOrderBillingPlanInformation PlanInformation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanInformation;
+            }
+        }
+
+        /// <summary> Gets the Reservations. </summary>
+        public IList<BillingReservationData> Reservations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Reservations;
+            }
+        }
+
         /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
-        [WirePath("properties.reviewDateTime")]
-        public DateTimeOffset? ReviewedOn { get; set; }
+        public DateTimeOffset? ReviewedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReviewedOn;
+            }
+        }
+
         /// <summary> Extended status information for the reservation. </summary>
-        [WirePath("properties.extendedStatusInfo")]
-        public ReservationExtendedStatusInfo ExtendedStatusInfo { get; set; }
+        public ReservationExtendedStatusInfo ExtendedStatusInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtendedStatusInfo;
+            }
+        }
+
         /// <summary> Represents UPN. </summary>
-        [WirePath("properties.productCode")]
-        public string ProductCode { get; set; }
+        public string ProductCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductCode;
+            }
+        }
     }
 }

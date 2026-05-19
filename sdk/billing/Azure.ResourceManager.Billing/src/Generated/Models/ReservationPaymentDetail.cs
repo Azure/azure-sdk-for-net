@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Information about payment related to a reservation order. </summary>
     public partial class ReservationPaymentDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationPaymentDetail"/>. </summary>
-        public ReservationPaymentDetail()
+        internal ReservationPaymentDetail()
         {
         }
 
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingAccount"> Shows the Account that is charged for this payment. </param>
         /// <param name="status"> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </param>
         /// <param name="extendedStatusInfo"> Extended status information for the reservation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, BillingPrice pricingCurrencyTotal, BillingPrice billingCurrencyTotal, string billingAccount, BillingPaymentStatus? status, ReservationExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, BillingPrice pricingCurrencyTotal, BillingPrice billingCurrencyTotal, string billingAccount, BillingPaymentStatus? status, ReservationExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DueOn = dueOn;
             PaymentOn = paymentOn;
@@ -68,29 +39,28 @@ namespace Azure.ResourceManager.Billing.Models
             BillingAccount = billingAccount;
             Status = status;
             ExtendedStatusInfo = extendedStatusInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Date when the payment needs to be done. </summary>
-        [WirePath("dueDate")]
-        public DateTimeOffset? DueOn { get; set; }
+        public DateTimeOffset? DueOn { get; }
+
         /// <summary> Date when the transaction is completed. Is null when it is scheduled. </summary>
-        [WirePath("paymentDate")]
-        public DateTimeOffset? PaymentOn { get; set; }
+        public DateTimeOffset? PaymentOn { get; }
+
         /// <summary> Amount in pricing currency. Tax not included. </summary>
-        [WirePath("pricingCurrencyTotal")]
-        public BillingPrice PricingCurrencyTotal { get; set; }
+        public BillingPrice PricingCurrencyTotal { get; }
+
         /// <summary> Amount charged in Billing currency. Tax not included. Is null for future payments. </summary>
-        [WirePath("billingCurrencyTotal")]
-        public BillingPrice BillingCurrencyTotal { get; set; }
+        public BillingPrice BillingCurrencyTotal { get; }
+
         /// <summary> Shows the Account that is charged for this payment. </summary>
-        [WirePath("billingAccount")]
-        public string BillingAccount { get; set; }
+        public string BillingAccount { get; }
+
         /// <summary> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </summary>
-        [WirePath("status")]
-        public BillingPaymentStatus? Status { get; set; }
+        public BillingPaymentStatus? Status { get; }
+
         /// <summary> Extended status information for the reservation. </summary>
-        [WirePath("extendedStatusInfo")]
-        public ReservationExtendedStatusInfo ExtendedStatusInfo { get; set; }
+        public ReservationExtendedStatusInfo ExtendedStatusInfo { get; }
     }
 }

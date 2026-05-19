@@ -7,51 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The properties of a role definition. </summary>
     public partial class BillingRoleDefinitionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingRoleDefinitionProperties"/>. </summary>
         /// <param name="roleName"> The name of the role. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
-        public BillingRoleDefinitionProperties(string roleName)
+        internal BillingRoleDefinitionProperties(string roleName)
         {
-            Argument.AssertNotNull(roleName, nameof(roleName));
-
             Permissions = new ChangeTrackingList<BillingPermission>();
             RoleName = roleName;
         }
@@ -60,28 +29,22 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="description"> The role description. </param>
         /// <param name="permissions"> The billingPermissions the role has. </param>
         /// <param name="roleName"> The name of the role. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRoleDefinitionProperties(string description, IReadOnlyList<BillingPermission> permissions, string roleName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingRoleDefinitionProperties(string description, IReadOnlyList<BillingPermission> permissions, string roleName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Permissions = permissions;
             RoleName = roleName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BillingRoleDefinitionProperties"/> for deserialization. </summary>
-        internal BillingRoleDefinitionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The role description. </summary>
-        [WirePath("description")]
         public string Description { get; }
+
         /// <summary> The billingPermissions the role has. </summary>
-        [WirePath("permissions")]
         public IReadOnlyList<BillingPermission> Permissions { get; }
+
         /// <summary> The name of the role. </summary>
-        [WirePath("roleName")]
-        public string RoleName { get; set; }
+        public string RoleName { get; }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal class BillingSavingsPlanModelOperationSource : IOperationSource<BillingSavingsPlanModelResource>
+    /// <summary></summary>
+    internal partial class BillingSavingsPlanModelOperationSource : IOperationSource<BillingSavingsPlanModelResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal BillingSavingsPlanModelOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         BillingSavingsPlanModelResource IOperationSource<BillingSavingsPlanModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingSavingsPlanModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            BillingSavingsPlanModelData data = BillingSavingsPlanModelData.DeserializeBillingSavingsPlanModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BillingSavingsPlanModelResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<BillingSavingsPlanModelResource> IOperationSource<BillingSavingsPlanModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingSavingsPlanModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
-            return await Task.FromResult(new BillingSavingsPlanModelResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            BillingSavingsPlanModelData data = BillingSavingsPlanModelData.DeserializeBillingSavingsPlanModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BillingSavingsPlanModelResource(_client, data);
         }
     }
 }

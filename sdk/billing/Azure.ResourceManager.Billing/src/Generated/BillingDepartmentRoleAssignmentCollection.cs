@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingDepartmentRoleAssignmentCollection : ArmCollection, IEnumerable<BillingDepartmentRoleAssignmentResource>, IAsyncEnumerable<BillingDepartmentRoleAssignmentResource>
     {
-        private readonly ClientDiagnostics _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics;
-        private readonly BillingRoleAssignmentsRestOperations _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient;
+        private readonly ClientDiagnostics _billingRoleAssignmentsClientDiagnostics;
+        private readonly BillingRoleAssignments _billingRoleAssignmentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentRoleAssignmentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingDepartmentRoleAssignmentCollection for mocking. </summary>
         protected BillingDepartmentRoleAssignmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentRoleAssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingDepartmentRoleAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingDepartmentRoleAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingDepartmentRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingDepartmentRoleAssignmentResource.ResourceType, out string billingDepartmentRoleAssignmentBillingRoleAssignmentsApiVersion);
-            _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient = new BillingRoleAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingDepartmentRoleAssignmentBillingRoleAssignmentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingDepartmentRoleAssignmentResource.ResourceType, out string billingDepartmentRoleAssignmentApiVersion);
+            _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingDepartmentRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingDepartmentRoleAssignmentApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingDepartmentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingDepartmentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingDepartmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update a billing role assignment. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_CreateOrUpdateByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_CreateOrUpdateByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="data"> The properties of the billing role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingDepartmentRoleAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string billingRoleAssignmentName, BillingRoleAssignmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<BillingDepartmentRoleAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string billingRoleAssignmentName, BillingDepartmentRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateOrUpdateByDepartmentAsync(Id.Parent.Name, Id.Name, billingRoleAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingDepartmentRoleAssignmentResource>(new BillingDepartmentRoleAssignmentOperationSource(Client), _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics, Pipeline, _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateCreateOrUpdateByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingDepartmentRoleAssignmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingDepartmentRoleAssignmentResource> operation = new BillingArmOperation<BillingDepartmentRoleAssignmentResource>(
+                    new BillingDepartmentRoleAssignmentOperationSource(Client),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Billing
         /// Create or update a billing role assignment. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_CreateOrUpdateByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_CreateOrUpdateByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="data"> The properties of the billing role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BillingDepartmentRoleAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string billingRoleAssignmentName, BillingRoleAssignmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<BillingDepartmentRoleAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string billingRoleAssignmentName, BillingDepartmentRoleAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateOrUpdateByDepartment(Id.Parent.Name, Id.Name, billingRoleAssignmentName, data, cancellationToken);
-                var operation = new BillingArmOperation<BillingDepartmentRoleAssignmentResource>(new BillingDepartmentRoleAssignmentOperationSource(Client), _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics, Pipeline, _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateCreateOrUpdateByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingDepartmentRoleAssignmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingDepartmentRoleAssignmentResource> operation = new BillingArmOperation<BillingDepartmentRoleAssignmentResource>(
+                    new BillingDepartmentRoleAssignmentOperationSource(Client),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingDepartmentRoleAssignmentResource>> GetAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Get");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.GetByDepartmentAsync(Id.Parent.Name, Id.Name, billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingDepartmentRoleAssignmentData> response = Response.FromValue(BillingDepartmentRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingDepartmentRoleAssignmentResource> Get(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Get");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.GetByDepartment(Id.Parent.Name, Id.Name, billingRoleAssignmentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingDepartmentRoleAssignmentData> response = Response.FromValue(BillingDepartmentRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.Billing
         /// Lists the role assignments for the caller on a department. The operation is supported for billing accounts of type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_ListByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_ListByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingDepartmentRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingDepartmentRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingDepartmentRoleAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateListByDepartmentRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateListByDepartmentNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingDepartmentRoleAssignmentResource(Client, BillingRoleAssignmentData.DeserializeBillingRoleAssignmentData(e)), _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics, Pipeline, "BillingDepartmentRoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingDepartmentRoleAssignmentData, BillingDepartmentRoleAssignmentResource>(new BillingRoleAssignmentsGetByDepartmentAsyncCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentRoleAssignmentCollection.GetAll"), data => new BillingDepartmentRoleAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Lists the role assignments for the caller on a department. The operation is supported for billing accounts of type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_ListByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_ListByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.Billing
         /// <returns> A collection of <see cref="BillingDepartmentRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingDepartmentRoleAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateListByDepartmentRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.CreateListByDepartmentNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingDepartmentRoleAssignmentResource(Client, BillingRoleAssignmentData.DeserializeBillingRoleAssignmentData(e)), _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics, Pipeline, "BillingDepartmentRoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingDepartmentRoleAssignmentData, BillingDepartmentRoleAssignmentResource>(new BillingRoleAssignmentsGetByDepartmentCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentRoleAssignmentCollection.GetAll"), data => new BillingDepartmentRoleAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Exists");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.GetByDepartmentAsync(Id.Parent.Name, Id.Name, billingRoleAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingDepartmentRoleAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentRoleAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentRoleAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Exists");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.GetByDepartment(Id.Parent.Name, Id.Name, billingRoleAssignmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingDepartmentRoleAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentRoleAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentRoleAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingDepartmentRoleAssignmentResource>> GetIfExistsAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.GetByDepartmentAsync(Id.Parent.Name, Id.Name, billingRoleAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingDepartmentRoleAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentRoleAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentRoleAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingDepartmentRoleAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByDepartment_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingDepartmentRoleAssignmentResource> GetIfExists(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            using var scope = _billingDepartmentRoleAssignmentBillingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingDepartmentRoleAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingDepartmentRoleAssignmentBillingRoleAssignmentsRestClient.GetByDepartment(Id.Parent.Name, Id.Name, billingRoleAssignmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingDepartmentRoleAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentRoleAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentRoleAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingDepartmentRoleAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.Billing
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingDepartmentRoleAssignmentResource> IAsyncEnumerable<BillingDepartmentRoleAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal class BillingAccountPolicyOperationSource : IOperationSource<BillingAccountPolicyResource>
+    /// <summary></summary>
+    internal partial class BillingAccountPolicyOperationSource : IOperationSource<BillingAccountPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal BillingAccountPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         BillingAccountPolicyResource IOperationSource<BillingAccountPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingAccountPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            BillingAccountPolicyData data = BillingAccountPolicyData.DeserializeBillingAccountPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BillingAccountPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<BillingAccountPolicyResource> IOperationSource<BillingAccountPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingAccountPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
-            return await Task.FromResult(new BillingAccountPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            BillingAccountPolicyData data = BillingAccountPolicyData.DeserializeBillingAccountPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BillingAccountPolicyResource(_client, data);
         }
     }
 }

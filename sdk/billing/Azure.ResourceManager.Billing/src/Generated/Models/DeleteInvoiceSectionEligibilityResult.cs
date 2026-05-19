@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Eligibility to delete an invoice section result. </summary>
     public partial class DeleteInvoiceSectionEligibilityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeleteInvoiceSectionEligibilityResult"/>. </summary>
         internal DeleteInvoiceSectionEligibilityResult()
@@ -54,19 +26,18 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="DeleteInvoiceSectionEligibilityResult"/>. </summary>
         /// <param name="eligibilityStatus"> Status describing if invoice section is eligible to be deleted. </param>
         /// <param name="eligibilityDetails"> A list of delete invoice section eligibility result details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteInvoiceSectionEligibilityResult(DeleteInvoiceSectionEligibilityStatus? eligibilityStatus, IReadOnlyList<DeleteInvoiceSectionEligibilityDetail> eligibilityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeleteInvoiceSectionEligibilityResult(DeleteInvoiceSectionEligibilityStatus? eligibilityStatus, IReadOnlyList<DeleteInvoiceSectionEligibilityDetail> eligibilityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EligibilityStatus = eligibilityStatus;
             EligibilityDetails = eligibilityDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Status describing if invoice section is eligible to be deleted. </summary>
-        [WirePath("eligibilityStatus")]
         public DeleteInvoiceSectionEligibilityStatus? EligibilityStatus { get; }
+
         /// <summary> A list of delete invoice section eligibility result details. </summary>
-        [WirePath("eligibilityDetails")]
         public IReadOnlyList<DeleteInvoiceSectionEligibilityDetail> EligibilityDetails { get; }
     }
 }

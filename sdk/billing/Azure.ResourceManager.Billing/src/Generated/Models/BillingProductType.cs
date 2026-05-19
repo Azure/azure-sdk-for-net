@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingProductType : IEquatable<BillingProductType>
     {
         private readonly string _value;
+        /// <summary> AzureSubscription. </summary>
+        private const string AzureSubscriptionValue = "AzureSubscription";
+        /// <summary> AzureReservation. </summary>
+        private const string AzureReservationValue = "AzureReservation";
+        /// <summary> Department. </summary>
+        private const string DepartmentValue = "Department";
+        /// <summary> SavingsPlan. </summary>
+        private const string SavingsPlanValue = "SavingsPlan";
+        /// <summary> SAAS. </summary>
+        private const string SAASValue = "SAAS";
 
         /// <summary> Initializes a new instance of <see cref="BillingProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingProductType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureSubscriptionValue = "AzureSubscription";
-        private const string AzureReservationValue = "AzureReservation";
-        private const string DepartmentValue = "Department";
-        private const string SavingsPlanValue = "SavingsPlan";
-        private const string SaasValue = "SAAS";
+            _value = value;
+        }
 
         /// <summary> AzureSubscription. </summary>
         public static BillingProductType AzureSubscription { get; } = new BillingProductType(AzureSubscriptionValue);
+
         /// <summary> AzureReservation. </summary>
         public static BillingProductType AzureReservation { get; } = new BillingProductType(AzureReservationValue);
+
         /// <summary> Department. </summary>
         public static BillingProductType Department { get; } = new BillingProductType(DepartmentValue);
+
         /// <summary> SavingsPlan. </summary>
         public static BillingProductType SavingsPlan { get; } = new BillingProductType(SavingsPlanValue);
+
         /// <summary> SAAS. </summary>
-        public static BillingProductType Saas { get; } = new BillingProductType(SaasValue);
+        public static BillingProductType SAAS { get; } = new BillingProductType(SAASValue);
+
         /// <summary> Determines if two <see cref="BillingProductType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingProductType left, BillingProductType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingProductType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingProductType left, BillingProductType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingProductType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingProductType(string value) => new BillingProductType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingProductType?(string value) => value == null ? null : new BillingProductType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingProductType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingProductType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

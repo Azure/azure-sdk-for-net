@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -14,40 +15,11 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> A transaction. </summary>
     public partial class BillingTransactionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingTransactionProperties"/>. </summary>
-        public BillingTransactionProperties()
+        internal BillingTransactionProperties()
         {
         }
 
@@ -61,7 +33,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="creditType"> The credit type of the transaction. Applies only to credited transactions. </param>
-        /// <param name="on"> The date of transaction. </param>
+        /// <param name="date"> The date of transaction. </param>
         /// <param name="discount"> The percentage discount, if any, applied to this transaction. </param>
         /// <param name="effectivePrice"> The price of the product after applying any discounts. </param>
         /// <param name="exchangeRate"> The exchange rate used to convert charged amount to billing currency, if applicable. </param>
@@ -91,8 +63,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="unitType"> The description for the unit of measure for a given product. </param>
         /// <param name="specialTaxationType"> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </param>
         /// <param name="refundTransactionDetails"> The refund details of a transaction. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTransactionProperties(BillingAmount azureCreditApplied, string azurePlan, string billingCurrency, BinaryData billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount consumptionCommitmentDecremented, string customerDisplayName, ResourceIdentifier customerId, BillingTransactionCreditType? creditType, DateTimeOffset? @on, float? discount, BillingAmount effectivePrice, float? exchangeRate, string invoice, ResourceIdentifier invoiceId, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, bool? isThirdParty, BillingTransactionKind? kind, BillingAmount marketPrice, string partNumber, string pricingCurrency, string productDescription, string productFamily, string productTypeId, string productType, int? quantity, string reasonCode, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, BillingAmount subTotal, BillingAmount tax, BillingAmount transactionAmount, string transactionType, float? units, string unitOfMeasure, string unitType, SpecialTaxationType? specialTaxationType, RefundTransactionDetails refundTransactionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingTransactionProperties(BillingAmount azureCreditApplied, string azurePlan, string billingCurrency, BinaryData billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount consumptionCommitmentDecremented, string customerDisplayName, ResourceIdentifier customerId, BillingTransactionCreditType? creditType, DateTimeOffset? date, float? discount, BillingAmount effectivePrice, float? exchangeRate, string invoice, ResourceIdentifier invoiceId, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, bool? isThirdParty, BillingTransactionKind? kind, BillingAmount marketPrice, string partNumber, string pricingCurrency, string productDescription, string productFamily, string productTypeId, string productType, int? quantity, string reasonCode, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, BillingAmount subTotal, BillingAmount tax, BillingAmount transactionAmount, string transactionType, float? units, string unitOfMeasure, string unitType, SpecialTaxationType? specialTaxationType, RefundTransactionDetails refundTransactionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureCreditApplied = azureCreditApplied;
             AzurePlan = azurePlan;
@@ -103,7 +75,7 @@ namespace Azure.ResourceManager.Billing.Models
             CustomerDisplayName = customerDisplayName;
             CustomerId = customerId;
             CreditType = creditType;
-            On = @on;
+            Date = date;
             Discount = discount;
             EffectivePrice = effectivePrice;
             ExchangeRate = exchangeRate;
@@ -133,154 +105,149 @@ namespace Azure.ResourceManager.Billing.Models
             UnitType = unitType;
             SpecialTaxationType = specialTaxationType;
             RefundTransactionDetails = refundTransactionDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
-        [WirePath("azureCreditApplied")]
         public BillingAmount AzureCreditApplied { get; }
+
         /// <summary> Details of the Azure plan. </summary>
-        [WirePath("azurePlan")]
-        public string AzurePlan { get; set; }
+        public string AzurePlan { get; }
+
         /// <summary> The ISO 4217 code for the currency in which this transaction is billed. </summary>
-        [WirePath("billingCurrency")]
-        public string BillingCurrency { get; set; }
+        public string BillingCurrency { get; }
+
         /// <summary>
         /// The name of the billing profile.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("billingProfileDisplayName")]
-        public BinaryData BillingProfileDisplayName { get; set; }
+        public BinaryData BillingProfileDisplayName { get; }
+
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        [WirePath("billingProfileId")]
-        public ResourceIdentifier BillingProfileId { get; set; }
+        public ResourceIdentifier BillingProfileId { get; }
+
         /// <summary> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </summary>
-        [WirePath("consumptionCommitmentDecremented")]
         public BillingAmount ConsumptionCommitmentDecremented { get; }
+
         /// <summary> The name of the customer. </summary>
-        [WirePath("customerDisplayName")]
-        public string CustomerDisplayName { get; set; }
+        public string CustomerDisplayName { get; }
+
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        [WirePath("customerId")]
-        public ResourceIdentifier CustomerId { get; set; }
+        public ResourceIdentifier CustomerId { get; }
+
         /// <summary> The credit type of the transaction. Applies only to credited transactions. </summary>
-        [WirePath("creditType")]
-        public BillingTransactionCreditType? CreditType { get; set; }
+        public BillingTransactionCreditType? CreditType { get; }
+
         /// <summary> The date of transaction. </summary>
-        [WirePath("date")]
-        public DateTimeOffset? On { get; set; }
+        public DateTimeOffset? Date { get; }
+
         /// <summary> The percentage discount, if any, applied to this transaction. </summary>
-        [WirePath("discount")]
-        public float? Discount { get; set; }
+        public float? Discount { get; }
+
         /// <summary> The price of the product after applying any discounts. </summary>
-        [WirePath("effectivePrice")]
         public BillingAmount EffectivePrice { get; }
+
         /// <summary> The exchange rate used to convert charged amount to billing currency, if applicable. </summary>
-        [WirePath("exchangeRate")]
-        public float? ExchangeRate { get; set; }
+        public float? ExchangeRate { get; }
+
         /// <summary> Invoice name on which the transaction was billed or 'Pending' if the transaction is not billed. </summary>
-        [WirePath("invoice")]
-        public string Invoice { get; set; }
+        public string Invoice { get; }
+
         /// <summary> The fully qualified ID of the invoice on which the transaction was billed. This field is only applicable for transactions which are billed. </summary>
-        [WirePath("invoiceId")]
-        public ResourceIdentifier InvoiceId { get; set; }
+        public ResourceIdentifier InvoiceId { get; }
+
         /// <summary> The name of the invoice section. </summary>
-        [WirePath("invoiceSectionDisplayName")]
-        public string InvoiceSectionDisplayName { get; set; }
+        public string InvoiceSectionDisplayName { get; }
+
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
-        [WirePath("invoiceSectionId")]
-        public ResourceIdentifier InvoiceSectionId { get; set; }
+        public ResourceIdentifier InvoiceSectionId { get; }
+
         /// <summary> Whether or not the transaction is third party. </summary>
-        [WirePath("isThirdParty")]
-        public bool? IsThirdParty { get; set; }
+        public bool? IsThirdParty { get; }
+
         /// <summary> Type of the transaction, billed or unbilled. </summary>
-        [WirePath("kind")]
-        public BillingTransactionKind? Kind { get; set; }
+        public BillingTransactionKind? Kind { get; }
+
         /// <summary> The retail price of the product. </summary>
-        [WirePath("marketPrice")]
         public BillingAmount MarketPrice { get; }
+
         /// <summary> The part number of the product for which the transaction took place. The field is only applicable for Enterprise Agreement invoices. </summary>
-        [WirePath("partNumber")]
-        public string PartNumber { get; set; }
+        public string PartNumber { get; }
+
         /// <summary> The ISO 4217 code for the currency in which the product is priced. </summary>
-        [WirePath("pricingCurrency")]
-        public string PricingCurrency { get; set; }
+        public string PricingCurrency { get; }
+
         /// <summary> The description of the product for which the transaction took place. </summary>
-        [WirePath("productDescription")]
-        public string ProductDescription { get; set; }
+        public string ProductDescription { get; }
+
         /// <summary> The family of the product for which the transaction took place. </summary>
-        [WirePath("productFamily")]
-        public string ProductFamily { get; set; }
+        public string ProductFamily { get; }
+
         /// <summary> The ID of the product type for which the transaction took place. </summary>
-        [WirePath("productTypeId")]
-        public string ProductTypeId { get; set; }
+        public string ProductTypeId { get; }
+
         /// <summary> The type of the product for which the transaction took place. </summary>
-        [WirePath("productType")]
-        public string ProductType { get; set; }
+        public string ProductType { get; }
+
         /// <summary> The quantity purchased in the transaction. </summary>
-        [WirePath("quantity")]
-        public int? Quantity { get; set; }
+        public int? Quantity { get; }
+
         /// <summary> There reason code for the transaction. </summary>
-        [WirePath("reasonCode")]
-        public string ReasonCode { get; set; }
+        public string ReasonCode { get; }
+
         /// <summary> The date of the purchase of the product, or the start date of the month in which usage started. </summary>
-        [WirePath("servicePeriodStartDate")]
-        public DateTimeOffset? ServicePeriodStartOn { get; set; }
+        public DateTimeOffset? ServicePeriodStartOn { get; }
+
         /// <summary> The end date of the product term, or the end date of the month in which usage ended. </summary>
-        [WirePath("servicePeriodEndDate")]
-        public DateTimeOffset? ServicePeriodEndOn { get; set; }
+        public DateTimeOffset? ServicePeriodEndOn { get; }
+
         /// <summary> The pre-tax charged amount for the transaction. </summary>
-        [WirePath("subTotal")]
         public BillingAmount SubTotal { get; }
+
         /// <summary> The tax amount applied to the transaction. </summary>
-        [WirePath("tax")]
         public BillingAmount Tax { get; }
+
         /// <summary> The charge associated with the transaction. </summary>
-        [WirePath("transactionAmount")]
         public BillingAmount TransactionAmount { get; }
+
         /// <summary> The type of transaction. </summary>
-        [WirePath("transactionType")]
-        public string TransactionType { get; set; }
+        public string TransactionType { get; }
+
         /// <summary> The number of units used for a given product. </summary>
-        [WirePath("units")]
-        public float? Units { get; set; }
+        public float? Units { get; }
+
         /// <summary> The unit of measure used to bill for the product. For example, compute services are billed per hour. </summary>
-        [WirePath("unitOfMeasure")]
-        public string UnitOfMeasure { get; set; }
+        public string UnitOfMeasure { get; }
+
         /// <summary> The description for the unit of measure for a given product. </summary>
-        [WirePath("unitType")]
-        public string UnitType { get; set; }
+        public string UnitType { get; }
+
         /// <summary> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </summary>
-        [WirePath("specialTaxationType")]
-        public SpecialTaxationType? SpecialTaxationType { get; set; }
+        public SpecialTaxationType? SpecialTaxationType { get; }
+
         /// <summary> The refund details of a transaction. </summary>
-        [WirePath("refundTransactionDetails")]
-        public RefundTransactionDetails RefundTransactionDetails { get; set; }
+        public RefundTransactionDetails RefundTransactionDetails { get; }
     }
 }

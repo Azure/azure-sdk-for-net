@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -26,51 +26,49 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingRequestCollection : ArmCollection, IEnumerable<BillingRequestResource>, IAsyncEnumerable<BillingRequestResource>
     {
-        private readonly ClientDiagnostics _billingRequestClientDiagnostics;
-        private readonly BillingRequestsRestOperations _billingRequestRestClient;
+        private readonly ClientDiagnostics _billingRequestsClientDiagnostics;
+        private readonly BillingRequests _billingRequestsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingRequestCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingRequestCollection for mocking. </summary>
         protected BillingRequestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingRequestCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingRequestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingRequestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingRequestResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BillingRequestResource.ResourceType, out string billingRequestApiVersion);
-            _billingRequestRestClient = new BillingRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingRequestApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _billingRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingRequestResource.ResourceType.Namespace, Diagnostics);
+            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingRequestApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update a billing request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,21 +76,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="data"> A request submitted by a user to manage billing. Users with an owner role on the scope can approve or decline these requests. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BillingRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string billingRequestName, BillingRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _billingRequestRestClient.CreateOrUpdateAsync(billingRequestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingRequestResource>(new BillingRequestOperationSource(Client), _billingRequestClientDiagnostics, Pipeline, _billingRequestRestClient.CreateCreateOrUpdateRequest(billingRequestName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(billingRequestName, BillingRequestData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingRequestResource> operation = new BillingArmOperation<BillingRequestResource>(
+                    new BillingRequestOperationSource(Client),
+                    _billingRequestsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +117,16 @@ namespace Azure.ResourceManager.Billing
         /// Create or update a billing request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,21 +134,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="data"> A request submitted by a user to manage billing. Users with an owner role on the scope can approve or decline these requests. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BillingRequestResource> CreateOrUpdate(WaitUntil waitUntil, string billingRequestName, BillingRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _billingRequestRestClient.CreateOrUpdate(billingRequestName, data, cancellationToken);
-                var operation = new BillingArmOperation<BillingRequestResource>(new BillingRequestOperationSource(Client), _billingRequestClientDiagnostics, Pipeline, _billingRequestRestClient.CreateCreateOrUpdateRequest(billingRequestName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(billingRequestName, BillingRequestData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingRequestResource> operation = new BillingArmOperation<BillingRequestResource>(
+                    new BillingRequestOperationSource(Client),
+                    _billingRequestsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -155,38 +175,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a billing request by its ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingRequestResource>> GetAsync(string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.Get");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingRequestRestClient.GetAsync(billingRequestName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingRequestData> response = Response.FromValue(BillingRequestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,38 +224,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a billing request by its ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingRequestResource> Get(string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.Get");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingRequestRestClient.Get(billingRequestName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingRequestData> response = Response.FromValue(BillingRequestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,102 +273,136 @@ namespace Azure.ResourceManager.Billing
         /// The list of billing requests submitted by a user.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_ListByUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_ListByUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingRequestResource> GetAllAsync(BillingRequestCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingRequestResource> GetAllAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingRequestCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingRequestRestClient.CreateListByUserRequest(options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingRequestRestClient.CreateListByUserNextPageRequest(nextLink, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingRequestResource(Client, BillingRequestData.DeserializeBillingRequestData(e)), _billingRequestClientDiagnostics, Pipeline, "BillingRequestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByUserAsyncCollectionResultOfT(
+                _billingRequestsRestClient,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingRequestCollection.GetAll"), data => new BillingRequestResource(Client, data));
         }
 
         /// <summary>
         /// The list of billing requests submitted by a user.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_ListByUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_ListByUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingRequestResource> GetAll(BillingRequestCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingRequestResource> GetAll(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingRequestCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingRequestRestClient.CreateListByUserRequest(options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingRequestRestClient.CreateListByUserNextPageRequest(nextLink, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingRequestResource(Client, BillingRequestData.DeserializeBillingRequestData(e)), _billingRequestClientDiagnostics, Pipeline, "BillingRequestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByUserCollectionResultOfT(
+                _billingRequestsRestClient,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingRequestCollection.GetAll"), data => new BillingRequestResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.Exists");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingRequestRestClient.GetAsync(billingRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingRequestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRequestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +416,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.Exists");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingRequestRestClient.Get(billingRequestName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingRequestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRequestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +473,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingRequestResource>> GetIfExistsAsync(string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.GetIfExists");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingRequestRestClient.GetAsync(billingRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingRequestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRequestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingRequestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +534,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingRequests/{billingRequestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingRequests/{billingRequestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRequests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingRequestName"> The ID that uniquely identifies a billing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingRequestResource> GetIfExists(string billingRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRequestName, nameof(billingRequestName));
 
-            using var scope = _billingRequestClientDiagnostics.CreateScope("BillingRequestCollection.GetIfExists");
+            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingRequestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingRequestRestClient.Get(billingRequestName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRequestsRestClient.CreateGetRequest(billingRequestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingRequestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRequestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRequestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingRequestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,17 +593,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingRequestResource> IEnumerable<BillingRequestResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingRequestResource> IAsyncEnumerable<BillingRequestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

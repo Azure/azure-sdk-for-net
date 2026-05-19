@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> A principal who has interacted with a billing entity. </summary>
     public partial class BillingPrincipal
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingPrincipal"/>. </summary>
         public BillingPrincipal()
@@ -54,23 +25,22 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="tenantId"> The tenant id of the principal who has interacted with a billing entity. </param>
         /// <param name="objectId"> The object id of the principal who has interacted with a billing entity. </param>
         /// <param name="upn"> The user principal name of the principal who has interacted with a billing entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPrincipal(Guid? tenantId, string objectId, string upn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingPrincipal(Guid? tenantId, string objectId, string upn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             ObjectId = objectId;
             Upn = upn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The tenant id of the principal who has interacted with a billing entity. </summary>
-        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
+
         /// <summary> The object id of the principal who has interacted with a billing entity. </summary>
-        [WirePath("objectId")]
         public string ObjectId { get; set; }
+
         /// <summary> The user principal name of the principal who has interacted with a billing entity. </summary>
-        [WirePath("upn")]
         public string Upn { get; set; }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> A transaction summary. </summary>
     public partial class BillingTransactionSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingTransactionSummary"/>. </summary>
         internal BillingTransactionSummary()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="subTotal"> The total pre-tax charged amount. </param>
         /// <param name="tax"> The total tax amount applied. </param>
         /// <param name="total"> The total charges. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTransactionSummary(float? azureCreditApplied, string billingCurrency, float? consumptionCommitmentDecremented, float? subTotal, float? tax, float? total, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingTransactionSummary(float? azureCreditApplied, string billingCurrency, float? consumptionCommitmentDecremented, float? subTotal, float? tax, float? total, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureCreditApplied = azureCreditApplied;
             BillingCurrency = billingCurrency;
@@ -66,26 +37,25 @@ namespace Azure.ResourceManager.Billing.Models
             SubTotal = subTotal;
             Tax = tax;
             Total = total;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The total amount of any Azure credits applied. </summary>
-        [WirePath("azureCreditApplied")]
         public float? AzureCreditApplied { get; }
+
         /// <summary> The ISO 4217 code for the currency in which the transactions are billed. </summary>
-        [WirePath("billingCurrency")]
         public string BillingCurrency { get; }
+
         /// <summary> The total Microsoft Azure Consumption Commitment (MACC) decrement through the invoice. </summary>
-        [WirePath("consumptionCommitmentDecremented")]
         public float? ConsumptionCommitmentDecremented { get; }
+
         /// <summary> The total pre-tax charged amount. </summary>
-        [WirePath("subTotal")]
         public float? SubTotal { get; }
+
         /// <summary> The total tax amount applied. </summary>
-        [WirePath("tax")]
         public float? Tax { get; }
+
         /// <summary> The total charges. </summary>
-        [WirePath("total")]
         public float? Total { get; }
     }
 }

@@ -7,26 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> List of savings plans. </summary>
-    internal partial class SavingsPlanModelListResult : SavingsPlanModelList
+    public partial class SavingsPlanModelListResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
-        internal SavingsPlanModelListResult()
+        /// <param name="value"> The SavingsPlanModel items on this page. </param>
+        /// <param name="summary"> The roll out count summary of the savings plans. </param>
+        internal SavingsPlanModelListResult(IEnumerable<BillingSavingsPlanModelData> value, SavingsPlanSummaryCount summary)
         {
+            Value = value.ToList();
+            Summary = summary;
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> Url to get the next page. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="value"> The SavingsPlanModel items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="summary"> The roll out count summary of the savings plans. </param>
-        internal SavingsPlanModelListResult(IReadOnlyList<BillingSavingsPlanModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, SavingsPlanSummaryCount summary) : base(value, nextLink, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanModelListResult(IList<BillingSavingsPlanModelData> value, Uri nextLink, SavingsPlanSummaryCount summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Value = value;
+            NextLink = nextLink;
             Summary = summary;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The SavingsPlanModel items on this page. </summary>
+        public IList<BillingSavingsPlanModelData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
 
         /// <summary> The roll out count summary of the savings plans. </summary>
         public SavingsPlanSummaryCount Summary { get; }

@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> An invoice payment. </summary>
     public partial class BillingInvoicePayment
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoicePayment"/>. </summary>
         internal BillingInvoicePayment()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="paymentMethodFamily"> The family of payment method. </param>
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="paymentType"> The type of payment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingInvoicePayment(BillingAmount amount, DateTimeOffset? madeOn, ResourceIdentifier paymentMethodId, PaymentMethodFamily? paymentMethodFamily, string paymentMethodType, string paymentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingInvoicePayment(BillingAmount amount, DateTimeOffset? madeOn, ResourceIdentifier paymentMethodId, PaymentMethodFamily? paymentMethodFamily, string paymentMethodType, string paymentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Amount = amount;
             MadeOn = madeOn;
@@ -67,26 +38,25 @@ namespace Azure.ResourceManager.Billing.Models
             PaymentMethodFamily = paymentMethodFamily;
             PaymentMethodType = paymentMethodType;
             PaymentType = paymentType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The paid amount. </summary>
-        [WirePath("amount")]
         public BillingAmount Amount { get; }
+
         /// <summary> The date when the payment was made. </summary>
-        [WirePath("date")]
         public DateTimeOffset? MadeOn { get; }
+
         /// <summary> The ID that uniquely identifies the payment method used for the invoice. </summary>
-        [WirePath("paymentMethodId")]
         public ResourceIdentifier PaymentMethodId { get; }
+
         /// <summary> The family of payment method. </summary>
-        [WirePath("paymentMethodFamily")]
         public PaymentMethodFamily? PaymentMethodFamily { get; }
+
         /// <summary> The type of payment method. </summary>
-        [WirePath("paymentMethodType")]
         public string PaymentMethodType { get; }
+
         /// <summary> The type of payment. </summary>
-        [WirePath("paymentType")]
         public string PaymentType { get; }
     }
 }

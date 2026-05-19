@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The properties of a document. </summary>
     public partial class InvoiceDocument
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InvoiceDocument"/>. </summary>
         internal InvoiceDocument()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="name"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="uri"> The URL to download the invoice document if the source is internal to Microsoft.Billing. </param>
         /// <param name="source"> The source of the document. ENF for Brazil and DRS for rest of the world. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InvoiceDocument(IReadOnlyList<string> documentNumbers, Uri externalUri, InvoiceDocumentType? kind, string name, Uri uri, BillingDocumentSource? source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InvoiceDocument(IReadOnlyList<string> documentNumbers, Uri externalUri, InvoiceDocumentType? kind, string name, Uri uri, BillingDocumentSource? source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentNumbers = documentNumbers;
             ExternalUri = externalUri;
@@ -67,26 +39,25 @@ namespace Azure.ResourceManager.Billing.Models
             Name = name;
             Uri = uri;
             Source = source;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The document numbers for the invoice document. </summary>
-        [WirePath("documentNumbers")]
         public IReadOnlyList<string> DocumentNumbers { get; }
+
         /// <summary> The URL to download the invoice document if the source is external to Microsoft.Billing. </summary>
-        [WirePath("externalUrl")]
         public Uri ExternalUri { get; }
+
         /// <summary> The type of the document. </summary>
-        [WirePath("kind")]
         public InvoiceDocumentType? Kind { get; }
+
         /// <summary> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The URL to download the invoice document if the source is internal to Microsoft.Billing. </summary>
-        [WirePath("url")]
         public Uri Uri { get; }
+
         /// <summary> The source of the document. ENF for Brazil and DRS for rest of the world. </summary>
-        [WirePath("source")]
         public BillingDocumentSource? Source { get; }
     }
 }

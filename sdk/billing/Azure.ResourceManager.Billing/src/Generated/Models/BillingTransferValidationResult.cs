@@ -13,65 +13,51 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Transfer validation response. </summary>
     public partial class BillingTransferValidationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingTransferValidationResult"/>. </summary>
         internal BillingTransferValidationResult()
         {
-            Results = new ChangeTrackingList<BillingTransferValidationResultProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingTransferValidationResult"/>. </summary>
-        /// <param name="status"> The status of validation. </param>
-        /// <param name="productId"> The product id for which this result applies. </param>
-        /// <param name="results"> The array of validation results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTransferValidationResult(string status, string productId, IReadOnlyList<BillingTransferValidationResultProperties> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of transfer validation response. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingTransferValidationResult(ValidateTransferResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Status = status;
-            ProductId = productId;
-            Results = results;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The properties of transfer validation response. </summary>
+        internal ValidateTransferResponseProperties Properties { get; }
+
         /// <summary> The status of validation. </summary>
-        [WirePath("properties.status")]
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The product id for which this result applies. </summary>
-        [WirePath("properties.productId")]
-        public string ProductId { get; }
+        public string ProductId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductId;
+            }
+        }
+
         /// <summary> The array of validation results. </summary>
-        [WirePath("properties.results")]
-        public IReadOnlyList<BillingTransferValidationResultProperties> Results { get; }
+        public IList<BillingTransferValidationResultProperties> Results
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Results;
+            }
+        }
     }
 }

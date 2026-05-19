@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The properties of payment term. </summary>
     public partial class BillingPaymentTerm
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentTerm"/>. </summary>
         public BillingPaymentTerm()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="startOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
         /// <param name="endOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
         /// <param name="isDefault"> Indicates payment term is the standard payment term. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentTerm(string term, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingPaymentTerm(string term, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Term = term;
             StartOn = startOn;
             EndOn = endOn;
             IsDefault = isDefault;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents duration in netXX format. Always in days. </summary>
-        [WirePath("term")]
         public string Term { get; set; }
+
         /// <summary> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </summary>
-        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; set; }
+
         /// <summary> The date on when the defined 'Payment Term' will end and is always in UTC. </summary>
-        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; set; }
+
         /// <summary> Indicates payment term is the standard payment term. </summary>
-        [WirePath("isDefault")]
         public bool? IsDefault { get; }
     }
 }

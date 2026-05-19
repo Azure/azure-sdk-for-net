@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal class BillingEnrollmentAccountRoleAssignmentOperationSource : IOperationSource<BillingEnrollmentAccountRoleAssignmentResource>
+    /// <summary></summary>
+    internal partial class BillingEnrollmentAccountRoleAssignmentOperationSource : IOperationSource<BillingEnrollmentAccountRoleAssignmentResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal BillingEnrollmentAccountRoleAssignmentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         BillingEnrollmentAccountRoleAssignmentResource IOperationSource<BillingEnrollmentAccountRoleAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            BillingEnrollmentAccountRoleAssignmentData data = BillingEnrollmentAccountRoleAssignmentData.DeserializeBillingEnrollmentAccountRoleAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BillingEnrollmentAccountRoleAssignmentResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<BillingEnrollmentAccountRoleAssignmentResource> IOperationSource<BillingEnrollmentAccountRoleAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
-            return await Task.FromResult(new BillingEnrollmentAccountRoleAssignmentResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            BillingEnrollmentAccountRoleAssignmentData data = BillingEnrollmentAccountRoleAssignmentData.DeserializeBillingEnrollmentAccountRoleAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BillingEnrollmentAccountRoleAssignmentResource(_client, data);
         }
     }
 }

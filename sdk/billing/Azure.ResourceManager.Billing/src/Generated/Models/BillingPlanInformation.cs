@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Information describing the type of billing plan for this savings plan. </summary>
     public partial class BillingPlanInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingPlanInformation"/>. </summary>
-        public BillingPlanInformation()
+        internal BillingPlanInformation()
         {
             Transactions = new ChangeTrackingList<BillingPlanPaymentDetail>();
         }
@@ -56,27 +28,26 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPlanInformation(BillingPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<BillingPlanPaymentDetail> transactions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingPlanInformation(BillingPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<BillingPlanPaymentDetail> transactions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
             StartOn = startOn;
             NextPaymentDueOn = nextPaymentDueOn;
             Transactions = transactions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>
-        [WirePath("pricingCurrencyTotal")]
-        public BillingPrice PricingCurrencyTotal { get; set; }
+        public BillingPrice PricingCurrencyTotal { get; }
+
         /// <summary> Date when the billing plan has started. </summary>
-        [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn { get; }
+
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>
-        [WirePath("nextPaymentDueDate")]
-        public DateTimeOffset? NextPaymentDueOn { get; set; }
-        /// <summary> Gets the transactions. </summary>
-        [WirePath("transactions")]
+        public DateTimeOffset? NextPaymentDueOn { get; }
+
+        /// <summary> Gets the Transactions. </summary>
         public IList<BillingPlanPaymentDetail> Transactions { get; }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Details of the Azure plan. </summary>
     public partial class BillingAzurePlan
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingAzurePlan"/>. </summary>
         public BillingAzurePlan()
@@ -54,23 +25,22 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productId"> The ID that uniquely identifies a product. </param>
         /// <param name="skuId"> The ID that uniquely identifies a sku. </param>
         /// <param name="skuDescription"> The sku description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAzurePlan(string productId, string skuId, string skuDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingAzurePlan(string productId, string skuId, string skuDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProductId = productId;
             SkuId = skuId;
             SkuDescription = skuDescription;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID that uniquely identifies a product. </summary>
-        [WirePath("productId")]
         public string ProductId { get; set; }
+
         /// <summary> The ID that uniquely identifies a sku. </summary>
-        [WirePath("skuId")]
         public string SkuId { get; set; }
+
         /// <summary> The sku description. </summary>
-        [WirePath("skuDescription")]
         public string SkuDescription { get; set; }
     }
 }

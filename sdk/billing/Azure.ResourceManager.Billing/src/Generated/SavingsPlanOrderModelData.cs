@@ -13,163 +13,179 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary>
-    /// A class representing the SavingsPlanOrderModel data model.
-    /// Savings plan order
-    /// </summary>
+    /// <summary> Savings plan order. </summary>
     public partial class SavingsPlanOrderModelData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelData"/>. </summary>
         /// <param name="sku"> Savings plan SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public SavingsPlanOrderModelData(BillingSku sku)
+        internal SavingsPlanOrderModelData(BillingSku sku)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
-
-            Sku = sku;
-            SavingsPlans = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
+            Sku = sku;
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> Savings plan SKU. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <param name="provisioningState"> The provisioning state of the savings plan, e.g. Succeeded. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing SavingsPlan. </param>
-        /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </param>
-        /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
-        /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the savings plan is applied. </param>
-        /// <param name="term"> Represents the Savings plan term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </param>
-        /// <param name="benefitStartOn"> DateTime when the savings plan benefit started. </param>
-        /// <param name="expiryOn"> DateTime when the savings plan will expire. </param>
-        /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
-        /// <param name="savingsPlans"></param>
-        /// <param name="extendedStatusInfo"> Extended status information. </param>
-        /// <param name="productCode"> Represents UPN. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Savings plan order properties. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanOrderModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSku sku, string displayName, string provisioningState, string billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingSavingsPlanTerm? term, BillingPlan? billingPlan, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, BillingPlanInformation planInformation, IList<string> savingsPlans, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="sku"> Savings plan SKU. </param>
+        internal SavingsPlanOrderModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SavingsPlanOrderModelProperties properties, IDictionary<string, string> tags, BillingSku sku) : base(id, name, resourceType, systemData)
         {
-            Sku = sku;
-            DisplayName = displayName;
-            ProvisioningState = provisioningState;
-            BillingScopeId = billingScopeId;
-            BillingProfileId = billingProfileId;
-            CustomerId = customerId;
-            BillingAccountId = billingAccountId;
-            Term = term;
-            BillingPlan = billingPlan;
-            BenefitStartOn = benefitStartOn;
-            ExpiryOn = expiryOn;
-            PlanInformation = planInformation;
-            SavingsPlans = savingsPlans;
-            ExtendedStatusInfo = extendedStatusInfo;
-            ProductCode = productCode;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelData"/> for deserialization. </summary>
-        internal SavingsPlanOrderModelData()
-        {
-        }
+        /// <summary> Savings plan order properties. </summary>
+        internal SavingsPlanOrderModelProperties Properties { get; }
+
+        /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Savings plan SKU. </summary>
-        internal BillingSku Sku { get; set; }
-        /// <summary> Name of the SKU to be applied. </summary>
-        [WirePath("sku.name")]
-        public string SkuName
+        internal BillingSku Sku { get; }
+
+        /// <summary> Display name. </summary>
+        public string DisplayName
         {
-            get => Sku is null ? default : Sku.Name;
-            set
+            get
             {
-                if (Sku is null)
-                    Sku = new BillingSku();
-                Sku.Name = value;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
-        /// <summary> Display name. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
         /// <summary> The provisioning state of the savings plan, e.g. Succeeded. </summary>
-        [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
-        [WirePath("properties.billingScopeId")]
-        public string BillingScopeId { get; set; }
+        public string BillingScopeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScopeId;
+            }
+        }
+
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
-        [WirePath("properties.billingProfileId")]
-        public ResourceIdentifier BillingProfileId { get; }
+        public string BillingProfileId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingProfileId;
+            }
+        }
+
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
-        [WirePath("properties.customerId")]
-        public ResourceIdentifier CustomerId { get; }
+        public string CustomerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerId;
+            }
+        }
+
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. </summary>
-        [WirePath("properties.billingAccountId")]
-        public ResourceIdentifier BillingAccountId { get; }
+        public string BillingAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingAccountId;
+            }
+        }
+
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
-        [WirePath("properties.term")]
-        public BillingSavingsPlanTerm? Term { get; set; }
+        public BillingSavingsPlanTerm? Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+        }
+
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
-        [WirePath("properties.billingPlan")]
-        public BillingPlan? BillingPlan { get; set; }
+        public BillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+        }
+
         /// <summary> DateTime when the savings plan benefit started. </summary>
-        [WirePath("properties.benefitStartTime")]
-        public DateTimeOffset? BenefitStartOn { get; }
+        public DateTimeOffset? BenefitStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitStartOn;
+            }
+        }
+
         /// <summary> DateTime when the savings plan will expire. </summary>
-        [WirePath("properties.expiryDateTime")]
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpiryOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpiryOn;
+            }
+        }
+
         /// <summary> Information describing the type of billing plan for this savings plan. </summary>
-        [WirePath("properties.planInformation")]
-        public BillingPlanInformation PlanInformation { get; set; }
-        /// <summary> Gets the savings plans. </summary>
-        [WirePath("properties.savingsPlans")]
-        public IList<string> SavingsPlans { get; }
+        public BillingPlanInformation PlanInformation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanInformation;
+            }
+        }
+
+        /// <summary> Gets the SavingsPlans. </summary>
+        public IList<string> SavingsPlans
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SavingsPlans;
+            }
+        }
+
         /// <summary> Extended status information. </summary>
-        [WirePath("properties.extendedStatusInfo")]
-        public ExtendedStatusInfo ExtendedStatusInfo { get; }
+        public ExtendedStatusInfo ExtendedStatusInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtendedStatusInfo;
+            }
+        }
+
         /// <summary> Represents UPN. </summary>
-        [WirePath("properties.productCode")]
-        public string ProductCode { get; set; }
-        /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
+        public string ProductCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductCode;
+            }
+        }
+
+        /// <summary> Name of the SKU to be applied. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku.Name;
+            }
+        }
     }
 }
