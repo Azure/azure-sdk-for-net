@@ -13,10 +13,10 @@ using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownCommandProperties : DataMigrationCommandProperties, IJsonModel<DataMigrationCommandProperties>
+    internal partial class UnknownDataMigrationCommandProperties : DataMigrationCommandProperties, IJsonModel<DataMigrationCommandProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownCommandProperties"/> for deserialization. </summary>
-        internal UnknownCommandProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownDataMigrationCommandProperties"/> for deserialization. </summary>
+        internal UnknownDataMigrationCommandProperties()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownCommandProperties DeserializeUnknownCommandProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownDataMigrationCommandProperties DeserializeUnknownDataMigrationCommandProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownCommandProperties(commandType, errors ?? new ChangeTrackingList<DataMigrationODataError>(), state, additionalBinaryDataProperties);
+            return new UnknownDataMigrationCommandProperties(commandType, errors ?? new ChangeTrackingList<DataMigrationODataError>(), state, additionalBinaryDataProperties);
         }
     }
 }

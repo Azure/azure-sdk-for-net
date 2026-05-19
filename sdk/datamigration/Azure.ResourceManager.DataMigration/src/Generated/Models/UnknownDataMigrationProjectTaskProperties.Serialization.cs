@@ -13,10 +13,10 @@ using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownProjectTaskProperties : DataMigrationProjectTaskProperties, IJsonModel<DataMigrationProjectTaskProperties>
+    internal partial class UnknownDataMigrationProjectTaskProperties : DataMigrationProjectTaskProperties, IJsonModel<DataMigrationProjectTaskProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownProjectTaskProperties"/> for deserialization. </summary>
-        internal UnknownProjectTaskProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownDataMigrationProjectTaskProperties"/> for deserialization. </summary>
+        internal UnknownDataMigrationProjectTaskProperties()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownProjectTaskProperties DeserializeUnknownProjectTaskProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownDataMigrationProjectTaskProperties DeserializeUnknownDataMigrationProjectTaskProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownProjectTaskProperties(
+            return new UnknownDataMigrationProjectTaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<DataMigrationODataError>(),
                 state,
