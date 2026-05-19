@@ -5,7 +5,7 @@ metadata:
   version: "1.0.0"
   distribution: shared
 description: "Create and manage release plan work items for Azure SDK releases across languages. **UTILITY SKILL**. USE FOR: \"create release plan\", \"update release plan\", \"link SDK PR to plan\", \"namespace approval\", \"check release plan status\". DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedback. INVOKES: azure-sdk-mcp:azsdk_create_release_plan, azure-sdk-mcp:azsdk_get_release_plan, azure-sdk-mcp:azsdk_link_sdk_pull_request_to_release_plan."
-compatibility: "azure-sdk-mcp server, API spec PR in Azure/azure-rest-api-specs"
+compatibility: "azure-sdk-mcp server, API spec PR, or TypeSpec project path"
 ---
 
 # Prepare Release Plan
@@ -25,8 +25,8 @@ compatibility: "azure-sdk-mcp server, API spec PR in Azure/azure-rest-api-specs"
 
 ## Steps
 
-1. **Prerequisites** — Check for API spec PR; prompt if unavailable.
-2. **Check Existing** — Query by plan number or spec PR link.
+1. **Prerequisites** — Check for API spec PR link or a TypeSpec project path; prompt if unavailable.
+2. **Check Existing** — Query by release plan number or spec PR link (do not query by work item ID).
 3. **Gather Info** — Collect Service Tree IDs, timeline. See [details](references/release-plan-details.md).
 4. **Create** — Run `azure-sdk-mcp:azsdk_create_release_plan`.
 5. **Namespace** — For mgmt plane first releases, link approval issue.
@@ -35,9 +35,10 @@ compatibility: "azure-sdk-mcp server, API spec PR in Azure/azure-rest-api-specs"
 ## Examples
 
 - "Create a release plan for my spec PR"
+- "Create a release plan for my TypeSpec project"
 - "Link my SDK PR to release plan"
 
 ## Troubleshooting
 
 - Requires `azure-sdk-mcp` server; no CLI fallback.
-- If creation fails, verify spec PR URL and Service Tree IDs.
+- If creation fails, verify Service Tree IDs and the provided spec PR URL or TypeSpec project path.
