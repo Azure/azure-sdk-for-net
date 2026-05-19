@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Each <see cref="PublicSharedConfigResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="PublicSharedConfigCollection"/> instance call the GetPublicSharedConfigs method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class PublicSharedConfigCollection : ArmCollection, IEnumerable<PublicSharedConfigResource>, IAsyncEnumerable<PublicSharedConfigResource>
+    public partial class PublicSharedConfigCollection : ArmCollection
     {
         private readonly ClientDiagnostics _publicSharedConfigsClientDiagnostics;
         private readonly PublicSharedConfigs _publicSharedConfigsRestClient;
@@ -151,62 +149,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List a SharedConfig
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/sharedConfigs. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PublicSharedConfigs_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublicSharedConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PublicSharedConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SharedConfigData, PublicSharedConfigResource>(new PublicSharedConfigsGetAllAsyncCollectionResultOfT(_publicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "PublicSharedConfigCollection.GetAll"), data => new PublicSharedConfigResource(Client, data));
-        }
-
-        /// <summary>
-        /// List a SharedConfig
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/sharedConfigs. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PublicSharedConfigs_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublicSharedConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PublicSharedConfigResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SharedConfigData, PublicSharedConfigResource>(new PublicSharedConfigsGetAllCollectionResultOfT(_publicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "PublicSharedConfigCollection.GetAll"), data => new PublicSharedConfigResource(Client, data));
         }
 
         /// <summary>
@@ -443,22 +385,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<PublicSharedConfigResource> IEnumerable<PublicSharedConfigResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PublicSharedConfigResource> IAsyncEnumerable<PublicSharedConfigResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
