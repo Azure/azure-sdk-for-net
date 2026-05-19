@@ -21,8 +21,13 @@ namespace Azure.ResourceManager.AppConfiguration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotData"/>. </summary>
-        public AppConfigurationSnapshotData()
+        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
+        public AppConfigurationSnapshotData(IEnumerable<SnapshotKeyValueFilter> filters)
         {
+            Argument.AssertNotNull(filters, nameof(filters));
+
+            Properties = new SnapshotProperties(filters);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotData"/>. </summary>
