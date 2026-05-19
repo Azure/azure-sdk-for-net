@@ -11,7 +11,7 @@ using Azure;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary>Backward-compatible overloads for GA resource APIs.</summary>
+    // Backward-compatible overloads for GA resource APIs.
     public partial class DatabaseMigrationSqlDBResource
     {
         // Backward-compatible overload that accepts the GA Guid? migration operation id.
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration
             => GetAsync(migrationOperationId?.ToString(), expand, cancellationToken);
     }
 
-    /// <summary>Backward-compatible overloads for GA resource APIs.</summary>
+    // Backward-compatible overloads for GA resource APIs.
     public partial class DatabaseMigrationSqlMIResource
     {
         // Backward-compatible overload that accepts the GA Guid? migration operation id.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration
             => GetAsync(migrationOperationId?.ToString(), expand, cancellationToken);
     }
 
-    /// <summary>Backward-compatible overloads for GA resource APIs.</summary>
+    // Backward-compatible overloads for GA resource APIs.
     public partial class DatabaseMigrationSqlVmResource
     {
         // Backward-compatible overload that accepts the GA Guid? migration operation id.

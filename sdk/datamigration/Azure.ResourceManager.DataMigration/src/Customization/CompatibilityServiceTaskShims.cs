@@ -17,7 +17,7 @@ using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary>Backward-compatible GA alias for service-level tasks.</summary>
+    // Backward-compatible GA alias for service-level tasks.
     public class ServiceServiceTaskResource : DataMigrationServiceTaskResource
     {
         public static new readonly Azure.Core.ResourceType ResourceType = DataMigrationServiceTaskResource.ResourceType;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration
         }
     }
 
-    /// <summary>Backward-compatible GA alias for service-level tasks.</summary>
+    // Backward-compatible GA alias for service-level tasks.
     public class ServiceServiceTaskCollection : DataMigrationServiceTaskCollection, IEnumerable<ServiceServiceTaskResource>, IAsyncEnumerable<ServiceServiceTaskResource>
     {
         protected ServiceServiceTaskCollection()
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataMigration
         }
     }
 
-    /// <summary>Backward-compatible project-task wrapper using the GA type name.</summary>
+    // Backward-compatible project-task wrapper using the GA type name.
     internal sealed class ProjectDataMigrationServiceTaskResourceShim : DataMigrationServiceTaskResource
     {
         private readonly TaskResource _inner;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataMigration
             => _inner.CommandAsync(dataMigrationCommandProperties, cancellationToken);
     }
 
-    /// <summary>Backward-compatible project-task collection wrapper using the GA type name.</summary>
+    // Backward-compatible project-task collection wrapper using the GA type name.
     internal sealed class ProjectDataMigrationServiceTaskCollectionShim : DataMigrationServiceTaskCollection
     {
         private readonly TaskCollection _inner;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataMigration
         }
     }
 
-    /// <summary>Backward-compatible service-task members for GA signatures.</summary>
+    // Backward-compatible service-task members for GA signatures.
     public partial class DataMigrationServiceTaskResource
     {
         // Backward-compatible project-task command API from GA.
@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.DataMigration
             => TaskResource.CreateResourceIdentifier(subscriptionId, groupName, serviceName, projectName, taskName);
     }
 
-    /// <summary>Backward-compatible service-task members for GA signatures.</summary>
+    // Backward-compatible service-task members for GA signatures.
     public partial class DataMigrationServiceTaskCollection
     {
         // Backward-compatible virtual members are overridden by project-task shims when needed.
     }
 
-    /// <summary>Backward-compatible service-task members for GA signatures.</summary>
+    // Backward-compatible service-task members for GA signatures.
     public partial class DataMigrationProjectResource
     {
         // Backward-compatible GA project-task accessor.
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DataMigration
         }
     }
 
-    /// <summary>Backward-compatible service-task members for GA signatures.</summary>
+    // Backward-compatible service-task members for GA signatures.
     public partial class DataMigrationServiceResource
     {
         // Backward-compatible GA alias for service-level tasks.
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataMigration
         }
     }
 
-    /// <summary>Backward-compatible extension members for GA signatures.</summary>
+    // Backward-compatible extension members for GA signatures.
     public static partial class DataMigrationExtensions
     {
         // Backward-compatible GA alias for service-level tasks.
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.DataMigration
 
 namespace Azure.ResourceManager.DataMigration.Mocking
 {
-    /// <summary>Backward-compatible service-task members for GA signatures.</summary>
+    // Backward-compatible service-task members for GA signatures.
     public partial class MockableDataMigrationArmClient
     {
         // Backward-compatible GA alias for service-level tasks.

@@ -8,6 +8,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
+    // Suppress the generated internal parameterless constructors on discriminated abstract base types
+    // and replace them with protected constructors to preserve GA 1.0.0 ApiCompat compatibility.
+    // The TypeSpec generator emits internal ctors by design, but the previous AutoRest-based GA SDK
+    // shipped these as protected, so we must maintain that access level.
     [CodeGenSuppress("ConnectToSourceSqlServerTaskOutput")]
     public abstract partial class ConnectToSourceSqlServerTaskOutput
     {
@@ -128,6 +132,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
     }
 
+    // Backward-compatible convenience property that existed in the GA 1.0.0 API surface.
+    // The generated code exposes Output.Errors, but the old SDK flattened it as OutputErrors.
     public partial class MigrateMISyncCompleteCommandProperties
     {
         public IReadOnlyList<DataMigrationReportableException> OutputErrors => Output is null ? default : (IReadOnlyList<DataMigrationReportableException>)Output.Errors;

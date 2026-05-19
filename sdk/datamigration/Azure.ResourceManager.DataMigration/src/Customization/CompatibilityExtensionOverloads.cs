@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary>Backward-compatible extension members for GA signatures.</summary>
+    // Backward-compatible extension members for GA signatures.
     public static partial class DataMigrationExtensions
     {
         // Backward-compatible overload that preserved the AzureLocation parameter type.
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataMigration
 
 namespace Azure.ResourceManager.DataMigration.Mocking
 {
-    /// <summary>Backward-compatible mockable members for GA signatures.</summary>
+    // Backward-compatible mockable members for GA signatures.
     public partial class MockableDataMigrationSubscriptionResource
     {
         // Backward-compatible overload that preserved the AzureLocation parameter type.
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             => GetUsagesAsync(location.ToString(), cancellationToken);
     }
 
-    /// <summary>Backward-compatible mockable members for GA signatures.</summary>
+    // Backward-compatible mockable members for GA signatures.
     public partial class MockableDataMigrationResourceGroupResource
     {
         // Backward-compatible overload preserving the old SQL DB resource-group shape.

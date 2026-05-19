@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary>Backward-compatible constructors for GA model shapes.</summary>
+    // Backward-compatible constructors for GA model shapes.
     public abstract partial class DataMigrationMongoDBProgress
     {
         // Backward-compatible protected constructor for GA inheritance support.

@@ -12,7 +12,7 @@ using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary>Backward-compatible constructors for GA resource data types.</summary>
+    // Backward-compatible constructors for GA resource data types.
     public partial class DataMigrationProjectData
     {
         // Backward-compatible constructor for the previous TrackedResourceData shape.
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration
         }
     }
 
-    /// <summary>Backward-compatible constructors for GA resource data types.</summary>
+    // Backward-compatible constructors for GA resource data types.
     public partial class DataMigrationServiceData
     {
         // Backward-compatible constructor for the previous TrackedResourceData shape.
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration
         }
     }
 
-    /// <summary>Backward-compatible constructors for GA resource data types.</summary>
+    // Backward-compatible constructors for GA resource data types.
     public partial class SqlMigrationServiceData
     {
         // Backward-compatible constructor for the previous TrackedResourceData shape.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary>Backward-compatible constructor overloads for GA task inputs.</summary>
+    // Backward-compatible constructor overloads for GA task inputs.
     public partial class MigrateSqlServerSqlMITaskInput
     {
         // Backward-compatible constructor that preserved the blob share shape.
