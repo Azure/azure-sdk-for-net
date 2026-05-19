@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added experimental `FileBinaryContent` type for representing a file part within an HTTP request payload, typically as part of a `multipart/form-data` request.
+- Added experimental `MultiPartFormContent` type for building `multipart/form-data` request payloads.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -14,8 +17,6 @@
 
 ### Features Added
 
-- Added experimental `FileBinaryContent` type for representing a file part within an HTTP request payload, typically as part of a `multipart/form-data` request.
-- Added experimental `MultiPartFormContent` type for building `multipart/form-data` request payloads.
 - Added `CredentialSettings.TokenProvider` to hold the resolved `AuthenticationTokenProvider` for the credential.
 
 ### Breaking Changes
