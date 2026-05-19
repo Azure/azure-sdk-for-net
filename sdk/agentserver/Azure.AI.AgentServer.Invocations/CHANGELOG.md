@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Replaced `invoke_agent` SERVER span with baggage-only propagation. W3C trace context propagation is now handled automatically by ASP.NET Core, so handler spans are parented directly under the caller's span.
+- Invocation and session IDs are propagated as Activity baggage for downstream correlation.
 - Unhandled exceptions now include the `x-platform-error-source` header classifying error
   origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
   (developer handler failure) per container-image-spec §8. Platform errors include
