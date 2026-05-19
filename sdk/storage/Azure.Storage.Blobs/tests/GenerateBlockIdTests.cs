@@ -27,13 +27,11 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void GenerateBlockId_UrlEncodedSizeIsWithinLimit()
+        public void GenerateBlockId_LengthIsWithinLimit()
         {
             string blockId = BlobExtensions.GenerateBlockId();
-            string urlEncoded = Uri.EscapeDataString(blockId);
-            Assert.That(
-                System.Text.Encoding.UTF8.GetByteCount(urlEncoded),
-                Is.LessThanOrEqualTo(64));
+            // Azure Storage requires block ID Base64 string to be <= 64 characters
+            Assert.That(blockId.Length, Is.LessThanOrEqualTo(64));
         }
     }
 }
