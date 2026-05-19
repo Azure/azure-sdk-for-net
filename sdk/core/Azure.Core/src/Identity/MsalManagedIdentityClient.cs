@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.KeyAttestation;
 
 namespace Azure.Identity
 {
@@ -20,6 +19,7 @@ namespace Azure.Identity
     {
         private readonly ConcurrentDictionary<(bool EnableCae, bool IsTokenBinding), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
         private bool _isForceRefreshEnabled { get; }
+        private readonly Action<AcquireTokenForManagedIdentityParameterBuilder> _beforeTokenAcquisition;
 
         internal bool IsSupportLoggingEnabled { get; }
         internal Microsoft.Identity.Client.AppConfig.ManagedIdentityId ManagedIdentityId { get; }
@@ -54,6 +54,11 @@ namespace Azure.Identity
 
             Pipeline = clientOptions.Pipeline;
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;
+
+            if (clientOptions.Options is IMsalManagedIdentityInitializerOptions initializerOptions)
+            {
+                _beforeTokenAcquisition = initializerOptions.BeforeTokenAcquisition;
+            }
         }
 
         protected ValueTask<IManagedIdentityApplication> CreateClientAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
@@ -118,8 +123,11 @@ namespace Azure.Identity
 
             if (isTokenBindingAvailable)
             {
-                builder.WithMtlsProofOfPossession().WithAttestationSupport();
+                builder.WithMtlsProofOfPossession();
             }
+
+            _beforeTokenAcquisition?.Invoke(builder);
+
             if (_isForceRefreshEnabled)
             {
                 builder.WithForceRefresh(true);
