@@ -117,12 +117,14 @@ public abstract class InvocationHandler
     /// override this method. Override to opt in to the
     /// <c>invocations_ws</c> protocol.</para>
     /// <para>The library calls <c>AcceptWebSocketAsync</c> for you and emits
-    /// a structured close-event log line plus an OpenTelemetry
-    /// <c>websocket_session</c> span with
+    /// a single structured close-event log line carrying
     /// <c>azure.ai.agentserver.invocations_ws.session_id</c>,
     /// <c>azure.ai.agentserver.invocations_ws.close_code</c>, and
-    /// <c>azure.ai.agentserver.invocations_ws.duration_ms</c> attributes
-    /// after the connection ends.</para>
+    /// <c>azure.ai.agentserver.invocations_ws.duration_ms</c> when the
+    /// connection ends. No framework-level OpenTelemetry span is created;
+    /// ASP.NET Core auto-propagates the inbound W3C trace context to the
+    /// request <see cref="System.Diagnostics.Activity"/>, so any spans you
+    /// start inside the handler are parented correctly.</para>
     /// </remarks>
     public virtual Task HandleWebSocketAsync(
         WebSocket webSocket,

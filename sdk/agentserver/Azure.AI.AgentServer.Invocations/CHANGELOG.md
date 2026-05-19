@@ -1,9 +1,13 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
+- Unhandled exceptions now include the `x-platform-error-source` header classifying error
+  origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
+  (developer handler failure) per container-image-spec §8. Platform errors include
+  `x-platform-error-detail` with diagnostic context.
 - WebSocket protocol support — `InvocationHandler` now exposes a virtual
   `HandleWebSocketAsync(WebSocket, InvocationContext, CancellationToken)`
   method. Handlers that override it serve `/invocations_ws` alongside
@@ -16,27 +20,21 @@
   and uncaught handler exceptions to close code `1011`
   (`InternalServerError`), and preserves handler-initiated close codes
   unchanged.
-- Per-connection observability — emits an OpenTelemetry
-  `websocket_session` span with
-  `azure.ai.agentserver.invocations_ws.session_id`,
+- Per-connection telemetry — a single structured close-event log line
+  carrying `azure.ai.agentserver.invocations_ws.session_id`,
   `azure.ai.agentserver.invocations_ws.close_code`, and
-  `azure.ai.agentserver.invocations_ws.duration_ms` attributes, plus a
-  structured close-event log line carrying the same fields.
+  `azure.ai.agentserver.invocations_ws.duration_ms` (via structured
+  message templates). No framework-level OpenTelemetry span is created
+  for the connection — ASP.NET Core auto-propagates the W3C trace
+  context, so any spans the user handler starts are parented correctly
+  without a per-connection wrapper. Mirrors the Python design in
+  https://github.com/Azure/azure-sdk-for-python/pull/46973.
 - Session ID honours `FOUNDRY_AGENT_SESSION_ID` so HTTP and WebSocket
   transports on the same container report the same session, falling
   back to a fresh UUID when the platform does not inject one.
 - WebSocket Ping/Pong keep-alive is configured via the new
   `WS_KEEPALIVE_INTERVAL` environment variable (see
-  `Azure.AI.AgentServer.Core` 1.0.0-beta.25); disabled by default.
-
-## 1.0.0-beta.4 (2026-05-15)
-
-### Features Added
-
-- Unhandled exceptions now include the `x-platform-error-source` header classifying error
-  origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
-  (developer handler failure) per container-image-spec §8. Platform errors include
-  `x-platform-error-detail` with diagnostic context.
+  `Azure.AI.AgentServer.Core` 1.0.0-beta.24); disabled by default.
 
 ## 1.0.0-beta.3 (2026-04-22)
 

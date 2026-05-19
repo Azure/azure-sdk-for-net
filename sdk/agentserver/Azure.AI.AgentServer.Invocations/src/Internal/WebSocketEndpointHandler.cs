@@ -11,22 +11,30 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 
 /// <summary>
 /// ASP.NET Core endpoint handler that owns the <c>/invocations_ws</c>
-/// WebSocket lifecycle. Mirrors the Python <c>_WSHandlerMixin._ws_endpoint</c>:
-/// accept → dispatch → close-with-mapped-code → structured close-event log
-/// + OpenTelemetry span attributes.
+/// WebSocket lifecycle. Mirrors the Python <c>_WSHandlerMixin._ws_endpoint</c>
+/// after <see href="https://github.com/Azure/azure-sdk-for-python/pull/46973"/>:
+/// accept → dispatch → close-with-mapped-code → structured close-event log line.
 /// </summary>
+/// <remarks>
+/// No framework-level OpenTelemetry span is created for the connection.
+/// ASP.NET Core automatically propagates the inbound W3C trace context to
+/// the request <see cref="Activity"/>, so any spans the user handler starts
+/// inside <c>HandleWebSocketAsync</c> are parented correctly without a
+/// per-connection wrapper span. Telemetry for the connection is delivered
+/// as a single structured close-event log line carrying
+/// <c>azure.ai.agentserver.invocations_ws.session_id</c>,
+/// <c>azure.ai.agentserver.invocations_ws.close_code</c>, and
+/// <c>azure.ai.agentserver.invocations_ws.duration_ms</c>.
+/// </remarks>
 internal sealed class WebSocketEndpointHandler
 {
     private const string SessionIdResponseHeader = PlatformHeaders.SessionId;
 
-    private readonly InvocationsActivitySource _activitySource;
     private readonly ILogger<WebSocketEndpointHandler> _logger;
 
     public WebSocketEndpointHandler(
-        InvocationsActivitySource activitySource,
         ILogger<WebSocketEndpointHandler> logger)
     {
-        _activitySource = activitySource;
         _logger = logger;
     }
 
@@ -76,9 +84,16 @@ internal sealed class WebSocketEndpointHandler
             httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
         }
 
-        // Open the OTel span before accept so any tracecontext header the client
-        // sent parents child spans inside the user handler.
-        using var activity = _activitySource.StartWebSocketSessionActivity(context, httpContext.Request.Headers);
+        // Propagate session/invocation baggage onto the current request Activity
+        // for downstream correlation. ASP.NET Core has already opened the request
+        // Activity by the time we run, so any spans the handler starts will inherit
+        // these baggage entries automatically. No framework-level WS span is created.
+        var currentActivity = Activity.Current;
+        if (currentActivity is not null)
+        {
+            currentActivity.AddBaggage("azure.ai.agentserver.invocation_id", invocationId);
+            currentActivity.AddBaggage("azure.ai.agentserver.session_id", sessionId);
+        }
 
         using var logScope = _logger.BeginScope(new Dictionary<string, object>
         {
@@ -88,7 +103,7 @@ internal sealed class WebSocketEndpointHandler
 
         var startTimestamp = Stopwatch.GetTimestamp();
         var closeCode = InvocationsWebSocketConstants.CloseNormal;
-        Exception? handlerException = null;
+        string? errorCode = null;
         WebSocket? webSocket = null;
 
         try
@@ -103,14 +118,8 @@ internal sealed class WebSocketEndpointHandler
                     acceptEx,
                     "WebSocket accept failed for session {SessionId}",
                     sessionId);
-                RecordWebSocketCloseAttributes(
-                    activity,
-                    sessionId,
-                    InvocationsWebSocketConstants.CloseInternalError,
-                    GetElapsedMilliseconds(startTimestamp),
-                    InvocationsWebSocketConstants.ErrorCodeAcceptFailed,
-                    acceptEx.Message);
-                InvocationsExceptionFilter.RecordException(activity, acceptEx);
+                closeCode = InvocationsWebSocketConstants.CloseInternalError;
+                errorCode = InvocationsWebSocketConstants.ErrorCodeAcceptFailed;
                 throw;
             }
 
@@ -121,36 +130,28 @@ internal sealed class WebSocketEndpointHandler
             catch (OperationCanceledException) when (httpContext.RequestAborted.IsCancellationRequested)
             {
                 // Connection aborted (client disconnect / server shutdown). Treat
-                // as a clean close — the socket is already gone, no exception to
-                // record on the span.
+                // as a clean close — the socket is already gone, so emit a normal
+                // close event and let the caller observe the cancellation.
                 closeCode = InvocationsWebSocketConstants.CloseNormal;
             }
             catch (Exception ex)
             {
+                // Handler exception details flow through this LogError(...) only —
+                // they are deliberately NOT included in the close-event log line
+                // (mirrors Python PR #46973 / test_ws_close_event_log_does_not_leak_exception_message).
                 _logger.LogError(
                     ex,
                     "WebSocket handler raised for session {SessionId}",
                     sessionId);
-                handlerException = ex;
                 closeCode = InvocationsWebSocketConstants.CloseInternalError;
+                errorCode = InvocationsWebSocketConstants.ErrorCodeInternalError;
             }
         }
         finally
         {
             var durationMs = GetElapsedMilliseconds(startTimestamp);
             await CloseSocketAsync(webSocket, closeCode, sessionId);
-            RecordWebSocketCloseAttributes(
-                activity,
-                sessionId,
-                closeCode,
-                durationMs,
-                handlerException is not null ? InvocationsWebSocketConstants.ErrorCodeInternalError : null,
-                handlerException?.Message);
-            if (handlerException is not null)
-            {
-                InvocationsExceptionFilter.RecordException(activity, handlerException);
-            }
-            EmitCloseEventLog(sessionId, closeCode, durationMs);
+            EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode);
         }
     }
 
@@ -198,42 +199,30 @@ internal sealed class WebSocketEndpointHandler
         return (long)Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
     }
 
-    private static void RecordWebSocketCloseAttributes(
-        Activity? activity,
-        string sessionId,
-        int closeCode,
-        long durationMs,
-        string? errorCode,
-        string? errorMessage)
+    private void EmitCloseEventLog(string sessionId, int closeCode, long durationMs, string? errorCode)
     {
-        if (activity is null)
+        // Single structured close-event log line. Dotted field names line up
+        // 1:1 with the keys defined in InvocationsWebSocketConstants so log
+        // <-> trace correlation in OTel logging bridges is trivial. Exception
+        // details (when an error_code is set) are NOT included here; they
+        // flow through LogError(ex, ...) at the call site instead. This matches
+        // the Python contract enforced by test_ws_close_event_log_does_not_leak_exception_message.
+        if (errorCode is null)
         {
-            return;
+            _logger.LogInformation(
+                "invocations_ws connection closed: session_id={SessionId} close_code={CloseCode} duration_ms={DurationMs}",
+                sessionId,
+                closeCode,
+                durationMs);
         }
-
-        activity.SetTag(InvocationsWebSocketConstants.AttrSpanSessionId, sessionId);
-        activity.SetTag(InvocationsWebSocketConstants.AttrSpanCloseCode, closeCode);
-        activity.SetTag(InvocationsWebSocketConstants.AttrSpanDurationMs, durationMs);
-
-        if (!string.IsNullOrEmpty(errorCode))
+        else
         {
-            activity.SetTag(InvocationsWebSocketConstants.AttrSpanErrorCode, errorCode);
+            _logger.LogInformation(
+                "invocations_ws connection closed: session_id={SessionId} close_code={CloseCode} duration_ms={DurationMs} error_code={ErrorCode}",
+                sessionId,
+                closeCode,
+                durationMs,
+                errorCode);
         }
-        if (!string.IsNullOrEmpty(errorMessage))
-        {
-            activity.SetTag(InvocationsWebSocketConstants.AttrSpanErrorMessage, errorMessage);
-        }
-    }
-
-    private void EmitCloseEventLog(string sessionId, int closeCode, long durationMs)
-    {
-        // Match Python's structured close-event line. The dotted attribute names
-        // line up 1:1 with the OTel span attributes so log <-> trace
-        // correlation in OTel logging bridges is trivial.
-        _logger.LogInformation(
-            "invocations_ws connection closed: session_id={SessionId} close_code={CloseCode} duration_ms={DurationMs}",
-            sessionId,
-            closeCode,
-            durationMs);
     }
 }

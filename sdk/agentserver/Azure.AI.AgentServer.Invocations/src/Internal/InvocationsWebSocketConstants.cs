@@ -5,12 +5,14 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 
 /// <summary>
 /// Constants for the <c>invocations_ws</c> (WebSocket) protocol — route,
-/// RFC 6455 close codes, and OpenTelemetry span attribute keys.
+/// RFC 6455 close codes, and structured-log <c>extra</c> field keys.
 /// </summary>
 /// <remarks>
 /// Mirrors the Python <c>InvocationsWSConstants</c> class so the wire
-/// contract (route path, close codes, span attribute names) is identical
-/// across language SDKs.
+/// contract (route path, close codes, structured-log field names) is identical
+/// across language SDKs. The <c>AttrSpan*</c> field names are kept for
+/// cross-language parity; they read as OTel-style attribute keys but are
+/// actually used as <c>extra</c> keys on the close-event log record.
 /// </remarks>
 internal static class InvocationsWebSocketConstants
 {
@@ -23,20 +25,28 @@ internal static class InvocationsWebSocketConstants
     /// <summary>RFC 6455 close code 1011 — handler raised an unhandled exception.</summary>
     public const int CloseInternalError = 1011;
 
-    /// <summary>OTel span attribute carrying the per-connection session ID.</summary>
+    // ----------------------------------------------------------------
+    // Structured-log `extra` keys.
+    //
+    // The library does not create a framework-level OpenTelemetry span
+    // for a WebSocket connection — ASP.NET Core auto-propagates the W3C
+    // trace context, so any spans the user handler starts are parented
+    // correctly without a per-connection wrapper. The keys below are
+    // used as field names on the structured close-event log line emitted
+    // by `WebSocketEndpointHandler.EmitCloseEventLog`.
+    // ----------------------------------------------------------------
+
+    /// <summary>Structured-log field key carrying the per-connection session ID.</summary>
     public const string AttrSpanSessionId = "azure.ai.agentserver.invocations_ws.session_id";
 
-    /// <summary>OTel span attribute carrying the final RFC 6455 close code.</summary>
+    /// <summary>Structured-log field key carrying the final RFC 6455 close code.</summary>
     public const string AttrSpanCloseCode = "azure.ai.agentserver.invocations_ws.close_code";
 
-    /// <summary>OTel span attribute carrying the connection duration in milliseconds.</summary>
+    /// <summary>Structured-log field key carrying the connection duration in milliseconds.</summary>
     public const string AttrSpanDurationMs = "azure.ai.agentserver.invocations_ws.duration_ms";
 
-    /// <summary>OTel span attribute carrying a short error tag.</summary>
+    /// <summary>Structured-log field key carrying a short error tag.</summary>
     public const string AttrSpanErrorCode = "azure.ai.agentserver.invocations_ws.error.code";
-
-    /// <summary>OTel span attribute carrying a human-readable error message.</summary>
-    public const string AttrSpanErrorMessage = "azure.ai.agentserver.invocations_ws.error.message";
 
     /// <summary>Short error tag for the "handler accept failed" path.</summary>
     public const string ErrorCodeAcceptFailed = "accept_failed";
