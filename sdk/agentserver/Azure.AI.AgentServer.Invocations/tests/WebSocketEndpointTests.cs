@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Invocations.Tests;
@@ -279,26 +280,38 @@ public class WebSocketEndpointTests
     }
 
     [Test]
-    public async Task UpgradeResponseIncludes_SessionIdHeader()
+    public async Task CloseEventLog_UsesDottedStructuredFieldNames()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "session-id-on-upgrade");
+        // The close-event log line is documented (in README, CHANGELOG, and the
+        // XML doc on `HandleWebSocketAsync`) as carrying dotted-name structured
+        // fields like `azure.ai.agentserver.invocations_ws.session_id` — those
+        // names are part of the cross-SDK wire contract. Verify the field names
+        // downstream consumers see actually match.
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "log-shape-session");
         FoundryEnvironment.Reload();
 
-        var app = BuildApp(new EchoWebSocketInvocationHandler());
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var app = BuildApp(new EchoWebSocketInvocationHandler(), captured);
         await app.StartAsync();
         try
         {
             var server = app.GetTestServer();
             var wsClient = server.CreateWebSocketClient();
             var uri = new Uri(server.BaseAddress, "invocations_ws");
-
             using var ws = await wsClient.ConnectAsync(uri, CancellationToken.None);
+            await ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "client done", CancellationToken.None);
 
-            // TestServer doesn't expose upgrade response headers via the WebSocket
-            // object, so we don't assert on them directly here. Driver-level checks
-            // live in higher-level integration scenarios. The smoke test is that
-            // the upgrade still succeeds when we set the header from the handler.
-            Assert.That(ws.State, Is.EqualTo(WebSocketState.Open));
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+
+            var keys = closeEvent.StateKeys;
+            Assert.That(keys, Does.Contain("azure.ai.agentserver.invocations_ws.session_id"),
+                $"Structured-log field names must use the documented dotted keys. Got: [{string.Join(", ", keys)}]");
+            Assert.That(keys, Does.Contain("azure.ai.agentserver.invocations_ws.close_code"));
+            Assert.That(keys, Does.Contain("azure.ai.agentserver.invocations_ws.duration_ms"));
+            Assert.That(closeEvent.GetValue("azure.ai.agentserver.invocations_ws.session_id"),
+                Is.EqualTo("log-shape-session"));
+            Assert.That(closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
+                Is.EqualTo(1000));
         }
         finally
         {
@@ -306,12 +319,63 @@ public class WebSocketEndpointTests
         }
     }
 
-    private static WebApplication BuildApp(InvocationHandler handler)
+    [Test]
+    public async Task CloseEventLog_IncludesErrorCodeField_WhenHandlerThrows()
+    {
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var app = BuildApp(new ThrowingWebSocketInvocationHandler(), captured);
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            var wsClient = server.CreateWebSocketClient();
+            var uri = new Uri(server.BaseAddress, "invocations_ws");
+            using var ws = await wsClient.ConnectAsync(uri, CancellationToken.None);
+
+            // Drain the server's close frame, then reciprocate so the server's
+            // `CloseAsync` (which sends a close frame and waits for one back)
+            // unblocks — otherwise the server-side `finally` that emits the
+            // close-event log line never runs within the test's timeout window.
+            var buf = new byte[64];
+            await ws.ReceiveAsync(buf, CancellationToken.None);
+            try
+            {
+                await ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "ack", CancellationToken.None);
+            }
+            catch (WebSocketException)
+            {
+                // Socket may already be torn down; nothing to recover.
+            }
+
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+
+            Assert.That(closeEvent.StateKeys, Does.Contain("azure.ai.agentserver.invocations_ws.error.code"));
+            Assert.That(closeEvent.GetValue("azure.ai.agentserver.invocations_ws.error.code"),
+                Is.EqualTo("internal_error"));
+            Assert.That(closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
+                Is.EqualTo(1011));
+
+            // Handler exception details must NOT appear in the close-event log line.
+            var rendered = closeEvent.RenderedMessage ?? string.Empty;
+            Assert.That(rendered, Does.Not.Contain("boom"),
+                "Handler exception messages must not leak into the structured close-event log line.");
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    private static WebApplication BuildApp(InvocationHandler handler, ILoggerProvider? extraLoggerProvider = null)
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddInvocationsServer();
         builder.Services.AddSingleton<InvocationHandler>(handler);
+        if (extraLoggerProvider is not null)
+        {
+            builder.Logging.AddProvider(extraLoggerProvider);
+        }
 
         var app = builder.Build();
         // UseWebSockets is required for handlers that call AcceptWebSocketAsync.
@@ -320,6 +384,78 @@ public class WebSocketEndpointTests
         app.UseWebSockets();
         app.MapInvocationsServer();
         return app;
+    }
+
+    // ---------- In-memory logger for structured-field verification ----
+
+    private sealed class CapturingLoggerProvider : ILoggerProvider
+    {
+        private readonly System.Collections.Concurrent.ConcurrentQueue<CapturedLogEntry> _entries = new();
+        private readonly TaskCompletionSource<CapturedLogEntry> _matchSignal =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private readonly string _matchSubstring;
+
+        public CapturingLoggerProvider(string matchSubstring)
+        {
+            _matchSubstring = matchSubstring;
+        }
+
+        public ILogger CreateLogger(string categoryName) => new CapturingLogger(categoryName, this);
+
+        internal void Record(CapturedLogEntry entry)
+        {
+            _entries.Enqueue(entry);
+            if ((entry.RenderedMessage ?? string.Empty).Contains(_matchSubstring))
+            {
+                _matchSignal.TrySetResult(entry);
+            }
+        }
+
+        public Task<CapturedLogEntry> WaitForMatchAsync(TimeSpan timeout) =>
+            _matchSignal.Task.WaitAsync(timeout);
+
+        public void Dispose() { }
+    }
+
+    private sealed class CapturingLogger : ILogger
+    {
+        private readonly string _category;
+        private readonly CapturingLoggerProvider _provider;
+
+        public CapturingLogger(string category, CapturingLoggerProvider provider)
+        {
+            _category = category;
+            _provider = provider;
+        }
+
+        public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
+            Func<TState, Exception?, string> formatter)
+        {
+            var rendered = formatter(state, exception);
+            var stateDict = new Dictionary<string, object?>();
+            if (state is IEnumerable<KeyValuePair<string, object?>> pairs)
+            {
+                foreach (var pair in pairs)
+                {
+                    stateDict[pair.Key] = pair.Value;
+                }
+            }
+            _provider.Record(new CapturedLogEntry(_category, logLevel, eventId, rendered, stateDict));
+        }
+    }
+
+    private sealed record CapturedLogEntry(
+        string Category,
+        LogLevel Level,
+        EventId EventId,
+        string? RenderedMessage,
+        IReadOnlyDictionary<string, object?> State)
+    {
+        public IReadOnlyCollection<string> StateKeys => (IReadOnlyCollection<string>)State.Keys;
+        public object? GetValue(string key) => State.TryGetValue(key, out var v) ? v : null;
     }
 
     // ---------- Test handlers -----------------------------------------

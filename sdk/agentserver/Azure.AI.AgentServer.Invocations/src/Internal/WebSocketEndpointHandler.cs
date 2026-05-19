@@ -210,19 +210,36 @@ internal sealed class WebSocketEndpointHandler
         return (long)Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
     }
 
+    // Templates that pin the structured-log field names to the documented
+    // cross-SDK contract keys defined on InvocationsWebSocketConstants.
+    // Concatenation here is a compile-time fold over const strings, so the
+    // template is still a constant for analyzers like CA2254.
+    private const string CloseEventTemplate =
+        "invocations_ws connection closed: session_id={" + InvocationsWebSocketConstants.AttrSpanSessionId +
+        "} close_code={" + InvocationsWebSocketConstants.AttrSpanCloseCode +
+        "} duration_ms={" + InvocationsWebSocketConstants.AttrSpanDurationMs + "}";
+
+    private const string CloseEventTemplateWithError =
+        "invocations_ws connection closed: session_id={" + InvocationsWebSocketConstants.AttrSpanSessionId +
+        "} close_code={" + InvocationsWebSocketConstants.AttrSpanCloseCode +
+        "} duration_ms={" + InvocationsWebSocketConstants.AttrSpanDurationMs +
+        "} error_code={" + InvocationsWebSocketConstants.AttrSpanErrorCode + "}";
+
     private void EmitCloseEventLog(string sessionId, int closeCode, long durationMs, string? errorCode)
     {
-        // Single structured close-event log line. Dotted field names line up
-        // 1:1 with the keys defined in InvocationsWebSocketConstants so log
-        // <-> trace correlation in OTel logging bridges is trivial. Exception
-        // details (when an error_code is set) are NOT included here; they
-        // flow through LogError(ex, ...) at the call site instead, by contract:
-        // application stack traces must never leak into the structured close-event
-        // log line.
+        // Single structured close-event log line. The message-template
+        // placeholder names ARE the structured-log field names downstream
+        // consumers see, so we use the dotted names defined on
+        // InvocationsWebSocketConstants to honour the cross-SDK wire
+        // contract (e.g., `azure.ai.agentserver.invocations_ws.session_id`).
+        // Exception details (when an error_code is set) are NOT included here;
+        // they flow through LogError(ex, ...) at the call site instead, by
+        // contract: application stack traces must never leak into the
+        // structured close-event log line.
         if (errorCode is null)
         {
             _logger.LogInformation(
-                "invocations_ws connection closed: session_id={SessionId} close_code={CloseCode} duration_ms={DurationMs}",
+                CloseEventTemplate,
                 sessionId,
                 closeCode,
                 durationMs);
@@ -230,7 +247,7 @@ internal sealed class WebSocketEndpointHandler
         else
         {
             _logger.LogInformation(
-                "invocations_ws connection closed: session_id={SessionId} close_code={CloseCode} duration_ms={DurationMs} error_code={ErrorCode}",
+                CloseEventTemplateWithError,
                 sessionId,
                 closeCode,
                 durationMs,
