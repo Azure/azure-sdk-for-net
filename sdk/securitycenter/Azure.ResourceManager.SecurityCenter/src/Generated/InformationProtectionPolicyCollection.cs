@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal InformationProtectionPolicyCollection(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal InformationProtectionPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(InformationProtectionPolicyResource.ResourceType, out string informationProtectionPolicyApiVersion);
             _informationProtectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", InformationProtectionPolicyResource.ResourceType.Namespace, Diagnostics);

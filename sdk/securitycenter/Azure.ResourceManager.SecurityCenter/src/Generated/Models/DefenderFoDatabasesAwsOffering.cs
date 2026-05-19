@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Databases AWS offering. </summary>
-    public partial class DefenderFoDatabasesAwsOffering : CloudOffering
+    public partial class DefenderFoDatabasesAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOffering"/>. </summary>
         public DefenderFoDatabasesAwsOffering() : base(OfferingType.DefenderForDatabasesAws)

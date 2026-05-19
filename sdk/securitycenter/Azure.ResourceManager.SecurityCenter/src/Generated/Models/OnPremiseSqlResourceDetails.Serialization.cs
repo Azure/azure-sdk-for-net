@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityCenterResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OnPremiseSqlResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OnPremiseSqlResourceDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OnPremiseSqlResourceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseSqlResourceDetails IPersistableModel<OnPremiseSqlResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OnPremiseSqlResourceDetails)this.PersistableModelCreateCore(data, options);
+        OnPremiseSqlResourceDetails IPersistableModel<OnPremiseSqlResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OnPremiseSqlResourceDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OnPremiseSqlResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IJsonModel<OnPremiseSqlResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseSqlResourceDetails IJsonModel<OnPremiseSqlResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OnPremiseSqlResourceDetails)this.JsonModelCreateCore(ref reader, options);
+        OnPremiseSqlResourceDetails IJsonModel<OnPremiseSqlResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OnPremiseSqlResourceDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityCenterResourceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OnPremiseSqlResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -112,11 +112,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Source? source = default;
-            string id = default;
-            string connectorId = default;
+            Source source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Core.ResourceIdentifier workspaceId = default;
+            ResourceIdentifier workspaceId = default;
             string vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
@@ -126,26 +124,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (prop.NameEquals("source"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     source = new Source(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("connectorId"u8))
-                {
-                    connectorId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("workspaceId"u8))
                 {
-                    workspaceId = new Core.ResourceIdentifier(prop.Value.GetString());
+                    workspaceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vmuuid"u8))
@@ -180,8 +164,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return new OnPremiseSqlResourceDetails(
                 source,
-                id,
-                connectorId,
                 additionalBinaryDataProperties,
                 workspaceId,
                 vmuuid,

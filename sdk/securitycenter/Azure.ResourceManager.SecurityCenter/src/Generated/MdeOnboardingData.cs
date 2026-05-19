@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the MDE configuration or data parameter needed to onboard the machine to MDE. </param>
-        internal MdeOnboardingData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MdeOnboardingDataProperties properties) : base(id, name, resourceType, systemData)
+        internal MdeOnboardingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MdeOnboardingDataProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> Port configurations for the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
-        public JitNetworkAccessPolicyVirtualMachine(Core.ResourceIdentifier id, IEnumerable<JitNetworkAccessPortRule> ports)
+        public JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessPortRule> ports)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(ports, nameof(ports));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="ports"> Port configurations for the virtual machine. </param>
         /// <param name="publicIpAddress"> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessPolicyVirtualMachine(Core.ResourceIdentifier id, IList<JitNetworkAccessPortRule> ports, string publicIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessPortRule> ports, string publicIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Ports = ports;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
-        public Core.ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Port configurations for the virtual machine. </summary>
         public IList<JitNetworkAccessPortRule> Ports { get; }

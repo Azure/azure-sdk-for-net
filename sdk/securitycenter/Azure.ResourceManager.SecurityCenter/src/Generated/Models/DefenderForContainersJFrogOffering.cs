@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Containers for JFrog Artifactory offering. </summary>
-    public partial class DefenderForContainersJFrogOffering : CloudOffering
+    public partial class DefenderForContainersJFrogOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersJFrogOffering"/>. </summary>
         public DefenderForContainersJFrogOffering() : base(OfferingType.DefenderForContainersJFrog)

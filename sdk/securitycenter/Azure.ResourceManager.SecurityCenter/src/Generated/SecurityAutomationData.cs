@@ -15,15 +15,15 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> The security automation resource. </summary>
-    public partial class SecurityAutomationData : ResourceData
+    public partial class SecurityAutomationData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
-        public SecurityAutomationData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public SecurityAutomationData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
@@ -32,29 +32,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Security automation data. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        internal SecurityAutomationData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutomationProperties properties, IDictionary<string, string> tags, string location, string kind, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, AutomationProperties properties, IDictionary<string, string> tags, string kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
             Kind = kind;
             ETag = eTag;
         }
 
         /// <summary> Security automation data. </summary>
         internal AutomationProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
 
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }
@@ -97,42 +89,21 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
-        public IList<AutomationScope> Scopes
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationScope> Scopes
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AutomationProperties();
-                }
-                return Properties.Scopes;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
-        public IList<AutomationSource> Sources
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationSource> Sources
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AutomationProperties();
-                }
-                return Properties.Sources;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </summary>
-        public IList<AutomationAction> Actions
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationAction> Actions
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AutomationProperties();
-                }
-                return Properties.Actions;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

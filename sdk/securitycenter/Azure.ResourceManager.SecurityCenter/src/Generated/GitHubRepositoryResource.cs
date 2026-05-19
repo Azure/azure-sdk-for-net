@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a GitHubRepository along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Core.ResourceIdentifier"/> you can construct a <see cref="GitHubRepositoryResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GitHubRepositoryResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="GitHubOwnerResource"/> using the GetGitHubRepositories method.
     /// </summary>
     public partial class GitHubRepositoryResource : ArmResource
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="GitHubRepositoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GitHubRepositoryResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal GitHubRepositoryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string gitHubRepositoryApiVersion);
             _gitHubReposClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="securityConnectorName"> The securityConnectorName. </param>
         /// <param name="ownerName"> The ownerName. </param>
         /// <param name="repoName"> The repoName. </param>
-        public static Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName, string ownerName, string repoName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName, string ownerName, string repoName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/gitHubOwners/{ownerName}/repos/{repoName}";
-            return new Core.ResourceIdentifier(resourceId);
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
             {

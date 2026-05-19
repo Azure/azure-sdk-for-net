@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AwsOrganizationalData organizationalData = default;
+            AwsOrganizationalInfo organizationalData = default;
             IList<string> regions = default;
             string accountName = default;
             long? scanInterval = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = AwsOrganizationalData.DeserializeAwsOrganizationalData(prop.Value, options);
+                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("regions"u8))

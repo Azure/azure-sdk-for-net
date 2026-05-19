@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     // Generated discriminator subtypes include id and connectorId in their constructor chain, but the generated
     // abstract base constructor omits them. This preserves those generated subtype constructor calls.
-    public abstract partial class ResourceDetails
+    public partial class ResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="ResourceDetails"/>. </summary>
         /// <param name="source"> The source of the resource details. </param>

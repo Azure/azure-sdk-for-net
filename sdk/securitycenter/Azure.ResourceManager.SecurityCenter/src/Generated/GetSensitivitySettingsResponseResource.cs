@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a GetSensitivitySettingsResponse along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Core.ResourceIdentifier"/> you can construct a <see cref="GetSensitivitySettingsResponseResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GetSensitivitySettingsResponseResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetGetSensitivitySettingsResponse method.
     /// </summary>
     public partial class GetSensitivitySettingsResponseResource : ArmResource
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GetSensitivitySettingsResponseResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal GetSensitivitySettingsResponseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string getSensitivitySettingsResponseApiVersion);
             _sensitivitySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
-        public static Core.ResourceIdentifier CreateResourceIdentifier()
+        public static ResourceIdentifier CreateResourceIdentifier()
         {
             string resourceId = $"/providers/Microsoft.Security/sensitivitySettings/current";
-            return new Core.ResourceIdentifier(resourceId);
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
             {

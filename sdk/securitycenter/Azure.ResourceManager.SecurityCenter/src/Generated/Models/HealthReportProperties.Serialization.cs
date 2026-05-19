@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    resourceDetails = Models.ResourceDetails.DeserializeResourceDetails(prop.Value, options);
+                    resourceDetails = ResourceDetails.DeserializeResourceDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("environmentDetails"u8))

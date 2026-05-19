@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describes properties of a task. </summary>
-    internal partial class SecurityTaskProperties
+    public partial class SecurityTaskProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
-        internal SecurityTaskProperties()
+        public SecurityTaskProperties()
         {
         }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComplianceResultData"/>. </summary>
-        internal ComplianceResultData()
+        public ComplianceResultData()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Compliance result data. </param>
-        internal ComplianceResultData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComplianceResultProperties properties) : base(id, name, resourceType, systemData)
+        internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComplianceResultProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,12 +41,9 @@ namespace Azure.ResourceManager.SecurityCenter
         internal ComplianceResultProperties Properties { get; }
 
         /// <summary> The status of the resource regarding a single assessment. </summary>
-        public ResourceStatus? ResourceStatus
+        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus> ResourceStatus
         {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceStatus;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

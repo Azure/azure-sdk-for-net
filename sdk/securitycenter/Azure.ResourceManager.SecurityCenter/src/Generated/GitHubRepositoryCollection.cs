@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _gitHubReposClientDiagnostics;
         private readonly GitHubRepos _gitHubReposRestClient;
-        private readonly ClientDiagnostics _gitHubIssuesClientDiagnostics;
-        private readonly GitHubIssues _gitHubIssuesRestClient;
 
         /// <summary> Initializes a new instance of GitHubRepositoryCollection for mocking. </summary>
         protected GitHubRepositoryCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(GitHubRepositoryResource.ResourceType, out string gitHubRepositoryApiVersion);
             _gitHubReposClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitHubRepositoryResource.ResourceType.Namespace, Diagnostics);
             _gitHubReposRestClient = new GitHubRepos(_gitHubReposClientDiagnostics, Pipeline, Endpoint, gitHubRepositoryApiVersion ?? "2025-11-01-preview");
-            _gitHubIssuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GitHubRepositoryResource.ResourceType.Namespace, Diagnostics);
-            _gitHubIssuesRestClient = new GitHubIssues(_gitHubIssuesClientDiagnostics, Pipeline, Endpoint, gitHubRepositoryApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

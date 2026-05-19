@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.ResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             IList<JitNetworkAccessPortRule> ports = default;
             string publicIpAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = new Core.ResourceIdentifier(prop.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ports"u8))

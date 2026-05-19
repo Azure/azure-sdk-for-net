@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.ResourceIdentifier resourceId = default;
+            ResourceIdentifier resourceId = default;
             string severity = default;
             bool? recommendationsExist = default;
             string networkZones = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    resourceId = new Core.ResourceIdentifier(prop.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("severity"u8))

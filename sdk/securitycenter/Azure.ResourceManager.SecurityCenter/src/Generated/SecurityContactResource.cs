@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a SecurityContact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Core.ResourceIdentifier"/> you can construct a <see cref="SecurityContactResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityContactResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityContacts method.
     /// </summary>
     public partial class SecurityContactResource : ArmResource
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="SecurityContactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecurityContactResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal SecurityContactResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string securityContactApiVersion);
             _securityContactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="securityContactName"> The securityContactName. </param>
-        public static Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, SecurityContactName securityContactName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, SecurityContactName securityContactName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}";
-            return new Core.ResourceIdentifier(resourceId);
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a InformationProtectionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Core.ResourceIdentifier"/> you can construct a <see cref="InformationProtectionPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="InformationProtectionPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetInformationProtectionPolicies method.
     /// </summary>
     public partial class InformationProtectionPolicyResource : ArmResource
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal InformationProtectionPolicyResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal InformationProtectionPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string informationProtectionPolicyApiVersion);
             _informationProtectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="scope"> The scope. </param>
         /// <param name="informationProtectionPolicyName"> The informationProtectionPolicyName. </param>
-        public static Core.ResourceIdentifier CreateResourceIdentifier(string scope, InformationProtectionPolicyName informationProtectionPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, InformationProtectionPolicyName informationProtectionPolicyName)
         {
             string resourceId = $"{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}";
-            return new Core.ResourceIdentifier(resourceId);
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
             {

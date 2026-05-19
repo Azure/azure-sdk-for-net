@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Pricing data. </param>
-        internal SecurityCenterPricingData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PricingProperties properties) : base(id, name, resourceType, systemData)
+        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PricingProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,23 +41,10 @@ namespace Azure.ResourceManager.SecurityCenter
         internal PricingProperties Properties { get; set; }
 
         /// <summary> Indicates whether the Defender plan is enabled on the selected scope. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
-        public PricingTier? PricingTier
+        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier> PricingTier
         {
-            get
-            {
-                return Properties is null ? default : Properties.PricingTier;
-            }
-            set
-            {
-                if (value.HasValue)
-                {
-                    if (Properties is null)
-                    {
-                        Properties = new PricingProperties();
-                    }
-                    Properties.PricingTier = value.Value;
-                }
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. For VirtualMachines plan, available sub plans are 'P1' &amp; 'P2', where for resource level only 'P1' sub plan is supported. </summary>

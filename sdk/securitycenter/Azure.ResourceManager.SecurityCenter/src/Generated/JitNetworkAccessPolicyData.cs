@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="properties"></param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal JitNetworkAccessPolicyData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JitNetworkAccessPolicyProperties properties, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JitNetworkAccessPolicyProperties properties, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -69,16 +69,9 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets the Requests. </summary>
-        public IList<JitNetworkAccessRequest> Requests
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessRequestInfo> Requests
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new JitNetworkAccessPolicyProperties();
-                }
-                return Properties.Requests;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Gets the provisioning state of the Just-in-Time policy. </summary>

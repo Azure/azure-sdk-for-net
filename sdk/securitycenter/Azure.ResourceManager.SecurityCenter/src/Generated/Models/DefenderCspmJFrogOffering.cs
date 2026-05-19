@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM P1 for JFrog Artifactory offering. </summary>
-    public partial class DefenderCspmJFrogOffering : CloudOffering
+    public partial class DefenderCspmJFrogOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderCspmJFrogOffering"/>. </summary>
         public DefenderCspmJFrogOffering() : base(OfferingType.DefenderCspmJFrog)

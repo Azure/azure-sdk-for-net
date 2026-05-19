@@ -15,11 +15,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The IotSecuritySolutionPatch. </summary>
-    public partial class IotSecuritySolutionPatch : TagsResource, IJsonModel<IotSecuritySolutionPatch>
+    public partial class IotSecuritySolutionPatch : SecurityCenterTagsResourceInfo, IJsonModel<IotSecuritySolutionPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TagsResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityCenterTagsResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TagsResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityCenterTagsResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

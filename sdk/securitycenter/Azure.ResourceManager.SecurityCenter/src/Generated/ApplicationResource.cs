@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _applicationClientDiagnostics;
         private readonly Application _applicationRestClient;
-        private readonly ClientDiagnostics _applicationsClientDiagnostics;
-        private readonly Applications _applicationsRestClient;
         private readonly SecurityConnectorApplicationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/applications";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(ResourceType, out string applicationApiVersion);
             _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _applicationRestClient = new Application(_applicationClientDiagnostics, Pipeline, Endpoint, applicationApiVersion ?? "2022-07-01-preview");
-            _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, applicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="vmuuid"/>, <paramref name="sourceComputerId"/>, <paramref name="machineName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        public OnPremiseSqlResourceDetails(Core.ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base("OnPremiseSql", workspaceId, vmuuid, sourceComputerId, machineName)
+        public OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base("OnPremiseSql", workspaceId, vmuuid, sourceComputerId, machineName)
         {
             Argument.AssertNotNull(workspaceId, nameof(workspaceId));
             Argument.AssertNotNull(vmuuid, nameof(vmuuid));
@@ -37,9 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OnPremiseSqlResourceDetails"/>. </summary>
-        /// <param name="source"> The status of the health report. </param>
-        /// <param name="id"> The azure id of the resource. </param>
-        /// <param name="connectorId"> The id of the connector. </param>
+        /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
         /// <param name="vmuuid"> The unique Id of the machine. </param>
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="machineName"> The name of the machine. </param>
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
-        internal OnPremiseSqlResourceDetails(Source? source, string id, string connectorId, IDictionary<string, BinaryData> additionalBinaryDataProperties, Core.ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, id, connectorId, additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
+        internal OnPremiseSqlResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
         {
             ServerName = serverName;
             DatabaseName = databaseName;

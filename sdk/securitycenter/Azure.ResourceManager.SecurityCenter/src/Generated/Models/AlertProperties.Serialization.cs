@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("resourceIdentifiers"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in ResourceIdentifiers)
+                foreach (SecurityAlertResourceIdentifier item in ResourceIdentifiers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Intent? intent = default;
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
-            IReadOnlyList<ResourceIdentifier> resourceIdentifiers = default;
+            IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers = default;
             IReadOnlyList<string> remediationSteps = default;
             string vendorName = default;
             AlertStatus? status = default;
@@ -425,10 +425,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceIdentifier.DeserializeResourceIdentifier(item, options));
+                        array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item, options));
                     }
                     resourceIdentifiers = array;
                     continue;
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 intent,
                 startTimeUtc,
                 endTimeUtc,
-                resourceIdentifiers ?? new ChangeTrackingList<ResourceIdentifier>(),
+                resourceIdentifiers ?? new ChangeTrackingList<SecurityAlertResourceIdentifier>(),
                 remediationSteps ?? new ChangeTrackingList<string>(),
                 vendorName,
                 status,

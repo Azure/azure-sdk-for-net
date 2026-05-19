@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM monitoring for github offering. </summary>
-    public partial class CspmMonitorGithubOffering : CloudOffering
+    public partial class CspmMonitorGithubOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGithubOffering"/>. </summary>
         public CspmMonitorGithubOffering() : base(OfferingType.CspmMonitorGithub)

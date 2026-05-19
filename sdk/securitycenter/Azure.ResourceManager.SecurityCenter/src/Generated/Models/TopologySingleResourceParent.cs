@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="TopologySingleResourceParent"/>. </summary>
         /// <param name="resourceId"> Azure resource id which serves as parent resource in topology view. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopologySingleResourceParent(Core.ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopologySingleResourceParent(ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure resource id which serves as parent resource in topology view. </summary>
-        public Core.ResourceIdentifier ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }

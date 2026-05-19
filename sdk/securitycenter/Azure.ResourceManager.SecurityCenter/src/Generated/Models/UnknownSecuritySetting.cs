@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> the kind of the settings string. </param>
-        internal UnknownSecuritySetting(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingKind kind) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown")
+        internal UnknownSecuritySetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingKind kind) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind != default ? kind : "unknown")
         {
         }
     }

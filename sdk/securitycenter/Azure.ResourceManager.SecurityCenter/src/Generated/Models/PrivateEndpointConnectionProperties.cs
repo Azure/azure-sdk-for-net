@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityCenterPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
-        public Core.ResourceIdentifier PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

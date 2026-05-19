@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a SecurityAutomation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Core.ResourceIdentifier"/> you can construct a <see cref="SecurityAutomationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAutomationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityAutomations method.
     /// </summary>
     public partial class SecurityAutomationResource : ArmResource
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecurityAutomationResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal SecurityAutomationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string securityAutomationApiVersion);
             _automationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
@@ -77,15 +77,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="automationName"> The automationName. </param>
-        public static Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}";
-            return new Core.ResourceIdentifier(resourceId);
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
             {
@@ -419,32 +419,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<AutomationValidationStatus>> ValidateAsync(SecurityAutomationData data, CancellationToken cancellationToken = default)
+        public virtual Task<Response<Models.SecurityAutomationValidationStatus>> ValidateAsync(SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _automationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityAutomationData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AutomationValidationStatus> response = Response.FromValue(AutomationValidationStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary>
@@ -471,32 +448,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<AutomationValidationStatus> Validate(SecurityAutomationData data, CancellationToken cancellationToken = default)
+        public virtual Response<Models.SecurityAutomationValidationStatus> Validate(SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _automationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityAutomationData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AutomationValidationStatus> response = Response.FromValue(AutomationValidationStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

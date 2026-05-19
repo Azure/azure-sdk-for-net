@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents an ATA security solution which sends logs to an OMS workspace. </summary>
-    public partial class AtaExternalSecuritySolution : ExternalSecuritySolutionData
+    public partial class AtaExternalSecuritySolution : ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
-        internal AtaExternalSecuritySolution()
+        public AtaExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.ATA;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal AtaExternalSecuritySolution(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind, location)
+        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind, location)
         {
         }
     }

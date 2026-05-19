@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Azure resource identifier. </summary>
-    public partial class AzureResourceIdentifier : ResourceIdentifier
+    public partial class AzureResourceIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceIdentifier"/>. </summary>
         internal AzureResourceIdentifier() : base(ResourceIdentifierType.AzureResource)
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="type"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureResourceId"> ARM resource identifier for the cloud resource being alerted on. </param>
-        internal AzureResourceIdentifier(ResourceIdentifierType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Core.ResourceIdentifier azureResourceId) : base(@type, additionalBinaryDataProperties)
+        internal AzureResourceIdentifier(ResourceIdentifierType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId) : base(@type, additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
         }
 
         /// <summary> ARM resource identifier for the cloud resource being alerted on. </summary>
-        public Core.ResourceIdentifier AzureResourceId { get; }
+        public ResourceIdentifier AzureResourceId { get; }
     }
 }

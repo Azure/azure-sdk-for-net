@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AWS organization data for the member account. </summary>
-    public partial class AwsOrganizationalDataMember : AwsOrganizationalData, IJsonModel<AwsOrganizationalDataMember>
+    public partial class AwsOrganizationalDataMember : AwsOrganizationalInfo, IJsonModel<AwsOrganizationalDataMember>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AwsOrganizationalData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AwsOrganizationalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalDataMember>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AwsOrganizationalData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AwsOrganizationalInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalDataMember>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("offerings"u8);
                 writer.WriteStartArray();
-                foreach (CloudOffering item in Offerings)
+                foreach (SecurityCenterCloudOffering item in Offerings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string hierarchyIdentifier = default;
             DateTimeOffset? hierarchyIdentifierTrialEndOn = default;
             CloudName? environmentName = default;
-            IList<CloudOffering> offerings = default;
+            IList<SecurityCenterCloudOffering> offerings = default;
             EnvironmentData environmentData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<CloudOffering> array = new List<CloudOffering>();
+                    List<SecurityCenterCloudOffering> array = new List<SecurityCenterCloudOffering>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CloudOffering.DeserializeCloudOffering(item, options));
+                        array.Add(SecurityCenterCloudOffering.DeserializeSecurityCenterCloudOffering(item, options));
                     }
                     offerings = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 hierarchyIdentifier,
                 hierarchyIdentifierTrialEndOn,
                 environmentName,
-                offerings ?? new ChangeTrackingList<CloudOffering>(),
+                offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>(),
                 environmentData,
                 additionalBinaryDataProperties);
         }

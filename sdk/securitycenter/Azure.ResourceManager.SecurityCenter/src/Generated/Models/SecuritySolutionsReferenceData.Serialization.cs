@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionsReferenceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.ResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType? @type = default;
             SystemData systemData = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    id = new Core.ResourceIdentifier(prop.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

@@ -141,11 +141,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 switch (discriminator.GetString())
                 {
                     case "CEF":
-                        return CefExternalSecuritySolution.DeserializeCefExternalSecuritySolution(element, options);
                     case "ATA":
-                        return AtaExternalSecuritySolution.DeserializeAtaExternalSecuritySolution(element, options);
                     case "AAD":
-                        return AadExternalSecuritySolution.DeserializeAadExternalSecuritySolution(element, options);
+                        throw new NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
                 }
             }
             return UnknownExternalSecuritySolution.DeserializeUnknownExternalSecuritySolution(element, options);

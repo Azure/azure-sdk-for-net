@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _securityConnectorApplicationClientDiagnostics;
         private readonly SecurityConnectorApplication _securityConnectorApplicationRestClient;
-        private readonly ClientDiagnostics _securityConnectorApplicationsClientDiagnostics;
-        private readonly SecurityConnectorApplications _securityConnectorApplicationsRestClient;
         private readonly SecurityConnectorApplicationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/applications";
@@ -53,8 +51,6 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(ResourceType, out string securityConnectorApplicationApiVersion);
             _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
-            _securityConnectorApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -62,16 +58,9 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SecurityConnectorApplicationData Data
+        public virtual Azure.ResourceManager.SecurityCenter.SecurityApplicationData Data
         {
-            get
-            {
-                if (!HasData)
-                {
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
-                return _data;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>

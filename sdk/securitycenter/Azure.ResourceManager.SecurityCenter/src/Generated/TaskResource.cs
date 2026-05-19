@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a Task along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Core.ResourceIdentifier"/> you can construct a <see cref="TaskResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TaskResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource"/> using the GetTasks method.
     /// </summary>
     public partial class TaskResource : ArmResource
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="TaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TaskResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal TaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(ResourceType, out string taskApiVersion);
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="ascLocation"> The ascLocation. </param>
         /// <param name="taskName"> The taskName. </param>
-        public static Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation, string taskName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation, string taskName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}";
-            return new Core.ResourceIdentifier(resourceId);
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
             {

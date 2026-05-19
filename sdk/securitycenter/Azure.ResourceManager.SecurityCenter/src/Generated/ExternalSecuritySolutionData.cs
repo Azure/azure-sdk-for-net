@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal ExternalSecuritySolutionData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData)
+        internal ExternalSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

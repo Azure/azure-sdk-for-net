@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDetails"/>. </summary>
-        internal SecureScoreControlDetails()
+        public SecureScoreControlDetails()
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Calculation result data in control level. </param>
-        internal SecureScoreControlDetails(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecureScoreControlScoreDetails properties) : base(id, name, resourceType, systemData)
+        internal SecureScoreControlDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecureScoreControlScoreDetails properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -85,12 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Information about the security control. </summary>
-        public SecureScoreControlDefinitionItem Definition
+        public Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionItem Definition
         {
-            get
-            {
-                return Properties is null ? default : Properties.Definition;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Maximum score available. </summary>

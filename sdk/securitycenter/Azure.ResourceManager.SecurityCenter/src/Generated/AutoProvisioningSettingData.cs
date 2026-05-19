@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Auto provisioning setting data. </param>
-        internal AutoProvisioningSettingData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutoProvisioningSettingProperties properties) : base(id, name, resourceType, systemData)
+        internal AutoProvisioningSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutoProvisioningSettingProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,23 +41,10 @@ namespace Azure.ResourceManager.SecurityCenter
         internal AutoProvisioningSettingProperties Properties { get; set; }
 
         /// <summary> Describes what kind of security agent provisioning action to take. </summary>
-        public AutoProvision? AutoProvision
+        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState> AutoProvision
         {
-            get
-            {
-                return Properties is null ? default : Properties.AutoProvision;
-            }
-            set
-            {
-                if (value.HasValue)
-                {
-                    if (Properties is null)
-                    {
-                        Properties = new AutoProvisioningSettingProperties();
-                    }
-                    Properties.AutoProvision = value.Value;
-                }
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

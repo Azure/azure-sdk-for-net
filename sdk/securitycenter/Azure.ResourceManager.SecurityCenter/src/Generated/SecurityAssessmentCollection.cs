@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecurityAssessmentCollection(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal SecurityAssessmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SecurityAssessmentResource.ResourceType, out string securityAssessmentApiVersion);
             _assessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAssessmentResource.ResourceType.Namespace, Diagnostics);

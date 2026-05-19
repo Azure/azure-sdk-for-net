@@ -11,20 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Details of the Azure resource that was assessed. </summary>
-    public partial class AzureResourceDetails : ResourceDetails
+    public partial class AzureResourceDetails : SecurityCenterResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
-        public AzureResourceDetails()
+        public AzureResourceDetails() : base(Source.Azure)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
-        /// <param name="source"> The status of the health report. </param>
-        /// <param name="id"> The azure id of the resource. </param>
-        /// <param name="connectorId"> The id of the connector. </param>
+        /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureResourceDetails(Source? source, string id, string connectorId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(source, id, connectorId, additionalBinaryDataProperties)
+        /// <param name="id"> Azure resource Id of the assessed resource. </param>
+        internal AzureResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(source, additionalBinaryDataProperties)
         {
+            Id = id;
         }
+
+        /// <summary> Azure resource Id of the assessed resource. </summary>
+        public string Id { get; }
     }
 }

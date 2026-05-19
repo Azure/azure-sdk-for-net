@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a SecurityConnectorGovernanceRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="Core.ResourceIdentifier"/> you can construct a <see cref="SecurityConnectorGovernanceRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityConnectorGovernanceRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetSecurityConnectorGovernanceRules method.
     /// </summary>
     public partial class SecurityConnectorGovernanceRuleResource : ArmResource
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorGovernanceRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecurityConnectorGovernanceRuleResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal SecurityConnectorGovernanceRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string securityConnectorGovernanceRuleApiVersion);
             _governanceRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
@@ -59,30 +59,23 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SecurityConnectorGovernanceRuleData Data
+        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data
         {
-            get
-            {
-                if (!HasData)
-                {
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
-                return _data;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="scope"> The scope. </param>
         /// <param name="ruleId"> The ruleId. </param>
-        public static Core.ResourceIdentifier CreateResourceIdentifier(string scope, string ruleId)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string ruleId)
         {
             string resourceId = $"{scope}/providers/Microsoft.Security/governanceRules/{ruleId}";
-            return new Core.ResourceIdentifier(resourceId);
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
             {

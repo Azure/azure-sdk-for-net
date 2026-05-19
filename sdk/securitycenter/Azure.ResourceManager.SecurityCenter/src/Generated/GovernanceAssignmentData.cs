@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of a governance assignment. </param>
-        internal GovernanceAssignmentData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GovernanceAssignmentProperties properties) : base(id, name, resourceType, systemData)
+        internal GovernanceAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GovernanceAssignmentProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -129,20 +129,10 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </summary>
-        public GovernanceAssignmentAdditionalData AdditionalData
+        public Azure.ResourceManager.SecurityCenter.Models.GovernanceAssignmentAdditionalInfo AdditionalData
         {
-            get
-            {
-                return Properties is null ? default : Properties.AdditionalData;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GovernanceAssignmentProperties();
-                }
-                Properties.AdditionalData = value;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

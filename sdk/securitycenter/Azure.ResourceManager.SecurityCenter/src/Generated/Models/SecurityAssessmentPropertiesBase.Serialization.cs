@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             SecurityAssessmentPropertiesBaseRisk risk = default;
-            ResourceDetails resourceDetails = default;
+            SecurityCenterResourceDetails resourceDetails = default;
             string displayName = default;
             IDictionary<string, string> additionalData = default;
             AssessmentLinks links = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("resourceDetails"u8))
                 {
-                    resourceDetails = Models.ResourceDetails.DeserializeResourceDetails(prop.Value, options);
+                    resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))

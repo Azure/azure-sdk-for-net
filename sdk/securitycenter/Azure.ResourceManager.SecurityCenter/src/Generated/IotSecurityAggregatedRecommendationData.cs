@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationData"/>. </summary>
-        internal IotSecurityAggregatedRecommendationData()
+        public IotSecurityAggregatedRecommendationData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Security Solution data. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal IotSecurityAggregatedRecommendationData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IoTSecurityAggregatedRecommendationProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal IotSecurityAggregatedRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IoTSecurityAggregatedRecommendationProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,12 +47,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Name of the recommendation. </summary>
-        public string RecommendationName
+        public System.String RecommendationName
         {
-            get
-            {
-                return Properties is null ? default : Properties.RecommendationName;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Display name of the recommendation type. </summary>

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> describes security alert properties. </param>
-        internal ResourceGroupSecurityAlertData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertProperties properties) : base(id, name, resourceType, systemData)
+        internal ResourceGroupSecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert. </summary>
-        public IReadOnlyList<Models.ResourceIdentifier> ResourceIdentifiers
+        public IReadOnlyList<SecurityAlertResourceIdentifier> ResourceIdentifiers
         {
             get
             {

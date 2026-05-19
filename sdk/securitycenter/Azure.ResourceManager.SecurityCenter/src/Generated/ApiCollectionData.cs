@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of an API collection. </param>
-        internal ApiCollectionData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiCollectionProperties properties) : base(id, name, resourceType, systemData)
+        internal ApiCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiCollectionProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The resource Id of the resource from where this API collection was discovered. </summary>
-        public Core.ResourceIdentifier DiscoveredVia
+        public ResourceIdentifier DiscoveredVia
         {
             get
             {

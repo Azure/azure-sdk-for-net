@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AWS organization data for the member account. </summary>
-    public partial class AwsOrganizationalDataMember : AwsOrganizationalData
+    public partial class AwsOrganizationalDataMember : AwsOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalDataMember"/>. </summary>
         public AwsOrganizationalDataMember() : base(OrganizationMembershipType.Member)

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPropertiesBase"/>. </summary>
         /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> is null. </exception>
-        public SecurityAssessmentPropertiesBase(ResourceDetails resourceDetails)
+        public SecurityAssessmentPropertiesBase(SecurityCenterResourceDetails resourceDetails)
         {
             Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="metadata"> Describes properties of an assessment metadata. </param>
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentPropertiesBase(SecurityAssessmentPropertiesBaseRisk risk, ResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerData partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityAssessmentPropertiesBase(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerData partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Risk = risk;
             ResourceDetails = resourceDetails;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityAssessmentPropertiesBaseRisk Risk { get; set; }
 
         /// <summary> Details of the resource that was assessed. </summary>
-        public ResourceDetails ResourceDetails { get; set; }
+        public SecurityCenterResourceDetails ResourceDetails { get; set; }
 
         /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName { get; }

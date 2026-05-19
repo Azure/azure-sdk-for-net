@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>
-        internal SecureScoreControlDefinitionItem()
+        public SecureScoreControlDefinitionItem()
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Security Control Definition Properties. </param>
-        internal SecureScoreControlDefinitionItem(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecureScoreControlDefinitionItemProperties properties) : base(id, name, resourceType, systemData)
+        internal SecureScoreControlDefinitionItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecureScoreControlDefinitionItemProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -67,21 +67,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Array of assessments metadata IDs that are included in this security control. </summary>
-        public IReadOnlyList<AzureResourceLink> AssessmentDefinitions
+        public IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> AssessmentDefinitions
         {
-            get
-            {
-                return Properties is null ? default : Properties.AssessmentDefinitions;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public ControlType? SourceType
+        public SecurityControlType? SourceType
         {
-            get
-            {
-                return Properties is null ? default : Properties.SourceType;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

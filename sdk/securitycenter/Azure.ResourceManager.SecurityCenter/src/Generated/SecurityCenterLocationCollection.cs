@@ -28,14 +28,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _locationsClientDiagnostics;
         private readonly Locations _locationsRestClient;
-        private readonly ClientDiagnostics _alertsClientDiagnostics;
-        private readonly Alerts _alertsRestClient;
-        private readonly ClientDiagnostics _operationResultsClientDiagnostics;
-        private readonly OperationResults _operationResultsRestClient;
-        private readonly ClientDiagnostics _operationStatusesClientDiagnostics;
-        private readonly OperationStatuses _operationStatusesRestClient;
-        private readonly ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
-        private readonly SecuritySolutionsReferenceData _securitySolutionsReferenceDataRestClient;
 
         /// <summary> Initializes a new instance of SecurityCenterLocationCollection for mocking. </summary>
         protected SecurityCenterLocationCollection()
@@ -50,14 +42,6 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(SecurityCenterLocationResource.ResourceType, out string securityCenterLocationApiVersion);
             _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
             _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
-            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2022-01-01");
-            _operationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
-            _operationResultsRestClient = new OperationResults(_operationResultsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
-            _operationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
-            _operationStatusesRestClient = new OperationStatuses(_operationStatusesClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
-            _securitySolutionsReferenceDataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterLocationResource.ResourceType.Namespace, Diagnostics);
-            _securitySolutionsReferenceDataRestClient = new SecuritySolutionsReferenceData(_securitySolutionsReferenceDataClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The SecuritySolutionsReferenceData. </summary>
-    public partial class SecuritySolutionsReferenceData
+    public partial class SecuritySolutionsReferenceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySolutionsReferenceData(Core.ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, AzureLocation? location, SecuritySolutionsReferenceDataProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuritySolutionsReferenceData(ResourceIdentifier id, string name, ResourceType? @type, SystemData systemData, AzureLocation? location, SecuritySolutionsReferenceDataProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type ?? default, systemData)
         {
             Id = id;
             Name = name;
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public Core.ResourceIdentifier Id { get; }
+        public new ResourceIdentifier Id { get; }
 
         /// <summary> The name of the resource. </summary>
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
         public ResourceType? Type { get; }
 
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public SystemData SystemData { get; }
+        public new SystemData SystemData { get; }
 
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
@@ -63,66 +63,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal SecuritySolutionsReferenceDataProperties Properties { get; }
 
         /// <summary> The security family of the security solution. </summary>
-        public SecurityFamily SecurityFamily
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityFamily SecurityFamily
         {
-            get
-            {
-                return Properties.SecurityFamily;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The security solutions' vendor name. </summary>
-        public string AlertVendorName
+        public System.String AlertVendorName
         {
-            get
-            {
-                return Properties.AlertVendorName;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The security solutions' package info url. </summary>
-        public string PackageInfoUri
+        public System.Uri PackageInfoUri
         {
-            get
-            {
-                return Properties.PackageInfoUri;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The security solutions' product name. </summary>
-        public string ProductName
+        public System.String ProductName
         {
-            get
-            {
-                return Properties.ProductName;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The security solutions' publisher. </summary>
-        public string Publisher
+        public System.String Publisher
         {
-            get
-            {
-                return Properties.Publisher;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The security solutions' publisher display name. </summary>
-        public string PublisherDisplayName
+        public System.String PublisherDisplayName
         {
-            get
-            {
-                return Properties.PublisherDisplayName;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The security solutions' template. </summary>
-        public string Template
+        public System.String Template
         {
-            get
-            {
-                return Properties.Template;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

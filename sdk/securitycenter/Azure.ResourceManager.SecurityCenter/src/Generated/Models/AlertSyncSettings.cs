@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> the kind of the settings string. </param>
         /// <param name="properties"> Alert sync setting data. </param>
-        internal AlertSyncSettings(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingKind kind, AlertSyncSettingProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
+        internal AlertSyncSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingKind kind, AlertSyncSettingProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
             Properties = properties;
         }

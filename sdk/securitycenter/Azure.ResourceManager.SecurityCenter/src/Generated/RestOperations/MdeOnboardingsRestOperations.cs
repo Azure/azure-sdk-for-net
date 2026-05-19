@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetMdeOnboardingsRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

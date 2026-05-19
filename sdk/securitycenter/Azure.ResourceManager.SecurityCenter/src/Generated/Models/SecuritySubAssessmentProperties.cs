@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
         /// <param name="additionalData"> Details of the sub-assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySubAssessmentProperties(string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? timeGenerated, ResourceDetails resourceDetails, AdditionalData additionalData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuritySubAssessmentProperties(string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? timeGenerated, SecurityCenterResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VulnerabilityId = vulnerabilityId;
             DisplayName = displayName;
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? TimeGenerated { get; }
 
         /// <summary> Details of the resource that was assessed. </summary>
-        public ResourceDetails ResourceDetails { get; }
+        public SecurityCenterResourceDetails ResourceDetails { get; }
 
         /// <summary> Details of the sub-assessment. </summary>
-        public AdditionalData AdditionalData { get; }
+        public SecuritySubAssessmentAdditionalInfo AdditionalData { get; }
     }
 }

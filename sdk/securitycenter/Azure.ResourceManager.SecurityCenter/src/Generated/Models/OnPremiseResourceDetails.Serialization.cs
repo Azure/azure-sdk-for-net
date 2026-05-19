@@ -13,7 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Details of the On Premise resource that was assessed. </summary>
-    public partial class OnPremiseResourceDetails : ResourceDetails, IJsonModel<OnPremiseResourceDetails>
+    public partial class OnPremiseResourceDetails : SecurityCenterResourceDetails, IJsonModel<OnPremiseResourceDetails>
     {
         /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/> for deserialization. </summary>
         internal OnPremiseResourceDetails()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityCenterResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OnPremiseResourceDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OnPremiseResourceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OnPremiseResourceDetails)this.PersistableModelCreateCore(data, options);
+        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OnPremiseResourceDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OnPremiseResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IJsonModel<OnPremiseResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OnPremiseResourceDetails)this.JsonModelCreateCore(ref reader, options);
+        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OnPremiseResourceDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityCenterResourceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -113,6 +113,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
+            }
+            if (element.TryGetProperty("source"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "OnPremiseSql":
+                        return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element, options);
+                }
             }
             return UnknownOnPremiseResourceDetails.DeserializeUnknownOnPremiseResourceDetails(element, options);
         }

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             ProvisioningState? provisioningState = default;
             string displayName = default;
-            Core.ResourceIdentifier discoveredVia = default;
+            ResourceIdentifier discoveredVia = default;
             Uri baseUri = default;
             long? numberOfApiEndpoints = default;
             long? numberOfInactiveApiEndpoints = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    discoveredVia = new Core.ResourceIdentifier(prop.Value.GetString());
+                    discoveredVia = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("baseUrl"u8))

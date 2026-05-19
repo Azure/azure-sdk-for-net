@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="AllowedConnectionsResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AllowedConnectionsResourceCollection(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal AllowedConnectionsResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(AllowedConnectionsResource.ResourceType, out string allowedConnectionsResourceApiVersion);
             _allowedConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AllowedConnectionsResource.ResourceType.Namespace, Diagnostics);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {

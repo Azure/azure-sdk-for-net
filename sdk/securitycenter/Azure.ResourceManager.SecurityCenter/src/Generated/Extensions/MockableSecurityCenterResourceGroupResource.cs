@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private JitNetworkAccessPolicies _jitNetworkAccessPoliciesRestClient;
         private ClientDiagnostics _apiCollectionsClientDiagnostics;
         private APICollections _apiCollectionsRestClient;
-        private ClientDiagnostics _privateLinksClientDiagnostics;
-        private PrivateLinks _privateLinksRestClient;
 
         /// <summary> Initializes a new instance of MockableSecurityCenterResourceGroupResource for mocking. </summary>
         protected MockableSecurityCenterResourceGroupResource()
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Initializes a new instance of <see cref="MockableSecurityCenterResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableSecurityCenterResourceGroupResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal MockableSecurityCenterResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -53,10 +51,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
-
-        private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
 
         /// <summary> Gets a collection of Alerts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
@@ -1143,92 +1137,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetApiCollectionsCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetApiCollections"), data => new ApiCollectionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Checks whether private link exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/privateLinks/{privateLinkName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateLinkResources_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual async Task<Response> HeadAsync(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
-
-            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.Head");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PrivateLinksRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether private link exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/privateLinks/{privateLinkName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateLinkResources_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual Response Head(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
-
-            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.Head");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PrivateLinksRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateLinkName, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

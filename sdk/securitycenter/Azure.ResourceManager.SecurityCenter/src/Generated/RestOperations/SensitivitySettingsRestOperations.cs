@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(RequestContext context)
+        internal HttpMessage CreateGetSensitivitySettingsRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

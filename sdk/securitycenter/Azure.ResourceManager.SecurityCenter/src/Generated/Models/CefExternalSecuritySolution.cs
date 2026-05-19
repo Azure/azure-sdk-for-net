@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a security solution which sends CEF logs to an OMS workspace. </summary>
-    public partial class CefExternalSecuritySolution : ExternalSecuritySolutionData
+    public partial class CefExternalSecuritySolution : ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="CefExternalSecuritySolution"/>. </summary>
-        internal CefExternalSecuritySolution()
+        public CefExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.CEF;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal CefExternalSecuritySolution(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind, location)
+        internal CefExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind, location)
         {
         }
     }

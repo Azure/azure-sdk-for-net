@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a Log Analytics workspace scope identifier. </summary>
-    public partial class LogAnalyticsIdentifier : ResourceIdentifier
+    public partial class LogAnalyticsIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsIdentifier"/>. </summary>
         internal LogAnalyticsIdentifier() : base(ResourceIdentifierType.LogAnalytics)

@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents an AAD identity protection solution which sends logs to an OMS workspace. </summary>
-    public partial class AadExternalSecuritySolution : ExternalSecuritySolutionData
+    public partial class AadExternalSecuritySolution : ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="AadExternalSecuritySolution"/>. </summary>
-        internal AadExternalSecuritySolution()
+        public AadExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.AAD;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal AadExternalSecuritySolution(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind, location)
+        internal AadExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, string location) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind, location)
         {
         }
     }

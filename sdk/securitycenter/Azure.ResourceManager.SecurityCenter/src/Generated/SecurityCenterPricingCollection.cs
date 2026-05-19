@@ -546,12 +546,12 @@ namespace Azure.ResourceManager.SecurityCenter
 
         IEnumerator<SecurityCenterPricingResource> IEnumerable<SecurityCenterPricingResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(null, default).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(null, default).GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>

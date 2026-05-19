@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorProperties"/>. </summary>
         public SecurityConnectorProperties()
         {
-            Offerings = new ChangeTrackingList<CloudOffering>();
+            Offerings = new ChangeTrackingList<SecurityCenterCloudOffering>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="offerings"> A collection of offerings for the security connector. </param>
         /// <param name="environmentData"> The security connector environment data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorProperties(string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, CloudName? environmentName, IList<CloudOffering> offerings, EnvironmentData environmentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityConnectorProperties(string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, CloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, EnvironmentData environmentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HierarchyIdentifier = hierarchyIdentifier;
             HierarchyIdentifierTrialEndOn = hierarchyIdentifierTrialEndOn;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public CloudName? EnvironmentName { get; set; }
 
         /// <summary> A collection of offerings for the security connector. </summary>
-        public IList<CloudOffering> Offerings { get; } = new ChangeTrackingList<CloudOffering>();
+        public IList<SecurityCenterCloudOffering> Offerings { get; } = new ChangeTrackingList<SecurityCenterCloudOffering>();
 
         /// <summary> The security connector environment data. </summary>
         public EnvironmentData EnvironmentData { get; set; }

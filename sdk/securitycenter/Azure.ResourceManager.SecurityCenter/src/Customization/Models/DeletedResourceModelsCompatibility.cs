@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType left, Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType left, Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus left, Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus left, Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity left, Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity left, Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud left, Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud left, Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus left, Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus left, Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RecommendationAction left, Azure.ResourceManager.SecurityCenter.Models.RecommendationAction right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationAction (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationAction(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.RecommendationAction left, Azure.ResourceManager.SecurityCenter.Models.RecommendationAction right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection left, Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection left, Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol left, Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol left, Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState left, Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState left, Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override bool Equals(object obj) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override int GetHashCode() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState (string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState(string value) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState right) { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
         public override string ToString() { throw new System.NotSupportedException("This resource is no longer defined in the current Security service specification."); }
     }

@@ -35,8 +35,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Standards _standardsRestClient;
         private ClientDiagnostics _assignmentsClientDiagnostics;
         private Assignments _assignmentsRestClient;
-        private ClientDiagnostics _apiCollectionsClientDiagnostics;
-        private APICollections _apiCollectionsRestClient;
         private ClientDiagnostics _iotSecuritySolutionClientDiagnostics;
         private IotSecuritySolution _iotSecuritySolutionRestClient;
         private ClientDiagnostics _privateLinksClientDiagnostics;
@@ -47,10 +45,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Topology _topologyRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private Alerts _alertsRestClient;
+        private ClientDiagnostics _mdeOnboardingsClientDiagnostics;
+        private MdeOnboardings _mdeOnboardingsRestClient;
         private ClientDiagnostics _securitySolutionsClientDiagnostics;
         private SecuritySolutions _securitySolutionsRestClient;
         private ClientDiagnostics _tasksClientDiagnostics;
         private Tasks _tasksRestClient;
+        private ClientDiagnostics _apiCollectionsClientDiagnostics;
+        private APICollections _apiCollectionsRestClient;
         private ClientDiagnostics _secureScoreControlsClientDiagnostics;
         private SecureScoreControls _secureScoreControlsRestClient;
         private ClientDiagnostics _secureScoreControlDefinitionsClientDiagnostics;
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Initializes a new instance of <see cref="MockableSecurityCenterSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableSecurityCenterSubscriptionResource(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal MockableSecurityCenterSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -98,10 +100,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private Assignments AssignmentsRestClient => _assignmentsRestClient ??= new Assignments(AssignmentsClientDiagnostics, Pipeline, Endpoint, "2021-08-01-preview");
 
-        private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
-
         private ClientDiagnostics IotSecuritySolutionClientDiagnostics => _iotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private IotSecuritySolution IotSecuritySolutionRestClient => _iotSecuritySolutionRestClient ??= new IotSecuritySolution(IotSecuritySolutionClientDiagnostics, Pipeline, Endpoint, "2019-08-01");
@@ -122,6 +120,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-01-01");
 
+        private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private MdeOnboardings MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardings(MdeOnboardingsClientDiagnostics, Pipeline, Endpoint, "2021-10-01-preview");
+
         private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private SecuritySolutions SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutions(SecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
@@ -129,6 +131,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Tasks TasksRestClient => _tasksRestClient ??= new Tasks(TasksClientDiagnostics, Pipeline, Endpoint, "2015-06-01-preview");
+
+        private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
 
         private ClientDiagnostics SecureScoreControlsClientDiagnostics => _secureScoreControlsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -1351,62 +1357,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
-        /// Gets a list of API collections within a subscription that have been onboarded to Microsoft Defender for APIs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/apiCollections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApiCollections_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-11-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiCollectionResource> GetApiCollectionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetBySubscriptionAsyncCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetApiCollections"), data => new ApiCollectionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of API collections within a subscription that have been onboarded to Microsoft Defender for APIs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/apiCollections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApiCollections_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-11-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiCollectionResource> GetApiCollections(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetBySubscriptionCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetApiCollections"), data => new ApiCollectionResource(Client, data));
-        }
-
-        /// <summary>
         /// Use this method to get the list of IoT Security solutions by subscription.
         /// <list type="bullet">
         /// <item>
@@ -1709,6 +1659,94 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
+        /// The configuration or data needed to onboard the machine to MDE
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MdeOnboardings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MdeOnboardingDataList>> GetMdeOnboardingsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = MdeOnboardingsClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetMdeOnboardings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MdeOnboardingDataList> response = Response.FromValue(MdeOnboardingDataList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The configuration or data needed to onboard the machine to MDE
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MdeOnboardings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MdeOnboardingDataList> GetMdeOnboardings(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = MdeOnboardingsClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetMdeOnboardings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MdeOnboardingDataList> response = Response.FromValue(MdeOnboardingDataList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets a list of discovered Security Solutions for the subscription.
         /// <list type="bullet">
         /// <item>
@@ -1935,6 +1973,62 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
+        /// Gets a list of API collections within a subscription that have been onboarded to Microsoft Defender for APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/apiCollections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiCollections_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-11-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCollectionResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetBySubscriptionAsyncCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetBySubscription"), data => new ApiCollectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of API collections within a subscription that have been onboarded to Microsoft Defender for APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/apiCollections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiCollections_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-11-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiCollectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCollectionResource> GetBySubscription(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetBySubscriptionCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetBySubscription"), data => new ApiCollectionResource(Client, data));
+        }
+
+        /// <summary>
         /// Get all security controls within a scope
         /// <list type="bullet">
         /// <item>
@@ -2011,13 +2105,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecureScoreControlDefinitionItem> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetBySubscriptionAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetBySubscription");
+            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsBySubscriptionAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControlDefinitionsBySubscription");
         }
 
         /// <summary>
@@ -2039,13 +2133,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecureScoreControlDefinitionItem> GetBySubscription(CancellationToken cancellationToken = default)
+        public virtual Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsBySubscription(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetBySubscriptionCollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetBySubscription");
+            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsBySubscriptionCollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControlDefinitionsBySubscription");
         }
 
         /// <summary>

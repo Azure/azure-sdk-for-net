@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterLocationData"/>. </summary>
-        internal SecurityCenterLocationData()
+        public SecurityCenterLocationData()
         {
         }
 
@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Properties { get; }
+        public System.BinaryData Properties
+        {
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+        }
     }
 }

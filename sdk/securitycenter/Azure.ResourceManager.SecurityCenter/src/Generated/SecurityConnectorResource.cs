@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 else
                 {
                     SecurityConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SecurityConnectorData patch = new SecurityConnectorData();
+                    SecurityConnectorData patch = new SecurityConnectorData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 else
                 {
                     SecurityConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SecurityConnectorData patch = new SecurityConnectorData();
+                    SecurityConnectorData patch = new SecurityConnectorData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 else
                 {
                     SecurityConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SecurityConnectorData patch = new SecurityConnectorData();
+                    SecurityConnectorData patch = new SecurityConnectorData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<SecurityConnectorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 else
                 {
                     SecurityConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SecurityConnectorData patch = new SecurityConnectorData();
+                    SecurityConnectorData patch = new SecurityConnectorData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<SecurityConnectorResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 else
                 {
                     SecurityConnectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SecurityConnectorData patch = new SecurityConnectorData();
+                    SecurityConnectorData patch = new SecurityConnectorData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 else
                 {
                     SecurityConnectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SecurityConnectorData patch = new SecurityConnectorData();
+                    SecurityConnectorData patch = new SecurityConnectorData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

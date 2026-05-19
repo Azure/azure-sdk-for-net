@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="numberOfApiEndpointsWithSensitiveDataExposed"> The number of API endpoints in this API collection which are exposing sensitive data in their requests and/or responses. </param>
         /// <param name="sensitivityLabel"> The highest priority sensitivity label from Microsoft Purview in this API collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCollectionProperties(ProvisioningState? provisioningState, string displayName, Core.ResourceIdentifier discoveredVia, Uri baseUri, long? numberOfApiEndpoints, long? numberOfInactiveApiEndpoints, long? numberOfUnauthenticatedApiEndpoints, long? numberOfExternalApiEndpoints, long? numberOfApiEndpointsWithSensitiveDataExposed, string sensitivityLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCollectionProperties(ProvisioningState? provisioningState, string displayName, ResourceIdentifier discoveredVia, Uri baseUri, long? numberOfApiEndpoints, long? numberOfInactiveApiEndpoints, long? numberOfUnauthenticatedApiEndpoints, long? numberOfExternalApiEndpoints, long? numberOfApiEndpointsWithSensitiveDataExposed, string sensitivityLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string DisplayName { get; }
 
         /// <summary> The resource Id of the resource from where this API collection was discovered. </summary>
-        public Core.ResourceIdentifier DiscoveredVia { get; }
+        public ResourceIdentifier DiscoveredVia { get; }
 
         /// <summary> The base URI for this API collection. All endpoints of this API collection extend this base URI. </summary>
         public Uri BaseUri { get; }

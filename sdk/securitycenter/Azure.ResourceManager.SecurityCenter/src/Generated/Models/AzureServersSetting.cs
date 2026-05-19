@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of the server vulnerability assessments setting. </param>
         /// <param name="properties"> The vulnerability assessments setting properties on Azure servers in the defined scope. </param>
-        internal AzureServersSetting(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerVulnerabilityAssessmentsSettingKind kind, ServerVulnerabilityAssessmentsAzureSettingProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
+        internal AzureServersSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerVulnerabilityAssessmentsSettingKind kind, ServerVulnerabilityAssessmentsAzureSettingProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
             Properties = properties;
         }

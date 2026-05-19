@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM (Cloud security posture management) monitoring for gitlab offering. </summary>
-    public partial class CspmMonitorGitLabOffering : CloudOffering
+    public partial class CspmMonitorGitLabOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGitLabOffering"/>. </summary>
         public CspmMonitorGitLabOffering() : base(OfferingType.CspmMonitorGitLab)

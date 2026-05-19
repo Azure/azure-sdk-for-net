@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
-        internal BaselineAdjustedResult()
+        public BaselineAdjustedResult()
         {
             ResultsNotInBaseline = new ChangeTrackingList<IList<string>>();
             ResultsOnlyInBaseline = new ChangeTrackingList<IList<string>>();
@@ -40,10 +40,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Baseline details. </summary>
-        public SqlVulnerabilityAssessmentBaseline Baseline { get; }
+        public Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaseline Baseline
+        {
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+        }
 
         /// <summary> The rule result status. </summary>
-        public SqlVulnerabilityAssessmentScanResultRuleStatus? Status { get; }
+        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus> Status
+        {
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+        }
 
         /// <summary> Results that are not in the baseline. </summary>
         public IList<IList<string>> ResultsNotInBaseline { get; }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="regions"> list of regions to scan. </param>
         /// <param name="accountName"> The AWS account name. </param>
         /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
-        internal AwsEnvironmentData(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AwsOrganizationalData organizationalData, IList<string> regions, string accountName, long? scanInterval) : base(environmentType, additionalBinaryDataProperties)
+        internal AwsEnvironmentData(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AwsOrganizationalInfo organizationalData, IList<string> regions, string accountName, long? scanInterval) : base(environmentType, additionalBinaryDataProperties)
         {
             OrganizationalData = organizationalData;
             Regions = regions;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The AWS account's organizational data. </summary>
-        public AwsOrganizationalData OrganizationalData { get; set; }
+        public AwsOrganizationalInfo OrganizationalData { get; set; }
 
         /// <summary> list of regions to scan. </summary>
         public IList<string> Regions { get; }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The IotSecuritySolutionPatch. </summary>
-    public partial class IotSecuritySolutionPatch : TagsResource
+    public partial class IotSecuritySolutionPatch : SecurityCenterTagsResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionPatch"/>. </summary>
         public IotSecuritySolutionPatch()

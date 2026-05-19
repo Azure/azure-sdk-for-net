@@ -17,7 +17,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents an ATA security solution which sends logs to an OMS workspace. </summary>
-    public partial class AtaExternalSecuritySolution : ExternalSecuritySolutionData, IJsonModel<AtaExternalSecuritySolution>
+    public partial class AtaExternalSecuritySolution : ExternalSecuritySolution, IJsonModel<AtaExternalSecuritySolution>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.ResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    id = new Core.ResourceIdentifier(prop.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

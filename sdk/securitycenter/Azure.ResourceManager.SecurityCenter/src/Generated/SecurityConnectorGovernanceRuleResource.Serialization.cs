@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
         SecurityConnectorGovernanceRuleData IJsonModel<SecurityConnectorGovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecurityConnectorGovernanceRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityConnectorGovernanceRuleData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityConnectorGovernanceRuleData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

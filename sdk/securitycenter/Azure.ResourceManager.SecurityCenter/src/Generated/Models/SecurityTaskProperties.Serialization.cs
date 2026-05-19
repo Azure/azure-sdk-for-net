@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describes properties of a task. </summary>
-    internal partial class SecurityTaskProperties : IJsonModel<SecurityTaskProperties>
+    public partial class SecurityTaskProperties : IJsonModel<SecurityTaskProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

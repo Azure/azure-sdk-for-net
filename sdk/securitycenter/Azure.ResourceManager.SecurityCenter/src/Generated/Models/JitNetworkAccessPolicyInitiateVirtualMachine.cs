@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports to open for the resource with the `id`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
-        public JitNetworkAccessPolicyInitiateVirtualMachine(Core.ResourceIdentifier id, IEnumerable<JitNetworkAccessPolicyInitiatePort> ports)
+        public JitNetworkAccessPolicyInitiateVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessPolicyInitiatePort> ports)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(ports, nameof(ports));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports to open for the resource with the `id`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessPolicyInitiateVirtualMachine(Core.ResourceIdentifier id, IList<JitNetworkAccessPolicyInitiatePort> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitNetworkAccessPolicyInitiateVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessPolicyInitiatePort> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Ports = ports;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
-        public Core.ResourceIdentifier Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The ports to open for the resource with the `id`. </summary>
         public IList<JitNetworkAccessPolicyInitiatePort> Ports { get; }

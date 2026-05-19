@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The kind of the external solution. </summary>
-    internal readonly partial struct ExternalSecuritySolutionKind : IEquatable<ExternalSecuritySolutionKind>
+    public readonly partial struct ExternalSecuritySolutionKind : IEquatable<ExternalSecuritySolutionKind>
     {
         private readonly string _value;
         /// <summary> CEF. </summary>

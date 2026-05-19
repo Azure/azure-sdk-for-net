@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="DefenderForStorageSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DefenderForStorageSettingCollection(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal DefenderForStorageSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DefenderForStorageSettingResource.ResourceType, out string defenderForStorageSettingApiVersion);
             _defenderForStorageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", DefenderForStorageSettingResource.ResourceType.Namespace, Diagnostics);

@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Details of the Azure resource that was assessed. </summary>
-    public partial class AzureResourceDetails : ResourceDetails, IJsonModel<AzureResourceDetails>
+    public partial class AzureResourceDetails : SecurityCenterResourceDetails, IJsonModel<AzureResourceDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityCenterResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureResourceDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureResourceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureResourceDetails IPersistableModel<AzureResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureResourceDetails)this.PersistableModelCreateCore(data, options);
+        AzureResourceDetails IPersistableModel<AzureResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureResourceDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IJsonModel<AzureResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,15 +75,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 throw new FormatException($"The model {nameof(AzureResourceDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureResourceDetails IJsonModel<AzureResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureResourceDetails)this.JsonModelCreateCore(ref reader, options);
+        AzureResourceDetails IJsonModel<AzureResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureResourceDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityCenterResourceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -102,18 +107,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Source? source = default;
-            string id = default;
-            string connectorId = default;
+            Source source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string id = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("source"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     source = new Source(prop.Value.GetString());
                     continue;
                 }
@@ -122,17 +122,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("connectorId"u8))
-                {
-                    connectorId = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureResourceDetails(source, id, connectorId, additionalBinaryDataProperties);
+            return new AzureResourceDetails(source, additionalBinaryDataProperties, id);
         }
     }
 }

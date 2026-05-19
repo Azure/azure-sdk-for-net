@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentData"/>. </summary>
-        internal RegulatoryComplianceAssessmentData()
+        public RegulatoryComplianceAssessmentData()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Regulatory compliance assessment data. </param>
-        internal RegulatoryComplianceAssessmentData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegulatoryComplianceAssessmentProperties properties) : base(id, name, resourceType, systemData)
+        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegulatoryComplianceAssessmentProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -68,12 +68,10 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Aggregative state based on the assessment's scanned resources states. </summary>
-        public SecurityAlertNotificationByRoleState? State
+        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState> State
         {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The given assessment's related resources count with passed state. </summary>

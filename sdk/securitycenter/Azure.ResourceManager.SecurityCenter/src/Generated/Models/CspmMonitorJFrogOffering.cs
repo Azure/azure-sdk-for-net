@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM (Cloud security posture management) monitoring for JFrog Artifactory offering. </summary>
-    public partial class CspmMonitorJFrogOffering : CloudOffering
+    public partial class CspmMonitorJFrogOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorJFrogOffering"/>. </summary>
         public CspmMonitorJFrogOffering() : base(OfferingType.CspmMonitorJFrog)

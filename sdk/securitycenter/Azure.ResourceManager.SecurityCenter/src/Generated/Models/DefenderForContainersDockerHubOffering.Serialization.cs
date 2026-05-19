@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for containers Docker Hub offering configurations. </summary>
-    public partial class DefenderForContainersDockerHubOffering : CloudOffering, IJsonModel<DefenderForContainersDockerHubOffering>
+    public partial class DefenderForContainersDockerHubOffering : SecurityCenterCloudOffering, IJsonModel<DefenderForContainersDockerHubOffering>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CloudOffering PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityCenterCloudOffering PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersDockerHubOffering>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CloudOffering JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityCenterCloudOffering JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersDockerHubOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

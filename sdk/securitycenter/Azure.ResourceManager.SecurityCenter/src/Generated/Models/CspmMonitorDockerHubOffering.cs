@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM (Cloud security posture management) monitoring for Docker Hub offering. </summary>
-    public partial class CspmMonitorDockerHubOffering : CloudOffering
+    public partial class CspmMonitorDockerHubOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorDockerHubOffering"/>. </summary>
         public CspmMonitorDockerHubOffering() : base(OfferingType.CspmMonitorDockerHub)

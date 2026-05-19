@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string displayName = default;
-            Core.ResourceIdentifier policyDefinitionId = default;
+            ResourceIdentifier policyDefinitionId = default;
             string description = default;
             string remediationDescription = default;
             IList<SecurityAssessmentResourceCategory> categories = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    policyDefinitionId = new Core.ResourceIdentifier(prop.Value.GetString());
+                    policyDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

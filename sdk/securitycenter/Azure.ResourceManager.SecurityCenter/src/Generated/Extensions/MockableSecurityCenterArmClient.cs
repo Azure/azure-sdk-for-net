@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSecurityCenterArmClient : ArmResource
     {
+        private ClientDiagnostics _serverVulnerabilityAssessmentClientDiagnostics;
+        private ServerVulnerabilityAssessment _serverVulnerabilityAssessmentRestClient;
         private ClientDiagnostics _subAssessmentsClientDiagnostics;
         private SubAssessments _subAssessmentsRestClient;
 
@@ -31,9 +33,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Initializes a new instance of <see cref="MockableSecurityCenterArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableSecurityCenterArmClient(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal MockableSecurityCenterArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ServerVulnerabilityAssessmentClientDiagnostics => _serverVulnerabilityAssessmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ServerVulnerabilityAssessment ServerVulnerabilityAssessmentRestClient => _serverVulnerabilityAssessmentRestClient ??= new ServerVulnerabilityAssessment(ServerVulnerabilityAssessmentClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SubAssessmentsClientDiagnostics => _subAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -42,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityAlertsSuppressionRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource"/> object. </returns>
-        public virtual SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(Core.ResourceIdentifier id)
+        public virtual SecurityAlertsSuppressionRuleResource GetSecurityAlertsSuppressionRuleResource(ResourceIdentifier id)
         {
             SecurityAlertsSuppressionRuleResource.ValidateResourceId(id);
             return new SecurityAlertsSuppressionRuleResource(Client, id);
@@ -51,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityConnectorApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityConnectorApplicationResource"/> object. </returns>
-        public virtual SecurityConnectorApplicationResource GetSecurityConnectorApplicationResource(Core.ResourceIdentifier id)
+        public virtual SecurityConnectorApplicationResource GetSecurityConnectorApplicationResource(ResourceIdentifier id)
         {
             SecurityConnectorApplicationResource.ValidateResourceId(id);
             return new SecurityConnectorApplicationResource(Client, id);
@@ -60,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SecurityConnectorApplicationCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SecurityConnectorApplicationResource"/> objects. </returns>
-        public virtual SecurityConnectorApplicationCollection GetSecurityConnectorApplications(Core.ResourceIdentifier scope)
+        public virtual SecurityConnectorApplicationCollection GetSecurityConnectorApplications(ResourceIdentifier scope)
         {
             return new SecurityConnectorApplicationCollection(Client, scope);
         }
@@ -72,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityConnectorApplicationResource> GetSecurityConnectorApplication(Core.ResourceIdentifier scope, string applicationId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityConnectorApplicationResource> GetSecurityConnectorApplication(ResourceIdentifier scope, string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityConnectorApplicationResource>> GetSecurityConnectorApplicationAsync(Core.ResourceIdentifier scope, string applicationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityConnectorApplicationResource>> GetSecurityConnectorApplicationAsync(ResourceIdentifier scope, string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -96,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityAutomationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityAutomationResource"/> object. </returns>
-        public virtual SecurityAutomationResource GetSecurityAutomationResource(Core.ResourceIdentifier id)
+        public virtual SecurityAutomationResource GetSecurityAutomationResource(ResourceIdentifier id)
         {
             SecurityAutomationResource.ValidateResourceId(id);
             return new SecurityAutomationResource(Client, id);
@@ -105,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityContactResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityContactResource"/> object. </returns>
-        public virtual SecurityContactResource GetSecurityContactResource(Core.ResourceIdentifier id)
+        public virtual SecurityContactResource GetSecurityContactResource(ResourceIdentifier id)
         {
             SecurityContactResource.ValidateResourceId(id);
             return new SecurityContactResource(Client, id);
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ComplianceResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ComplianceResultResource"/> object. </returns>
-        public virtual ComplianceResultResource GetComplianceResultResource(Core.ResourceIdentifier id)
+        public virtual ComplianceResultResource GetComplianceResultResource(ResourceIdentifier id)
         {
             ComplianceResultResource.ValidateResourceId(id);
             return new ComplianceResultResource(Client, id);
@@ -123,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="ComplianceResultCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="ComplianceResultResource"/> objects. </returns>
-        public virtual ComplianceResultCollection GetComplianceResults(Core.ResourceIdentifier scope)
+        public virtual ComplianceResultCollection GetComplianceResults(ResourceIdentifier scope)
         {
             return new ComplianceResultCollection(Client, scope);
         }
@@ -135,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ComplianceResultResource> GetComplianceResult(Core.ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
+        public virtual Response<ComplianceResultResource> GetComplianceResult(ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(Core.ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComplianceResultResource>> GetComplianceResultAsync(ResourceIdentifier scope, string complianceResultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="GovernanceAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GovernanceAssignmentResource"/> object. </returns>
-        public virtual GovernanceAssignmentResource GetGovernanceAssignmentResource(Core.ResourceIdentifier id)
+        public virtual GovernanceAssignmentResource GetGovernanceAssignmentResource(ResourceIdentifier id)
         {
             GovernanceAssignmentResource.ValidateResourceId(id);
             return new GovernanceAssignmentResource(Client, id);
@@ -168,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="GovernanceAssignmentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="GovernanceAssignmentResource"/> objects. </returns>
-        public virtual GovernanceAssignmentCollection GetGovernanceAssignments(Core.ResourceIdentifier scope)
+        public virtual GovernanceAssignmentCollection GetGovernanceAssignments(ResourceIdentifier scope)
         {
             return new GovernanceAssignmentCollection(Client, scope);
         }
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GovernanceAssignmentResource> GetGovernanceAssignment(Core.ResourceIdentifier scope, string assignmentKey, CancellationToken cancellationToken = default)
+        public virtual Response<GovernanceAssignmentResource> GetGovernanceAssignment(ResourceIdentifier scope, string assignmentKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
@@ -194,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GovernanceAssignmentResource>> GetGovernanceAssignmentAsync(Core.ResourceIdentifier scope, string assignmentKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GovernanceAssignmentResource>> GetGovernanceAssignmentAsync(ResourceIdentifier scope, string assignmentKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
 
@@ -204,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityConnectorGovernanceRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityConnectorGovernanceRuleResource"/> object. </returns>
-        public virtual SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(Core.ResourceIdentifier id)
+        public virtual SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(ResourceIdentifier id)
         {
             SecurityConnectorGovernanceRuleResource.ValidateResourceId(id);
             return new SecurityConnectorGovernanceRuleResource(Client, id);
@@ -213,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SecurityConnectorGovernanceRuleCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SecurityConnectorGovernanceRuleResource"/> objects. </returns>
-        public virtual SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules(Core.ResourceIdentifier scope)
+        public virtual SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules(ResourceIdentifier scope)
         {
             return new SecurityConnectorGovernanceRuleCollection(Client, scope);
         }
@@ -225,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(Core.ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
@@ -239,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(Core.ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
@@ -249,7 +255,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="HealthReportResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HealthReportResource"/> object. </returns>
-        public virtual HealthReportResource GetHealthReportResource(Core.ResourceIdentifier id)
+        public virtual HealthReportResource GetHealthReportResource(ResourceIdentifier id)
         {
             HealthReportResource.ValidateResourceId(id);
             return new HealthReportResource(Client, id);
@@ -258,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="HealthReportCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="HealthReportResource"/> objects. </returns>
-        public virtual HealthReportCollection GetHealthReports(Core.ResourceIdentifier scope)
+        public virtual HealthReportCollection GetHealthReports(ResourceIdentifier scope)
         {
             return new HealthReportCollection(Client, scope);
         }
@@ -270,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HealthReportResource> GetHealthReport(Core.ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthReportResource> GetHealthReport(ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
@@ -284,7 +290,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="healthReportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HealthReportResource>> GetHealthReportAsync(Core.ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthReportResource>> GetHealthReportAsync(ResourceIdentifier scope, string healthReportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="DeviceSecurityGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceSecurityGroupResource"/> object. </returns>
-        public virtual DeviceSecurityGroupResource GetDeviceSecurityGroupResource(Core.ResourceIdentifier id)
+        public virtual DeviceSecurityGroupResource GetDeviceSecurityGroupResource(ResourceIdentifier id)
         {
             DeviceSecurityGroupResource.ValidateResourceId(id);
             return new DeviceSecurityGroupResource(Client, id);
@@ -303,7 +309,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="DeviceSecurityGroupCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="DeviceSecurityGroupResource"/> objects. </returns>
-        public virtual DeviceSecurityGroupCollection GetDeviceSecurityGroups(Core.ResourceIdentifier scope)
+        public virtual DeviceSecurityGroupCollection GetDeviceSecurityGroups(ResourceIdentifier scope)
         {
             return new DeviceSecurityGroupCollection(Client, scope);
         }
@@ -315,7 +321,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(Core.ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceSecurityGroupResource> GetDeviceSecurityGroup(ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
 
@@ -329,7 +335,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(Core.ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceSecurityGroupResource>> GetDeviceSecurityGroupAsync(ResourceIdentifier scope, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
 
@@ -339,7 +345,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AutoProvisioningSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AutoProvisioningSettingResource"/> object. </returns>
-        public virtual AutoProvisioningSettingResource GetAutoProvisioningSettingResource(Core.ResourceIdentifier id)
+        public virtual AutoProvisioningSettingResource GetAutoProvisioningSettingResource(ResourceIdentifier id)
         {
             AutoProvisioningSettingResource.ValidateResourceId(id);
             return new AutoProvisioningSettingResource(Client, id);
@@ -348,7 +354,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityComplianceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityComplianceResource"/> object. </returns>
-        public virtual SecurityComplianceResource GetSecurityComplianceResource(Core.ResourceIdentifier id)
+        public virtual SecurityComplianceResource GetSecurityComplianceResource(ResourceIdentifier id)
         {
             SecurityComplianceResource.ValidateResourceId(id);
             return new SecurityComplianceResource(Client, id);
@@ -357,7 +363,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SecurityComplianceCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SecurityComplianceResource"/> objects. </returns>
-        public virtual SecurityComplianceCollection GetSecurityCompliances(Core.ResourceIdentifier scope)
+        public virtual SecurityComplianceCollection GetSecurityCompliances(ResourceIdentifier scope)
         {
             return new SecurityComplianceCollection(Client, scope);
         }
@@ -369,7 +375,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityComplianceResource> GetSecurityCompliance(Core.ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityComplianceResource> GetSecurityCompliance(ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
@@ -383,7 +389,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(Core.ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityComplianceResource>> GetSecurityComplianceAsync(ResourceIdentifier scope, string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
@@ -393,7 +399,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="InformationProtectionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InformationProtectionPolicyResource"/> object. </returns>
-        public virtual InformationProtectionPolicyResource GetInformationProtectionPolicyResource(Core.ResourceIdentifier id)
+        public virtual InformationProtectionPolicyResource GetInformationProtectionPolicyResource(ResourceIdentifier id)
         {
             InformationProtectionPolicyResource.ValidateResourceId(id);
             return new InformationProtectionPolicyResource(Client, id);
@@ -402,7 +408,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="InformationProtectionPolicyCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="InformationProtectionPolicyResource"/> objects. </returns>
-        public virtual InformationProtectionPolicyCollection GetInformationProtectionPolicies(Core.ResourceIdentifier scope)
+        public virtual InformationProtectionPolicyCollection GetInformationProtectionPolicies(ResourceIdentifier scope)
         {
             return new InformationProtectionPolicyCollection(Client, scope);
         }
@@ -412,7 +418,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<InformationProtectionPolicyResource> GetInformationProtectionPolicy(Core.ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<InformationProtectionPolicyResource> GetInformationProtectionPolicy(ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, CancellationToken cancellationToken = default)
         {
             return GetInformationProtectionPolicies(scope).Get(informationProtectionPolicyName, cancellationToken);
         }
@@ -422,7 +428,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InformationProtectionPolicyResource>> GetInformationProtectionPolicyAsync(Core.ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InformationProtectionPolicyResource>> GetInformationProtectionPolicyAsync(ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetInformationProtectionPolicies(scope).GetAsync(informationProtectionPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -430,7 +436,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityWorkspaceSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityWorkspaceSettingResource"/> object. </returns>
-        public virtual SecurityWorkspaceSettingResource GetSecurityWorkspaceSettingResource(Core.ResourceIdentifier id)
+        public virtual SecurityWorkspaceSettingResource GetSecurityWorkspaceSettingResource(ResourceIdentifier id)
         {
             SecurityWorkspaceSettingResource.ValidateResourceId(id);
             return new SecurityWorkspaceSettingResource(Client, id);
@@ -439,7 +445,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="MdeOnboardingDataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MdeOnboardingDataResource"/> object. </returns>
-        public virtual MdeOnboardingDataResource GetMdeOnboardingDataResource(Core.ResourceIdentifier id)
+        public virtual MdeOnboardingDataResource GetMdeOnboardingDataResource(ResourceIdentifier id)
         {
             MdeOnboardingDataResource.ValidateResourceId(id);
             return new MdeOnboardingDataResource(Client, id);
@@ -448,7 +454,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityCenterPricingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityCenterPricingResource"/> object. </returns>
-        public virtual SecurityCenterPricingResource GetSecurityCenterPricingResource(Core.ResourceIdentifier id)
+        public virtual SecurityCenterPricingResource GetSecurityCenterPricingResource(ResourceIdentifier id)
         {
             SecurityCenterPricingResource.ValidateResourceId(id);
             return new SecurityCenterPricingResource(Client, id);
@@ -457,7 +463,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SecurityCenterPricingCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SecurityCenterPricingResource"/> objects. </returns>
-        public virtual SecurityCenterPricingCollection GetSecurityCenterPricings(Core.ResourceIdentifier scope)
+        public virtual SecurityCenterPricingCollection GetSecurityCenterPricings(ResourceIdentifier scope)
         {
             return new SecurityCenterPricingCollection(Client, scope);
         }
@@ -469,7 +475,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityCenterPricingResource> GetSecurityCenterPricing(Core.ResourceIdentifier scope, string pricingName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterPricingResource> GetSecurityCenterPricing(ResourceIdentifier scope, string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
@@ -483,7 +489,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(Core.ResourceIdentifier scope, string pricingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(ResourceIdentifier scope, string pricingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
@@ -493,7 +499,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="PrivateLinkGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkGroupResource"/> object. </returns>
-        public virtual PrivateLinkGroupResource GetPrivateLinkGroupResource(Core.ResourceIdentifier id)
+        public virtual PrivateLinkGroupResource GetPrivateLinkGroupResource(ResourceIdentifier id)
         {
             PrivateLinkGroupResource.ValidateResourceId(id);
             return new PrivateLinkGroupResource(Client, id);
@@ -502,7 +508,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(Core.ResourceIdentifier id)
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             PrivateEndpointConnectionResource.ValidateResourceId(id);
             return new PrivateEndpointConnectionResource(Client, id);
@@ -511,7 +517,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="RegulatoryComplianceStandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RegulatoryComplianceStandardResource"/> object. </returns>
-        public virtual RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(Core.ResourceIdentifier id)
+        public virtual RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(ResourceIdentifier id)
         {
             RegulatoryComplianceStandardResource.ValidateResourceId(id);
             return new RegulatoryComplianceStandardResource(Client, id);
@@ -520,7 +526,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="RegulatoryComplianceControlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RegulatoryComplianceControlResource"/> object. </returns>
-        public virtual RegulatoryComplianceControlResource GetRegulatoryComplianceControlResource(Core.ResourceIdentifier id)
+        public virtual RegulatoryComplianceControlResource GetRegulatoryComplianceControlResource(ResourceIdentifier id)
         {
             RegulatoryComplianceControlResource.ValidateResourceId(id);
             return new RegulatoryComplianceControlResource(Client, id);
@@ -529,7 +535,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="RegulatoryComplianceAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RegulatoryComplianceAssessmentResource"/> object. </returns>
-        public virtual RegulatoryComplianceAssessmentResource GetRegulatoryComplianceAssessmentResource(Core.ResourceIdentifier id)
+        public virtual RegulatoryComplianceAssessmentResource GetRegulatoryComplianceAssessmentResource(ResourceIdentifier id)
         {
             RegulatoryComplianceAssessmentResource.ValidateResourceId(id);
             return new RegulatoryComplianceAssessmentResource(Client, id);
@@ -538,7 +544,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityConnectorResource"/> object. </returns>
-        public virtual SecurityConnectorResource GetSecurityConnectorResource(Core.ResourceIdentifier id)
+        public virtual SecurityConnectorResource GetSecurityConnectorResource(ResourceIdentifier id)
         {
             SecurityConnectorResource.ValidateResourceId(id);
             return new SecurityConnectorResource(Client, id);
@@ -547,7 +553,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AzureDevOpsOrgResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureDevOpsOrgResource"/> object. </returns>
-        public virtual AzureDevOpsOrgResource GetAzureDevOpsOrgResource(Core.ResourceIdentifier id)
+        public virtual AzureDevOpsOrgResource GetAzureDevOpsOrgResource(ResourceIdentifier id)
         {
             AzureDevOpsOrgResource.ValidateResourceId(id);
             return new AzureDevOpsOrgResource(Client, id);
@@ -556,7 +562,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="GitHubOwnerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GitHubOwnerResource"/> object. </returns>
-        public virtual GitHubOwnerResource GetGitHubOwnerResource(Core.ResourceIdentifier id)
+        public virtual GitHubOwnerResource GetGitHubOwnerResource(ResourceIdentifier id)
         {
             GitHubOwnerResource.ValidateResourceId(id);
             return new GitHubOwnerResource(Client, id);
@@ -565,7 +571,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="GitLabGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GitLabGroupResource"/> object. </returns>
-        public virtual GitLabGroupResource GetGitLabGroupResource(Core.ResourceIdentifier id)
+        public virtual GitLabGroupResource GetGitLabGroupResource(ResourceIdentifier id)
         {
             GitLabGroupResource.ValidateResourceId(id);
             return new GitLabGroupResource(Client, id);
@@ -574,7 +580,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="DevOpsConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DevOpsConfigurationResource"/> object. </returns>
-        public virtual DevOpsConfigurationResource GetDevOpsConfigurationResource(Core.ResourceIdentifier id)
+        public virtual DevOpsConfigurationResource GetDevOpsConfigurationResource(ResourceIdentifier id)
         {
             DevOpsConfigurationResource.ValidateResourceId(id);
             return new DevOpsConfigurationResource(Client, id);
@@ -583,7 +589,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AzureDevOpsProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureDevOpsProjectResource"/> object. </returns>
-        public virtual AzureDevOpsProjectResource GetAzureDevOpsProjectResource(Core.ResourceIdentifier id)
+        public virtual AzureDevOpsProjectResource GetAzureDevOpsProjectResource(ResourceIdentifier id)
         {
             AzureDevOpsProjectResource.ValidateResourceId(id);
             return new AzureDevOpsProjectResource(Client, id);
@@ -592,7 +598,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="GitLabProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GitLabProjectResource"/> object. </returns>
-        public virtual GitLabProjectResource GetGitLabProjectResource(Core.ResourceIdentifier id)
+        public virtual GitLabProjectResource GetGitLabProjectResource(ResourceIdentifier id)
         {
             GitLabProjectResource.ValidateResourceId(id);
             return new GitLabProjectResource(Client, id);
@@ -601,7 +607,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityOperatorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityOperatorResource"/> object. </returns>
-        public virtual SecurityOperatorResource GetSecurityOperatorResource(Core.ResourceIdentifier id)
+        public virtual SecurityOperatorResource GetSecurityOperatorResource(ResourceIdentifier id)
         {
             SecurityOperatorResource.ValidateResourceId(id);
             return new SecurityOperatorResource(Client, id);
@@ -610,7 +616,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="DiscoveredSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiscoveredSecuritySolutionResource"/> object. </returns>
-        public virtual DiscoveredSecuritySolutionResource GetDiscoveredSecuritySolutionResource(Core.ResourceIdentifier id)
+        public virtual DiscoveredSecuritySolutionResource GetDiscoveredSecuritySolutionResource(ResourceIdentifier id)
         {
             DiscoveredSecuritySolutionResource.ValidateResourceId(id);
             return new DiscoveredSecuritySolutionResource(Client, id);
@@ -619,7 +625,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ExternalSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExternalSecuritySolutionResource"/> object. </returns>
-        public virtual ExternalSecuritySolutionResource GetExternalSecuritySolutionResource(Core.ResourceIdentifier id)
+        public virtual ExternalSecuritySolutionResource GetExternalSecuritySolutionResource(ResourceIdentifier id)
         {
             ExternalSecuritySolutionResource.ValidateResourceId(id);
             return new ExternalSecuritySolutionResource(Client, id);
@@ -628,7 +634,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="JitNetworkAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource"/> object. </returns>
-        public virtual JitNetworkAccessPolicyResource GetJitNetworkAccessPolicyResource(Core.ResourceIdentifier id)
+        public virtual JitNetworkAccessPolicyResource GetJitNetworkAccessPolicyResource(ResourceIdentifier id)
         {
             JitNetworkAccessPolicyResource.ValidateResourceId(id);
             return new JitNetworkAccessPolicyResource(Client, id);
@@ -637,7 +643,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecuritySolutionResource"/> object. </returns>
-        public virtual SecuritySolutionResource GetSecuritySolutionResource(Core.ResourceIdentifier id)
+        public virtual SecuritySolutionResource GetSecuritySolutionResource(ResourceIdentifier id)
         {
             SecuritySolutionResource.ValidateResourceId(id);
             return new SecuritySolutionResource(Client, id);
@@ -646,7 +652,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityStandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityStandardResource"/> object. </returns>
-        public virtual SecurityStandardResource GetSecurityStandardResource(Core.ResourceIdentifier id)
+        public virtual SecurityStandardResource GetSecurityStandardResource(ResourceIdentifier id)
         {
             SecurityStandardResource.ValidateResourceId(id);
             return new SecurityStandardResource(Client, id);
@@ -655,7 +661,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SecurityStandardCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SecurityStandardResource"/> objects. </returns>
-        public virtual SecurityStandardCollection GetSecurityStandards(Core.ResourceIdentifier scope)
+        public virtual SecurityStandardCollection GetSecurityStandards(ResourceIdentifier scope)
         {
             return new SecurityStandardCollection(Client, scope);
         }
@@ -667,7 +673,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityStandardResource> GetSecurityStandard(Core.ResourceIdentifier scope, string standardId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityStandardResource> GetSecurityStandard(ResourceIdentifier scope, string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
@@ -681,7 +687,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityStandardResource>> GetSecurityStandardAsync(Core.ResourceIdentifier scope, string standardId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityStandardResource>> GetSecurityStandardAsync(ResourceIdentifier scope, string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
@@ -691,7 +697,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="StandardAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StandardAssignmentResource"/> object. </returns>
-        public virtual StandardAssignmentResource GetStandardAssignmentResource(Core.ResourceIdentifier id)
+        public virtual StandardAssignmentResource GetStandardAssignmentResource(ResourceIdentifier id)
         {
             StandardAssignmentResource.ValidateResourceId(id);
             return new StandardAssignmentResource(Client, id);
@@ -700,7 +706,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="StandardAssignmentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="StandardAssignmentResource"/> objects. </returns>
-        public virtual StandardAssignmentCollection GetStandardAssignments(Core.ResourceIdentifier scope)
+        public virtual StandardAssignmentCollection GetStandardAssignments(ResourceIdentifier scope)
         {
             return new StandardAssignmentCollection(Client, scope);
         }
@@ -712,7 +718,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standardAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StandardAssignmentResource> GetStandardAssignment(Core.ResourceIdentifier scope, string standardAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<StandardAssignmentResource> GetStandardAssignment(ResourceIdentifier scope, string standardAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardAssignmentName, nameof(standardAssignmentName));
 
@@ -726,7 +732,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standardAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StandardAssignmentResource>> GetStandardAssignmentAsync(Core.ResourceIdentifier scope, string standardAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StandardAssignmentResource>> GetStandardAssignmentAsync(ResourceIdentifier scope, string standardAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardAssignmentName, nameof(standardAssignmentName));
 
@@ -736,7 +742,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="CustomRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CustomRecommendationResource"/> object. </returns>
-        public virtual CustomRecommendationResource GetCustomRecommendationResource(Core.ResourceIdentifier id)
+        public virtual CustomRecommendationResource GetCustomRecommendationResource(ResourceIdentifier id)
         {
             CustomRecommendationResource.ValidateResourceId(id);
             return new CustomRecommendationResource(Client, id);
@@ -745,7 +751,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="CustomRecommendationCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="CustomRecommendationResource"/> objects. </returns>
-        public virtual CustomRecommendationCollection GetCustomRecommendations(Core.ResourceIdentifier scope)
+        public virtual CustomRecommendationCollection GetCustomRecommendations(ResourceIdentifier scope)
         {
             return new CustomRecommendationCollection(Client, scope);
         }
@@ -757,7 +763,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customRecommendationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomRecommendationResource> GetCustomRecommendation(Core.ResourceIdentifier scope, string customRecommendationName, CancellationToken cancellationToken = default)
+        public virtual Response<CustomRecommendationResource> GetCustomRecommendation(ResourceIdentifier scope, string customRecommendationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customRecommendationName, nameof(customRecommendationName));
 
@@ -771,7 +777,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customRecommendationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomRecommendationResource>> GetCustomRecommendationAsync(Core.ResourceIdentifier scope, string customRecommendationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomRecommendationResource>> GetCustomRecommendationAsync(ResourceIdentifier scope, string customRecommendationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customRecommendationName, nameof(customRecommendationName));
 
@@ -781,7 +787,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentsSettingResource"/> object. </returns>
-        public virtual ServerVulnerabilityAssessmentsSettingResource GetServerVulnerabilityAssessmentsSettingResource(Core.ResourceIdentifier id)
+        public virtual ServerVulnerabilityAssessmentsSettingResource GetServerVulnerabilityAssessmentsSettingResource(ResourceIdentifier id)
         {
             ServerVulnerabilityAssessmentsSettingResource.ValidateResourceId(id);
             return new ServerVulnerabilityAssessmentsSettingResource(Client, id);
@@ -790,7 +796,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecuritySettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecuritySettingResource"/> object. </returns>
-        public virtual SecuritySettingResource GetSecuritySettingResource(Core.ResourceIdentifier id)
+        public virtual SecuritySettingResource GetSecuritySettingResource(ResourceIdentifier id)
         {
             SecuritySettingResource.ValidateResourceId(id);
             return new SecuritySettingResource(Client, id);
@@ -799,7 +805,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(Core.ResourceIdentifier id)
+        public virtual SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(ResourceIdentifier id)
         {
             SqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
             return new SqlVulnerabilityAssessmentBaselineRuleResource(Client, id);
@@ -808,7 +814,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SqlVulnerabilityAssessmentBaselineRuleCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/> objects. </returns>
-        public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(Core.ResourceIdentifier scope)
+        public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier scope)
         {
             return new SqlVulnerabilityAssessmentBaselineRuleCollection(Client, scope);
         }
@@ -821,7 +827,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(Core.ResourceIdentifier scope, string ruleId, string databaseName = default, CancellationToken cancellationToken = default)
+        public virtual Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(ResourceIdentifier scope, string ruleId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
@@ -836,7 +842,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(Core.ResourceIdentifier scope, string ruleId, string databaseName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(ResourceIdentifier scope, string ruleId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
@@ -846,7 +852,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ScanResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScanResultResource"/> object. </returns>
-        public virtual ScanResultResource GetScanResultResource(Core.ResourceIdentifier id)
+        public virtual ScanResultResource GetScanResultResource(ResourceIdentifier id)
         {
             ScanResultResource.ValidateResourceId(id);
             return new ScanResultResource(Client, id);
@@ -855,7 +861,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="ScanResultCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="ScanResultResource"/> objects. </returns>
-        public virtual ScanResultCollection GetScanResults(Core.ResourceIdentifier scope)
+        public virtual ScanResultCollection GetScanResults(ResourceIdentifier scope)
         {
             return new ScanResultCollection(Client, scope);
         }
@@ -868,7 +874,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ScanResultResource> GetScanResult(Core.ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        public virtual Response<ScanResultResource> GetScanResult(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
 
@@ -883,7 +889,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScanResultResource>> GetScanResultAsync(Core.ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScanResultResource>> GetScanResultAsync(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
 
@@ -893,7 +899,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="StandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StandardResource"/> object. </returns>
-        public virtual StandardResource GetStandardResource(Core.ResourceIdentifier id)
+        public virtual StandardResource GetStandardResource(ResourceIdentifier id)
         {
             StandardResource.ValidateResourceId(id);
             return new StandardResource(Client, id);
@@ -902,7 +908,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AssignmentResource"/> object. </returns>
-        public virtual AssignmentResource GetAssignmentResource(Core.ResourceIdentifier id)
+        public virtual AssignmentResource GetAssignmentResource(ResourceIdentifier id)
         {
             AssignmentResource.ValidateResourceId(id);
             return new AssignmentResource(Client, id);
@@ -911,7 +917,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ApiCollectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCollectionResource"/> object. </returns>
-        public virtual ApiCollectionResource GetApiCollectionResource(Core.ResourceIdentifier id)
+        public virtual ApiCollectionResource GetApiCollectionResource(ResourceIdentifier id)
         {
             ApiCollectionResource.ValidateResourceId(id);
             return new ApiCollectionResource(Client, id);
@@ -920,7 +926,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="ApiCollectionCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="ApiCollectionResource"/> objects. </returns>
-        public virtual ApiCollectionCollection GetApiCollections(Core.ResourceIdentifier scope)
+        public virtual ApiCollectionCollection GetApiCollections(ResourceIdentifier scope)
         {
             return new ApiCollectionCollection(Client, scope);
         }
@@ -932,7 +938,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiCollectionResource> GetApiCollection(Core.ResourceIdentifier scope, string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiCollectionResource> GetApiCollection(ResourceIdentifier scope, string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -946,7 +952,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiCollectionResource>> GetApiCollectionAsync(Core.ResourceIdentifier scope, string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiCollectionResource>> GetApiCollectionAsync(ResourceIdentifier scope, string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -956,7 +962,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public virtual ApplicationResource GetApplicationResource(Core.ResourceIdentifier id)
+        public virtual ApplicationResource GetApplicationResource(ResourceIdentifier id)
         {
             ApplicationResource.ValidateResourceId(id);
             return new ApplicationResource(Client, id);
@@ -965,7 +971,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityAssessmentResource"/> object. </returns>
-        public virtual SecurityAssessmentResource GetSecurityAssessmentResource(Core.ResourceIdentifier id)
+        public virtual SecurityAssessmentResource GetSecurityAssessmentResource(ResourceIdentifier id)
         {
             SecurityAssessmentResource.ValidateResourceId(id);
             return new SecurityAssessmentResource(Client, id);
@@ -974,7 +980,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SecurityAssessmentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SecurityAssessmentResource"/> objects. </returns>
-        public virtual SecurityAssessmentCollection GetSecurityAssessments(Core.ResourceIdentifier scope)
+        public virtual SecurityAssessmentCollection GetSecurityAssessments(ResourceIdentifier scope)
         {
             return new SecurityAssessmentCollection(Client, scope);
         }
@@ -987,7 +993,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityAssessmentResource> GetSecurityAssessment(Core.ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityAssessmentResource> GetSecurityAssessment(ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
@@ -1002,7 +1008,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(Core.ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
@@ -1012,7 +1018,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
-        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(Core.ResourceIdentifier id)
+        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(ResourceIdentifier id)
         {
             AdvancedThreatProtectionSettingResource.ValidateResourceId(id);
             return new AdvancedThreatProtectionSettingResource(Client, id);
@@ -1021,7 +1027,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
-        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(Core.ResourceIdentifier scope)
+        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(ResourceIdentifier scope)
         {
             return new AdvancedThreatProtectionSettingResource(Client, scope.AppendProviderResource("Microsoft.Security", "advancedThreatProtectionSettings", "default"));
         }
@@ -1029,7 +1035,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="DefenderForStorageSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DefenderForStorageSettingResource"/> object. </returns>
-        public virtual DefenderForStorageSettingResource GetDefenderForStorageSettingResource(Core.ResourceIdentifier id)
+        public virtual DefenderForStorageSettingResource GetDefenderForStorageSettingResource(ResourceIdentifier id)
         {
             DefenderForStorageSettingResource.ValidateResourceId(id);
             return new DefenderForStorageSettingResource(Client, id);
@@ -1038,7 +1044,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="DefenderForStorageSettingCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="DefenderForStorageSettingResource"/> objects. </returns>
-        public virtual DefenderForStorageSettingCollection GetDefenderForStorageSettings(Core.ResourceIdentifier scope)
+        public virtual DefenderForStorageSettingCollection GetDefenderForStorageSettings(ResourceIdentifier scope)
         {
             return new DefenderForStorageSettingCollection(Client, scope);
         }
@@ -1048,7 +1054,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(Core.ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
+        public virtual Response<DefenderForStorageSettingResource> GetDefenderForStorageSetting(ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
         {
             return GetDefenderForStorageSettings(scope).Get(settingName, cancellationToken);
         }
@@ -1058,7 +1064,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="settingName"> The defender for storage setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(Core.ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefenderForStorageSettingResource>> GetDefenderForStorageSettingAsync(ResourceIdentifier scope, SettingName settingName, CancellationToken cancellationToken = default)
         {
             return await GetDefenderForStorageSettings(scope).GetAsync(settingName, cancellationToken).ConfigureAwait(false);
         }
@@ -1066,7 +1072,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> object. </returns>
-        public virtual IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(Core.ResourceIdentifier id)
+        public virtual IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
         {
             IoTSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
             return new IoTSecuritySolutionAnalyticsModelResource(Client, id);
@@ -1075,7 +1081,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="IotSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotSecuritySolutionResource"/> object. </returns>
-        public virtual IotSecuritySolutionResource GetIotSecuritySolutionResource(Core.ResourceIdentifier id)
+        public virtual IotSecuritySolutionResource GetIotSecuritySolutionResource(ResourceIdentifier id)
         {
             IotSecuritySolutionResource.ValidateResourceId(id);
             return new IotSecuritySolutionResource(Client, id);
@@ -1084,7 +1090,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="IotSecurityAggregatedAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotSecurityAggregatedAlertResource"/> object. </returns>
-        public virtual IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(Core.ResourceIdentifier id)
+        public virtual IotSecurityAggregatedAlertResource GetIotSecurityAggregatedAlertResource(ResourceIdentifier id)
         {
             IotSecurityAggregatedAlertResource.ValidateResourceId(id);
             return new IotSecurityAggregatedAlertResource(Client, id);
@@ -1093,7 +1099,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="IotSecurityAggregatedRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IotSecurityAggregatedRecommendationResource"/> object. </returns>
-        public virtual IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(Core.ResourceIdentifier id)
+        public virtual IotSecurityAggregatedRecommendationResource GetIotSecurityAggregatedRecommendationResource(ResourceIdentifier id)
         {
             IotSecurityAggregatedRecommendationResource.ValidateResourceId(id);
             return new IotSecurityAggregatedRecommendationResource(Client, id);
@@ -1102,7 +1108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecurityCenterLocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityCenterLocationResource"/> object. </returns>
-        public virtual SecurityCenterLocationResource GetSecurityCenterLocationResource(Core.ResourceIdentifier id)
+        public virtual SecurityCenterLocationResource GetSecurityCenterLocationResource(ResourceIdentifier id)
         {
             SecurityCenterLocationResource.ValidateResourceId(id);
             return new SecurityCenterLocationResource(Client, id);
@@ -1111,7 +1117,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(Core.ResourceIdentifier id)
+        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
         {
             PrivateLinkResource.ValidateResourceId(id);
             return new PrivateLinkResource(Client, id);
@@ -1120,7 +1126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecureScoreResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecureScoreResource"/> object. </returns>
-        public virtual SecureScoreResource GetSecureScoreResource(Core.ResourceIdentifier id)
+        public virtual SecureScoreResource GetSecureScoreResource(ResourceIdentifier id)
         {
             SecureScoreResource.ValidateResourceId(id);
             return new SecureScoreResource(Client, id);
@@ -1129,7 +1135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AzureDevOpsRepositoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureDevOpsRepositoryResource"/> object. </returns>
-        public virtual AzureDevOpsRepositoryResource GetAzureDevOpsRepositoryResource(Core.ResourceIdentifier id)
+        public virtual AzureDevOpsRepositoryResource GetAzureDevOpsRepositoryResource(ResourceIdentifier id)
         {
             AzureDevOpsRepositoryResource.ValidateResourceId(id);
             return new AzureDevOpsRepositoryResource(Client, id);
@@ -1138,7 +1144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="GitHubRepositoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GitHubRepositoryResource"/> object. </returns>
-        public virtual GitHubRepositoryResource GetGitHubRepositoryResource(Core.ResourceIdentifier id)
+        public virtual GitHubRepositoryResource GetGitHubRepositoryResource(ResourceIdentifier id)
         {
             GitHubRepositoryResource.ValidateResourceId(id);
             return new GitHubRepositoryResource(Client, id);
@@ -1147,7 +1153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="AllowedConnectionsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AllowedConnectionsResource"/> object. </returns>
-        public virtual AllowedConnectionsResource GetAllowedConnectionsResource(Core.ResourceIdentifier id)
+        public virtual AllowedConnectionsResource GetAllowedConnectionsResource(ResourceIdentifier id)
         {
             AllowedConnectionsResource.ValidateResourceId(id);
             return new AllowedConnectionsResource(Client, id);
@@ -1156,7 +1162,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
-        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(Core.ResourceIdentifier id)
+        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
             ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
             return new ServerVulnerabilityAssessmentResource(Client, id);
@@ -1165,7 +1171,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
-        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessment(Core.ResourceIdentifier scope)
+        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessment(ResourceIdentifier scope)
         {
             return new ServerVulnerabilityAssessmentResource(Client, scope.AppendProviderResource("Microsoft.Security", "serverVulnerabilityAssessments", "default"));
         }
@@ -1173,7 +1179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="TopologyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TopologyResource"/> object. </returns>
-        public virtual TopologyResource GetTopologyResource(Core.ResourceIdentifier id)
+        public virtual TopologyResource GetTopologyResource(ResourceIdentifier id)
         {
             TopologyResource.ValidateResourceId(id);
             return new TopologyResource(Client, id);
@@ -1182,41 +1188,33 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="GetSensitivitySettingsResponseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GetSensitivitySettingsResponseResource"/> object. </returns>
-        public virtual GetSensitivitySettingsResponseResource GetGetSensitivitySettingsResponseResource(Core.ResourceIdentifier id)
+        public virtual GetSensitivitySettingsResponseResource GetGetSensitivitySettingsResponseResource(ResourceIdentifier id)
         {
             GetSensitivitySettingsResponseResource.ValidateResourceId(id);
             return new GetSensitivitySettingsResponseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentSettingResource GetSqlVulnerabilityAssessmentSettingResource(Core.ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentSettingsResource GetSqlVulnerabilityAssessmentSettingsResource(ResourceIdentifier id)
         {
-            SqlVulnerabilityAssessmentSettingResource.ValidateResourceId(id);
-            return new SqlVulnerabilityAssessmentSettingResource(Client, id);
+            SqlVulnerabilityAssessmentSettingsResource.ValidateResourceId(id);
+            return new SqlVulnerabilityAssessmentSettingsResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentSettingResource GetSqlVulnerabilityAssessmentSetting(Core.ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentSettingsResource GetSqlVulnerabilityAssessmentSettings(ResourceIdentifier scope)
         {
-            return new SqlVulnerabilityAssessmentSettingResource(Client, scope.AppendProviderResource("Microsoft.Security", "sqlVulnerabilityAssessments", "default"));
-        }
-
-        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScan(Core.ResourceIdentifier scope)
-        {
-            return new SqlVulnerabilityAssessmentScanResource(Client, (Core.ResourceIdentifier)null);
+            return new SqlVulnerabilityAssessmentSettingsResource(Client, scope.AppendProviderResource("Microsoft.Security", "sqlVulnerabilityAssessments", "default"));
         }
 
         /// <summary> Gets a collection of <see cref="SqlVulnerabilityAssessmentScanCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SqlVulnerabilityAssessmentScanResource"/> objects. </returns>
-        public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(Core.ResourceIdentifier scope)
+        public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(ResourceIdentifier scope)
         {
             return new SqlVulnerabilityAssessmentScanCollection(Client, scope);
         }
@@ -1229,7 +1227,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(Core.ResourceIdentifier scope, string scanId, string databaseName = default, CancellationToken cancellationToken = default)
+        public virtual Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(ResourceIdentifier scope, string scanId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
 
@@ -1244,7 +1242,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(Core.ResourceIdentifier scope, string scanId, string databaseName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(ResourceIdentifier scope, string scanId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scanId, nameof(scanId));
 
@@ -1254,7 +1252,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets an object representing a <see cref="SecuritySubAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecuritySubAssessmentResource"/> object. </returns>
-        public virtual SecuritySubAssessmentResource GetSecuritySubAssessmentResource(Core.ResourceIdentifier id)
+        public virtual SecuritySubAssessmentResource GetSecuritySubAssessmentResource(ResourceIdentifier id)
         {
             SecuritySubAssessmentResource.ValidateResourceId(id);
             return new SecuritySubAssessmentResource(Client, id);
@@ -1263,7 +1261,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of <see cref="SecuritySubAssessmentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SecuritySubAssessmentResource"/> objects. </returns>
-        public virtual SecuritySubAssessmentCollection GetSecuritySubAssessments(Core.ResourceIdentifier scope)
+        public virtual SecuritySubAssessmentCollection GetSecuritySubAssessments(ResourceIdentifier scope)
         {
             return new SecuritySubAssessmentCollection(Client, scope);
         }
@@ -1275,7 +1273,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecuritySubAssessmentResource> GetSecuritySubAssessment(Core.ResourceIdentifier scope, string subAssessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<SecuritySubAssessmentResource> GetSecuritySubAssessment(ResourceIdentifier scope, string subAssessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
@@ -1289,11 +1287,107 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecuritySubAssessmentResource>> GetSecuritySubAssessmentAsync(Core.ResourceIdentifier scope, string subAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecuritySubAssessmentResource>> GetSecuritySubAssessmentAsync(ResourceIdentifier scope, string subAssessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             return await GetSecuritySubAssessments(scope).GetAsync(subAssessmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a list of server vulnerability assessment onboarding statuses on a given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerVulnerabilityAssessments_ListByExtendedResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<ServerVulnerabilityAssessmentsList>> GetByExtendedResourceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = ServerVulnerabilityAssessmentClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.GetByExtendedResource");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServerVulnerabilityAssessmentsList> response = Response.FromValue(ServerVulnerabilityAssessmentsList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of server vulnerability assessment onboarding statuses on a given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerVulnerabilityAssessments_ListByExtendedResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<ServerVulnerabilityAssessmentsList> GetByExtendedResource(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = ServerVulnerabilityAssessmentClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.GetByExtendedResource");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServerVulnerabilityAssessmentsList> response = Response.FromValue(ServerVulnerabilityAssessmentsList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1317,7 +1411,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecuritySubAssessmentResource> GetAllAsync(Core.ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecuritySubAssessmentResource> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1349,7 +1443,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecuritySubAssessmentResource> GetAll(Core.ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecuritySubAssessmentResource> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

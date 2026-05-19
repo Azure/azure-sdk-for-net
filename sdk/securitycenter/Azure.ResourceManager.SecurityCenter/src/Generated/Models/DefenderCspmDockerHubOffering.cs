@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for CSPM Docker Hub offering configurations. </summary>
-    public partial class DefenderCspmDockerHubOffering : CloudOffering
+    public partial class DefenderCspmDockerHubOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderCspmDockerHubOffering"/>. </summary>
         public DefenderCspmDockerHubOffering() : base(OfferingType.DefenderCspmDockerHub)

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The containers GCP offering. </summary>
-    public partial class DefenderForContainersGcpOffering : CloudOffering
+    public partial class DefenderForContainersGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOffering"/>. </summary>
         public DefenderForContainersGcpOffering() : base(OfferingType.DefenderForContainersGcp)

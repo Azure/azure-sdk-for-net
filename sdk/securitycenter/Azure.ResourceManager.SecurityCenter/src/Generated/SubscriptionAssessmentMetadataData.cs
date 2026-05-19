@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes properties of an assessment metadata response. </param>
-        internal SubscriptionAssessmentMetadataData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentMetadataPropertiesResponse properties) : base(id, name, resourceType, systemData)
+        internal SubscriptionAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentMetadataPropertiesResponse properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
-        public Core.ResourceIdentifier PolicyDefinitionId
+        public ResourceIdentifier PolicyDefinitionId
         {
             get
             {

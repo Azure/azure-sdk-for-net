@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="AlertProperties"/>. </summary>
         internal AlertProperties()
         {
-            ResourceIdentifiers = new ChangeTrackingList<ResourceIdentifier>();
+            ResourceIdentifiers = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
             RemediationSteps = new ChangeTrackingList<string>();
             ExtendedLinks = new ChangeTrackingList<IDictionary<string, string>>();
             Entities = new ChangeTrackingList<AlertEntity>();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
         /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertProperties(string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, AlertSeverity? severity, Intent? intent, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, IReadOnlyList<ResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, AlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, string alertUri, DateTimeOffset? timeGeneratedUtc, string productName, DateTimeOffset? processingEndTimeUtc, IReadOnlyList<AlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, AlertPropertiesSupportingEvidence supportingEvidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProperties(string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, AlertSeverity? severity, Intent? intent, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, AlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, string alertUri, DateTimeOffset? timeGeneratedUtc, string productName, DateTimeOffset? processingEndTimeUtc, IReadOnlyList<AlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, AlertPropertiesSupportingEvidence supportingEvidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             AlertType = alertType;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? EndTimeUtc { get; }
 
         /// <summary> The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert. </summary>
-        public IReadOnlyList<ResourceIdentifier> ResourceIdentifiers { get; } = new ChangeTrackingList<ResourceIdentifier>();
+        public IReadOnlyList<SecurityAlertResourceIdentifier> ResourceIdentifiers { get; } = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
 
         /// <summary> Manual action items to take to remediate the alert. </summary>
         public IReadOnlyList<string> RemediationSteps { get; } = new ChangeTrackingList<string>();

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecuritySettingData : ResourceData, IJsonModel<SecuritySettingData>
     {
         /// <summary> Initializes a new instance of <see cref="SecuritySettingData"/> for deserialization. </summary>
-        internal SecuritySettingData()
+        public SecuritySettingData()
         {
         }
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="SecuritySettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecuritySettingCollection(ArmClient client, Core.ResourceIdentifier id) : base(client, id)
+        internal SecuritySettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SecuritySettingResource.ResourceType, out string securitySettingApiVersion);
             _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecuritySettingResource.ResourceType.Namespace, Diagnostics);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
-        internal static void ValidateResourceId(Core.ResourceIdentifier id)
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {

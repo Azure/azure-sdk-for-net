@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> describes AlertsSuppressionRule properties. </param>
-        internal SecurityAlertsSuppressionRuleData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertsSuppressionRuleProperties properties) : base(id, name, resourceType, systemData)
+        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertsSuppressionRuleProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -101,23 +101,10 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Possible states of the rule. </summary>
-        public RuleState? State
+        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertsSuppressionRuleState> State
         {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
-            set
-            {
-                if (value.HasValue)
-                {
-                    if (Properties is null)
-                    {
-                        Properties = new AlertsSuppressionRuleProperties();
-                    }
-                    Properties.State = value.Value;
-                }
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Any comment regarding the rule. </summary>
@@ -138,16 +125,10 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public IList<ScopeElement> SuppressionAlertsScopeAllOf
+        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertsSuppressionRuleProperties();
-                }
-                return Properties.SuppressionAlertsScopeAllOf;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

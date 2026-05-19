@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The CSPM (Cloud security posture management) monitoring for JFrog Artifactory offering. </summary>
-    public partial class CspmMonitorJFrogOffering : CloudOffering, IJsonModel<CspmMonitorJFrogOffering>
+    public partial class CspmMonitorJFrogOffering : SecurityCenterCloudOffering, IJsonModel<CspmMonitorJFrogOffering>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CloudOffering PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityCenterCloudOffering PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CspmMonitorJFrogOffering>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CloudOffering JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityCenterCloudOffering JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CspmMonitorJFrogOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

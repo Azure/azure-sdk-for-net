@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports that were opened for the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
-        public JitNetworkAccessRequestVirtualMachine(Core.ResourceIdentifier id, IEnumerable<JitNetworkAccessRequestPort> ports)
+        public JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessRequestPort> ports)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(ports, nameof(ports));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> The ports that were opened for the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessRequestVirtualMachine(Core.ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Ports = ports;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
-        public Core.ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> The ports that were opened for the virtual machine. </summary>
         public IList<JitNetworkAccessRequestPort> Ports { get; }

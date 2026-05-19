@@ -7,6 +7,6 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Security.</Description>
     <PackageTags>azure;management;arm;resource manager;securitycenter</PackageTags>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
-    <NoWarn>$(NoWarn);CS1574;CS1580;IL2026;IL3050</NoWarn>
+    <NoWarn>$(NoWarn);CS0618;CS1574;CS1580;IL2026;IL3050</NoWarn>
   </PropertyGroup>
 </Project>

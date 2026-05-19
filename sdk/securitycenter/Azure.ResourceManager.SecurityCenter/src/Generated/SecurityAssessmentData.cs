@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentData"/>. </summary>
-        internal SecurityAssessmentData()
+        public SecurityAssessmentData()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes properties of an assessment. </param>
-        internal SecurityAssessmentData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentPropertiesResponse properties) : base(id, name, resourceType, systemData)
+        internal SecurityAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentPropertiesResponse properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -50,12 +50,10 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Details of the resource that was assessed. </summary>
-        public ResourceDetails ResourceDetails
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterResourceDetails ResourceDetails
         {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceDetails;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> User friendly display name of the assessment. </summary>
@@ -77,21 +75,17 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Describes properties of an assessment metadata. </summary>
-        public SecurityAssessmentMetadataProperties Metadata
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentMetadataProperties Metadata
         {
-            get
-            {
-                return Properties is null ? default : Properties.Metadata;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Data regarding 3rd party partner integration. </summary>
-        public SecurityAssessmentPartnerData PartnersData
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentPartner PartnersData
         {
-            get
-            {
-                return Properties is null ? default : Properties.PartnersData;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Link to assessment in Azure Portal. </summary>
@@ -104,12 +98,10 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The result of the assessment. </summary>
-        public AssessmentStatusResponse Status
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusResult Status
         {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

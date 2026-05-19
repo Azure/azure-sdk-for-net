@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Workspace setting data. </param>
-        internal SecurityWorkspaceSettingData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkspaceSettingProperties properties) : base(id, name, resourceType, systemData)
+        internal SecurityWorkspaceSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkspaceSettingProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,20 +41,10 @@ namespace Azure.ResourceManager.SecurityCenter
         internal WorkspaceSettingProperties Properties { get; set; }
 
         /// <summary> The full Azure ID of the workspace to save the data in. </summary>
-        public string WorkspaceId
+        public Azure.Core.ResourceIdentifier WorkspaceId
         {
-            get
-            {
-                return Properties is null ? default : Properties.WorkspaceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WorkspaceSettingProperties();
-                }
-                Properties.WorkspaceId = value;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </summary>

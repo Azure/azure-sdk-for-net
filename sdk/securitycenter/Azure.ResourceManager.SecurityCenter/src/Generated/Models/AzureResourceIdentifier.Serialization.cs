@@ -15,11 +15,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Azure resource identifier. </summary>
-    public partial class AzureResourceIdentifier : ResourceIdentifier, IJsonModel<AzureResourceIdentifier>
+    public partial class AzureResourceIdentifier : SecurityAlertResourceIdentifier, IJsonModel<AzureResourceIdentifier>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityAlertResourceIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureResourceIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityAlertResourceIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureResourceIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             ResourceIdentifierType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Core.ResourceIdentifier azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    azureResourceId = new Core.ResourceIdentifier(prop.Value.GetString());
+                    azureResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AWS organization data for the master account. </summary>
-    public partial class AwsOrganizationalDataMaster : AwsOrganizationalData
+    public partial class AwsOrganizationalDataMaster : AwsOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalDataMaster"/>. </summary>
         public AwsOrganizationalDataMaster() : base(OrganizationMembershipType.Organization)

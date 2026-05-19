@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal TopologyResourceData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TopologyResourceProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal TopologyResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TopologyResourceProperties properties, string location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

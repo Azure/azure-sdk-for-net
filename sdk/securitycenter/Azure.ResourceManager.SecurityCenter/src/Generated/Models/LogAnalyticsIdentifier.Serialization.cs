@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a Log Analytics workspace scope identifier. </summary>
-    public partial class LogAnalyticsIdentifier : ResourceIdentifier, IJsonModel<LogAnalyticsIdentifier>
+    public partial class LogAnalyticsIdentifier : SecurityAlertResourceIdentifier, IJsonModel<LogAnalyticsIdentifier>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityAlertResourceIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityAlertResourceIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

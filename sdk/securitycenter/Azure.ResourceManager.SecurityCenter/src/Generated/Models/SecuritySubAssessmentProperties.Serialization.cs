@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string category = default;
             string description = default;
             DateTimeOffset? timeGenerated = default;
-            ResourceDetails resourceDetails = default;
-            AdditionalData additionalData = default;
+            SecurityCenterResourceDetails resourceDetails = default;
+            SecuritySubAssessmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    resourceDetails = Models.ResourceDetails.DeserializeResourceDetails(prop.Value, options);
+                    resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalData"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    additionalData = AdditionalData.DeserializeAdditionalData(prop.Value, options);
+                    additionalData = SecuritySubAssessmentAdditionalInfo.DeserializeSecuritySubAssessmentAdditionalInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

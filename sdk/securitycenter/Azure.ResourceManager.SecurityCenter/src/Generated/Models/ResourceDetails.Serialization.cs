@@ -7,23 +7,15 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Details of the resource that was assessed
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/>, and <see cref="OnPremiseSqlResourceDetails"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownResourceDetails))]
-    public abstract partial class ResourceDetails : IJsonModel<ResourceDetails>
+    /// <summary> The resource details of the health report. </summary>
+    public partial class ResourceDetails : IJsonModel<ResourceDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceDetails"/> for deserialization. </summary>
-        internal ResourceDetails()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -34,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return ResourceDetails.DeserializeResourceDetails(document.RootElement, options);
+                        return DeserializeResourceDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ResourceDetails)} does not support reading '{options.Format}' format.");
@@ -55,11 +47,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceDetails>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceDetails IPersistableModel<ResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
+        ResourceDetails IPersistableModel<ResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -69,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IJsonModel<ResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -82,8 +74,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(ResourceDetails)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("source"u8);
-            writer.WriteStringValue(Source.ToString());
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectorId))
+            {
+                writer.WritePropertyName("connectorId"u8);
+                writer.WriteStringValue(ConnectorId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceDetails IJsonModel<ResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
+        ResourceDetails IJsonModel<ResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -115,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 throw new FormatException($"The model {nameof(ResourceDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return ResourceDetails.DeserializeResourceDetails(document.RootElement, options);
+            return DeserializeResourceDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
@@ -126,19 +131,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("source"u8, out JsonElement discriminator))
+            Source? source = default;
+            string id = default;
+            string connectorId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("source"u8))
                 {
-                    case "Azure":
-                        return AzureResourceDetails.DeserializeAzureResourceDetails(element, options);
-                    case "OnPremiseResourceDetails":
-                        return OnPremiseResourceDetails.DeserializeOnPremiseResourceDetails(element, options);
-                    case "OnPremiseSql":
-                        return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    source = new Source(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("connectorId"u8))
+                {
+                    connectorId = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownResourceDetails.DeserializeUnknownResourceDetails(element, options);
+            return new ResourceDetails(source, id, connectorId, additionalBinaryDataProperties);
         }
     }
 }

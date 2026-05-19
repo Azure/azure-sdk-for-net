@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        internal AssignmentData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AssignmentProperties properties, IDictionary<string, string> tags, string location, string kind, string eTag) : base(id, name, resourceType, systemData)
+        internal AssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AssignmentProperties properties, IDictionary<string, string> tags, string location, string kind, string eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

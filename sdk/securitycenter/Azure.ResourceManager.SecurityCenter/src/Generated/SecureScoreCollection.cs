@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _secureScoresClientDiagnostics;
         private readonly SecureScores _secureScoresRestClient;
-        private readonly ClientDiagnostics _secureScoreControlsClientDiagnostics;
-        private readonly SecureScoreControls _secureScoreControlsRestClient;
 
         /// <summary> Initializes a new instance of SecureScoreCollection for mocking. </summary>
         protected SecureScoreCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(SecureScoreResource.ResourceType, out string secureScoreApiVersion);
             _secureScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecureScoreResource.ResourceType.Namespace, Diagnostics);
             _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Endpoint, secureScoreApiVersion ?? "2020-01-01");
-            _secureScoreControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecureScoreResource.ResourceType.Namespace, Diagnostics);
-            _secureScoreControlsRestClient = new SecureScoreControls(_secureScoreControlsClientDiagnostics, Pipeline, Endpoint, secureScoreApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 

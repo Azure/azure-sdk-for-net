@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentData"/>. </summary>
-        internal SecuritySubAssessmentData()
+        public SecuritySubAssessmentData()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes properties of an sub-assessment. </param>
-        internal SecuritySubAssessmentData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecuritySubAssessmentProperties properties) : base(id, name, resourceType, systemData)
+        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecuritySubAssessmentProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -59,12 +59,10 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Status of the sub-assessment. </summary>
-        public SubAssessmentStatus Status
+        public Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatus Status
         {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Information on how to remediate this sub-assessment. </summary>
@@ -113,21 +111,17 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Details of the resource that was assessed. </summary>
-        public ResourceDetails ResourceDetails
+        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterResourceDetails ResourceDetails
         {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceDetails;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Details of the sub-assessment. </summary>
-        public AdditionalData AdditionalData
+        public Azure.ResourceManager.SecurityCenter.Models.SecuritySubAssessmentAdditionalInfo AdditionalData
         {
-            get
-            {
-                return Properties is null ? default : Properties.AdditionalData;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

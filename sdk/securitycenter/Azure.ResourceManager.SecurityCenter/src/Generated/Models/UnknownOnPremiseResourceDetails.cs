@@ -14,15 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     internal partial class UnknownOnPremiseResourceDetails : OnPremiseResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOnPremiseResourceDetails"/>. </summary>
-        /// <param name="source"> The status of the health report. </param>
-        /// <param name="id"> The azure id of the resource. </param>
-        /// <param name="connectorId"> The id of the connector. </param>
+        /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
         /// <param name="vmuuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
-        internal UnknownOnPremiseResourceDetails(Source? source, string id, string connectorId, IDictionary<string, BinaryData> additionalBinaryDataProperties, Core.ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName) : base(source, id, connectorId, additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
+        internal UnknownOnPremiseResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName) : base(source != default ? source : "unknown", additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
         {
         }
     }

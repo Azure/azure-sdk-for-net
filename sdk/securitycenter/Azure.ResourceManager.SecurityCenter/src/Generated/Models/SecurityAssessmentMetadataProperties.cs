@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentMetadataProperties(string displayName, Core.ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? preview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? preview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string DisplayName { get; set; }
 
         /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
-        public Core.ResourceIdentifier PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
 
         /// <summary> Human readable description of the assessment. </summary>
         public string Description { get; set; }

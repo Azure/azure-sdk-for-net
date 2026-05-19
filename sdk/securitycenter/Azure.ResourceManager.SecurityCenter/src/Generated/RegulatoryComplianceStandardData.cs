@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardData"/>. </summary>
-        internal RegulatoryComplianceStandardData()
+        public RegulatoryComplianceStandardData()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Regulatory compliance standard data. </param>
-        internal RegulatoryComplianceStandardData(Core.ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegulatoryComplianceStandardProperties properties) : base(id, name, resourceType, systemData)
+        internal RegulatoryComplianceStandardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegulatoryComplianceStandardProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,12 +41,10 @@ namespace Azure.ResourceManager.SecurityCenter
         internal RegulatoryComplianceStandardProperties Properties { get; }
 
         /// <summary> Aggregative state based on the standard's supported controls states. </summary>
-        public SecurityAlertNotificationByRoleState? State
+        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState> State
         {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
+            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The number of supported regulatory compliance controls of the given standard with a passed state. </summary>
