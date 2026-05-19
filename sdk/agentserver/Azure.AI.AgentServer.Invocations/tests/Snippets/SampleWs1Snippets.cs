@@ -9,78 +9,65 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing the Invocations README.md. Compiled to prevent rot.
+    /// Code snippets backing Invocations SampleWs1_Echo.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
-    public class ReadMeSnippets
+    public class SampleWs1Snippets
     {
         [Test]
-        public void Tier1_Startup()
+        public void StartServer()
         {
-            #region Snippet:Invocations_ReadMe_Tier1
+            #region Snippet:Invocations_SampleWs1_StartServer
 
-            InvocationsServer.Run<EchoHandler>();
+            InvocationsServer.Run<EchoAgentHandler>();
 
             #endregion
         }
 
         [Test]
-        public void ManualSetup()
+        public void Implement_EchoAgentHandler()
         {
-            #region Snippet:Invocations_ReadMe_ManualSetup
-
-            var builder = AgentHost.CreateBuilder();
-            builder.AddInvocations<EchoHandler>();
-            builder.Build().Run();
-
-            #endregion
-        }
-
-        [Test]
-        public void Implement_EchoHandler()
-        {
-            var handler = new EchoHandler();
+            var handler = new EchoAgentHandler();
             Assert.That(handler, Is.Not.Null);
         }
 
-        [Test]
-        public void Implement_WebSocketEchoHandler()
-        {
-            var handler = new WebSocketEchoHandler();
-            Assert.That(handler, Is.Not.Null);
-        }
+        #region Snippet:Invocations_SampleWs1_EchoAgentHandler
 
-        #region Snippet:Invocations_ReadMe_EchoHandler
-
-        public class EchoHandler : InvocationHandler
+        public class EchoAgentHandler : InvocationWebSocketHandler
         {
+            // POST /invocations — classic request/response echo. Overrides the
+            // InvocationWebSocketHandler default (404) to add HTTP support
+            // alongside the WebSocket endpoint.
             public override async Task HandleAsync(
-                HttpRequest request, HttpResponse response,
-                InvocationContext context, CancellationToken cancellationToken)
+                HttpRequest request,
+                HttpResponse response,
+                InvocationContext context,
+                CancellationToken cancellationToken)
             {
                 var input = await new StreamReader(request.Body).ReadToEndAsync(cancellationToken);
                 await response.WriteAsync($"You said: {input}", cancellationToken);
             }
-        }
 
-        #endregion
-
-        #region Snippet:Invocations_ReadMe_WebSocketHandler
-
-        public class WebSocketEchoHandler : InvocationWebSocketHandler
-        {
+            // /invocations_ws — full-duplex echo. The SDK has already accepted
+            // the upgrade; the handler owns the connection until it returns.
             public override async Task HandleWebSocketAsync(
-                WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
+                WebSocket webSocket,
+                InvocationContext context,
+                CancellationToken cancellationToken)
             {
                 var buffer = new byte[4096];
                 while (webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
                 {
                     var received = await webSocket.ReceiveAsync(buffer, cancellationToken);
+
                     if (received.MessageType == WebSocketMessageType.Close)
                     {
+                        // Client initiated close — exit the loop and let the SDK
+                        // send the close frame back with NormalClosure (1000).
                         break;
                     }
+
                     await webSocket.SendAsync(
                         new ArraySegment<byte>(buffer, 0, received.Count),
                         received.MessageType,
