@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -62,28 +63,9 @@ internal sealed class SseResult : IResult
         var responseId = _execution.ResponseId;
         _logger.LogInformation("SSE stream started for response {ResponseId}", responseId);
 
-        using var sseWriter = new SseWriter(httpContext.Response.Body, _jsonOptions);
-
-        // Start keep-alive timer if interval is not infinite
-        Timer? keepAliveTimer = null;
-        if (_keepAliveInterval != Timeout.InfiniteTimeSpan && _keepAliveInterval > TimeSpan.Zero)
-        {
-            keepAliveTimer = new Timer(
-                async _ =>
-                {
-                    try
-                    {
-                        await sseWriter.WriteKeepAliveAsync(CancellationToken.None);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogDebug(ex, "Keep-alive write failed for response {ResponseId}", responseId);
-                    }
-                },
-                null,
-                _keepAliveInterval,
-                _keepAliveInterval);
-        }
+        await using var keepAliveSession = SseKeepAliveSession.Start(
+            httpContext.Response.Body, _keepAliveInterval, _logger, $"response {responseId}");
+        var sseWriter = new SseWriter(keepAliveSession, _jsonOptions);
 
         try
         {
@@ -136,11 +118,6 @@ internal sealed class SseResult : IResult
         }
         finally
         {
-            if (keepAliveTimer is not null)
-            {
-                await keepAliveTimer.DisposeAsync();
-            }
-
             _linkedCts.Dispose();
             _activity?.Dispose();
         }
