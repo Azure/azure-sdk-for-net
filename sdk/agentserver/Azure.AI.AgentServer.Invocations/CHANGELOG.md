@@ -14,29 +14,19 @@
   `HandleWebSocketAsync(WebSocket, InvocationContext, CancellationToken)`
   method. Handlers that override it serve `/invocations_ws` alongside
   `POST /invocations` on the same host. Handlers that do not override it
-  cause the endpoint to short-circuit to HTTP 404, matching the Python
-  "route not registered" 404 behaviour for hosts without a registered
-  WS handler.
-- The SDK accepts the upgrade for you (`AcceptWebSocketAsync`), maps
-  clean handler returns to RFC 6455 close code `1000` (`NormalClosure`)
-  and uncaught handler exceptions to close code `1011`
-  (`InternalServerError`), and preserves handler-initiated close codes
-  unchanged.
-- Per-connection telemetry — a single structured close-event log line
-  carrying `azure.ai.agentserver.invocations_ws.session_id`,
-  `azure.ai.agentserver.invocations_ws.close_code`, and
-  `azure.ai.agentserver.invocations_ws.duration_ms` (via structured
-  message templates). No framework-level OpenTelemetry span is created
-  for the connection — ASP.NET Core auto-propagates the W3C trace
-  context, so any spans the user handler starts are parented correctly
-  without a per-connection wrapper. Mirrors the Python design in
-  https://github.com/Azure/azure-sdk-for-python/pull/46973.
-- Session ID honours `FOUNDRY_AGENT_SESSION_ID` so HTTP and WebSocket
-  transports on the same container report the same session, falling
-  back to a fresh UUID when the platform does not inject one.
-- WebSocket Ping/Pong keep-alive is configured via the new
+  cause the endpoint to short-circuit to HTTP 404. The SDK accepts the
+  upgrade (`AcceptWebSocketAsync`), maps clean handler returns to RFC 6455
+  close code `1000` (`NormalClosure`) and uncaught handler exceptions to
+  `1011` (`InternalServerError`), and preserves handler-initiated close
+  codes unchanged.
+- WebSocket Ping/Pong keep-alive — disabled by default; enable via the
   `WS_KEEPALIVE_INTERVAL` environment variable (see
-  `Azure.AI.AgentServer.Core` 1.0.0-beta.24); disabled by default.
+  `Azure.AI.AgentServer.Core` 1.0.0-beta.24), which is wired through to
+  Kestrel's `WebSocketOptions.KeepAliveInterval`.
+- WebSocket telemetry — structured close-event log line carrying
+  `azure.ai.agentserver.invocations_ws.session_id`,
+  `azure.ai.agentserver.invocations_ws.close_code`, and
+  `azure.ai.agentserver.invocations_ws.duration_ms`.
 
 ## 1.0.0-beta.3 (2026-04-22)
 

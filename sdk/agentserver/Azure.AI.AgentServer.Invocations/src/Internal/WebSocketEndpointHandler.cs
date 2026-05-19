@@ -30,11 +30,14 @@ internal sealed class WebSocketEndpointHandler
 {
     private const string SessionIdResponseHeader = PlatformHeaders.SessionId;
 
+    private readonly InvocationsActivitySource _activitySource;
     private readonly ILogger<WebSocketEndpointHandler> _logger;
 
     public WebSocketEndpointHandler(
+        InvocationsActivitySource activitySource,
         ILogger<WebSocketEndpointHandler> logger)
     {
+        _activitySource = activitySource;
         _logger = logger;
     }
 
@@ -84,16 +87,13 @@ internal sealed class WebSocketEndpointHandler
             httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
         }
 
-        // Propagate session/invocation baggage onto the current request Activity
-        // for downstream correlation. ASP.NET Core has already opened the request
-        // Activity by the time we run, so any spans the handler starts will inherit
-        // these baggage entries automatically. No framework-level WS span is created.
-        var currentActivity = Activity.Current;
-        if (currentActivity is not null)
-        {
-            currentActivity.AddBaggage("azure.ai.agentserver.invocation_id", invocationId);
-            currentActivity.AddBaggage("azure.ai.agentserver.session_id", sessionId);
-        }
+        // Propagate invocation/session/x-request-id baggage onto the current request
+        // Activity for downstream correlation. Reuses the same helper the HTTP
+        // `POST /invocations` endpoint uses (#59050) so HTTP and WS paths produce
+        // the same baggage shape. No framework-level WS span is created — ASP.NET
+        // Core auto-propagates the inbound W3C trace context to the request
+        // Activity, so any spans the handler starts inherit it directly.
+        _activitySource.PropagateInvocationBaggage(context, httpContext.Request.Headers);
 
         using var logScope = _logger.BeginScope(new Dictionary<string, object>
         {
@@ -127,11 +127,19 @@ internal sealed class WebSocketEndpointHandler
             {
                 await handler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
             }
-            catch (OperationCanceledException) when (httpContext.RequestAborted.IsCancellationRequested)
+            catch (OperationCanceledException oce)
+                when (oce.CancellationToken == httpContext.RequestAborted
+                      && httpContext.RequestAborted.IsCancellationRequested)
             {
                 // Connection aborted (client disconnect / server shutdown). Treat
                 // as a clean close — the socket is already gone, so emit a normal
                 // close event and let the caller observe the cancellation.
+                //
+                // The token-identity check (`oce.CancellationToken == httpContext.RequestAborted`)
+                // distinguishes shutdown-driven cancellation from a handler-internal
+                // OperationCanceledException (e.g., a handler's own timeout CTS firing
+                // concurrently with shutdown) — those should still surface as close
+                // code 1011 so real handler bugs aren't masked.
                 closeCode = InvocationsWebSocketConstants.CloseNormal;
             }
             catch (Exception ex)

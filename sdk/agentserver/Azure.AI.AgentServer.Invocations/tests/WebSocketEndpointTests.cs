@@ -194,6 +194,37 @@ public class WebSocketEndpointTests
     }
 
     [Test]
+    public async Task HandlerThrowsOceFromUnrelatedToken_ClosesWith1011()
+    {
+        // Guard against the OCE-attribution edge case: a handler throwing
+        // OperationCanceledException from its own CancellationTokenSource
+        // (e.g., an internal timeout) must NOT be swallowed as a clean close
+        // even when the request happens to be aborted concurrently. Only
+        // cancellation whose token matches httpContext.RequestAborted is
+        // attributable to the SDK / server shutdown.
+        var app = BuildApp(new HandlerOceFromUnrelatedTokenInvocationHandler());
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            var wsClient = server.CreateWebSocketClient();
+            var uri = new Uri(server.BaseAddress, "invocations_ws");
+
+            using var ws = await wsClient.ConnectAsync(uri, CancellationToken.None);
+
+            var buffer = new byte[1024];
+            var frame = await ws.ReceiveAsync(buffer, CancellationToken.None);
+            Assert.That(frame.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That(ws.CloseStatus, Is.EqualTo(WebSocketCloseStatus.InternalServerError),
+                "Handler-internal OCE (different token than RequestAborted) must surface as 1011, not 1000.");
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
     public async Task SessionId_HonoursFoundryAgentSessionIdEnv()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "ws-session-from-env");
@@ -369,6 +400,25 @@ public class WebSocketEndpointTests
             WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
         {
             await webSocket.CloseAsync(_status, _description, cancellationToken);
+        }
+    }
+
+    private sealed class HandlerOceFromUnrelatedTokenInvocationHandler : InvocationHandler
+    {
+        public override Task HandleAsync(
+            HttpRequest request, HttpResponse response, InvocationContext context, CancellationToken cancellationToken)
+            => Task.CompletedTask;
+
+        public override Task HandleWebSocketAsync(
+            WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
+        {
+            // Simulate a handler-internal timeout: throw OCE bound to a
+            // CancellationToken the SDK has never seen. The SDK's filter
+            // must NOT swallow this as a clean close just because some
+            // *other* token happens to be cancelled.
+            using var localCts = new CancellationTokenSource();
+            localCts.Cancel();
+            throw new OperationCanceledException("handler-internal timeout", localCts.Token);
         }
     }
 
