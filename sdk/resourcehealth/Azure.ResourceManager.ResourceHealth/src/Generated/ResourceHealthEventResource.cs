@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.ResourceHealth
     {
         private readonly ClientDiagnostics _eventClientDiagnostics;
         private readonly Event _eventRestClient;
-        private readonly ClientDiagnostics _eventsClientDiagnostics;
-        private readonly Events _eventsRestClient;
         private readonly ClientDiagnostics _securityAdvisoryImpactedResourcesClientDiagnostics;
         private readonly SecurityAdvisoryImpactedResources _securityAdvisoryImpactedResourcesRestClient;
         private readonly ResourceHealthEventData _data;
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.ResourceHealth
             TryGetApiVersion(ResourceType, out string eventApiVersion);
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
             _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
-            _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
             _securityAdvisoryImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
             _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
             ValidateResourceId(id);

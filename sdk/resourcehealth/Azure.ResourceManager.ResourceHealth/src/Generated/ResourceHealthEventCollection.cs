@@ -30,8 +30,6 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly Event _eventRestClient;
         private readonly ClientDiagnostics _eventsClientDiagnostics;
         private readonly Events _eventsRestClient;
-        private readonly ClientDiagnostics _securityAdvisoryImpactedResourcesClientDiagnostics;
-        private readonly SecurityAdvisoryImpactedResources _securityAdvisoryImpactedResourcesRestClient;
 
         /// <summary> Initializes a new instance of ResourceHealthEventCollection for mocking. </summary>
         protected ResourceHealthEventCollection()
@@ -48,8 +46,6 @@ namespace Azure.ResourceManager.ResourceHealth
             _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
             _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
             _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
-            _securityAdvisoryImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
