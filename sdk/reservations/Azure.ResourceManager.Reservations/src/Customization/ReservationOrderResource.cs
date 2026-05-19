@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
-using TypeSpecCodeGenSuppress = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 #pragma warning disable CS1591
 
@@ -22,10 +21,10 @@ namespace Azure.ResourceManager.Reservations
     // Response<ReservationRefundResult>. The new generator emits Pageable shapes for Merge/Split
     // and an LRO for Return. It also omits the GA CreateResourceIdentifier and direct
     // GetReservationDetail forwarding methods. These shims preserve the GA-shape methods.
-    [TypeSpecCodeGenSuppress("MergeReservation", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
-    [TypeSpecCodeGenSuppress("MergeReservationAsync", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
-    [TypeSpecCodeGenSuppress("SplitReservation", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
-    [TypeSpecCodeGenSuppress("SplitReservationAsync", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
+    [CodeGenSuppress("MergeReservation", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
+    [CodeGenSuppress("MergeReservationAsync", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
+    [CodeGenSuppress("SplitReservation", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
+    [CodeGenSuppress("SplitReservationAsync", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
     public partial class ReservationOrderResource
     {
         public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId)
