@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GetRevisions(Guid) was a collection-level entry point in GA but in the new SDK
-// lives on ReservationDetailResource; we synthesize a resource here to invoke it without a network
-// round-trip.
+// Justification: GA exposed item-level Get/Exists/GetIfExists and GetRevisions(Guid) on
+// ReservationDetailCollection. The TypeSpec generator only emits list operations here and places
+// revisions on ReservationDetailResource, so these shims preserve the GA collection surface.
 
 using System;
 using System.Threading;

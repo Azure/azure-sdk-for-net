@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Justification: These public extension methods mirror the mockable-resource customizations so
+// SubscriptionResource and TenantResource keep the GA shortcut and options-bag overloads while
+// still forwarding through mockable resources for testability.
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;

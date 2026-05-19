@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Justification: GA exposed direct GetQuotaRequestDetail and GetCatalog overloads on the
+// mockable subscription extension resource, including shorter and options-bag catalog overloads.
+// The TypeSpec generator emits collection or long-parameter methods, so these forwarders preserve
+// the GA convenience surface and mocking target.
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;

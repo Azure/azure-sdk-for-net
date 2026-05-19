@@ -4,7 +4,8 @@
 // Justification: GA modelled MergeReservation/SplitReservation as
 // ArmOperation<IList<ReservationDetailData>> and Return as a synchronous
 // Response<ReservationRefundResult>. The new generator emits Pageable shapes for Merge/Split
-// and an LRO for Return; these shims preserve the GA-shape methods.
+// and an LRO for Return. It also omits the GA CreateResourceIdentifier and direct
+// GetReservationDetail forwarding methods. These shims preserve the GA-shape methods.
 
 using System;
 using System.ClientModel.Primitives;
