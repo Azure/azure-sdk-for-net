@@ -28,7 +28,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -43,12 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <summary>
         /// The operation to export the details of the Azure Site Recovery jobs of the vault.
         /// </summary>
-        /// <remarks>
-        /// This API is deprecated. The underlying REST operation is a vault-scoped collection
-        /// action (it is not keyed by a specific job); use
-        /// <see cref="RecoveryServicesSiteRecoveryExtensions.ExportAsync(ResourceGroupResource, WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/>
-        /// (available via <c>ResourceGroupResource.ExportAsync</c>) instead.
-        /// </remarks>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the
         /// long-running operation has completed on the service; <see cref="WaitUntil.Started"/>
@@ -57,8 +50,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is deprecated and will be removed in a future version. The underlying REST operation is a vault-scoped collection action; call ResourceGroupResource.ExportAsync(WaitUntil, vaultName, content, ct) instead.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(WaitUntil waitUntil, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
@@ -71,12 +62,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <summary>
         /// The operation to export the details of the Azure Site Recovery jobs of the vault.
         /// </summary>
-        /// <remarks>
-        /// This API is deprecated. The underlying REST operation is a vault-scoped collection
-        /// action (it is not keyed by a specific job); use
-        /// <see cref="RecoveryServicesSiteRecoveryExtensions.Export(ResourceGroupResource, WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/>
-        /// (available via <c>ResourceGroupResource.Export</c>) instead.
-        /// </remarks>
         /// <param name="waitUntil">
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the
         /// long-running operation has completed on the service; <see cref="WaitUntil.Started"/>
@@ -85,8 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is deprecated and will be removed in a future version. The underlying REST operation is a vault-scoped collection action; call ResourceGroupResource.Export(WaitUntil, vaultName, content, ct) instead.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual ArmOperation<SiteRecoveryJobResource> Export(WaitUntil waitUntil, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
