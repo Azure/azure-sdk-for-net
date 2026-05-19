@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added Agent365 tracing export support with managed identity token acquisition when `FOUNDRY_AGENT365_TRACING_ENABLED` is set.
+- Added `AgentInstanceClientId`, `AgentBlueprintClientId`, `AgentTenantId`, and `IsAgent365TracingEnabled` properties to `FoundryEnvironment`.
+- Added `FoundryEnrichmentProcessor` attributes: `gen_ai.agent.blueprint.id`, `microsoft.tenant.id`, and `microsoft.foundry.agent.type` on telemetry spans.
+- Added `W3CBaggagePropagator` middleware that parses the W3C `baggage` header into `Activity.Baggage` on all target frameworks (net8.0, net9.0, net10.0).
+- Configured W3C Trace Context and Baggage propagators via `Sdk.SetDefaultTextMapPropagator` for outgoing request propagation.
+- Added conditional exporter registration: Azure Monitor, OTLP, and Agent365 exporters activate only when their respective environment variables are set.
 - Added `PlatformHeaders.ErrorSource` (`x-platform-error-source`), `PlatformHeaders.ErrorDetail`
   (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
   `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.

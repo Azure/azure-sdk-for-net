@@ -38,9 +38,13 @@ namespace Azure.AI.AgentServer.Core
     }
     public static partial class FoundryEnvironment
     {
+        public static string? AgentBlueprintClientId { get { throw null; } }
+        public static string? AgentInstanceClientId { get { throw null; } }
         public static string? AgentName { get { throw null; } }
+        public static string? AgentTenantId { get { throw null; } }
         public static string? AgentVersion { get { throw null; } }
         public static string? AppInsightsConnectionString { get { throw null; } }
+        public static bool IsAgent365TracingEnabled { get { throw null; } }
         public static bool IsHosted { get { throw null; } }
         public static string? OtlpEndpoint { get { throw null; } }
         public static int Port { get { throw null; } }

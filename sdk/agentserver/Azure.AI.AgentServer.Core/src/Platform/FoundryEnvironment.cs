@@ -88,6 +88,34 @@ public static class FoundryEnvironment
     /// </remarks>
     public static bool IsHosted { get; private set; }
 
+    /// <summary>
+    /// The managed identity client ID of the agent instance.
+    /// Sourced from the <c>FOUNDRY_AGENT_INSTANCE_CLIENT_ID</c> environment variable.
+    /// When present, this is used as the primary agent identifier for telemetry.
+    /// </summary>
+    public static string? AgentInstanceClientId { get; private set; }
+
+    /// <summary>
+    /// The managed identity client ID of the agent blueprint.
+    /// Sourced from the <c>FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID</c> environment variable.
+    /// Stamped as <c>gen_ai.agent.blueprint.id</c> on telemetry spans.
+    /// </summary>
+    public static string? AgentBlueprintClientId { get; private set; }
+
+    /// <summary>
+    /// The Microsoft Entra tenant ID of the agent.
+    /// Sourced from the <c>FOUNDRY_AGENT_TENANT_ID</c> environment variable.
+    /// Stamped as <c>microsoft.tenant.id</c> on telemetry spans.
+    /// </summary>
+    public static string? AgentTenantId { get; private set; }
+
+    /// <summary>
+    /// Indicates whether Agent365 tracing export is enabled.
+    /// Returns <c>true</c> when both <see cref="IsHosted"/> is <c>true</c> and the
+    /// <c>FOUNDRY_AGENT365_TRACING_ENABLED</c> environment variable is set to <c>"true"</c> (case-insensitive).
+    /// </summary>
+    public static bool IsAgent365TracingEnabled { get; private set; }
+
     static FoundryEnvironment() => Reload();
 
     /// <summary>
@@ -140,5 +168,14 @@ public static class FoundryEnvironment
         // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists
         // and is non-empty. This variable is injected by the Azure AI Foundry hosting infrastructure.
         IsHosted = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
+
+        // Agent identity env vars for A365 tracing.
+        AgentInstanceClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID");
+        AgentBlueprintClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID");
+        AgentTenantId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID");
+
+        // A365 tracing enabled when both hosted and explicitly opted in.
+        IsAgent365TracingEnabled = IsHosted
+            && string.Equals(Environment.GetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
     }
 }
