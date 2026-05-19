@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models
 {
     /// <summary> The response of a Database list operation. </summary>
     public partial class DatabaseListResult

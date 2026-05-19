@@ -6,7 +6,7 @@ using System;
 using System.Text.Json.Serialization;
 using Microsoft.Sql;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models
 {
     /// <summary> Database resource properties. </summary>
     public partial class DatabaseProperties
