@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,67 +17,134 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionModernChargeSummary : ConsumptionChargeSummary
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
-        public ConsumptionModernChargeSummary()
+        public ConsumptionModernChargeSummary() : base(ChargeSummaryKind.Modern)
         {
-            Kind = ChargeSummaryKind.Modern;
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Specifies the kind of charge summary. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
-        /// <param name="usageStart"> Usage start date. </param>
-        /// <param name="usageEnd"> Usage end date. </param>
-        /// <param name="azureCharges"> Azure Charges. </param>
-        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
-        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
-        /// <param name="billingAccountId"> Billing Account Id. </param>
-        /// <param name="billingProfileId"> Billing Profile Id. </param>
-        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
-        /// <param name="customerId"> Customer Id. </param>
-        /// <param name="isInvoiced"> Is charge Invoiced. </param>
-        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="properties"> Properties for modern charge summary. </param>
+        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, ETag? eTag, ModernChargeSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            BillingPeriodId = billingPeriodId;
-            UsageStart = usageStart;
-            UsageEnd = usageEnd;
-            AzureCharges = azureCharges;
-            ChargesBilledSeparately = chargesBilledSeparately;
-            MarketplaceCharges = marketplaceCharges;
-            BillingAccountId = billingAccountId;
-            BillingProfileId = billingProfileId;
-            InvoiceSectionId = invoiceSectionId;
-            CustomerId = customerId;
-            IsInvoiced = isInvoiced;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Properties for modern charge summary. </summary>
+        internal ModernChargeSummaryProperties Properties { get; set; }
+
         /// <summary> The id of the billing period resource that the charge belongs to. </summary>
-        public string BillingPeriodId { get; }
+        public string BillingPeriodId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPeriodId;
+            }
+        }
+
         /// <summary> Usage start date. </summary>
-        public string UsageStart { get; }
+        public string UsageStart
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsageStart;
+            }
+        }
+
         /// <summary> Usage end date. </summary>
-        public string UsageEnd { get; }
+        public string UsageEnd
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsageEnd;
+            }
+        }
+
         /// <summary> Azure Charges. </summary>
-        public ConsumptionAmount AzureCharges { get; }
+        public ConsumptionAmount AzureCharges
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureCharges;
+            }
+        }
+
         /// <summary> Charges Billed separately. </summary>
-        public ConsumptionAmount ChargesBilledSeparately { get; }
+        public ConsumptionAmount ChargesBilledSeparately
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChargesBilledSeparately;
+            }
+        }
+
         /// <summary> Marketplace Charges. </summary>
-        public ConsumptionAmount MarketplaceCharges { get; }
+        public ConsumptionAmount MarketplaceCharges
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceCharges;
+            }
+        }
+
         /// <summary> Billing Account Id. </summary>
-        public string BillingAccountId { get; }
+        public string BillingAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingAccountId;
+            }
+        }
+
         /// <summary> Billing Profile Id. </summary>
-        public string BillingProfileId { get; }
+        public string BillingProfileId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingProfileId;
+            }
+        }
+
         /// <summary> Invoice Section Id. </summary>
-        public string InvoiceSectionId { get; }
+        public string InvoiceSectionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InvoiceSectionId;
+            }
+        }
+
         /// <summary> Customer Id. </summary>
-        public string CustomerId { get; }
+        public string CustomerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerId;
+            }
+        }
+
         /// <summary> Is charge Invoiced. </summary>
-        public bool? IsInvoiced { get; }
+        public bool? IsInvoiced
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsInvoiced;
+            }
+        }
+
+        /// <summary> Subscription guid. </summary>
+        public string SubscriptionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionId;
+            }
+        }
     }
 }

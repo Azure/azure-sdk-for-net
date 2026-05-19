@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.NetApp
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
-        private readonly ClientDiagnostics _volumeGroupsClientDiagnostics;
-        private readonly VolumeGroups _volumeGroupsRestClient;
-        private readonly ClientDiagnostics _backupsUnderAccountClientDiagnostics;
-        private readonly BackupsUnderAccount _backupsUnderAccountRestClient;
 
         /// <summary> Initializes a new instance of NetAppAccountCollection for mocking. </summary>
         protected NetAppAccountCollection()
@@ -46,10 +42,6 @@ namespace Azure.ResourceManager.NetApp
             TryGetApiVersion(NetAppAccountResource.ResourceType, out string netAppAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
             _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, netAppAccountApiVersion ?? "2026-01-15-preview");
-            _volumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Endpoint, netAppAccountApiVersion ?? "2026-01-15-preview");
-            _backupsUnderAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-            _backupsUnderAccountRestClient = new BackupsUnderAccount(_backupsUnderAccountClientDiagnostics, Pipeline, Endpoint, netAppAccountApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
