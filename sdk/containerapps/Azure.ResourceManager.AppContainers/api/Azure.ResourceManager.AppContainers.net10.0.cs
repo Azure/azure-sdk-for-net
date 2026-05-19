@@ -639,16 +639,6 @@ namespace Azure.ResourceManager.AppContainers
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppContainers.ContainerAppDetectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppDetectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ContainerAppDetectorPropertyCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected ContainerAppDetectorPropertyCollection() { }
-        public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource> GetIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource>> GetIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ContainerAppDetectorPropertyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.ContainerAppData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.ContainerAppData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1242,16 +1232,6 @@ namespace Azure.ResourceManager.AppContainers
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.ContainerAppDiagnosticData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.ContainerAppDiagnosticData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContainerAppManagedEnvironmentDetectorResourcePropertyCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected ContainerAppManagedEnvironmentDetectorResourcePropertyCollection() { }
-        public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource> GetIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ContainerAppManagedEnvironmentDetectorResourcePropertyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1301,10 +1281,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDaprComponentCollection GetContainerAppManagedEnvironmentDaprComponents() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResource> GetContainerAppManagedEnvironmentDetector(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResource>> GetContainerAppManagedEnvironmentDetectorAsync(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyCollection GetContainerAppManagedEnvironmentDetectorResourceProperties() { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourceProperty() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource> GetContainerAppManagedEnvironmentDetectorResourceProperty(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetContainerAppManagedEnvironmentDetectorResourcePropertyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorCollection GetContainerAppManagedEnvironmentDetectors() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentStorageResource> GetContainerAppManagedEnvironmentStorage(string storageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentStorageResource>> GetContainerAppManagedEnvironmentStorageAsync(string storageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1514,10 +1491,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Azure.ResourceManager.AppContainers.ContainerAppAuthConfigCollection GetContainerAppAuthConfigs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorResource> GetContainerAppDetector(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorResource>> GetContainerAppDetectorAsync(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyCollection GetContainerAppDetectorProperties() { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource GetContainerAppDetectorProperty() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource> GetContainerAppDetectorProperty(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource>> GetContainerAppDetectorPropertyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyRevisionResource> GetContainerAppDetectorPropertyRevision(string revisionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyRevisionResource>> GetContainerAppDetectorPropertyRevisionAsync(string revisionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyRevisionCollection GetContainerAppDetectorPropertyRevisions() { throw null; }

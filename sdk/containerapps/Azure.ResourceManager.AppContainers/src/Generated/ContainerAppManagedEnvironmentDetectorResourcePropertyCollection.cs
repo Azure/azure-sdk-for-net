@@ -16,12 +16,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> and their operations.
-    /// Each <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
-    /// To get a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyCollection"/> instance call the GetContainerAppManagedEnvironmentDetectorResourceProperties method from an instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
-    /// </summary>
-    public partial class ContainerAppManagedEnvironmentDetectorResourcePropertyCollection : ArmCollection
+    internal partial class ContainerAppManagedEnvironmentDetectorResourcePropertyCollection : ArmCollection
     {
         private readonly ClientDiagnostics _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics;
         private readonly ContainerAppManagedEnvironmentDetectorResourceProperties _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient;

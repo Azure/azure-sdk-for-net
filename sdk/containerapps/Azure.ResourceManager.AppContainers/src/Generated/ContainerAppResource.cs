@@ -1400,29 +1400,6 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppAuthConfigs().Get(authConfigName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerAppDetectorProperties in the <see cref="ContainerAppResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppDetectorProperties and their operations over a ContainerAppDetectorPropertyResource. </returns>
-        public virtual ContainerAppDetectorPropertyCollection GetContainerAppDetectorProperties()
-        {
-            return GetCachedClient(client => new ContainerAppDetectorPropertyCollection(client, Id));
-        }
-
-        /// <summary> Get the properties of a Container App. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppDetectorPropertyResource>> GetContainerAppDetectorPropertyAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppDetectorProperties().GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the properties of a Container App. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppDetectorPropertyResource> GetContainerAppDetectorProperty(CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppDetectorProperties().Get(cancellationToken);
-        }
-
         /// <summary> Gets a collection of ContainerAppRevisions in the <see cref="ContainerAppResource"/>. </summary>
         /// <returns> An object representing collection of ContainerAppRevisions and their operations over a ContainerAppRevisionResource. </returns>
         public virtual ContainerAppRevisionCollection GetContainerAppRevisions()

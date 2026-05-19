@@ -1317,29 +1317,6 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppManagedEnvironmentStorages().Get(storageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerAppManagedEnvironmentDetectorResourceProperties in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppManagedEnvironmentDetectorResourceProperties and their operations over a ContainerAppManagedEnvironmentDetectorResourcePropertyResource. </returns>
-        public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyCollection GetContainerAppManagedEnvironmentDetectorResourceProperties()
-        {
-            return GetCachedClient(client => new ContainerAppManagedEnvironmentDetectorResourcePropertyCollection(client, Id));
-        }
-
-        /// <summary> Get the properties of a Managed Environment used to host container apps. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetContainerAppManagedEnvironmentDetectorResourcePropertyAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppManagedEnvironmentDetectorResourceProperties().GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the properties of a Managed Environment used to host container apps. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource> GetContainerAppManagedEnvironmentDetectorResourceProperty(CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppManagedEnvironmentDetectorResourceProperties().Get(cancellationToken);
-        }
-
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentCertificates in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentCertificates and their operations over a ContainerAppManagedEnvironmentCertificateResource. </returns>
         public virtual ContainerAppManagedEnvironmentCertificateCollection GetContainerAppManagedEnvironmentCertificates()
