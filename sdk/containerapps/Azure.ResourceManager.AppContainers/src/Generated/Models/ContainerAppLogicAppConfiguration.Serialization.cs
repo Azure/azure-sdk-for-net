@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppContainers;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The properties of logic apps extension. </summary>
-    public partial class ContainerAppLogicAppConfiguration : IJsonModel<ContainerAppLogicAppConfiguration>
+    internal partial class ContainerAppLogicAppConfiguration : IJsonModel<ContainerAppLogicAppConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

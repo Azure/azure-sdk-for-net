@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfileProperties"/>. </summary>
-        public ContainerAppAvailableWorkloadProfileProperties()
+        internal ContainerAppAvailableWorkloadProfileProperties()
         {
         }
 
@@ -43,26 +43,26 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Used to categorize workload profiles. </summary>
         [WirePath("category")]
-        public string Category { get; set; }
+        public string Category { get; }
 
         /// <summary> indicates whether the profile is default for the location. </summary>
         [WirePath("applicability")]
-        public ContainerAppAvailableWorkloadProfileApplicability? Applicability { get; set; }
+        public ContainerAppAvailableWorkloadProfileApplicability? Applicability { get; }
 
         /// <summary> Number of cores in CPU. </summary>
         [WirePath("cores")]
-        public int? Cores { get; set; }
+        public int? Cores { get; }
 
         /// <summary> Memory in GiB. </summary>
         [WirePath("memoryGiB")]
-        public int? MemoryInGiB { get; set; }
+        public int? MemoryInGiB { get; }
 
         /// <summary> Number of GPUs. </summary>
         [WirePath("gpus")]
-        public int? Gpus { get; set; }
+        public int? Gpus { get; }
 
         /// <summary> The everyday name of the workload profile. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogicAppWorkflowEnvelopeData"/>. </summary>
-        public LogicAppWorkflowEnvelopeData()
+        internal LogicAppWorkflowEnvelopeData()
         {
         }
 
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Additional workflow properties. </summary>
         [WirePath("properties")]
-        public LogicAppWorkflowEnvelopeProperties Properties { get; set; }
+        public LogicAppWorkflowEnvelopeProperties Properties { get; }
 
         /// <summary> Gets the logic app hybrid workflow kind. </summary>
         [WirePath("kind")]
-        public LogicAppWorkflowKind? Kind { get; set; }
+        public LogicAppWorkflowKind? Kind { get; }
     }
 }

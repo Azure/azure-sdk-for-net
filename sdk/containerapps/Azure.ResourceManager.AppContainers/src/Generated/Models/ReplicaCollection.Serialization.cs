@@ -14,6 +14,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
+    /// <summary> Container App Revision Replicas collection ARM resource. </summary>
     internal partial class ReplicaCollection : IJsonModel<ReplicaCollection>
     {
         /// <summary> Initializes a new instance of <see cref="ReplicaCollection"/> for deserialization. </summary>

@@ -13,52 +13,52 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> C# compatibility replacement for flattened blob storage token store settings. </summary>
-    internal partial class CSharpBlobStorageTokenStore : IJsonModel<CSharpBlobStorageTokenStore>
+    /// <summary> .NET app configuration. </summary>
+    internal partial class RuntimeDotnet : IJsonModel<RuntimeDotnet>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CSharpBlobStorageTokenStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RuntimeDotnet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpBlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeDotnet>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCSharpBlobStorageTokenStore(document.RootElement, options);
+                        return DeserializeRuntimeDotnet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CSharpBlobStorageTokenStore)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeDotnet)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpBlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeDotnet>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CSharpBlobStorageTokenStore)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeDotnet)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CSharpBlobStorageTokenStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RuntimeDotnet>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CSharpBlobStorageTokenStore IPersistableModel<CSharpBlobStorageTokenStore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RuntimeDotnet IPersistableModel<RuntimeDotnet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CSharpBlobStorageTokenStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RuntimeDotnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CSharpBlobStorageTokenStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RuntimeDotnet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpBlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeDotnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpBlobStorageTokenStore)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeDotnet)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AzureBlobStorageSasUrlSettingName))
+            if (Optional.IsDefined(AutoConfigureDataProtection))
             {
-                writer.WritePropertyName("sasUrlSettingName"u8);
-                writer.WriteStringValue(AzureBlobStorageSasUrlSettingName);
+                writer.WritePropertyName("autoConfigureDataProtection"u8);
+                writer.WriteBooleanValue(AutoConfigureDataProtection.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,36 +98,40 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CSharpBlobStorageTokenStore IJsonModel<CSharpBlobStorageTokenStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RuntimeDotnet IJsonModel<RuntimeDotnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CSharpBlobStorageTokenStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RuntimeDotnet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpBlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeDotnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpBlobStorageTokenStore)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeDotnet)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCSharpBlobStorageTokenStore(document.RootElement, options);
+            return DeserializeRuntimeDotnet(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CSharpBlobStorageTokenStore DeserializeCSharpBlobStorageTokenStore(JsonElement element, ModelReaderWriterOptions options)
+        internal static RuntimeDotnet DeserializeRuntimeDotnet(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string azureBlobStorageSasUrlSettingName = default;
+            bool? autoConfigureDataProtection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("sasUrlSettingName"u8))
+                if (prop.NameEquals("autoConfigureDataProtection"u8))
                 {
-                    azureBlobStorageSasUrlSettingName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoConfigureDataProtection = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CSharpBlobStorageTokenStore(azureBlobStorageSasUrlSettingName, additionalBinaryDataProperties);
+            return new RuntimeDotnet(autoConfigureDataProtection, additionalBinaryDataProperties);
         }
     }
 }

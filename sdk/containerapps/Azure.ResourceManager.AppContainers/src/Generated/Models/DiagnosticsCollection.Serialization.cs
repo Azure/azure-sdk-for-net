@@ -14,6 +14,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
+    /// <summary> Diagnostics data collection for a resource. </summary>
     internal partial class DiagnosticsCollection : IJsonModel<DiagnosticsCollection>
     {
         /// <summary> Initializes a new instance of <see cref="DiagnosticsCollection"/> for deserialization. </summary>

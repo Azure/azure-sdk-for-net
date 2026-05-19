@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppPrivateLink"/>. </summary>
-        public ContainerAppPrivateLink()
+        internal ContainerAppPrivateLink()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal AppContainersPrivateLinkResourceProperties Properties { get; set; }
+        internal AppContainersPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The private link resource group id. </summary>
         [WirePath("properties.groupId")]
@@ -57,11 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new AppContainersPrivateLinkResourceProperties();
-                }
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
@@ -71,11 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new AppContainersPrivateLinkResourceProperties();
-                }
-                return Properties.RequiredZoneNames;
+                return Properties is null ? default : Properties.RequiredZoneNames;
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReplicaProperties"/>. </summary>
-        public ReplicaProperties()
+        internal ReplicaProperties()
         {
             Containers = new ChangeTrackingList<ContainerAppReplicaContainer>();
             InitContainers = new ChangeTrackingList<ContainerAppReplicaContainer>();

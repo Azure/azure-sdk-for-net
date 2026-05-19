@@ -11,8 +11,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Revision resource specific properties. </summary>
     public partial class ContainerAppBillingMeterProperties
     {
+        private ContainerAppBillingMeterCategory? _category;
+
         /// <summary> billing category for container app. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory? Category { get => WorkloadProfileCategory; set => WorkloadProfileCategory = value?.ToString(); }
+        public ContainerAppBillingMeterCategory? Category
+        {
+            get => _category ?? WorkloadProfileCategory;
+            set => _category = value;
+        }
     }
 }

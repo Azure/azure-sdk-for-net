@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowErrorEntity"/>. </summary>
-        public WorkflowErrorEntity()
+        internal WorkflowErrorEntity()
         {
             Parameters = new ChangeTrackingList<string>();
             InnerErrors = new ChangeTrackingList<WorkflowErrorEntity>();
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Type of error. </summary>
         [WirePath("extendedCode")]
-        public string ExtendedCode { get; set; }
+        public string ExtendedCode { get; }
 
         /// <summary> Message template. </summary>
         [WirePath("messageTemplate")]
-        public string MessageTemplate { get; set; }
+        public string MessageTemplate { get; }
 
         /// <summary> Parameters for the template. </summary>
         [WirePath("parameters")]
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The error target. </summary>
         [WirePath("target")]
-        public string Target { get; set; }
+        public string Target { get; }
 
         /// <summary> Basic error code. </summary>
         [WirePath("code")]
-        public string Code { get; set; }
+        public string Code { get; }
 
         /// <summary> Any details of the error. </summary>
         [WirePath("message")]
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }

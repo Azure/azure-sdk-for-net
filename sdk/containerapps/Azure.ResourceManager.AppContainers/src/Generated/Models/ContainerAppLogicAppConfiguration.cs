@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The properties of logic apps extension. </summary>
-    public partial class ContainerAppLogicAppConfiguration
+    internal partial class ContainerAppLogicAppConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

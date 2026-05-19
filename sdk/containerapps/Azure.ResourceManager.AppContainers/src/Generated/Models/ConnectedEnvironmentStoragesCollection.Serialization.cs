@@ -14,6 +14,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
+    /// <summary> Collection of Storage for Environments. </summary>
     internal partial class ConnectedEnvironmentStoragesCollection : IJsonModel<ConnectedEnvironmentStoragesCollection>
     {
         /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStoragesCollection"/> for deserialization. </summary>

@@ -12,6 +12,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
+    /// <summary> Container App Revision Replicas collection ARM resource. </summary>
     internal partial class ReplicaCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class ContainerAppJobDetectorProperties
+    internal partial class JobDetectorProperties
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ContainerAppJobDetectorProperties for mocking. </summary>
-        protected ContainerAppJobDetectorProperties()
+        /// <summary> Initializes a new instance of JobDetectorProperties for mocking. </summary>
+        protected JobDetectorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobDetectorProperties. </summary>
+        /// <summary> Initializes a new instance of JobDetectorProperties. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ContainerAppJobDetectorProperties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal JobDetectorProperties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateProxyGetRequest(Guid subscriptionId, string resourceGroupName, string jobName, string apiName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string jobName, string apiName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

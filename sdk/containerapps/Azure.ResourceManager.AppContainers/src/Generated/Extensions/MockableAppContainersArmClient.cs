@@ -327,6 +327,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppJobExecutionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
+        public virtual ContainerAppJobDetectorPropertyResource GetContainerAppJobDetectorPropertyResource(ResourceIdentifier id)
+        {
+            ContainerAppJobDetectorPropertyResource.ValidateResourceId(id);
+            return new ContainerAppJobDetectorPropertyResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
@@ -424,15 +433,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppHttpRouteConfigResource.ValidateResourceId(id);
             return new ContainerAppHttpRouteConfigResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
-        public virtual ContainerAppJobDetectorPropertyResource GetContainerAppJobDetectorPropertyResource(ResourceIdentifier id)
-        {
-            ContainerAppJobDetectorPropertyResource.ValidateResourceId(id);
-            return new ContainerAppJobDetectorPropertyResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>

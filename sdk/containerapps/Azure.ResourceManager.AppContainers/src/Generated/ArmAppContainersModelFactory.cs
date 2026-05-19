@@ -211,6 +211,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Session pool collection Azure resource. </summary>
+        /// <param name="value"> The SessionPool items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.SessionPoolCollection"/> instance for mocking. </returns>
+        public static SessionPoolCollection SessionPoolCollection(IEnumerable<SessionPoolData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SessionPoolData>();
+
+            return new SessionPoolCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The credentials used for the MCP server endpoint authentication. </summary>
         /// <param name="apiKey"> The API key for the MCP server. </param>
         /// <returns> A new <see cref="Models.McpServerCredential"/> instance for mocking. </returns>
@@ -334,39 +345,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 identity,
                 managedBy,
                 kind);
-        }
-
-        /// <param name="secrets"> Collection of secrets used by a Container app. </param>
-        /// <param name="activeRevisionsMode"> Controls how active revisions are handled for the Container app. </param>
-        /// <param name="targetLabel"> Required in labels revisions mode. Label to apply to newly created revision. </param>
-        /// <param name="ingress"> Ingress configurations. </param>
-        /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
-        /// <param name="dapr"> Dapr configuration for the Container App. </param>
-        /// <param name="enableMetrics"> Enable jmx core metrics for the java app. </param>
-        /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
-        /// <param name="revisionTransitionThreshold"> Optional. The percent of the total number of replicas that must be brought up before revision transition occurs. Defaults to 100 when none is given. Value must be greater than 0 and less than or equal to 100. </param>
-        /// <param name="serviceType"> Dev ContainerApp service type. </param>
-        /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
-        /// <returns> A new <see cref="Models.ContainerAppConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppConfiguration ContainerAppConfiguration(IEnumerable<ContainerAppWritableSecret> secrets = default, ContainerAppActiveRevisionsMode? activeRevisionsMode = default, string targetLabel = default, ContainerAppIngressConfiguration ingress = default, IEnumerable<ContainerAppRegistryCredentials> registries = default, ContainerAppDaprConfiguration dapr = default, bool? enableMetrics = default, int? maxInactiveRevisions = default, int? revisionTransitionThreshold = default, string serviceType = default, IEnumerable<ContainerAppIdentitySettings> identitySettings = default)
-        {
-            secrets ??= new ChangeTrackingList<ContainerAppWritableSecret>();
-            registries ??= new ChangeTrackingList<ContainerAppRegistryCredentials>();
-            identitySettings ??= new ChangeTrackingList<ContainerAppIdentitySettings>();
-
-            return new ContainerAppConfiguration(
-                secrets.ToList(),
-                activeRevisionsMode,
-                targetLabel,
-                ingress,
-                registries.ToList(),
-                dapr,
-                enableMetrics is null ? default : new CSharpRuntime(new CSharpRuntimeJava(enableMetrics, null), null),
-                maxInactiveRevisions,
-                revisionTransitionThreshold,
-                serviceType is null ? default : new Service(serviceType, null),
-                identitySettings.ToList(),
-                additionalBinaryDataProperties: null);
         }
 
         /// <param name="fqdn"> Hostname. </param>
@@ -702,6 +680,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppServiceBind(serviceId, name, clientType, customizedKeys, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App collection ARM resource. </summary>
+        /// <param name="value"> The ContainerApp items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ContainerAppCollection"/> instance for mocking. </returns>
+        public static ContainerAppCollection ContainerAppCollection(IEnumerable<ContainerAppData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ContainerAppData>();
+
+            return new ContainerAppCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Custom domain analysis. </summary>
         /// <param name="hostName"> Host name that was analyzed. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -888,6 +877,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 invokeUrlTemplate is null && triggerType is null && language is null && isDisabled is null ? default : new ContainerAppsFunctionProperties(invokeUrlTemplate, triggerType, language, isDisabled, null));
+        }
+
+        /// <summary> Container App Functions collection ARM resource. </summary>
+        /// <param name="value"> The ContainerAppsFunction items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ContainerAppsFunctionCollection"/> instance for mocking. </returns>
+        public static ContainerAppsFunctionCollection ContainerAppsFunctionCollection(IEnumerable<ContainerAppsFunctionData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ContainerAppsFunctionData>();
+
+            return new ContainerAppsFunctionCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1259,6 +1259,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             filesToDelete ??= new ChangeTrackingList<string>();
 
             return new WorkflowArtifacts(appSettings, files, filesToDelete.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Additional workflow properties. </summary>
+        /// <param name="files"> Gets or sets the files. </param>
+        /// <param name="flowState"> Gets or sets the state of the workflow. </param>
+        /// <param name="health"> Gets or sets workflow health. </param>
+        /// <returns> A new <see cref="Models.LogicAppWorkflowEnvelopeProperties"/> instance for mocking. </returns>
+        public static LogicAppWorkflowEnvelopeProperties LogicAppWorkflowEnvelopeProperties(BinaryData files = default, LogicAppWorkflowState? flowState = default, LogicAppWorkflowHealth health = default)
+        {
+            return new LogicAppWorkflowEnvelopeProperties(files, flowState, health, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the workflow health. </summary>
+        /// <param name="state"> Gets or sets the workflow health state. </param>
+        /// <param name="error"> Gets or sets the workflow error. </param>
+        /// <returns> A new <see cref="Models.LogicAppWorkflowHealth"/> instance for mocking. </returns>
+        public static LogicAppWorkflowHealth LogicAppWorkflowHealth(LogicAppWorkflowHealthState state = default, WorkflowErrorEntity error = default)
+        {
+            return new LogicAppWorkflowHealth(state, error, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Body of the error response returned from the API. </summary>
@@ -1779,6 +1798,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 properties);
         }
 
+        /// <summary> Workload Profile resource specific properties. </summary>
+        /// <param name="minimumCount"> Minimum count of instances. </param>
+        /// <param name="maximumCount"> Maximum count of nodes. </param>
+        /// <param name="currentCount"> Current count of nodes. </param>
+        /// <returns> A new <see cref="Models.ContainerAppWorkloadProfileStateProperties"/> instance for mocking. </returns>
+        public static ContainerAppWorkloadProfileStateProperties ContainerAppWorkloadProfileStateProperties(int? minimumCount = default, int? maximumCount = default, int? currentCount = default)
+        {
+            return new ContainerAppWorkloadProfileStateProperties(minimumCount, maximumCount, currentCount, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Storage resource for connectedEnvironment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2297,6 +2326,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                     null));
         }
 
+        /// <summary> Collection of AppResiliency policies. </summary>
+        /// <param name="value"> The AppResiliency items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.AppResiliencyCollection"/> instance for mocking. </returns>
+        public static AppResiliencyCollection AppResiliencyCollection(IEnumerable<AppResiliencyData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<AppResiliencyData>();
+
+            return new AppResiliencyCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Build Auth Token. </summary>
         /// <param name="token"> Authentication token. </param>
         /// <param name="expiresOn"> Token expiration date. </param>
@@ -2578,6 +2618,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDiagnosticSupportTopic(id, pesId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Diagnostics data returned from a detector. </summary>
+        /// <param name="table"> Table response. </param>
+        /// <param name="renderingProperties"> Details of the table response. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsDataApiResult"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticsDataApiResult ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table = default, ContainerAppDiagnosticRendering renderingProperties = default)
+        {
+            return new ContainerAppDiagnosticsDataApiResult(table, renderingProperties, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Diagnostics data table. </summary>
         /// <param name="tableName"> Table name. </param>
         /// <param name="columns"> Columns in the table. </param>
@@ -2591,6 +2640,36 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDiagnosticDataTableResult(tableName, columns.ToList(), rows.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Diagnostics data column. </summary>
+        /// <param name="columnName"> Column name. </param>
+        /// <param name="dataType"> Data type of the column. </param>
+        /// <param name="columnType"> Column type. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataColumn"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticDataColumn ContainerAppDiagnosticDataColumn(string columnName = default, string dataType = default, string columnType = default)
+        {
+            return new ContainerAppDiagnosticDataColumn(columnName, dataType, columnType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Rendering details of a diagnostics table. </summary>
+        /// <param name="diagnosticRenderingType"> Rendering type. </param>
+        /// <param name="title"> Title of the table. </param>
+        /// <param name="description"> Description of the table. </param>
+        /// <param name="isVisible"> Flag if the table should be rendered. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticRendering"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticRendering ContainerAppDiagnosticRendering(int? diagnosticRenderingType = default, string title = default, string description = default, bool? isVisible = default)
+        {
+            return new ContainerAppDiagnosticRendering(diagnosticRenderingType, title, description, isVisible, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Rendering details of a diagnostics table. </summary>
+        /// <param name="message"> Diagnostic message. </param>
+        /// <param name="statusId"> Status. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsStatus"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticsStatus ContainerAppDiagnosticsStatus(string message = default, int? statusId = default)
+        {
+            return new ContainerAppDiagnosticsStatus(message, statusId, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Details of a diagnostics data provider. </summary>
         /// <param name="providerName"> Name of data provider. </param>
         /// <param name="propertyBag"> Collection of properties. </param>
@@ -2600,6 +2679,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             propertyBag ??= new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
 
             return new ContainerAppDiagnosticDataProviderMetadata(providerName, propertyBag.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Property details. </summary>
+        /// <param name="name"> Property name. </param>
+        /// <param name="value"> Property value. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticDataProviderMetadataPropertyBagItem ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name = default, string value = default)
+        {
+            return new ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(name, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A workload profile with specific hardware configure to run container apps. </summary>
@@ -2622,6 +2710,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 properties);
         }
 
+        /// <summary> Revision resource specific properties. </summary>
+        /// <param name="category"> Used to categorize workload profiles. </param>
+        /// <param name="applicability"> indicates whether the profile is default for the location. </param>
+        /// <param name="cores"> Number of cores in CPU. </param>
+        /// <param name="memoryInGiB"> Memory in GiB. </param>
+        /// <param name="gpus"> Number of GPUs. </param>
+        /// <param name="displayName"> The everyday name of the workload profile. </param>
+        /// <returns> A new <see cref="Models.ContainerAppAvailableWorkloadProfileProperties"/> instance for mocking. </returns>
+        public static ContainerAppAvailableWorkloadProfileProperties ContainerAppAvailableWorkloadProfileProperties(string category = default, ContainerAppAvailableWorkloadProfileApplicability? applicability = default, int? cores = default, int? memoryInGiB = default, int? gpus = default, string displayName = default)
+        {
+            return new ContainerAppAvailableWorkloadProfileProperties(
+                category,
+                applicability,
+                cores,
+                memoryInGiB,
+                gpus,
+                displayName,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Billing meter. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2640,6 +2748,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 additionalBinaryDataProperties: null,
                 location,
                 properties);
+        }
+
+        /// <summary> Revision resource specific properties. </summary>
+        /// <param name="workloadProfileCategory"> Used to categorize billing meters. </param>
+        /// <param name="meterType"> Billing meter type. </param>
+        /// <param name="displayName"> The everyday name of the billing meter. </param>
+        /// <returns> A new <see cref="Models.ContainerAppBillingMeterProperties"/> instance for mocking. </returns>
+        public static ContainerAppBillingMeterProperties ContainerAppBillingMeterProperties(string workloadProfileCategory = default, string meterType = default, string displayName = default)
+        {
+            return new ContainerAppBillingMeterProperties(workloadProfileCategory, meterType, displayName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes Compute Resource Usage. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/>. </summary>
-        public ContainerAppDiagnosticDataProviderMetadataPropertyBagItem()
+        internal ContainerAppDiagnosticDataProviderMetadataPropertyBagItem()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Property name. </summary>
         [WirePath("name")]
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Property value. </summary>
         [WirePath("value")]
-        public string Value { get; set; }
+        public string Value { get; }
     }
 }

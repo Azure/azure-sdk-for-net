@@ -11,28 +11,34 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> C# compatibility replacement for flattened Java runtime settings. </summary>
-    internal partial class CSharpRuntimeJava
+    /// <summary> Java app configuration. </summary>
+    internal partial class RuntimeJava
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CSharpRuntimeJava"/>. </summary>
-        public CSharpRuntimeJava()
+        /// <summary> Initializes a new instance of <see cref="RuntimeJava"/>. </summary>
+        public RuntimeJava()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CSharpRuntimeJava"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeJava"/>. </summary>
         /// <param name="enableMetrics"> Enable jmx core metrics for the java app. </param>
+        /// <param name="javaAgent"> Diagnostic capabilities achieved by java agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CSharpRuntimeJava(bool? enableMetrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeJava(bool? enableMetrics, RuntimeJavaJavaAgent javaAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableMetrics = enableMetrics;
+            JavaAgent = javaAgent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable jmx core metrics for the java app. </summary>
         [WirePath("enableMetrics")]
         public bool? EnableMetrics { get; set; }
+
+        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+        [WirePath("javaAgent")]
+        public RuntimeJavaJavaAgent JavaAgent { get; set; }
     }
 }

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobDetectorPropertyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _containerAppJobDetectorPropertiesClientDiagnostics;
-        private readonly ContainerAppJobDetectorProperties _containerAppJobDetectorPropertiesRestClient;
+        private readonly ClientDiagnostics _jobDetectorPropertiesClientDiagnostics;
+        private readonly JobDetectorProperties _jobDetectorPropertiesRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppJobDetectorPropertyCollection for mocking. </summary>
         protected ContainerAppJobDetectorPropertyCollection()
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppJobDetectorPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerAppJobDetectorPropertyResource.ResourceType, out string containerAppJobDetectorPropertyApiVersion);
-            _containerAppJobDetectorPropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
-            _containerAppJobDetectorPropertiesRestClient = new ContainerAppJobDetectorProperties(_containerAppJobDetectorPropertiesClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2025-10-02-preview");
+            _jobDetectorPropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
+            _jobDetectorPropertiesRestClient = new JobDetectorProperties(_jobDetectorPropertiesClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;

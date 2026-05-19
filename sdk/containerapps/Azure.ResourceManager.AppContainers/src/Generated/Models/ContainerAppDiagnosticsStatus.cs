@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsStatus"/>. </summary>
-        public ContainerAppDiagnosticsStatus()
+        internal ContainerAppDiagnosticsStatus()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Diagnostic message. </summary>
         [WirePath("message")]
-        public string Message { get; set; }
+        public string Message { get; }
 
         /// <summary> Status. </summary>
         [WirePath("statusId")]
-        public int? StatusId { get; set; }
+        public int? StatusId { get; }
     }
 }

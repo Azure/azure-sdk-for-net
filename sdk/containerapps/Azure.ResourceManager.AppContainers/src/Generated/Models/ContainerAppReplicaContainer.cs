@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaContainer"/>. </summary>
-        public ContainerAppReplicaContainer()
+        internal ContainerAppReplicaContainer()
         {
         }
 
@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The Name of the Container. </summary>
         [WirePath("name")]
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The Id of the Container. </summary>
         [WirePath("containerId")]
-        public string ContainerId { get; set; }
+        public string ContainerId { get; }
 
         /// <summary> The container ready status. </summary>
         [WirePath("ready")]
-        public bool? IsReady { get; set; }
+        public bool? IsReady { get; }
 
         /// <summary> The container start status. </summary>
         [WirePath("started")]
-        public bool? IsStarted { get; set; }
+        public bool? IsStarted { get; }
 
         /// <summary> The container restart count. </summary>
         [WirePath("restartCount")]
-        public int? RestartCount { get; set; }
+        public int? RestartCount { get; }
 
         /// <summary> Current running state of the container. </summary>
         [WirePath("runningState")]

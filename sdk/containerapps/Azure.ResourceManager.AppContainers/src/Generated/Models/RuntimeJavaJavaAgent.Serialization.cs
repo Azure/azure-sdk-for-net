@@ -13,52 +13,52 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> C# compatibility replacement for flattened Java runtime settings. </summary>
-    internal partial class CSharpRuntimeJava : IJsonModel<CSharpRuntimeJava>
+    /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+    internal partial class RuntimeJavaJavaAgent : IJsonModel<RuntimeJavaJavaAgent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CSharpRuntimeJava PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RuntimeJavaJavaAgent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpRuntimeJava>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeJavaJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCSharpRuntimeJava(document.RootElement, options);
+                        return DeserializeRuntimeJavaJavaAgent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CSharpRuntimeJava)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeJavaJavaAgent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpRuntimeJava>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeJavaJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CSharpRuntimeJava)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeJavaJavaAgent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CSharpRuntimeJava>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RuntimeJavaJavaAgent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CSharpRuntimeJava IPersistableModel<CSharpRuntimeJava>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RuntimeJavaJavaAgent IPersistableModel<RuntimeJavaJavaAgent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CSharpRuntimeJava>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RuntimeJavaJavaAgent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CSharpRuntimeJava>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RuntimeJavaJavaAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpRuntimeJava>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeJavaJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpRuntimeJava)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeJavaJavaAgent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableMetrics))
+            if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enableMetrics"u8);
-                writer.WriteBooleanValue(EnableMetrics.Value);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
+            }
+            if (Optional.IsDefined(Logging))
+            {
+                writer.WritePropertyName("logging"u8);
+                writer.WriteObjectValue(Logging, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,40 +103,50 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CSharpRuntimeJava IJsonModel<CSharpRuntimeJava>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RuntimeJavaJavaAgent IJsonModel<RuntimeJavaJavaAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CSharpRuntimeJava JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RuntimeJavaJavaAgent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CSharpRuntimeJava>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeJavaJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpRuntimeJava)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeJavaJavaAgent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCSharpRuntimeJava(document.RootElement, options);
+            return DeserializeRuntimeJavaJavaAgent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CSharpRuntimeJava DeserializeCSharpRuntimeJava(JsonElement element, ModelReaderWriterOptions options)
+        internal static RuntimeJavaJavaAgent DeserializeRuntimeJavaJavaAgent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enableMetrics = default;
+            bool? enabled = default;
+            RuntimeJavaJavaAgentLogging logging = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enableMetrics"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableMetrics = prop.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("logging"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logging = RuntimeJavaJavaAgentLogging.DeserializeRuntimeJavaJavaAgentLogging(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CSharpRuntimeJava(enableMetrics, additionalBinaryDataProperties);
+            return new RuntimeJavaJavaAgent(enabled, logging, additionalBinaryDataProperties);
         }
     }
 }

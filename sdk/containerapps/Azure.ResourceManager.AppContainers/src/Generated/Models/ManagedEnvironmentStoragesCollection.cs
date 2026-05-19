@@ -12,6 +12,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
+    /// <summary> Collection of Storage for Environments. </summary>
     internal partial class ManagedEnvironmentStoragesCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

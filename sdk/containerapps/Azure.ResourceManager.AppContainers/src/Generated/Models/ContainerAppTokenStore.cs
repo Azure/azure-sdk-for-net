@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, CSharpBlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, BlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
@@ -57,24 +57,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
         [WirePath("azureBlobStorage")]
-        internal CSharpBlobStorageTokenStore AzureBlobStorage { get; set; }
-
-        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
-        [WirePath("azureBlobStorage.sasUrlSettingName")]
-        public string AzureBlobStorageSasUrlSettingName
-        {
-            get
-            {
-                return AzureBlobStorage is null ? default : AzureBlobStorage.AzureBlobStorageSasUrlSettingName;
-            }
-            set
-            {
-                if (AzureBlobStorage is null)
-                {
-                    AzureBlobStorage = new CSharpBlobStorageTokenStore();
-                }
-                AzureBlobStorage.AzureBlobStorageSasUrlSettingName = value;
-            }
-        }
+        internal BlobStorageTokenStore AzureBlobStorage { get; set; }
     }
 }

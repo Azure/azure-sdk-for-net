@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobDetectorPropertyResource : ArmResource
     {
-        private readonly ClientDiagnostics _containerAppJobDetectorPropertiesClientDiagnostics;
-        private readonly ContainerAppJobDetectorProperties _containerAppJobDetectorPropertiesRestClient;
+        private readonly ClientDiagnostics _jobDetectorPropertiesClientDiagnostics;
+        private readonly JobDetectorProperties _jobDetectorPropertiesRestClient;
         private readonly ContainerAppJobData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/jobs/detectorProperties";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppJobDetectorPropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string containerAppJobDetectorPropertyApiVersion);
-            _containerAppJobDetectorPropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppJobDetectorPropertiesRestClient = new ContainerAppJobDetectorProperties(_containerAppJobDetectorPropertiesClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2025-10-02-preview");
+            _jobDetectorPropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _jobDetectorPropertiesRestClient = new JobDetectorProperties(_jobDetectorPropertiesClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppJobDetectorPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyResource.Get");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_ProxyGet. </description>
+        /// <description> JobDetectorProperties_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppJobDetectorPropertyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppJobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyResource.Get");
+            using DiagnosticScope scope = _jobDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorPropertiesRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _jobDetectorPropertiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)

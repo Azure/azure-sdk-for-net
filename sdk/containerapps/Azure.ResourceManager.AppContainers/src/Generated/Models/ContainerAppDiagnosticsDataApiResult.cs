@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsDataApiResult"/>. </summary>
-        public ContainerAppDiagnosticsDataApiResult()
+        internal ContainerAppDiagnosticsDataApiResult()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Table response. </summary>
         [WirePath("table")]
-        public ContainerAppDiagnosticDataTableResult Table { get; set; }
+        public ContainerAppDiagnosticDataTableResult Table { get; }
 
         /// <summary> Details of the table response. </summary>
         [WirePath("renderingProperties")]
-        public ContainerAppDiagnosticRendering RenderingProperties { get; set; }
+        public ContainerAppDiagnosticRendering RenderingProperties { get; }
     }
 }
