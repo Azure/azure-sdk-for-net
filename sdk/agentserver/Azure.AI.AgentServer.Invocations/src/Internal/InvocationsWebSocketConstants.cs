@@ -8,11 +8,12 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// RFC 6455 close codes, and structured-log <c>extra</c> field keys.
 /// </summary>
 /// <remarks>
-/// Mirrors the Python <c>InvocationsWSConstants</c> class so the wire
-/// contract (route path, close codes, structured-log field names) is identical
-/// across language SDKs. The <c>AttrSpan*</c> field names are kept for
-/// cross-language parity; they read as OTel-style attribute keys but are
-/// actually used as <c>extra</c> keys on the close-event log record.
+/// The route path, close codes, and structured-log field names are part of
+/// the cross-language <c>invocations_ws</c> wire contract; keep them in
+/// lock-step with the same set surfaced by other SDKs implementing the
+/// protocol. The <c>AttrSpan*</c> field names read as OTel-style attribute
+/// keys but are actually used as <c>extra</c> keys on the close-event log
+/// record (the WS endpoint does not create framework-level spans).
 /// </remarks>
 internal static class InvocationsWebSocketConstants
 {

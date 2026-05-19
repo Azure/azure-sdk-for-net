@@ -68,12 +68,12 @@ public static class FoundryEnvironment
     /// option explicitly to honour the spec's "disabled by default" contract).
     /// </summary>
     /// <remarks>
-    /// Hypercorn's <c>websocket_ping_interval</c> setting on the Python side
-    /// maps to ASP.NET Core's <c>WebSocketOptions.KeepAliveInterval</c>: both
-    /// emit RFC 6455 protocol-level Ping frames (opcode <c>0x9</c>) at the
-    /// configured cadence. The Foundry hosting platform auto-injects this env
-    /// var; configure it locally to test long-lived WS connections through
-    /// idle-timeout-aware intermediaries (e.g., APIM, Azure Load Balancer).
+    /// Wired into ASP.NET Core's <c>WebSocketOptions.KeepAliveInterval</c> so a
+    /// positive value emits RFC 6455 protocol-level Ping frames (opcode
+    /// <c>0x9</c>) at the configured cadence. The Foundry hosting platform
+    /// auto-injects this env var; configure it locally to test long-lived WS
+    /// connections through idle-timeout-aware intermediaries (e.g., APIM,
+    /// Azure Load Balancer).
     /// </remarks>
     public static TimeSpan WebSocketKeepAliveInterval { get; private set; }
 
@@ -157,7 +157,7 @@ public static class FoundryEnvironment
                 : Timeout.InfiniteTimeSpan;
 
         // WebSocket keep-alive: disabled (InfiniteTimeSpan) unless a positive integer seconds value is set.
-        // Matches the Python `WS_KEEPALIVE_INTERVAL` env var; wired to Kestrel's `WebSocketOptions.KeepAliveInterval`.
+        // Read from `WS_KEEPALIVE_INTERVAL`; wired to Kestrel's `WebSocketOptions.KeepAliveInterval`.
         var wsEnv = Environment.GetEnvironmentVariable("WS_KEEPALIVE_INTERVAL");
         WebSocketKeepAliveInterval = !string.IsNullOrEmpty(wsEnv)
             && int.TryParse(wsEnv, out var wsSeconds)

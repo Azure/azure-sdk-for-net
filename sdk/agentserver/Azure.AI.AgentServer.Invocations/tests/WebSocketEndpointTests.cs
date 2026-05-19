@@ -16,9 +16,8 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests;
 
 /// <summary>
-/// End-to-end tests for the <c>/invocations_ws</c> (WebSocket) protocol —
-/// symmetric to the Python <c>tests/test_ws_*.py</c> suite. Covers:
-/// 404 when the handler does not implement WS; clean echo round-trip;
+/// End-to-end tests for the <c>/invocations_ws</c> (WebSocket) protocol.
+/// Covers: 404 when the handler does not implement WS; clean echo round-trip;
 /// uncaught exception → close code 1011; handler-initiated close passes
 /// through; session ID precedence (env var vs UUID fallback); plain HTTP
 /// to a WS endpoint → 400.

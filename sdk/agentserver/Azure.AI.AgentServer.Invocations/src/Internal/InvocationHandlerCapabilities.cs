@@ -13,11 +13,11 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// <see cref="InvocationHandler.HandleWebSocketAsync"/>.
 /// </summary>
 /// <remarks>
-/// <para>Matches the Python side's lazy <c>WebSocketRoute</c> registration:
-/// when the handler does not implement the WS protocol, the endpoint
-/// short-circuits to HTTP 404, so a client attempting a WebSocket upgrade
-/// receives the same "endpoint not registered" signal it would on the
-/// Python host.</para>
+/// <para>Drives the lazy <c>/invocations_ws</c> route gate: when the handler
+/// does not implement the WS protocol, the endpoint short-circuits to HTTP
+/// 404, so a client attempting a WebSocket upgrade receives an
+/// "endpoint not registered" signal rather than a 101 Switching Protocols
+/// followed by an immediate close.</para>
 /// <para>The lookup is cached per <see cref="Type"/> so the reflection
 /// cost is paid once per handler type, not per request.</para>
 /// </remarks>

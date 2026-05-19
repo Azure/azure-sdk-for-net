@@ -94,7 +94,7 @@ ws.onopen    = () => ws.send("hello from the browser");
 
 ## What the SDK does for you
 
-- **Lazy route registration.** The `/invocations_ws` route is only active when the handler overrides `HandleWebSocketAsync`. Handlers that don't (Samples 1–7) return HTTP `404 Not Found` for upgrade attempts — exactly as Python's `@app.ws_handler` registration model behaves.
+- **Lazy route registration.** The `/invocations_ws` route is only active when the handler overrides `HandleWebSocketAsync`. Handlers that don't (Samples 1–7) return HTTP `404 Not Found` for upgrade attempts.
 - **Accept the upgrade.** The SDK calls `AcceptWebSocketAsync` before invoking your handler — you receive an already-open `WebSocket`.
 - **Map exit codes.** A clean return maps to RFC 6455 close code `1000` (`NormalClosure`); an uncaught handler exception maps to `1011` (`InternalServerError`). Handler-initiated `CloseAsync` codes are preserved unchanged.
 - **Honour `FOUNDRY_AGENT_SESSION_ID`.** The session ID injected by the Foundry hosting platform is reused so HTTP and WS turns on the same container correlate to the same session. A fresh UUID is used when the env var is unset (local dev).

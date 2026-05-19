@@ -11,9 +11,8 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 
 /// <summary>
 /// ASP.NET Core endpoint handler that owns the <c>/invocations_ws</c>
-/// WebSocket lifecycle. Mirrors the Python <c>_WSHandlerMixin._ws_endpoint</c>
-/// after <see href="https://github.com/Azure/azure-sdk-for-python/pull/46973"/>:
-/// accept → dispatch → close-with-mapped-code → structured close-event log line.
+/// WebSocket lifecycle: accept → dispatch → close-with-mapped-code →
+/// structured close-event log line.
 /// </summary>
 /// <remarks>
 /// No framework-level OpenTelemetry span is created for the connection.
@@ -47,8 +46,9 @@ internal sealed class WebSocketEndpointHandler
     internal async Task HandleAsync(HttpContext httpContext, InvocationHandler handler)
     {
         // If the handler has not opted in to the WS protocol, refuse the upgrade
-        // with HTTP 404 — equivalent to Python's "route not registered" 404 when
-        // no @ws_handler has been decorated.
+        // with HTTP 404. The route is mapped unconditionally so this short-circuit
+        // — equivalent to "endpoint not registered" — keeps the upgrade decision
+        // colocated with the handler-capability check.
         if (!InvocationHandlerCapabilities.SupportsWebSocket(handler.GetType()))
         {
             httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
@@ -66,7 +66,9 @@ internal sealed class WebSocketEndpointHandler
         // Per-connection identifiers. Honour the platform-injected
         // FOUNDRY_AGENT_SESSION_ID so HTTP and WebSocket transports on the same
         // container report the same session ID; fall back to a fresh UUID when
-        // the platform does not inject one. Matches the Python behavior.
+        // the platform does not inject one. Matches the HTTP precedence used by
+        // POST /invocations (minus the agent_session_id query-param override,
+        // which has no ergonomic equivalent on a long-lived WS connection).
         var sessionId = !string.IsNullOrEmpty(FoundryEnvironment.SessionId)
             ? FoundryEnvironment.SessionId!
             : Guid.NewGuid().ToString();
@@ -146,7 +148,8 @@ internal sealed class WebSocketEndpointHandler
             {
                 // Handler exception details flow through this LogError(...) only —
                 // they are deliberately NOT included in the close-event log line
-                // (mirrors Python PR #46973 / test_ws_close_event_log_does_not_leak_exception_message).
+                // so application stack traces never leak into the structured
+                // metric stream.
                 _logger.LogError(
                     ex,
                     "WebSocket handler raised for session {SessionId}",
@@ -213,8 +216,9 @@ internal sealed class WebSocketEndpointHandler
         // 1:1 with the keys defined in InvocationsWebSocketConstants so log
         // <-> trace correlation in OTel logging bridges is trivial. Exception
         // details (when an error_code is set) are NOT included here; they
-        // flow through LogError(ex, ...) at the call site instead. This matches
-        // the Python contract enforced by test_ws_close_event_log_does_not_leak_exception_message.
+        // flow through LogError(ex, ...) at the call site instead, by contract:
+        // application stack traces must never leak into the structured close-event
+        // log line.
         if (errorCode is null)
         {
             _logger.LogInformation(

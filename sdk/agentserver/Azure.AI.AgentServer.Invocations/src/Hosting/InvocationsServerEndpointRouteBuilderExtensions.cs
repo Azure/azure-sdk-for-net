@@ -78,8 +78,9 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
 
         // /invocations_ws — WebSocket transport.
         // Endpoint short-circuits to 404 when the handler does not override
-        // `InvocationHandler.HandleWebSocketAsync`, matching the Python "route
-        // not registered" 404 behaviour for hosts without a registered handler.
+        // `InvocationHandler.HandleWebSocketAsync`, so an upgrade attempt
+        // against a host without a registered WS handler fails fast with
+        // "endpoint not registered".
         group.Map(InvocationsWebSocketConstants.RoutePath, async (
             HttpContext httpContext,
             WebSocketEndpointHandler handler,
