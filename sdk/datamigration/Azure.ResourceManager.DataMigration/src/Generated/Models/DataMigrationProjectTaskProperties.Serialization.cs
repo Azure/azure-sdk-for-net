@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Base class for all types of DMS (classic) task properties. If task is not supported by current client, this object is returned.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="CheckOciDriverTaskProperties"/>, <see cref="UploadOciDriverTaskProperties"/>, <see cref="InstallOciDriverTaskProperties"/>, <see cref="ConnectToMongoDBTaskProperties"/>, <see cref="ConnectToSourceSqlServerTaskProperties"/>, <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="ConnectToSourceMySqlTaskProperties"/>, <see cref="ConnectToSourceOracleSyncTaskProperties"/>, <see cref="ConnectToTargetSqlDBTaskProperties"/>, <see cref="ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="GetUserTablesSqlTaskProperties"/>, <see cref="GetUserTablesSqlSyncTaskProperties"/>, <see cref="GetUserTablesOracleTaskProperties"/>, <see cref="GetUserTablesPostgreSqlTaskProperties"/>, <see cref="GetUserTablesMySqlTaskProperties"/>, <see cref="ConnectToTargetSqlMITaskProperties"/>, <see cref="ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="MigrateMongoDBTaskProperties"/>, <see cref="MigrateSqlServerSqlMITaskProperties"/>, <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="MigrateSqlServerSqlDBTaskProperties"/>, <see cref="MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/>, <see cref="ValidateMongoDBTaskProperties"/>, <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="GetTdeCertificatesSqlTaskProperties"/>, and <see cref="MigrateSsisTaskProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataMigrationProjectTaskProperties))]
+    [PersistableModelProxy(typeof(UnknownProjectTaskProperties))]
     public abstract partial class DataMigrationProjectTaskProperties : IJsonModel<DataMigrationProjectTaskProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return MigrateSsisTaskProperties.DeserializeMigrateSsisTaskProperties(element, options);
                 }
             }
-            return UnknownDataMigrationProjectTaskProperties.DeserializeUnknownDataMigrationProjectTaskProperties(element, options);
+            return UnknownProjectTaskProperties.DeserializeUnknownProjectTaskProperties(element, options);
         }
     }
 }

@@ -13,10 +13,10 @@ using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownDataMigrationMongoDBProgress : DataMigrationMongoDBProgress, IJsonModel<DataMigrationMongoDBProgress>
+    internal partial class UnknownMongoDBProgress : DataMigrationMongoDBProgress, IJsonModel<DataMigrationMongoDBProgress>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataMigrationMongoDBProgress"/> for deserialization. </summary>
-        internal UnknownDataMigrationMongoDBProgress()
+        /// <summary> Initializes a new instance of <see cref="UnknownMongoDBProgress"/> for deserialization. </summary>
+        internal UnknownMongoDBProgress()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownDataMigrationMongoDBProgress DeserializeUnknownDataMigrationMongoDBProgress(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownMongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownDataMigrationMongoDBProgress(
+            return new UnknownMongoDBProgress(
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
