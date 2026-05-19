@@ -780,7 +780,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             if (!Task.WaitAll(tasks, timeoutMs))
             {
-                Assert.Ignore("Thread-safety test could not complete within the CI timeout budget.");
+                Assert.Inconclusive("Thread-safety test could not complete within the CI timeout budget.");
             }
 
             int totalCalls = threadCount * iterationsPerThread;
