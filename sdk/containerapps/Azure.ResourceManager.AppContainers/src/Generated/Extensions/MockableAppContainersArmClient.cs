@@ -354,6 +354,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppJobExecutionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
+        public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
+        {
+            ContainerAppJobDetectorResource.ValidateResourceId(id);
+            return new ContainerAppJobDetectorResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
@@ -433,15 +442,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppHttpRouteConfigResource.ValidateResourceId(id);
             return new ContainerAppHttpRouteConfigResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
-        public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
-        {
-            ContainerAppJobDetectorResource.ValidateResourceId(id);
-            return new ContainerAppJobDetectorResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

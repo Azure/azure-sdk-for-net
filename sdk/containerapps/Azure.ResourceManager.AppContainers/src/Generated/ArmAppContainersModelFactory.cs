@@ -2345,6 +2345,149 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerExecutionStatus(name, code, additionalInformation, status, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Diagnostics data for a resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="AppContainers.ContainerAppDiagnosticData"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticData ContainerAppDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerAppDiagnosticsProperties properties = default)
+        {
+            return new ContainerAppDiagnosticData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Diagnostics resource specific properties. </summary>
+        /// <param name="metadata"> Metadata of the diagnostics response. </param>
+        /// <param name="dataset"> Set of data collections associated with the response. </param>
+        /// <param name="status"> Status of the diagnostics response. </param>
+        /// <param name="dataProviderMetadata"> List of data providers' metadata. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsProperties"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticsProperties ContainerAppDiagnosticsProperties(ContainerAppDiagnosticsMetadata metadata = default, IEnumerable<ContainerAppDiagnosticsDataApiResult> dataset = default, ContainerAppDiagnosticsStatus status = default, ContainerAppDiagnosticDataProviderMetadata dataProviderMetadata = default)
+        {
+            dataset ??= new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>();
+
+            return new ContainerAppDiagnosticsProperties(metadata, dataset.ToList(), status, dataProviderMetadata, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> C# compatibility replacement for diagnostics metadata. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> Details of the diagnostics info. </param>
+        /// <param name="author"> Authors' names of the detector. </param>
+        /// <param name="category"> Category of the detector. </param>
+        /// <param name="supportTopicList"> List of support topics. </param>
+        /// <param name="analysisTypes"> List of analysis types. </param>
+        /// <param name="score"> Authors' names of the detector. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsMetadata"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticsMetadata ContainerAppDiagnosticsMetadata(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string author = default, string category = default, IEnumerable<ContainerAppDiagnosticSupportTopic> supportTopicList = default, IEnumerable<string> analysisTypes = default, float? score = default)
+        {
+            supportTopicList ??= new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>();
+            analysisTypes ??= new ChangeTrackingList<string>();
+
+            return new ContainerAppDiagnosticsMetadata(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                description,
+                author,
+                category,
+                supportTopicList.ToList(),
+                analysisTypes.ToList(),
+                score);
+        }
+
+        /// <summary> Support topic information. </summary>
+        /// <param name="id"> Unique topic identifier. </param>
+        /// <param name="pesId"> PES identifier. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticSupportTopic"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticSupportTopic ContainerAppDiagnosticSupportTopic(string id = default, string pesId = default)
+        {
+            return new ContainerAppDiagnosticSupportTopic(id, pesId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Diagnostics data returned from a detector. </summary>
+        /// <param name="table"> Table response. </param>
+        /// <param name="renderingProperties"> Details of the table response. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsDataApiResult"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticsDataApiResult ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table = default, ContainerAppDiagnosticRendering renderingProperties = default)
+        {
+            return new ContainerAppDiagnosticsDataApiResult(table, renderingProperties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Diagnostics data table. </summary>
+        /// <param name="tableName"> Table name. </param>
+        /// <param name="columns"> Columns in the table. </param>
+        /// <param name="rows"> Rows in the table. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataTableResult"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticDataTableResult ContainerAppDiagnosticDataTableResult(string tableName = default, IEnumerable<ContainerAppDiagnosticDataColumn> columns = default, IEnumerable<BinaryData> rows = default)
+        {
+            columns ??= new ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
+            rows ??= new ChangeTrackingList<BinaryData>();
+
+            return new ContainerAppDiagnosticDataTableResult(tableName, columns.ToList(), rows.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Diagnostics data column. </summary>
+        /// <param name="columnName"> Column name. </param>
+        /// <param name="dataType"> Data type of the column. </param>
+        /// <param name="columnType"> Column type. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataColumn"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticDataColumn ContainerAppDiagnosticDataColumn(string columnName = default, string dataType = default, string columnType = default)
+        {
+            return new ContainerAppDiagnosticDataColumn(columnName, dataType, columnType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Rendering details of a diagnostics table. </summary>
+        /// <param name="diagnosticRenderingType"> Rendering type. </param>
+        /// <param name="title"> Title of the table. </param>
+        /// <param name="description"> Description of the table. </param>
+        /// <param name="isVisible"> Flag if the table should be rendered. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticRendering"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticRendering ContainerAppDiagnosticRendering(int? diagnosticRenderingType = default, string title = default, string description = default, bool? isVisible = default)
+        {
+            return new ContainerAppDiagnosticRendering(diagnosticRenderingType, title, description, isVisible, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Rendering details of a diagnostics table. </summary>
+        /// <param name="message"> Diagnostic message. </param>
+        /// <param name="statusId"> Status. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsStatus"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticsStatus ContainerAppDiagnosticsStatus(string message = default, int? statusId = default)
+        {
+            return new ContainerAppDiagnosticsStatus(message, statusId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of a diagnostics data provider. </summary>
+        /// <param name="providerName"> Name of data provider. </param>
+        /// <param name="propertyBag"> Collection of properties. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataProviderMetadata"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticDataProviderMetadata ContainerAppDiagnosticDataProviderMetadata(string providerName = default, IEnumerable<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag = default)
+        {
+            propertyBag ??= new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
+
+            return new ContainerAppDiagnosticDataProviderMetadata(providerName, propertyBag.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Property details. </summary>
+        /// <param name="name"> Property name. </param>
+        /// <param name="value"> Property value. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/> instance for mocking. </returns>
+        public static ContainerAppDiagnosticDataProviderMetadataPropertyBagItem ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name = default, string value = default)
+        {
+            return new ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(name, value, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2545,149 +2688,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             routes ??= new ChangeTrackingList<ContainerAppHttpRoute>();
 
             return new ContainerAppHttpRouteRule(targets.ToList(), routes.ToList(), description, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Diagnostics data for a resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppDiagnosticData"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticData ContainerAppDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerAppDiagnosticsProperties properties = default)
-        {
-            return new ContainerAppDiagnosticData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Diagnostics resource specific properties. </summary>
-        /// <param name="metadata"> Metadata of the diagnostics response. </param>
-        /// <param name="dataset"> Set of data collections associated with the response. </param>
-        /// <param name="status"> Status of the diagnostics response. </param>
-        /// <param name="dataProviderMetadata"> List of data providers' metadata. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsProperties"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticsProperties ContainerAppDiagnosticsProperties(ContainerAppDiagnosticsMetadata metadata = default, IEnumerable<ContainerAppDiagnosticsDataApiResult> dataset = default, ContainerAppDiagnosticsStatus status = default, ContainerAppDiagnosticDataProviderMetadata dataProviderMetadata = default)
-        {
-            dataset ??= new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>();
-
-            return new ContainerAppDiagnosticsProperties(metadata, dataset.ToList(), status, dataProviderMetadata, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> C# compatibility replacement for diagnostics metadata. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Details of the diagnostics info. </param>
-        /// <param name="author"> Authors' names of the detector. </param>
-        /// <param name="category"> Category of the detector. </param>
-        /// <param name="supportTopicList"> List of support topics. </param>
-        /// <param name="analysisTypes"> List of analysis types. </param>
-        /// <param name="score"> Authors' names of the detector. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsMetadata"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticsMetadata ContainerAppDiagnosticsMetadata(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string author = default, string category = default, IEnumerable<ContainerAppDiagnosticSupportTopic> supportTopicList = default, IEnumerable<string> analysisTypes = default, float? score = default)
-        {
-            supportTopicList ??= new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>();
-            analysisTypes ??= new ChangeTrackingList<string>();
-
-            return new ContainerAppDiagnosticsMetadata(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                description,
-                author,
-                category,
-                supportTopicList.ToList(),
-                analysisTypes.ToList(),
-                score);
-        }
-
-        /// <summary> Support topic information. </summary>
-        /// <param name="id"> Unique topic identifier. </param>
-        /// <param name="pesId"> PES identifier. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticSupportTopic"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticSupportTopic ContainerAppDiagnosticSupportTopic(string id = default, string pesId = default)
-        {
-            return new ContainerAppDiagnosticSupportTopic(id, pesId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Diagnostics data returned from a detector. </summary>
-        /// <param name="table"> Table response. </param>
-        /// <param name="renderingProperties"> Details of the table response. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsDataApiResult"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticsDataApiResult ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table = default, ContainerAppDiagnosticRendering renderingProperties = default)
-        {
-            return new ContainerAppDiagnosticsDataApiResult(table, renderingProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Diagnostics data table. </summary>
-        /// <param name="tableName"> Table name. </param>
-        /// <param name="columns"> Columns in the table. </param>
-        /// <param name="rows"> Rows in the table. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataTableResult"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticDataTableResult ContainerAppDiagnosticDataTableResult(string tableName = default, IEnumerable<ContainerAppDiagnosticDataColumn> columns = default, IEnumerable<BinaryData> rows = default)
-        {
-            columns ??= new ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
-            rows ??= new ChangeTrackingList<BinaryData>();
-
-            return new ContainerAppDiagnosticDataTableResult(tableName, columns.ToList(), rows.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Diagnostics data column. </summary>
-        /// <param name="columnName"> Column name. </param>
-        /// <param name="dataType"> Data type of the column. </param>
-        /// <param name="columnType"> Column type. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataColumn"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticDataColumn ContainerAppDiagnosticDataColumn(string columnName = default, string dataType = default, string columnType = default)
-        {
-            return new ContainerAppDiagnosticDataColumn(columnName, dataType, columnType, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Rendering details of a diagnostics table. </summary>
-        /// <param name="diagnosticRenderingType"> Rendering type. </param>
-        /// <param name="title"> Title of the table. </param>
-        /// <param name="description"> Description of the table. </param>
-        /// <param name="isVisible"> Flag if the table should be rendered. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticRendering"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticRendering ContainerAppDiagnosticRendering(int? diagnosticRenderingType = default, string title = default, string description = default, bool? isVisible = default)
-        {
-            return new ContainerAppDiagnosticRendering(diagnosticRenderingType, title, description, isVisible, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Rendering details of a diagnostics table. </summary>
-        /// <param name="message"> Diagnostic message. </param>
-        /// <param name="statusId"> Status. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsStatus"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticsStatus ContainerAppDiagnosticsStatus(string message = default, int? statusId = default)
-        {
-            return new ContainerAppDiagnosticsStatus(message, statusId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Details of a diagnostics data provider. </summary>
-        /// <param name="providerName"> Name of data provider. </param>
-        /// <param name="propertyBag"> Collection of properties. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataProviderMetadata"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticDataProviderMetadata ContainerAppDiagnosticDataProviderMetadata(string providerName = default, IEnumerable<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag = default)
-        {
-            propertyBag ??= new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
-
-            return new ContainerAppDiagnosticDataProviderMetadata(providerName, propertyBag.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Property details. </summary>
-        /// <param name="name"> Property name. </param>
-        /// <param name="value"> Property value. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticDataProviderMetadataPropertyBagItem ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name = default, string value = default)
-        {
-            return new ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(name, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A workload profile with specific hardware configure to run container apps. </summary>

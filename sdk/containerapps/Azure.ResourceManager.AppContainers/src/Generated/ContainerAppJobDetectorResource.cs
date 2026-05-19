@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_GetDetector. </description>
+        /// <description> JobDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Jobs_GetDetector. </description>
+        /// <description> JobDetectors_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

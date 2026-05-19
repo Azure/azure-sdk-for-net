@@ -1230,39 +1230,6 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppJobExecutions().Get(jobExecutionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerAppJobDetectorProperties in the <see cref="ContainerAppJobResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppJobDetectorProperties and their operations over a ContainerAppJobDetectorPropertyResource. </returns>
-        public virtual ContainerAppJobDetectorPropertyCollection GetContainerAppJobDetectorProperties()
-        {
-            return GetCachedClient(client => new ContainerAppJobDetectorPropertyCollection(client, Id));
-        }
-
-        /// <summary> Get the properties of a Container App Job. </summary>
-        /// <param name="apiName"> Proxy API Name for Container App Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppJobDetectorPropertyResource>> GetContainerAppJobDetectorPropertyAsync(string apiName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-
-            return await GetContainerAppJobDetectorProperties().GetAsync(apiName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the properties of a Container App Job. </summary>
-        /// <param name="apiName"> Proxy API Name for Container App Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppJobDetectorPropertyResource> GetContainerAppJobDetectorProperty(string apiName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-
-            return GetContainerAppJobDetectorProperties().Get(apiName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ContainerAppJobDetectors in the <see cref="ContainerAppJobResource"/>. </summary>
         /// <returns> An object representing collection of ContainerAppJobDetectors and their operations over a ContainerAppJobDetectorResource. </returns>
         public virtual ContainerAppJobDetectorCollection GetContainerAppJobDetectors()
@@ -1294,6 +1261,39 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             return GetContainerAppJobDetectors().Get(detectorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppJobDetectorProperties in the <see cref="ContainerAppJobResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppJobDetectorProperties and their operations over a ContainerAppJobDetectorPropertyResource. </returns>
+        public virtual ContainerAppJobDetectorPropertyCollection GetContainerAppJobDetectorProperties()
+        {
+            return GetCachedClient(client => new ContainerAppJobDetectorPropertyCollection(client, Id));
+        }
+
+        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <param name="apiName"> Proxy API Name for Container App Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppJobDetectorPropertyResource>> GetContainerAppJobDetectorPropertyAsync(string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            return await GetContainerAppJobDetectorProperties().GetAsync(apiName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <param name="apiName"> Proxy API Name for Container App Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppJobDetectorPropertyResource> GetContainerAppJobDetectorProperty(string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            return GetContainerAppJobDetectorProperties().Get(apiName, cancellationToken);
         }
     }
 }
