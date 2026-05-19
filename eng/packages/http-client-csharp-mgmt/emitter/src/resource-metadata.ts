@@ -639,6 +639,16 @@ export function applyResourceNameOverrides(
       continue;
     }
 
+    const expandable = group.some(
+      (r) => r.metadata.expansionTypeValue !== undefined
+    );
+    if (!expandable) {
+      diagnosticReporter?.(
+        `@@clientOption(..., "${resourceNameKey}", ...) value is a Record but its Read operation does not produce expanded {parentType} resources. Use a plain string instead.`
+      );
+      continue;
+    }
+
     const usedKeys = new Set<string>();
     for (const r of group) {
       const key = r.metadata.expansionTypeValue;

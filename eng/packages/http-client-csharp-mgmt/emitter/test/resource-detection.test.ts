@@ -5011,4 +5011,66 @@ interface PrivateEndpointConnections {
         .join(" | ")}`
     );
   });
+
+  it("resource-name override - map on non-expandable Read op emits a single diagnostic", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Record set properties */
+model RecordSetProperties {
+  /** TTL */
+  ttl?: int32;
+}
+
+/** An ordinary (non-expandable) resource. */
+model RecordSet is TrackedResource<RecordSetProperties> {
+  ...ResourceNameParameter<RecordSet>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface RecordSets {
+  get is ArmResourceRead<RecordSet>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<RecordSet>;
+}
+
+// Map form misused on a non-expandable Read op.
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Misuse: map on non-expandable"
+@@clientOption(RecordSets.get, "resource-name", #{
+  one: "DnsRecordSetOne",
+  two: "DnsRecordSetTwo",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+
+    // Override is ignored; default model-derived name is preserved.
+    strictEqual(armProviderSchema.resources.length, 1);
+    strictEqual(
+      armProviderSchema.resources[0].metadata.resourceName,
+      "RecordSet"
+    );
+
+    const diagnostics: readonly Diagnostic[] = program.diagnostics;
+    const nonExpandable = diagnostics.filter((d) =>
+      d.message.includes("does not produce expanded {parentType} resources")
+    );
+    // Exactly one diagnostic — not one per map entry.
+    strictEqual(
+      nonExpandable.length,
+      1,
+      `Expected exactly one 'non-expandable map' diagnostic. Diagnostics: ${diagnostics
+        .map((d) => d.message)
+        .join(" | ")}`
+    );
+    // The per-entry "did not match any expanded resource" diagnostic must NOT fire.
+    const perEntry = diagnostics.filter((d) =>
+      d.message.includes("did not match any expanded resource")
+    );
+    strictEqual(perEntry.length, 0);
+  });
 });
