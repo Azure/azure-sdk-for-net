@@ -498,12 +498,12 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.OpenApiToolCall OpenApiToolCall(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput OpenApiToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput OutputItemComputerToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> acknowledgedSafetyChecks = null, Azure.AI.Extensions.OpenAI.ComputerScreenshotImage output = null, Azure.AI.Extensions.OpenAI.ItemFieldComputerToolCallOutputStatus? status = default(Azure.AI.Extensions.OpenAI.ItemFieldComputerToolCallOutputStatus?)) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.OutputItemCustomToolCallOutputResource OutputItemCustomToolCallOutputResource(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum status = Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum.InProgress, string createdBy = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.OutputItemCustomToolCallOutputResource OutputItemCustomToolCallOutputResource(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus status = Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.InProgress, string createdBy = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OutputItemFunctionToolCallOutput OutputItemFunctionToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus? status = default(Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OutputItemLocalShellToolCallOutput OutputItemLocalShellToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string output = null, Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus? status = default(Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OutputItemMcpApprovalResponseResource OutputItemMcpApprovalResponseResource(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string approvalRequestId = null, bool approve = false, string reason = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OutputItemToolSearchCall OutputItemToolSearchCall(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType execution = Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Server, System.BinaryData arguments = null, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallStatus status = Azure.AI.Extensions.OpenAI.ResponsesFunctionCallStatus.InProgress, string createdBy = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput OutputItemToolSearchOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType execution = Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Server, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesTool> tools = null, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum status = Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum.InProgress, string createdBy = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput OutputItemToolSearchOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType execution = Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Server, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesTool> tools = null, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus status = Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.InProgress, string createdBy = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ProjectConversation ProjectConversation(string id = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool ResponsesA2APreviewTool(string name = null, string description = null, System.Uri baseUrl = null, string agentCardPath = null, string projectConnectionId = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource ResponsesAISearchIndexResource(string projectConnectionId = null, string indexName = null, Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType? queryType = default(Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
@@ -778,11 +778,11 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public partial class OutputItemCustomToolCallOutputResource : Azure.AI.Extensions.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemCustomToolCallOutputResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemCustomToolCallOutputResource>
     {
-        public OutputItemCustomToolCallOutputResource(string callId, System.BinaryData output, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum status) { }
+        public OutputItemCustomToolCallOutputResource(string callId, System.BinaryData output, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus status) { }
         public string CallId { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public System.BinaryData Output { get { throw null; } set { } }
-        public Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum Status { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus Status { get { throw null; } set { } }
         protected override Azure.AI.Extensions.OpenAI.AgentResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.AgentResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -860,11 +860,11 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public partial class OutputItemToolSearchOutput : Azure.AI.Extensions.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>
     {
-        public OutputItemToolSearchOutput(string callId, Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType execution, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesTool> tools, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum status) { }
+        public OutputItemToolSearchOutput(string callId, Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType execution, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesTool> tools, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus status) { }
         public string CallId { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType Execution { get { throw null; } set { } }
-        public Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatusEnum Status { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus Status { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.ResponsesTool> Tools { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.AgentResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -962,6 +962,7 @@ namespace Azure.AI.Extensions.OpenAI
         public virtual Azure.AI.Extensions.OpenAI.ProjectFilesClient GetProjectFilesClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgent(Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { throw null; }
+        public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null) { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectVectorStoresClient GetProjectVectorStoresClient() { throw null; }
     }
@@ -1541,7 +1542,7 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum ResponsesFunctionCallOutputStatusEnum
+    public enum ResponsesFunctionCallOutputStatus
     {
         InProgress = 0,
         Completed = 1,

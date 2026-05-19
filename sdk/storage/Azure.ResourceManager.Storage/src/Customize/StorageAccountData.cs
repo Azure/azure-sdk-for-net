@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Storage
             get
             {
                 var state = Properties?.ProvisioningState;
-                if (state == null) return null;
+                if (state == null)
+                    return null;
                 return StorageProvisioningStateExtensions.ToStorageProvisioningState(state.Value.ToSerialString());
             }
         }
