@@ -35,6 +35,12 @@ public abstract class DiscriminatorRouter : IDiscriminatorRouter
     /// if this router should handle deserialization.
     /// Default returns false.
     /// </summary>
+    /// <remarks>
+    /// When called by <see cref="ModelReaderWriter"/>, the <paramref name="data"/> is the same
+    /// instance passed to the read operation. Implementations may freely parse the data for
+    /// inspection; the same data will be passed to <see cref="Create(BinaryData, ModelReaderWriterOptions)"/>
+    /// if this method returns true.
+    /// </remarks>
     /// <param name="data">The data to inspect.</param>
     /// <returns>True if this router can handle the data; otherwise, false.</returns>
     public virtual bool CanHandle(BinaryData data) => false;
@@ -44,9 +50,17 @@ public abstract class DiscriminatorRouter : IDiscriminatorRouter
     /// Override to inspect the JSON (e.g. check a discriminator property) and return true
     /// if this router should handle deserialization.
     /// Default returns false.
-    /// The reader is passed by ref but should not be advanced; implementations should
-    /// only peek at the current state.
     /// </summary>
+    /// <remarks>
+    /// When called by <see cref="ModelReaderWriter"/>, the reader passed to this method is a
+    /// snapshot. Implementations may freely advance the reader to inspect the JSON structure
+    /// (e.g. enumerate properties to find a discriminator). The reader position will be reset
+    /// before <see cref="Create(ref Utf8JsonReader, ModelReaderWriterOptions)"/> is called.
+    /// <para>
+    /// If you call this method directly outside of <see cref="ModelReaderWriter"/>, you are
+    /// responsible for snapshotting the reader beforehand if you need to preserve its position.
+    /// </para>
+    /// </remarks>
     /// <param name="reader">The JSON reader positioned at the start of the element.</param>
     /// <returns>True if this router can handle the data; otherwise, false.</returns>
     public virtual bool CanHandle(ref Utf8JsonReader reader) => false;
