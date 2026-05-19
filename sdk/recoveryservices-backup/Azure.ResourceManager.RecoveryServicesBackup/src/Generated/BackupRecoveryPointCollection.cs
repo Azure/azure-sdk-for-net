@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _recoveryPointsClientDiagnostics;
         private readonly RecoveryPoints _recoveryPointsRestClient;
-        private readonly ClientDiagnostics _itemLevelRecoveryConnectionsClientDiagnostics;
-        private readonly ItemLevelRecoveryConnections _itemLevelRecoveryConnectionsRestClient;
-        private readonly ClientDiagnostics _restoresClientDiagnostics;
-        private readonly Restores _restoresRestClient;
 
         /// <summary> Initializes a new instance of BackupRecoveryPointCollection for mocking. </summary>
         protected BackupRecoveryPointCollection()
@@ -45,10 +41,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(BackupRecoveryPointResource.ResourceType, out string backupRecoveryPointApiVersion);
             _recoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
             _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
-            _itemLevelRecoveryConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _itemLevelRecoveryConnectionsRestClient = new ItemLevelRecoveryConnections(_itemLevelRecoveryConnectionsClientDiagnostics, Pipeline, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
-            _restoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _restoresRestClient = new Restores(_restoresClientDiagnostics, Pipeline, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

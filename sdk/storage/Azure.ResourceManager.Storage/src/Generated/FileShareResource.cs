@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _fileSharesClientDiagnostics;
         private readonly FileShares _fileSharesRestClient;
-        private readonly ClientDiagnostics _fileServicesClientDiagnostics;
-        private readonly FileServices _fileServicesRestClient;
         private readonly FileShareData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices/shares";

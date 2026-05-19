@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "putModelPropertyContentType",
+      "name": "PutModelPropertyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "putModelPropertyContentType1",
+      "name": "PutModelPropertyContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

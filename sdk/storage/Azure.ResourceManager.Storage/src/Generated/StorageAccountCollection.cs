@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _storageAccountsClientDiagnostics;
         private readonly StorageAccounts _storageAccountsRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of StorageAccountCollection for mocking. </summary>
         protected StorageAccountCollection()
