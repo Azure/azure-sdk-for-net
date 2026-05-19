@@ -153,11 +153,33 @@ foreach ($pkg in $selectedPackages) {
     }
 
     $assetData = Get-Content -Raw $assetsJson | ConvertFrom-Json
-    if (-not $assetData.PSObject.Properties.Match('AssetsRepo').Count -or -not $assetData.AssetsRepo) {
-        throw "assets.json at $assetsJson is missing 'AssetsRepo'."
+
+    # Only the absence of the property itself is a hard configuration error.
+    # An empty Tag value is valid - it means the package has no recordings yet
+    # (test-proxy itself treats this as a no-op). Mirror that behavior here:
+    # skip restore and remove any stale `.assets` directory so the package
+    # starts in a known-empty state.
+    if (-not $assetData.PSObject.Properties.Match('Tag').Count) {
+        throw "assets.json at $assetsJson is missing the 'Tag' property."
     }
-    if (-not $assetData.PSObject.Properties.Match('Tag').Count -or -not $assetData.Tag) {
-        throw "assets.json at $assetsJson is missing 'Tag'."
+    if (-not $assetData.PSObject.Properties.Match('AssetsRepo').Count) {
+        throw "assets.json at $assetsJson is missing the 'AssetsRepo' property."
+    }
+
+    if ([string]::IsNullOrWhiteSpace($assetData.Tag)) {
+        $staleAssetsDir = Join-Path (Split-Path -Parent $assetsJson) ".assets"
+        if (Test-Path $staleAssetsDir) {
+            Write-Host "  $($pkg.ArtifactName): empty Tag - removing stale .assets at $staleAssetsDir"
+            Remove-Item -Recurse -Force $staleAssetsDir
+        }
+        else {
+            Write-Host "  $($pkg.ArtifactName): empty Tag - nothing to restore (skipped)."
+        }
+        continue
+    }
+
+    if ([string]::IsNullOrWhiteSpace($assetData.AssetsRepo)) {
+        throw "assets.json at $assetsJson has a non-empty Tag '$($assetData.Tag)' but no AssetsRepo."
     }
 
     $assetEntries.Add([pscustomobject]@{
