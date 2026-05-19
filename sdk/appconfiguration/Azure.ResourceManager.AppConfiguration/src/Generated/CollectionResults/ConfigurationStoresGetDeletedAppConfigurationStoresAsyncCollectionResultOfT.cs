@@ -11,41 +11,35 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DesktopVirtualization.Models;
+using Azure.ResourceManager.AppConfiguration.Models;
 
-namespace Azure.ResourceManager.DesktopVirtualization
+namespace Azure.ResourceManager.AppConfiguration
 {
-    internal partial class ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT : AsyncPageable<ActiveSessionHostConfigurationData>
+    internal partial class ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT : AsyncPageable<DeletedAppConfigurationStoreData>
     {
-        private readonly ActiveSessionHostConfigurations _client;
+        private readonly ConfigurationStores _client;
         private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _hostPoolName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ActiveSessionHostConfigurations client used to send requests. </param>
+        /// <summary> Initializes a new instance of ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ConfigurationStores client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT(ActiveSessionHostConfigurations client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT(ConfigurationStores client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _hostPoolName = hostPoolName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ActiveSessionHostConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<DeletedAppConfigurationStoreData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +49,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     yield break;
                 }
-                ActiveSessionHostConfigurationList result = ActiveSessionHostConfigurationList.FromResponse(response);
-                yield return Page<ActiveSessionHostConfigurationData>.FromValues((IReadOnlyList<ActiveSessionHostConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                DeletedConfigurationStoreListResult result = DeletedConfigurationStoreListResult.FromResponse(response);
+                yield return Page<DeletedAppConfigurationStoreData>.FromValues((IReadOnlyList<DeletedAppConfigurationStoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHostPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _context) : _client.CreateGetByHostPoolRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDeletedAppConfigurationStoresRequest(nextLink, _subscriptionId, _context) : _client.CreateGetDeletedAppConfigurationStoresRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
