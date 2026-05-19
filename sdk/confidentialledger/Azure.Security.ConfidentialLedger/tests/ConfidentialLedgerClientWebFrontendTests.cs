@@ -66,6 +66,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         // W3: mTLS (client certificate) is rejected in Web Frontend mode.
+        // Skipped on .NET Framework 4.6.2 because the X509 CertificateRequest API used to
+        // synthesize a throw-away self-signed certificate was added in 4.7.2; the production
+        // code path under test is TFM-agnostic and fully exercised on modern frameworks.
+#if !NET462
         [Test]
         public void CtorRejectsClientCertificateInWebFrontendMode()
         {
@@ -86,6 +90,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.That(ex.ParamName, Is.EqualTo("clientCertificate"));
             Assert.That(ex.Message, Does.Contain(nameof(ConfidentialLedgerClientOptions.UseWebFrontend)));
         }
+#endif
 
         // W4: 200 (synchronous commit) on POST yields an operation whose Id is the CCF transaction id;
         // polling uses /app/transactions/{txId}/status.
