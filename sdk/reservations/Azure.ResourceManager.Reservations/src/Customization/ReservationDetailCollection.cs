@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed item-level Get/Exists/GetIfExists and GetRevisions(Guid) on
-// ReservationDetailCollection. The TypeSpec generator only emits list operations here and places
-// revisions on ReservationDetailResource, so these shims preserve the GA collection surface.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +11,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Reservations
 {
+    // Justification: GA exposed item-level Get/Exists/GetIfExists and GetRevisions(Guid) on
+    // ReservationDetailCollection. The TypeSpec generator only emits list operations here and places
+    // revisions on ReservationDetailResource, so these shims preserve the GA collection surface.
     public partial class ReservationDetailCollection
     {
         public virtual async Task<Response<ReservationDetailResource>> GetAsync(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)

@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed AppliedScopes as a settable IList<string> on
-// ReservationPurchaseContent. The new generator emits a get-only flattened property; this
-// shim restores the GA setter by replacing the underlying collection contents.
-
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -12,6 +8,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
+    // Justification: GA exposed AppliedScopes as a settable IList<string> on
+    // ReservationPurchaseContent. The new generator emits a get-only flattened property; this
+    // shim restores the GA setter by replacing the underlying collection contents.
     [CodeGenSuppress("AppliedScopes")]
     public partial class ReservationPurchaseContent
     {

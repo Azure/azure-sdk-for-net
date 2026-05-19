@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed PolicyErrors as IReadOnlyList<ExchangePolicyError>. See the
-// CalculateExchangeResultProperties customization for the matching pattern.
-
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -11,6 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
+    // Justification: GA exposed PolicyErrors as IReadOnlyList<ExchangePolicyError>. See the
+    // CalculateExchangeResultProperties customization for the matching pattern.
     [CodeGenSuppress("PolicyErrors")]
     public partial class ExchangeResultProperties
     {

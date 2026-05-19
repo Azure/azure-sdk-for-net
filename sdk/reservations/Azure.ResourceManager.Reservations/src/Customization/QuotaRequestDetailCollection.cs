@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed item-level Get/Exists/GetIfExists methods on
-// QuotaRequestDetailCollection. The TypeSpec generator only emits list operations for this
-// collection, so these shims preserve the GA lookup surface and 404-to-no-value behavior.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +11,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Reservations
 {
+    // Justification: GA exposed item-level Get/Exists/GetIfExists methods on
+    // QuotaRequestDetailCollection. The TypeSpec generator only emits list operations for this
+    // collection, so these shims preserve the GA lookup surface and 404-to-no-value behavior.
     public partial class QuotaRequestDetailCollection
     {
         public virtual async Task<Response<QuotaRequestDetailResource>> GetAsync(Guid id, CancellationToken cancellationToken = default)

@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed QuotaRequestDetailData.QuotaRequestValue as
-// IReadOnlyList<SubContent>. The new generator emits IList<SubContent> via the flattened
-// QuotaRequestProperties; this shim restores the read-only collection surface.
-
 using System.Collections.Generic;
 using Azure.ResourceManager.Reservations.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -13,6 +9,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations
 {
+    // Justification: GA exposed QuotaRequestDetailData.QuotaRequestValue as
+    // IReadOnlyList<SubContent>. The new generator emits IList<SubContent> via the flattened
+    // QuotaRequestProperties; this shim restores the read-only collection surface.
     [CodeGenSuppress("QuotaRequestValue")]
     public partial class QuotaRequestDetailData
     {

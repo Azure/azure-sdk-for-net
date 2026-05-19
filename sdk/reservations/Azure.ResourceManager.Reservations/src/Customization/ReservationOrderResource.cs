@@ -1,12 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA modelled MergeReservation/SplitReservation as
-// ArmOperation<IList<ReservationDetailData>> and Return as a synchronous
-// Response<ReservationRefundResult>. The new generator emits Pageable shapes for Merge/Split
-// and an LRO for Return. It also omits the GA CreateResourceIdentifier and direct
-// GetReservationDetail forwarding methods. These shims preserve the GA-shape methods.
-
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -22,6 +16,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations
 {
+    // Justification: GA modelled MergeReservation/SplitReservation as
+    // ArmOperation<IList<ReservationDetailData>> and Return as a synchronous
+    // Response<ReservationRefundResult>. The new generator emits Pageable shapes for Merge/Split
+    // and an LRO for Return. It also omits the GA CreateResourceIdentifier and direct
+    // GetReservationDetail forwarding methods. These shims preserve the GA-shape methods.
     [CodeGenSuppress("MergeReservation", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
     [CodeGenSuppress("MergeReservationAsync", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
     [CodeGenSuppress("SplitReservation", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]

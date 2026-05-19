@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed CreateOrUpdate and item-level Get/Exists/GetIfExists methods on
-// ReservationOrderCollection. The TypeSpec generator only emits the tenant-level list operation,
-// so these shims preserve the GA collection surface and LRO wrapping behavior.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +12,9 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
+    // Justification: GA exposed CreateOrUpdate and item-level Get/Exists/GetIfExists methods on
+    // ReservationOrderCollection. The TypeSpec generator only emits the tenant-level list operation,
+    // so these shims preserve the GA collection surface and LRO wrapping behavior.
     public partial class ReservationOrderCollection
     {
         public virtual async Task<ArmOperation<ReservationOrderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)

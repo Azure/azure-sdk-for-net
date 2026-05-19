@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed direct GetReservationOrder and options-bag GetReservationDetails
-// overloads on the mockable tenant extension resource. The TypeSpec generator emits collection
-// or long-parameter methods, so these forwarders preserve the GA convenience surface.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {
+    // Justification: GA exposed direct GetReservationOrder and options-bag GetReservationDetails
+    // overloads on the mockable tenant extension resource. The TypeSpec generator emits collection
+    // or long-parameter methods, so these forwarders preserve the GA convenience surface.
     public partial class MockableReservationsTenantResource
     {
         [ForwardsClientCalls]

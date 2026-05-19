@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Justification: GA exposed an options-bag overload for TenantResource.GetReservationDetails
-// (TenantResourceGetReservationDetailsOptions). The new TypeSpec generator emits long-form
-// parameters; this type and overloads preserve the GA options-bag surface.
-
 #pragma warning disable CS1591
 
 namespace Azure.ResourceManager.Reservations.Models
 {
+    // Justification: GA exposed an options-bag overload for TenantResource.GetReservationDetails
+    // (TenantResourceGetReservationDetailsOptions). The new TypeSpec generator emits long-form
+    // parameters; this type and overloads preserve the GA options-bag surface.
     public partial class TenantResourceGetReservationDetailsOptions
     {
         public TenantResourceGetReservationDetailsOptions()
