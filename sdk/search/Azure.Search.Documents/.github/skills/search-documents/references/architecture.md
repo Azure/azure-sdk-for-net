@@ -444,6 +444,7 @@ The generated serializer accesses properties by `[CodeGenMember]` name. If a new
 |---|---|---|
 | Related to semantic search (language, speller, answers, captions, rewrites, semantic fields, semantic config, error mode, max wait, semantic query) | `SemanticSearchOptions` | Private `[CodeGenMember]` redirector in `Options/SearchOptions.cs` → public property on `SemanticSearchOptions` |
 | Related to vector/hybrid search (vector queries, filter mode, hybrid search config) | `VectorSearchOptions` | Private `[CodeGenMember]` redirector in `Options/SearchOptions.cs` → public property on `VectorSearchOptions` |
+| Typed as `XxxType?` but the doc comment shows a pipe-delimited compound format (e.g. `extractive\|count-5`, `generative\|count-3`) | Wrapper class on the appropriate sub-object | See [customization.md → Compound / magic-string properties](./customization.md#compound--magic-string-properties) |
 | A comma-separated string that users should see as a list | `SearchOptions` itself | Public `IList<string>` + private `[CodeGenMember]` `string` Raw accessor using `CommaJoin()`/`CommaSplit()` |
 | A simple property with acceptable generated name/type | `SearchOptions` itself | No custom code needed — the generated auto-property is the public API |
 | A simple property that needs renaming | `SearchOptions` itself | `[CodeGenMember("GeneratedName")]` on a public property in `Options/SearchOptions.cs` |

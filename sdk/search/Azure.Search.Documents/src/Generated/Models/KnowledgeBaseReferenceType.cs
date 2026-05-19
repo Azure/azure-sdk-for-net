@@ -33,6 +33,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string FabricDataAgentValue = "fabricDataAgent";
         /// <summary> Fabric Ontology document reference. </summary>
         private const string FabricOntologyValue = "fabricOntology";
+        /// <summary> MCP server document reference. </summary>
+        private const string McpServerValue = "mcpServer";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -70,6 +72,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Fabric Ontology document reference. </summary>
         public static KnowledgeBaseReferenceType FabricOntology { get; } = new KnowledgeBaseReferenceType(FabricOntologyValue);
+
+        /// <summary> MCP server document reference. </summary>
+        public static KnowledgeBaseReferenceType McpServer { get; } = new KnowledgeBaseReferenceType(McpServerValue);
 
         /// <summary> Determines if two <see cref="KnowledgeBaseReferenceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

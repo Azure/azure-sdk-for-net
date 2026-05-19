@@ -2432,6 +2432,272 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
+        /// [Protocol Method] Uploads a file to a File knowledge source for processing and indexing.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UploadKnowledgeSourceFile(string sourceName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Uploads a file to a File knowledge source for processing and indexing.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UploadKnowledgeSourceFileAsync(string sourceName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="file"> The file content to upload. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFile(string sourceName, BinaryData @file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            Response result = UploadKnowledgeSourceFile(sourceName, RequestContent.Create(@file), cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeSourceFile)result, result);
+        }
+
+        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="file"> The file content to upload. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileAsync(string sourceName, BinaryData @file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            Response result = await UploadKnowledgeSourceFileAsync(sourceName, RequestContent.Create(@file), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeSourceFile)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all files in a File knowledge source.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetKnowledgeSourceFiles(string sourceName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesCollectionResult(this, sourceName, context, "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all files in a File knowledge source.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetKnowledgeSourceFilesAsync(string sourceName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult(this, sourceName, context, "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary> Lists all files in a File knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<KnowledgeSourceFile> GetKnowledgeSourceFiles(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesCollectionResultOfT(this, sourceName, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary> Lists all files in a File knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<KnowledgeSourceFile> GetKnowledgeSourceFilesAsync(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT(this, sourceName, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a file from a File knowledge source and removes all indexed content derived from it.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a file from a File knowledge source and removes all indexed content derived from it.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return DeleteKnowledgeSourceFile(fileId, sourceName, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return await DeleteKnowledgeSourceFileAsync(fileId, sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// [Protocol Method] Gets service level statistics for a search service.
         /// <list type="bullet">
         /// <item>

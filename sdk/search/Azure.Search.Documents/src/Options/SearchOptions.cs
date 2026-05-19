@@ -224,10 +224,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.QueryAnswer?.QueryAnswerRaw; }
             set
             {
-                if (SemanticSearch?.QueryAnswer != null)
-                {
-                    SemanticSearch.QueryAnswer.QueryAnswerRaw = value;
-                }
+                if (string.IsNullOrEmpty(value)) { return; }
+                SemanticSearch ??= new SemanticSearchOptions();
+                SemanticSearch.QueryAnswer ??= new QueryAnswer();
+                SemanticSearch.QueryAnswer.QueryAnswerRaw = value;
             }
         }
 
@@ -238,10 +238,10 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.QueryCaption?.QueryCaptionRaw; }
             set
             {
-                if (SemanticSearch?.QueryCaption != null)
-                {
-                    SemanticSearch.QueryCaption.QueryCaptionRaw = value;
-                }
+                if (string.IsNullOrEmpty(value)) { return; }
+                SemanticSearch ??= new SemanticSearchOptions();
+                SemanticSearch.QueryCaption ??= new QueryCaption();
+                SemanticSearch.QueryCaption.QueryCaptionRaw = value;
             }
         }
 
@@ -370,21 +370,17 @@ namespace Azure.Search.Documents
             }
         }
 
-        /// <summary> A value that specifies whether query rewrites should be generated to augment the search query. </summary>
+        /// <summary> Constructed from <see cref="QueryRewrites.RewritesType"/> and <see cref="QueryRewrites.Count"/>. For example: "generative|count-3". </summary>
         [CodeGenMember("QueryRewrites")]
-        private QueryRewritesType? QueryRewrites
+        private string QueryRewritesRaw
         {
-            get { return SemanticSearch?.QueryRewrites; }
+            get { return SemanticSearch?.QueryRewrites?.QueryRewritesRaw; }
             set
             {
-                if (value != null)
-                {
-                    SemanticSearch ??= new SemanticSearchOptions();
-                }
-                if (SemanticSearch != null)
-                {
-                    SemanticSearch.QueryRewrites = value;
-                }
+                if (string.IsNullOrEmpty(value)) { return; }
+                SemanticSearch ??= new SemanticSearchOptions();
+                SemanticSearch.QueryRewrites ??= new QueryRewrites();
+                SemanticSearch.QueryRewrites.QueryRewritesRaw = value;
             }
         }
 

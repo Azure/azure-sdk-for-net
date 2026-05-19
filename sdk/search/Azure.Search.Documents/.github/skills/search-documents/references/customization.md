@@ -330,6 +330,55 @@ SDK usages:
 
 `SearchOptions` routes semantic/vector properties through private `[CodeGenMember]` redirectors to public sub-objects (`SemanticSearchOptions`, `VectorSearchOptions`). When a new generated property belongs to a sub-object, follow the full procedure in [architecture.md → SearchOptions Architecture](./architecture.md#searchoptions-architecture).
 
+#### Compound / magic-string properties
+
+Some wire properties are typed as an extensible enum (e.g. `QueryAnswerType`, `QueryCaptionType`, `QueryRewritesType`) but the service actually accepts a **pipe-delimited compound string** that packs the enum value plus one or more parameters:
+
+| Property | Compound format example |
+|---|---|
+| `Answers` | `extractive\|count-5,threshold-0.9,maxcharlength-300` |
+| `Captions` | `extractive\|highlight-true,maxcharlength-400` |
+| `QueryRewrites` | `generative\|count-3` |
+
+The generator only sees the enum type and exposes it as `XxxType?`, **silently hiding the parameter portion** from users. Detect this by reading the generated property's doc comment: if it shows a `|` separator or mentions parameters like `count-`, `threshold-`, `highlight-`, `maxcharlength-`, the property needs a wrapper.
+
+**Wiring template** (three files, mirror `QueryAnswer` exactly):
+
+1. **Handwritten wrapper class** at `src/Models/Xxx.cs` — public typed properties (the enum + each parameter) and an `internal string XxxRaw` getter/setter that parses and emits the compound string. See [Models/QueryAnswer.cs](../../../src/Models/QueryAnswer.cs) as the canonical reference.
+
+2. **Raw redirector on the owner model.** When the property lives on `SearchOptions`, add a redirector in `Options/SearchOptions.cs` that **lazy-initializes both the sub-object and the wrapper** so a value coming back from deserialization (continuation tokens, response models) isn't silently dropped:
+   ```csharp
+   [CodeGenMember("Xxx")]
+   private string XxxRaw
+   {
+       get => SemanticSearch?.Xxx?.XxxRaw;
+       set
+       {
+           if (string.IsNullOrEmpty(value)) { return; }
+           SemanticSearch ??= new SemanticSearchOptions();
+           SemanticSearch.Xxx ??= new Xxx();
+           SemanticSearch.Xxx.XxxRaw = value;
+       }
+   }
+   ```
+   The wrapper class must expose an `internal Xxx()` parameterless constructor so the redirector can lazy-init it.
+
+   When the property lives directly on another generated model (e.g. `VectorizableTextQuery`), put the redirector on a partial of that model — no sub-object indirection, but the same lazy-init shape:
+   ```csharp
+   public Xxx Xxx { get; set; }
+
+   [CodeGenMember("Xxx")]
+   private string XxxRaw
+   {
+       get => Xxx?.XxxRaw;
+       set { if (!string.IsNullOrEmpty(value)) { Xxx ??= new Xxx(); Xxx.XxxRaw = value; } }
+   }
+   ```
+
+3. **Public sub-object property** (when applicable) — change the public property on `SemanticSearchOptions` / `VectorSearchOptions` from the bare enum (`XxxType?`) to the new wrapper class so callers can set parameters.
+
+Reference implementations: [Models/QueryAnswer.cs](../../../src/Models/QueryAnswer.cs), [Models/QueryCaption.cs](../../../src/Models/QueryCaption.cs), [Models/QueryRewrites.cs](../../../src/Models/QueryRewrites.cs), with matching redirectors in [Options/SearchOptions.cs](../../../src/Options/SearchOptions.cs) and the `VectorizableTextQuery` partial in [Models/VectorizableTextQuery.cs](../../../src/Models/VectorizableTextQuery.cs).
+
 ### `[CodeGenSuppress("MemberName", typeof(Arg1))]`
 Removes a generated constructor or method.
 
@@ -453,6 +502,7 @@ Remove enum member and all three switch arms. This is a **breaking change** requ
 | Deleted model file | Check backward compat rules in [architecture.md](./architecture.md#backwards-compatibility-for-removed-api-version-types) |
 | Renamed member | Update `[CodeGenMember("...")]` attribute |
 | Changed client method signature | Update custom partial that wraps/overrides it |
+| New `XxxType?` property whose doc comment shows a `\|` separator or `count-` / `threshold-` / `highlight-` / `maxcharlength-` parameter | Add a wrapper class + raw redirector — see [Compound / magic-string properties](#compound--magic-string-properties) |
 | Added parameter to generated ctor | Custom code calling `new ModelType(...)` — update argument list |
 | Removed property from model | Custom partials referencing it — remove references |
 | Deleted model file | Check backward compat rules in [architecture.md](./architecture.md#backwards-compatibility-for-removed-api-version-types) |

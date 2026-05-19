@@ -234,10 +234,10 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(QueryCaptionRaw);
             }
-            if (Optional.IsDefined(QueryRewrites))
+            if (Optional.IsDefined(QueryRewritesRaw))
             {
                 writer.WritePropertyName("queryRewrites"u8);
-                writer.WriteStringValue(QueryRewrites.Value.ToString());
+                writer.WriteStringValue(QueryRewritesRaw);
             }
             if (Optional.IsCollectionDefined(SemanticFields))
             {
@@ -334,7 +334,7 @@ namespace Azure.Search.Documents
             string semanticQuery = default;
             string queryAnswerRaw = default;
             string queryCaptionRaw = default;
-            QueryRewritesType? queryRewrites = default;
+            string queryRewritesRaw = default;
             IList<string> semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? filterMode = default;
@@ -564,11 +564,7 @@ namespace Azure.Search.Documents
                 }
                 if (prop.NameEquals("queryRewrites"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryRewrites = new QueryRewritesType(prop.Value.GetString());
+                    queryRewritesRaw = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("semanticFields"u8))
@@ -647,7 +643,7 @@ namespace Azure.Search.Documents
                 semanticQuery,
                 queryAnswerRaw,
                 queryCaptionRaw,
-                queryRewrites,
+                queryRewritesRaw,
                 semanticFields ?? new ChangeTrackingList<string>(),
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
                 filterMode,

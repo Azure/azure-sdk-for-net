@@ -33,6 +33,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string FabricDataAgentValue = "fabricDataAgent";
         /// <summary> Fabric Ontology retrieval activity. </summary>
         private const string FabricOntologyValue = "fabricOntology";
+        /// <summary> MCP server retrieval activity. </summary>
+        private const string McpServerValue = "mcpServer";
         /// <summary> LLM query planning activity. </summary>
         private const string ModelQueryPlanningValue = "modelQueryPlanning";
         /// <summary> LLM answer synthesis activity. </summary>
@@ -78,6 +80,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Fabric Ontology retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType FabricOntology { get; } = new KnowledgeBaseActivityRecordType(FabricOntologyValue);
+
+        /// <summary> MCP server retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType McpServer { get; } = new KnowledgeBaseActivityRecordType(McpServerValue);
 
         /// <summary> LLM query planning activity. </summary>
         public static KnowledgeBaseActivityRecordType ModelQueryPlanning { get; } = new KnowledgeBaseActivityRecordType(ModelQueryPlanningValue);

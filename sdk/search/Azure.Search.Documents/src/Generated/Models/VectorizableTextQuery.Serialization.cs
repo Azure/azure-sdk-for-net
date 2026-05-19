@@ -82,10 +82,10 @@ namespace Azure.Search.Documents.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(QueryRewrites))
+            if (Optional.IsDefined(QueryRewritesRaw))
             {
                 writer.WritePropertyName("queryRewrites"u8);
-                writer.WriteStringValue(QueryRewrites.Value.ToString());
+                writer.WriteStringValue(QueryRewritesRaw);
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents.Models
             VectorQueryKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            QueryRewritesType? queryRewrites = default;
+            string queryRewritesRaw = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("k"u8))
@@ -204,11 +204,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("queryRewrites"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryRewrites = new QueryRewritesType(prop.Value.GetString());
+                    queryRewritesRaw = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -228,7 +224,7 @@ namespace Azure.Search.Documents.Models
                 kind,
                 additionalBinaryDataProperties,
                 text,
-                queryRewrites);
+                queryRewritesRaw);
         }
     }
 }
