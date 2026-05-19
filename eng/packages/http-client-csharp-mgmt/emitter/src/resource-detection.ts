@@ -27,7 +27,6 @@ import {
   sortResourceMethods,
   RequestPath,
   extractNameConstraintOverrides,
-  getSingletonResourceNameFromPath,
   resolveFixedEnumNameSegments
 } from "./resource-metadata.js";
 import {
@@ -142,6 +141,8 @@ export function buildArmProviderSchema(
 
     const rawPath = new RequestPath(method.operation.path);
     if (!isResourceInstancePath(sdkMethod, rawPath)) continue;
+    // Canonicalizing fixed enum names changes resourceIdPattern from a parameter
+    // to a literal; track any full-regeneration API impact before broad rollout.
     const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
 
     const entry: ResourceEntry = {
@@ -150,10 +151,7 @@ export function buildArmProviderSchema(
       client,
       methods: [],
       explicitResourceName: getExplicitResourceName(sdkMethod),
-      singletonResourceName: getSingletonResourceNameFromPath(
-        sdkMethod,
-        rawPath
-      )
+      singletonResourceName: path.singletonName
     };
     resourceEntries.push(entry);
     entry.methods.push({

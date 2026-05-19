@@ -4,15 +4,16 @@
 import {
   DecoratedType,
   getClientOptions,
+  SdkEnumType,
   SdkHttpOperation,
-  SdkMethod
+  SdkMethod,
+  SdkPathParameter
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 
 type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
-type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
-  kind: "path";
-  type: { kind: "enum"; values: { value: unknown }[]; isFixed: boolean };
+type SdkHttpOperationEnumPathParameter = SdkPathParameter & {
+  type: SdkEnumType;
 };
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
@@ -23,6 +24,13 @@ type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
  */
 export function isVariableSegment(segment: string): boolean {
   return segment.startsWith("{") && segment.endsWith("}");
+}
+
+/**
+ * Gets the parameter name from a variable segment like {resourceName}.
+ */
+export function getVariableSegmentName(segment: string): string {
+  return segment.slice(1, -1);
 }
 
 /**
@@ -738,18 +746,6 @@ export function isResourceInstancePath(
 }
 
 /**
- * Derives singleton resource names that are fixed by the path itself.
- * A singleton name can be represented either as a literal final path segment
- * or as a final path parameter whose type is a fixed enum with one value.
- */
-export function getSingletonResourceNameFromPath(
-  method: SdkMethod<SdkHttpOperation>,
-  path: RequestPath
-): string | undefined {
-  return resolveFixedEnumNameSegments(method, path).singletonName;
-}
-
-/**
  * Treats name path parameters with fixed one-value enum types as constants.
  */
 export function resolveFixedEnumNameSegments(
@@ -778,7 +774,7 @@ export function resolveFixedEnumNameSegments(
 
       const fixedValue = getSingleFixedEnumValueForPathParam(
         method,
-        segment.slice(1, -1)
+        getVariableSegmentName(segment)
       );
       if (!fixedValue) continue;
 
@@ -1497,9 +1493,11 @@ function detectDynamicTypeSegments(
 
   for (let i = providerIndex + 2; i < path.length - 1; i += 2) {
     if (isVariableSegment(path.segments[i])) {
-      const typeParamName = path.segments[i].slice(1, -1);
+      const typeParamName = getVariableSegmentName(path.segments[i]);
       const nameParamName =
-        i + 1 < path.length ? path.segments[i + 1].slice(1, -1) : "";
+        i + 1 < path.length && isVariableSegment(path.segments[i + 1])
+          ? getVariableSegmentName(path.segments[i + 1])
+          : "";
       results.push({
         typeParamName,
         nameParamName,
