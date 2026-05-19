@@ -741,7 +741,7 @@ namespace Azure.Security.CodeTransparency.Tests
             int threadCount = 8;
             int iterationsPerThread = 3;
 
-            const int timeoutMs = 25_000;
+            var timeout = TimeSpan.FromMilliseconds(25_000);
 
             var barrier = new Barrier(threadCount);
             var exceptions = new ConcurrentBag<Exception>();
@@ -774,9 +774,9 @@ namespace Azure.Security.CodeTransparency.Tests
                 }
             })).ToArray();
 
-            if (!Task.WaitAll(tasks, timeoutMs))
+            if (!Task.WaitAll(tasks, timeout))
             {
-                Assert.Inconclusive($"Thread-safety test could not complete within the CI timeout budget ({timeoutMs} milliseconds).");
+                Assert.Inconclusive($"Thread-safety test could not complete within the CI timeout budget ({timeout.TotalSeconds} seconds).");
             }
 
             int totalCalls = threadCount * iterationsPerThread;
