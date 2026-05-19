@@ -34,9 +34,11 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
         #region Snippet:Invocations_SampleWs1_EchoAgentHandler
 
-        public class EchoAgentHandler : InvocationHandler
+        public class EchoAgentHandler : InvocationsWebSocketHandler
         {
-            // POST /invocations — classic request/response echo.
+            // POST /invocations — classic request/response echo. Overrides the
+            // InvocationsWebSocketHandler default (404) to add HTTP support
+            // alongside the WebSocket endpoint.
             public override async Task HandleAsync(
                 HttpRequest request,
                 HttpResponse response,

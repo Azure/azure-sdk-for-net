@@ -57,7 +57,11 @@ For more control over the host (adding services, configuring middleware, composi
 
 ### InvocationHandler
 
-The abstract base class you subclass. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`, `HandleWebSocketAsync`) return 404 / refuse the upgrade by default and can be overridden as needed.
+The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`) return 404 by default and can be overridden as needed.
+
+### InvocationsWebSocketHandler
+
+Derives from `InvocationHandler` and adds the abstract `HandleWebSocketAsync` method for the `/invocations_ws` endpoint. The inherited `HandleAsync` returns 404 by default, so a WebSocket-only handler does not need to implement `HandleAsync` — multi-protocol handlers override both. See the [WebSocket protocol section](#websocket-protocol-invocations_ws) below.
 
 ### InvocationContext
 
@@ -86,19 +90,11 @@ Handlers registered via `AddInvocations<THandler>()` or `InvocationsServer.Run<T
 
 ### WebSocket protocol (`invocations_ws`)
 
-The same host that serves `POST /invocations` also exposes a WebSocket transport at `/invocations_ws`. Container authors do not install or import a second package — overriding `InvocationHandler.HandleWebSocketAsync` is the only step. A multi-protocol agent shares one host, one session, and one process.
+The same host that serves `POST /invocations` also exposes a WebSocket transport at `/invocations_ws`. Container authors do not install or import a second package — derive from `InvocationsWebSocketHandler` and override `HandleWebSocketAsync`. The inherited `HandleAsync` returns 404 by default, so a WebSocket-only agent has no boilerplate; override `HandleAsync` too when you want HTTP and WebSocket on the same handler.
 
 ```C# Snippet:Invocations_ReadMe_WebSocketHandler
-public class WebSocketEchoHandler : InvocationHandler
+public class WebSocketEchoHandler : InvocationsWebSocketHandler
 {
-    public override Task HandleAsync(
-        HttpRequest request, HttpResponse response,
-        InvocationContext context, CancellationToken cancellationToken)
-    {
-        response.StatusCode = StatusCodes.Status200OK;
-        return Task.CompletedTask;
-    }
-
     public override async Task HandleWebSocketAsync(
         WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
     {
@@ -120,14 +116,14 @@ public class WebSocketEchoHandler : InvocationHandler
 }
 ```
 
-What the SDK does for you when you override `HandleWebSocketAsync`:
+What the SDK does for you when the registered handler derives from `InvocationsWebSocketHandler`:
 
 - Registers the `/invocations_ws` route on the same host as `/invocations` and `/readiness`.
 - Calls `AcceptWebSocketAsync` before invoking your handler.
 - Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
 - Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
 - Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. No framework-level OpenTelemetry span is created for the connection — ASP.NET Core auto-propagates the inbound W3C trace context, so any spans your handler starts are parented correctly without a per-connection wrapper.
-- When the handler does **not** override `HandleWebSocketAsync`, an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
+- When the registered handler is a plain `InvocationHandler` (not an `InvocationsWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
 

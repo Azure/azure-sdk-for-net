@@ -68,16 +68,8 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
         #region Snippet:Invocations_ReadMe_WebSocketHandler
 
-        public class WebSocketEchoHandler : InvocationHandler
+        public class WebSocketEchoHandler : InvocationsWebSocketHandler
         {
-            public override Task HandleAsync(
-                HttpRequest request, HttpResponse response,
-                InvocationContext context, CancellationToken cancellationToken)
-            {
-                response.StatusCode = StatusCodes.Status200OK;
-                return Task.CompletedTask;
-            }
-
             public override async Task HandleWebSocketAsync(
                 WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
             {

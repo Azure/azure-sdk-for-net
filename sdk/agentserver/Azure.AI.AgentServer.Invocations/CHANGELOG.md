@@ -10,15 +10,18 @@
   origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
   (developer handler failure) per container-image-spec §8. Platform errors include
   `x-platform-error-detail` with diagnostic context.
-- WebSocket protocol support — `InvocationHandler` now exposes a virtual
+- WebSocket protocol support — new public abstract `InvocationsWebSocketHandler`
+  base class (derived from `InvocationHandler`) declares abstract
   `HandleWebSocketAsync(WebSocket, InvocationContext, CancellationToken)`
-  method. Handlers that override it serve `/invocations_ws` alongside
-  `POST /invocations` on the same host. Handlers that do not override it
-  cause the endpoint to short-circuit to HTTP 404. The SDK accepts the
-  upgrade (`AcceptWebSocketAsync`), maps clean handler returns to RFC 6455
-  close code `1000` (`NormalClosure`) and uncaught handler exceptions to
-  `1011` (`InternalServerError`), and preserves handler-initiated close
-  codes unchanged.
+  and defaults the inherited `HandleAsync` to HTTP `404 Not Found`. A
+  WebSocket-only agent therefore implements only `HandleWebSocketAsync`;
+  multi-protocol agents override both methods. Handlers that derive from
+  plain `InvocationHandler` continue to short-circuit `/invocations_ws`
+  to HTTP `404 Not Found`. The SDK accepts the upgrade
+  (`AcceptWebSocketAsync`), maps clean handler returns to RFC 6455 close
+  code `1000` (`NormalClosure`) and uncaught handler exceptions to `1011`
+  (`InternalServerError`), and preserves handler-initiated close codes
+  unchanged.
 - WebSocket Ping/Pong keep-alive — disabled by default; enable via the
   `WS_KEEPALIVE_INTERVAL` environment variable (see
   `Azure.AI.AgentServer.Core` 1.0.0-beta.24), which is wired through to

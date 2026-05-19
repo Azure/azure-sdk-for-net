@@ -45,11 +45,10 @@ internal sealed class WebSocketEndpointHandler
     /// </summary>
     internal async Task HandleAsync(HttpContext httpContext, InvocationHandler handler)
     {
-        // If the handler has not opted in to the WS protocol, refuse the upgrade
-        // with HTTP 404. The route is mapped unconditionally so this short-circuit
-        // — equivalent to "endpoint not registered" — keeps the upgrade decision
-        // colocated with the handler-capability check.
-        if (!InvocationHandlerCapabilities.SupportsWebSocket(handler.GetType()))
+        // If the handler does not derive from InvocationsWebSocketHandler, refuse
+        // the upgrade with HTTP 404 — "endpoint not registered" semantics so a
+        // missing handler fails fast instead of accepting and immediately closing.
+        if (handler is not InvocationsWebSocketHandler webSocketHandler)
         {
             httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             return;
@@ -127,7 +126,7 @@ internal sealed class WebSocketEndpointHandler
 
             try
             {
-                await handler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
+                await webSocketHandler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
             }
             catch (OperationCanceledException oce)
                 when (oce.CancellationToken == httpContext.RequestAborted

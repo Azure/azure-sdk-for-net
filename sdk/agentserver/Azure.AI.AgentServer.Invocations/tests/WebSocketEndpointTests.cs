@@ -103,6 +103,61 @@ public class WebSocketEndpointTests
     }
 
     [Test]
+    public async Task WebSocketOnlyHandler_HttpPostInvocations_Returns404_ByDefault()
+    {
+        // The new InvocationsWebSocketHandler base class lets developers
+        // implement HandleWebSocketAsync without also implementing HandleAsync.
+        // The default HandleAsync must return 404 so HTTP POST /invocations
+        // against a WS-only handler is rejected cleanly.
+        var app = BuildApp(new WebSocketOnlyEchoHandler());
+        await app.StartAsync();
+        try
+        {
+            var client = app.GetTestClient();
+            var response = await client.PostAsync("/invocations", new StringContent("{}"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound),
+                "WS-only InvocationsWebSocketHandler must default HandleAsync to 404 — multi-protocol opt-in only when the user overrides HandleAsync explicitly.");
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task WebSocketOnlyHandler_WebSocketUpgrade_EchoesFrames()
+    {
+        // The WS path on a WS-only handler must still work end to end —
+        // the InvocationsWebSocketHandler default HandleAsync 404 must not
+        // disrupt the WebSocket upgrade on /invocations_ws.
+        var app = BuildApp(new WebSocketOnlyEchoHandler());
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            var wsClient = server.CreateWebSocketClient();
+            var uri = new Uri(server.BaseAddress, "invocations_ws");
+            using var ws = await wsClient.ConnectAsync(uri, CancellationToken.None);
+
+            var payload = Encoding.UTF8.GetBytes("ws-only path");
+            await ws.SendAsync(payload, WebSocketMessageType.Text, endOfMessage: true, CancellationToken.None);
+
+            var buffer = new byte[256];
+            var received = await ws.ReceiveAsync(buffer, CancellationToken.None);
+            Assert.That(received.MessageType, Is.EqualTo(WebSocketMessageType.Text));
+            Assert.That(Encoding.UTF8.GetString(buffer, 0, received.Count), Is.EqualTo("ws-only path"));
+
+            await ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+            await ws.ReceiveAsync(buffer, CancellationToken.None); // drain close frame
+            Assert.That(ws.CloseStatus, Is.EqualTo(WebSocketCloseStatus.NormalClosure));
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
     public async Task EchoHandler_RoundTripsTextFrame_AndClosesCleanly()
     {
         var app = BuildApp(new EchoWebSocketInvocationHandler());
@@ -468,11 +523,14 @@ public class WebSocketEndpointTests
             response.StatusCode = 200;
             return Task.CompletedTask;
         }
-        // Intentionally does NOT override HandleWebSocketAsync.
+        // Intentionally NOT an InvocationsWebSocketHandler — a plain
+        // InvocationHandler must yield 404 on the /invocations_ws route.
     }
 
-    private sealed class EchoWebSocketInvocationHandler : InvocationHandler
+    private sealed class EchoWebSocketInvocationHandler : InvocationsWebSocketHandler
     {
+        // Overrides the default 404 HandleAsync from InvocationsWebSocketHandler
+        // to also accept HTTP — exercises the multi-protocol path.
         public override Task HandleAsync(
             HttpRequest request, HttpResponse response, InvocationContext context, CancellationToken cancellationToken)
         {
@@ -505,18 +563,39 @@ public class WebSocketEndpointTests
         }
     }
 
-    private sealed class ThrowingWebSocketInvocationHandler : InvocationHandler
+    private sealed class WebSocketOnlyEchoHandler : InvocationsWebSocketHandler
     {
-        public override Task HandleAsync(
-            HttpRequest request, HttpResponse response, InvocationContext context, CancellationToken cancellationToken)
-            => Task.CompletedTask;
+        // Does NOT override HandleAsync — relies on the InvocationsWebSocketHandler
+        // default that returns 404 on POST /invocations. This is the "WS-only"
+        // ergonomic the new base class enables.
+        public override async Task HandleWebSocketAsync(
+            WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
+        {
+            var buffer = new byte[256];
+            while (webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
+            {
+                var received = await webSocket.ReceiveAsync(buffer, cancellationToken);
+                if (received.MessageType == WebSocketMessageType.Close)
+                {
+                    break;
+                }
+                await webSocket.SendAsync(
+                    new ArraySegment<byte>(buffer, 0, received.Count),
+                    received.MessageType,
+                    received.EndOfMessage,
+                    cancellationToken);
+            }
+        }
+    }
 
+    private sealed class ThrowingWebSocketInvocationHandler : InvocationsWebSocketHandler
+    {
         public override Task HandleWebSocketAsync(
             WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
             => throw new InvalidOperationException("boom");
     }
 
-    private sealed class HandlerInitiatedCloseInvocationHandler : InvocationHandler
+    private sealed class HandlerInitiatedCloseInvocationHandler : InvocationsWebSocketHandler
     {
         private readonly WebSocketCloseStatus _status;
         private readonly string _description;
@@ -527,10 +606,6 @@ public class WebSocketEndpointTests
             _description = description;
         }
 
-        public override Task HandleAsync(
-            HttpRequest request, HttpResponse response, InvocationContext context, CancellationToken cancellationToken)
-            => Task.CompletedTask;
-
         public override async Task HandleWebSocketAsync(
             WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
         {
@@ -538,12 +613,8 @@ public class WebSocketEndpointTests
         }
     }
 
-    private sealed class HandlerOceFromUnrelatedTokenInvocationHandler : InvocationHandler
+    private sealed class HandlerOceFromUnrelatedTokenInvocationHandler : InvocationsWebSocketHandler
     {
-        public override Task HandleAsync(
-            HttpRequest request, HttpResponse response, InvocationContext context, CancellationToken cancellationToken)
-            => Task.CompletedTask;
-
         public override Task HandleWebSocketAsync(
             WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
         {
@@ -557,7 +628,7 @@ public class WebSocketEndpointTests
         }
     }
 
-    private sealed class CaptureSessionIdInvocationHandler : InvocationHandler
+    private sealed class CaptureSessionIdInvocationHandler : InvocationsWebSocketHandler
     {
         private readonly TaskCompletionSource<string> _observed;
 
@@ -565,10 +636,6 @@ public class WebSocketEndpointTests
         {
             _observed = observed;
         }
-
-        public override Task HandleAsync(
-            HttpRequest request, HttpResponse response, InvocationContext context, CancellationToken cancellationToken)
-            => Task.CompletedTask;
 
         public override async Task HandleWebSocketAsync(
             WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)

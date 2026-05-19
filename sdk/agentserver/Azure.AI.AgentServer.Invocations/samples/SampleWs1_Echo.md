@@ -13,9 +13,11 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 ## Implement the handler
 
 ```C# Snippet:Invocations_SampleWs1_EchoAgentHandler
-public class EchoAgentHandler : InvocationHandler
+public class EchoAgentHandler : InvocationsWebSocketHandler
 {
-    // POST /invocations — classic request/response echo.
+    // POST /invocations — classic request/response echo. Overrides the
+    // InvocationsWebSocketHandler default (404) to add HTTP support
+    // alongside the WebSocket endpoint.
     public override async Task HandleAsync(
         HttpRequest request,
         HttpResponse response,
@@ -94,7 +96,7 @@ ws.onopen    = () => ws.send("hello from the browser");
 
 ## What the SDK does for you
 
-- **Lazy route registration.** The `/invocations_ws` route is only active when the handler overrides `HandleWebSocketAsync`. Handlers that don't (Samples 1–7) return HTTP `404 Not Found` for upgrade attempts.
+- **Opt-in via `InvocationsWebSocketHandler`.** Only handlers that derive from `InvocationsWebSocketHandler` serve the `/invocations_ws` route. Plain `InvocationHandler` subclasses (Samples 1–7) return HTTP `404 Not Found` for upgrade attempts so a missing WS implementation fails fast.
 - **Accept the upgrade.** The SDK calls `AcceptWebSocketAsync` before invoking your handler — you receive an already-open `WebSocket`.
 - **Map exit codes.** A clean return maps to RFC 6455 close code `1000` (`NormalClosure`); an uncaught handler exception maps to `1011` (`InternalServerError`). Handler-initiated `CloseAsync` codes are preserved unchanged.
 - **Honour `FOUNDRY_AGENT_SESSION_ID`.** The session ID injected by the Foundry hosting platform is reused so HTTP and WS turns on the same container correlate to the same session. A fresh UUID is used when the env var is unset (local dev).

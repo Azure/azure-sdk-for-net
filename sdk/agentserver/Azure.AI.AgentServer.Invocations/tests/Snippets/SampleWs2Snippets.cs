@@ -38,7 +38,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
         #region Snippet:Invocations_SampleWs2_BidirectionalStreamingHandler
 
-        public class BidirectionalStreamingHandler : InvocationHandler
+        public class BidirectionalStreamingHandler : InvocationsWebSocketHandler
         {
             private static readonly string[] SimulatedTokens =
             {
@@ -50,6 +50,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             private static readonly TimeSpan TokenDelay = TimeSpan.FromMilliseconds(200);
 
             // HTTP /invocations — kept for parity with the other samples.
+            // Overrides the InvocationsWebSocketHandler default (404).
             public override async Task HandleAsync(
                 HttpRequest request, HttpResponse response,
                 InvocationContext context, CancellationToken cancellationToken)

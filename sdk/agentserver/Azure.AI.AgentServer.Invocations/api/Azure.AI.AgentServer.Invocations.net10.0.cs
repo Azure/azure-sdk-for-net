@@ -16,7 +16,12 @@ namespace Azure.AI.AgentServer.Invocations
         public virtual System.Threading.Tasks.Task GetAsync(string invocationId, Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task GetOpenApiAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, System.Threading.CancellationToken cancellationToken) { throw null; }
         public abstract System.Threading.Tasks.Task HandleAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken);
-        public virtual System.Threading.Tasks.Task HandleWebSocketAsync(System.Net.WebSockets.WebSocket webSocket, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public abstract partial class InvocationsWebSocketHandler : Azure.AI.AgentServer.Invocations.InvocationHandler
+    {
+        protected InvocationsWebSocketHandler() { }
+        public override System.Threading.Tasks.Task HandleAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public abstract System.Threading.Tasks.Task HandleWebSocketAsync(System.Net.WebSockets.WebSocket webSocket, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken);
     }
     public static partial class InvocationsBuilderExtensions
     {
