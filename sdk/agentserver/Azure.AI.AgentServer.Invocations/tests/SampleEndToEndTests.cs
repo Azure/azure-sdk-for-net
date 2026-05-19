@@ -343,13 +343,13 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
-    //  Sample 8: WebSocket Echo — HTTP and WS on the same handler
+    //  Sample WS1: WebSocket Echo — HTTP and WS on the same handler
     // ═══════════════════════════════════════════════════════════════════
 
     [Test]
-    public async Task Sample8_EchoAgentHandler_RespondsOverHttp()
+    public async Task SampleWs1_EchoAgentHandler_RespondsOverHttp()
     {
-        await using var env = await CreateTestServerAsync<Snippets.Sample8Snippets.EchoAgentHandler>(
+        await using var env = await CreateTestServerAsync<Snippets.SampleWs1Snippets.EchoAgentHandler>(
             configureServerSide: true);
 
         var response = await env.Client.PostAsync("/invocations",
@@ -361,9 +361,9 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task Sample8_EchoAgentHandler_EchoesOverWebSocket()
+    public async Task SampleWs1_EchoAgentHandler_EchoesOverWebSocket()
     {
-        await using var env = await CreateTestServerAsync<Snippets.Sample8Snippets.EchoAgentHandler>(
+        await using var env = await CreateTestServerAsync<Snippets.SampleWs1Snippets.EchoAgentHandler>(
             configureServerSide: true);
 
         var wsClient = env.Server.CreateWebSocketClient();
@@ -392,13 +392,13 @@ public class SampleEndToEndTests
     }
 
     // ═══════════════════════════════════════════════════════════════════
-    //  Sample 9: WebSocket Bidirectional Streaming
+    //  Sample WS2: WebSocket Bidirectional Streaming
     // ═══════════════════════════════════════════════════════════════════
 
     [Test]
-    public async Task Sample9_BidirectionalStreaming_StreamsTokensAndHandlesBye()
+    public async Task SampleWs2_BidirectionalStreaming_StreamsTokensAndHandlesBye()
     {
-        await using var env = await CreateTestServerAsync<Snippets.Sample9Snippets.BidirectionalStreamingHandler>(
+        await using var env = await CreateTestServerAsync<Snippets.SampleWs2Snippets.BidirectionalStreamingHandler>(
             configureServerSide: true);
 
         var wsClient = env.Server.CreateWebSocketClient();
@@ -446,9 +446,9 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task Sample9_BidirectionalStreaming_CancelInterruptsInFlight()
+    public async Task SampleWs2_BidirectionalStreaming_CancelInterruptsInFlight()
     {
-        await using var env = await CreateTestServerAsync<Snippets.Sample9Snippets.BidirectionalStreamingHandler>(
+        await using var env = await CreateTestServerAsync<Snippets.SampleWs2Snippets.BidirectionalStreamingHandler>(
             configureServerSide: true);
 
         var wsClient = env.Server.CreateWebSocketClient();

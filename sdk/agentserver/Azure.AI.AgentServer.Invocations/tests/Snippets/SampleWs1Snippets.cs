@@ -9,16 +9,16 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Invocations Sample8_WebSocketEcho.md. Compiled to prevent rot.
+    /// Code snippets backing Invocations SampleWs1_WebSocketEcho.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
-    public class Sample8Snippets
+    public class SampleWs1Snippets
     {
         [Test]
         public void StartServer()
         {
-            #region Snippet:Invocations_Sample8_StartServer
+            #region Snippet:Invocations_SampleWs1_StartServer
 
             InvocationsServer.Run<EchoAgentHandler>();
 
@@ -32,7 +32,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Invocations_Sample8_EchoAgentHandler
+        #region Snippet:Invocations_SampleWs1_EchoAgentHandler
 
         public class EchoAgentHandler : InvocationHandler
         {

@@ -1,6 +1,6 @@
-# Sample 9: Bidirectional Streaming — Concurrent Token Streams over WebSocket
+# Sample WS2: Bidirectional Streaming — Concurrent Token Streams over WebSocket
 
-Unlike the request/reply echo in [Sample 8](Sample8_WebSocketEcho.md), this sample exercises the **full-duplex** nature of WebSocket: the server and the client send and receive on the same socket **concurrently and independently**.
+Unlike the request/reply echo in [Sample WS1](SampleWs1_Echo.md), this sample exercises the **full-duplex** nature of WebSocket: the server and the client send and receive on the same socket **concurrently and independently**.
 
 The handler runs two responsibilities in parallel:
 
@@ -37,7 +37,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ## Implement the handler
 
-```C# Snippet:Invocations_Sample9_BidirectionalStreamingHandler
+```C# Snippet:Invocations_SampleWs2_BidirectionalStreamingHandler
 public class BidirectionalStreamingHandler : InvocationHandler
 {
     private static readonly string[] SimulatedTokens =
@@ -208,7 +208,7 @@ public class BidirectionalStreamingHandler : InvocationHandler
 
 ## Start the server
 
-```C# Snippet:Invocations_Sample9_StartServer
+```C# Snippet:Invocations_SampleWs2_StartServer
 InvocationsServer.Run<BidirectionalStreamingHandler>();
 ```
 

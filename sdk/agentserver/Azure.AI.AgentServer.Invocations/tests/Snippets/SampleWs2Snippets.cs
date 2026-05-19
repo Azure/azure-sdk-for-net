@@ -12,17 +12,17 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Invocations Sample9_WebSocketBidirectionalStreaming.md.
+    /// Code snippets backing Invocations SampleWs2_WebSocketBidirectionalStreaming.md.
     /// Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
-    public class Sample9Snippets
+    public class SampleWs2Snippets
     {
         [Test]
         public void StartServer()
         {
-            #region Snippet:Invocations_Sample9_StartServer
+            #region Snippet:Invocations_SampleWs2_StartServer
 
             InvocationsServer.Run<BidirectionalStreamingHandler>();
 
@@ -36,7 +36,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Invocations_Sample9_BidirectionalStreamingHandler
+        #region Snippet:Invocations_SampleWs2_BidirectionalStreamingHandler
 
         public class BidirectionalStreamingHandler : InvocationHandler
         {

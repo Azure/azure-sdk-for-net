@@ -1,4 +1,4 @@
-# Sample 8: WebSocket Echo — HTTP and WebSocket on the Same Host
+# Sample WS1: WebSocket Echo — HTTP and WebSocket on the Same Host
 
 A single `InvocationHandler` can serve **both** the HTTP `POST /invocations` endpoint and the WebSocket `/invocations_ws` endpoint. Multi-protocol agents share one host, one session, and one process — no second package and no separate server to manage.
 
@@ -12,7 +12,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ## Implement the handler
 
-```C# Snippet:Invocations_Sample8_EchoAgentHandler
+```C# Snippet:Invocations_SampleWs1_EchoAgentHandler
 public class EchoAgentHandler : InvocationHandler
 {
     // POST /invocations — classic request/response echo.
@@ -57,7 +57,7 @@ public class EchoAgentHandler : InvocationHandler
 
 ## Start the server
 
-```C# Snippet:Invocations_Sample8_StartServer
+```C# Snippet:Invocations_SampleWs1_StartServer
 InvocationsServer.Run<EchoAgentHandler>();
 ```
 
@@ -108,4 +108,4 @@ ws.onopen    = () => ws.send("hello from the browser");
 
 ## Next
 
-See [Sample 9 — Bidirectional Streaming](Sample9_WebSocketBidirectionalStreaming.md) for a real full-duplex scenario where the server pushes tokens concurrently with reading client control messages.
+See [Sample WS2 — Bidirectional Streaming](SampleWs2_BidirectionalStreaming.md) for a real full-duplex scenario where the server pushes tokens concurrently with reading client control messages.
