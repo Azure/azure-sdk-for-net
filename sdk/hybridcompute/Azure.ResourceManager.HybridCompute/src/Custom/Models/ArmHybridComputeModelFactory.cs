@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId, HybridComputePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
-            => HybridComputePrivateEndpointConnectionProperties(privateEndpointId?.ToString(), connectionState, provisioningState, groupIds);
+            => new HybridComputePrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, additionalBinaryDataProperties: null), connectionState, provisioningState, groupIds is null ? new List<string>() : new List<string>(groupIds), additionalBinaryDataProperties: null);
     }
 }

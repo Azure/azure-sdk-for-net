@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceViewSoftwareAssurance"/>. </summary>
-        internal LicenseProfileMachineInstanceViewSoftwareAssurance()
+        public LicenseProfileMachineInstanceViewSoftwareAssurance()
         {
         }
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
         [WirePath("softwareAssuranceCustomer")]
-        public bool? IsSoftwareAssuranceCustomer { get; }
+        public bool? IsSoftwareAssuranceCustomer { get; set; }
     }
 }

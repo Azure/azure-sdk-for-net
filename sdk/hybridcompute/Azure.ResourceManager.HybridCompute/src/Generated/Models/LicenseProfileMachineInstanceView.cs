@@ -48,47 +48,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         [WirePath("licenseChannel")]
         public string LicenseChannel { get; }
 
-        /// <summary> Gets the SoftwareAssurance. </summary>
-        [WirePath("softwareAssurance")]
-        internal LicenseProfileMachineInstanceViewSoftwareAssurance SoftwareAssurance { get; }
-
         /// <summary> Properties for the Machine ESU profile. </summary>
         [WirePath("esuProfile")]
         public LicenseProfileMachineInstanceViewEsuProperties EsuProfile { get; set; }
-
-        /// <summary> Hybrid Compute Product Profile properties. </summary>
-        [WirePath("productProfile")]
-        internal LicenseProfileArmProductProfileProperties ProductProfile { get; }
-
-        /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
-        [WirePath("softwareAssurance.softwareAssuranceCustomer")]
-        public bool? IsSoftwareAssuranceCustomer
-        {
-            get
-            {
-                return SoftwareAssurance is null ? default : SoftwareAssurance.IsSoftwareAssuranceCustomer;
-            }
-        }
-
-        /// <summary> Indicates the subscription status of the product. </summary>
-        [WirePath("productProfile.subscriptionStatus")]
-        public LicenseProfileSubscriptionStatus? SubscriptionStatus
-        {
-            get
-            {
-                return ProductProfile is null ? default : ProductProfile.SubscriptionStatus;
-            }
-        }
-
-        /// <summary> Indicates the product type of the license. </summary>
-        [WirePath("productProfile.productType")]
-        public LicenseProfileProductType? ProductType
-        {
-            get
-            {
-                return ProductProfile is null ? default : ProductProfile.ProductType;
-            }
-        }
 
         /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
         [WirePath("productProfile.enrollmentDate")]
@@ -146,7 +108,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             get
             {
-                return ProductProfile is null ? default : ProductProfile.ProductFeatures;
+                if (ProductProfile is null)
+                {
+                    ProductProfile = new LicenseProfileArmProductProfileProperties();
+                }
+                return ProductProfile.ProductFeatures;
             }
         }
     }

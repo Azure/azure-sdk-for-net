@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceProperties"/>. </summary>
-        internal HybridComputePrivateLinkResourceProperties()
+        public HybridComputePrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

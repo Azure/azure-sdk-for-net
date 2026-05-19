@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceData"/>. </summary>
-        internal HybridComputePrivateLinkResourceData()
+        public HybridComputePrivateLinkResourceData()
         {
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        public HybridComputePrivateLinkResourceProperties Properties { get; }
+        public HybridComputePrivateLinkResourceProperties Properties { get; set; }
     }
 }

@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
-    public partial class PrivateEndpointConnectionDataModel
+    public partial class PrivateEndpointConnectionDataModel : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,31 +25,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionDataModel"/>. </summary>
-        /// <param name="id"> The ARM Resource Id of the Private Endpoint. </param>
-        /// <param name="name"> The Name of the Private Endpoint. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="properties"> The Private Endpoint Connection properties. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionDataModel(string id, string name, string @type, HybridComputePrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> The Name of the Private Endpoint. </param>
+        /// <param name="properties"> The Private Endpoint Connection properties. </param>
+        internal PrivateEndpointConnectionDataModel(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, HybridComputePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> The ARM Resource Id of the Private Endpoint. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> The Name of the Private Endpoint. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> Azure resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The Private Endpoint Connection properties. </summary>
         [WirePath("properties")]

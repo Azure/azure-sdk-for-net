@@ -972,18 +972,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 properties);
         }
 
-        /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
-        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
-        /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        /// <param name="groupIds"> List of group IDs. </param>
-        /// <returns> A new <see cref="Models.HybridComputePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(string privateEndpointId = default, HybridComputePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
-        {
-            groupIds ??= new ChangeTrackingList<string>();
-
-            return new HybridComputePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, null), connectionState, provisioningState, groupIds.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> State of the private endpoint connection. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
@@ -1169,17 +1157,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 privateEndpointConnections.ToList(),
                 serviceExtensions.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
-        /// <param name="id"> The ARM Resource Id of the Private Endpoint. </param>
-        /// <param name="name"> The Name of the Private Endpoint. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="properties"> The Private Endpoint Connection properties. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(string id = default, string name = default, string @type = default, HybridComputePrivateEndpointConnectionProperties properties = default)
-        {
-            return new PrivateEndpointConnectionDataModel(id, name, @type, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
@@ -1446,10 +1423,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The Private Endpoint Connection properties. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridComputePrivateEndpointConnectionProperties properties)
+        public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateEndpointConnectionProperties properties = default)
         {
-            return new PrivateEndpointConnectionDataModel(id, name, default, properties, additionalBinaryDataProperties: null);
+            return new PrivateEndpointConnectionDataModel(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                properties);
         }
     }
 }
