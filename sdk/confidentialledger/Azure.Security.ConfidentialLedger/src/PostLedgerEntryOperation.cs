@@ -60,12 +60,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="client"> The <see cref="ConfidentialLedgerClient"/>. </param>
         /// <param name="id"> The transaction id (Direct) or operation id (WebFrontend) returned by the service. </param>
         /// <param name="mode"> Identifies which endpoint to poll. </param>
-        public PostLedgerEntryOperation(ConfidentialLedgerClient client, string id, PollingMode mode = PollingMode.Direct)
+        /// <param name="initialResponse"> The raw response that produced <paramref name="id"/>, exposed through <see cref="GetRawResponse"/> until the first poll completes. <c>null</c> for rehydration scenarios where no I/O has occurred yet. </param>
+        public PostLedgerEntryOperation(ConfidentialLedgerClient client, string id, PollingMode mode = PollingMode.Direct, Response initialResponse = null)
         {
             _client = client;
             _mode = mode;
             _id = id;
-            _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: null, nameof(PostLedgerEntryOperation));
+            _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: initialResponse, nameof(PostLedgerEntryOperation));
         }
 
         /// <summary>

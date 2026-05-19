@@ -248,13 +248,13 @@ namespace Azure.Security.ConfidentialLedger
                         $"The Confidential Ledger Web Frontend Gateway returned HTTP 202 without a '{ConfidentialLedgerConstants.OperationIdHeaderName}' header or a body-level 'operationId' field, so the write cannot be tracked.");
                 }
 
-                return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.WebFrontend);
+                return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.WebFrontend, response);
             }
 
             // Standard synchronous-commit path. Works for both legacy CCF and Web Frontend Gateway
             // when the latter chooses to commit synchronously (returning 200).
             response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
-            return new PostLedgerEntryOperation(this, transactionId);
+            return new PostLedgerEntryOperation(this, transactionId, PostLedgerEntryOperation.PollingMode.Direct, response);
         }
 
         private static string TryReadOperationIdFromBody(Response response)
