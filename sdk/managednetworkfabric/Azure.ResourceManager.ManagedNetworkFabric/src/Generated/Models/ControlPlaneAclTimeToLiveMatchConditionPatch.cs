@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> TTL [Time To Live] match conditions patch properties. </summary>
-    public partial class ControlPlaneAclTtlMatchConditionPatch
+    public partial class ControlPlaneAclTimeToLiveMatchConditionPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlaneAclTtlMatchConditionPatch"/>. </summary>
-        public ControlPlaneAclTtlMatchConditionPatch()
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneAclTimeToLiveMatchConditionPatch"/>. </summary>
+        public ControlPlaneAclTimeToLiveMatchConditionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlaneAclTtlMatchConditionPatch"/>. </summary>
-        /// <param name="ttlValue"> TTL [Time To Live] values that need to be matched. </param>
-        /// <param name="ttlMatchType"> TTL [Time To Live] match type. Example: eq | neq | gt | lt | range. </param>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneAclTimeToLiveMatchConditionPatch"/>. </summary>
+        /// <param name="timeToLiveInHops"> TTL [Time To Live] values that need to be matched. </param>
+        /// <param name="timeToLiveMatchType"> TTL [Time To Live] match type. Example: eq | neq | gt | lt | range. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneAclTtlMatchConditionPatch(string ttlValue, ControlPlaneAclTtlMatchType? ttlMatchType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ControlPlaneAclTimeToLiveMatchConditionPatch(string timeToLiveInHops, ControlPlaneAclTimeToLiveMatchType? timeToLiveMatchType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TtlValue = ttlValue;
-            TtlMatchType = ttlMatchType;
+            TimeToLiveInHops = timeToLiveInHops;
+            TimeToLiveMatchType = timeToLiveMatchType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> TTL [Time To Live] values that need to be matched. </summary>
-        public string TtlValue { get; set; }
+        public string TimeToLiveInHops { get; set; }
         /// <summary> TTL [Time To Live] match type. Example: eq | neq | gt | lt | range. </summary>
-        public ControlPlaneAclTtlMatchType? TtlMatchType { get; set; }
+        public ControlPlaneAclTimeToLiveMatchType? TimeToLiveMatchType { get; set; }
     }
 }

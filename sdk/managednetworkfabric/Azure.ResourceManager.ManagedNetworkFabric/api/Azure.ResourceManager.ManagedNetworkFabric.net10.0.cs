@@ -2903,7 +2903,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlanAclIPMatchCondition IPCondition { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclPortMatchCondition PortCondition { get { throw null; } set { } }
         public string ProtocolTypes { get { throw null; } set { } }
-        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition TtlMatchCondition { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition TimeToLiveMatchCondition { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2919,7 +2919,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclIPMatchConditionPatch IPCondition { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclPortMatchConditionPatch PortCondition { get { throw null; } set { } }
         public string ProtocolTypes { get { throw null; } set { } }
-        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch TtlMatchCondition { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch TimeToLiveMatchCondition { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclMatchConditionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclMatchConditionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclMatchConditionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3034,46 +3034,46 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ControlPlaneAclTtlMatchCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition>
+    public partial class ControlPlaneAclTimeToLiveMatchCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition>
     {
-        public ControlPlaneAclTtlMatchCondition() { }
-        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType? TtlMatchType { get { throw null; } set { } }
-        public string TtlValue { get { throw null; } set { } }
+        public ControlPlaneAclTimeToLiveMatchCondition() { }
+        public string TimeToLiveInHops { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType? TimeToLiveMatchType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ControlPlaneAclTtlMatchConditionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch>
+    public partial class ControlPlaneAclTimeToLiveMatchConditionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch>
     {
-        public ControlPlaneAclTtlMatchConditionPatch() { }
-        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType? TtlMatchType { get { throw null; } set { } }
-        public string TtlValue { get { throw null; } set { } }
+        public ControlPlaneAclTimeToLiveMatchConditionPatch() { }
+        public string TimeToLiveInHops { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType? TimeToLiveMatchType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchConditionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchConditionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ControlPlaneAclTtlMatchType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType>
+    public readonly partial struct ControlPlaneAclTimeToLiveMatchType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ControlPlaneAclTtlMatchType(string value) { throw null; }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType EqualsValue { get { throw null; } }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType GreaterThan { get { throw null; } }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType LesserThan { get { throw null; } }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType NotEquals { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType other) { throw null; }
+        public ControlPlaneAclTimeToLiveMatchType(string value) { throw null; }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType EqualsValue { get { throw null; } }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType GreaterThan { get { throw null; } }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType LesserThan { get { throw null; } }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType NotEquals { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType left, Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType left, Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTtlMatchType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType left, Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType left, Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclTimeToLiveMatchType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DeviceUpdateCommonPostActionResult : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ControlPlaneAclTtlMatchCondition : IUtf8JsonSerializable, IJsonModel<ControlPlaneAclTtlMatchCondition>
+    public partial class ControlPlaneAclTimeToLiveMatchCondition : IUtf8JsonSerializable, IJsonModel<ControlPlaneAclTimeToLiveMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlPlaneAclTtlMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlPlaneAclTimeToLiveMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ControlPlaneAclTtlMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ControlPlaneAclTimeToLiveMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTtlMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTimeToLiveMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlaneAclTtlMatchCondition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlaneAclTimeToLiveMatchCondition)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(TtlValue))
+            if (Optional.IsDefined(TimeToLiveInHops))
             {
                 writer.WritePropertyName("ttlValue"u8);
-                writer.WriteStringValue(TtlValue);
+                writer.WriteStringValue(TimeToLiveInHops);
             }
-            if (Optional.IsDefined(TtlMatchType))
+            if (Optional.IsDefined(TimeToLiveMatchType))
             {
                 writer.WritePropertyName("ttlMatchType"u8);
-                writer.WriteStringValue(TtlMatchType.Value.ToString());
+                writer.WriteStringValue(TimeToLiveMatchType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        ControlPlaneAclTtlMatchCondition IJsonModel<ControlPlaneAclTtlMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ControlPlaneAclTimeToLiveMatchCondition IJsonModel<ControlPlaneAclTimeToLiveMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTtlMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTimeToLiveMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlaneAclTtlMatchCondition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlaneAclTimeToLiveMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeControlPlaneAclTtlMatchCondition(document.RootElement, options);
+            return DeserializeControlPlaneAclTimeToLiveMatchCondition(document.RootElement, options);
         }
 
-        internal static ControlPlaneAclTtlMatchCondition DeserializeControlPlaneAclTtlMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ControlPlaneAclTimeToLiveMatchCondition DeserializeControlPlaneAclTimeToLiveMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string ttlValue = default;
-            ControlPlaneAclTtlMatchType? ttlMatchType = default;
+            ControlPlaneAclTimeToLiveMatchType? ttlMatchType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ttlMatchType = new ControlPlaneAclTtlMatchType(property.Value.GetString());
+                    ttlMatchType = new ControlPlaneAclTimeToLiveMatchType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ControlPlaneAclTtlMatchCondition(ttlValue, ttlMatchType, serializedAdditionalRawData);
+            return new ControlPlaneAclTimeToLiveMatchCondition(ttlValue, ttlMatchType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ControlPlaneAclTtlMatchCondition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ControlPlaneAclTimeToLiveMatchCondition>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTtlMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTimeToLiveMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlaneAclTtlMatchCondition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlaneAclTimeToLiveMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ControlPlaneAclTtlMatchCondition IPersistableModel<ControlPlaneAclTtlMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ControlPlaneAclTimeToLiveMatchCondition IPersistableModel<ControlPlaneAclTimeToLiveMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTtlMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclTimeToLiveMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeControlPlaneAclTtlMatchCondition(document.RootElement, options);
+                        return DeserializeControlPlaneAclTimeToLiveMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlaneAclTtlMatchCondition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlaneAclTimeToLiveMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ControlPlaneAclTtlMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ControlPlaneAclTimeToLiveMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

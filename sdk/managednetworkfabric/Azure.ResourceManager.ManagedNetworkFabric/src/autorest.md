@@ -99,6 +99,15 @@ rename-mapping:
   Condition: IPPrefixRuleCondition
   ControllerServices: NetworkFabricControllerServices
   ControlPlanAclIPMatchCondition: ControlPlaneAclIPMatchCondition
+  ControlPlaneAclMatchCondition.ttlMatchCondition: TimeToLiveMatchCondition
+  ControlPlaneAclMatchConditionPatch.ttlMatchCondition: TimeToLiveMatchCondition
+  ControlPlaneAclTtlMatchCondition: ControlPlaneAclTimeToLiveMatchCondition
+  ControlPlaneAclTtlMatchCondition.ttlMatchType: TimeToLiveMatchType
+  ControlPlaneAclTtlMatchCondition.ttlValue: TimeToLiveInHops
+  ControlPlaneAclTtlMatchConditionPatch: ControlPlaneAclTimeToLiveMatchConditionPatch
+  ControlPlaneAclTtlMatchConditionPatch.ttlMatchType: TimeToLiveMatchType
+  ControlPlaneAclTtlMatchConditionPatch.ttlValue: TimeToLiveInHops
+  ControlPlaneAclTtlMatchType: ControlPlaneAclTimeToLiveMatchType
   DestinationProperties: NetworkTapPropertiesDestinationsItem
   DestinationType: NetworkTapDestinationType
   DeviceAdministrativeState: NetworkDeviceAdministrativeState

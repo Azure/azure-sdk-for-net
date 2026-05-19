@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition, options);
             }
-            if (Optional.IsDefined(TtlMatchCondition))
+            if (Optional.IsDefined(TimeToLiveMatchCondition))
             {
                 writer.WritePropertyName("ttlMatchCondition"u8);
-                writer.WriteObjectValue(TtlMatchCondition, options);
+                writer.WriteObjectValue(TimeToLiveMatchCondition, options);
             }
             if (Optional.IsDefined(PortCondition))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string protocolTypes = default;
             ControlPlanAclIPMatchCondition ipCondition = default;
-            ControlPlaneAclTtlMatchCondition ttlMatchCondition = default;
+            ControlPlaneAclTimeToLiveMatchCondition ttlMatchCondition = default;
             ControlPlaneAclPortMatchCondition portCondition = default;
             IList<string> flags = default;
             IcmpConfigurationProperties icmpConfiguration = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ttlMatchCondition = ControlPlaneAclTtlMatchCondition.DeserializeControlPlaneAclTtlMatchCondition(property.Value, options);
+                    ttlMatchCondition = ControlPlaneAclTimeToLiveMatchCondition.DeserializeControlPlaneAclTimeToLiveMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("portCondition"u8))
