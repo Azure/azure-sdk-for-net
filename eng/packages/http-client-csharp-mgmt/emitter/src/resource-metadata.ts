@@ -408,6 +408,15 @@ export interface ResourceMetadata {
   apiVersions: string[];
   /** The RBAC roles defined for this resource via @@clientOption */
   rbacRoles: RbacRole[];
+  /**
+   * If this resource was produced by expanding a dynamic `{parentType}` segment
+   * (see `expandDynamicParentResourcesInSchema`), the enum value that was
+   * substituted for that segment. This is the user-authored identifier from the
+   * union/enum (e.g. `"eventGridTopics"`) and is used as the lookup key for
+   * the `resource-name` `@@clientOption` map override. `undefined` for
+   * non-expanded resources.
+   */
+  expansionTypeValue?: string;
 }
 
 export function convertResourceMetadataToArguments(
@@ -479,6 +488,215 @@ export function extractNameConstraintOverrides(
     maxLength:
       typeof record["maxLength"] === "number" ? record["maxLength"] : undefined
   };
+}
+
+const resourceNameKey = "resource-name";
+
+/**
+ * The parsed value of the `@@clientOption(op, "resource-name", ...)` decorator
+ * applied to an ARM resource's Read operation.
+ *
+ * - A plain `string` renames the single resource that Read identifies.
+ * - A `Map<string, string>` is used when the Read operation expands into multiple
+ *   concrete resources (via `{parentType}` segment expansion). The map keys are
+ *   the enum/union values that were substituted for the `{parentType}` segment
+ *   (i.e. `metadata.expansionTypeValue`, e.g. `"eventGridTopics"`), and the
+ *   values are the desired resource (SDK class) names.
+ */
+export type ResourceNameOverride = string | Map<string, string>;
+
+/**
+ * Extracts a resource-name override from an ARM resource's Read operation
+ * `@@clientOption(op, "resource-name", value, "csharp")` decorator.
+ *
+ * Returns:
+ * - a non-empty `string` if the decorator value is a string,
+ * - a non-empty `Map<string, string>` if the decorator value is a record with
+ *   non-empty string entries,
+ * - `undefined` if the decorator is not set or the value is malformed.
+ *
+ * Malformed values (mixed types, empty strings, empty maps) are reported via
+ * the optional `diagnosticReporter` and treated as if the decorator was absent.
+ */
+export function extractResourceNameOverride(
+  operation: DecoratedType | undefined,
+  diagnosticReporter?: (message: string) => void
+): ResourceNameOverride | undefined {
+  if (!operation) return undefined;
+  const value = getClientOptions(operation, resourceNameKey);
+  if (value === undefined || value === null) return undefined;
+
+  if (typeof value === "string") {
+    if (value.length === 0) {
+      diagnosticReporter?.(
+        `@@clientOption(..., "${resourceNameKey}", ...) value is an empty string and will be ignored.`
+      );
+      return undefined;
+    }
+    return value;
+  }
+
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    const map = new Map<string, string>();
+    for (const [key, v] of Object.entries(record)) {
+      if (typeof v !== "string" || v.length === 0 || key.length === 0) {
+        diagnosticReporter?.(
+          `@@clientOption(..., "${resourceNameKey}", ...) entry '${key}' is not a non-empty string and will be ignored.`
+        );
+        continue;
+      }
+      map.set(key, v);
+    }
+    if (map.size === 0) {
+      diagnosticReporter?.(
+        `@@clientOption(..., "${resourceNameKey}", ...) value is an empty record and will be ignored.`
+      );
+      return undefined;
+    }
+    return map;
+  }
+
+  diagnosticReporter?.(
+    `@@clientOption(..., "${resourceNameKey}", ...) value must be a string or a Record<string, string>; received ${typeof value}.`
+  );
+  return undefined;
+}
+
+/**
+ * Applies `resource-name` `@@clientOption` overrides to a finalized list of
+ * {@link ArmResourceSchema} entries.
+ *
+ * The decorator is placed on a resource's Read operation:
+ *
+ * ```typespec
+ * // plain rename (also covers multi-path same-model resources, since each
+ * // path has its own distinct Read op)
+ * @@clientOption(MyOps.get, "resource-name", "DnsRecordSet", "csharp");
+ *
+ * // expandable {parentType} resource — map enum value to SDK name
+ * @@clientOption(PrivateEndpointConnections.get, "resource-name", #{
+ *   topics: "EventGridTopicPrivateEndpointConnection",
+ *   domains: "EventGridDomainPrivateEndpointConnection",
+ * }, "csharp");
+ * ```
+ *
+ * This is a late, name-only transformation: it runs after expansion, parent
+ * inference, scope assignment, and post-processing, and only mutates
+ * `metadata.resourceName`. No downstream resource-building logic depends on
+ * `resourceName` for correctness, so this can be applied uniformly as a final
+ * step from both the legacy and resolveArmResources paths.
+ *
+ * Diagnostics are reported for:
+ * - using a plain string override on a Read op whose group spans multiple
+ *   resources (i.e. an expandable Read — must use the map form),
+ * - map entries that did not match any expanded resource's `expansionTypeValue`,
+ * - resource-name collisions introduced by the override.
+ *
+ * @param resources The finalized resource list to rename in place.
+ * @param options.resolveReadOperation Returns the underlying decorated TypeSpec
+ *   `Operation` for a resource's primary Read method (the natural identity
+ *   anchor for an ARM resource), or `undefined` if there is no Read method.
+ * @param options.diagnosticReporter Optional reporter for warnings.
+ */
+export function applyResourceNameOverrides(
+  resources: ArmResourceSchema[],
+  options: {
+    resolveReadOperation: (
+      resource: ArmResourceSchema
+    ) => DecoratedType | undefined;
+    diagnosticReporter?: (message: string) => void;
+  }
+): void {
+  const { resolveReadOperation, diagnosticReporter } = options;
+
+  // Group resources by their Read operation so we can detect the expandable
+  // fan-out case (one Read op → N resources) and validate the override shape.
+  const groupsByOperation = new Map<DecoratedType, ArmResourceSchema[]>();
+  for (const r of resources) {
+    const op = resolveReadOperation(r);
+    if (!op) continue;
+    let list = groupsByOperation.get(op);
+    if (!list) {
+      list = [];
+      groupsByOperation.set(op, list);
+    }
+    list.push(r);
+  }
+
+  for (const [op, group] of groupsByOperation) {
+    const override = extractResourceNameOverride(op, diagnosticReporter);
+    if (override === undefined) continue;
+
+    if (typeof override === "string") {
+      if (group.length > 1) {
+        diagnosticReporter?.(
+          `@@clientOption(..., "${resourceNameKey}", "${override}", ...) is a plain string but its Read operation produces ${group.length} resources (expandable {parentType}). Use a Record<resourceType, name> map form instead.`
+        );
+        continue;
+      }
+      group[0].metadata.resourceName = override;
+      continue;
+    }
+
+    const usedKeys = new Set<string>();
+    for (const r of group) {
+      const key = r.metadata.expansionTypeValue;
+      if (key === undefined) continue;
+      const newName = override.get(key);
+      if (newName !== undefined) {
+        usedKeys.add(key);
+        r.metadata.resourceName = newName;
+      }
+    }
+    for (const key of override.keys()) {
+      if (!usedKeys.has(key)) {
+        diagnosticReporter?.(
+          `@@clientOption(..., "${resourceNameKey}", ...) entry '${key}' did not match any expanded resource produced by this Read operation. Check for typos or stale entries.`
+        );
+      }
+    }
+  }
+
+  // Collision check across the full resource list after overrides are applied.
+  const nameToResourceTypes = new Map<string, string[]>();
+  for (const r of resources) {
+    let list = nameToResourceTypes.get(r.metadata.resourceName);
+    if (!list) {
+      list = [];
+      nameToResourceTypes.set(r.metadata.resourceName, list);
+    }
+    list.push(r.metadata.resourceType);
+  }
+  for (const [name, resourceTypes] of nameToResourceTypes) {
+    if (resourceTypes.length > 1) {
+      diagnosticReporter?.(
+        `Multiple resources share the resource name '${name}' after applying @@clientOption "${resourceNameKey}" overrides: ${resourceTypes.join(
+          ", "
+        )}.`
+      );
+    }
+  }
+}
+
+/**
+ * Finds the Read method on an {@link ArmResourceSchema} that is the natural
+ * identity anchor for `resource-name` overrides. Prefers a Read method whose
+ * `operationPath` matches the resource's `resourceIdPattern` (so multi-Read
+ * edge cases pick the canonical one); otherwise returns the first Read.
+ */
+export function findReadMethod(
+  resource: ArmResourceSchema
+): ResourceMethod | undefined {
+  const reads = resource.metadata.methods.filter(
+    (m) => m.kind === ResourceOperationKind.Read
+  );
+  if (reads.length === 0) return undefined;
+  if (reads.length === 1 || !resource.metadata.resourceIdPattern) {
+    return reads[0];
+  }
+  const idPath = resource.metadata.resourceIdPattern.path;
+  return reads.find((m) => m.operationPath.path === idPath) ?? reads[0];
 }
 
 export interface NonResourceMethod {
@@ -1411,7 +1629,8 @@ export function expandDynamicParentResourcesInSchema(
           resourceName: expandedResourceName,
           nameConstraints: resource.metadata.nameConstraints,
           apiVersions: resource.metadata.apiVersions,
-          rbacRoles: resource.metadata.rbacRoles
+          rbacRoles: resource.metadata.rbacRoles,
+          expansionTypeValue: enumValue
         }
       };
       resourcesToAdd.push(expanded);

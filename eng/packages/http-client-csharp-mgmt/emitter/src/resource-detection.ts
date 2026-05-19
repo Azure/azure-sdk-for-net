@@ -26,7 +26,9 @@ import {
   isResourceInstancePath,
   sortResourceMethods,
   RequestPath,
-  extractNameConstraintOverrides
+  extractNameConstraintOverrides,
+  applyResourceNameOverrides,
+  findReadMethod
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -360,6 +362,21 @@ export function buildArmProviderSchema(
       serviceMethods
     );
   }
+
+  // Final step: apply user-provided resource-name overrides from the
+  // @@clientOption(<readOp>, "resource-name", ...) decorator. This is a pure,
+  // name-only transformation; no downstream resource-building logic depends on
+  // `resourceName`, so it is safe to run last. Anchoring on the Read operation
+  // (rather than the model) gives unambiguous targeting for multi-path same-
+  // model resources and for expandable `{parentType}` resources.
+  applyResourceNameOverrides(detectedResources, {
+    resolveReadOperation: (resource) => {
+      const readMethod = findReadMethod(resource);
+      if (!readMethod) return undefined;
+      return serviceMethods.get(readMethod.methodId);
+    },
+    diagnosticReporter: reportWarning
+  });
 
   return {
     resources: detectedResources,

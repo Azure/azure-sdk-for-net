@@ -55,6 +55,8 @@ import {
   resolveResourceApiVersions,
   extractRbacRoles,
   extractNameConstraintOverrides,
+  applyResourceNameOverrides,
+  findReadMethod,
   isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
@@ -301,6 +303,21 @@ export function resolveArmResources(
       methodMap
     );
   }
+
+  // Final step: apply user-provided resource-name overrides from the
+  // @@clientOption(<readOp>, "resource-name", ...) decorator. This is a pure,
+  // name-only transformation; no downstream resource-building logic depends on
+  // `resourceName`, so it is safe to run last. Anchoring on the Read operation
+  // (rather than the model) gives unambiguous targeting for multi-path same-
+  // model resources and for expandable `{parentType}` resources.
+  applyResourceNameOverrides(filteredResources, {
+    resolveReadOperation: (resource) => {
+      const readMethod = findReadMethod(resource);
+      if (!readMethod) return undefined;
+      return methodMap.get(readMethod.methodId);
+    },
+    diagnosticReporter: reportWarning
+  });
 
   return {
     resources: filteredResources,
