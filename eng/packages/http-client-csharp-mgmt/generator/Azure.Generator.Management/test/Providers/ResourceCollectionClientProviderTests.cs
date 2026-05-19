@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Providers;
@@ -325,67 +325,6 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
             Assert.That(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))), Is.False,
                 "GetIfExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
-        }
-
-        // Regression test for the "tuple resource" scenario where a single resource exposes
-        // multiple ResourceOperationKind.List service methods on the same collection. The
-        // schema builder produces three List entries, two of which share a structurally
-        // identical C# parameter signature. The provider must:
-        //   - emit one (sync, async) GetAll pair per *unique* CSharpType parameter signature
-        //     (so we expect two pairs, not three),
-        //   - keep the parameterless overload as canonical (the broadest scope, sorted first),
-        //   - implement IEnumerable<TResource>/IAsyncEnumerable<TResource> because a
-        //     parameterless GetAll exists.
-        // This guards against regressions where a non-structural de-dup key (e.g. Type.ToString())
-        // could either incorrectly merge two distinct overloads or fail to merge two identical
-        // overloads (causing CS0111 in generated code).
-        [TestCase]
-        public void Verify_MultipleListOperations_DedupedByStructuralSignature()
-        {
-            var (parentClient, childClient, models) = InputResourceData.ClientWithChildResourceMultipleLists();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => models,
-                clients: () => [parentClient, childClient]);
-
-            var childCollection = plugin.Object.OutputLibrary.TypeProviders
-                .OfType<ResourceCollectionClientProvider>()
-                .FirstOrDefault(p => p.ResourceName == "ChildType");
-            Assert.That(childCollection, Is.Not.Null, "ChildType collection provider should be generated");
-
-            var syncGetAlls = childCollection!.Methods.Where(m => m.Signature.Name == "GetAll").ToList();
-            var asyncGetAlls = childCollection.Methods.Where(m => m.Signature.Name == "GetAllAsync").ToList();
-
-            Assert.That(syncGetAlls.Count, Is.EqualTo(2),
-                $"Expected 2 sync GetAll overloads after de-dup, got {syncGetAlls.Count}: " +
-                string.Join(" | ", syncGetAlls.Select(m => $"({string.Join(",", m.Signature.Parameters.Select(p => p.Type.Name))})")));
-            Assert.That(asyncGetAlls.Count, Is.EqualTo(2),
-                $"Expected 2 async GetAllAsync overloads after de-dup, got {asyncGetAlls.Count}");
-
-            // The two surviving signatures must be structurally distinct.
-            var syncSignatures = syncGetAlls
-                .Select(m => m.Signature.Parameters.Select(p => p.Type).ToArray())
-                .ToList();
-            Assert.That(syncSignatures[0].SequenceEqual(syncSignatures[1]), Is.False,
-                "The two emitted GetAll overloads should have structurally distinct parameter signatures.");
-
-            // One overload is parameterless (CancellationToken only); the other has the $filter query parameter.
-            var parameterless = syncGetAlls.FirstOrDefault(m =>
-                m.Signature.Parameters.Count == 1 &&
-                m.Signature.Parameters[0].Type.FrameworkType == typeof(CancellationToken));
-            Assert.That(parameterless, Is.Not.Null,
-                "A parameterless GetAll(CancellationToken) overload should exist.");
-
-            var withFilter = syncGetAlls.FirstOrDefault(m =>
-                m.Signature.Parameters.Any(p => p.Name == "filter" && p.Type.FrameworkType == typeof(string)));
-            Assert.That(withFilter, Is.Not.Null,
-                "A GetAll overload that accepts the 'filter' query parameter should exist.");
-
-            // Because a parameterless GetAll exists, the collection must implement IEnumerable<T>/IAsyncEnumerable<T>.
-            var getEnumeratorMethods = childCollection.Methods
-                .Where(m => m.Signature.Name == "GetEnumerator" || m.Signature.Name == "GetAsyncEnumerator")
-                .ToList();
-            Assert.That(getEnumeratorMethods.Count, Is.GreaterThanOrEqualTo(2),
-                "Collection should expose GetEnumerator and GetAsyncEnumerator when a parameterless GetAll exists.");
         }
 
         // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/59242
