@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Storage.Tests
                     AllowStorageConnectors = true,
                     AllowStorageDataShares = true,
                     AllowCrossTenantDataSharing = false
-                }
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             StorageAccountResource account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
@@ -85,9 +86,31 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // TODO: Uncomment and re-record when Location serialization issue is resolved.
             ////update data share
-            //dataShare.Data.Properties.Description = "Updated data share";
-            //StorageDataShareResource updatedDataShare = (await dataShare.UpdateAsync(WaitUntil.Completed, dataShare.Data)).Value;
-            //Assert.AreEqual("Updated data share", updatedDataShare.Data.Properties.Description);
+            StorageDataSharePatch patchData = new StorageDataSharePatch()
+            {
+                Properties = new StorageDataSharePropertiesUpdate()
+                {
+                    Description = "Updated data share",
+                },
+                Tags =
+                {
+                    { "key1", "value1" },
+                    { "key2", "value2" }
+                }
+            };
+            patchData.Properties.AccessPolicies.Add(new StorageDataShareAccessPolicy(
+                account.Data.Identity.PrincipalId.Value.ToString(),
+                account.Data.Identity.TenantId.Value.ToString(),
+                StorageDataShareAccessPolicyPermission.Read));
+            StorageDataShareResource updatedDataShare = (await dataShare.UpdateAsync(WaitUntil.Completed, patchData)).Value;
+            Assert.AreEqual(patchData.Properties.Description, updatedDataShare.Data.Properties.Description);
+            Assert.AreEqual(patchData.Properties.AccessPolicies.Count, updatedDataShare.Data.Properties.AccessPolicies.Count);
+            Assert.AreEqual(patchData.Properties.AccessPolicies[0].PrincipalId, updatedDataShare.Data.Properties.AccessPolicies[0].PrincipalId);
+            Assert.AreEqual(patchData.Properties.AccessPolicies[0].TenantId, updatedDataShare.Data.Properties.AccessPolicies[0].TenantId);
+            Assert.AreEqual(patchData.Properties.AccessPolicies[0].Permission, updatedDataShare.Data.Properties.AccessPolicies[0].Permission);
+            Assert.AreEqual(patchData.Tags.Count, updatedDataShare.Data.Tags.Count);
+            Assert.AreEqual(patchData.Tags.First().Key, updatedDataShare.Data.Tags.First().Key);
+            Assert.AreEqual(patchData.Tags.First().Value, updatedDataShare.Data.Tags.First().Value);
 
             //delete data share
             await dataShare.DeleteAsync(WaitUntil.Completed);
@@ -211,11 +234,31 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsNotNull(testResult.StorageConnectorMethodName);
             Assert.IsNotNull(testResult.StorageConnectorRequestId);
 
-            // TODO: Uncomment and re-record when Location serialization issue is resolved.
-            ////update connector
-            //connector.Data.Properties.Description = "Updated connector";
-            //StorageConnectorResource updatedConnector = (await connector.UpdateAsync(WaitUntil.Completed, connector.Data)).Value;
-            //Assert.AreEqual("Updated connector", updatedConnector.Data.Properties.Description);
+            //update connector
+            //string managedIdentityId = string.Format("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testid");
+            StorageConnectorPatch patchData = new StorageConnectorPatch()
+            {
+                Properties = new StorageConnectorPropertiesUpdate()
+                {
+                    Description = "Updated connector",
+                },
+                Tags =
+                {
+                    { "key1", "value1" },
+                    { "key2", "value2" }
+                }
+            };
+            //ManagedIdentityAuthPropertiesUpdate authPropertiesUpdate = new ManagedIdentityAuthPropertiesUpdate(StorageConnectorAuthType.ManagedIdentity, null, managedIdentityId);
+            //patchData.Properties.Source = new DataShareSourceUpdate(StorageConnectorSourceType.DataShare, null, authPropertiesUpdate);
+
+            StorageConnectorResource updatedConnector = (await connector.UpdateAsync(WaitUntil.Completed, patchData)).Value;
+
+            //Assert.AreEqual(((ManagedIdentityAuthPropertiesUpdate)((DataShareSourceUpdate)patchData.Properties.Source).AuthProperties).IdentityResourceId,
+            //    ((ManagedIdentityAuthProperties)((DataShareSource)updatedConnector.Data.Properties.Source).AuthProperties).IdentityResourceId);
+            Assert.AreEqual(patchData.Properties.Description, updatedConnector.Data.Properties.Description);
+            Assert.AreEqual(patchData.Tags.Count, updatedConnector.Data.Tags.Count);
+            Assert.AreEqual(patchData.Tags.First().Key, updatedConnector.Data.Tags.First().Key);
+            Assert.AreEqual(patchData.Tags.First().Value, updatedConnector.Data.Tags.First().Value);
 
             //delete connector, then data share
             await connector.DeleteAsync(WaitUntil.Completed);
