@@ -13,6 +13,7 @@
 
 ### Bugs Fixed
 
+- `PostLedgerEntryOperation.GetRawResponse()` now returns the initial submit response before the first poll. Previously, callers using `WaitUntil.Started` who inspected response headers (for example `x-ms-ccf-transaction-id` or `x-ms-webfe-operation-id`) on the returned operation observed a `NullReferenceException`.
 - Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node. (Primary-node caching is automatically disabled when `UseWebFrontend = true`, since the gateway brokers node routing on the server side.)
 
 ## 1.4.1-beta.4 (2026-02-27)
