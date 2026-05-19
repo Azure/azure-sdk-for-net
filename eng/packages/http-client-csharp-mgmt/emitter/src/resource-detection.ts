@@ -29,7 +29,6 @@ import {
   extractNameConstraintOverrides
 } from "./resource-metadata.js";
 import {
-  DecoratorInfo,
   SdkHttpOperation,
   SdkMethod,
   SdkModelType
@@ -43,8 +42,7 @@ import {
   customAzureResource,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
-  legacyResourceOperationName,
-  singleton
+  legacyResourceOperationName
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -240,9 +238,7 @@ export function buildArmProviderSchema(
     const metadata: ResourceMetadata = {
       resourceIdPattern: entry.instancePath,
       resourceType: entry.instancePath.resourceType ?? "",
-      singletonResourceName: getSingletonResource(
-        model?.decorators?.find((d) => d.name == singleton)
-      ),
+      singletonResourceName: entry.instancePath.singletonName,
       scope: {
         kind: ResourceScopeKind.Tenant,
         scopeIdPattern: RequestPath.empty
@@ -685,15 +681,6 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   return resourceModels;
 }
 
-function getSingletonResource(
-  decorator: DecoratorInfo | undefined
-): string | undefined {
-  if (!decorator) return undefined;
-  const singletonResource = decorator.arguments["keyValue"] as
-    | string
-    | undefined;
-  return singletonResource ?? "default";
-}
 /**
  * Builds an ArmScopeInfo from an operation path.
  * Extracts the scope ID pattern and resource type from the path's scope portion.
