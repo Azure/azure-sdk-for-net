@@ -17,6 +17,12 @@ const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
     messages: {
       default: paramMessage`{message}`
     }
+  },
+  "resource-model-not-associated-with-arm-resource": {
+    severity: "warning",
+    messages: {
+      default: paramMessage`Resource model '${"modelName"}' was not detected as an ARM resource because no GET operation returns it from a valid resource instance path.`
+    }
   }
 };
 
