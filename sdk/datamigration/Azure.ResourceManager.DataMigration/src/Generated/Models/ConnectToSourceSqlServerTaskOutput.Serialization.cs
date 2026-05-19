@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownConnectToSourceSqlServerTaskOutput))]
     public abstract partial class ConnectToSourceSqlServerTaskOutput : IJsonModel<ConnectToSourceSqlServerTaskOutput>
     {
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutput"/> for deserialization. </summary>
+        internal ConnectToSourceSqlServerTaskOutput()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ConnectToSourceSqlServerTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

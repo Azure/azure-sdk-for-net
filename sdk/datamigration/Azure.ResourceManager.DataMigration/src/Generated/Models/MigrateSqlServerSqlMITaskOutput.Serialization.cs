@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlMITaskOutput))]
     public abstract partial class MigrateSqlServerSqlMITaskOutput : IJsonModel<MigrateSqlServerSqlMITaskOutput>
     {
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutput"/> for deserialization. </summary>
+        internal MigrateSqlServerSqlMITaskOutput()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MigrateSqlServerSqlMITaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

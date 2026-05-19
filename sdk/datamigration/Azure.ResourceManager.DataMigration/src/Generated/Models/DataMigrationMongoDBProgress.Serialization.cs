@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Base class for MongoDB migration outputs
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMongoDBCollectionProgress"/>, <see cref="DataMigrationMongoDBDatabaseProgress"/>, and <see cref="DataMigrationMongoDBMigrationProgress"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownMongoDBProgress))]
+    [PersistableModelProxy(typeof(UnknownDataMigrationMongoDBProgress))]
     public abstract partial class DataMigrationMongoDBProgress : IJsonModel<DataMigrationMongoDBProgress>
     {
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBProgress"/> for deserialization. </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DataMigrationMongoDBMigrationProgress.DeserializeDataMigrationMongoDBMigrationProgress(element, options);
                 }
             }
-            return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element, options);
+            return UnknownDataMigrationMongoDBProgress.DeserializeUnknownDataMigrationMongoDBProgress(element, options);
         }
     }
 }

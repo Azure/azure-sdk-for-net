@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<DataMigrationProjectResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<DataMigrationProjectResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             commands ??= new ChangeTrackingList<DataMigrationCommandProperties>();
             clientData ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownProjectTaskProperties(
+            return new UnknownDataMigrationProjectTaskProperties(
                 new DataMigrationTaskType(taskType),
                 errors.ToList(),
                 state,
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             errors ??= new ChangeTrackingList<DataMigrationODataError>();
 
-            return new UnknownCommandProperties(new DataMigrationCommandType(commandType), errors.ToList(), state, additionalBinaryDataProperties: null);
+            return new UnknownDataMigrationCommandProperties(new DataMigrationCommandType(commandType), errors.ToList(), state, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties for the command that completes sync migration for a database. </summary>
@@ -2196,7 +2196,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             errors ??= new ChangeTrackingDictionary<string, DataMigrationMongoDBError>();
 
-            return new UnknownMongoDBProgress(
+            return new UnknownDataMigrationMongoDBProgress(
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
