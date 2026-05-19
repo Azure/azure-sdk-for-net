@@ -741,10 +741,6 @@ namespace Azure.Security.CodeTransparency.Tests
             int threadCount = 8;
             int iterationsPerThread = 3;
 
-            // Use a local timeout budget (25s) so that if CI agents are under heavy load
-            // the test is marked as inconclusive instead of failing the build. The 30s hard
-            // cap comes from GlobalTimeoutTearDown in ClientTestBase and cannot be overridden
-            // per-test.
             const int timeoutMs = 25_000;
 
             var barrier = new Barrier(threadCount);
@@ -780,7 +776,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             if (!Task.WaitAll(tasks, timeoutMs))
             {
-                Assert.Inconclusive("Thread-safety test could not complete within the CI timeout budget.");
+                Assert.Inconclusive($"Thread-safety test could not complete within the CI timeout budget ({timeoutMs} milliseconds).");
             }
 
             int totalCalls = threadCount * iterationsPerThread;
