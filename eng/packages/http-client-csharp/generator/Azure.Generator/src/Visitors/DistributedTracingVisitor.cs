@@ -153,13 +153,17 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (ShouldSkipType(method.EnclosingType) || ShouldSkipMethodForTracing(method))
+            if (ShouldSkipType(method.EnclosingType))
             {
                 return base.VisitMethod(method);
             }
 
-            if (IsPagingMethod(method))
+            if (ShouldSkipMethodForTracing(method))
             {
+                // Paging methods are identified via the injected shouldSkipMethod delegate.
+                // They don't get standard try/catch scope wrapping (tracing is handled inside
+                // the CollectionResultDefinition.GetNextResponse method), but we still need to
+                // pass the scope name through to the Pageable/AsyncPageable constructor.
                 UpdatePagingMethodWithScope(method);
             }
             else if (method.Kind == ScmMethodKind.Protocol)
@@ -255,7 +259,7 @@ namespace Azure.Generator.Visitors
             }
 
             var clientField = collectionResult.Fields.First(f => f.Name == "_client");
-            var scopeName = GetCollectionResultScopeName(collectionResult);
+            var scopeName = collectionResult.ScopeName;
 
             // declare scope
             var scopeDeclaration = UsingDeclare(
@@ -379,35 +383,49 @@ namespace Azure.Generator.Visitors
                     .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
         }
 
-        /// TODO: replace with collectionResult.ScopeName when available
-        private static string GetCollectionResultScopeName(CollectionResultDefinition collectionResult)
+        private static void UpdatePagingMethodWithScope(ScmMethodProvider method)
         {
-            // The CollectionResultDefinition.Name follows the pattern:
-            // "{ClientName}{OperationName}{Async?}CollectionResult{OfT?}"
-            // We need to extract "{ClientName}.{OperationName}".
-            var name = collectionResult.Name;
-
-            // Strip trailing suffixes: "OfT", "CollectionResult", "Async"
-            if (name.EndsWith("OfT"))
-                name = name[..^3];
-            if (name.EndsWith("CollectionResult"))
-                name = name[..^"CollectionResult".Length];
-            if (name.EndsWith("Async"))
-                name = name[..^5];
-
-            // Find the client name by looking at the client field's type name
-            var clientField = collectionResult.Fields.FirstOrDefault(f => f.Name == "_client");
-            if (clientField != null)
+            string scopeName = method.GetScopeName();
+            const string asyncSuffix = "Async";
+            if (scopeName.EndsWith(asyncSuffix))
             {
-                var clientName = clientField.Type.Name;
-                if (name.StartsWith(clientName))
-                {
-                    var operationName = name[clientName.Length..];
-                    return $"{clientName}.{operationName}";
-                }
+                scopeName = scopeName[..^asyncSuffix.Length];
             }
 
-            return name;
+            if (method.BodyExpression is NewInstanceExpression newInstance)
+            {
+                List<MethodBodyStatement> updatedStatements =
+                [
+                    Return(new NewInstanceExpression(
+                        newInstance.Type,
+                        [.. newInstance.Parameters, Literal(scopeName)],
+                        newInstance.InitExpression))
+                ];
+                method.Update(bodyStatements: updatedStatements);
+            }
+            else if (method.BodyStatements != null)
+            {
+                var updatedStatements = new List<MethodBodyStatement>();
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (statement is ExpressionStatement
+                        {
+                            Expression: KeywordExpression
+                            {
+                                Keyword: "return",
+                                Expression: NewInstanceExpression returnNewInstance
+                            } keyword
+                        })
+                    {
+                        keyword.Update(keyword.Keyword, new NewInstanceExpression(
+                            returnNewInstance.Type,
+                            [.. returnNewInstance.Parameters, Literal(scopeName)],
+                            returnNewInstance.InitExpression));
+                    }
+                    updatedStatements.Add(statement);
+                }
+                method.Update(bodyStatements: updatedStatements);
+            }
         }
 
         private static bool IsSubClientFactoryMethod(ScmMethodProvider method)
