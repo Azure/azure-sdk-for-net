@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string error = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            IList<ExtensionsResourceStatus> statuses = default;
+            IReadOnlyList<ExtensionsResourceStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

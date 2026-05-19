@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The level code. </summary>
-    public enum ExtensionsStatusLevelTypes
+    public enum ExtensionsStatusLevelType
     {
         /// <summary> Info. </summary>
         Info,

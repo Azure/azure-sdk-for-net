@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.HybridCompute;
 
@@ -65,42 +64,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EsuKey>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EsuKey)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteStringValue(Sku);
-            }
-            if (Optional.IsDefined(LicenseStatus))
-            {
-                writer.WritePropertyName("licenseStatus"u8);
-                writer.WriteNumberValue(LicenseStatus.Value);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EsuKey IJsonModel<EsuKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
@@ -116,41 +79,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEsuKey(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EsuKey DeserializeEsuKey(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string sku = default;
-            int? licenseStatus = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("sku"u8))
-                {
-                    sku = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("licenseStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    licenseStatus = prop.Value.GetInt32();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new EsuKey(sku, licenseStatus, additionalBinaryDataProperties);
         }
     }
 }

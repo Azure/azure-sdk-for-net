@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,19 +126,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            string clientId = default;
-            string objectId = default;
+            Guid? clientId = default;
+            Guid? objectId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientId"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("objectId"u8))
                 {
-                    objectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    objectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

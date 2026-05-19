@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The  status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
@@ -73,9 +73,5 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Script end time. </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-
-        /// <summary> The  status information. </summary>
-        [WirePath("statuses")]
-        public IList<ExtensionsResourceStatus> Statuses { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="commandId"> Specifies the commandId of predefined built-in script. </param>
         /// <param name="scriptUriManagedIdentity"> User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandScriptSource(string script, string scriptUri, string commandId, RunCommandManagedIdentity scriptUriManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineRunCommandScriptSource(string script, Uri scriptUri, string commandId, RunCommandManagedIdentity scriptUriManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Script = script;
             ScriptUri = scriptUri;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or public URI. </summary>
         [WirePath("scriptUri")]
-        public string ScriptUri { get; set; }
+        public Uri ScriptUri { get; set; }
 
         /// <summary> Specifies the commandId of predefined built-in script. </summary>
         [WirePath("commandId")]

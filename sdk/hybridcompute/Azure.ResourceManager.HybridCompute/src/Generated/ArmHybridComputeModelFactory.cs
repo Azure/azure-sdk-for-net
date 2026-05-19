@@ -410,30 +410,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Properties for the Machine ESU profile. </summary>
-        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
-        /// <param name="esuKeys"> The list of ESU keys. </param>
-        /// <param name="serverType"> The type of the Esu servers. </param>
-        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
-        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        /// <param name="assignedLicense"> The assigned license resource. </param>
-        /// <param name="licenseAssignmentState"> Describes the license assignment state (Assigned or NotAssigned). </param>
-        /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceViewEsuProperties"/> instance for mocking. </returns>
-        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, HybridComputeLicenseData assignedLicense = default, LicenseAssignmentState? licenseAssignmentState = default)
-        {
-            esuKeys ??= new ChangeTrackingList<EsuKey>();
-
-            return new LicenseProfileMachineInstanceViewEsuProperties(
-                assignedLicenseImmutableId,
-                esuKeys.ToList(),
-                additionalBinaryDataProperties: null,
-                serverType,
-                esuEligibility,
-                esuKeyState,
-                assignedLicense,
-                licenseAssignmentState);
-        }
-
         /// <summary> Describes the properties of a License Profile ARM model. </summary>
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
         /// <param name="esuKeys"> The list of ESU keys. </param>
@@ -463,15 +439,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             esuKeys ??= new ChangeTrackingList<EsuKey>();
 
             return new LicenseProfileStorageModelEsuProperties(assignedLicenseImmutableId, esuKeys.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> ESU key. </summary>
-        /// <param name="sku"> SKU number. </param>
-        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
-        /// <returns> A new <see cref="Models.EsuKey"/> instance for mocking. </returns>
-        public static EsuKey EsuKey(string sku = default, int? licenseStatus = default)
-        {
-            return new EsuKey(sku, licenseStatus, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Product Feature. </summary>
@@ -867,16 +834,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="timeOn"> The time of the status. </param>
+        /// <param name="time"> The time of the status. </param>
         /// <returns> A new <see cref="Models.ExtensionsResourceStatus"/> instance for mocking. </returns>
-        public static ExtensionsResourceStatus ExtensionsResourceStatus(string code = default, ExtensionsStatusLevelTypes? level = default, string displayStatus = default, string message = default, DateTimeOffset? timeOn = default)
+        public static ExtensionsResourceStatus ExtensionsResourceStatus(string code = default, ExtensionsStatusLevelType? level = default, string displayStatus = default, string message = default, DateTimeOffset? time = default)
         {
             return new ExtensionsResourceStatus(
                 code,
                 level,
                 displayStatus,
                 message,
-                timeOn,
+                time,
                 additionalBinaryDataProperties: null);
         }
 

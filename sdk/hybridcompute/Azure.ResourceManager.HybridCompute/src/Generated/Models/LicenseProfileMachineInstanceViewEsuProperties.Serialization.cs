@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             EsuServerType? serverType = default;
             EsuEligibility? esuEligibility = default;
             EsuKeyState? esuKeyState = default;
-            HybridComputeLicenseData assignedLicense = default;
+            HybridComputeLicense assignedLicense = default;
             LicenseAssignmentState? licenseAssignmentState = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    assignedLicense = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(prop.Value, options);
+                    assignedLicense = HybridComputeLicense.DeserializeHybridComputeLicense(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("licenseAssignmentState"u8))

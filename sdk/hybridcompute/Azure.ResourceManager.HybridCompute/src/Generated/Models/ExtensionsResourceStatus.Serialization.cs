@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(TimeOn))
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
-                writer.WriteStringValue(TimeOn.Value, "O");
+                writer.WriteStringValue(Time.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string code = default;
-            ExtensionsStatusLevelTypes? level = default;
+            ExtensionsStatusLevelType? level = default;
             string displayStatus = default;
             string message = default;
-            DateTimeOffset? timeOn = default;
+            DateTimeOffset? time = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    level = prop.Value.GetString().ToExtensionsStatusLevelTypes();
+                    level = prop.Value.GetString().ToExtensionsStatusLevelType();
                     continue;
                 }
                 if (prop.NameEquals("displayStatus"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    timeOn = prop.Value.GetDateTimeOffset("O");
+                    time = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 level,
                 displayStatus,
                 message,
-                timeOn,
+                time,
                 additionalBinaryDataProperties);
         }
     }
