@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppDetectorPropertyRevisionCollection : ArmCollection, IEnumerable<ContainerAppDetectorPropertyRevisionResource>, IAsyncEnumerable<ContainerAppDetectorPropertyRevisionResource>
     {
-        private readonly ClientDiagnostics _containerAppDetectorPropertyRevisionsClientDiagnostics;
-        private readonly ContainerAppDetectorPropertyRevisions _containerAppDetectorPropertyRevisionsRestClient;
+        private readonly ClientDiagnostics _containerAppsDiagnosticsClientDiagnostics;
+        private readonly ContainerAppsDiagnostics _containerAppsDiagnosticsRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppDetectorPropertyRevisionCollection for mocking. </summary>
         protected ContainerAppDetectorPropertyRevisionCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppDetectorPropertyRevisionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerAppDetectorPropertyRevisionResource.ResourceType, out string containerAppDetectorPropertyRevisionApiVersion);
-            _containerAppDetectorPropertyRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppDetectorPropertyRevisionResource.ResourceType.Namespace, Diagnostics);
-            _containerAppDetectorPropertyRevisionsRestClient = new ContainerAppDetectorPropertyRevisions(_containerAppDetectorPropertyRevisionsClientDiagnostics, Pipeline, Endpoint, containerAppDetectorPropertyRevisionApiVersion ?? "2025-10-02-preview");
+            _containerAppsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppDetectorPropertyRevisionResource.ResourceType.Namespace, Diagnostics);
+            _containerAppsDiagnosticsRestClient = new ContainerAppsDiagnostics(_containerAppsDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppDetectorPropertyRevisionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
-            using DiagnosticScope scope = _containerAppDetectorPropertyRevisionsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertyRevisionsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppRevisionData> response = Response.FromValue(ContainerAppRevisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
-            using DiagnosticScope scope = _containerAppDetectorPropertyRevisionsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertyRevisionsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppRevisionData> response = Response.FromValue(ContainerAppRevisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppRevisionData, ContainerAppDetectorPropertyRevisionResource>(new ContainerAppDetectorPropertyRevisionsGetRevisionsAsyncCollectionResultOfT(
-                _containerAppDetectorPropertyRevisionsRestClient,
+            return new AsyncPageableWrapper<ContainerAppRevisionData, ContainerAppDetectorPropertyRevisionResource>(new ContainerAppsDiagnosticsGetRevisionsAsyncCollectionResultOfT(
+                _containerAppsDiagnosticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppRevisionData, ContainerAppDetectorPropertyRevisionResource>(new ContainerAppDetectorPropertyRevisionsGetRevisionsCollectionResultOfT(
-                _containerAppDetectorPropertyRevisionsRestClient,
+            return new PageableWrapper<ContainerAppRevisionData, ContainerAppDetectorPropertyRevisionResource>(new ContainerAppsDiagnosticsGetRevisionsCollectionResultOfT(
+                _containerAppsDiagnosticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
-            using DiagnosticScope scope = _containerAppDetectorPropertyRevisionsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Exists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Exists");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertyRevisionsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
-            using DiagnosticScope scope = _containerAppDetectorPropertyRevisionsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Exists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.Exists");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertyRevisionsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
-            using DiagnosticScope scope = _containerAppDetectorPropertyRevisionsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertyRevisionsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
-            using DiagnosticScope scope = _containerAppDetectorPropertyRevisionsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertyRevisionsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;

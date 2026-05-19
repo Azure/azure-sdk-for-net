@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class ContainerAppDetectorPropertyRevisions
+    internal partial class ContainerAppsDiagnostics
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ContainerAppDetectorPropertyRevisions for mocking. </summary>
-        protected ContainerAppDetectorPropertyRevisions()
+        /// <summary> Initializes a new instance of ContainerAppsDiagnostics for mocking. </summary>
+        protected ContainerAppsDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDetectorPropertyRevisions. </summary>
+        /// <summary> Initializes a new instance of ContainerAppsDiagnostics. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ContainerAppDetectorPropertyRevisions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ContainerAppsDiagnostics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
