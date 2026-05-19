@@ -168,12 +168,16 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteAgentRequest(string agentName, RequestOptions options)
+        internal PipelineMessage CreateDeleteAgentRequest(string agentName, bool? force, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -284,7 +288,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteAgentVersionRequest(string agentName, string agentVersion, RequestOptions options)
+        internal PipelineMessage CreateDeleteAgentVersionRequest(string agentName, string agentVersion, bool? force, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -292,6 +296,10 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(agentVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -385,37 +393,17 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDownloadAgentVersionCodeRequest(string agentName, string agentVersion, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agents/", false);
-            uri.AppendPath(agentName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(agentVersion, true);
-            uri.AppendPath("/code:download", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/zip");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateDownloadAgentCodeRequest(string agentName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDownloadAgentCodeRequest(string agentName, string foundryFeatures, string agentVersion, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/code:download", false);
+            if (agentVersion != null)
+            {
+                uri.AppendQuery("agent_version", agentVersion, true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

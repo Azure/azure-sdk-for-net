@@ -363,9 +363,25 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult DeleteAgent(string agentName, CancellationToken cancellationToken = default)
     {
+        return DeleteAgent(
+            agentName: agentName,
+            force: null,
+            cancellationToken: cancellationToken
+        );
+    }
+
+    /// <summary> Deletes an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="force"> For Hosted Agents, if true, force-deletes the agent even if its versions have active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult DeleteAgent(string agentName, bool? force, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        ClientResult result = DeleteAgent(agentName, cancellationToken.ToRequestOptions());
+        ClientResult result = DeleteAgent(agentName, force, cancellationToken.ToRequestOptions());
         return result;
     }
 
@@ -377,9 +393,25 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, CancellationToken cancellationToken = default)
     {
+        return await DeleteAgentAsync(
+            agentName: agentName,
+            force: null,
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
+    }
+
+    /// <summary> Deletes an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="force"> For Hosted Agents, if true, force-deletes the agent even if its versions have active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, bool? force, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        ClientResult result = await DeleteAgentAsync(agentName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        ClientResult result = await DeleteAgentAsync(agentName, force, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return result;
     }
 
@@ -392,10 +424,28 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult DeleteAgentVersion(string agentName, string agentVersion, CancellationToken cancellationToken = default)
     {
+        return DeleteAgentVersion(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            force: null,
+            cancellationToken: cancellationToken
+        );
+    }
+
+    /// <summary> Deletes a specific version of an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="agentVersion"> The version of the agent to delete. </param>
+    /// <param name="force"> For Hosted Agents, if true, force-deletes the version even if it has active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult DeleteAgentVersion(string agentName, string agentVersion, bool? force, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-        ClientResult result = DeleteAgentVersion(agentName, agentVersion, cancellationToken.ToRequestOptions());
+        ClientResult result = DeleteAgentVersion(agentName, agentVersion, force, cancellationToken.ToRequestOptions());
         return result;
     }
 
@@ -408,10 +458,28 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> DeleteAgentVersionAsync(string agentName, string agentVersion, CancellationToken cancellationToken = default)
     {
+        return await DeleteAgentVersionAsync(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            force: null,
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
+    }
+
+    /// <summary> Deletes a specific version of an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="agentVersion"> The version of the agent to delete. </param>
+    /// <param name="force"> For Hosted Agents, if true, force-deletes the version even if it has active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> DeleteAgentVersionAsync(string agentName, string agentVersion, bool? force, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-        ClientResult result = await DeleteAgentVersionAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        ClientResult result = await DeleteAgentVersionAsync(agentName, agentVersion, force, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return result;
     }
 
@@ -875,56 +943,6 @@ public partial class AgentAdministrationClient
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
-        FileHelper.SaveAndUnzipData(path, result);
-        return result;
-    }
-
-    /// <summary>
-    /// Download the code zip for a specific version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
-    /// Returns the previously-uploaded zip (`application/zip`).
-    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
-    /// </summary>
-    /// <param name="agentName"> The name of the agent. </param>
-    /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
-    /// <param name="path"> The path to save the agent code. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/>  is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual BinaryData DownloadAgentVersionCode(string agentName, string agentVersion, string path, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(path, nameof(path));
-
-        BinaryData result = DownloadAgentVersionCode(
-            agentName: agentName,
-            agentVersion: agentVersion,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
-        FileHelper.SaveAndUnzipData(path, result);
-        return result;
-    }
-
-    /// <summary>
-    /// Download the code zip for a specific version of a code-based hosted agent and unpacks it to the user directory; returns the zip content as a binary data.
-    /// Returns the previously-uploaded zip (`application/zip`).
-    /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
-    /// </summary>
-    /// <param name="agentName"> The name of the agent. </param>
-    /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
-    /// <param name="path"> The path to save the agent code. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/>  is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<BinaryData> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, string path, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(path, nameof(path));
-
-        BinaryData result = await DownloadAgentVersionCodeAsync(
-            agentName: agentName,
-            agentVersion: agentVersion,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
         FileHelper.SaveAndUnzipData(path, result);
         return result;
     }

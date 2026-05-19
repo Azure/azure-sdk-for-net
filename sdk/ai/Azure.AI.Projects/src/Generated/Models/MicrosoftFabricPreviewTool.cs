@@ -17,6 +17,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(fabricDataagentPreview, nameof(fabricDataagentPreview));
 
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             FabricDataagentPreview = fabricDataagentPreview;
         }
 
@@ -25,11 +26,17 @@ namespace Azure.AI.Projects
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        internal MicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, FabricDataAgentToolParameters fabricDataagentPreview) : base(@type, additionalBinaryDataProperties)
+        internal MicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, FabricDataAgentToolParameters fabricDataagentPreview) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
             FabricDataagentPreview = fabricDataagentPreview;
         }
 
@@ -39,7 +46,14 @@ namespace Azure.AI.Projects
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+
         /// <summary> The fabric data agent tool parameters. </summary>
-        public FabricDataAgentToolParameters FabricDataagentPreview { get; }
+        public FabricDataAgentToolParameters FabricDataagentPreview { get; set; }
     }
 }
