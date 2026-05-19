@@ -5,7 +5,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models
 {
     /// <summary> The resource management error additional info. </summary>
     public partial class ErrorAdditionalInfo

@@ -4,13 +4,15 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Models;
+using Asp.Versioning;
+using Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Controllers
+namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Controllers
 {
     /// <summary> Database resource operations. </summary>
     [ApiController]
+    [ApiVersion("2026-02-01")]
     public abstract partial class DatabasesControllerBase : ControllerBase
     {
         /// <summary> Gets a database. </summary>
