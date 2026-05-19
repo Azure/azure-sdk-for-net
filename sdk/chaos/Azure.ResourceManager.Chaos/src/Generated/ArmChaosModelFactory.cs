@@ -840,6 +840,97 @@ namespace Azure.ResourceManager.Chaos.Models
             return new Recommendation(recommendationStatus, evaluationRunOn, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Model that represents the scenario. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of scenario definition. </param>
+        /// <returns> A new <see cref="Chaos.ChaosScenarioConfigurationData"/> instance for mocking. </returns>
+        public static ChaosScenarioConfigurationData ChaosScenarioConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScenarioConfigurationProperties properties = default)
+        {
+            return new ChaosScenarioConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Model that represents the properties of the scenario configuration. </summary>
+        /// <param name="scenarioId"> Resource ID of the scenario this configuration applies to. </param>
+        /// <param name="parameters"> Runtime parameter values for the scenario. Keys must match parameter names defined in the scenario. </param>
+        /// <param name="exclusions"> Exclusion criteria for protecting resources from fault injection. </param>
+        /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
+        /// <param name="filters"> Filter criteria used to constrain which discovered resources participate in fault injection. </param>
+        /// <returns> A new <see cref="Models.ScenarioConfigurationProperties"/> instance for mocking. </returns>
+        public static ScenarioConfigurationProperties ScenarioConfigurationProperties(ResourceIdentifier scenarioId = default, IEnumerable<ChaosKeyValuePair> parameters = default, ConfigurationExclusions exclusions = default, ChaosProvisioningState? provisioningState = default, ConfigurationFilters filters = default)
+        {
+            parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
+
+            return new ScenarioConfigurationProperties(
+                scenarioId,
+                parameters.ToList(),
+                exclusions,
+                provisioningState,
+                filters,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Model that represents exclusion criteria for protecting resources from fault injection.
+        /// Uses union (OR) logic - a resource is excluded if it matches ANY criteria.
+        /// </summary>
+        /// <param name="resources"> Array of specific resource IDs to exclude from fault injection. </param>
+        /// <param name="tags"> Array of tag key-value pairs. Resources with matching tags are excluded. </param>
+        /// <param name="types"> Array of resource types. All resources of these types are excluded. </param>
+        /// <returns> A new <see cref="Models.ConfigurationExclusions"/> instance for mocking. </returns>
+        public static ConfigurationExclusions ConfigurationExclusions(IEnumerable<ResourceIdentifier> resources = default, IEnumerable<ChaosKeyValuePair> tags = default, IEnumerable<string> types = default)
+        {
+            resources ??= new ChangeTrackingList<ResourceIdentifier>();
+            tags ??= new ChangeTrackingList<ChaosKeyValuePair>();
+            types ??= new ChangeTrackingList<string>();
+
+            return new ConfigurationExclusions(resources.ToList(), tags.ToList(), types.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Model that represents filter criteria for constraining which discovered
+        /// resources participate in fault injection.
+        /// Uses intersection (AND) logic — a resource is included only if it matches all criteria.
+        /// </summary>
+        /// <param name="locations">
+        /// Array of Azure location strings. Only resources in these locations are included.
+        /// Null or omitted means all locations (no filter). Empty array means include nothing.
+        /// </param>
+        /// <param name="zones">
+        /// Array of availability zone identifiers ("1", "2", "3", "zone-redundant").
+        /// Only resources whose zones intersect this list are included.
+        /// Null or omitted means all zones (including non-zonal). Empty array means include nothing.
+        /// Mutually exclusive with `physicalZones` — set one or the other, not both.
+        /// </param>
+        /// <param name="physicalZones">
+        /// Array of physical availability zone identifiers in `{region}-az{N}` format
+        /// (e.g., `"westus2-az1"`). Only resources in the corresponding logical zone
+        /// for each subscription are included.
+        /// At execution time, each physical zone is resolved to per-subscription
+        /// logical zones via the Azure locations API. The resolved mapping is surfaced
+        /// on the scenario run response (`zoneResolution`).
+        /// Null or omitted means physical zone targeting is not used.
+        /// Only one physical zone is supported in preview.
+        /// Mutually exclusive with `zones` — set one or the other, not both.
+        /// </param>
+        /// <returns> A new <see cref="Models.ConfigurationFilters"/> instance for mocking. </returns>
+        public static ConfigurationFilters ConfigurationFilters(IEnumerable<string> locations = default, IEnumerable<string> zones = default, IEnumerable<string> physicalZones = default)
+        {
+            locations ??= new ChangeTrackingList<string>();
+            zones ??= new ChangeTrackingList<string>();
+            physicalZones ??= new ChangeTrackingList<string>();
+
+            return new ConfigurationFilters(locations.ToList(), zones.ToList(), physicalZones.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Model that represents the scenario run. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1034,97 +1125,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public static PhysicalToLogicalZoneMapping PhysicalToLogicalZoneMapping(string physicalZone = default, string logicalZone = default)
         {
             return new PhysicalToLogicalZoneMapping(physicalZone, logicalZone, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model that represents the scenario. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties of scenario definition. </param>
-        /// <returns> A new <see cref="Chaos.ChaosScenarioConfigurationData"/> instance for mocking. </returns>
-        public static ChaosScenarioConfigurationData ChaosScenarioConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScenarioConfigurationProperties properties = default)
-        {
-            return new ChaosScenarioConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Model that represents the properties of the scenario configuration. </summary>
-        /// <param name="scenarioId"> Resource ID of the scenario this configuration applies to. </param>
-        /// <param name="parameters"> Runtime parameter values for the scenario. Keys must match parameter names defined in the scenario. </param>
-        /// <param name="exclusions"> Exclusion criteria for protecting resources from fault injection. </param>
-        /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
-        /// <param name="filters"> Filter criteria used to constrain which discovered resources participate in fault injection. </param>
-        /// <returns> A new <see cref="Models.ScenarioConfigurationProperties"/> instance for mocking. </returns>
-        public static ScenarioConfigurationProperties ScenarioConfigurationProperties(ResourceIdentifier scenarioId = default, IEnumerable<ChaosKeyValuePair> parameters = default, ConfigurationExclusions exclusions = default, ChaosProvisioningState? provisioningState = default, ConfigurationFilters filters = default)
-        {
-            parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
-
-            return new ScenarioConfigurationProperties(
-                scenarioId,
-                parameters.ToList(),
-                exclusions,
-                provisioningState,
-                filters,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Model that represents exclusion criteria for protecting resources from fault injection.
-        /// Uses union (OR) logic - a resource is excluded if it matches ANY criteria.
-        /// </summary>
-        /// <param name="resources"> Array of specific resource IDs to exclude from fault injection. </param>
-        /// <param name="tags"> Array of tag key-value pairs. Resources with matching tags are excluded. </param>
-        /// <param name="types"> Array of resource types. All resources of these types are excluded. </param>
-        /// <returns> A new <see cref="Models.ConfigurationExclusions"/> instance for mocking. </returns>
-        public static ConfigurationExclusions ConfigurationExclusions(IEnumerable<ResourceIdentifier> resources = default, IEnumerable<ChaosKeyValuePair> tags = default, IEnumerable<string> types = default)
-        {
-            resources ??= new ChangeTrackingList<ResourceIdentifier>();
-            tags ??= new ChangeTrackingList<ChaosKeyValuePair>();
-            types ??= new ChangeTrackingList<string>();
-
-            return new ConfigurationExclusions(resources.ToList(), tags.ToList(), types.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Model that represents filter criteria for constraining which discovered
-        /// resources participate in fault injection.
-        /// Uses intersection (AND) logic — a resource is included only if it matches all criteria.
-        /// </summary>
-        /// <param name="locations">
-        /// Array of Azure location strings. Only resources in these locations are included.
-        /// Null or omitted means all locations (no filter). Empty array means include nothing.
-        /// </param>
-        /// <param name="zones">
-        /// Array of availability zone identifiers ("1", "2", "3", "zone-redundant").
-        /// Only resources whose zones intersect this list are included.
-        /// Null or omitted means all zones (including non-zonal). Empty array means include nothing.
-        /// Mutually exclusive with `physicalZones` — set one or the other, not both.
-        /// </param>
-        /// <param name="physicalZones">
-        /// Array of physical availability zone identifiers in `{region}-az{N}` format
-        /// (e.g., `"westus2-az1"`). Only resources in the corresponding logical zone
-        /// for each subscription are included.
-        /// At execution time, each physical zone is resolved to per-subscription
-        /// logical zones via the Azure locations API. The resolved mapping is surfaced
-        /// on the scenario run response (`zoneResolution`).
-        /// Null or omitted means physical zone targeting is not used.
-        /// Only one physical zone is supported in preview.
-        /// Mutually exclusive with `zones` — set one or the other, not both.
-        /// </param>
-        /// <returns> A new <see cref="Models.ConfigurationFilters"/> instance for mocking. </returns>
-        public static ConfigurationFilters ConfigurationFilters(IEnumerable<string> locations = default, IEnumerable<string> zones = default, IEnumerable<string> physicalZones = default)
-        {
-            locations ??= new ChangeTrackingList<string>();
-            zones ??= new ChangeTrackingList<string>();
-            physicalZones ??= new ChangeTrackingList<string>();
-
-            return new ConfigurationFilters(locations.ToList(), zones.ToList(), physicalZones.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>

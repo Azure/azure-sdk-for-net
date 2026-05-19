@@ -219,15 +219,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosScenarioResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ChaosScenarioRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosScenarioRunResource"/> object. </returns>
-        public virtual ChaosScenarioRunResource GetChaosScenarioRunResource(ResourceIdentifier id)
-        {
-            ChaosScenarioRunResource.ValidateResourceId(id);
-            return new ChaosScenarioRunResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ChaosScenarioConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ChaosScenarioConfigurationResource"/> object. </returns>
@@ -235,6 +226,15 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosScenarioConfigurationResource.ValidateResourceId(id);
             return new ChaosScenarioConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioRunResource"/> object. </returns>
+        public virtual ChaosScenarioRunResource GetChaosScenarioRunResource(ResourceIdentifier id)
+        {
+            ChaosScenarioRunResource.ValidateResourceId(id);
+            return new ChaosScenarioRunResource(Client, id);
         }
     }
 }
