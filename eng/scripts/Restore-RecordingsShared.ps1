@@ -53,7 +53,7 @@ param(
     [Parameter(Mandatory = $true)][string] $ProjectNames,
     [string] $SourcesDirectory,
     [string] $SharedCloneRoot,
-    [int]    $FetchChunkSize = 30
+    [int] $FetchChunkSize = 30
 )
 
 Set-StrictMode -Version 3.0
@@ -182,6 +182,32 @@ foreach ($pkg in $selectedPackages) {
         throw "assets.json at $assetsJson has a non-empty Tag '$($assetData.Tag)' but no AssetsRepo."
     }
 
+    # Defense-in-depth: validate AssetsRepo and Tag before they flow into
+    # filesystem paths, git remote URLs, or git command-line arguments.
+    # AssetsRepo flows into a path under $SharedCloneRoot and into the
+    # remote URL https://github.com/<repo>.git - require a clean owner/repo
+    # identifier and explicitly reject '.' / '..' segments so a malicious
+    # assets.json can't escape the shared clone root via Join-Path.
+    $repoMatch = [regex]::Match($assetData.AssetsRepo, '^(?<owner>[A-Za-z0-9._-]+)/(?<repo>[A-Za-z0-9._-]+)$')
+    if (-not $repoMatch.Success -or
+        $repoMatch.Groups['owner'].Value -in @('.', '..') -or
+        $repoMatch.Groups['repo'].Value -in @('.', '..')) {
+        throw ("assets.json at {0} has an invalid AssetsRepo '{1}'. " +
+            "Expected '<owner>/<repo>' with letters/digits/'.'/'_'/'-' " +
+            "(no '.' or '..' segments).") -f $assetsJson, $assetData.AssetsRepo
+    }
+
+    # Tag flows into git refspecs and into `git checkout`. Delegate format
+    # validation to git itself (`git check-ref-format`) so we accept exactly
+    # what git accepts as a tag ref. This rejects whitespace, control chars,
+    # '..', '@{', and other dangerous patterns. Option-injection on bare tag
+    # names starting with '-' is handled separately by always passing
+    # `refs/tags/<tag>` (which starts with 'r') as the positional argument.
+    & git check-ref-format "refs/tags/$($assetData.Tag)" 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        throw "assets.json at $assetsJson has an invalid Tag '$($assetData.Tag)' (rejected by 'git check-ref-format refs/tags/<tag>')."
+    }
+
     $assetEntries.Add([pscustomobject]@{
             Artifact   = $pkg.ArtifactName
             AssetsJson = $assetsJson
@@ -307,8 +333,8 @@ foreach ($repoGroup in $entriesByRepo) {
         Invoke-GitCommand -GitArgs @('clone', '--local', '--shared', '--no-checkout', '--quiet', $sharedRepo, $entry.AssetsDir) `
             -FailMessage "git clone --local --shared failed for $($entry.Artifact)" | Out-Null
 
-        Invoke-GitCommand -GitArgs @('-C', $entry.AssetsDir, 'checkout', '--quiet', $entry.Tag, '--', '.') `
-            -FailMessage "git checkout $($entry.Tag) failed for $($entry.Artifact)" | Out-Null
+        Invoke-GitCommand -GitArgs @('-C', $entry.AssetsDir, 'checkout', '--quiet', "refs/tags/$($entry.Tag)", '--', '.') `
+            -FailMessage "git checkout refs/tags/$($entry.Tag) failed for $($entry.Artifact)" | Out-Null
     }
     $swMaterialize.Stop()
     Write-Host ("Materialized {0} package(s) in {1:N1}s." -f $repoGroup.Group.Count, $swMaterialize.Elapsed.TotalSeconds)
