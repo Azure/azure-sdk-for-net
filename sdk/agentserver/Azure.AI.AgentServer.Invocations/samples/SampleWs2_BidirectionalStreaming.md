@@ -38,7 +38,7 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 ## Implement the handler
 
 ```C# Snippet:Invocations_SampleWs2_BidirectionalStreamingHandler
-public class BidirectionalStreamingHandler : InvocationsWebSocketHandler
+public class BidirectionalStreamingHandler : InvocationWebSocketHandler
 {
     private static readonly string[] SimulatedTokens =
     {
@@ -50,7 +50,7 @@ public class BidirectionalStreamingHandler : InvocationsWebSocketHandler
     private static readonly TimeSpan TokenDelay = TimeSpan.FromMilliseconds(200);
 
     // HTTP /invocations — kept for parity with the other samples.
-    // Overrides the InvocationsWebSocketHandler default (404).
+    // Overrides the InvocationWebSocketHandler default (404).
     public override async Task HandleAsync(
         HttpRequest request, HttpResponse response,
         InvocationContext context, CancellationToken cancellationToken)

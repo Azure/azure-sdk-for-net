@@ -35,7 +35,7 @@ namespace Azure.AI.AgentServer.Invocations;
 /// <c>x-request-id</c> baggage is propagated onto the current Activity
 /// before the handler runs.</para>
 /// </remarks>
-public abstract class InvocationsWebSocketHandler : InvocationHandler
+public abstract class InvocationWebSocketHandler : InvocationHandler
 {
     /// <summary>
     /// Handles a <c>POST /invocations</c> request. Returns <c>404 Not Found</c>

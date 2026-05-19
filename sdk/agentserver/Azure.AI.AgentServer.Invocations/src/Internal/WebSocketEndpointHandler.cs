@@ -45,10 +45,10 @@ internal sealed class WebSocketEndpointHandler
     /// </summary>
     internal async Task HandleAsync(HttpContext httpContext, InvocationHandler handler)
     {
-        // If the handler does not derive from InvocationsWebSocketHandler, refuse
+        // If the handler does not derive from InvocationWebSocketHandler, refuse
         // the upgrade with HTTP 404 — "endpoint not registered" semantics so a
         // missing handler fails fast instead of accepting and immediately closing.
-        if (handler is not InvocationsWebSocketHandler webSocketHandler)
+        if (handler is not InvocationWebSocketHandler webSocketHandler)
         {
             httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             return;

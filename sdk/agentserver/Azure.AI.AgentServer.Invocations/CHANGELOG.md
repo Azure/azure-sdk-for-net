@@ -10,7 +10,7 @@
   origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
   (developer handler failure) per container-image-spec §8. Platform errors include
   `x-platform-error-detail` with diagnostic context.
-- WebSocket protocol support — new public abstract `InvocationsWebSocketHandler`
+- WebSocket protocol support — new public abstract `InvocationWebSocketHandler`
   base class (derived from `InvocationHandler`) declares abstract
   `HandleWebSocketAsync(WebSocket, InvocationContext, CancellationToken)`
   and defaults the inherited `HandleAsync` to HTTP `404 Not Found`. A

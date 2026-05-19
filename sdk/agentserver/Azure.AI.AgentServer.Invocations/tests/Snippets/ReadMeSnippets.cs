@@ -68,7 +68,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
         #region Snippet:Invocations_ReadMe_WebSocketHandler
 
-        public class WebSocketEchoHandler : InvocationsWebSocketHandler
+        public class WebSocketEchoHandler : InvocationWebSocketHandler
         {
             public override async Task HandleWebSocketAsync(
                 WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
