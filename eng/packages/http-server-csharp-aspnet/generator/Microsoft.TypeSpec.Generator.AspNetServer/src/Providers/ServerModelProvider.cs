@@ -31,10 +31,10 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
         protected override string BuildName() => _input.Name;
 
         protected override string BuildNamespace() =>
-            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models";
+            $"{AspNetServerCodeModelGenerator.Instance.GeneratedNamespace}.Models";
 
         protected override string BuildRelativeFilePath() =>
-            Path.Combine("src", "Generated", "Models", $"{Name}.cs");
+            Path.Combine(AspNetServerCodeModelGenerator.Instance.GeneratedDirectory, "Models", $"{Name}.cs");
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
