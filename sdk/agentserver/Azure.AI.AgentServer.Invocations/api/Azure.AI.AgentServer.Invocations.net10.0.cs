@@ -17,12 +17,6 @@ namespace Azure.AI.AgentServer.Invocations
         public virtual System.Threading.Tasks.Task GetOpenApiAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, System.Threading.CancellationToken cancellationToken) { throw null; }
         public abstract System.Threading.Tasks.Task HandleAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken);
     }
-    public abstract partial class InvocationWebSocketHandler : Azure.AI.AgentServer.Invocations.InvocationHandler
-    {
-        protected InvocationWebSocketHandler() { }
-        public override System.Threading.Tasks.Task HandleAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public abstract System.Threading.Tasks.Task HandleWebSocketAsync(System.Net.WebSockets.WebSocket webSocket, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken);
-    }
     public static partial class InvocationsBuilderExtensions
     {
         public static Azure.AI.AgentServer.Core.AgentHostBuilder AddInvocations(this Azure.AI.AgentServer.Core.AgentHostBuilder builder, Azure.AI.AgentServer.Invocations.InvocationHandler handler, System.Action<Azure.AI.AgentServer.Invocations.InvocationsServerOptions>? configure = null) { throw null; }
@@ -45,5 +39,11 @@ namespace Azure.AI.AgentServer.Invocations
     public static partial class InvocationsServerServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddInvocationsServer(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Invocations.InvocationsServerOptions>? configure = null) { throw null; }
+    }
+    public abstract partial class InvocationWebSocketHandler : Azure.AI.AgentServer.Invocations.InvocationHandler
+    {
+        protected InvocationWebSocketHandler() { }
+        public override System.Threading.Tasks.Task HandleAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public abstract System.Threading.Tasks.Task HandleWebSocketAsync(System.Net.WebSockets.WebSocket webSocket, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken);
     }
 }
