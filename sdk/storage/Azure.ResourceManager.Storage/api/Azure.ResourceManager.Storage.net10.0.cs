@@ -992,8 +992,8 @@ namespace Azure.ResourceManager.Storage
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.Models.TestConnectionResult> TestExistingConnection(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.TestExistingConnectionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.Models.TestConnectionResult>> TestExistingConnectionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.TestExistingConnectionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.StorageConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.StorageConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageConnectorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageConnectorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StorageDataShareCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.StorageDataShareResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StorageDataShareResource>, System.Collections.IEnumerable
     {
@@ -1048,8 +1048,8 @@ namespace Azure.ResourceManager.Storage
         Azure.ResourceManager.Storage.StorageDataShareData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageDataShareData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageDataShareData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageDataShareData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageDataShareResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.StorageDataShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageDataShareResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.StorageDataShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageDataShareResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageDataSharePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.StorageDataShareResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageDataSharePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class StorageExtensions
     {
@@ -1589,14 +1589,16 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent StorageAccountRegenerateKeyContent(string keyName = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState? skuConversionStatus = default(Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState?), Azure.ResourceManager.Storage.Models.StorageSkuName? targetSkuName = default(Azure.ResourceManager.Storage.Models.StorageSkuName?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Storage.StorageConnectorData StorageConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Storage.Models.StorageConnectorProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageConnectorPatch StorageConnectorPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate properties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageConnectorProperties StorageConnectorProperties(string uniqueId = null, Azure.ResourceManager.Storage.Models.StorageConnectorState? state = default(Azure.ResourceManager.Storage.Models.StorageConnectorState?), string creationTime = null, string description = null, bool? testConnection = default(bool?), Azure.ResourceManager.Storage.Models.StorageConnectorDataSourceType dataSourceType = default(Azure.ResourceManager.Storage.Models.StorageConnectorDataSourceType), Azure.ResourceManager.Storage.Models.StorageConnectorSource source = null, Azure.ResourceManager.Storage.Models.NativeDataSharingProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.NativeDataSharingProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageCorsRule StorageCorsRule(System.Collections.Generic.IEnumerable<string> allowedOrigins = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod> allowedMethods = null, int maxAgeInSeconds = 0, System.Collections.Generic.IEnumerable<string> exposedHeaders = null, System.Collections.Generic.IEnumerable<string> allowedHeaders = null) { throw null; }
         public static Azure.ResourceManager.Storage.StorageDataShareData StorageDataShareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Storage.Models.StorageDataShareProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageDataSharePatch StorageDataSharePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate properties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageDataShareProperties StorageDataShareProperties(string dataShareIdentifier = null, string description = null, string dataShareUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageDataShareAccessPolicy> accessPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageDataShareAsset> assets = null, Azure.ResourceManager.Storage.Models.NativeDataSharingProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.NativeDataSharingProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate StorageDataSharePropertiesUpdate(string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageDataShareAccessPolicy> accessPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageDataShareAsset> assets = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageEncryptionService StorageEncryptionService(bool? isEnabled = default(bool?), System.DateTimeOffset? lastEnabledOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType? keyType = default(Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType?)) { throw null; }
         public static Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState connectionState, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState?), string privateEndpointId = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties StoragePrivateEndpointConnectionProperties(string privateEndpointId = null, Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData StoragePrivateLinkResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier groupId, System.Collections.Generic.IEnumerable<string> requiredMembers, System.Collections.Generic.IEnumerable<string> requiredZoneNames) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult StoragePrivateLinkResourceListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData> value = null) { throw null; }
         public static Azure.ResourceManager.Storage.StorageQueueData StorageQueueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> metadata = null, int? approximateMessageCount = default(int?)) { throw null; }
@@ -1619,6 +1621,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.TableServiceData TableServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.TestConnectionResult TestConnectionResult(string storageConnectorMethodName = null, string storageConnectorErrorMessage = null, string storageConnectorRequestId = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.TestExistingConnectionContent TestExistingConnectionContent(string uniqueId = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.TrackedResourceUpdate TrackedResourceUpdate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.UpdateHistoryEntry UpdateHistoryEntry(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, System.DateTimeOffset? timestamp, string objectIdentifier, System.Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll) { throw null; }
     }
     public partial class BlobContainerImmutabilityPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy>
@@ -1960,6 +1963,20 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.DataShareSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DataShareSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DataShareSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DataShareSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DataShareSourceUpdate : Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DataShareSourceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DataShareSourceUpdate>
+    {
+        public DataShareSourceUpdate() { }
+        public Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate AuthProperties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.DataShareSourceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DataShareSourceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DataShareSourceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.DataShareSourceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DataShareSourceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DataShareSourceUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DataShareSourceUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DateAfterCreation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DateAfterCreation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DateAfterCreation>
     {
@@ -2887,6 +2904,20 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.ManagedIdentityAuthProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedIdentityAuthPropertiesUpdate : Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate>
+    {
+        public ManagedIdentityAuthPropertiesUpdate() { }
+        public string IdentityResourceId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagementPolicyAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyAction>
     {
@@ -4244,6 +4275,19 @@ namespace Azure.ResourceManager.Storage.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class StorageConnectorAuthPropertiesUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate>
+    {
+        internal StorageConnectorAuthPropertiesUpdate() { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class StorageConnectorConnection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorConnection>
     {
         internal StorageConnectorConnection() { }
@@ -4273,6 +4317,20 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageConnectorDataSourceType left, Azure.ResourceManager.Storage.Models.StorageConnectorDataSourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StorageConnectorPatch : Azure.ResourceManager.Storage.Models.TrackedResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPatch>
+    {
+        public StorageConnectorPatch() { }
+        public Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StorageConnectorPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StorageConnectorPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StorageConnectorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorProperties>
     {
         public StorageConnectorProperties(Azure.ResourceManager.Storage.Models.StorageConnectorDataSourceType dataSourceType, Azure.ResourceManager.Storage.Models.StorageConnectorSource source) { }
@@ -4294,6 +4352,23 @@ namespace Azure.ResourceManager.Storage.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StorageConnectorPropertiesUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate>
+    {
+        public StorageConnectorPropertiesUpdate() { }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate Source { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageConnectorState? State { get { throw null; } set { } }
+        public bool? TestConnection { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorPropertiesUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class StorageConnectorSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSource>
     {
         internal StorageConnectorSource() { }
@@ -4306,6 +4381,19 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.StorageConnectorSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class StorageConnectorSourceUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate>
+    {
+        internal StorageConnectorSourceUpdate() { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageConnectorSourceUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageConnectorState : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageConnectorState>
@@ -4421,6 +4509,20 @@ namespace Azure.ResourceManager.Storage.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataShareAsset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataShareAsset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StorageDataSharePatch : Azure.ResourceManager.Storage.Models.TrackedResourceUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageDataSharePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePatch>
+    {
+        public StorageDataSharePatch() { }
+        public Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StorageDataSharePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageDataSharePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageDataSharePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StorageDataSharePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StorageDataShareProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageDataShareProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataShareProperties>
     {
         public StorageDataShareProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageDataShareAccessPolicy> accessPolicies, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageDataShareAsset> assets) { }
@@ -4439,6 +4541,22 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.StorageDataShareProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataShareProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataShareProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataShareProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StorageDataSharePropertiesUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate>
+    {
+        public StorageDataSharePropertiesUpdate() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageDataShareAccessPolicy> AccessPolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageDataShareAsset> Assets { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageDataSharePropertiesUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageDnsEndpointType : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageDnsEndpointType>
@@ -4641,22 +4759,6 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.StoragePermissionScope System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePermissionScope>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePermissionScope>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePermissionScope>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class StoragePrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties>
-    {
-        public StoragePrivateEndpointConnectionProperties(Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState connectionState) { }
-        public Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public string PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StoragePrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState>
@@ -5306,6 +5408,20 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.TestExistingConnectionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.TestExistingConnectionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.TestExistingConnectionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.TestExistingConnectionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TrackedResourceUpdate : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.TrackedResourceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.TrackedResourceUpdate>
+    {
+        public TrackedResourceUpdate() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.TrackedResourceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.TrackedResourceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.TrackedResourceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.TrackedResourceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.TrackedResourceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.TrackedResourceUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.TrackedResourceUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UpdateHistoryEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry>
     {
