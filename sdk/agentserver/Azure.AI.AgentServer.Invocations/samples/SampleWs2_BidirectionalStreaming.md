@@ -1,6 +1,6 @@
 # Sample WS2: Bidirectional Streaming — Concurrent Token Streams over WebSocket
 
-Unlike the request/reply echo in [Sample WS1](SampleWs1_Echo.md), this sample exercises the **full-duplex** nature of WebSocket: the server and the client send and receive on the same socket **concurrently and independently**.
+Unlike the request/reply echo in [Sample WS1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/SampleWs1_Echo.md), this sample exercises the **full-duplex** nature of WebSocket: the server and the client send and receive on the same socket **concurrently and independently**.
 
 The handler runs two responsibilities in parallel:
 

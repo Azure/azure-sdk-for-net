@@ -108,4 +108,4 @@ ws.onopen    = () => ws.send("hello from the browser");
 
 ## Next
 
-See [Sample WS2 — Bidirectional Streaming](SampleWs2_BidirectionalStreaming.md) for a real full-duplex scenario where the server pushes tokens concurrently with reading client control messages.
+See [Sample WS2 — Bidirectional Streaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/SampleWs2_BidirectionalStreaming.md) for a real full-duplex scenario where the server pushes tokens concurrently with reading client control messages.
