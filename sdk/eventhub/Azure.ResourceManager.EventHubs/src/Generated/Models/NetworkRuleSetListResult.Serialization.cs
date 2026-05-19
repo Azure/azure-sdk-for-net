@@ -10,68 +10,68 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.DesktopVirtualization;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.DesktopVirtualization.Models
+namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> List of ActiveSessionHostConfiguration definitions. </summary>
-    internal partial class ActiveSessionHostConfigurationList : IJsonModel<ActiveSessionHostConfigurationList>
+    /// <summary> Paged collection of NetworkRuleSet items. </summary>
+    public partial class NetworkRuleSetListResult : IJsonModel<NetworkRuleSetListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ActiveSessionHostConfigurationList"/> for deserialization. </summary>
-        internal ActiveSessionHostConfigurationList()
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetListResult"/> for deserialization. </summary>
+        internal NetworkRuleSetListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActiveSessionHostConfigurationList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetworkRuleSetListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveSessionHostConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActiveSessionHostConfigurationList(document.RootElement, options);
+                        return DeserializeNetworkRuleSetListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveSessionHostConfigurationList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveSessionHostConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveSessionHostConfigurationList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActiveSessionHostConfigurationList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkRuleSetListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveSessionHostConfigurationList IPersistableModel<ActiveSessionHostConfigurationList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkRuleSetListResult IPersistableModel<NetworkRuleSetListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActiveSessionHostConfigurationList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkRuleSetListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ActiveSessionHostConfigurationList"/> from. </param>
-        internal static ActiveSessionHostConfigurationList FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkRuleSetListResult"/> from. </param>
+        internal static NetworkRuleSetListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeActiveSessionHostConfigurationList(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNetworkRuleSetListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActiveSessionHostConfigurationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkRuleSetListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveSessionHostConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveSessionHostConfigurationList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ActiveSessionHostConfigurationData item in Value)
+            foreach (EventHubsNetworkRuleSetData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveSessionHostConfigurationList IJsonModel<ActiveSessionHostConfigurationList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkRuleSetListResult IJsonModel<NetworkRuleSetListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActiveSessionHostConfigurationList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetworkRuleSetListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveSessionHostConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveSessionHostConfigurationList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActiveSessionHostConfigurationList(document.RootElement, options);
+            return DeserializeNetworkRuleSetListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActiveSessionHostConfigurationList DeserializeActiveSessionHostConfigurationList(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ActiveSessionHostConfigurationData> value = default;
+            IList<EventHubsNetworkRuleSetData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ActiveSessionHostConfigurationData> array = new List<ActiveSessionHostConfigurationData>();
+                    List<EventHubsNetworkRuleSetData> array = new List<EventHubsNetworkRuleSetData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActiveSessionHostConfigurationData.DeserializeActiveSessionHostConfigurationData(item, options));
+                        array.Add(EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActiveSessionHostConfigurationList(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkRuleSetListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

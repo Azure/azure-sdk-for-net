@@ -10,41 +10,47 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DesktopVirtualization.Models;
+using Azure.ResourceManager.Storage.Models;
 
-namespace Azure.ResourceManager.DesktopVirtualization
+namespace Azure.ResourceManager.Storage
 {
-    internal partial class ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT : Pageable<ActiveSessionHostConfigurationData>
+    internal partial class QueueServicesListCollectionResultOfT : Pageable<StorageQueueData>
     {
-        private readonly ActiveSessionHostConfigurations _client;
+        private readonly QueueServices _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _hostPoolName;
+        private readonly string _accountName;
+        private readonly string _maxpagesize;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ActiveSessionHostConfigurations client used to send requests. </param>
+        /// <summary> Initializes a new instance of QueueServicesListCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The QueueServices client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
+        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
+        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT(ActiveSessionHostConfigurations client, Guid subscriptionId, string resourceGroupName, string hostPoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public QueueServicesListCollectionResultOfT(QueueServices client, Guid subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _hostPoolName = hostPoolName;
+            _accountName = accountName;
+            _maxpagesize = maxpagesize;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of QueueServicesListCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ActiveSessionHostConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of QueueServicesListCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<StorageQueueData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +60,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     yield break;
                 }
-                ActiveSessionHostConfigurationList result = ActiveSessionHostConfigurationList.FromResponse(response);
-                yield return Page<ActiveSessionHostConfigurationData>.FromValues((IReadOnlyList<ActiveSessionHostConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ListQueueResource result = ListQueueResource.FromResponse(response);
+                yield return Page<StorageQueueData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHostPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _context) : _client.CreateGetByHostPoolRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _maxpagesize, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
