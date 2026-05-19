@@ -27,7 +27,7 @@ namespace Azure.Identity
     /// <remarks>
     /// Register this resolver explicitly via <see cref="ConfigurationExtensions.AddAzureCredentialResolver(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
     /// (or its host-builder overload), or rely on
-    /// <see cref="ConfigurationExtensions.GetAzureCredential(IConfiguration, string)"/>
+    /// <see cref="ConfigurationExtensions.GetAzureCredentialSettings(IConfiguration, string)"/>
     /// and friends, which transparently append a built-in instance to the
     /// resolver chain. The class has a public parameterless constructor so it
     /// can be used with <c>AddCredentialResolver&lt;AzureCredentialResolver&gt;()</c>.
@@ -38,7 +38,7 @@ namespace Azure.Identity
     {
         /// <summary>
         /// A shared singleton used by built-in helpers (e.g.
-        /// <see cref="ConfigurationExtensions.GetAzureCredential(IConfiguration, string)"/>).
+        /// <see cref="ConfigurationExtensions.GetAzureCredentialSettings(IConfiguration, string)"/>).
         /// </summary>
         internal static AzureCredentialResolver Instance { get; } = new AzureCredentialResolver();
 

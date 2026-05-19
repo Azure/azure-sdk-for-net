@@ -13,13 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Identity.CredentialResolvers
 {
-    public class GetAzureCredentialTests
+    public class GetAzureCredentialSettingsTests
     {
         private static IConfiguration BuildConfig(IDictionary<string, string> values)
             => new ConfigurationBuilder().AddInMemoryCollection(values).Build();
 
         [Test]
-        public void GetAzureCredential_NoResolvers_UsesBuiltInResolver()
+        public void GetAzureCredentialSettings_NoResolvers_UsesBuiltInResolver()
         {
             // Even with no caller-supplied resolvers, the built-in AzureCredentialResolver
             // is appended to the chain so a known token-source section resolves successfully.
@@ -28,37 +28,43 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
                 ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
             });
 
-            TokenCredential cred = config.GetAzureCredential("MyClient:Credential");
+            CredentialSettings cred = config.GetAzureCredentialSettings("MyClient:Credential");
             Assert.IsNotNull(cred);
-            Assert.IsInstanceOf<DefaultAzureCredential>(cred);
+            Assert.IsInstanceOf<DefaultAzureCredential>(cred.TokenProvider);
         }
 
         [Test]
-        public void GetAzureCredential_ApiKeySection_ReturnsNull()
+        public void GetAzureCredentialSettings_ApiKeySection_ReturnsKeyWithNoProvider()
         {
-            // ApiKey sections are intentionally not claimed by AzureCredentialResolver — consuming
-            // libraries dispatch on Credential.CredentialSource themselves at construction time.
+            // ApiKey sections are intentionally not claimed by AzureCredentialResolver — the
+            // returned settings expose the inline Key (so consuming libraries can dispatch on
+            // CredentialSource and read Key directly) while TokenProvider stays null.
             IConfiguration config = BuildConfig(new Dictionary<string, string>
             {
                 ["MyClient:Credential:CredentialSource"] = "ApiKeyCredential",
                 ["MyClient:Credential:Key"] = "abc",
             });
 
-            Assert.IsNull(config.GetAzureCredential("MyClient:Credential"));
+            CredentialSettings cred = config.GetAzureCredentialSettings("MyClient:Credential");
+
+            Assert.IsNotNull(cred);
+            Assert.IsNull(cred.TokenProvider);
+            Assert.AreEqual("apikeycredential", cred.CredentialSource);
+            Assert.AreEqual("abc", cred.Key);
         }
 
         [Test]
-        public void GetAzureCredential_MissingSection_ReturnsNullWithoutThrowing()
+        public void GetAzureCredentialSettings_MissingSection_ReturnsNullWithoutThrowing()
         {
             IConfiguration config = BuildConfig(new Dictionary<string, string>());
 
-            Assert.IsNull(config.GetAzureCredential("Nope"));
-            Assert.IsNull(config.GetAzureCredential("Nope", Array.Empty<CredentialResolver>()));
-            Assert.IsNull(config.GetAzureCredential("Nope", Array.Empty<CredentialResolver>(), _ => { }));
+            Assert.IsNull(config.GetAzureCredentialSettings("Nope"));
+            Assert.IsNull(config.GetAzureCredentialSettings("Nope", Array.Empty<CredentialResolver>()));
+            Assert.IsNull(config.GetAzureCredentialSettings("Nope", Array.Empty<CredentialResolver>(), _ => { }));
         }
 
         [Test]
-        public void GetAzureCredential_CustomResolverWins_OverBuiltIn()
+        public void GetAzureCredentialSettings_CustomResolverWins_OverBuiltIn()
         {
             // Custom resolver appears before AzureCredentialResolver in the chain, so when
             // both could claim the section the custom one wins. The section uses a token-based
@@ -71,12 +77,13 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             FakeTokenCredential fake = new FakeTokenCredential("from-fake-resolver");
             FakeResolver custom = new FakeResolver(fake);
 
-            TokenCredential cred = config.GetAzureCredential("MyClient:Credential", custom);
-            Assert.AreSame(fake, cred);
+            CredentialSettings cred = config.GetAzureCredentialSettings("MyClient:Credential", custom);
+            Assert.IsNotNull(cred);
+            Assert.AreSame(fake, cred.TokenProvider);
         }
 
         [Test]
-        public void GetAzureCredential_BuiltInWins_WhenCustomResolverDefers()
+        public void GetAzureCredentialSettings_BuiltInWins_WhenCustomResolverDefers()
         {
             // Custom resolver returns false, so the built-in handles the section.
             IConfiguration config = BuildConfig(new Dictionary<string, string>
@@ -86,13 +93,13 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
 
             DeferringResolver custom = new DeferringResolver();
 
-            TokenCredential cred = config.GetAzureCredential("MyClient:Credential", custom);
+            CredentialSettings cred = config.GetAzureCredentialSettings("MyClient:Credential", custom);
             Assert.IsNotNull(cred);
-            Assert.IsInstanceOf<DefaultAzureCredential>(cred);
+            Assert.IsInstanceOf<DefaultAzureCredential>(cred.TokenProvider);
         }
 
         [Test]
-        public void GetAzureCredential_WithOverrides_AppliesBeforeResolution()
+        public void GetAzureCredentialSettings_WithOverrides_AppliesBeforeResolution()
         {
             // The override callback runs against the writable overlay of the credential section
             // before any resolver sees it. Use a custom resolver that surfaces what it observed
@@ -105,13 +112,37 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
 
             MarkerEchoingResolver echo = new MarkerEchoingResolver();
 
-            TokenCredential cred = config.GetAzureCredential(
+            CredentialSettings cred = config.GetAzureCredentialSettings(
                 "MyClient:Credential",
                 new CredentialResolver[] { echo },
                 section => section["Marker"] = "overridden");
 
             Assert.IsNotNull(cred);
-            Assert.AreEqual("overridden", cred.GetToken(new TokenRequestContext(new[] { "x" }), default).Token);
+            Assert.IsInstanceOf<TokenCredential>(cred.TokenProvider);
+            TokenCredential token = (TokenCredential)cred.TokenProvider;
+            Assert.AreEqual("overridden", token.GetToken(new TokenRequestContext(new[] { "x" }), default).Token);
+        }
+
+        [Test]
+        public void GetAzureCredentialSettings_DispatchPattern_TokenAndApiKey()
+        {
+            // Demonstrates the mixed-mode dispatch pattern: a single call site can hand off
+            // either a TokenCredential or an inline ApiKey without binding a ClientSettings.
+            IConfiguration config = BuildConfig(new Dictionary<string, string>
+            {
+                ["TokenClient:Credential:CredentialSource"] = "AzureCliCredential",
+                ["KeyClient:Credential:CredentialSource"] = "ApiKeyCredential",
+                ["KeyClient:Credential:Key"] = "secret",
+            });
+
+            CredentialSettings tokenSettings = config.GetAzureCredentialSettings("TokenClient:Credential");
+            Assert.IsNotNull(tokenSettings);
+            Assert.IsInstanceOf<TokenCredential>(tokenSettings.TokenProvider);
+
+            CredentialSettings keySettings = config.GetAzureCredentialSettings("KeyClient:Credential");
+            Assert.IsNotNull(keySettings);
+            Assert.IsNull(keySettings.TokenProvider);
+            Assert.AreEqual("secret", keySettings.Key);
         }
 
         private sealed class FakeResolver : CredentialResolver

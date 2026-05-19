@@ -144,16 +144,33 @@ MyClient secondary = provider.GetRequiredKeyedService<MyClient>("secondary");
 
 ## Resolving Credentials Directly
 
-If you need a `TokenCredential` instance separately from a client settings object —
-for example, to share one credential across multiple non-`ClientSettings` consumers —
-use `GetAzureCredential`:
+If you need a credential separately from a client settings object — for example, to
+share one credential across multiple non-`ClientSettings` consumers, or to handle
+both token credentials and inline API keys at the same call site — use
+`GetAzureCredentialSettings`:
 
-```C# Snippet:Azure_Core_Samples_AzureClient_GetCredential
-TokenCredential credential = configuration.GetAzureCredential("MyClient:Credential");
+```C# Snippet:Azure_Core_Samples_AzureClient_GetCredentialSettings
+CredentialSettings credential = configuration.GetAzureCredentialSettings("MyClient:Credential");
+
+if (credential?.TokenProvider is TokenCredential token)
+{
+    // Use the resolved TokenCredential.
+}
+else if (credential?.CredentialSource == "apikeycredential" && credential.Key is string key)
+{
+    // Use the inline API key.
+}
+else
+{
+    // Section missing, or no resolver claimed it.
+}
 ```
 
-`GetAzureCredential` returns `null` when no resolver claims the section. It never
-throws.
+`GetAzureCredentialSettings` returns `null` only when the named section does not
+exist. When the section exists, the returned `CredentialSettings` always exposes
+the bound `Key`, `CredentialSource`, and `AdditionalProperties` — for inline ApiKey
+sections `TokenProvider` is `null` and the caller dispatches on `CredentialSource`
+to use the `Key` directly. It never throws.
 
 ## Chaining Additional Configuration
 
@@ -240,8 +257,10 @@ the `Credential` section as well.
 
 > **ApiKeyCredential note:** `ApiKeyCredential` is a configuration-schema source
 > recognized by `System.ClientModel`, but `AzureCredentialResolver` does not
-> claim it (`GetAzureCredential` returns `null` for inline API-key sections).
-> Service-specific Azure clients that accept an API key inspect
+> claim it. `GetAzureCredentialSettings` still returns a populated
+> `CredentialSettings` for an inline API-key section (with `Key`,
+> `CredentialSource`, and `AdditionalProperties` bound) but with `TokenProvider`
+> set to `null`. Service-specific Azure clients that accept an API key inspect
 > `Credential.CredentialSource` themselves at construction time and read
 > `Credential.Key` directly. From an application-author perspective nothing
 > changes — `AddAzureClient`/`GetAzureClientSettings<T>` still bind the
@@ -564,15 +583,15 @@ public static IClientBuilder AddMyClient(
 ### Standalone (Non-DI) Use
 
 For non-DI scenarios — for example, console tools that call `GetAzureClientSettings`
-or `GetAzureCredential` directly — resolvers can be passed as arguments without any
-DI container:
+or `GetAzureCredentialSettings` directly — resolvers can be passed as arguments
+without any DI container:
 
 ```C# Snippet:Azure_Core_Samples_AzureClient_StandaloneCustomResolver
 MyClientSettings settings = configuration.GetAzureClientSettings<MyClientSettings>(
     "MyClient",
     new MyVaultCredentialResolver());
 
-TokenCredential credential = configuration.GetAzureCredential(
+CredentialSettings credential = configuration.GetAzureCredentialSettings(
     "MyClient:Credential",
     new MyVaultCredentialResolver());
 ```

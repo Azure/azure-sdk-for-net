@@ -14,7 +14,7 @@ The `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInj
 - `Azure.Core.DiagnosticsOptions` constructor that accepts `IConfigurationSection`
 - `Azure.Identity.ConfigurationExtensions` - Extension methods for `IConfiguration`, `IServiceCollection`, and `IHostApplicationBuilder`
   - `GetAzureClientSettings<T>` - Creates client settings from configuration with Azure credential resolution. Overloads accept caller-supplied `CredentialResolver` chains in addition to the built-in `AzureCredentialResolver`.
-  - `GetAzureCredential` - Resolves a `TokenCredential` directly from a configuration section using the built-in `AzureCredentialResolver`, optionally with caller-supplied resolvers and overrides. Returns `null` when no resolver claims the section; never throws.
+  - `GetAzureCredentialSettings` - Returns a `CredentialSettings` bound from a credential section, with `TokenProvider` populated by the built-in `AzureCredentialResolver` when it claims the section. For inline ApiKey sections `Key` is populated and `TokenProvider` is `null`, letting callers dispatch on either shape without binding a `ClientSettings`. Returns `null` only when the section does not exist; never throws.
   - `AddAzureCredentialResolver` (on `IServiceCollection` and `IHostApplicationBuilder`) - Idempotently registers the `AzureCredentialResolver` in DI so libraries that want their own credential sources can compose with the Azure built-in chain.
   - `AddAzureClient<TClient, TSettings>` - Registers an Azure client in the DI container. The built-in `AzureCredentialResolver` is added automatically.
   - `AddKeyedAzureClient<TClient, TSettings>` - Registers a keyed Azure client in the DI container. The built-in `AzureCredentialResolver` is added automatically.

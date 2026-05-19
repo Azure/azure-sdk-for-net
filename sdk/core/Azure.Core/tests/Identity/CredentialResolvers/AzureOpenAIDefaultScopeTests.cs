@@ -6,15 +6,17 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Identity.CredentialResolvers
 {
     /// <summary>
     /// Verifies the AzureOpenAI default-scope quirk writes Scope at the root of the
-    /// credential section (the canonical SCM 1.12.0+ location) for both code paths:
-    /// the new resolver-aware <see cref="ConfigurationExtensions.GetAzureClientSettings{T}(IConfiguration, string)"/>
-    /// path and the legacy <see cref="ConfigurationExtensions.WithAzureCredential{T}(T)"/> path.
+    /// credential section for both the
+    /// <see cref="ConfigurationExtensions.GetAzureClientSettings{T}(IConfiguration, string)"/>
+    /// path and the <see cref="ConfigurationExtensions.WithAzureCredential{T}(T)"/> path.
     /// </summary>
     public class AzureOpenAIDefaultScopeTests
     {
@@ -32,6 +34,12 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             }
         }
 
+        internal class TestClient
+        {
+            public TestSettings Settings { get; }
+            public TestClient(TestSettings settings) => Settings = settings;
+        }
+
         private static IConfiguration BuildConfig(IDictionary<string, string> values)
             => new ConfigurationBuilder().AddInMemoryCollection(values).Build();
 
@@ -46,9 +54,9 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
 
             _ = config.GetAzureClientSettings<TestSettings>("MyClient");
 
-            // Root location is canonical (SCM 1.12.0+ reads here first).
+            // Scope is written at the root of the credential section.
             Assert.AreEqual(DefaultScope, config["MyClient:Credential:Scope"]);
-            // Legacy AdditionalProperties location is no longer written by Azure.Core.
+            // Scope is not duplicated under AdditionalProperties.
             Assert.IsNull(config["MyClient:Credential:AdditionalProperties:Scope"]);
         }
 
@@ -93,7 +101,7 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
 
             _ = config.GetClientSettings<TestSettings>("MyClient").WithAzureCredential();
 
-            // Legacy WithAzureCredential path must also write at the canonical root location.
+            // WithAzureCredential writes Scope at the root of the credential section.
             Assert.AreEqual(DefaultScope, config["MyClient:Credential:Scope"]);
             Assert.IsNull(config["MyClient:Credential:AdditionalProperties:Scope"]);
         }
@@ -126,6 +134,65 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             _ = config.GetClientSettings<TestSettings>("MyClient").WithAzureCredential();
 
             Assert.AreEqual("custom-scope", config["MyClient:Credential:Scope"]);
+        }
+
+        [Test]
+        public void AddAzureClient_AzureOpenAIEndpoint_WritesScopeAtRoot()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["MyClient:Options:Endpoint"] = OpenAIEndpoint,
+                ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            builder.AddAzureClient<TestClient, TestSettings>("MyClient");
+
+            // Resolving the client materializes settings, which runs the ConfigureCredential
+            // overlay registered by AddAzureClient. After that the section reflects the override.
+            using ServiceProvider provider = builder.Services.BuildServiceProvider();
+            _ = provider.GetRequiredService<TestClient>();
+
+            Assert.AreEqual(DefaultScope, builder.Configuration["MyClient:Credential:Scope"]);
+            Assert.IsNull(builder.Configuration["MyClient:Credential:AdditionalProperties:Scope"]);
+        }
+
+        [Test]
+        public void AddAzureClient_NonAzureOpenAIEndpoint_DoesNotWriteScope()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["MyClient:Options:Endpoint"] = "https://example.com/",
+                ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            builder.AddAzureClient<TestClient, TestSettings>("MyClient");
+
+            using ServiceProvider provider = builder.Services.BuildServiceProvider();
+            _ = provider.GetRequiredService<TestClient>();
+
+            Assert.IsNull(builder.Configuration["MyClient:Credential:Scope"]);
+            Assert.IsNull(builder.Configuration["MyClient:Credential:AdditionalProperties:Scope"]);
+        }
+
+        [Test]
+        public void AddAzureClient_PreSetScopeAtRoot_NotOverwritten()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["MyClient:Options:Endpoint"] = OpenAIEndpoint,
+                ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
+                ["MyClient:Credential:Scope"] = "custom-scope",
+            });
+
+            builder.AddAzureClient<TestClient, TestSettings>("MyClient");
+
+            using ServiceProvider provider = builder.Services.BuildServiceProvider();
+            _ = provider.GetRequiredService<TestClient>();
+
+            Assert.AreEqual("custom-scope", builder.Configuration["MyClient:Credential:Scope"]);
         }
     }
 }

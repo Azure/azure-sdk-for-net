@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
@@ -70,12 +71,25 @@ namespace Azure.Core.Tests.Identity.Samples.DocSnippets
             #endregion
         }
 
-        public void GetAzureCredential()
+        public void GetAzureCredentialSettings()
         {
             ConfigurationManager configuration = new();
 
-            #region Snippet:Azure_Core_Samples_AzureClient_GetCredential
-            TokenCredential credential = configuration.GetAzureCredential("MyClient:Credential");
+            #region Snippet:Azure_Core_Samples_AzureClient_GetCredentialSettings
+            CredentialSettings credential = configuration.GetAzureCredentialSettings("MyClient:Credential");
+
+            if (credential?.TokenProvider is TokenCredential token)
+            {
+                // Use the resolved TokenCredential.
+            }
+            else if (credential?.CredentialSource == "apikeycredential" && credential.Key is string key)
+            {
+                // Use the inline API key.
+            }
+            else
+            {
+                // Section missing, or no resolver claimed it.
+            }
             #endregion
         }
 
@@ -126,7 +140,7 @@ namespace Azure.Core.Tests.Identity.Samples.DocSnippets
                 "MyClient",
                 new MyVaultCredentialResolver());
 
-            TokenCredential credential = configuration.GetAzureCredential(
+            CredentialSettings credential = configuration.GetAzureCredentialSettings(
                 "MyClient:Credential",
                 new MyVaultCredentialResolver());
             #endregion
