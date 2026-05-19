@@ -1,5 +1,25 @@
 # Release History
 
+## 1.1.0 (Unreleased)
+ 
+### Features Added
+ 
+- Added support for built-in tool calling scenarios, including file search and web search.
+- Added lifecycle status tracking for tool calls, including `Searching`, `InProgress`, and `Completed` states.
+- Added streaming server events for tool execution, transcript annotations, and video output updates.
+- Added avatar voice synchronization support via `AzureAvatarVoiceSyncVoice` with configurable voice parameters.
+- Added phrase-level transcription support, including word-level timing, confidence, and phrase grouping.
+- Added support for including additional response data via session include options (e.g., file search results and transcription metadata).
+- Added support for new transcription models, including diarization scenarios.
+- Added expanded token usage reporting with reasoning token support.
+ 
+### Breaking Changes
+ 
+- Changed `SessionResponseItem.Id` to a virtual property.
+- Updated transcription completion APIs to include additional metadata (logprobs and phrases).
+- Updated `OutputTokenDetails` constructors to support reasoning tokens.
+- Updated `VoiceLiveSessionOptions` to include new properties such as `Include` and `Metadata`.
+
 ## 1.1.0-beta.4 (2026-05-13)
 
 ### Features Added
