@@ -7,69 +7,105 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Possible states of a server. </summary>
+    /// <summary> State of a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerState : IEquatable<PostgreSqlFlexibleServerState>
     {
         private readonly string _value;
+        /// <summary> Server is healthy and not undergoing any operations at the management or control plane level. This doesn't mean that the server is fully operational at the data plane level. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> Server is being deleted. </summary>
+        private const string DroppingValue = "Dropping";
+        /// <summary> Server is disabled. Typical reasons include: the subscription on which the server is deployed is explicitly disabled or canceled by the administrator, the spending limit has been reached, or the bill is past due. May also happen when the server is being moved to another resource group or subscription. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> PostgreSQL database engine is being restarted. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Compute resources associated with the server are being stopped and deallocated. If the server has high availability enabled, the compute resources of the standby server are also stopped and deallocated. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Compute resources associated with the server are being stopped and deallocated. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Server is undergoing some changes which may or may not impact the availability of the PostgreSQL database engine. For example, the compute resources of the server are being scaled up or down, which may cause temporary unavailability of the database engine. Or, for example, a firewall rule is being added or removed, which doesn't cause any unavailability of the database engine. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> PostgreSQL database engine is being restarted. </summary>
+        private const string RestartingValue = "Restarting";
+        /// <summary> Server isn't accessible, because the key provided to encrypt and decrypt the data is in invalid state. </summary>
+        private const string InaccessibleValue = "Inaccessible";
+        /// <summary> Server is in the process of being created. </summary>
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ReadyValue = "Ready";
-        private const string DroppingValue = "Dropping";
-        private const string DisabledValue = "Disabled";
-        private const string StartingValue = "Starting";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string UpdatingValue = "Updating";
-        private const string RestartingValue = "Restarting";
-        private const string InaccessibleValue = "Inaccessible";
-        private const string ProvisioningValue = "Provisioning";
-
-        /// <summary> Ready. </summary>
+        /// <summary> Server is healthy and not undergoing any operations at the management or control plane level. This doesn't mean that the server is fully operational at the data plane level. </summary>
         public static PostgreSqlFlexibleServerState Ready { get; } = new PostgreSqlFlexibleServerState(ReadyValue);
-        /// <summary> Dropping. </summary>
+
+        /// <summary> Server is being deleted. </summary>
         public static PostgreSqlFlexibleServerState Dropping { get; } = new PostgreSqlFlexibleServerState(DroppingValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Server is disabled. Typical reasons include: the subscription on which the server is deployed is explicitly disabled or canceled by the administrator, the spending limit has been reached, or the bill is past due. May also happen when the server is being moved to another resource group or subscription. </summary>
         public static PostgreSqlFlexibleServerState Disabled { get; } = new PostgreSqlFlexibleServerState(DisabledValue);
-        /// <summary> Starting. </summary>
+
+        /// <summary> PostgreSQL database engine is being restarted. </summary>
         public static PostgreSqlFlexibleServerState Starting { get; } = new PostgreSqlFlexibleServerState(StartingValue);
-        /// <summary> Stopping. </summary>
+
+        /// <summary> Compute resources associated with the server are being stopped and deallocated. If the server has high availability enabled, the compute resources of the standby server are also stopped and deallocated. </summary>
         public static PostgreSqlFlexibleServerState Stopping { get; } = new PostgreSqlFlexibleServerState(StoppingValue);
-        /// <summary> Stopped. </summary>
+
+        /// <summary> Compute resources associated with the server are being stopped and deallocated. </summary>
         public static PostgreSqlFlexibleServerState Stopped { get; } = new PostgreSqlFlexibleServerState(StoppedValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Server is undergoing some changes which may or may not impact the availability of the PostgreSQL database engine. For example, the compute resources of the server are being scaled up or down, which may cause temporary unavailability of the database engine. Or, for example, a firewall rule is being added or removed, which doesn't cause any unavailability of the database engine. </summary>
         public static PostgreSqlFlexibleServerState Updating { get; } = new PostgreSqlFlexibleServerState(UpdatingValue);
-        /// <summary> Restarting. </summary>
+
+        /// <summary> PostgreSQL database engine is being restarted. </summary>
         public static PostgreSqlFlexibleServerState Restarting { get; } = new PostgreSqlFlexibleServerState(RestartingValue);
-        /// <summary> Inaccessible. </summary>
+
+        /// <summary> Server isn't accessible, because the key provided to encrypt and decrypt the data is in invalid state. </summary>
         public static PostgreSqlFlexibleServerState Inaccessible { get; } = new PostgreSqlFlexibleServerState(InaccessibleValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> Server is in the process of being created. </summary>
         public static PostgreSqlFlexibleServerState Provisioning { get; } = new PostgreSqlFlexibleServerState(ProvisioningValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerState(string value) => new PostgreSqlFlexibleServerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerState?(string value) => value == null ? null : new PostgreSqlFlexibleServerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

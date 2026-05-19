@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineKeySetProvisioningState : IEquatable<BareMetalMachineKeySetProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Canceled status. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Accepted status. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The Provisioning status. </summary>
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineKeySetProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string AcceptedValue = "Accepted";
-        private const string ProvisioningValue = "Provisioning";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The Succeeded status. </summary>
         public static BareMetalMachineKeySetProvisioningState Succeeded { get; } = new BareMetalMachineKeySetProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Failed status. </summary>
         public static BareMetalMachineKeySetProvisioningState Failed { get; } = new BareMetalMachineKeySetProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The Canceled status. </summary>
         public static BareMetalMachineKeySetProvisioningState Canceled { get; } = new BareMetalMachineKeySetProvisioningState(CanceledValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The Accepted status. </summary>
         public static BareMetalMachineKeySetProvisioningState Accepted { get; } = new BareMetalMachineKeySetProvisioningState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Provisioning status. </summary>
         public static BareMetalMachineKeySetProvisioningState Provisioning { get; } = new BareMetalMachineKeySetProvisioningState(ProvisioningValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineKeySetProvisioningState left, BareMetalMachineKeySetProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineKeySetProvisioningState left, BareMetalMachineKeySetProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineKeySetProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineKeySetProvisioningState(string value) => new BareMetalMachineKeySetProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineKeySetProvisioningState?(string value) => value == null ? null : new BareMetalMachineKeySetProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineKeySetProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineKeySetProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

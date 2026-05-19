@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: StorageCache
 namespace: Azure.ResourceManager.StorageCache
-require: https://github.com/Azure/azure-rest-api-specs/blob/ec0ec094fc9eae3a75ac16b175a3b596a482003b/specification/storagecache/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8b8076693baafd8d4ebeaca903bdaa0c191766b9/specification/storagecache/resource-manager/Microsoft.StorageCache/StorageCache/readme.md
 #tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -75,6 +75,7 @@ rename-mapping:
   Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
   BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
   BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds
+  ExpansionJobPropertiesProvisioningState: ExpansionJobProvisioningState
 
 prepend-rp-prefix:
   - ImportJob

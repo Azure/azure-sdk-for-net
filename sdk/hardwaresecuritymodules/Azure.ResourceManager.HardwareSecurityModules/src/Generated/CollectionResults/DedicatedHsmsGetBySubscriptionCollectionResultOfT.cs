@@ -20,18 +20,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly Guid _subscriptionId;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DedicatedHsmsGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DedicatedHsms client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DedicatedHsmsGetBySubscriptionCollectionResultOfT(DedicatedHsms client, Guid subscriptionId, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DedicatedHsmsGetBySubscriptionCollectionResultOfT(DedicatedHsms client, Guid subscriptionId, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DedicatedHsmsGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _top, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

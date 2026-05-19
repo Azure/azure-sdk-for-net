@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfile : IUtf8JsonSerializable, IJsonModel<ContainerServiceNetworkProfile>
+    /// <summary> Profile of network configuration. </summary>
+    public partial class ContainerServiceNetworkProfile : IJsonModel<ContainerServiceNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerServiceNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerServiceNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerServiceNetworkProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceNetworkProfile IPersistableModel<ContainerServiceNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServiceNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServiceNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(NetworkPlugin))
             {
                 writer.WritePropertyName("networkPlugin"u8);
@@ -110,8 +148,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
-                foreach (var item in PodCidrs)
+                foreach (string item in PodCidrs)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -120,8 +163,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
-                foreach (var item in ServiceCidrs)
+                foreach (string item in ServiceCidrs)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -130,21 +178,31 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("ipFamilies"u8);
                 writer.WriteStartArray();
-                foreach (var item in NetworkIPFamilies)
+                foreach (ContainerServiceIPFamily item in NetworkIPFamilies)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(PodLinkLocalAccess))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("podLinkLocalAccess"u8);
+                writer.WriteStringValue(PodLinkLocalAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(KubeProxyConfig))
+            {
+                writer.WritePropertyName("kubeProxyConfig"u8);
+                writer.WriteObjectValue(KubeProxyConfig, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -153,22 +211,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        ContainerServiceNetworkProfile IJsonModel<ContainerServiceNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceNetworkProfile IJsonModel<ContainerServiceNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerServiceNetworkProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerServiceNetworkProfile(document.RootElement, options);
         }
 
-        internal static ContainerServiceNetworkProfile DeserializeContainerServiceNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerServiceNetworkProfile DeserializeContainerServiceNetworkProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -189,173 +252,205 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
-            IList<ContainerServiceIPFamily> ipFamilies = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<ContainerServiceIPFamily> networkIPFamilies = default;
+            PodLinkLocalAccess? podLinkLocalAccess = default;
+            ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("networkPlugin"u8))
+                if (prop.NameEquals("networkPlugin"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkPlugin = new ContainerServiceNetworkPlugin(property.Value.GetString());
+                    networkPlugin = new ContainerServiceNetworkPlugin(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkPluginMode"u8))
+                if (prop.NameEquals("networkPluginMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkPluginMode = new ContainerServiceNetworkPluginMode(property.Value.GetString());
+                    networkPluginMode = new ContainerServiceNetworkPluginMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkPolicy"u8))
+                if (prop.NameEquals("networkPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkPolicy = new ContainerServiceNetworkPolicy(property.Value.GetString());
+                    networkPolicy = new ContainerServiceNetworkPolicy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkMode"u8))
+                if (prop.NameEquals("networkMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkMode = new ContainerServiceNetworkMode(property.Value.GetString());
+                    networkMode = new ContainerServiceNetworkMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkDataplane"u8))
+                if (prop.NameEquals("networkDataplane"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkDataplane = new NetworkDataplane(property.Value.GetString());
+                    networkDataplane = new NetworkDataplane(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("advancedNetworking"u8))
+                if (prop.NameEquals("advancedNetworking"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    advancedNetworking = ManagedClusterAdvancedNetworking.DeserializeManagedClusterAdvancedNetworking(property.Value, options);
+                    advancedNetworking = ManagedClusterAdvancedNetworking.DeserializeManagedClusterAdvancedNetworking(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("podCidr"u8))
+                if (prop.NameEquals("podCidr"u8))
                 {
-                    podCidr = property.Value.GetString();
+                    podCidr = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceCidr"u8))
+                if (prop.NameEquals("serviceCidr"u8))
                 {
-                    serviceCidr = property.Value.GetString();
+                    serviceCidr = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsServiceIP"u8))
+                if (prop.NameEquals("dnsServiceIP"u8))
                 {
-                    dnsServiceIP = property.Value.GetString();
+                    dnsServiceIP = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outboundType"u8))
+                if (prop.NameEquals("outboundType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    outboundType = new ContainerServiceOutboundType(property.Value.GetString());
+                    outboundType = new ContainerServiceOutboundType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerSku"u8))
+                if (prop.NameEquals("loadBalancerSku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    loadBalancerSku = new ContainerServiceLoadBalancerSku(property.Value.GetString());
+                    loadBalancerSku = new ContainerServiceLoadBalancerSku(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerProfile"u8))
+                if (prop.NameEquals("loadBalancerProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(property.Value, options);
+                    loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("natGatewayProfile"u8))
+                if (prop.NameEquals("natGatewayProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value, options);
+                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("staticEgressGatewayProfile"u8))
+                if (prop.NameEquals("staticEgressGatewayProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    staticEgressGatewayProfile = ManagedClusterStaticEgressGatewayProfile.DeserializeManagedClusterStaticEgressGatewayProfile(property.Value, options);
+                    staticEgressGatewayProfile = ManagedClusterStaticEgressGatewayProfile.DeserializeManagedClusterStaticEgressGatewayProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("podCidrs"u8))
+                if (prop.NameEquals("podCidrs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     podCidrs = array;
                     continue;
                 }
-                if (property.NameEquals("serviceCidrs"u8))
+                if (prop.NameEquals("serviceCidrs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     serviceCidrs = array;
                     continue;
                 }
-                if (property.NameEquals("ipFamilies"u8))
+                if (prop.NameEquals("ipFamilies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ContainerServiceIPFamily> array = new List<ContainerServiceIPFamily>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ContainerServiceIPFamily(item.GetString()));
                     }
-                    ipFamilies = array;
+                    networkIPFamilies = array;
+                    continue;
+                }
+                if (prop.NameEquals("podLinkLocalAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    podLinkLocalAccess = new PodLinkLocalAccess(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("kubeProxyConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kubeProxyConfig = ContainerServiceNetworkProfileKubeProxyConfig.DeserializeContainerServiceNetworkProfileKubeProxyConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceNetworkProfile(
                 networkPlugin,
                 networkPluginMode,
@@ -373,388 +468,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 staticEgressGatewayProfile,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
-                ipFamilies ?? new ChangeTrackingList<ContainerServiceIPFamily>(),
-                serializedAdditionalRawData);
+                networkIPFamilies ?? new ChangeTrackingList<ContainerServiceIPFamily>(),
+                podLinkLocalAccess,
+                kubeProxyConfig,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkPlugin), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkPlugin: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkPlugin))
-                {
-                    builder.Append("  networkPlugin: ");
-                    builder.AppendLine($"'{NetworkPlugin.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkPluginMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkPluginMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkPluginMode))
-                {
-                    builder.Append("  networkPluginMode: ");
-                    builder.AppendLine($"'{NetworkPluginMode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkPolicy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkPolicy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkPolicy))
-                {
-                    builder.Append("  networkPolicy: ");
-                    builder.AppendLine($"'{NetworkPolicy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkMode))
-                {
-                    builder.Append("  networkMode: ");
-                    builder.AppendLine($"'{NetworkMode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkDataplane), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkDataplane: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkDataplane))
-                {
-                    builder.Append("  networkDataplane: ");
-                    builder.AppendLine($"'{NetworkDataplane.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdvancedNetworking), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  advancedNetworking: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdvancedNetworking))
-                {
-                    builder.Append("  advancedNetworking: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AdvancedNetworking, options, 2, false, "  advancedNetworking: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodCidr), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  podCidr: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PodCidr))
-                {
-                    builder.Append("  podCidr: ");
-                    if (PodCidr.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PodCidr}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PodCidr}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceCidr), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceCidr: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceCidr))
-                {
-                    builder.Append("  serviceCidr: ");
-                    if (ServiceCidr.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceCidr}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceCidr}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServiceIP), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dnsServiceIP: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DnsServiceIP))
-                {
-                    builder.Append("  dnsServiceIP: ");
-                    if (DnsServiceIP.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DnsServiceIP}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DnsServiceIP}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutboundType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  outboundType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OutboundType))
-                {
-                    builder.Append("  outboundType: ");
-                    builder.AppendLine($"'{OutboundType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadBalancerSku), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  loadBalancerSku: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LoadBalancerSku))
-                {
-                    builder.Append("  loadBalancerSku: ");
-                    builder.AppendLine($"'{LoadBalancerSku.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadBalancerProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  loadBalancerProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LoadBalancerProfile))
-                {
-                    builder.Append("  loadBalancerProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LoadBalancerProfile, options, 2, false, "  loadBalancerProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NatGatewayProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  natGatewayProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NatGatewayProfile))
-                {
-                    builder.Append("  natGatewayProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NatGatewayProfile, options, 2, false, "  natGatewayProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsStaticEgressGatewayAddonEnabled", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  staticEgressGatewayProfile: ");
-                builder.AppendLine("{");
-                builder.Append("    enabled: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(StaticEgressGatewayProfile))
-                {
-                    builder.Append("  staticEgressGatewayProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, StaticEgressGatewayProfile, options, 2, false, "  staticEgressGatewayProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodCidrs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  podCidrs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PodCidrs))
-                {
-                    if (PodCidrs.Any())
-                    {
-                        builder.Append("  podCidrs: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PodCidrs)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceCidrs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceCidrs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ServiceCidrs))
-                {
-                    if (ServiceCidrs.Any())
-                    {
-                        builder.Append("  serviceCidrs: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ServiceCidrs)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkIPFamilies), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipFamilies: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NetworkIPFamilies))
-                {
-                    if (NetworkIPFamilies.Any())
-                    {
-                        builder.Append("  ipFamilies: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NetworkIPFamilies)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContainerServiceNetworkProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerServiceNetworkProfile IPersistableModel<ContainerServiceNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerServiceNetworkProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerServiceNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

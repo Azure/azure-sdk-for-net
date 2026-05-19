@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             get
             {
-                return DownloadStatus.DownloadSizeInMB;
+                return DownloadStatus is null ? default : DownloadStatus.DownloadSizeInMB;
             }
         }
     }

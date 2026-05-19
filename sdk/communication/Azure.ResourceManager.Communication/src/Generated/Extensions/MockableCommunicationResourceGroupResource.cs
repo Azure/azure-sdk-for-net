@@ -8,32 +8,30 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Communication;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Communication.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableCommunicationResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableCommunicationResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCommunicationResourceGroupResource for mocking. </summary>
         protected MockableCommunicationResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCommunicationResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCommunicationResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCommunicationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CommunicationServiceResources in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public virtual CommunicationServiceResourceCollection GetCommunicationServiceResources()
         {
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// Get the CommunicationService and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommunicationServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CommunicationServiceResource>> GetCommunicationServiceResourceAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
             return await GetCommunicationServiceResources().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// Get the CommunicationService and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommunicationServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,10 +91,12 @@ namespace Azure.ResourceManager.Communication.Mocking
         [ForwardsClientCalls]
         public virtual Response<CommunicationServiceResource> GetCommunicationServiceResource(string communicationServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
             return GetCommunicationServiceResources().Get(communicationServiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EmailServiceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of EmailServiceResources in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
         public virtual EmailServiceResourceCollection GetEmailServiceResources()
         {
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// Get the EmailService and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmailServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EmailServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EmailServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EmailServiceResource>> GetEmailServiceResourceAsync(string emailServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
             return await GetEmailServiceResources().GetAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// Get the EmailService and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EmailServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EmailServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EmailServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +156,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         [ForwardsClientCalls]
         public virtual Response<EmailServiceResource> GetEmailServiceResource(string emailServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
             return GetEmailServiceResources().Get(emailServiceName, cancellationToken);
         }
     }

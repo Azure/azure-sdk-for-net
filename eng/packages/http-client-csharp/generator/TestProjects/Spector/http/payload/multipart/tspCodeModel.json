@@ -654,7 +654,6 @@
             "$id": "79",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -729,7 +728,6 @@
             "$id": "84",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -804,7 +802,6 @@
             "$id": "89",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -940,7 +937,6 @@
             "$id": "98",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -976,7 +972,6 @@
               "$id": "101",
               "kind": "bytes",
               "name": "bytes",
-              "encode": "base64",
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             },
@@ -1053,7 +1048,6 @@
             "$id": "105",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -1132,7 +1126,6 @@
               "$id": "111",
               "kind": "bytes",
               "name": "bytes",
-              "encode": "base64",
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             },
@@ -1179,7 +1172,6 @@
             "$id": "114",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -1211,7 +1203,6 @@
             "$id": "116",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -1255,7 +1246,6 @@
             "$id": "119",
             "kind": "bytes",
             "name": "bytes",
-            "encode": "base64",
             "crossLanguageDefinitionId": "TypeSpec.bytes",
             "decorators": []
           },
@@ -1509,6 +1499,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1542,6 +1533,7 @@
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1770,6 +1762,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1804,10 +1797,12 @@
                     "$ref": "4"
                   },
                   "name": "FileContentType",
-                  "isGeneratedName": true
+                  "isGeneratedName": true,
+                  "isExactName": false
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1915,6 +1910,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2093,6 +2089,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2130,10 +2127,12 @@
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
                   "name": "FileSpecificContentTypeContentType",
-                  "isGeneratedName": true
+                  "isGeneratedName": true,
+                  "isExactName": false
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2286,6 +2285,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2321,6 +2321,7 @@
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2403,15 +2404,17 @@
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
-                  "name": "FloatRequestTemperatureContentType",
-                  "isGeneratedName": true
+                  "name": "FloatRequest1",
+                  "isGeneratedName": true,
+                  "isExactName": false
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
-                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.Request.temperature.anonymous.contentType",
+                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.Request.anonymous.contentType",
                 "decorators": [],
                 "visibility": [
                   1,

@@ -451,11 +451,17 @@ namespace Azure.Search.Documents.Tests
         /// Automatically delete the Search Service when the resources are no
         /// longer needed.
         /// </summary>
-        public async ValueTask DisposeAsync() => await Task.WhenAll(
-            DeleteKnowledgeBaseAsync(),
-            DeleteKnowledgeSourceAsync(),
-            DeleteIndexAsync(),
-            DeleteBlobContainerAsync());
+        public async ValueTask DisposeAsync()
+        {
+            // Knowledge bases reference knowledge sources, so they must be
+            // deleted first.  Knowledge sources reference indexes, so they
+            // must be deleted before the index.
+            await DeleteKnowledgeBaseAsync();
+            await DeleteKnowledgeSourceAsync();
+            await Task.WhenAll(
+                DeleteIndexAsync(),
+                DeleteBlobContainerAsync());
+        }
 
         /// <summary>
         /// Deletes the index created as a test resource.
@@ -466,7 +472,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteIndexAsync(IndexName);
+                try
+                {
+                    await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Index doesn't exist, which is fine during cleanup
+                }
                 RequiresCleanup = false;
 
                 await WaitForIndexDeletionAsync();
@@ -482,7 +495,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresKnowledgeSourceCleanup && !string.IsNullOrEmpty(KnowledgeSourceName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName);
+                try
+                {
+                    await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Knowledge source doesn't exist, which is fine during cleanup
+                }
                 RequiresKnowledgeSourceCleanup = false;
 
                 await WaitForKnowledgeSourceDeletionAsync();
@@ -498,7 +518,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresKnowledgeBaseCleanup && !string.IsNullOrEmpty(KnowledgeBaseName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeBaseAsync(KnowledgeBaseName);
+                try
+                {
+                    await client.DeleteKnowledgeBaseAsync(KnowledgeBaseName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Knowledge base doesn't exist, which is fine during cleanup
+                }
                 RequiresKnowledgeBaseCleanup = false;
 
                 await WaitForKnowledgeBaseDeletionAsync();
@@ -598,7 +625,7 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random knowledge agent Name
                 KnowledgeBaseName = Random.GetName(8);
                 KnowledgeSourceName = Random.GetName(8);
-                string deploymentName = "gpt-4.1";
+                string deploymentName = "gpt-5-mini";
 
                 SearchIndexKnowledgeSource indexKnowledgeSource = new(KnowledgeSourceName, new(IndexName));
                 KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
@@ -610,27 +637,19 @@ namespace Azure.Search.Documents.Tests
                     knowledgeSources: new List<KnowledgeSourceReference>
                     {
                         new KnowledgeSourceReference(knowledgeSource.Name)
-                    },
-                    models: new List<KnowledgeBaseModel>
-                    {
-                        new KnowledgeBaseAzureOpenAIModel(
-                            new AzureOpenAIVectorizerParameters
-                            {
-                                ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                                ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                                DeploymentName = deploymentName,
-                                ModelName = AzureOpenAIModelName.Gpt41
-                            })
-                    },
-                    retrievalReasoningEffort: new KnowledgeRetrievalLowReasoningEffort(),
-                    KnowledgeRetrievalOutputMode.AnswerSynthesis,
-                    eTag: null,
-                    encryptionKey: null,
-                    description: "Description of the Knowledge Base",
-                    retrievalInstructions: "Instructions for the retrieval and answering behavior of the Knowledge Base",
-                    answerInstructions: "Instructions for the answer",
-                    serializedAdditionalRawData: null
-                    );
+                    })
+                {
+                    Description = "Description of the Knowledge Base"
+                };
+                knowledgeAgent.Models.Add(
+                    new KnowledgeBaseAzureOpenAIModel(
+                        new AzureOpenAIVectorizerParameters
+                        {
+                            ResourceUri = new Uri(TestFixture.TestEnvironment.OpenAIEndpoint),
+                            ApiKey = TestFixture.TestEnvironment.OpenAIKey,
+                            DeploymentName = deploymentName,
+                            ModelName = AzureOpenAIModelName.Gpt5Mini
+                        }));
 
                 await client.CreateKnowledgeBaseAsync(knowledgeAgent);
                 RequiresKnowledgeBaseCleanup = true;

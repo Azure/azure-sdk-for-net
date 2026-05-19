@@ -1,13 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -1376,7 +1373,9 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task GetDeletedAccounts()
         {
             //get all deleted accounts
+#pragma warning disable CS0618 // Obsolete backward-compat overload used for test coverage
             await foreach (var _ in DefaultSubscription.GetDeletedAccountsAsync())
+#pragma warning restore CS0618
             {
                 return;
             }
@@ -1554,15 +1553,17 @@ namespace Azure.ResourceManager.Storage.Tests
             ManagementPolicyRule rule3 = new ManagementPolicyRule("rule3", "Lifecycle", definition3);
             rules.Add(rule3);
 
+            // TypeSpec migration: Policy wrapper removed; Rules is now a direct property on StorageAccountManagementPolicyData
             StorageAccountManagementPolicyData parameter = new StorageAccountManagementPolicyData()
             {
-                Policy = new ManagementPolicySchema(rules)
+                Rules = rules
             };
 
             //set management policy, the policy name should always be default
             StorageAccountManagementPolicyResource managementPolicy = (await account.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
             Assert.NotNull(managementPolicy);
-            Assert.AreEqual(managementPolicy.Data.Policy.Rules.Count, 3);
+            // TypeSpec migration: Policy wrapper removed; Rules is accessed directly
+            Assert.AreEqual(managementPolicy.Data.Rules.Count, 3);
             Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
             Assert.AreEqual(managementPolicy.Data.Rules[1].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
             Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Filters.BlobTypes.Count, 2);
@@ -1601,9 +1602,10 @@ namespace Azure.ResourceManager.Storage.Tests
             ManagementPolicyRule rule4 = new ManagementPolicyRule("rule4", "Lifecycle", definition4);
             List<ManagementPolicyRule> rules2 = new List<ManagementPolicyRule>();
             rules2.Add(rule4);
+            // TypeSpec migration: Policy wrapper removed; Rules is now a direct property on StorageAccountManagementPolicyData
             parameter = new StorageAccountManagementPolicyData()
             {
-                Policy = new ManagementPolicySchema(rules2)
+                Rules = rules2
             };
             StorageAccountManagementPolicyResource managementPolicy2 = (await account2.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
             Assert.AreEqual(50, managementPolicy2.Data.Rules[0].Definition.Actions.BaseBlob.TierToHot.DaysAfterCreationGreaterThan);
@@ -1854,10 +1856,12 @@ namespace Azure.ResourceManager.Storage.Tests
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
-            parameters.KeyPolicy = new StorageAccountKeyPolicy(2);
+            // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+            parameters.KeyExpirationPeriodInDays = 2;
             parameters.SasPolicy = new StorageAccountSasPolicy("2.02:03:59", ExpirationAction.Log);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
-            Assert.AreEqual(2, account.Data.KeyPolicy.KeyExpirationPeriodInDays);
+            // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+            Assert.AreEqual(2, account.Data.KeyExpirationPeriodInDays);
             Assert.AreEqual("2.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
 
             //update storage account type
@@ -1865,13 +1869,15 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Kind = StorageKind.StorageV2,
                 EnableHttpsTrafficOnly = true,
-                KeyPolicy = new StorageAccountKeyPolicy(9),
+                // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+                KeyExpirationPeriodInDays = 9,
                 SasPolicy = new StorageAccountSasPolicy("0.02:03:59", ExpirationAction.Block),
             };
             account = await account.UpdateAsync(updateParameters);
 
             //validate
-            Assert.AreEqual(9, account.Data.KeyPolicy.KeyExpirationPeriodInDays);
+            // TypeSpec migration: KeyPolicy wrapper removed; KeyExpirationPeriodInDays is now a direct property
+            Assert.AreEqual(9, account.Data.KeyExpirationPeriodInDays);
             Assert.AreEqual("0.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
             Assert.AreEqual(ExpirationAction.Block, account.Data.SasPolicy.ExpirationAction);
             Assert.NotNull(account.Data.KeyCreationTime.Key1);
@@ -2547,6 +2553,73 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task StorageAccountNonGuidFormatDomainGuid()
+        {
+            // E2E test for issue https://github.com/Azure/azure-sdk-for-net/issues/56903
+            //create storage account
+            _resourceGroup = await CreateResourceGroupAsync();
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+
+            // With domainName = " ", domainId = Guid.Empty, can create a storage account which server returns domainId as " ".
+            // If re-record this case, need check the record file to make sure server still return domainId as " ".
+            // We still don't find a way to set domainId to other non-GUID value on server with .net SDK, but has unit test to cover other value in test class StorageActiveDirectoryPropertiesSerializationTests.
+            string domainName = " ";
+            var domainId = Guid.Empty;
+            var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadkerb)
+            {
+                ActiveDirectoryProperties = new StorageActiveDirectoryProperties(domainName, domainId)
+            };
+            var parameters = new StorageAccountCreateOrUpdateContent(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2,
+                DefaultLocation
+                )
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // Get  storage account
+            account = (await storageAccountCollection.GetAsync(accountName)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // Update storage account
+            var updateParameters = new StorageAccountPatch
+            {
+                AzureFilesIdentityBasedAuthentication = data
+            };
+            account = (await account.UpdateAsync(updateParameters)).Value;
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+
+            // List storage account
+            account = null;
+            await foreach (StorageAccountResource account1 in _resourceGroup.GetStorageAccounts().GetAllAsync())
+            {
+                if (account1.Id.Name == accountName)
+                {
+                    account = account1;
+                }
+            }
+            Assert.IsNotNull(account);
+            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task StorageAccountCreateSetGetFileSmbOauth()
         {
             //create storage account
@@ -2650,20 +2723,24 @@ namespace Azure.ResourceManager.Storage.Tests
                 "centraluseuap"
                 )
             {
-                GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus() { IsBlobEnabled = true }
+                // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+                IsBlobEnabled = true
             };
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
-            Assert.AreEqual(account1.Data.GeoPriorityReplicationStatus.IsBlobEnabled, true);
+            // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+            Assert.AreEqual(account1.Data.IsBlobEnabled, true);
 
             // Update storage account to GeoPriorityReplicationStatus.IsBlobEnabled = false
             var updateParameters1 = new StorageAccountPatch
             {
-                GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus() { IsBlobEnabled = false }
+                // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+                IsBlobEnabled = false
             };
 
             account1 = (await account1.UpdateAsync(updateParameters1)).Value;
-            Assert.AreEqual(account1.Data.GeoPriorityReplicationStatus.IsBlobEnabled, false);
+            // TypeSpec migration: GeoPriorityReplicationStatus wrapper removed; IsBlobEnabled is now a direct property
+            Assert.AreEqual(account1.Data.IsBlobEnabled, false);
 
             await account1.DeleteAsync(waitUntil: WaitUntil.Started);
         }

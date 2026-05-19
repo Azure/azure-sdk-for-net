@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.HealthDataAIServices
     {
         private readonly ClientDiagnostics _deidServicesClientDiagnostics;
         private readonly DeidServices _deidServicesRestClient;
-        private readonly ClientDiagnostics _privateLinksClientDiagnostics;
-        private readonly PrivateLinks _privateLinksRestClient;
 
         /// <summary> Initializes a new instance of DeidServiceCollection for mocking. </summary>
         protected DeidServiceCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.HealthDataAIServices
             TryGetApiVersion(DeidServiceResource.ResourceType, out string deidServiceApiVersion);
             _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", DeidServiceResource.ResourceType.Namespace, Diagnostics);
             _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
-            _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", DeidServiceResource.ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
             ValidateResourceId(id);
         }
 
@@ -55,7 +51,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +294,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +322,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>

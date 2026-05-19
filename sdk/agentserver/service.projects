@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.AI.AgentServer.*\**\*.csproj" />
+  </ItemGroup>
+</Project>

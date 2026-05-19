@@ -71,99 +71,100 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             ValidatePurviewAccount(list.FirstOrDefault().Data, nodeTypeName);
         }
 
-        [RecordedTest]
-        public async Task NodeTypesActions()
-        {
-            // CreateOrUpdate
-            _cluster = await CreateServiceFabricManagedCluster(_resourceGroup, Recording.GenerateAssetName("sfmctest"));
+        // Preview only
+        // [RecordedTest]
+        // public async Task NodeTypesActions()
+        // {
+        //     // CreateOrUpdate
+        //     _cluster = await CreateServiceFabricManagedCluster(_resourceGroup, Recording.GenerateAssetName("sfmctest"));
 
-            string primaryNodeTypeName = Recording.GenerateAssetName("node");
-            string secondaryNodeTypeName = Recording.GenerateAssetName("node");
-            var primaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, primaryNodeTypeName, true);
-            var secondaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, secondaryNodeTypeName, false);
-            ValidatePurviewAccount(primaryNodeType.Data, primaryNodeTypeName);
-            ValidatePurviewAccount(secondaryNodeType.Data, secondaryNodeTypeName);
+        //     string primaryNodeTypeName = Recording.GenerateAssetName("node");
+        //     string secondaryNodeTypeName = Recording.GenerateAssetName("node");
+        //     var primaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, primaryNodeTypeName, true);
+        //     var secondaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, secondaryNodeTypeName, false);
+        //     ValidatePurviewAccount(primaryNodeType.Data, primaryNodeTypeName);
+        //     ValidatePurviewAccount(secondaryNodeType.Data, secondaryNodeTypeName);
 
-            // Actions
-            NodeTypeActionContent content = new NodeTypeActionContent
-            {
-                Nodes = { String.Format("{0}_1", secondaryNodeTypeName), String.Format("{0}_3", secondaryNodeTypeName) },
-            };
+        //     // Actions
+        //     NodeTypeActionContent content = new NodeTypeActionContent
+        //     {
+        //         Nodes = { String.Format("{0}_1", secondaryNodeTypeName), String.Format("{0}_3", secondaryNodeTypeName) },
+        //     };
 
-            // Deallocate
-            await secondaryNodeType.DeallocateAsync(WaitUntil.Completed, content);
+        //     // Deallocate
+        //     await secondaryNodeType.DeallocateAsync(WaitUntil.Completed, content);
 
-            // Start/Allocate
-            await secondaryNodeType.StartAsync(WaitUntil.Completed, content);
+        //     // Start/Allocate
+        //     await secondaryNodeType.StartAsync(WaitUntil.Completed, content);
 
-            content.UpdateType = ServiceFabricManagedClusterUpdateType.ByUpgradeDomain;
-            // Redeploy
-            await secondaryNodeType.RedeployAsync(WaitUntil.Completed, content);
-        }
+        //     content.UpdateType = ServiceFabricManagedClusterUpdateType.ByUpgradeDomain;
+        //     // Redeploy
+        //     await secondaryNodeType.RedeployAsync(WaitUntil.Completed, content);
+        // }
 
-        [RecordedTest]
-        public async Task NodeTypeFaultSimulationTest()
-        {
-            // CreateOrUpdate
-            _cluster = await CreateServiceFabricManagedClusterZoneResilient(_resourceGroup, Recording.GenerateAssetName("sfmctest"));
+        // [RecordedTest]
+        // public async Task NodeTypeFaultSimulationTest()
+        // {
+        //     // CreateOrUpdate
+        //     _cluster = await CreateServiceFabricManagedClusterZoneResilient(_resourceGroup, Recording.GenerateAssetName("sfmctest"));
 
-            string primaryNodeTypeName = Recording.GenerateAssetName("node");
-            string secondaryNodeTypeName = Recording.GenerateAssetName("node");
-            var primaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, primaryNodeTypeName, true);
-            var secondaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, secondaryNodeTypeName, false);
-            ValidatePurviewAccount(primaryNodeType.Data, primaryNodeTypeName);
-            ValidatePurviewAccount(secondaryNodeType.Data, secondaryNodeTypeName);
+        //     string primaryNodeTypeName = Recording.GenerateAssetName("node");
+        //     string secondaryNodeTypeName = Recording.GenerateAssetName("node");
+        //     var primaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, primaryNodeTypeName, true);
+        //     var secondaryNodeType = await CreateServiceFabricManagedNodeType(_cluster, secondaryNodeTypeName, false);
+        //     ValidatePurviewAccount(primaryNodeType.Data, primaryNodeTypeName);
+        //     ValidatePurviewAccount(secondaryNodeType.Data, secondaryNodeTypeName);
 
-            // Start Fault Simulation
-            FaultSimulationContent content = new ZoneFaultSimulationContent
-            {
-                Zones = { "2" },
-                FaultKind = "Zone",
-            };
+        //     // Start Fault Simulation
+        //     FaultSimulationContent content = new ZoneFaultSimulationContent
+        //     {
+        //         Zones = { "2" },
+        //         FaultKind = "Zone",
+        //     };
 
-            FaultSimulationContentWrapper faultSimulationContentWrapper = new FaultSimulationContentWrapper(content);
+        //     FaultSimulationContentWrapper faultSimulationContentWrapper = new FaultSimulationContentWrapper(content);
 
-            try
-            {
-                var startFaultSimulationResult = (await secondaryNodeType.StartFaultSimulationAsync(WaitUntil.Completed, faultSimulationContentWrapper)).Value;
+        //     try
+        //     {
+        //         var startFaultSimulationResult = (await secondaryNodeType.StartFaultSimulationAsync(WaitUntil.Completed, faultSimulationContentWrapper)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.Status, FaultSimulationStatus.Active);
+        //         Assert.AreEqual(startFaultSimulationResult.Status, FaultSimulationStatus.Active);
 
-                // List Fault Simulation
-                var faultSimulationCount = 0;
-                var mostRecentSimulationId = "";
+        //         // List Fault Simulation
+        //         var faultSimulationCount = 0;
+        //         var mostRecentSimulationId = "";
 
-                var listFaultSimulationResult = secondaryNodeType.GetFaultSimulationAsync();
-                await foreach (FaultSimulation simulation in listFaultSimulationResult)
-                {
-                    faultSimulationCount++;
-                    mostRecentSimulationId = simulation.SimulationId;
-                }
+        //         var listFaultSimulationResult = secondaryNodeType.GetFaultSimulationAsync();
+        //         await foreach (FaultSimulation simulation in listFaultSimulationResult)
+        //         {
+        //             faultSimulationCount++;
+        //             mostRecentSimulationId = simulation.SimulationId;
+        //         }
 
-                Assert.AreEqual(faultSimulationCount, 1);
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, mostRecentSimulationId);
+        //         Assert.AreEqual(faultSimulationCount, 1);
+        //         Assert.AreEqual(startFaultSimulationResult.SimulationId, mostRecentSimulationId);
 
-                // Get Fault Simulation
-                FaultSimulationIdContent faultSimulationIdContent = new FaultSimulationIdContent(startFaultSimulationResult.SimulationId);
-                var getFaultSimulationResult = (await secondaryNodeType.GetFaultSimulationAsync(faultSimulationIdContent)).Value;
+        //         // Get Fault Simulation
+        //         FaultSimulationIdContent faultSimulationIdContent = new FaultSimulationIdContent(startFaultSimulationResult.SimulationId);
+        //         var getFaultSimulationResult = (await secondaryNodeType.GetFaultSimulationAsync(faultSimulationIdContent)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, getFaultSimulationResult.SimulationId);
-                Assert.AreEqual(startFaultSimulationResult.Details.ClusterId, getFaultSimulationResult.Details.ClusterId);
-                Assert.AreEqual(startFaultSimulationResult.StartOn, getFaultSimulationResult.StartOn);
-                Assert.AreEqual(startFaultSimulationResult.EndOn, getFaultSimulationResult.EndOn);
+        //         Assert.AreEqual(startFaultSimulationResult.SimulationId, getFaultSimulationResult.SimulationId);
+        //         Assert.AreEqual(startFaultSimulationResult.Details.ClusterId, getFaultSimulationResult.Details.ClusterId);
+        //         Assert.AreEqual(startFaultSimulationResult.StartOn, getFaultSimulationResult.StartOn);
+        //         Assert.AreEqual(startFaultSimulationResult.EndOn, getFaultSimulationResult.EndOn);
 
-                // Stop Fault Simulation
-                var stopFaultSimulationResult = (await secondaryNodeType.StopFaultSimulationAsync(WaitUntil.Completed, faultSimulationIdContent)).Value;
+        //         // Stop Fault Simulation
+        //         var stopFaultSimulationResult = (await secondaryNodeType.StopFaultSimulationAsync(WaitUntil.Completed, faultSimulationIdContent)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, stopFaultSimulationResult.SimulationId);
-                Assert.AreEqual(stopFaultSimulationResult.Status, FaultSimulationStatus.Done);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(content);
-                Console.WriteLine(ex);
-            }
-        }
+        //         Assert.AreEqual(startFaultSimulationResult.SimulationId, stopFaultSimulationResult.SimulationId);
+        //         Assert.AreEqual(stopFaultSimulationResult.Status, FaultSimulationStatus.Done);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine(content);
+        //         Console.WriteLine(ex);
+        //     }
+        // }
 
         private void ValidatePurviewAccount(ServiceFabricManagedNodeTypeData nodeType, string nodeTypeName)
         {

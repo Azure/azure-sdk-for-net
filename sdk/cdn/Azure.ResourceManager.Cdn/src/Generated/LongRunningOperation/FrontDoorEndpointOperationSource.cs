@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class FrontDoorEndpointOperationSource : IOperationSource<FrontDoorEndpointResource>
+    /// <summary></summary>
+    internal partial class FrontDoorEndpointOperationSource : IOperationSource<FrontDoorEndpointResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal FrontDoorEndpointOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         FrontDoorEndpointResource IOperationSource<FrontDoorEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            FrontDoorEndpointData data = FrontDoorEndpointData.DeserializeFrontDoorEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new FrontDoorEndpointResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<FrontDoorEndpointResource> IOperationSource<FrontDoorEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
-            return await Task.FromResult(new FrontDoorEndpointResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            FrontDoorEndpointData data = FrontDoorEndpointData.DeserializeFrontDoorEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new FrontDoorEndpointResource(_client, data);
         }
     }
 }

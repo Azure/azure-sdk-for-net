@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct AccessKeysAuthentication : IEquatable<AccessKeysAuthentication>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="AccessKeysAuthentication"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessKeysAuthentication(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static AccessKeysAuthentication Disabled { get; } = new AccessKeysAuthentication(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static AccessKeysAuthentication Enabled { get; } = new AccessKeysAuthentication(EnabledValue);
+
         /// <summary> Determines if two <see cref="AccessKeysAuthentication"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccessKeysAuthentication left, AccessKeysAuthentication right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccessKeysAuthentication"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccessKeysAuthentication left, AccessKeysAuthentication right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessKeysAuthentication"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccessKeysAuthentication"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccessKeysAuthentication(string value) => new AccessKeysAuthentication(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AccessKeysAuthentication"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AccessKeysAuthentication?(string value) => value == null ? null : new AccessKeysAuthentication(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccessKeysAuthentication other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccessKeysAuthentication other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -68,6 +68,8 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType: resourceType,
                 systemData: systemData,
                 identity: identity,
+                etag: etag,
+                tags: null,
                 displayName: displayName,
                 lastModifiedOn: lastModifiedOn,
                 createdOn: createdOn,
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                 applicationPackages: applicationPackages,
                 resizeOperationStatus: resizeOperationStatus,
                 mountConfiguration: mountConfiguration,
-                etag: etag
+                upgradePolicy: null
             );
         }
 
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag, IDictionary<string, string> tags)
         {
             tags ??= new Dictionary<string, string>();
-            return new BatchAccountDetectorData(id, name, resourceType, systemData, etag, tags, value, serializedAdditionalRawData: null);
+            return new BatchAccountDetectorData(id, name, resourceType, systemData, null, new DetectorResponseProperties() { Value = value }, etag, tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
@@ -164,7 +166,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchApplicationData BatchApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, ETag? etag, IDictionary<string, string> tags)
         {
             tags ??= new Dictionary<string, string>();
-            return new BatchApplicationData(id, name, resourceType, systemData, etag, tags, displayName, allowUpdates, defaultVersion, serializedAdditionalRawData: null);
+            return new BatchApplicationData(id, name, resourceType, systemData, null, new ApplicationProperties(displayName, allowUpdates, defaultVersion, null), etag, tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationPackageData"/>. </summary>
@@ -172,7 +174,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag, IDictionary<string, string> tags)
         {
             tags ??= new Dictionary<string, string>();
-            return new BatchApplicationPackageData(id, name, resourceType, systemData, etag, tags, state, format, storageUri, storageUriExpireOn, lastActivatedOn, serializedAdditionalRawData: null);
+            return new BatchApplicationPackageData(id, name, resourceType, systemData, null, new ApplicationPackageProperties(state, format, storageUri, storageUriExpireOn, lastActivatedOn, null), etag, tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
@@ -181,7 +183,8 @@ namespace Azure.ResourceManager.Batch.Models
         {
             tags ??= new Dictionary<string, string>();
             groupIds ??= new List<string>();
-            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, etag, tags, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, serializedAdditionalRawData: null);
+            var privateEndpoint = privateEndpointId != null ? new PrivateEndpoint(privateEndpointId, null) : null;
+            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, null, new PrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds?.ToList(), connectionState, null), etag, tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateLinkResourceData"/>. </summary>
@@ -191,30 +194,21 @@ namespace Azure.ResourceManager.Batch.Models
             tags ??= new Dictionary<string, string>();
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
-            return new BatchPrivateLinkResourceData(id, name, resourceType, systemData, etag, tags, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new BatchPrivateLinkResourceData(id, name, resourceType, systemData, null, new BatchPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), null), etag, tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchResourceAssociation"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BatchResourceAssociation BatchResourceAssociation(string name, ResourceAssociationAccessMode? accessMode)
         {
-            return new BatchResourceAssociation
-            {
-                Name = name,
-                AccessMode = accessMode,
-            };
+            return new BatchResourceAssociation(name, accessMode, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeter"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location)
         {
-            return new NetworkSecurityPerimeter
-            {
-                Id = id,
-                PerimeterGuid = perimeterGuid,
-                Location = location,
-            };
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, null);
         }
     }
 }

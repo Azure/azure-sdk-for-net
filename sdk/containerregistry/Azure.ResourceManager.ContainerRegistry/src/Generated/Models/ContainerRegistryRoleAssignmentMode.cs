@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryRoleAssignmentMode : IEquatable<ContainerRegistryRoleAssignmentMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRoleAssignmentMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerRegistryRoleAssignmentMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AbacRepositoryPermissionsValue = "AbacRepositoryPermissions";
         private const string LegacyRegistryPermissionsValue = "LegacyRegistryPermissions";
 
-        /// <summary> AbacRepositoryPermissions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRoleAssignmentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerRegistryRoleAssignmentMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AbacRepositoryPermissions. </summary>
         public static ContainerRegistryRoleAssignmentMode AbacRepositoryPermissions { get; } = new ContainerRegistryRoleAssignmentMode(AbacRepositoryPermissionsValue);
-        /// <summary> LegacyRegistryPermissions. </summary>
+
+        /// <summary> Gets the LegacyRegistryPermissions. </summary>
         public static ContainerRegistryRoleAssignmentMode LegacyRegistryPermissions { get; } = new ContainerRegistryRoleAssignmentMode(LegacyRegistryPermissionsValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryRoleAssignmentMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryRoleAssignmentMode left, ContainerRegistryRoleAssignmentMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryRoleAssignmentMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryRoleAssignmentMode left, ContainerRegistryRoleAssignmentMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryRoleAssignmentMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryRoleAssignmentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryRoleAssignmentMode(string value) => new ContainerRegistryRoleAssignmentMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryRoleAssignmentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryRoleAssignmentMode?(string value) => value == null ? null : new ContainerRegistryRoleAssignmentMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryRoleAssignmentMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryRoleAssignmentMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

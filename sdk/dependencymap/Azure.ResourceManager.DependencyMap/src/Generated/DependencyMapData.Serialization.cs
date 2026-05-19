@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dependencyMapData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dependencyMapData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DependencyMapData"/> from. </param>

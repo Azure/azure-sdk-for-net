@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2023-10-01"
+  "apiVersions": {
+    "ImageAnalysis": "2023-10-01"
+  }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WebPubSub
 {
+    /// <summary></summary>
     public partial class WebPubSubPrivateEndpointConnectionResource : IJsonModel<WebPubSubPrivateEndpointConnectionData>
     {
-        private static WebPubSubPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static WebPubSubPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WebPubSubPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WebPubSubPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WebPubSubPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebPubSubPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        WebPubSubPrivateEndpointConnectionData IJsonModel<WebPubSubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebPubSubPrivateEndpointConnectionData IJsonModel<WebPubSubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubPrivateEndpointConnectionData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WebPubSubPrivateEndpointConnectionData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubPrivateEndpointConnectionData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        string IPersistableModel<WebPubSubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebPubSubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

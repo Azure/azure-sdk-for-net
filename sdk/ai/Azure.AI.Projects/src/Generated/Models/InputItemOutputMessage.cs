@@ -35,15 +35,17 @@ namespace Azure.AI.Projects
         /// <param name="id"> The unique ID of the output message. </param>
         /// <param name="role"> The role of the output message. Always `assistant`. </param>
         /// <param name="content"> The content of the output message. </param>
+        /// <param name="phase"></param>
         /// <param name="status">
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InputItemOutputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<OutputMessageContent> content, InputItemOutputMessageStatus status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemOutputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<OutputMessageContent> content, MessagePhase? phase, InputItemOutputMessageStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Role = role;
             Content = content;
+            Phase = phase;
             Status = status;
         }
 
@@ -55,6 +57,9 @@ namespace Azure.AI.Projects
 
         /// <summary> The content of the output message. </summary>
         public IList<OutputMessageContent> Content { get; }
+
+        /// <summary> Gets or sets the Phase. </summary>
+        public MessagePhase? Phase { get; set; }
 
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or

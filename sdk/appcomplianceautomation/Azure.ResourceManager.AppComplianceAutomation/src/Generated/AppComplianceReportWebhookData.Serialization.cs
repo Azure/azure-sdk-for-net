@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appComplianceReportWebhookData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(appComplianceReportWebhookData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppComplianceReportWebhookData"/> from. </param>

@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FetchTieringCostSavingsInfoForVaultContent : IUtf8JsonSerializable, IJsonModel<FetchTieringCostSavingsInfoForVaultContent>
+    /// <summary> Request parameters for tiering cost info for vault. </summary>
+    public partial class FetchTieringCostSavingsInfoForVaultContent : FetchTieringCostInfoContent, IJsonModel<FetchTieringCostSavingsInfoForVaultContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FetchTieringCostSavingsInfoForVaultContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForVaultContent"/> for deserialization. </summary>
+        internal FetchTieringCostSavingsInfoForVaultContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FetchTieringCostInfoContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFetchTieringCostSavingsInfoForVaultContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FetchTieringCostSavingsInfoForVaultContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FetchTieringCostSavingsInfoForVaultContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FetchTieringCostSavingsInfoForVaultContent IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (FetchTieringCostSavingsInfoForVaultContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FetchTieringCostSavingsInfoForVaultContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,95 +74,66 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FetchTieringCostSavingsInfoForVaultContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        FetchTieringCostSavingsInfoForVaultContent IJsonModel<FetchTieringCostSavingsInfoForVaultContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FetchTieringCostSavingsInfoForVaultContent IJsonModel<FetchTieringCostSavingsInfoForVaultContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FetchTieringCostSavingsInfoForVaultContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FetchTieringCostInfoContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FetchTieringCostSavingsInfoForVaultContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFetchTieringCostSavingsInfoForVaultContent(document.RootElement, options);
         }
 
-        internal static FetchTieringCostSavingsInfoForVaultContent DeserializeFetchTieringCostSavingsInfoForVaultContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FetchTieringCostSavingsInfoForVaultContent DeserializeFetchTieringCostSavingsInfoForVaultContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RecoveryPointTierType sourceTierType = default;
             RecoveryPointTierType targetTierType = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string objectType = "FetchTieringCostSavingsInfoForVaultRequest";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceTierType"u8))
+                if (prop.NameEquals("sourceTierType"u8))
                 {
-                    sourceTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    sourceTierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
-                if (property.NameEquals("targetTierType"u8))
+                if (prop.NameEquals("targetTierType"u8))
                 {
-                    targetTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    targetTierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    objectType = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FetchTieringCostSavingsInfoForVaultContent(sourceTierType, targetTierType, objectType, serializedAdditionalRawData);
+            return new FetchTieringCostSavingsInfoForVaultContent(sourceTierType, targetTierType, objectType, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FetchTieringCostSavingsInfoForVaultContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FetchTieringCostSavingsInfoForVaultContent IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFetchTieringCostSavingsInfoForVaultContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FetchTieringCostSavingsInfoForVaultContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FetchTieringCostSavingsInfoForVaultContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

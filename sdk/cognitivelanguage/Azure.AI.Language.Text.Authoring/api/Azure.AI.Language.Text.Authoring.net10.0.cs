@@ -727,6 +727,8 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAnalysisAuthoringClient
     {
         protected TextAnalysisAuthoringClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public TextAnalysisAuthoringClient(Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientSettings settings) { }
         public TextAnalysisAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public TextAnalysisAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions options) { }
         public TextAnalysisAuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -777,6 +779,14 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual Azure.AsyncPageable<System.BinaryData> GetTrainingJobsAsync(string projectName, int? maxCount, int? skip, int? maxPageSize, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState> GetTrainingJobsAsync(string projectName, int? maxCount = default(int?), int? skip = default(int?), int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class TextAnalysisAuthoringClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextAnalysisAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientSettings> configureSettings) { throw null; }
+    }
     public partial class TextAnalysisAuthoringClientOptions : Azure.Core.ClientOptions
     {
         public TextAnalysisAuthoringClientOptions(Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions.ServiceVersion version = Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview) { }
@@ -786,6 +796,14 @@ namespace Azure.AI.Language.Text.Authoring
             V2024_11_15_Preview = 2,
             V2025_05_15_Preview = 3,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class TextAnalysisAuthoringClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public TextAnalysisAuthoringClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class TextAnalysisAuthoringModelFactory
     {

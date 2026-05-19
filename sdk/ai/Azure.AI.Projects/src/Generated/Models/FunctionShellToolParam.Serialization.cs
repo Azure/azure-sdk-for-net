@@ -71,6 +71,21 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(FunctionShellToolParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Environment))
+            {
+                writer.WritePropertyName("environment"u8);
+                writer.WriteObjectValue(Environment, options);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -100,6 +115,9 @@ namespace Azure.AI.Projects
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            FunctionShellToolParamEnvironment environment = default;
+            string name = default;
+            string description = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -107,12 +125,32 @@ namespace Azure.AI.Projects
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("environment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        environment = null;
+                        continue;
+                    }
+                    environment = FunctionShellToolParamEnvironment.DeserializeFunctionShellToolParamEnvironment(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FunctionShellToolParam(@type, additionalBinaryDataProperties);
+            return new FunctionShellToolParam(@type, additionalBinaryDataProperties, environment, name, description);
         }
     }
 }

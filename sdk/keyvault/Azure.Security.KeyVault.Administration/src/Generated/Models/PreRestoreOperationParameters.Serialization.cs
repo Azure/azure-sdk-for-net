@@ -63,9 +63,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(preRestoreOperationParameters, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(preRestoreOperationParameters, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

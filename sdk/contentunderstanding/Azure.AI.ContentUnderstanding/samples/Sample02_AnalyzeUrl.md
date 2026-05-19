@@ -44,12 +44,18 @@ Use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. The result 
 
 ```C# Snippet:ContentUnderstandingAnalyzeUrlAsync
 // You can replace this URL with your own publicly accessible document URL.
-Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
+Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_docs.pdf");
 
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    inputs: new[] { new AnalysisInput { Uri = uriSource } });
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource
+        }
+    });
 
 AnalysisResult result = operation.Value;
 AnalysisContent content = result.Contents!.First();
@@ -74,6 +80,34 @@ if (documentContent.Pages != null && documentContent.Pages.Count > 0)
 }
 ```
 
+### Restrict to specific pages with ContentRange
+
+Set `AnalysisInput.ContentRange` to analyze only specific pages. The `ContentRange` struct provides typed factory methods for documents:
+
+- `ContentRange.Page(1)` — single page ("1")
+- `ContentRange.Pages(1, 3)` — page range ("1-3")
+- `ContentRange.PagesFrom(9)` — from page 9 onward ("9-")
+- `ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))` — combined ranges ("1-3,5,9-")
+
+```C# Snippet:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
+// Extract only page 1 of the document.
+Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = ContentRange.Page(1)
+        }
+    });
+
+AnalysisResult rangeResult = rangeOperation.Value;
+DocumentContent rangeDocContent = (DocumentContent)rangeResult.Contents!.First();
+Console.WriteLine($"ContentRange analysis returned pages {rangeDocContent.StartPageNumber} - {rangeDocContent.EndPageNumber}");
+```
+
 ## Video from a URL
 
 Analyze video content (with transcript, shots, and segments enabled) using `prebuilt-videoSearch`. Markdown output follows the video markdown schema described in [Video markdown][cu-video-markdown]. The analyzer divides the video into topic- or scene-based segments rather than returning one long segment.
@@ -82,10 +116,17 @@ For video content, cast `AnalysisContent` to `AudioVisualContent` to access vide
 
 ```C# Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-videoSearch",
-    inputs: new[] { new AnalysisInput { Uri = uriSource } });
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource
+        }
+    });
 
 AnalysisResult result = operation.Value;
 
@@ -112,6 +153,63 @@ foreach (AnalysisContent media in result.Contents!)
 }
 ```
 
+### Restrict to a time window with ContentRange
+
+Use `AnalysisInput.ContentRange` to analyze only a specific time window. The `ContentRange` struct provides typed factory methods for time-based content (`TimeSpan` values are converted to milliseconds on the wire):
+
+- `ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))` — specific time window ("0-5000")
+- `ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(10))` — from 10 seconds onward ("10000-")
+- `ContentRange.Combine(ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5)), ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(30)))` — combined time ranges ("0-5000,30000-")
+
+```C# Snippet:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
+// Analyze only the first 5 seconds of the video.
+Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-videoSearch",
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = ContentRange.TimeRange(
+                TimeSpan.Zero,
+                TimeSpan.FromSeconds(5))
+        }
+    });
+
+AnalysisResult rangeResult = rangeOperation.Value;
+foreach (AnalysisContent rangeMedia in rangeResult.Contents!)
+{
+    AudioVisualContent rangeVideoContent = (AudioVisualContent)rangeMedia;
+    Console.WriteLine($"ContentRange segment: {rangeVideoContent.StartTime.TotalMilliseconds} ms - {rangeVideoContent.EndTime.TotalMilliseconds} ms");
+}
+```
+
+You can also pass a range string directly to the `ContentRange` constructor. Time ranges use milliseconds on the wire. This is equivalent to using the factory methods and is useful for dynamically constructed or user-supplied ranges:
+
+```C# Snippet:ContentUnderstandingAnalyzeVideoUrlWithRawContentRangeAsync
+// Analyze the first 5 seconds using a raw range string (milliseconds).
+// This is equivalent to: ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))
+Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-videoSearch",
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = new ContentRange("0-5000")
+        }
+    });
+
+AnalysisResult rawRangeResult = rawRangeOperation.Value;
+foreach (AnalysisContent rawMedia in rawRangeResult.Contents!)
+{
+    AudioVisualContent rawVideoContent = (AudioVisualContent)rawMedia;
+    Console.WriteLine($"Raw ContentRange segment: {rawVideoContent.StartTime.TotalMilliseconds} ms - {rawVideoContent.EndTime.TotalMilliseconds} ms");
+}
+```
+
 ## Audio from a URL
 
 Analyze audio content with `prebuilt-audioSearch`. The returned markdown captures transcript and structure similar to video markdown, and you can read summaries.
@@ -120,10 +218,17 @@ For audio content, cast `AnalysisContent` to `AudioVisualContent` to access audi
 
 ```C# Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-audioSearch",
-    inputs: new[] { new AnalysisInput { Uri = uriSource } });
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource
+        }
+    });
 
 AnalysisResult result = operation.Value;
 
@@ -146,6 +251,53 @@ if (audioContent.TranscriptPhrases != null && audioContent.TranscriptPhrases.Cou
         Console.WriteLine($"  [{phrase.Speaker}] {phrase.StartTime.TotalMilliseconds} ms: {phrase.Text}");
     }
 }
+```
+
+### Restrict to a time range with ContentRange
+
+Use `AnalysisInput.ContentRange` with `ContentRange.TimeRangeFrom(start)` to analyze from a specific time onward, skipping the beginning of the recording. You can also use `ContentRange.TimeRange(start, end)` to specify an exact time window.
+
+```C# Snippet:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
+// Analyze audio from 5 seconds onward.
+Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-audioSearch",
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = ContentRange.TimeRangeFrom(
+                TimeSpan.FromSeconds(5))
+        }
+    });
+
+AnalysisResult rangeResult = rangeOperation.Value;
+AudioVisualContent rangeAudioContent = (AudioVisualContent)rangeResult.Contents!.First();
+Console.WriteLine($"ContentRange audio analysis: {rangeAudioContent.StartTime.TotalMilliseconds} ms onward");
+Console.WriteLine($"Summary: {rangeAudioContent.Fields["Summary"].Value}");
+```
+
+You can also pass a range string directly for audio time ranges:
+
+```C# Snippet:ContentUnderstandingAnalyzeAudioUrlWithRawContentRangeAsync
+// Analyze audio from 5 seconds onward using a raw range string (milliseconds).
+// This is equivalent to: ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5))
+Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-audioSearch",
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = new ContentRange("5000-")
+        }
+    });
+
+AnalysisResult rawRangeResult = rawRangeOperation.Value;
+AudioVisualContent rawAudioContent = (AudioVisualContent)rawRangeResult.Contents!.First();
+Console.WriteLine($"Raw ContentRange audio analysis: {rawAudioContent.StartTime.TotalMilliseconds} ms onward");
 ```
 
 ## Image from a URL

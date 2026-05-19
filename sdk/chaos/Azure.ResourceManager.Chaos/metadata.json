@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-01-01"
+  "apiVersions": {
+    "Microsoft.Chaos": "2025-01-01"
+  }
 }

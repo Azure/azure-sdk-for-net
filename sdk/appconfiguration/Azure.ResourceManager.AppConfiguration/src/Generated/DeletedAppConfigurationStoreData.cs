@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties.ConfigurationStoreId;
+                return Properties is null ? default : Properties.ConfigurationStoreId;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties.Location;
+                return Properties is null ? default : Properties.Location;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties.ScheduledPurgeOn;
+                return Properties is null ? default : Properties.ScheduledPurgeOn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties.Tags;
+                return Properties is null ? default : Properties.Tags;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             get
             {
-                return Properties.IsPurgeProtectionEnabled;
+                return Properties is null ? default : Properties.IsPurgeProtectionEnabled;
             }
         }
     }

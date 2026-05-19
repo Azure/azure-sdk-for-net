@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class DnsResolverDomainListBulk : IUtf8JsonSerializable, IJsonModel<DnsResolverDomainListBulk>
+    /// <summary> Describes a DNS resolver domain list for bulk UPLOAD or DOWNLOAD operations. </summary>
+    public partial class DnsResolverDomainListBulk : IJsonModel<DnsResolverDomainListBulk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsResolverDomainListBulk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListBulk"/> for deserialization. </summary>
+        internal DnsResolverDomainListBulk()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DnsResolverDomainListBulk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDnsResolverDomainListBulk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsResolverDomainListBulk)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DnsResolverDomainListBulk)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DnsResolverDomainListBulk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsResolverDomainListBulk IPersistableModel<DnsResolverDomainListBulk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnsResolverDomainListBulk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dnsResolverDomainListBulk"> The <see cref="DnsResolverDomainListBulk"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DnsResolverDomainListBulk dnsResolverDomainListBulk)
+        {
+            if (dnsResolverDomainListBulk == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dnsResolverDomainListBulk, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnsResolverDomainListBulk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,28 +85,22 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DnsResolverDomainListBulk)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("storageUrl"u8);
-            writer.WriteStringValue(StorageUri.AbsoluteUri);
-            writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,92 +109,46 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
         }
 
-        DnsResolverDomainListBulk IJsonModel<DnsResolverDomainListBulk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsResolverDomainListBulk IJsonModel<DnsResolverDomainListBulk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DnsResolverDomainListBulk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DnsResolverDomainListBulk)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDnsResolverDomainListBulk(document.RootElement, options);
         }
 
-        internal static DnsResolverDomainListBulk DeserializeDnsResolverDomainListBulk(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DnsResolverDomainListBulk DeserializeDnsResolverDomainListBulk(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri storageUrl = default;
-            DnsResolverDomainListBulkAction action = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DnsResolverDomainListBulkProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("storageUrl"u8))
-                        {
-                            storageUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("action"u8))
-                        {
-                            action = new DnsResolverDomainListBulkAction(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = DnsResolverDomainListBulkProperties.DeserializeDnsResolverDomainListBulkProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DnsResolverDomainListBulk(storageUrl, action, serializedAdditionalRawData);
+            return new DnsResolverDomainListBulk(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DnsResolverDomainListBulk>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DnsResolverDomainListBulk)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DnsResolverDomainListBulk IPersistableModel<DnsResolverDomainListBulk>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListBulk>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDnsResolverDomainListBulk(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DnsResolverDomainListBulk)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DnsResolverDomainListBulk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

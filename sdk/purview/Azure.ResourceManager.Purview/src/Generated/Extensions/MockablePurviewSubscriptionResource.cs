@@ -8,143 +8,147 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Purview.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockablePurviewSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _purviewAccountAccountsClientDiagnostics;
-        private AccountsRestOperations _purviewAccountAccountsRestClient;
+        private ClientDiagnostics _accountsClientDiagnostics;
+        private Accounts _accountsRestClient;
         private ClientDiagnostics _featuresClientDiagnostics;
-        private FeaturesRestOperations _featuresRestClient;
+        private Features _featuresRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
-        private UsagesRestOperations _usagesRestClient;
+        private Usages _usagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePurviewSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePurviewSubscriptionResource for mocking. </summary>
         protected MockablePurviewSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePurviewSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePurviewSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePurviewSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PurviewAccountAccountsClientDiagnostics => _purviewAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations PurviewAccountAccountsRestClient => _purviewAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PurviewAccountResource.ResourceType));
-        private ClientDiagnostics FeaturesClientDiagnostics => _featuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private FeaturesRestOperations FeaturesRestClient => _featuresRestClient ??= new FeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
 
-        /// <summary>
-        /// List accounts in Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> The skip token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PurviewAccountResource> GetPurviewAccountsAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PurviewAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PurviewAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), PurviewAccountAccountsClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetPurviewAccounts", "value", "nextLink", cancellationToken);
-        }
+        private ClientDiagnostics FeaturesClientDiagnostics => _featuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Features FeaturesRestClient => _featuresRestClient ??= new Features(FeaturesClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
+
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
 
         /// <summary>
         /// List accounts in Subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PurviewAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PurviewAccountResource> GetPurviewAccounts(string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PurviewAccountResource> GetPurviewAccountsAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PurviewAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PurviewAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), PurviewAccountAccountsClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetPurviewAccounts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
+        }
+
+        /// <summary>
+        /// List accounts in Subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> The skip token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PurviewAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PurviewAccountResource> GetPurviewAccounts(string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
         /// Checks if account name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccountsOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PurviewAccountAccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
+            using DiagnosticScope scope = AccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
             scope.Start();
             try
             {
-                var response = await PurviewAccountAccountsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PurviewAccountNameAvailabilityResult> response = Response.FromValue(PurviewAccountNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -158,35 +162,41 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Checks if account name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccountsOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<PurviewAccountNameAvailabilityResult> CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PurviewAccountAccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
+            using DiagnosticScope scope = AccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
             scope.Start();
             try
             {
-                var response = PurviewAccountAccountsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PurviewAccountNameAvailabilityResult> response = Response.FromValue(PurviewAccountNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -200,34 +210,44 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Gets details from a list of feature names.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{locations}/listFeatures</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{locations}/listFeatures. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Features_SubscriptionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturesOperationGroup_SubscriptionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="content"> Request body with feature names. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
+            using DiagnosticScope scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();
             try
             {
-                var response = await FeaturesRestClient.SubscriptionGetAsync(Id.SubscriptionId, locations, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -241,34 +261,44 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Gets details from a list of feature names.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{locations}/listFeatures</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{locations}/listFeatures. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Features_SubscriptionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturesOperationGroup_SubscriptionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="content"> Request body with feature names. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PurviewBatchFeatureStatus> SubscriptionGetFeature(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
+            using DiagnosticScope scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();
             try
             {
-                var response = FeaturesRestClient.SubscriptionGet(Id.SubscriptionId, locations, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -282,54 +312,72 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Get the usage quota configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PurviewUsage> GetUsagesAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PurviewUsage> GetUsagesAsync(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PurviewUsage.DeserializePurviewUsage(e), UsagesClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetUsages", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesAsyncCollectionResultOfT(
+                UsagesRestClient,
+                Id.SubscriptionId,
+                location,
+                filter,
+                context,
+                "MockablePurviewSubscriptionResource.GetUsages");
         }
 
         /// <summary>
         /// Get the usage quota configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Purview/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PurviewUsage> GetUsages(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PurviewUsage> GetUsages(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PurviewUsage.DeserializePurviewUsage(e), UsagesClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetUsages", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesCollectionResultOfT(
+                UsagesRestClient,
+                Id.SubscriptionId,
+                location,
+                filter,
+                context,
+                "MockablePurviewSubscriptionResource.GetUsages");
         }
     }
 }

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serviceFabricManagedApplicationTypeData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(serviceFabricManagedApplicationTypeData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedApplicationTypeData"/> from. </param>

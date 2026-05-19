@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required parameters for creating and exporting backup of the given server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerBackupV2Resource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerBackupV2Data data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerBackupV2Resource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _longRunningBackupClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Resource.Update");
             scope.Start();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required parameters for creating and exporting backup of the given server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<MySqlFlexibleServerBackupV2Resource> Update(WaitUntil waitUntil, MySqlFlexibleServerBackupV2Data data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerBackupV2Resource> Update(WaitUntil waitUntil, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _longRunningBackupClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Resource.Update");
             scope.Start();

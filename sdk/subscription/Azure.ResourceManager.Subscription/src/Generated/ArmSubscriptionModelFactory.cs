@@ -8,57 +8,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmSubscriptionModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CanceledSubscriptionId"/>. </summary>
-        /// <param name="subscriptionId"> The ID of the canceled subscription. </param>
-        /// <returns> A new <see cref="Models.CanceledSubscriptionId"/> instance for mocking. </returns>
-        public static CanceledSubscriptionId CanceledSubscriptionId(string subscriptionId = null)
-        {
-            return new CanceledSubscriptionId(subscriptionId, serializedAdditionalRawData: null);
-        }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RenamedSubscriptionId"/>. </summary>
-        /// <param name="subscriptionId"> The ID of the subscriptions that is being renamed. </param>
-        /// <returns> A new <see cref="Models.RenamedSubscriptionId"/> instance for mocking. </returns>
-        public static RenamedSubscriptionId RenamedSubscriptionId(string subscriptionId = null)
-        {
-            return new RenamedSubscriptionId(subscriptionId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EnabledSubscriptionId"/>. </summary>
-        /// <param name="subscriptionId"> The ID of the subscriptions that is being enabled. </param>
-        /// <returns> A new <see cref="Models.EnabledSubscriptionId"/> instance for mocking. </returns>
-        public static EnabledSubscriptionId EnabledSubscriptionId(string subscriptionId = null)
-        {
-            return new EnabledSubscriptionId(subscriptionId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Subscription.SubscriptionAliasData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Subscription Information with the alias. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Subscription Alias response properties. </param>
         /// <returns> A new <see cref="Subscription.SubscriptionAliasData"/> instance for mocking. </returns>
-        public static SubscriptionAliasData SubscriptionAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionAliasProperties properties = null)
+        public static SubscriptionAliasData SubscriptionAliasData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionAliasProperties properties = default)
         {
             return new SubscriptionAliasData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionAliasProperties"/>. </summary>
+        /// <summary> Put subscription creation result properties. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -77,9 +56,9 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="createdOn"> Created Time. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <returns> A new <see cref="Models.SubscriptionAliasProperties"/> instance for mocking. </returns>
-        public static SubscriptionAliasProperties SubscriptionAliasProperties(string subscriptionId = null, string displayName = null, SubscriptionProvisioningState? provisioningState = null, Uri acceptOwnershipUri = null, AcceptOwnershipState? acceptOwnershipState = null, string billingScope = null, SubscriptionWorkload? workload = null, string resellerId = null, string subscriptionOwnerId = null, string managementGroupId = null, DateTimeOffset? createdOn = null, IReadOnlyDictionary<string, string> tags = null)
+        public static SubscriptionAliasProperties SubscriptionAliasProperties(string subscriptionId = default, string displayName = default, SubscriptionProvisioningState? provisioningState = default, Uri acceptOwnershipUri = default, AcceptOwnershipState? acceptOwnershipState = default, string billingScope = default, SubscriptionWorkload? workload = default, string resellerId = default, string subscriptionOwnerId = default, string managementGroupId = default, DateTimeOffset? createdOn = default, IReadOnlyDictionary<string, string> tags = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SubscriptionAliasProperties(
                 subscriptionId,
@@ -94,22 +73,186 @@ namespace Azure.ResourceManager.Subscription.Models
                 managementGroupId,
                 createdOn,
                 tags,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AcceptOwnershipRequestProperties"/>. </summary>
+        /// <summary> Put subscription additional properties. </summary>
+        /// <param name="managementGroupId"> Management group Id for the subscription. </param>
+        /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
+        /// <param name="subscriptionOwnerId"> Owner Id of the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
+        /// <returns> A new <see cref="Models.SubscriptionAliasAdditionalProperties"/> instance for mocking. </returns>
+        public static SubscriptionAliasAdditionalProperties SubscriptionAliasAdditionalProperties(string managementGroupId = default, Guid? subscriptionTenantId = default, string subscriptionOwnerId = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tenant policy Information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Tenant policy properties. </param>
+        /// <returns> A new <see cref="Subscription.TenantPolicyData"/> instance for mocking. </returns>
+        public static TenantPolicyData TenantPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TenantPolicyProperties properties = default)
+        {
+            return new TenantPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Tenant policy. </summary>
+        /// <param name="policyId"> Policy Id. </param>
+        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
+        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
+        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
+        /// <returns> A new <see cref="Models.TenantPolicyProperties"/> instance for mocking. </returns>
+        public static TenantPolicyProperties TenantPolicyProperties(string policyId = default, bool? blockSubscriptionsLeavingTenant = default, bool? blockSubscriptionsIntoTenant = default, IEnumerable<Guid> exemptedPrincipals = default)
+        {
+            exemptedPrincipals ??= new ChangeTrackingList<Guid>();
+
+            return new TenantPolicyProperties(policyId, blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, exemptedPrincipals.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Put tenant policy request properties. </summary>
+        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
+        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
+        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
+        /// <returns> A new <see cref="Models.TenantPolicyCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static TenantPolicyCreateOrUpdateContent TenantPolicyCreateOrUpdateContent(bool? blockSubscriptionsLeavingTenant = default, bool? blockSubscriptionsIntoTenant = default, IEnumerable<Guid> exemptedPrincipals = default)
+        {
+            exemptedPrincipals ??= new ChangeTrackingList<Guid>();
+
+            return new TenantPolicyCreateOrUpdateContent(blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, exemptedPrincipals.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Billing account policies information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Billing account policies response properties. </param>
+        /// <returns> A new <see cref="Subscription.BillingAccountPolicyData"/> instance for mocking. </returns>
+        public static BillingAccountPolicyData BillingAccountPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountPolicyProperties properties = default)
+        {
+            return new BillingAccountPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Put billing account policies response properties. </summary>
+        /// <param name="serviceTenants"> Service tenant for the billing account. </param>
+        /// <param name="allowTransfers"> Determine if the transfers are allowed for the billing account. </param>
+        /// <returns> A new <see cref="Models.BillingAccountPolicyProperties"/> instance for mocking. </returns>
+        public static BillingAccountPolicyProperties BillingAccountPolicyProperties(IEnumerable<ServiceTenant> serviceTenants = default, bool? allowTransfers = default)
+        {
+            serviceTenants ??= new ChangeTrackingList<ServiceTenant>();
+
+            return new BillingAccountPolicyProperties(serviceTenants.ToList(), allowTransfers, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Billing account service tenant. </summary>
+        /// <param name="tenantId"> Service tenant id. </param>
+        /// <param name="tenantName"> Service tenant name. </param>
+        /// <returns> A new <see cref="Models.ServiceTenant"/> instance for mocking. </returns>
+        public static ServiceTenant ServiceTenant(Guid? tenantId = default, string tenantName = default)
+        {
+            return new ServiceTenant(tenantId, tenantName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Subscription Response for Changed Target Directory. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Subscription Changed Target Directory response properties. </param>
+        /// <returns> A new <see cref="Subscription.TargetDirectoryResultData"/> instance for mocking. </returns>
+        public static TargetDirectoryResultData TargetDirectoryResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetDirectoryResultProperties properties = default)
+        {
+            return new TargetDirectoryResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of subscription Response for Changed Target Directory. </summary>
+        /// <param name="destinationTenantId"> Destination Tenant Id where Subscription will be accepted. </param>
+        /// <param name="destinationOwnerId"> Destination Owner Id where Subscription will be accepted. </param>
+        /// <param name="subscriptionId"> The id of the subscription being transferred. </param>
+        /// <param name="createdOn"> The UTC date and time when the transfer request was created. </param>
+        /// <param name="acceptedOn"> The UTC date and time when the transfer request was accepted. </param>
+        /// <param name="sourceOwnerEmail"> The email address of the user who initiated the transfer request. If the request was generated by a Service Principal, this field may be null. </param>
+        /// <param name="sourceOwnerId"> The object id of the user who initiated the transfer request. </param>
+        /// <param name="sourceTenantId"> The id of the tenant where the subscription originally resided. </param>
+        /// <param name="status"> Status of the subscription transfer operation. </param>
+        /// <param name="expiresOn"> Subscription Initiate Request Expiry time. </param>
+        /// <returns> A new <see cref="Models.TargetDirectoryResultProperties"/> instance for mocking. </returns>
+        public static TargetDirectoryResultProperties TargetDirectoryResultProperties(Guid? destinationTenantId = default, Guid? destinationOwnerId = default, string subscriptionId = default, DateTimeOffset? createdOn = default, DateTimeOffset? acceptedOn = default, string sourceOwnerEmail = default, Guid? sourceOwnerId = default, Guid? sourceTenantId = default, ChangeDirectoryOperationStatus? status = default, DateTimeOffset? expiresOn = default)
+        {
+            return new TargetDirectoryResultProperties(
+                destinationTenantId,
+                destinationOwnerId,
+                subscriptionId,
+                createdOn,
+                acceptedOn,
+                sourceOwnerEmail,
+                sourceOwnerId,
+                sourceTenantId,
+                status,
+                expiresOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ID of the canceled subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the canceled subscription. </param>
+        /// <returns> A new <see cref="Models.CanceledSubscriptionId"/> instance for mocking. </returns>
+        public static CanceledSubscriptionId CanceledSubscriptionId(string subscriptionId = default)
+        {
+            return new CanceledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ID of the subscriptions that is being renamed. </summary>
+        /// <param name="subscriptionId"> The ID of the subscriptions that is being renamed. </param>
+        /// <returns> A new <see cref="Models.RenamedSubscriptionId"/> instance for mocking. </returns>
+        public static RenamedSubscriptionId RenamedSubscriptionId(string subscriptionId = default)
+        {
+            return new RenamedSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ID of the subscriptions that is being enabled. </summary>
+        /// <param name="subscriptionId"> The ID of the subscriptions that is being enabled. </param>
+        /// <returns> A new <see cref="Models.EnabledSubscriptionId"/> instance for mocking. </returns>
+        public static EnabledSubscriptionId EnabledSubscriptionId(string subscriptionId = default)
+        {
+            return new EnabledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Accept subscription ownership request properties. </summary>
         /// <param name="displayName"> The friendly name of the subscription. </param>
         /// <param name="managementGroupId"> Management group Id for the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <returns> A new <see cref="Models.AcceptOwnershipRequestProperties"/> instance for mocking. </returns>
-        public static AcceptOwnershipRequestProperties AcceptOwnershipRequestProperties(string displayName = null, string managementGroupId = null, IDictionary<string, string> tags = null)
+        public static AcceptOwnershipRequestProperties AcceptOwnershipRequestProperties(string displayName = default, string managementGroupId = default, IDictionary<string, string> tags = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags, serializedAdditionalRawData: null);
+            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AcceptOwnershipStatus"/>. </summary>
+        /// <summary> Subscription Accept Ownership Response. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -118,9 +261,9 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <returns> A new <see cref="Models.AcceptOwnershipStatus"/> instance for mocking. </returns>
-        public static AcceptOwnershipStatus AcceptOwnershipStatus(string subscriptionId = null, AcceptOwnershipState? acceptOwnershipState = null, AcceptOwnershipProvisioningState? provisioningState = null, string billingOwner = null, Guid? subscriptionTenantId = null, string displayName = null, IReadOnlyDictionary<string, string> tags = null)
+        public static AcceptOwnershipStatus AcceptOwnershipStatus(string subscriptionId = default, AcceptOwnershipState? acceptOwnershipState = default, AcceptOwnershipProvisioningState? provisioningState = default, string billingOwner = default, Guid? subscriptionTenantId = default, string displayName = default, IReadOnlyDictionary<string, string> tags = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AcceptOwnershipStatus(
                 subscriptionId,
@@ -130,76 +273,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 subscriptionTenantId,
                 displayName,
                 tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Subscription.TenantPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Tenant policy properties. </param>
-        /// <returns> A new <see cref="Subscription.TenantPolicyData"/> instance for mocking. </returns>
-        public static TenantPolicyData TenantPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TenantPolicyProperties properties = null)
-        {
-            return new TenantPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TenantPolicyProperties"/>. </summary>
-        /// <param name="policyId"> Policy Id. </param>
-        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
-        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
-        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
-        /// <returns> A new <see cref="Models.TenantPolicyProperties"/> instance for mocking. </returns>
-        public static TenantPolicyProperties TenantPolicyProperties(string policyId = null, bool? blockSubscriptionsLeavingTenant = null, bool? blockSubscriptionsIntoTenant = null, IEnumerable<Guid> exemptedPrincipals = null)
-        {
-            exemptedPrincipals ??= new List<Guid>();
-
-            return new TenantPolicyProperties(policyId, blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, exemptedPrincipals?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Subscription.BillingAccountPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Billing account policies response properties. </param>
-        /// <returns> A new <see cref="Subscription.BillingAccountPolicyData"/> instance for mocking. </returns>
-        public static BillingAccountPolicyData BillingAccountPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingAccountPolicyProperties properties = null)
-        {
-            return new BillingAccountPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BillingAccountPolicyProperties"/>. </summary>
-        /// <param name="serviceTenants"> Service tenant for the billing account. </param>
-        /// <param name="allowTransfers"> Determine if the transfers are allowed for the billing account. </param>
-        /// <returns> A new <see cref="Models.BillingAccountPolicyProperties"/> instance for mocking. </returns>
-        public static BillingAccountPolicyProperties BillingAccountPolicyProperties(IEnumerable<ServiceTenant> serviceTenants = null, bool? allowTransfers = null)
-        {
-            serviceTenants ??= new List<ServiceTenant>();
-
-            return new BillingAccountPolicyProperties(serviceTenants?.ToList(), allowTransfers, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceTenant"/>. </summary>
-        /// <param name="tenantId"> Service tenant id. </param>
-        /// <param name="tenantName"> Service tenant name. </param>
-        /// <returns> A new <see cref="Models.ServiceTenant"/> instance for mocking. </returns>
-        public static ServiceTenant ServiceTenant(Guid? tenantId = null, string tenantName = null)
-        {
-            return new ServiceTenant(tenantId, tenantName, serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }

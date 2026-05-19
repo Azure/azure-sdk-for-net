@@ -68,9 +68,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(businessMetadataOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(businessMetadataOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -92,7 +90,14 @@ namespace Azure.Analytics.Purview.DataMap
                 throw new FormatException($"The model {nameof(BusinessMetadataOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("file"u8);
-            writer.WriteBase64StringValue(File.ToArray(), "D");
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(File);
+#else
+            using (JsonDocument document = JsonDocument.Parse(File))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,7 +146,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 if (prop.NameEquals("file"u8))
                 {
-                    @file = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    @file = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

@@ -99,7 +99,8 @@ namespace Azure.Storage.Sas
             string delegatedUserObjectId = default,
             string keyDelegatedUserTenantId = default,
             List<string> requestHeaders = default,
-            List<string> requestQueryParameters = default)
+            List<string> requestQueryParameters = default,
+            int? directoryDepth = default)
             : base(
                 version,
                 services,
@@ -120,7 +121,7 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId,
                 unauthorizedAadObjectId,
                 correlationId,
-                directoryDepth: null,
+                directoryDepth: directoryDepth,
                 encryptionScope,
                 delegatedUserObjectId,
                 requestHeaders,

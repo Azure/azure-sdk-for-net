@@ -233,25 +233,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string connectionName = Recording.GenerateAssetName("endpointconnection");
             ServiceBusPrivateEndpointConnectionData parameter = new ServiceBusPrivateEndpointConnectionData()
             {
-                PrivateEndpoint = new WritableSubResource()
-                {
-                    Id = serviceBusNamespace2.Id
-                }
+                PrivateEndpointId = serviceBusNamespace2.Id
             };
             ServiceBusPrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
             Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpointId.ToString(), serviceBusNamespace2.Id.ToString());
             connectionName = privateEndpointConnection.Id.Name;
 
             //get the endpoint connection and validate
             privateEndpointConnection = await privateEndpointConnectionCollection.GetAsync(connectionName);
             Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpointId.ToString(), serviceBusNamespace2.Id.ToString());
 
             //get all endpoint connections and validate
             List<ServiceBusPrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(privateEndpointConnections, 1);
-            Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpointId.ToString(), serviceBusNamespace2.Id.ToString());
 
             //delete endpoint connection and validate
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
@@ -445,9 +442,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 DefaultAction = ServiceBusNetworkRuleSetDefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId1 } ,IgnoreMissingVnetServiceEndpoint = true},
-                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId2 } ,IgnoreMissingVnetServiceEndpoint = false},
-                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId3 } ,IgnoreMissingVnetServiceEndpoint = false}
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId1 ,IgnoreMissingVnetServiceEndpoint = true},
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId2 ,IgnoreMissingVnetServiceEndpoint = false},
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId3 ,IgnoreMissingVnetServiceEndpoint = false}
                 },
                 IPRules =
                     {

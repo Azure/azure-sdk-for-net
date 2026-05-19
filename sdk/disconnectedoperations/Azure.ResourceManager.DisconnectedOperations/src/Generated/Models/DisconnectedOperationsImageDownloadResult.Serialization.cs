@@ -127,6 +127,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(UpdateProperties))
+            {
+                writer.WritePropertyName("updateProperties"u8);
+                writer.WriteObjectValue(UpdateProperties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("transactionId"u8);
@@ -140,7 +145,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("linkExpiry"u8);
-                writer.WriteStringValue(LinkExpiry, "O");
+                writer.WriteStringValue(LinkExpiresOn, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -191,9 +196,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             DateTimeOffset releaseOn = default;
             DisconnectedOperationsReleaseType releaseType = default;
             IReadOnlyList<string> compatibleVersions = default;
+            DisconnectedOperationsImageUpdateProperties updateProperties = default;
             string transactionId = default;
             Uri downloadLink = default;
-            DateTimeOffset linkExpiry = default;
+            DateTimeOffset linkExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -252,6 +258,15 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                     compatibleVersions = array;
                     continue;
                 }
+                if (prop.NameEquals("updateProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateProperties = DisconnectedOperationsImageUpdateProperties.DeserializeDisconnectedOperationsImageUpdateProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("transactionId"u8))
                 {
                     transactionId = prop.Value.GetString();
@@ -264,7 +279,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 }
                 if (prop.NameEquals("linkExpiry"u8))
                 {
-                    linkExpiry = prop.Value.GetDateTimeOffset("O");
+                    linkExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -280,9 +295,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 releaseOn,
                 releaseType,
                 compatibleVersions ?? new ChangeTrackingList<string>(),
+                updateProperties,
                 transactionId,
                 downloadLink,
-                linkExpiry,
+                linkExpiresOn,
                 additionalBinaryDataProperties);
         }
     }

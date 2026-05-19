@@ -68,6 +68,24 @@ namespace Azure.AI.ContentUnderstanding
             return await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <inheritdoc/>
+        public override Azure.Core.RehydrationToken? GetRehydrationToken()
+        {
+            return _internalOperation.GetRehydrationToken();
+        }
+
+        /// <inheritdoc/>
+        public override ValueTask<Response<BinaryData>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        {
+            return _internalOperation.WaitForCompletionAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public override ValueTask<Response<BinaryData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            return _internalOperation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        }
+
         private string? GetOperationId()
         {
             var response = GetRawResponse();

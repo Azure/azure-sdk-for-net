@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(artifactSigningCertificateProfileData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(artifactSigningCertificateProfileData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ArtifactSigningCertificateProfileData"/> from. </param>

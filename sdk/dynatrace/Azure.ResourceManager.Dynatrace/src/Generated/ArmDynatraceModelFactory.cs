@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                logRules is null && metricRules is null && provisioningState is null ? default : new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, null));
+                new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSaasAutoRenew is null && dynatraceEnvironmentProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && provisioningState is null ? default : new DynatraceMonitorProperties(
+                new DynatraceMonitorProperties(
                     monitoringStatus,
                     marketplaceSubscriptionStatus,
                     marketplaceSaasAutoRenew,
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                singleSignOnState is null && enterpriseAppId is null && singleSignOnUri is null && aadDomains is null && provisioningState is null ? default : new DynatraceSingleSignOnProperties(
+                new DynatraceSingleSignOnProperties(
                     singleSignOnState,
                     enterpriseAppId,
                     singleSignOnUri,

@@ -60,7 +60,7 @@ namespace Azure.AI.ContentUnderstanding
     [ModelReaderWriterBuildable(typeof(DocumentTable))]
     [ModelReaderWriterBuildable(typeof(DocumentTableCell))]
     [ModelReaderWriterBuildable(typeof(DocumentWord))]
-    [ModelReaderWriterBuildable(typeof(GrantCopyAuthorizationRequest1))]
+    [ModelReaderWriterBuildable(typeof(GrantCopyAuthorizationRequest))]
     [ModelReaderWriterBuildable(typeof(KnowledgeSource))]
     [ModelReaderWriterBuildable(typeof(LabeledDataKnowledgeSource))]
     [ModelReaderWriterBuildable(typeof(PagedContentAnalyzer))]

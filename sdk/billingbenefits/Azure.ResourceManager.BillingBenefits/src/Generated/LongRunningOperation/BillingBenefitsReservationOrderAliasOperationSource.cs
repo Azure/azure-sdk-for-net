@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    internal class BillingBenefitsReservationOrderAliasOperationSource : IOperationSource<BillingBenefitsReservationOrderAliasResource>
+    /// <summary></summary>
+    internal partial class BillingBenefitsReservationOrderAliasOperationSource : IOperationSource<BillingBenefitsReservationOrderAliasResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal BillingBenefitsReservationOrderAliasOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         BillingBenefitsReservationOrderAliasResource IOperationSource<BillingBenefitsReservationOrderAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingBenefitsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            BillingBenefitsReservationOrderAliasData data = BillingBenefitsReservationOrderAliasData.DeserializeBillingBenefitsReservationOrderAliasData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BillingBenefitsReservationOrderAliasResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<BillingBenefitsReservationOrderAliasResource> IOperationSource<BillingBenefitsReservationOrderAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingBenefitsContext.Default);
-            return await Task.FromResult(new BillingBenefitsReservationOrderAliasResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            BillingBenefitsReservationOrderAliasData data = BillingBenefitsReservationOrderAliasData.DeserializeBillingBenefitsReservationOrderAliasData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BillingBenefitsReservationOrderAliasResource(_client, data);
         }
     }
 }

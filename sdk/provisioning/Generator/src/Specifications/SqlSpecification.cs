@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
@@ -10,7 +10,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class SqlSpecification() :
-    Specification("Sql", typeof(SqlExtensions), ignorePropertiesWithoutPath: true)
+    Specification("Sql", typeof(SqlExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "sqlmanagement")
 {
     protected override void Customize()
     {

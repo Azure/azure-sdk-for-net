@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> RackDefinition represents details regarding the rack. </summary>
     public partial class NetworkCloudRackDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudRackDefinition"/>. </summary>
         /// <param name="networkRackId"> The resource ID of the network rack that matches this rack definition. </param>
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackSerialNumber"> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </param>
         /// <param name="rackSkuId"> The resource ID of the sku for the rack being added. </param>
         /// <param name="storageApplianceConfigurationData"> The list of storage appliance configuration data for this rack. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudRackDefinition(string availabilityZone, IList<BareMetalMachineConfiguration> bareMetalMachineConfigurationData, ResourceIdentifier networkRackId, string rackLocation, string rackSerialNumber, ResourceIdentifier rackSkuId, IList<StorageApplianceConfiguration> storageApplianceConfigurationData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudRackDefinition(string availabilityZone, IList<BareMetalMachineConfiguration> bareMetalMachineConfigurationData, ResourceIdentifier networkRackId, string rackLocation, string rackSerialNumber, ResourceIdentifier rackSkuId, IList<StorageApplianceConfiguration> storageApplianceConfigurationData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvailabilityZone = availabilityZone;
             BareMetalMachineConfigurationData = bareMetalMachineConfigurationData;
@@ -82,26 +54,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             RackSerialNumber = rackSerialNumber;
             RackSkuId = rackSkuId;
             StorageApplianceConfigurationData = storageApplianceConfigurationData;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackDefinition"/> for deserialization. </summary>
-        internal NetworkCloudRackDefinition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The zone name used for this rack when created. Availability zones are used for workload placement. </summary>
         public string AvailabilityZone { get; set; }
+
         /// <summary> The unordered list of bare metal machine configuration. </summary>
         public IList<BareMetalMachineConfiguration> BareMetalMachineConfigurationData { get; }
+
         /// <summary> The resource ID of the network rack that matches this rack definition. </summary>
         public ResourceIdentifier NetworkRackId { get; set; }
+
         /// <summary> The free-form description of the rack's location. </summary>
         public string RackLocation { get; set; }
+
         /// <summary> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </summary>
         public string RackSerialNumber { get; set; }
+
         /// <summary> The resource ID of the sku for the rack being added. </summary>
         public ResourceIdentifier RackSkuId { get; set; }
+
         /// <summary> The list of storage appliance configuration data for this rack. </summary>
         public IList<StorageApplianceConfiguration> StorageApplianceConfigurationData { get; }
     }

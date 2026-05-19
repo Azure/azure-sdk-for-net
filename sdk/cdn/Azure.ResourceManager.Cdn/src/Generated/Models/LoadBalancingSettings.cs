@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Round-Robin load balancing settings for a backend pool. </summary>
     public partial class LoadBalancingSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancingSettings"/>. </summary>
         public LoadBalancingSettings()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyInMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SampleSize = sampleSize;
             SuccessfulSamplesRequired = successfulSamplesRequired;
             AdditionalLatencyInMilliseconds = additionalLatencyInMilliseconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of samples to consider for load balancing decisions. </summary>
         [WirePath("sampleSize")]
         public int? SampleSize { get; set; }
+
         /// <summary> The number of samples within the sample period that must succeed. </summary>
         [WirePath("successfulSamplesRequired")]
         public int? SuccessfulSamplesRequired { get; set; }
+
         /// <summary> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </summary>
         [WirePath("additionalLatencyInMilliseconds")]
         public int? AdditionalLatencyInMilliseconds { get; set; }

@@ -18,6 +18,15 @@ namespace Azure.ResourceManager.LoadTesting
         public static Azure.ResourceManager.LoadTesting.LoadTestingResourceCollection GetLoadTestingResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.LoadTesting.LoadTestingResource> GetLoadTestingResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.LoadTestingResource> GetLoadTestingResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> GetLoadTestMapping(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>> GetLoadTestMappingAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.LoadTestMappingResource GetLoadTestMappingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.LoadTestMappingCollection GetLoadTestMappings(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> GetLoadTestProfileMapping(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> GetLoadTestProfileMappingAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource GetLoadTestProfileMappingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.LoadTestProfileMappingCollection GetLoadTestProfileMappings(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHoursResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class LoadTestingQuotaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource>, System.Collections.IEnumerable
     {
@@ -79,7 +88,10 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursCollection GetAllMaxMonthlyVirtualUserHours() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> GetMaxMonthlyVirtualUserHours(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetMaxMonthlyVirtualUserHoursAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -129,6 +141,147 @@ namespace Azure.ResourceManager.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestingResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestingResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LoadTestMappingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>, System.Collections.IEnumerable
+    {
+        protected LoadTestMappingCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string loadTestMappingName, Azure.ResourceManager.LoadTesting.LoadTestMappingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string loadTestMappingName, Azure.ResourceManager.LoadTesting.LoadTestMappingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> Get(string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>> GetAsync(string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> GetIfExists(string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>> GetIfExistsAsync(string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class LoadTestMappingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>
+    {
+        public LoadTestMappingData() { }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.LoadTestMappingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.LoadTestMappingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestMappingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected LoadTestMappingResource() { }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestMappingData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string loadTestMappingName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LoadTesting.LoadTestMappingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.LoadTestMappingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestMappingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> Update(Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>> UpdateAsync(Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class LoadTestProfileMappingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>, System.Collections.IEnumerable
+    {
+        protected LoadTestProfileMappingCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string loadTestProfileMappingName, Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string loadTestProfileMappingName, Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> Get(string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> GetAsync(string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> GetIfExists(string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> GetIfExistsAsync(string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class LoadTestProfileMappingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>
+    {
+        public LoadTestProfileMappingData() { }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestProfileMappingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected LoadTestProfileMappingResource() { }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string loadTestProfileMappingName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> Update(Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> UpdateAsync(Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MaxMonthlyVirtualUserHoursCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected MaxMonthlyVirtualUserHoursCollection() { }
+        public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> GetIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MaxMonthlyVirtualUserHoursData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>
+    {
+        internal MaxMonthlyVirtualUserHoursData() { }
+        public Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MaxMonthlyVirtualUserHoursResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MaxMonthlyVirtualUserHoursResource() { }
+        public virtual Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadTestName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Set(Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> SetAsync(Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.LoadTesting.Mocking
 {
@@ -137,6 +290,15 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         protected MockableLoadTestingArmClient() { }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource GetLoadTestingQuotaResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingResource GetLoadTestingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource> GetLoadTestMapping(Azure.Core.ResourceIdentifier scope, string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestMappingResource>> GetLoadTestMappingAsync(Azure.Core.ResourceIdentifier scope, string loadTestMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestMappingResource GetLoadTestMappingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestMappingCollection GetLoadTestMappings(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> GetLoadTestProfileMapping(Azure.Core.ResourceIdentifier scope, string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> GetLoadTestProfileMappingAsync(Azure.Core.ResourceIdentifier scope, string loadTestProfileMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource GetLoadTestProfileMappingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestProfileMappingCollection GetLoadTestProfileMappings(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHoursResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableLoadTestingResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -166,6 +328,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public static Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent LoadTestingQuotaBucketContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? currentUsage = default(int?), int? currentQuota = default(int?), int? newQuota = default(int?), Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions dimensions = null) { throw null; }
         public static Azure.ResourceManager.LoadTesting.LoadTestingQuotaData LoadTestingQuotaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? limit = default(int?), int? usage = default(int?), Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? provisioningState = default(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.LoadTesting.LoadTestingResourceData LoadTestingResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string description = null, Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? provisioningState = default(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState?), string dataPlaneUri = null, Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties encryption = null) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.LoadTestMappingData LoadTestMappingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData LoadTestProfileMappingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData MaxMonthlyVirtualUserHoursData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties MaxMonthlyVirtualUserHoursProperties(int? limit = default(int?), int? usage = default(int?), Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? provisioningState = default(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState?)) { throw null; }
     }
     public partial class LoadTestingCmkEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties>
     {
@@ -341,5 +507,127 @@ namespace Azure.ResourceManager.LoadTesting.Models
         Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestMappingPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>
+    {
+        public LoadTestMappingPatch() { }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestMappingProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>
+    {
+        public LoadTestMappingProperties() { }
+        public Azure.Core.ResourceIdentifier AzureLoadTestingResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
+        public string TestId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestMappingUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>
+    {
+        public LoadTestMappingUpdateProperties() { }
+        public Azure.Core.ResourceIdentifier AzureLoadTestingResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
+        public string TestId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestProfileMappingPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>
+    {
+        public LoadTestProfileMappingPatch() { }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestProfileMappingProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>
+    {
+        public LoadTestProfileMappingProperties() { }
+        public Azure.Core.ResourceIdentifier AzureLoadTestingResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
+        public string TestProfileId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadTestProfileMappingUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>
+    {
+        public LoadTestProfileMappingUpdateProperties() { }
+        public Azure.Core.ResourceIdentifier AzureLoadTestingResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
+        public string TestProfileId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MaxMonthlyVirtualUserHoursLimitContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>
+    {
+        public MaxMonthlyVirtualUserHoursLimitContent() { }
+        public int? Limit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MaxMonthlyVirtualUserHoursProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties>
+    {
+        internal MaxMonthlyVirtualUserHoursProperties() { }
+        public int? Limit { get { throw null; } }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? ProvisioningState { get { throw null; } }
+        public int? Usage { get { throw null; } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

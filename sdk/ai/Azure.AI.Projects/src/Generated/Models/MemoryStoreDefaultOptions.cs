@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store configurations. </summary>
     public partial class MemoryStoreDefaultOptions
@@ -14,34 +14,34 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultOptions"/>. </summary>
-        /// <param name="userProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
-        /// <param name="chatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
-        public MemoryStoreDefaultOptions(bool userProfileEnabled, bool chatSummaryEnabled)
+        /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
+        /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
+        public MemoryStoreDefaultOptions(bool isUserProfileEnabled, bool isChatSummaryEnabled)
         {
-            UserProfileEnabled = userProfileEnabled;
-            ChatSummaryEnabled = chatSummaryEnabled;
+            IsUserProfileEnabled = isUserProfileEnabled;
+            IsChatSummaryEnabled = isChatSummaryEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultOptions"/>. </summary>
-        /// <param name="userProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
+        /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
-        /// <param name="chatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
+        /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreDefaultOptions(bool userProfileEnabled, string userProfileDetails, bool chatSummaryEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UserProfileEnabled = userProfileEnabled;
+            IsUserProfileEnabled = isUserProfileEnabled;
             UserProfileDetails = userProfileDetails;
-            ChatSummaryEnabled = chatSummaryEnabled;
+            IsChatSummaryEnabled = isChatSummaryEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable user profile extraction and storage. Default is true. </summary>
-        public bool UserProfileEnabled { get; set; }
+        public bool IsUserProfileEnabled { get; set; }
 
         /// <summary> Specific categories or types of user profile information to extract and store. </summary>
         public string UserProfileDetails { get; set; }
 
         /// <summary> Whether to enable chat summary extraction and storage. Default is true. </summary>
-        public bool ChatSummaryEnabled { get; set; }
+        public bool IsChatSummaryEnabled { get; set; }
     }
 }

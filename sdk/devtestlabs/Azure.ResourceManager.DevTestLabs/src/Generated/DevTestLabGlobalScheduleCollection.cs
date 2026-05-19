@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context,
+                "DevTestLabGlobalScheduleCollection.GetAll"), data => new DevTestLabGlobalScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -342,7 +343,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabGlobalScheduleResource(Client, data));
+                context,
+                "DevTestLabGlobalScheduleCollection.GetAll"), data => new DevTestLabGlobalScheduleResource(Client, data));
         }
 
         /// <summary>

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playwrightWorkspaceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(playwrightWorkspaceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceData"/> from. </param>
@@ -107,6 +105,11 @@ namespace Azure.ResourceManager.Playwright
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -143,6 +146,7 @@ namespace Azure.ResourceManager.Playwright
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             PlaywrightWorkspaceProperties properties = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -212,6 +216,15 @@ namespace Azure.ResourceManager.Playwright
                     properties = PlaywrightWorkspaceProperties.DeserializePlaywrightWorkspaceProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerPlaywrightContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -225,7 +238,8 @@ namespace Azure.ResourceManager.Playwright
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                identity);
         }
     }
 }

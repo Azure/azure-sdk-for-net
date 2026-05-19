@@ -75,6 +75,11 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     {
         base.Configure();
 
+        // Use Azure-specific configuration schema settings
+        ConfigurationSchema.SectionName = "AzureClients";
+        ConfigurationSchema.OptionsRef = "azureOptions";
+        ConfigurationSchema.GenerateNuGetTargets = false;
+
         // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
         if (HasDataFactoryElement)
@@ -102,6 +107,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new MultiPartFormDataVisitor());
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
+        AddVisitor(new ClientSettingsVisitor());
     }
 
     /// <summary>

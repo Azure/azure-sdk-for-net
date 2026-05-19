@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fabricCapacityData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(fabricCapacityData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FabricCapacityData"/> from. </param>

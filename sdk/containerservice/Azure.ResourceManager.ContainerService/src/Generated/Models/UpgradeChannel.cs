@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct UpgradeChannel : IEquatable<UpgradeChannel>
     {
         private readonly string _value;
+        /// <summary> Automatically upgrade the cluster to the latest supported patch release on the latest supported minor version. In cases where the cluster is at a version of Kubernetes that is at an N-2 minor version where N is the latest supported minor version, the cluster first upgrades to the latest supported patch version on N-1 minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster first is upgraded to 1.18.6, then is upgraded to 1.19.1. </summary>
+        private const string RapidValue = "rapid";
+        /// <summary> Automatically upgrade the cluster to the latest supported patch release on minor version N-1, where N is the latest supported minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.18.6. </summary>
+        private const string StableValue = "stable";
+        /// <summary> Automatically upgrade the cluster to the latest supported patch version when it becomes available while keeping the minor version the same. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.17.9. </summary>
+        private const string PatchValue = "patch";
+        /// <summary> Automatically upgrade the node image to the latest version available. Consider using nodeOSUpgradeChannel instead as that allows you to configure node OS patching separate from Kubernetes version patching. </summary>
+        private const string NodeImageValue = "node-image";
+        /// <summary> Disables auto-upgrades and keeps the cluster at its current version of Kubernetes. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="UpgradeChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpgradeChannel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RapidValue = "rapid";
-        private const string StableValue = "stable";
-        private const string PatchValue = "patch";
-        private const string NodeImageValue = "node-image";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> Automatically upgrade the cluster to the latest supported patch release on the latest supported minor version. In cases where the cluster is at a version of Kubernetes that is at an N-2 minor version where N is the latest supported minor version, the cluster first upgrades to the latest supported patch version on N-1 minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster first is upgraded to 1.18.6, then is upgraded to 1.19.1. </summary>
         public static UpgradeChannel Rapid { get; } = new UpgradeChannel(RapidValue);
+
         /// <summary> Automatically upgrade the cluster to the latest supported patch release on minor version N-1, where N is the latest supported minor version. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.18.6. </summary>
         public static UpgradeChannel Stable { get; } = new UpgradeChannel(StableValue);
+
         /// <summary> Automatically upgrade the cluster to the latest supported patch version when it becomes available while keeping the minor version the same. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.17.9. </summary>
         public static UpgradeChannel Patch { get; } = new UpgradeChannel(PatchValue);
+
         /// <summary> Automatically upgrade the node image to the latest version available. Consider using nodeOSUpgradeChannel instead as that allows you to configure node OS patching separate from Kubernetes version patching. </summary>
         public static UpgradeChannel NodeImage { get; } = new UpgradeChannel(NodeImageValue);
+
         /// <summary> Disables auto-upgrades and keeps the cluster at its current version of Kubernetes. </summary>
         public static UpgradeChannel None { get; } = new UpgradeChannel(NoneValue);
+
         /// <summary> Determines if two <see cref="UpgradeChannel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpgradeChannel left, UpgradeChannel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpgradeChannel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpgradeChannel left, UpgradeChannel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpgradeChannel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpgradeChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpgradeChannel(string value) => new UpgradeChannel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UpgradeChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UpgradeChannel?(string value) => value == null ? null : new UpgradeChannel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpgradeChannel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpgradeChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

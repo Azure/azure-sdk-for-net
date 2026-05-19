@@ -231,7 +231,7 @@ namespace Azure.Storage.Test.Shared
         internal static Action<Request> GetRequestStructuredMessageAssertion(
             StructuredMessage.Flags flags,
             Func<Request, bool> isStructuredMessageExpected = default,
-            long? structuredContentSegmentLength = default)
+            long? expectedStructuredContentLength = default)
         {
             return request =>
             {
@@ -250,6 +250,31 @@ namespace Azure.Storage.Test.Shared
 
                 Assert.That(request.Headers.TryGetValue("Content-Length", out string contentLength));
                 Assert.That(request.Headers.TryGetValue("x-ms-structured-content-length", out string structuredContentLength));
+                if (expectedStructuredContentLength.HasValue)
+                {
+                    Assert.That(long.Parse(structuredContentLength), Is.EqualTo(expectedStructuredContentLength.Value));
+                }
+            };
+        }
+
+        internal static Action<Response> GetStructuredMessageResponseAssertion(
+            StructuredMessage.Flags flags,
+            Func<Response, bool> isStructuredMessageExpected = default)
+        {
+            return response =>
+            {
+                // filter some responses out with predicate
+                if (isStructuredMessageExpected != default && !isStructuredMessageExpected(response))
+                {
+                    return;
+                }
+
+                Assert.That(response.Headers.TryGetValue("x-ms-structured-body", out string structuredBody));
+                Assert.That(structuredBody, Does.Contain("XSM/1.0"));
+                if (flags.HasFlag(StructuredMessage.Flags.StorageCrc64))
+                {
+                    Assert.That(structuredBody, Does.Contain("crc64"));
+                }
             };
         }
 

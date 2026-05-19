@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.HybridConnectivity
         private readonly string _resourceUri;
         private readonly string _endpointName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ServiceConfigurationResourcesGetByEndpointResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ServiceConfigurationResources client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ServiceConfigurationResourcesGetByEndpointResourceAsyncCollectionResultOfT(ServiceConfigurationResources client, string resourceUri, string endpointName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ServiceConfigurationResourcesGetByEndpointResourceAsyncCollectionResultOfT(ServiceConfigurationResources client, string resourceUri, string endpointName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;
             _endpointName = endpointName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ServiceConfigurationResourcesGetByEndpointResourceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByEndpointResourceRequest(nextLink, _resourceUri, _endpointName, _context) : _client.CreateGetByEndpointResourceRequest(_resourceUri, _endpointName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

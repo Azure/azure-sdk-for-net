@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 enabled,
                 virtualNetworks ?? new ChangeTrackingList<PrivateAccessVirtualNetwork>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

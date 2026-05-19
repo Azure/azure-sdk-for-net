@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fix deserialization when `AppServiceApiDefinitionInfo.Uri` is not a valid URI.
+- Fix deserialization when `FunctionAppStorage.Value` is not a valid URI.
+
 ### Other Changes
 
 ## 1.4.1 (2025-08-11)

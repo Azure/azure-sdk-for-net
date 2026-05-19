@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Dictionary
 {
     public partial class DictionaryClientOptions : ClientOptions
     {
+        public DictionaryClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal DictionaryClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

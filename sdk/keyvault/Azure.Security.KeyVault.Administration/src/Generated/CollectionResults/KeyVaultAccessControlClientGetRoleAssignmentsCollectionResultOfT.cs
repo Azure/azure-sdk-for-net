@@ -20,18 +20,21 @@ namespace Azure.Security.KeyVault.Administration
         private readonly string _scope;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of KeyVaultAccessControlClientGetRoleAssignmentsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The KeyVaultAccessControlClient client used to send requests. </param>
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public KeyVaultAccessControlClientGetRoleAssignmentsCollectionResultOfT(KeyVaultAccessControlClient client, string scope, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public KeyVaultAccessControlClientGetRoleAssignmentsCollectionResultOfT(KeyVaultAccessControlClient client, string scope, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _scope = scope;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of KeyVaultAccessControlClientGetRoleAssignmentsCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.Security.KeyVault.Administration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRoleAssignmentsRequest(nextLink, _scope, _filter, _context) : _client.CreateGetRoleAssignmentsRequest(_scope, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleAssignments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

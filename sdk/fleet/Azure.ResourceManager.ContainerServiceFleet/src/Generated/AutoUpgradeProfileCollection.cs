@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     {
         private readonly ClientDiagnostics _autoUpgradeProfilesClientDiagnostics;
         private readonly AutoUpgradeProfiles _autoUpgradeProfilesRestClient;
-        private readonly ClientDiagnostics _autoUpgradeProfileOperationsClientDiagnostics;
-        private readonly AutoUpgradeProfileOperations _autoUpgradeProfileOperationsRestClient;
 
         /// <summary> Initializes a new instance of AutoUpgradeProfileCollection for mocking. </summary>
         protected AutoUpgradeProfileCollection()
@@ -42,9 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(AutoUpgradeProfileResource.ResourceType, out string autoUpgradeProfileApiVersion);
             _autoUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", AutoUpgradeProfileResource.ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2025-08-01-preview");
-            _autoUpgradeProfileOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", AutoUpgradeProfileResource.ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileOperations(_autoUpgradeProfileOperationsClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2025-08-01-preview");
+            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             if (id.ResourceType != ContainerServiceFleetResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,7 +99,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -130,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,7 +159,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -189,7 +187,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,7 +236,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +285,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,7 +306,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new AutoUpgradeProfileResource(Client, data));
+                context,
+                "AutoUpgradeProfileCollection.GetAll"), data => new AutoUpgradeProfileResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,7 +344,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.Name,
                 maxCount,
                 skipToken,
-                context), data => new AutoUpgradeProfileResource(Client, data));
+                context,
+                "AutoUpgradeProfileCollection.GetAll"), data => new AutoUpgradeProfileResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

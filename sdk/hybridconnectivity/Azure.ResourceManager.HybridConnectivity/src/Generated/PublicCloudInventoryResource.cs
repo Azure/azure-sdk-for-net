@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// <summary>
     /// A class representing a PublicCloudInventory along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublicCloudInventoryResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetPublicCloudInventories method.
+    /// Otherwise you can get one from its parent resource <see cref="PublicCloudConnectorSolutionConfigurationResource"/> using the GetPublicCloudInventories method.
     /// </summary>
     public partial class PublicCloudInventoryResource : ArmResource
     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)

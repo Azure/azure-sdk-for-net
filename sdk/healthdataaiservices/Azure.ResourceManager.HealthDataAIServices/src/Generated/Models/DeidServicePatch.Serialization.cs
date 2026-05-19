@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HealthDataAIServices;
@@ -65,9 +66,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deidServicePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(deidServicePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                SerializeIdentity(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -185,7 +184,11 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    DeserializeIdentity(prop, ref identity);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerHealthDataAIServicesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

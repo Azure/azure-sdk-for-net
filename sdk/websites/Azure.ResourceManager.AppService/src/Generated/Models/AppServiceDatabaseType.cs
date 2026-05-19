@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Database type (e.g. SqlAzure / MySql). </summary>
+    /// <summary>
+    /// Database type (e.g. SqlAzure / MySql).
+    /// Serialized Name: DatabaseType
+    /// </summary>
     public readonly partial struct AppServiceDatabaseType : IEquatable<AppServiceDatabaseType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AppService.Models
         private const string LocalMySqlValue = "LocalMySql";
         private const string PostgreSqlValue = "PostgreSql";
 
-        /// <summary> SqlAzure. </summary>
+        /// <summary>
+        /// SqlAzure
+        /// Serialized Name: DatabaseType.SqlAzure
+        /// </summary>
         public static AppServiceDatabaseType SqlAzure { get; } = new AppServiceDatabaseType(SqlAzureValue);
-        /// <summary> MySql. </summary>
+        /// <summary>
+        /// MySql
+        /// Serialized Name: DatabaseType.MySql
+        /// </summary>
         public static AppServiceDatabaseType MySql { get; } = new AppServiceDatabaseType(MySqlValue);
-        /// <summary> LocalMySql. </summary>
+        /// <summary>
+        /// LocalMySql
+        /// Serialized Name: DatabaseType.LocalMySql
+        /// </summary>
         public static AppServiceDatabaseType LocalMySql { get; } = new AppServiceDatabaseType(LocalMySqlValue);
-        /// <summary> PostgreSql. </summary>
+        /// <summary>
+        /// PostgreSql
+        /// Serialized Name: DatabaseType.PostgreSql
+        /// </summary>
         public static AppServiceDatabaseType PostgreSql { get; } = new AppServiceDatabaseType(PostgreSqlValue);
         /// <summary> Determines if two <see cref="AppServiceDatabaseType"/> values are the same. </summary>
         public static bool operator ==(AppServiceDatabaseType left, AppServiceDatabaseType right) => left.Equals(right);

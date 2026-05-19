@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using Azure.AI.Projects;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Memory
 {
     /// <summary></summary>
     public readonly partial struct MemoryStoreObjectType : IEquatable<MemoryStoreObjectType>
@@ -15,6 +15,7 @@ namespace OpenAI
         private const string MemoryStoreValue = "memory_store";
         private const string MemoryStoreDeletedValue = "memory_store.deleted";
         private const string MemoryStoreScopeDeletedValue = "memory_store.scope.deleted";
+        private const string MemoryDeletedValue = "memory.deleted";
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreObjectType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,6 +35,9 @@ namespace OpenAI
 
         /// <summary> Gets the MemoryStoreScopeDeleted. </summary>
         public static MemoryStoreObjectType MemoryStoreScopeDeleted { get; } = new MemoryStoreObjectType(MemoryStoreScopeDeletedValue);
+
+        /// <summary> Gets the MemoryDeleted. </summary>
+        public static MemoryStoreObjectType MemoryDeleted { get; } = new MemoryStoreObjectType(MemoryDeletedValue);
 
         /// <summary> Determines if two <see cref="MemoryStoreObjectType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

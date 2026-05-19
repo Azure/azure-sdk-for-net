@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Instructions for rendering the data. </summary>
+    /// <summary>
+    /// Instructions for rendering the data
+    /// Serialized Name: Rendering
+    /// </summary>
     public partial class DiagnosticDataRendering
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDataRendering"/>. </summary>
-        /// <param name="renderingType"> Rendering Type. </param>
-        /// <param name="title"> Title of data. </param>
-        /// <param name="description"> Description of the data that will help it be interpreted. </param>
+        /// <param name="renderingType">
+        /// Rendering Type
+        /// Serialized Name: Rendering.type
+        /// </param>
+        /// <param name="title">
+        /// Title of data
+        /// Serialized Name: Rendering.title
+        /// </param>
+        /// <param name="description">
+        /// Description of the data that will help it be interpreted
+        /// Serialized Name: Rendering.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiagnosticDataRendering(DiagnosticDataRenderingType? renderingType, string title, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Rendering Type. </summary>
+        /// <summary>
+        /// Rendering Type
+        /// Serialized Name: Rendering.type
+        /// </summary>
         [WirePath("type")]
         public DiagnosticDataRenderingType? RenderingType { get; set; }
-        /// <summary> Title of data. </summary>
+        /// <summary>
+        /// Title of data
+        /// Serialized Name: Rendering.title
+        /// </summary>
         [WirePath("title")]
         public string Title { get; set; }
-        /// <summary> Description of the data that will help it be interpreted. </summary>
+        /// <summary>
+        /// Description of the data that will help it be interpreted
+        /// Serialized Name: Rendering.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
     }

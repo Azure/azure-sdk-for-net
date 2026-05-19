@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataBox
         private readonly string _resourceGroupName;
         private readonly string _jobName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of JobResourcesGetCredentialsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JobResources client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public JobResourcesGetCredentialsAsyncCollectionResultOfT(JobResources client, string subscriptionId, string resourceGroupName, string jobName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public JobResourcesGetCredentialsAsyncCollectionResultOfT(JobResources client, string subscriptionId, string resourceGroupName, string jobName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _jobName = jobName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of JobResourcesGetCredentialsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.DataBox
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetCredentialsRequest(nextLink, _subscriptionId, _resourceGroupName, _jobName, _context) : _client.CreateGetCredentialsRequest(_subscriptionId, _resourceGroupName, _jobName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataBoxJobResource.GetCredentials");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

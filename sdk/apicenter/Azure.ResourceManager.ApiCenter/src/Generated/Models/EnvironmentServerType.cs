@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public readonly partial struct EnvironmentServerType : IEquatable<EnvironmentServerType>
     {
         private readonly string _value;
+        /// <summary> Api Management Server. </summary>
+        private const string AzureApiManagementValue = "Azure API Management";
+        /// <summary> Compute server. </summary>
+        private const string AzureComputeServiceValue = "Azure compute service";
+        /// <summary> Apigee server. </summary>
+        private const string ApigeeApiManagementValue = "Apigee API Management";
+        /// <summary> AWS Api Gateway server. </summary>
+        private const string AwsApiGatewayValue = "AWS API Gateway";
+        /// <summary> Kong API Gateway server. </summary>
+        private const string KongApiGatewayValue = "Kong API Gateway";
+        /// <summary> Kubernetes server. </summary>
+        private const string KubernetesValue = "Kubernetes";
+        /// <summary> Mulesoft Api Management server. </summary>
+        private const string MuleSoftApiManagementValue = "MuleSoft API Management";
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnvironmentServerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureApiManagementValue = "Azure API Management";
-        private const string AzureComputeServiceValue = "Azure compute service";
-        private const string ApigeeApiManagementValue = "Apigee API Management";
-        private const string AwsApiGatewayValue = "AWS API Gateway";
-        private const string KongApiGatewayValue = "Kong API Gateway";
-        private const string KubernetesValue = "Kubernetes";
-        private const string MuleSoftApiManagementValue = "MuleSoft API Management";
+            _value = value;
+        }
 
         /// <summary> Api Management Server. </summary>
         public static EnvironmentServerType AzureApiManagement { get; } = new EnvironmentServerType(AzureApiManagementValue);
+
         /// <summary> Compute server. </summary>
         public static EnvironmentServerType AzureComputeService { get; } = new EnvironmentServerType(AzureComputeServiceValue);
+
         /// <summary> Apigee server. </summary>
         public static EnvironmentServerType ApigeeApiManagement { get; } = new EnvironmentServerType(ApigeeApiManagementValue);
+
         /// <summary> AWS Api Gateway server. </summary>
         public static EnvironmentServerType AwsApiGateway { get; } = new EnvironmentServerType(AwsApiGatewayValue);
+
         /// <summary> Kong API Gateway server. </summary>
         public static EnvironmentServerType KongApiGateway { get; } = new EnvironmentServerType(KongApiGatewayValue);
+
         /// <summary> Kubernetes server. </summary>
         public static EnvironmentServerType Kubernetes { get; } = new EnvironmentServerType(KubernetesValue);
+
         /// <summary> Mulesoft Api Management server. </summary>
         public static EnvironmentServerType MuleSoftApiManagement { get; } = new EnvironmentServerType(MuleSoftApiManagementValue);
+
         /// <summary> Determines if two <see cref="EnvironmentServerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnvironmentServerType left, EnvironmentServerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnvironmentServerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnvironmentServerType left, EnvironmentServerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnvironmentServerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnvironmentServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnvironmentServerType(string value) => new EnvironmentServerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnvironmentServerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnvironmentServerType?(string value) => value == null ? null : new EnvironmentServerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnvironmentServerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnvironmentServerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

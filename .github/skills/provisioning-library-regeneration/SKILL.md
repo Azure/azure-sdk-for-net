@@ -1,16 +1,263 @@
 ---
 name: provisioning-library-regeneration
-description: Regenerate Azure.Provisioning.* libraries to add new resources or features. Use when adding new resource types, enum values, or API versions to provisioning libraries.
+description: Onboard new Azure.Provisioning.* libraries OR regenerate existing ones. Use when introducing a brand-new provisioning library, adding new resource types, enum values, or API versions.
 ---
 
-# Provisioning Library Regeneration
+# Provisioning Library Onboarding & Regeneration
 
-This skill guides the process of regenerating `Azure.Provisioning.*` libraries to add new resources or features. This is typically needed when:
+This skill covers two related workflows for `Azure.Provisioning.*` libraries:
 
-- New resource types need to be added to provisioning (e.g., NetworkSecurityPerimeter)
-- New enum values are added (e.g., new PostgreSQL server versions)
-- New API versions bring new properties or types
-- The management library has a new release with features needed in provisioning
+- **Onboarding** — introducing a brand new `Azure.Provisioning.{Service}` package.
+- **Regeneration** — updating an existing package to add new resources, enum values, or API versions.
+
+> **Start here:** Read **Workflow Selection** below to choose the correct path before doing anything else.
+
+---
+
+## Workflow Selection
+
+### Is this onboarding or regeneration?
+
+- If `sdk/{service}/Azure.Provisioning.{Service}/` already exists → **Regeneration**. Jump to [Regeneration Workflow](#regeneration-workflow).
+- If it does NOT exist → **Onboarding**. Continue below to pick the correct onboarding path.
+
+### Onboarding: Path A vs Path B
+
+The onboarding workflow depends on how the corresponding management library (`Azure.ResourceManager.{Service}`) is generated:
+
+```shell
+# Inspect the mgmt library to choose the path
+ls sdk/{service}/Azure.ResourceManager.{Service}/tsp-location.yaml
+```
+
+| Path | Trigger | Onboarding flow |
+|---|---|---|
+| **Path A** — reflection generator | Mgmt library has **NO** `tsp-location.yaml` (Swagger/AutoRest based; has `src/autorest.md`) | [Path A: Onboard via the reflection generator](#path-a-onboard-via-the-reflection-generator) |
+| **Path B** — TypeSpec emitter | Mgmt library **has** `tsp-location.yaml` (TypeSpec based) | [Path B: Onboard via the TypeSpec provisioning emitter](#path-b-onboard-via-the-typespec-provisioning-emitter) |
+
+**Key structural difference**:
+- Path A packages live alongside other reflection-generated provisioning libs and are registered in `sdk/provisioning/Generator/src/Program.cs`.
+- Path B packages live next to their mgmt counterpart at `sdk/{service}/Azure.Provisioning.{Service}/`, have their own `tsp-location.yaml` + `metadata.json`, and are NEVER registered in `Program.cs`.
+
+> **Common to both paths**: New packages start at version `1.0.0-beta.1`, do NOT add `ApiCompatVersion`, and do NOT add the new package itself to `eng/centralpackagemanagement/Directory.Packages.props` unless explicitly required (CPM is for *consumed* packages; in-repo packages reference each other via `ProjectReference` in tests / `PackageReference` only when consumed by another in-repo package). Confirm by checking how a recent equivalent onboarding PR handled it.
+
+---
+
+## Path A: Onboard via the reflection generator
+
+Use when the mgmt library is Swagger/AutoRest based (no `tsp-location.yaml`).
+
+### A1. Scaffold the new package directory
+
+Model after a recent simple Path A package (e.g., `sdk/resourcegraph/Azure.Provisioning.ResourceGraph/` or `sdk/redisenterprise/Azure.Provisioning.RedisEnterprise/`). Create:
+
+```
+sdk/{service}/Azure.Provisioning.{Service}/
+├── Azure.Provisioning.{Service}.slnx          # references src and tests csprojs
+├── Directory.Build.props                       # standard provisioning props
+├── CHANGELOG.md                                # 1.0.0-beta.1 (Unreleased) entry
+├── README.md                                   # use `dotnet add package ... --prerelease`
+├── src/
+│   └── Azure.Provisioning.{Service}.csproj    # Version 1.0.0-beta.1, references Azure.Provisioning
+└── tests/
+    └── Azure.Provisioning.{Service}.Tests.csproj
+```
+
+> **Path A packages do NOT have `tsp-location.yaml` or `metadata.json`** — those are Path B artifacts.
+
+### A2. Register the specification
+
+Add a new specification class file:
+
+```csharp
+// sdk/provisioning/Generator/src/Specifications/{Service}Specification.cs
+using Azure.Provisioning.Generator.Model;
+using Azure.ResourceManager.{Service};
+
+namespace Azure.Provisioning.Generator.Specifications;
+
+public class {Service}Specification() :
+    Specification("{Service}", typeof({Service}Extensions), serviceDirectory: "{service}")
+{
+    protected override void Customize() { }
+}
+```
+
+Register it alphabetically in `sdk/provisioning/Generator/src/Program.cs` `rpSpecs` list.
+
+Add the mgmt PackageReference to `sdk/provisioning/Generator/src/Generator.csproj` (alphabetical):
+
+```xml
+<PackageReference Include="Azure.ResourceManager.{Service}" />
+```
+
+### A3. Run the generator
+
+```shell
+cd sdk/provisioning/Generator/src
+dotnet run --framework net10.0 -- --filter {Service}
+```
+
+Then jump to [Verify Only Target Library Changed](#verify-only-target-library-changed) (under the regeneration section).
+
+### A4. WirePath workaround (if generated paths are wrong)
+
+After running the generator, peek at `DefineProperty` calls in a generated resource (e.g., `LogicWorkflow.cs`):
+
+```shell
+Select-String sdk/{service}/Azure.Provisioning.{Service}/src/Generated/{Resource}.cs -Pattern 'DefineProperty'
+```
+
+If you see paths like `["Definition"]` or `["State"]` instead of `["properties", "definition"]` / `["properties", "state"]`, the mgmt library is missing `WirePath` attributes (it lacks `enable-bicep-serialization: true` in its `autorest.md`).
+
+**Confirm**:
+```shell
+(Select-String -Path sdk/{service}/Azure.ResourceManager.{Service}/src/Generated/Models/*.cs -Pattern 'WirePath' | Measure).Count
+# 0 → workaround required
+```
+
+**Workaround** (verified via `Logic` and `ContainerInstance` PRs):
+
+1. Add `enable-bicep-serialization: true` under `use-model-reader-writer: true` in `sdk/{service}/Azure.ResourceManager.{Service}/src/autorest.md`.
+2. Regenerate the mgmt library locally:
+   ```shell
+   cd sdk/{service}/Azure.ResourceManager.{Service}/src
+   dotnet build /t:GenerateCode
+   ```
+   This produces `WirePath` attrs and `Internal/{BicepSerializationHelpers,WirePathAttribute}.cs`.
+3. Switch `Generator.csproj` from `PackageReference` to `ProjectReference` for this mgmt lib only:
+   ```xml
+   <ProjectReference Include="..\..\..\{service}\Azure.ResourceManager.{Service}\src\Azure.ResourceManager.{Service}.csproj" />
+   ```
+4. Re-run the provisioning generator (step A3). Confirm `DefineProperty` paths now include `"properties"`.
+5. **Revert all mgmt-side changes** — the workaround is generator-side only; the mgmt library must NOT ship with these changes:
+   ```shell
+   git checkout -- sdk/{service}/Azure.ResourceManager.{Service}/
+   Remove-Item sdk/{service}/Azure.ResourceManager.{Service}/src/Generated/Internal/BicepSerializationHelpers.cs,
+                sdk/{service}/Azure.ResourceManager.{Service}/src/Generated/Internal/WirePathAttribute.cs
+   ```
+6. Switch `Generator.csproj` back to `PackageReference`.
+
+After revert, `git status -- sdk/{service}/Azure.ResourceManager.{Service}/` must be **empty**.
+
+### A5. Validate, test, finalize
+
+Continue with these regeneration steps (they apply to both onboarding and regen):
+
+- [Step 4: Validate Generated Schema Against Bicep Reference](#step-4-validate-generated-schema-against-bicep-reference) — but see the note on [Path A schema validation without schema.log](#schema-validation-without-schemalog) below for new generators.
+- [Step 6: Fix Spell Check Issues](#step-6-fix-spell-check-issues)
+- [Step 7: Run Pre-Commit Checks](#step-7-run-pre-commit-checks)
+- [Step 8: Update CHANGELOG and Commit](#step-8-update-changelog-and-commit)
+
+Additionally for onboarding:
+
+- Add a basic test (`tests/Basic{Service}Tests.cs`) using the simplest resource with a `#region Snippet:{Name}` block; add a `BasicLive{Service}Tests.cs` (`[LiveOnly]`) calling the same factory through `SetupLiveCalls(this).Lint().ValidateAsync()`. Model after `BasicResourceGraphTests.cs`.
+- Add the package to `sdk/{service}/ci.mgmt.yml` `Artifacts:`:
+  ```yaml
+      - name: Azure.Provisioning.{Service}
+        safeName: AzureProvisioning{Service}
+  ```
+- Open a **draft** PR.
+
+---
+
+## Path B: Onboard via the TypeSpec provisioning emitter
+
+Use when the mgmt library has `tsp-location.yaml` (TypeSpec based).
+
+This path requires changes in **two repos**: a spec PR in `azure-rest-api-specs` (to enable the provisioning emitter) and an SDK PR here (to scaffold and generate).
+
+### B1. Open a spec PR enabling the provisioning emitter
+
+In `azure-rest-api-specs`, edit the service's `tspconfig.yaml` to add the `@azure-typespec/http-client-csharp-provisioning` emitter under `options:` (NOT `emit:`). Pin to the same stable api-version the mgmt library uses:
+
+```yaml
+options:
+  "@azure-typespec/http-client-csharp-provisioning":
+    namespace: "Azure.Provisioning.{Service}"
+    emitter-output-dir: "{project-root}/Azure.Provisioning.{Service}"
+    api-version: "YYYY-MM-DD"   # match the mgmt library's stable version
+```
+
+> Find the right api-version by reading the mgmt library's `tsp-location.yaml` and its referenced spec.
+
+Commit, push to your fork, open a draft PR. Use `git rev-parse HEAD` to get the **full** commit SHA (short SHA from `git log --oneline` is truncated and `tsp-client` will fail with "not our ref").
+
+### B2. Scaffold the new package directory
+
+Model after `sdk/batch/Azure.Provisioning.Batch/` or `sdk/servicenetworking/Azure.Provisioning.ServiceNetworking/`. Create:
+
+```
+sdk/{service}/Azure.Provisioning.{Service}/
+├── Azure.Provisioning.{Service}.slnx
+├── Directory.Build.props
+├── CHANGELOG.md                 # 1.0.0-beta.1 (Unreleased)
+├── README.md                    # use `dotnet add package ... --prerelease`
+├── tsp-location.yaml            # points to your spec PR's HEAD commit + fork repo
+├── metadata.json
+├── src/Azure.Provisioning.{Service}.csproj
+└── tests/Azure.Provisioning.{Service}.Tests.csproj
+```
+
+> **Path B packages do NOT register anything in `sdk/provisioning/Generator/src/Program.cs`.**
+
+`tsp-location.yaml` example:
+
+```yaml
+directory: specification/{service}/{Service}.Management
+commit: <FULL SHA from git rev-parse HEAD in spec repo>
+repo: <fork>/azure-rest-api-specs   # change to Azure/azure-rest-api-specs after spec PR merges
+additionalDirectories:
+```
+
+### B3. Generate
+
+```shell
+cd sdk/{service}/Azure.Provisioning.{Service}/src
+dotnet build /t:GenerateCode
+```
+
+This invokes `tsp-client` against the spec at the pinned commit. Always wipe `src/Generated/` before regen for clean output.
+
+### B4. NUnit 3 baseline pinning
+
+The repo default is NUnit 4 but several shared sources still use NUnit 3 classic asserts. New Path B test projects must be added to `eng/centralpackagemanagement/Directory.NUnit3Baseline.Packages.props` (alphabetical, alongside other `Azure.Provisioning.*.Tests`). Skip this step if the NUnit 4 migration has been completed for `Azure.Provisioning.*` (check whether the Provisioning entries are still present in the baseline file).
+
+### B5. Validate, test, finalize
+
+- [Schema validation without schema.log](#schema-validation-without-schemalog) — Path B generator does NOT emit `schema.log`.
+- Write basic + live tests with a `#region Snippet:{Name}` block. The shared `Trycep` helper does Bicep snapshot comparison.
+- Add the package to `sdk/{service}/ci.mgmt.yml` `Artifacts:`.
+- Run [Step 7: Pre-Commit Checks](#step-7-run-pre-commit-checks).
+- Commit and open a **draft** SDK PR.
+- **Post-merge follow-up**: when the spec PR merges, flip `tsp-location.yaml` `repo:` → `Azure/azure-rest-api-specs` and `commit:` → the merge SHA, regenerate, commit.
+
+---
+
+## Schema validation without schema.log
+
+The new Path B generator does NOT produce `Generated/schema.log`. For Path A with the latest generator version, also confirm whether `schema.log` is emitted; if not, use this approach.
+
+For each generated resource (any class extending `ProvisionableResource`):
+
+```shell
+Select-String sdk/{service}/Azure.Provisioning.{Service}/src/Generated/*.cs -Pattern 'base\(bicepIdentifier,\s*"(Microsoft\.[^"]+)"'
+```
+
+For each ARM resource type printed:
+
+1. Construct the Bicep ref URL using the lowercased type:
+   `https://learn.microsoft.com/en-us/azure/templates/{lowercased-provider}/{lowercased-type}?pivots=deployment-language-bicep`
+2. Fetch the page and compare the writable properties listed there against the generated `DefineProperty(...)` calls (those NOT marked `isOutput: true`) in the generated resource file.
+3. Apply the same critical/info-level rules described in [Compare and Validate](#compare-and-validate) below — especially the `Name` rule.
+
+Delegate this to a parallel sub-agent (the `explore` agent) when there are many resources — it's faster than serial fetching.
+
+---
+
+## Regeneration Workflow
+
+(For existing packages — adding new resources, enum values, or API versions.)
 
 ## Step 1: Determine If Management Library Version Update Is Needed
 

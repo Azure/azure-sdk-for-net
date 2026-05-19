@@ -100,10 +100,18 @@ This script:
 
 If regeneration produces file changes, they must be included in the commit.
 
-### 9. Verify
+### 9. Refresh the Emitter Version Dashboard
+
+```shell
+pwsh doc/GeneratorVersions/Emitter_Version_Dashboard.ps1
+```
+
+This regenerates `doc/GeneratorVersions/Emitter_Version_Dashboard.md` so the documented dependency chain matches the updated package.json versions. The updated dashboard file must be included in the commit.
+
+### 10. Verify
 
 - Run `git status` to see all modified files
-- Ensure `package.json`, `package-lock.json`, `Directory.Generation.Packages.props`, and any regenerated test project files are included
+- Ensure `package.json`, `package-lock.json`, `Directory.Generation.Packages.props`, `Emitter_Version_Dashboard.md`, and any regenerated test project files are included
 - All changes should be committed together
 
 ## Key Files Reference
@@ -117,3 +125,5 @@ If regeneration produces file changes, they must be included in the commit.
 | `eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/src/Azure.Generator.Management.csproj` | Generator project referencing Azure.Generator |
 | `eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1` | Test project regeneration script |
 | `eng/packages/http-client-csharp-mgmt/eng/scripts/Generation.psm1` | Build and generation helper functions |
+| `doc/GeneratorVersions/Emitter_Version_Dashboard.ps1` | Script to regenerate the version dashboard |
+| `doc/GeneratorVersions/Emitter_Version_Dashboard.md` | Emitter dependency version dashboard |

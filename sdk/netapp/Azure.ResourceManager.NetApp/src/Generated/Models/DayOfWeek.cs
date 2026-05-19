@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct DayOfWeek : IEquatable<DayOfWeek>
     {
         private readonly string _value;
+        /// <summary> Take a snapshot each Sunday. </summary>
+        private const string SundayValue = "Sunday";
+        /// <summary> Take a snapshot each Monday. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Take a snapshot each Tuesday. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Take a snapshot each Wednesday. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Take a snapshot each Thursday. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Take a snapshot each Friday. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Take a snapshot each Saturday. </summary>
+        private const string SaturdayValue = "Saturday";
 
         /// <summary> Initializes a new instance of <see cref="DayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DayOfWeek(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SundayValue = "Sunday";
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
+            _value = value;
+        }
 
         /// <summary> Take a snapshot each Sunday. </summary>
         public static DayOfWeek Sunday { get; } = new DayOfWeek(SundayValue);
+
         /// <summary> Take a snapshot each Monday. </summary>
         public static DayOfWeek Monday { get; } = new DayOfWeek(MondayValue);
+
         /// <summary> Take a snapshot each Tuesday. </summary>
         public static DayOfWeek Tuesday { get; } = new DayOfWeek(TuesdayValue);
+
         /// <summary> Take a snapshot each Wednesday. </summary>
         public static DayOfWeek Wednesday { get; } = new DayOfWeek(WednesdayValue);
+
         /// <summary> Take a snapshot each Thursday. </summary>
         public static DayOfWeek Thursday { get; } = new DayOfWeek(ThursdayValue);
+
         /// <summary> Take a snapshot each Friday. </summary>
         public static DayOfWeek Friday { get; } = new DayOfWeek(FridayValue);
+
         /// <summary> Take a snapshot each Saturday. </summary>
         public static DayOfWeek Saturday { get; } = new DayOfWeek(SaturdayValue);
+
         /// <summary> Determines if two <see cref="DayOfWeek"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DayOfWeek left, DayOfWeek right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DayOfWeek"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DayOfWeek left, DayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DayOfWeek"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DayOfWeek(string value) => new DayOfWeek(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DayOfWeek?(string value) => value == null ? null : new DayOfWeek(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DayOfWeek other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     {
         private readonly ClientDiagnostics _managedClustersClientDiagnostics;
         private readonly ManagedClusters _managedClustersRestClient;
-        private readonly ClientDiagnostics _managedApplyMaintenanceWindowClientDiagnostics;
-        private readonly ManagedApplyMaintenanceWindow _managedApplyMaintenanceWindowRestClient;
-        private readonly ClientDiagnostics _managedAzResiliencyStatusClientDiagnostics;
-        private readonly ManagedAzResiliencyStatus _managedAzResiliencyStatusRestClient;
-        private readonly ClientDiagnostics _managedMaintenanceWindowStatusClientDiagnostics;
-        private readonly ManagedMaintenanceWindowStatus _managedMaintenanceWindowStatusRestClient;
 
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterCollection for mocking. </summary>
         protected ServiceFabricManagedClusterCollection()
@@ -47,13 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             TryGetApiVersion(ServiceFabricManagedClusterResource.ResourceType, out string serviceFabricManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
-            _managedApplyMaintenanceWindowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedApplyMaintenanceWindowRestClient = new ManagedApplyMaintenanceWindow(_managedApplyMaintenanceWindowClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
-            _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatus(_managedAzResiliencyStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
-            _managedMaintenanceWindowStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedMaintenanceWindowStatusRestClient = new ManagedMaintenanceWindowStatus(_managedMaintenanceWindowStatusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2025-10-01-preview");
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -63,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -80,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +184,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +233,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +282,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,7 +294,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupAsyncCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupAsyncCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +310,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,7 +322,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +338,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,7 +395,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,7 +452,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +513,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -190,7 +190,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 _location,
                 zone,
                 shapeAttribute,
-                context), data => new OracleDBSystemShapeResource(Client, data));
+                context,
+                "OracleDBSystemShapeCollection.GetAll"), data => new OracleDBSystemShapeResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +227,8 @@ namespace Azure.ResourceManager.OracleDatabase
                 _location,
                 zone,
                 shapeAttribute,
-                context), data => new OracleDBSystemShapeResource(Client, data));
+                context,
+                "OracleDBSystemShapeCollection.GetAll"), data => new OracleDBSystemShapeResource(Client, data));
         }
 
         /// <summary>

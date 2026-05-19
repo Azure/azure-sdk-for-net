@@ -4,17 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluation task for the schedule. </summary>
-    public partial class EvaluationScheduleTask : ScheduleTask
+    public partial class EvaluationScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationScheduleTask"/>. </summary>
         /// <param name="evalId"> Identifier of the evaluation group. </param>
         /// <param name="evalRun"> The evaluation run payload. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evalId"/> or <paramref name="evalRun"/> is null. </exception>
-        public EvaluationScheduleTask(string evalId, EvaluationScheduleTaskEvalRun evalRun) : base(ScheduleTaskType.Evaluation)
+        public EvaluationScheduleTask(string evalId, BinaryData evalRun) : base(ScheduleTaskType.Evaluation)
         {
             Argument.AssertNotNull(evalId, nameof(evalId));
             Argument.AssertNotNull(evalRun, nameof(evalRun));
@@ -29,7 +31,7 @@ namespace Azure.AI.Projects
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evalId"> Identifier of the evaluation group. </param>
         /// <param name="evalRun"> The evaluation run payload. </param>
-        internal EvaluationScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, EvaluationScheduleTaskEvalRun evalRun) : base(@type, configuration, additionalBinaryDataProperties)
+        internal EvaluationScheduleTask(ScheduleTaskType @type, IDictionary<string, string> configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, BinaryData evalRun) : base(@type, configuration, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             EvalRun = evalRun;
@@ -38,7 +40,32 @@ namespace Azure.AI.Projects
         /// <summary> Identifier of the evaluation group. </summary>
         public string EvalId { get; set; }
 
-        /// <summary> The evaluation run payload. </summary>
-        public EvaluationScheduleTaskEvalRun EvalRun { get; set; }
+        /// <summary>
+        /// The evaluation run payload.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData EvalRun { get; set; }
     }
 }

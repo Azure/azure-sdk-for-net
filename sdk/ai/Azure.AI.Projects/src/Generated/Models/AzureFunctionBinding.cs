@@ -35,9 +35,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The type of binding, which is always 'storage_queue'. </summary>
-        public string Type { get; } = "storage_queue";
+        internal string Type { get; } = "storage_queue";
 
         /// <summary> Storage queue. </summary>
-        public AzureFunctionStorageQueue StorageQueue { get; set; }
+        public AzureFunctionStorageQueue StorageQueue { get; }
     }
 }

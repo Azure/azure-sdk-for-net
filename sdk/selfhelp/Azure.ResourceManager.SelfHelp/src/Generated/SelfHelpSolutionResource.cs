@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpSolutionData> response = Response.FromValue(SelfHelpSolutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The required request body for updating a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> UpdateAsync(WaitUntil waitUntil, SelfHelpSolutionPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> UpdateAsync(WaitUntil waitUntil, SelfHelpSolutionPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionResource.Update");
             scope.Start();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
                     new SelfHelpSolutionOperationSource(Client),
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The required request body for updating a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SelfHelpSolutionResource> Update(WaitUntil waitUntil, SelfHelpSolutionPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpSolutionResource> Update(WaitUntil waitUntil, SelfHelpSolutionPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _solutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionResource.Update");
             scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
                     new SelfHelpSolutionOperationSource(Client),
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent, Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent.ToString(), Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent, Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
+                HttpMessage message = _solutionResourcesRestClient.CreateWarmUpRequest(Id.Parent.ToString(), Id.Name, SolutionWarmUpContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

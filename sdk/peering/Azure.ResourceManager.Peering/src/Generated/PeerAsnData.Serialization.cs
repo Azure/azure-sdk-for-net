@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Peering
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(peerAsnData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(peerAsnData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PeerAsnData"/> from. </param>

@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A Class representing a NetworkCloudRackSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudRackSkuResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudRackSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetNetworkCloudRackSku method.
+    /// A class representing a NetworkCloudRackSku along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudRackSkuResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetNetworkCloudRackSkus method.
     /// </summary>
     public partial class NetworkCloudRackSkuResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkCloudRackSkuResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="rackSkuName"> The rackSkuName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string rackSkuName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkCloudRackSkuRackSkusClientDiagnostics;
-        private readonly RackSkusRestOperations _networkCloudRackSkuRackSkusRestClient;
+        private readonly ClientDiagnostics _rackSkusClientDiagnostics;
+        private readonly RackSkus _rackSkusRestClient;
         private readonly NetworkCloudRackSkuData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/rackSkus";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackSkuResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudRackSkuResource for mocking. </summary>
         protected NetworkCloudRackSkuResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudRackSkuResource(ArmClient client, NetworkCloudRackSkuData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.NetworkCloud
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudRackSkuResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudRackSkuRackSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkCloudRackSkuRackSkusApiVersion);
-            _networkCloudRackSkuRackSkusRestClient = new RackSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudRackSkuRackSkusApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string networkCloudRackSkuApiVersion);
+            _rackSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
+            _rackSkusRestClient = new RackSkus(_rackSkusClientDiagnostics, Pipeline, Endpoint, networkCloudRackSkuApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkCloudRackSkuData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="rackSkuName"> The rackSkuName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string rackSkuName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the properties of the provided rack SKU.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RackSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RackSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudRackSkuResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkCloudRackSkuResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudRackSkuRackSkusClientDiagnostics.CreateScope("NetworkCloudRackSkuResource.Get");
+            using DiagnosticScope scope = _rackSkusClientDiagnostics.CreateScope("NetworkCloudRackSkuResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudRackSkuRackSkusRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkCloudRackSkuData> response = Response.FromValue(NetworkCloudRackSkuData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudRackSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get the properties of the provided rack SKU.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RackSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RackSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudRackSkuResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkCloudRackSkuResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudRackSkuRackSkusClientDiagnostics.CreateScope("NetworkCloudRackSkuResource.Get");
+            using DiagnosticScope scope = _rackSkusClientDiagnostics.CreateScope("NetworkCloudRackSkuResource.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudRackSkuRackSkusRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkCloudRackSkuData> response = Response.FromValue(NetworkCloudRackSkuData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudRackSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

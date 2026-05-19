@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionAsyncCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DevOpsPoolResource(Client, data));
+            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionAsyncCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DevOpsPoolResource(Client, data));
+            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetBySubscriptionCollectionResultOfT(PoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevOpsInfrastructureSubscriptionResource.GetDevOpsPools"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SubscriptionUsagesGetUsagesAsyncCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new SubscriptionUsagesGetUsagesAsyncCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SubscriptionUsagesGetUsagesCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new SubscriptionUsagesGetUsagesCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkuGetSkusByLocationAsyncCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new SkuGetSkusByLocationAsyncCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation");
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkuGetSkusByLocationCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new SkuGetSkusByLocationCollectionResultOfT(SkuRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableDevOpsInfrastructureSubscriptionResource.GetSkusByLocation");
         }
     }
 }

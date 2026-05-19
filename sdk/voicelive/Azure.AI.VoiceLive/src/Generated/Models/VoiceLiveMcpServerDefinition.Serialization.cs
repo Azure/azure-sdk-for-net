@@ -119,13 +119,13 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(_requireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(_requireApproval);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                using (JsonDocument document = JsonDocument.Parse(_requireApproval))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }

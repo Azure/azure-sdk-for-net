@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         {
             get
             {
-                return AdditionalInfo.AvailableDaysCount;
+                return AdditionalInfo is null ? default : AdditionalInfo.AvailableDaysCount;
             }
         }
     }

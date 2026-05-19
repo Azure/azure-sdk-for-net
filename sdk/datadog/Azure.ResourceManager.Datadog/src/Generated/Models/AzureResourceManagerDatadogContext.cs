@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CreateResourceSupportedResponseList))]
+    [ModelReaderWriterBuildable(typeof(DatadogActivateSaaSContent))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreement))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogApiKey))]
     [ModelReaderWriterBuildable(typeof(DatadogApiKeyListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogApplicationKey))]
     [ModelReaderWriterBuildable(typeof(DatadogBillingInfoResult))]
     [ModelReaderWriterBuildable(typeof(DatadogHost))]
     [ModelReaderWriterBuildable(typeof(DatadogHostListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogHostMetadata))]
     [ModelReaderWriterBuildable(typeof(DatadogInstallMethod))]
+    [ModelReaderWriterBuildable(typeof(DatadogLatestLinkedSaaSResult))]
     [ModelReaderWriterBuildable(typeof(DatadogLinkedResourceResult))]
     [ModelReaderWriterBuildable(typeof(DatadogLogsAgent))]
+    [ModelReaderWriterBuildable(typeof(DatadogMarketplaceOfferDetails))]
     [ModelReaderWriterBuildable(typeof(DatadogMonitorAgentRules))]
     [ModelReaderWriterBuildable(typeof(DatadogMonitorData))]
     [ModelReaderWriterBuildable(typeof(DatadogMonitoredResourceResult))]
@@ -43,12 +48,17 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DatadogMonitorResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogMonitorResourcePatchProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSaaSInfo))]
+    [ModelReaderWriterBuildable(typeof(DatadogSaaSResourceDetailsData))]
     [ModelReaderWriterBuildable(typeof(DatadogSetPasswordLink))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnData))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResource))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogSku))]
+    [ModelReaderWriterBuildable(typeof(DatadogSreAgentConfiguration))]
+    [ModelReaderWriterBuildable(typeof(DatadogSreAgentConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(DatadogSreAgentConnectorContent))]
     [ModelReaderWriterBuildable(typeof(DatadogSubscriptionProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogSubscriptionStatusProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogSubscriptionStatusResult))]
@@ -66,6 +76,7 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeOrganizationContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDatadogContext : ModelReaderWriterContext
     {
     }

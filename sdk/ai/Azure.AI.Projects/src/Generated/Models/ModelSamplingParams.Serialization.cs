@@ -6,17 +6,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
     public partial class ModelSamplingParams : IJsonModel<ModelSamplingParams>
     {
-        /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/> for deserialization. </summary>
-        internal ModelSamplingParams()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ModelSamplingParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -134,21 +130,37 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("temperature"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     temperature = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     topP = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("seed"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     seed = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("max_completion_tokens"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     maxCompletionTokens = prop.Value.GetInt32();
                     continue;
                 }

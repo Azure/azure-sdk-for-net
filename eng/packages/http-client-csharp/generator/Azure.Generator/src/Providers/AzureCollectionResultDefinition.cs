@@ -35,8 +35,11 @@ namespace Azure.Generator.Providers
             new("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri), isNullable: true));
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
+        private static readonly ParameterProvider ScopeParameter =
+            new("diagnosticScope", $"The diagnostic scope name.", new CSharpType(typeof(string)));
 
         private readonly bool _isProtocol;
+        private readonly FieldProvider _scopeField;
 
         protected override string RequestOptionsFieldName => "_context";
 
@@ -49,6 +52,11 @@ namespace Azure.Generator.Providers
             _isProtocol = itemModelType == null;
             _itemModelType = itemModelType ?? new CSharpType(typeof(BinaryData));
             _scopeName = Client.GetScopeName(_operation);
+            _scopeField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(string),
+                "_diagnosticScope",
+                this);
         }
 
         private IReadOnlyList<ParameterProvider> CreateRequestParameters
@@ -56,6 +64,12 @@ namespace Azure.Generator.Providers
 
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
+
+        // We use "_diagnosticScope" rather than "_scope" to reduce collision risk with API parameters.
+        // If a collision does occur, the framework's CodeWriter dedup renames declarations but not
+        // AsValueExpression references, causing incorrect codegen. See: https://github.com/microsoft/typespec/issues/10130
+        protected override FieldProvider[] BuildFields()
+            => [.. base.BuildFields(), _scopeField];
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
@@ -214,7 +228,7 @@ namespace Azure.Generator.Providers
             }
 
             bodyStatements.Add(Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, BuildCreateHttpMessageExpression(), out var messageVariable));
-            bodyStatements.Add(UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable));
+            bodyStatements.Add(UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [_scopeField]), out var scopeVariable));
             bodyStatements.Add(scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate());
             bodyStatements.Add(new TryCatchFinallyStatement
                 (BuildTryExpression(), Catch(Declare<Exception>("e", out var exceptionVariable), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()])));
@@ -285,10 +299,26 @@ namespace Azure.Generator.Providers
             var ctors = base.BuildConstructors();
             foreach (var ctor in ctors)
             {
-                ctor.Signature.Update(initializer: new ConstructorInitializer(
-                    true,
-                    // Pass the request context cancellation token to the base Pageable constructor
-                    [CreateRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)]));
+                ctor.Signature.Update(
+                    parameters: [.. ctor.Signature.Parameters, ScopeParameter],
+                    initializer: new ConstructorInitializer(
+                        true,
+                        // Pass the request context cancellation token to the base Pageable constructor
+                        [CreateRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)]));
+
+                // Add _scope = scope assignment to the constructor body
+                List<MethodBodyStatement> updatedBody = ctor.BodyStatements != null
+                    ? [ctor.BodyStatements, _scopeField.Assign(ScopeParameter).Terminate()]
+                    : [_scopeField.Assign(ScopeParameter).Terminate()];
+
+                // Add XML doc for the scope parameter
+                if (ctor.XmlDocs != null)
+                {
+                    List<XmlDocParamStatement> updatedParams = [.. ctor.XmlDocs.Parameters, new XmlDocParamStatement(ScopeParameter)];
+                    ctor.XmlDocs.Update(parameters: updatedParams);
+                }
+
+                ctor.Update(bodyStatements: updatedBody);
             }
 
             return ctors;

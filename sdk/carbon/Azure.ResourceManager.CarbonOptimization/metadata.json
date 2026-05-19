@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-04-01"
+  "apiVersions": {
+    "Microsoft.Carbon": "2025-04-01"
+  }
 }

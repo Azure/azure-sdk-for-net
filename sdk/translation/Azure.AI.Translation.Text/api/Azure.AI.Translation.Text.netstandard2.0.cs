@@ -291,6 +291,7 @@ namespace Azure.AI.Translation.Text
     public partial class TextTranslationClient
     {
         protected TextTranslationClient() { }
+        public TextTranslationClient(Azure.AI.Translation.Text.TextTranslationClientSettings settings) { }
         public TextTranslationClient(Azure.AzureKeyCredential credential, string region = "global", Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.AzureKeyCredential credential, System.Uri endpoint, string region = "global", Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.Core.TokenCredential credential, Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
@@ -357,6 +358,13 @@ namespace Azure.AI.Translation.Text
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, string text, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class TextTranslationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Translation.Text.TextTranslationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Translation.Text.TextTranslationClientSettings> configureSettings) { throw null; }
+    }
     public partial class TextTranslationClientOptions : Azure.Core.ClientOptions
     {
         public TextTranslationClientOptions(Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion.V2025_10_01_Preview) { }
@@ -365,6 +373,16 @@ namespace Azure.AI.Translation.Text
             V3_0 = 1,
             V2025_10_01_Preview = 2,
         }
+    }
+    public partial class TextTranslationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public TextTranslationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Translation.Text.TextTranslationClientOptions Options { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        public string TokenScope { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class TextTranslationTranslateOptions

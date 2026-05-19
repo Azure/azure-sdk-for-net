@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerServiceFleetData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(containerServiceFleetData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceFleetData"/> from. </param>

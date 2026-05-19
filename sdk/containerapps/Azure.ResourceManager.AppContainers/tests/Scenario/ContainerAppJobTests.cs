@@ -24,11 +24,10 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/57787 - Recordings need re-recording for api-version 2025-07-01")]
         public async Task CreateOrUpdate()
         {
             ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
-
-            // Create ContainerApp
             var envResource = await CreateContainerAppManagedEnvironment(resourceGroup, Recording.GenerateAssetName("env"));
             var containerApp = await CreateContainerApp(resourceGroup, envResource, Recording.GenerateAssetName("container"));
 

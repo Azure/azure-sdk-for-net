@@ -4,11 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory item kind. </summary>
-    internal readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
+    public readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
     {
         private readonly string _value;
         /// <summary> User profile information extracted from conversations. </summary>

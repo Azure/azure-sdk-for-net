@@ -322,6 +322,80 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void UpdatesConvenienceMethodBodyWithResultPath()
+        {
+            var visitor = new TestLroVisitor();
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
+            ];
+            var responseModel = InputFactory.Model("foo");
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro, parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]),
+                longRunningServiceMetadata: InputFactory.LongRunningServiceMetadata(
+                    finalState: 1,
+                    finalResponse: InputFactory.OperationResponse(),
+                    resultPath: "result"));
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var outputLibrary = plugin.Object.OutputLibrary;
+            visitor.InvokeVisitLibrary(outputLibrary);
+
+            var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            var convenienceMethod = clientProvider!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "Foo"
+                    && m.Signature.Parameters.All(p => p.Name != "context"));
+
+            Assert.IsNotNull(convenienceMethod);
+            var actual = convenienceMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
+        }
+
+        [Test]
+        public void UpdatesAsyncConvenienceMethodBodyWithResultPath()
+        {
+            var visitor = new TestLroVisitor();
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
+            ];
+            var responseModel = InputFactory.Model("foo");
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro, parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]),
+                longRunningServiceMetadata: InputFactory.LongRunningServiceMetadata(
+                    finalState: 1,
+                    finalResponse: InputFactory.OperationResponse(),
+                    resultPath: "result"));
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var outputLibrary = plugin.Object.OutputLibrary;
+            visitor.InvokeVisitLibrary(outputLibrary);
+
+            var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            var asyncConvenienceMethod = clientProvider!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FooAsync"
+                    && m.Signature.Parameters.All(p => p.Name != "context"));
+
+            Assert.IsNotNull(asyncConvenienceMethod);
+            var actual = asyncConvenienceMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
+        }
+
+        [Test]
         public void UpdatesProtocolMethodBody()
         {
             var visitor = new TestLroVisitor();

@@ -3,27 +3,20 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Capacity pool patch resource. </summary>
-    public partial class CapacityPoolPatch : TrackedResourceData
+    // Backward-compat: GA shipped CustomThroughputMibps as float?, but the spec models it as
+    // int (see NetApp.Management.tsp). The generated property is renamed via @@clientName to
+    // CustomThroughputMibpsInt, and this float?-typed shim restores the v1.15 surface.
+    // A spec change can't fix this — TypeSpec has no way to declare two properties (int +
+    // float?) bound to the same wire field, so the type-bridging must live in C#.
+    public partial class CapacityPoolPatch
     {
-        /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
+        /// <summary> Maximum throughput in MiB/s (legacy float? alias for <see cref="CustomThroughputMibpsInt"/>). </summary>
         public float? CustomThroughputMibps
         {
-            get
-            {
-                return CustomThroughputMibpsInt.HasValue ? (float?)CustomThroughputMibpsInt.Value : null;
-            }
-            set
-            {
-                CustomThroughputMibpsInt = value.HasValue ? (int)value.Value : null;
-            }
+            get => CustomThroughputMibpsInt;
+            set => CustomThroughputMibpsInt = value.HasValue ? (int?)value.Value : null;
         }
     }
 }

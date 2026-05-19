@@ -6,9 +6,7 @@ switch (format)
         content.XmlWriter.WriteObjectValue(this, options, "TestElement");
         return content;
     case "J":
-        global::Samples.Utf8JsonRequestContent jsonContent = new global::Samples.Utf8JsonRequestContent();
-        jsonContent.JsonWriter.WriteObjectValue(this, options);
-        return jsonContent;
+        return global::Azure.Core.RequestContent.Create(this, options);
     default:
         return global::Azure.Core.RequestContent.Create(this, options);
 }

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dedicatedCapacityData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dedicatedCapacityData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DedicatedCapacityData"/> from. </param>

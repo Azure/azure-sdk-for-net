@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode : IEquatable<SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode>
     {
         private readonly string _value;
+        /// <summary> Enforced access mode - traffic to the resource that failed access checks is blocked. </summary>
+        private const string EnforcedValue = "Enforced";
+        /// <summary> Learning access mode - traffic to the resource is enabled for analysis but not blocked. </summary>
+        private const string LearningValue = "Learning";
+        /// <summary> Audit access mode - traffic to the resource that fails access checks is logged but not blocked. </summary>
+        private const string AuditValue = "Audit";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnforcedValue = "Enforced";
-        private const string LearningValue = "Learning";
-        private const string AuditValue = "Audit";
+            _value = value;
+        }
 
         /// <summary> Enforced access mode - traffic to the resource that failed access checks is blocked. </summary>
         public static SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode Enforced { get; } = new SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(EnforcedValue);
+
         /// <summary> Learning access mode - traffic to the resource is enabled for analysis but not blocked. </summary>
         public static SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode Learning { get; } = new SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(LearningValue);
+
         /// <summary> Audit access mode - traffic to the resource that fails access checks is logged but not blocked. </summary>
         public static SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode Audit { get; } = new SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(AuditValue);
+
         /// <summary> Determines if two <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode left, SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode left, SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(string value) => new SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode?(string value) => value == null ? null : new SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

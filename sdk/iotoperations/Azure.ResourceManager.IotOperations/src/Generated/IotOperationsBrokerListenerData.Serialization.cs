@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(iotOperationsBrokerListenerData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(iotOperationsBrokerListenerData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsBrokerListenerData"/> from. </param>

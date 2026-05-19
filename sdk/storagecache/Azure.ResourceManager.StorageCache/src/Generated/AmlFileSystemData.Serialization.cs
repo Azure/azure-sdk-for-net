@@ -65,6 +65,16 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentStorageCapacityTiB))
+            {
+                writer.WritePropertyName("currentStorageCapacityTiB"u8);
+                writer.WriteNumberValue(CurrentStorageCapacityTiB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClusterUuid))
+            {
+                writer.WritePropertyName("clusterUuid"u8);
+                writer.WriteStringValue(ClusterUuid.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
@@ -143,6 +153,8 @@ namespace Azure.ResourceManager.StorageCache
             ResourceType type = default;
             SystemData systemData = default;
             float? storageCapacityTiB = default;
+            float? currentStorageCapacityTiB = default;
+            Guid? clusterUuid = default;
             AmlFileSystemHealth health = default;
             AmlFileSystemProvisioningStateType? provisioningState = default;
             string filesystemSubnet = default;
@@ -249,6 +261,24 @@ namespace Azure.ResourceManager.StorageCache
                             storageCapacityTiB = property0.Value.GetSingle();
                             continue;
                         }
+                        if (property0.NameEquals("currentStorageCapacityTiB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            currentStorageCapacityTiB = property0.Value.GetSingle();
+                            continue;
+                        }
+                        if (property0.NameEquals("clusterUuid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusterUuid = property0.Value.GetGuid();
+                            continue;
+                        }
                         if (property0.NameEquals("health"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -346,6 +376,8 @@ namespace Azure.ResourceManager.StorageCache
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
                 storageCapacityTiB,
+                currentStorageCapacityTiB,
+                clusterUuid,
                 health,
                 provisioningState,
                 filesystemSubnet,

@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
-        internal HttpMessage CreateCreateRequest(long fileContentLength, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, NfsFileType? nfsFileType, byte[] contentMD5, FilePropertySemantics? filePropertySemantics, long? contentLength, Stream optionalbody, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateCreateRequest(long fileContentLength, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, NfsFileType? nfsFileType, byte[] contentMD5, FilePropertySemantics? filePropertySemantics, long? contentLength, string structuredBodyType, long? structuredContentLength, Stream optionalbody, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,6 +155,14 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-property-semantics", filePropertySemantics.Value.ToString());
             }
+            if (structuredBodyType != null)
+            {
+                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+            }
+            if (structuredContentLength != null)
+            {
+                request.Headers.Add("x-ms-structured-content-length", structuredContentLength.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             if (optionalbody != null)
             {
@@ -172,7 +180,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
+        /// <summary> Creates a new file or replaces a file. Can also initialize the file with content. </summary>
         /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
@@ -190,13 +198,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
         /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="optionalbody"> Initial data. </param>
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, byte[] contentMD5 = null, FilePropertySemantics? filePropertySemantics = null, long? contentLength = null, Stream optionalbody = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, byte[] contentMD5 = null, FilePropertySemantics? filePropertySemantics = null, long? contentLength = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, optionalbody, fileHttpHeaders, shareFileRequestConditions);
+            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, structuredBodyType, structuredContentLength, optionalbody, fileHttpHeaders, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -208,7 +218,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
+        /// <summary> Creates a new file or replaces a file. Can also initialize the file with content. </summary>
         /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
@@ -226,13 +236,15 @@ namespace Azure.Storage.Files.Shares
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
         /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
         /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="optionalbody"> Initial data. </param>
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, byte[] contentMD5 = null, FilePropertySemantics? filePropertySemantics = null, long? contentLength = null, Stream optionalbody = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, byte[] contentMD5 = null, FilePropertySemantics? filePropertySemantics = null, long? contentLength = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, optionalbody, fileHttpHeaders, shareFileRequestConditions);
+            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, structuredBodyType, structuredContentLength, optionalbody, fileHttpHeaders, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileCreateHeaders(message.Response);
             switch (message.Response.Status)

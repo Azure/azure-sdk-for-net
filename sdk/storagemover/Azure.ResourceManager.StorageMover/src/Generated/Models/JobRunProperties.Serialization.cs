@@ -105,6 +105,16 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("executionEndTime"u8);
                 writer.WriteStringValue(ExecutionEndOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(TriggerType))
+            {
+                writer.WritePropertyName("triggerType"u8);
+                writer.WriteStringValue(TriggerType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScheduledExecutionOn))
+            {
+                writer.WritePropertyName("scheduledExecutionTime"u8);
+                writer.WriteStringValue(ScheduledExecutionOn.Value, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
             {
                 writer.WritePropertyName("lastStatusUpdate"u8);
@@ -294,6 +304,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             ResourceIdentifier agentResourceId = default;
             DateTimeOffset? executionStartOn = default;
             DateTimeOffset? executionEndOn = default;
+            StorageMoverJobTriggerType? triggerType = default;
+            DateTimeOffset? scheduledExecutionOn = default;
             DateTimeOffset? lastStatusUpdate = default;
             long? itemsScanned = default;
             long? itemsExcluded = default;
@@ -368,6 +380,24 @@ namespace Azure.ResourceManager.StorageMover.Models
                         continue;
                     }
                     executionEndOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("triggerType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    triggerType = new StorageMoverJobTriggerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scheduledExecutionTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledExecutionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastStatusUpdate"u8))
@@ -586,6 +616,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 agentResourceId,
                 executionStartOn,
                 executionEndOn,
+                triggerType,
+                scheduledExecutionOn,
                 lastStatusUpdate,
                 itemsScanned,
                 itemsExcluded,

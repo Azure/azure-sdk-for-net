@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Payload.ContentNegotiation
 {
     public partial class ContentNegotiationClientOptions : ClientOptions
     {
+        public ContentNegotiationClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal ContentNegotiationClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

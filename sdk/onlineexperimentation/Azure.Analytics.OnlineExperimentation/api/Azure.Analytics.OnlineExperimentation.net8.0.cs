@@ -213,6 +213,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class OnlineExperimentationClient
     {
         protected OnlineExperimentationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public OnlineExperimentationClient(Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings settings) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -245,6 +247,14 @@ namespace Azure.Analytics.OnlineExperimentation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>> ValidateMetricAsync(Azure.Analytics.OnlineExperimentation.ExperimentMetric body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateMetricAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class OnlineExperimentationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings> configureSettings) { throw null; }
+    }
     public partial class OnlineExperimentationClientOptions : Azure.Core.ClientOptions
     {
         public OnlineExperimentationClientOptions(Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion version = Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion.V2025_05_31_Preview) { }
@@ -252,6 +262,14 @@ namespace Azure.Analytics.OnlineExperimentation
         {
             V2025_05_31_Preview = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class OnlineExperimentationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public OnlineExperimentationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class OnlineExperimentationModelFactory
     {

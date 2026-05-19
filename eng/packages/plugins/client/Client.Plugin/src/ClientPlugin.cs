@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel;
 using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -18,6 +20,14 @@ namespace Client.Plugin
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)
         {
+            // Use Azure-specific configuration schema settings
+            if (generator is ScmCodeModelGenerator scmGenerator)
+            {
+                scmGenerator.ConfigurationSchema.SectionName = "AzureClients";
+                scmGenerator.ConfigurationSchema.OptionsRef = "azureOptions";
+                scmGenerator.ConfigurationSchema.GenerateNuGetTargets = false;
+            }
+
             // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
             generator.AddVisitor(new ModelFactoryRenamerVisitor());
 

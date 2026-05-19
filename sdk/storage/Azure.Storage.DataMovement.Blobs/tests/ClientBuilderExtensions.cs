@@ -72,6 +72,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             return new DisposingBlobContainer(container);
         }
 
+        public static async Task<DisposingBlobContainer> GetAzureSasCredentialTestContainerAsync(
+            this BlobsClientBuilder clientBuilder,
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
+            PublicAccessType? publicAccessType = default)
+        {
+            containerName ??= clientBuilder.GetNewContainerName();
+            service ??= clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, default);
+
+            if (publicAccessType == default)
+            {
+                publicAccessType = PublicAccessType.None;
+            }
+
+            BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            return new DisposingBlobContainer(container);
+        }
+
         public static async Task<BlobContainerClient> GetContainerAsync(
             this BlobsClientBuilder clientBuilder,
             BlobServiceClient service = default,

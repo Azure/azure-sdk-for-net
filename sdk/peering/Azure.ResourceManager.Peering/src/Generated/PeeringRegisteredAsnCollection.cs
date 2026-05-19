@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering
         {
             if (id.ResourceType != PeeringResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PeeringResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PeeringResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringAsyncCollectionResultOfT(_registeredAsnsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PeeringRegisteredAsnResource(Client, data));
+            return new AsyncPageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringAsyncCollectionResultOfT(
+                _registeredAsnsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PeeringRegisteredAsnCollection.GetAll"), data => new PeeringRegisteredAsnResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.Peering
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringCollectionResultOfT(_registeredAsnsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PeeringRegisteredAsnResource(Client, data));
+            return new PageableWrapper<PeeringRegisteredAsnData, PeeringRegisteredAsnResource>(new RegisteredAsnsGetByPeeringCollectionResultOfT(
+                _registeredAsnsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PeeringRegisteredAsnCollection.GetAll"), data => new PeeringRegisteredAsnResource(Client, data));
         }
 
         /// <summary>

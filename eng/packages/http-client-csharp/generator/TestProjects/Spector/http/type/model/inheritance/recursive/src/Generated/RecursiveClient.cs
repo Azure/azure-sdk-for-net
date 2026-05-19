@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +19,12 @@ namespace _Type.Model.Inheritance.Recursive
     {
         public RecursiveClient() : this(new Uri("http://localhost:3000"), new RecursiveClientOptions()) => throw null;
 
-        public RecursiveClient(Uri endpoint, RecursiveClientOptions options) => throw null;
+        internal RecursiveClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RecursiveClientOptions options) => throw null;
+
+        public RecursiveClient(Uri endpoint, RecursiveClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public RecursiveClient(RecursiveClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Kubelet configurations of agent nodes. See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details. </summary>
     public partial class KubeletConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KubeletConfig"/>. </summary>
         public KubeletConfig()
@@ -59,12 +31,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="imageGcLowThreshold"> The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageGcHighThreshold. The default is 80%. </param>
         /// <param name="topologyManagerPolicy"> The Topology Manager policy to use. For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'. </param>
         /// <param name="allowedUnsafeSysctls"> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </param>
-        /// <param name="failStartWithSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
+        /// <param name="shouldFailStartWithSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
         /// <param name="containerLogMaxSizeInMB"> The maximum size (e.g. 10Mi) of container log file before it is rotated. </param>
         /// <param name="containerLogMaxFiles"> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </param>
         /// <param name="podMaxPids"> The maximum number of processes per pod. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? failStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="seccompDefault"> Specifies the default seccomp profile applied to all workloads. If not specified, 'Unconfined' will be used by default. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? shouldFailStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, SeccompDefault? seccompDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CpuManagerPolicy = cpuManagerPolicy;
             IsCpuCfsQuotaEnabled = isCpuCfsQuotaEnabled;
@@ -73,45 +46,60 @@ namespace Azure.ResourceManager.ContainerService.Models
             ImageGcLowThreshold = imageGcLowThreshold;
             TopologyManagerPolicy = topologyManagerPolicy;
             AllowedUnsafeSysctls = allowedUnsafeSysctls;
-            FailStartWithSwapOn = failStartWithSwapOn;
+            ShouldFailStartWithSwapOn = shouldFailStartWithSwapOn;
             ContainerLogMaxSizeInMB = containerLogMaxSizeInMB;
             ContainerLogMaxFiles = containerLogMaxFiles;
             PodMaxPids = podMaxPids;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SeccompDefault = seccompDefault;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The CPU Manager policy to use. The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </summary>
         [WirePath("cpuManagerPolicy")]
         public string CpuManagerPolicy { get; set; }
+
         /// <summary> If CPU CFS quota enforcement is enabled for containers that specify CPU limits. The default is true. </summary>
         [WirePath("cpuCfsQuota")]
         public bool? IsCpuCfsQuotaEnabled { get; set; }
+
         /// <summary> The CPU CFS quota period value. The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. </summary>
         [WirePath("cpuCfsQuotaPeriod")]
         public string CpuCfsQuotaPeriod { get; set; }
+
         /// <summary> The percent of disk usage after which image garbage collection is always run. To disable image garbage collection, set to 100. The default is 85%. </summary>
         [WirePath("imageGcHighThreshold")]
         public int? ImageGcHighThreshold { get; set; }
+
         /// <summary> The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageGcHighThreshold. The default is 80%. </summary>
         [WirePath("imageGcLowThreshold")]
         public int? ImageGcLowThreshold { get; set; }
+
         /// <summary> The Topology Manager policy to use. For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'. </summary>
         [WirePath("topologyManagerPolicy")]
         public string TopologyManagerPolicy { get; set; }
+
         /// <summary> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </summary>
         [WirePath("allowedUnsafeSysctls")]
         public IList<string> AllowedUnsafeSysctls { get; }
+
         /// <summary> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </summary>
         [WirePath("failSwapOn")]
-        public bool? FailStartWithSwapOn { get; set; }
+        public bool? ShouldFailStartWithSwapOn { get; set; }
+
         /// <summary> The maximum size (e.g. 10Mi) of container log file before it is rotated. </summary>
         [WirePath("containerLogMaxSizeMB")]
         public int? ContainerLogMaxSizeInMB { get; set; }
+
         /// <summary> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </summary>
         [WirePath("containerLogMaxFiles")]
         public int? ContainerLogMaxFiles { get; set; }
+
         /// <summary> The maximum number of processes per pod. </summary>
         [WirePath("podMaxPids")]
         public int? PodMaxPids { get; set; }
+
+        /// <summary> Specifies the default seccomp profile applied to all workloads. If not specified, 'Unconfined' will be used by default. </summary>
+        [WirePath("seccompDefault")]
+        public SeccompDefault? SeccompDefault { get; set; }
     }
 }

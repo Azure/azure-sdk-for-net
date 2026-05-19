@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Category;
+                return Properties is null ? default : Properties.Category;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Control;
+                return Properties is null ? default : Properties.Control;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Impact;
+                return Properties is null ? default : Properties.Impact;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ImpactedField;
+                return Properties is null ? default : Properties.ImpactedField;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ImpactedValue;
+                return Properties is null ? default : Properties.ImpactedValue;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.LastUpdatedOn;
+                return Properties is null ? default : Properties.LastUpdatedOn;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Metadata;
+                return Properties is null ? default : Properties.Metadata;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.RecommendationTypeId;
+                return Properties is null ? default : Properties.RecommendationTypeId;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Risk;
+                return Properties is null ? default : Properties.Risk;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ShortDescription;
+                return Properties is null ? default : Properties.ShortDescription;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.SuppressionIds;
+                return Properties is null ? default : Properties.SuppressionIds;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ExtendedProperties;
+                return Properties is null ? default : Properties.ExtendedProperties;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceMetadata;
+                return Properties is null ? default : Properties.ResourceMetadata;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Label;
+                return Properties is null ? default : Properties.Label;
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.LearnMoreLink;
+                return Properties is null ? default : Properties.LearnMoreLink;
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.PotentialBenefits;
+                return Properties is null ? default : Properties.PotentialBenefits;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Actions;
+                return Properties is null ? default : Properties.Actions;
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Remediation;
+                return Properties is null ? default : Properties.Remediation;
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ExposedMetadataProperties;
+                return Properties is null ? default : Properties.ExposedMetadataProperties;
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.IsTracked;
+                return Properties is null ? default : Properties.IsTracked;
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.TrackedProperties;
+                return Properties is null ? default : Properties.TrackedProperties;
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Review;
+                return Properties is null ? default : Properties.Review;
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceWorkload;
+                return Properties is null ? default : Properties.ResourceWorkload;
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.SourceSystem;
+                return Properties is null ? default : Properties.SourceSystem;
             }
         }
 
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Notes;
+                return Properties is null ? default : Properties.Notes;
             }
         }
     }
