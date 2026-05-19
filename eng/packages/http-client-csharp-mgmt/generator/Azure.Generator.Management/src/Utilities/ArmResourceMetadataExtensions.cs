@@ -41,6 +41,11 @@ namespace Azure.Generator.Management.Utilities
                 // when this filter is introduced.
                 foreach (var resourceMethod in resourceMetadata.Methods)
                 {
+                    if (resourceMethod.Kind == ResourceOperationKind.CheckExistence)
+                    {
+                        continue;
+                    }
+
                     var inputClient = resourceMethod.InputClient;
                     if (!referencedClients.Contains(inputClient))
                     {
@@ -95,6 +100,10 @@ namespace Azure.Generator.Management.Utilities
                             // both resource and collection should have read method
                             methodsInResource.Add(method);
                             methodsInCollection.Add(method);
+                            break;
+                        case ResourceOperationKind.CheckExistence:
+                            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/56996
+                            // Temporarily omit check-existence operations until their public SDK shape is designed.
                             break;
                         case ResourceOperationKind.Update:
                             hasUpdateMethod = true;
