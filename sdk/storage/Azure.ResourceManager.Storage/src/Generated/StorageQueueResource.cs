@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _queueClientDiagnostics;
         private readonly Queue _queueRestClient;
-        private readonly ClientDiagnostics _queueServicesClientDiagnostics;
-        private readonly QueueServices _queueServicesRestClient;
         private readonly StorageQueueData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/queues";

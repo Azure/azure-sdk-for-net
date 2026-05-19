@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _blobContainersClientDiagnostics;
         private readonly BlobContainers _blobContainersRestClient;
-        private readonly ClientDiagnostics _blobServicesClientDiagnostics;
-        private readonly BlobServices _blobServicesRestClient;
         private readonly BlobContainerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices/containers";

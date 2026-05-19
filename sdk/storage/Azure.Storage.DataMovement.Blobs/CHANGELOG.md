@@ -11,6 +11,7 @@
 ### Bugs Fixed
 - Fixed an issue where corrupted or truncated checkpoint files could cause unexpected errors during transfer resume.
 - Fixed known issue where passing a `AzureSasCredential` to authenticate the source resource will not properly pass the credential for blob copy operations.
+- Fixed bug where pausing and resuming a transfer multiple times could cause a transfer item to be reported as completed successfully before it had finished transferring.
 
 ### Other Changes
 
