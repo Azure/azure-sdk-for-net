@@ -1,15 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility shim: preserves the old ResourceHealthAvailabilityStatus type from GA 1.0.0.
-// GA 1.0.0 returned Pageable<ResourceHealthAvailabilityStatus> from extension methods like
-// GetAvailabilityStatuses(). The new TypeSpec-generated SDK uses AvailabilityStatusData (which
-// inherits from a different base class and has a different property structure). This type cannot
-// be reproduced via @@clientName or any decorator — it requires a custom wrapper class that
-// adapts AvailabilityStatusData to the old type shape (inheriting ResourceData with Location
-// and Properties accessors). The IJsonModel/IPersistableModel implementations enable
-// ModelReaderWriter serialization support required by the SDK framework.
-
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
@@ -19,25 +10,20 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    /// <summary> availabilityStatus of a resource. </summary>
-    // GA 1.0.0 backward compatibility type. The old SDK returned this type from methods like
-    // GetAvailabilityStatuses(). The new SDK uses AvailabilityStatusData which has a different
-    // base class and property structure. This wrapper adapts AvailabilityStatusData to the old
-    // type shape (ResourceData base + Location + Properties). Marked EditorBrowsable(Never) so
-    // new code uses AvailabilityStatusData instead.
+#pragma warning disable CS1591
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ResourceHealthAvailabilityStatus : ResourceData, IJsonModel<ResourceHealthAvailabilityStatus>, IPersistableModel<ResourceHealthAvailabilityStatus>
     {
         private readonly AzureLocation? _location;
         private readonly ResourceHealthAvailabilityStatusProperties _properties;
 
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatus. </summary>
+        // This constructor only exists to satisfy the legacy shape of the GA 1.0.0 compatibility wrapper.
         internal ResourceHealthAvailabilityStatus()
         {
         }
 
-        /// <summary> Initializes a new instance wrapping an AvailabilityStatusData. </summary>
-        // Converts string Location to AzureLocation? and copies Properties reference.
+        // This wrapper is required because AvailabilityStatusData has a different base type and property layout,
+        // so no TypeSpec decorator can reproduce the GA 1.0.0 ResourceData-derived shape with Location and Properties.
         internal ResourceHealthAvailabilityStatus(AvailabilityStatusData data)
         {
             if (data == null)
@@ -48,13 +34,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Azure Resource Manager geo location of the resource. </summary>
+        // Re-exposes Location on the GA 1.0.0 wrapper because the generated model no longer inherits ResourceData in the same way.
         public AzureLocation? Location => _location;
 
         /// <summary> Properties of availability state. </summary>
+        // Re-exposes the old Properties accessor so existing callers keep the GA 1.0.0 object shape.
         public ResourceHealthAvailabilityStatusProperties Properties => _properties;
 
-        /// <summary> Factory method to create a ResourceHealthAvailabilityStatus from AvailabilityStatusData. </summary>
-        // Used by MappedPageable/MappedAsyncPageable as the selector function.
+        // Centralizes the generated-to-compat conversion used by the mapped pageable shims and single-item responses.
         internal static ResourceHealthAvailabilityStatus FromData(AvailabilityStatusData data)
         {
             if (data == null)
@@ -62,7 +49,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthAvailabilityStatus(data);
         }
 
-        /// <summary> IJsonModel.Create — deserializes JSON into the compat type via AvailabilityStatusData. </summary>
+        // Deserializes through AvailabilityStatusData first because the wire shape still matches the generated model, then wraps it in the GA-compatible type.
         ResourceHealthAvailabilityStatus IJsonModel<ResourceHealthAvailabilityStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +57,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return FromData(data);
         }
 
-        /// <summary> IJsonModel.Write — minimal implementation for SDK framework compliance. </summary>
+        // Provides the minimal writer required by the SDK serialization interfaces even though this compatibility wrapper is intended for reading existing APIs.
         void IJsonModel<ResourceHealthAvailabilityStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
         }
 
-        /// <summary> IPersistableModel.Create — deserializes BinaryData into the compat type. </summary>
+        // BinaryData deserialization follows the same generated-model-first path so framework helpers can materialize the compatibility type.
         ResourceHealthAvailabilityStatus IPersistableModel<ResourceHealthAvailabilityStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
@@ -85,13 +72,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return FromData(statusData);
         }
 
-        /// <summary> IPersistableModel.GetFormatFromOptions — returns JSON format. </summary>
+        // Returns JSON because that is the only supported persistence format for this compatibility wrapper.
         string IPersistableModel<ResourceHealthAvailabilityStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> IPersistableModel.Write — minimal implementation for SDK framework compliance. </summary>
+        // Provides the minimal BinaryData writer required for IPersistableModel even though the wrapper primarily exists for backward-compatible reads.
         BinaryData IPersistableModel<ResourceHealthAvailabilityStatus>.Write(ModelReaderWriterOptions options)
         {
             return BinaryData.FromString("{}");
         }
     }
+#pragma warning restore CS1591
 }

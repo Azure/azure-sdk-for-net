@@ -1,13 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility shims: map old GA 1.0.0 extension method names to new generated names.
-// The generator derives extension method names from the resource class name (e.g. "Event" → GetEvents()).
-// GA 1.0.0 used "GetResourceHealthEvents". @@clientName cannot rename extension methods on
-// ResourceHealthExtensions — they are derived from the TypeSpec resource model name.
-// Each extension method delegates through the corresponding Mockable* class to satisfy
-// the ValidateMockingPattern test requirement.
-
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,9 +15,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Gets the collection of ResourceHealthEvents for the subscription. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> instance the method will execute against. </param>
         /// <returns> An object representing collection of ResourceHealthEvents and their operations. </returns>
-        // GA 1.0.0 backward compatibility shim: preserves the old name "GetResourceHealthEvents".
-        // The new generated extension method is "GetEvents". Delegates through
-        // MockableResourceHealthSubscriptionResource for mocking support.
+        // This shim restores the GA extension-method name because generator-derived extension names come from the TypeSpec resource name,
+        // and @@clientName cannot rename extension methods on ResourceHealthExtensions.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceHealthEventCollection GetResourceHealthEvents(this SubscriptionResource subscriptionResource)
         {
@@ -37,9 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // GA 1.0.0 backward compatibility shim: preserves the old name "GetResourceHealthEventAsync".
-        // The new generated extension method is "GetEventAsync". Delegates through
-        // MockableResourceHealthSubscriptionResource for mocking support.
+        // Async counterpart for the same GA method-name shim, delegated through Mockable* to satisfy ValidateMockingPattern.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static async Task<Response<ResourceHealthEventResource>> GetResourceHealthEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
@@ -53,9 +43,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="queryStartTime"> Specifies from when to return events, based on the lastUpdateTime property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // GA 1.0.0 backward compatibility shim: preserves the old name "GetResourceHealthEvent".
-        // The new generated extension method is "GetEvent". Delegates through
-        // MockableResourceHealthSubscriptionResource for mocking support.
+        // Sync counterpart for the same GA method-name shim, delegated through Mockable* to satisfy ValidateMockingPattern.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Response<ResourceHealthEventResource> GetResourceHealthEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)

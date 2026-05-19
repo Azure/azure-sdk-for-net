@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: mockable methods for SubscriptionResource extension shims.
-// Required by ValidateMockingPattern test — each extension method on ResourceHealthExtensions
-// that extends SubscriptionResource must have a corresponding virtual method here.
-
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,9 +11,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
     public partial class MockableResourceHealthSubscriptionResource
     {
         /// <summary> Lists the current availability status for all the resources in the subscription. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusesBySubscriptionAsync.
-        // Wraps GetAvailabilityStatusesAsync() and converts Pageable<AvailabilityStatusResource>
-        // to Pageable<ResourceHealthAvailabilityStatus>.
+        // This mockable shim is required by ValidateMockingPattern, and it converts generated subscription availability items back to the GA 1.0.0 wrapper type.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -26,8 +20,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists the current availability status for all the resources in the subscription. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusesBySubscription.
-        // Sync version of GetAvailabilityStatusesBySubscriptionAsync.
+        // Sync counterpart for the same mocking requirement and GA-compatible item-type conversion.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -36,8 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Gets the collection of ResourceHealthEvents for the subscription. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetResourceHealthEvents.
-        // Delegates to the generated GetEvents() method.
+        // This mockable shim is required because method-name compatibility extensions must delegate through a virtual Mockable* member to satisfy ValidateMockingPattern.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ResourceHealthEventCollection GetResourceHealthEvents()
         {
@@ -45,8 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Gets a specific service health event in the subscription. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetResourceHealthEventAsync.
-        // Delegates to the generated GetEventAsync() method.
+        // Async mockable counterpart for the GA method name GetResourceHealthEventAsync, which now maps to the generated GetEventAsync method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ResourceHealthEventResource>> GetResourceHealthEventAsync(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
@@ -54,8 +45,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Gets a specific service health event in the subscription. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetResourceHealthEvent.
-        // Delegates to the generated GetEvent() method.
+        // Sync mockable counterpart for the GA method name GetResourceHealthEvent, which now maps to the generated GetEvent method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ResourceHealthEventResource> GetResourceHealthEvent(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {

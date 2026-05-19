@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: async pageable for the "Events.getBySingleResource" operation.
-// Async counterpart of HealthEventsBySingleResourcePageable. See that file for rationale.
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -14,7 +11,6 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary> Custom async pageable for health events by single resource. </summary>
     internal sealed class HealthEventsBySingleResourceAsyncPageable : AsyncPageable<ResourceHealthEventData>
     {
         private readonly ArmClient _client;
@@ -22,6 +18,8 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly string _filter;
         private readonly CancellationToken _cancellationToken;
 
+        // Async counterpart to HealthEventsBySingleResourcePageable for the same generator gap around Azure.Core.Page<Event>
+        // in ArmProviderActionSync-based listBySingleResource operations, which would need a spec-level custom list-result model to eliminate this shim.
         public HealthEventsBySingleResourceAsyncPageable(ArmClient client, ResourceIdentifier scope, string filter, CancellationToken cancellationToken)
         {
             _client = client;
@@ -30,9 +28,7 @@ namespace Azure.ResourceManager.ResourceHealth
             _cancellationToken = cancellationToken;
         }
 
-        /// <summary>
-        /// Asynchronously enumerates pages by delegating to EventsBySingleResourceHelper.GetPagesAsync.
-        /// </summary>
+        // Delegates to the helper because only the REST client methods were generated for this operation, not the public async pageable surface.
         public override async IAsyncEnumerable<Page<ResourceHealthEventData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
         {
             var helper = _client.GetCachedClient(c => new EventsBySingleResourceHelper(c, _scope));

@@ -1,15 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: rename generated resource class to match GA 1.0.0 SDK name.
-// The TypeSpec generator produces "ImpactedResource" but GA SDK shipped "ResourceHealthEventImpactedResource".
-// @@clientName cannot rename Resource classes; [CodeGenType] is the only mechanism.
-
+// [CodeGenType] is required because @@clientName can rename the impacted resource data model,
+// but it cannot rename the generated resource class that GA 1.0.0 shipped as ResourceHealthEventImpactedResource.
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary> A Class representing a ResourceHealthEventImpactedResource along with the instance operations that can be performed on it. </summary>
     [CodeGenType("ImpactedResource")]
     public partial class ResourceHealthEventImpactedResource
     {

@@ -1,14 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: mockable methods for ArmClient extension shims.
-// The Azure SDK ValidateMockingPattern test requires that every public extension method on
-// ResourceHealthExtensions has a corresponding virtual method with the same name and parameter
-// list (minus the 'this' parameter) on the appropriate Mockable* class. These methods implement
-// the actual logic that the extension methods delegate to. Without these, the mocking test fails
-// because the extension methods would call generated methods directly instead of going through
-// the mockable layer.
-
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,9 +12,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
     public partial class MockableResourceHealthArmClient
     {
         /// <summary> Lists availability statuses for a resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusesAsync(ArmClient, ...).
-        // Wraps the generated GetAllAsync() which returns Pageable<AvailabilityStatusData>,
-        // converting each item to ResourceHealthAvailabilityStatus via MappedAsyncPageable.
+        // This mockable shim is required by ValidateMockingPattern, and it converts generated AvailabilityStatusData items back to the GA 1.0.0 wrapper type.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -31,8 +21,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists availability statuses for a resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatuses(ArmClient, ...).
-        // Sync version of GetAvailabilityStatusesAsync.
+        // Sync counterpart for the same mocking requirement and GA-compatible item-type conversion.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -41,9 +30,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists child resource availability statuses. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusOfChildResourcesAsync(ArmClient, ...).
-        // Uses the same GetAllAsync() internally — the GA SDK exposed separate methods for
-        // parent and child resources but they hit similar REST endpoints.
+        // This preserves the GA child-resource method shape even though the generated API now returns the same generated AvailabilityStatusData sequence as other availability list operations.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -52,8 +39,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists child resource availability statuses. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusOfChildResources(ArmClient, ...).
-        // Sync version of GetAvailabilityStatusOfChildResourcesAsync.
+        // Sync counterpart for the same GA method-name and item-type compatibility shim.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -62,7 +48,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists historical availability statuses of child resources. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetHistoricalAvailabilityStatusesOfChildResourceAsync(ArmClient, ...).
+        // This preserves the GA historical child-resource method shape while converting the generated AvailabilityStatusData items to the GA wrapper type.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -71,8 +57,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists historical availability statuses of child resources. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetHistoricalAvailabilityStatusesOfChildResource(ArmClient, ...).
-        // Sync version of GetHistoricalAvailabilityStatusesOfChildResourceAsync.
+        // Sync counterpart for the same GA method-name and item-type compatibility shim.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -81,8 +66,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Gets current availability status for a single resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusAsync(ArmClient, ...).
-        // Gets AvailabilityStatusResource via scope resolver, calls Get(), wraps result.
+        // This wraps the generated AvailabilityStatusResource response so the public shim can still return the GA 1.0.0 ResourceHealthAvailabilityStatus type.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -92,8 +76,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Gets current availability status for a single resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatus(ArmClient, ...).
-        // Sync version of GetAvailabilityStatusAsync.
+        // Sync counterpart for the same single-item GA wrapper conversion.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -103,8 +86,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Gets current availability status for a single child resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusOfChildResourceAsync(ArmClient, ...).
-        // Gets ChildAvailabilityStatusResource via scope resolver, calls Get(), wraps result.
+        // This wraps the generated ChildAvailabilityStatusResource response so the public shim keeps the GA 1.0.0 return type.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -114,8 +96,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Gets current availability status for a single child resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusOfChildResource(ArmClient, ...).
-        // Sync version of GetAvailabilityStatusOfChildResourceAsync.
+        // Sync counterpart for the same child-resource GA wrapper conversion.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -125,9 +106,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists health events for a single resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetHealthEventsOfSingleResourceAsync(ArmClient, ...).
-        // Uses custom HealthEventsBySingleResourceAsyncPageable because the generator does not
-        // expose Events.getBySingleResource as a public API — only the internal REST client exists.
+        // This mockable shim is required by ValidateMockingPattern, and it uses the custom pageable because the generator emitted only REST request builders for listBySingleResource.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(ResourceIdentifier scope, string filter, CancellationToken cancellationToken = default)
         {
@@ -135,8 +114,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists health events for a single resource. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetHealthEventsOfSingleResource(ArmClient, ...).
-        // Sync version using HealthEventsBySingleResourcePageable.
+        // Sync counterpart for the same mocking requirement and manual pageable implementation for listBySingleResource.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ResourceHealthEventData> GetHealthEventsOfSingleResource(ResourceIdentifier scope, string filter, CancellationToken cancellationToken = default)
         {

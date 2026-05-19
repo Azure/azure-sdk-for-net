@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: mockable methods for ResourceGroupResource extension shims.
-// Required by ValidateMockingPattern test — each extension method on ResourceHealthExtensions
-// that extends ResourceGroupResource must have a corresponding virtual method here.
-
 using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.ResourceHealth.Models;
@@ -14,9 +10,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
     public partial class MockableResourceHealthResourceGroupResource
     {
         /// <summary> Lists the current availability status for all the resources in the resource group. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusesByResourceGroupAsync.
-        // Wraps GetAvailabilityStatusesAsync() (returns Pageable<AvailabilityStatusResource>)
-        // and converts to Pageable<ResourceHealthAvailabilityStatus>.
+        // This mockable shim is required by ValidateMockingPattern, and it also converts the generated AvailabilityStatusResource items back to the GA 1.0.0 wrapper type.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(string filter, string expand, CancellationToken cancellationToken = default)
         {
@@ -25,8 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary> Lists the current availability status for all the resources in the resource group. </summary>
-        // Mockable counterpart of ResourceHealthExtensions.GetAvailabilityStatusesByResourceGroup.
-        // Sync version of GetAvailabilityStatusesByResourceGroupAsync.
+        // Sync counterpart for the same mocking requirement and GA-compatible item-type conversion.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(string filter, string expand, CancellationToken cancellationToken = default)
         {
