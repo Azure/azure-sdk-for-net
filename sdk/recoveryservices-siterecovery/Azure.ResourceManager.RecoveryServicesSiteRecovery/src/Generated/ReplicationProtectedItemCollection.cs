@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         private readonly ClientDiagnostics _replicationProtectedItemsClientDiagnostics;
         private readonly ReplicationProtectedItems _replicationProtectedItemsRestClient;
-        private readonly ClientDiagnostics _targetComputeSizesClientDiagnostics;
-        private readonly TargetComputeSizes _targetComputeSizesRestClient;
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemCollection for mocking. </summary>
         protected ReplicationProtectedItemCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             TryGetApiVersion(ReplicationProtectedItemResource.ResourceType, out string replicationProtectedItemApiVersion);
             _replicationProtectedItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ReplicationProtectedItemResource.ResourceType.Namespace, Diagnostics);
             _replicationProtectedItemsRestClient = new ReplicationProtectedItems(_replicationProtectedItemsClientDiagnostics, Pipeline, Endpoint, replicationProtectedItemApiVersion ?? "2026-02-01");
-            _targetComputeSizesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ReplicationProtectedItemResource.ResourceType.Namespace, Diagnostics);
-            _targetComputeSizesRestClient = new TargetComputeSizes(_targetComputeSizesClientDiagnostics, Pipeline, Endpoint, replicationProtectedItemApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

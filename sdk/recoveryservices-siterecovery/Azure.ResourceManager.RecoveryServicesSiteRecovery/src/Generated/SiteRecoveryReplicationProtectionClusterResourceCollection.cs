@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         private readonly ClientDiagnostics _replicationProtectionClustersClientDiagnostics;
         private readonly ReplicationProtectionClusters _replicationProtectionClustersRestClient;
-        private readonly ClientDiagnostics _clusterRecoveryPointsClientDiagnostics;
-        private readonly ClusterRecoveryPoints _clusterRecoveryPointsRestClient;
-        private readonly ClientDiagnostics _clusterRecoveryPointClientDiagnostics;
-        private readonly ClusterRecoveryPoint _clusterRecoveryPointRestClient;
 
         /// <summary> Initializes a new instance of SiteRecoveryReplicationProtectionClusterResourceCollection for mocking. </summary>
         protected SiteRecoveryReplicationProtectionClusterResourceCollection()
@@ -45,10 +41,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             TryGetApiVersion(SiteRecoveryReplicationProtectionClusterResource.ResourceType, out string siteRecoveryReplicationProtectionClusterApiVersion);
             _replicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryReplicationProtectionClusterResource.ResourceType.Namespace, Diagnostics);
             _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterApiVersion ?? "2026-02-01");
-            _clusterRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryReplicationProtectionClusterResource.ResourceType.Namespace, Diagnostics);
-            _clusterRecoveryPointsRestClient = new ClusterRecoveryPoints(_clusterRecoveryPointsClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterApiVersion ?? "2026-02-01");
-            _clusterRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryReplicationProtectionClusterResource.ResourceType.Namespace, Diagnostics);
-            _clusterRecoveryPointRestClient = new ClusterRecoveryPoint(_clusterRecoveryPointClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
