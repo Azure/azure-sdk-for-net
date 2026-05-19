@@ -16,6 +16,7 @@ internal sealed class InvocationEndpointHandler
 {
     private const string InvocationIdResponseHeader = "x-agent-invocation-id";
     private const string SessionIdResponseHeader = PlatformHeaders.SessionId;
+    private const string SseContentTypePrefix = "text/event-stream";
 
     private readonly InvocationsActivitySource _activitySource;
     private readonly ILogger<InvocationEndpointHandler> _logger;
@@ -75,7 +76,10 @@ internal sealed class InvocationEndpointHandler
                 return Task.CompletedTask;
             });
 
-            await handler.HandleAsync(request, response, context, httpContext.RequestAborted);
+            await RunWithSseKeepAliveAsync(
+                httpContext,
+                $"invocation {invocationId}",
+                () => handler.HandleAsync(request, response, context, httpContext.RequestAborted));
         }
         catch (Exception ex)
         {
@@ -94,7 +98,10 @@ internal sealed class InvocationEndpointHandler
             "Getting invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
             invocationId, context.Isolation.UserIsolationKey is not null, context.Isolation.ChatIsolationKey is not null);
         InjectSessionIdHeader(httpContext.Response, context.SessionId);
-        await handler.GetAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted);
+        await RunWithSseKeepAliveAsync(
+            httpContext,
+            $"invocation {invocationId} (get)",
+            () => handler.GetAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted));
     }
 
     /// <summary>
@@ -107,7 +114,10 @@ internal sealed class InvocationEndpointHandler
             "Cancelling invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
             invocationId, context.Isolation.UserIsolationKey is not null, context.Isolation.ChatIsolationKey is not null);
         InjectSessionIdHeader(httpContext.Response, context.SessionId);
-        await handler.CancelAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted);
+        await RunWithSseKeepAliveAsync(
+            httpContext,
+            $"invocation {invocationId} (cancel)",
+            () => handler.CancelAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted));
     }
 
     /// <summary>
@@ -160,6 +170,56 @@ internal sealed class InvocationEndpointHandler
         if (!string.IsNullOrEmpty(sessionId))
         {
             response.Headers[SessionIdResponseHeader] = sessionId;
+        }
+    }
+
+    /// <summary>
+    /// Wraps <paramref name="httpContext"/>.Response.Body with a <see cref="SseKeepAliveSession"/>
+    /// so that any handler whose response content type is <c>text/event-stream</c> automatically
+    /// receives periodic <c>: keep-alive\n\n</c> comments at the interval configured via the
+    /// <c>SSE_KEEPALIVE_INTERVAL</c> environment variable.
+    /// </summary>
+    /// <remarks>
+    /// <para>The session is created in a "synchronization only" mode upfront so application writes
+    /// share a lock with the timer. A <see cref="HttpResponse.OnStarting(System.Func{System.Threading.Tasks.Task})"/>
+    /// callback activates the timer only when the handler's chosen content type begins with
+    /// <c>text/event-stream</c>, avoiding accidental injection of SSE comments into non-SSE payloads.</para>
+    /// <para>When the keep-alive interval is disabled (default), the wrapping is skipped entirely so
+    /// handlers see the original response body.</para>
+    /// </remarks>
+    private async Task RunWithSseKeepAliveAsync(HttpContext httpContext, string contextName, Func<Task> invokeHandler)
+    {
+        var keepAliveInterval = FoundryEnvironment.SseKeepAliveInterval;
+        if (keepAliveInterval == Timeout.InfiniteTimeSpan || keepAliveInterval <= TimeSpan.Zero)
+        {
+            await invokeHandler().ConfigureAwait(false);
+            return;
+        }
+
+        var response = httpContext.Response;
+        var originalBody = response.Body;
+        var session = SseKeepAliveSession.Start(originalBody, Timeout.InfiniteTimeSpan, _logger, contextName);
+        response.Body = session.Stream;
+
+        response.OnStarting(() =>
+        {
+            var contentType = response.ContentType;
+            if (contentType is not null
+                && contentType.StartsWith(SseContentTypePrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                session.EnableKeepAlive(keepAliveInterval);
+            }
+            return Task.CompletedTask;
+        });
+
+        try
+        {
+            await invokeHandler().ConfigureAwait(false);
+        }
+        finally
+        {
+            response.Body = originalBody;
+            await session.DisposeAsync().ConfigureAwait(false);
         }
     }
 }
