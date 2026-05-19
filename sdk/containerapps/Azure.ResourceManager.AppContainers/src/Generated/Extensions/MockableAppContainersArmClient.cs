@@ -75,6 +75,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppsFunctionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
+        public virtual ContainerAppRevisionResource GetContainerAppRevisionResource(ResourceIdentifier id)
+        {
+            ContainerAppRevisionResource.ValidateResourceId(id);
+            return new ContainerAppRevisionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="LabelHistoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LabelHistoryResource"/> object. </returns>
@@ -255,6 +264,24 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppManagedEnvironmentResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
+        public virtual ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier id)
+        {
+            ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
+            return new ContainerAppConnectedEnvironmentDaprComponentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentDaprComponentResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> object. </returns>
@@ -363,15 +390,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppsRevisionFunctionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
-        public virtual ContainerAppRevisionResource GetContainerAppRevisionResource(ResourceIdentifier id)
-        {
-            ContainerAppRevisionResource.ValidateResourceId(id);
-            return new ContainerAppRevisionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="AppResiliencyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppResiliencyResource"/> object. </returns>
@@ -397,24 +415,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppManagedEnvironmentCertificateResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentCertificateResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
-        public virtual ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier id)
-        {
-            ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
-            return new ContainerAppConnectedEnvironmentDaprComponentResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentDaprComponentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

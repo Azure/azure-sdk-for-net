@@ -763,6 +763,39 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
+        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentDaprComponents in the <see cref="ContainerAppConnectedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentDaprComponents and their operations over a ContainerAppConnectedEnvironmentDaprComponentResource. </returns>
+        public virtual ContainerAppConnectedEnvironmentDaprComponentCollection GetContainerAppConnectedEnvironmentDaprComponents()
+        {
+            return GetCachedClient(client => new ContainerAppConnectedEnvironmentDaprComponentCollection(client, Id));
+        }
+
+        /// <summary> Get a dapr component. </summary>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppConnectedEnvironmentDaprComponentResource>> GetContainerAppConnectedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return await GetContainerAppConnectedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a dapr component. </summary>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppConnectedEnvironmentDaprComponentResource> GetContainerAppConnectedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return GetContainerAppConnectedEnvironmentDaprComponents().Get(componentName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppConnectedEnvironmentStorages in the <see cref="ContainerAppConnectedEnvironmentResource"/>. </summary>
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentStorages and their operations over a ContainerAppConnectedEnvironmentStorageResource. </returns>
         public virtual ContainerAppConnectedEnvironmentStorageCollection GetContainerAppConnectedEnvironmentStorages()
@@ -827,39 +860,6 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             return GetContainerAppConnectedEnvironmentCertificates().Get(certificateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentDaprComponents in the <see cref="ContainerAppConnectedEnvironmentResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentDaprComponents and their operations over a ContainerAppConnectedEnvironmentDaprComponentResource. </returns>
-        public virtual ContainerAppConnectedEnvironmentDaprComponentCollection GetContainerAppConnectedEnvironmentDaprComponents()
-        {
-            return GetCachedClient(client => new ContainerAppConnectedEnvironmentDaprComponentCollection(client, Id));
-        }
-
-        /// <summary> Get a dapr component. </summary>
-        /// <param name="componentName"> Name of the Dapr Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppConnectedEnvironmentDaprComponentResource>> GetContainerAppConnectedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-
-            return await GetContainerAppConnectedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a dapr component. </summary>
-        /// <param name="componentName"> Name of the Dapr Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppConnectedEnvironmentDaprComponentResource> GetContainerAppConnectedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-
-            return GetContainerAppConnectedEnvironmentDaprComponents().Get(componentName, cancellationToken);
         }
     }
 }

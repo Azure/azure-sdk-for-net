@@ -1268,6 +1268,39 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppsFunctions().Get(functionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerAppRevisions in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppRevisions and their operations over a ContainerAppRevisionResource. </returns>
+        public virtual ContainerAppRevisionCollection GetContainerAppRevisions()
+        {
+            return GetCachedClient(client => new ContainerAppRevisionCollection(client, Id));
+        }
+
+        /// <summary> Get a revision of a Container App. </summary>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppRevisionResource>> GetContainerAppRevisionAsync(string revisionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+
+            return await GetContainerAppRevisions().GetAsync(revisionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a revision of a Container App. </summary>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppRevisionResource> GetContainerAppRevision(string revisionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+
+            return GetContainerAppRevisions().Get(revisionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of LabelHistories in the <see cref="ContainerAppResource"/>. </summary>
         /// <returns> An object representing collection of LabelHistories and their operations over a LabelHistoryResource. </returns>
         public virtual LabelHistoryCollection GetLabelHistories()
@@ -1398,39 +1431,6 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
             return GetContainerAppAuthConfigs().Get(authConfigName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppRevisions in the <see cref="ContainerAppResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppRevisions and their operations over a ContainerAppRevisionResource. </returns>
-        public virtual ContainerAppRevisionCollection GetContainerAppRevisions()
-        {
-            return GetCachedClient(client => new ContainerAppRevisionCollection(client, Id));
-        }
-
-        /// <summary> Get a revision of a Container App. </summary>
-        /// <param name="revisionName"> Name of the Container App Revision. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppRevisionResource>> GetContainerAppRevisionAsync(string revisionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
-
-            return await GetContainerAppRevisions().GetAsync(revisionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a revision of a Container App. </summary>
-        /// <param name="revisionName"> Name of the Container App Revision. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppRevisionResource> GetContainerAppRevision(string revisionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
-
-            return GetContainerAppRevisions().Get(revisionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AppResiliencies in the <see cref="ContainerAppResource"/>. </summary>

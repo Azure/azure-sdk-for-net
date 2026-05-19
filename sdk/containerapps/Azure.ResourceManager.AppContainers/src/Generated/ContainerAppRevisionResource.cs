@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly ClientDiagnostics _containerAppRevisionsClientDiagnostics;
         private readonly ContainerAppRevisions _containerAppRevisionsRestClient;
-        private readonly ClientDiagnostics _containerAppsRevisionsClientDiagnostics;
-        private readonly ContainerAppsRevisions _containerAppsRevisionsRestClient;
         private readonly ClientDiagnostics _functionsExtensionClientDiagnostics;
         private readonly FunctionsExtension _functionsExtensionRestClient;
         private readonly ContainerAppRevisionData _data;
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.AppContainers
             TryGetApiVersion(ResourceType, out string containerAppRevisionApiVersion);
             _containerAppRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             _containerAppRevisionsRestClient = new ContainerAppRevisions(_containerAppRevisionsClientDiagnostics, Pipeline, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
-            _containerAppsRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsRevisionsRestClient = new ContainerAppsRevisions(_containerAppsRevisionsClientDiagnostics, Pipeline, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
             _functionsExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             _functionsExtensionRestClient = new FunctionsExtension(_functionsExtensionClientDiagnostics, Pipeline, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
@@ -220,7 +216,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ActivateRevisionAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
+            using DiagnosticScope scope = _containerAppRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
             scope.Start();
             try
             {
@@ -228,7 +224,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRevisionsRestClient.CreateActivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppRevisionsRestClient.CreateActivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -263,7 +259,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ActivateRevision(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
+            using DiagnosticScope scope = _containerAppRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.ActivateRevision");
             scope.Start();
             try
             {
@@ -271,7 +267,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRevisionsRestClient.CreateActivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppRevisionsRestClient.CreateActivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -306,7 +302,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeactivateRevisionAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
+            using DiagnosticScope scope = _containerAppRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
             scope.Start();
             try
             {
@@ -314,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRevisionsRestClient.CreateDeactivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppRevisionsRestClient.CreateDeactivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -349,7 +345,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeactivateRevision(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
+            using DiagnosticScope scope = _containerAppRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.DeactivateRevision");
             scope.Start();
             try
             {
@@ -357,7 +353,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRevisionsRestClient.CreateDeactivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppRevisionsRestClient.CreateDeactivateRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -392,7 +388,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RestartRevisionAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");
+            using DiagnosticScope scope = _containerAppRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");
             scope.Start();
             try
             {
@@ -400,7 +396,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRevisionsRestClient.CreateRestartRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppRevisionsRestClient.CreateRestartRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -435,7 +431,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RestartRevision(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");
+            using DiagnosticScope scope = _containerAppRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionResource.RestartRevision");
             scope.Start();
             try
             {
@@ -443,7 +439,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRevisionsRestClient.CreateRestartRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppRevisionsRestClient.CreateRestartRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

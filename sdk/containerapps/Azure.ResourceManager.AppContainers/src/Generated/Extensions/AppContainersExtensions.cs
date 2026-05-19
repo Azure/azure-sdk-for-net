@@ -129,6 +129,24 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppRevisionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
+        public static ContainerAppRevisionResource GetContainerAppRevisionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppRevisionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="LabelHistoryResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -461,6 +479,42 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
+        public static ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentDaprComponentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
+        public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -677,24 +731,6 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppRevisionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
-        public static ContainerAppRevisionResource GetContainerAppRevisionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppContainersArmClient(client).GetContainerAppRevisionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="AppResiliencyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -746,42 +782,6 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentCertificateResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
-        public static ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentDaprComponentResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
-        public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
         }
 
         /// <summary>

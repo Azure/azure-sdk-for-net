@@ -894,6 +894,54 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="createdOn">
+        /// Timestamp describing when the revision was created
+        /// by controller
+        /// </param>
+        /// <param name="lastActiveOn"> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the revision. </param>
+        /// <param name="template">
+        /// Container App Revision Template with all possible settings and the
+        /// defaults if user did not provide them. The defaults are populated
+        /// as they were at the creation time
+        /// </param>
+        /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
+        /// <param name="replicas"> Number of pods currently running for this revision. </param>
+        /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
+        /// <param name="labels"> List of labels assigned to this revision. </param>
+        /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
+        /// <param name="healthState"> Current health State of the revision. </param>
+        /// <param name="provisioningState"> Current provisioning State of the revision. </param>
+        /// <param name="runningState"> Current running state of the revision. </param>
+        /// <returns> A new <see cref="AppContainers.ContainerAppRevisionData"/> instance for mocking. </returns>
+        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastActiveOn = default, string fqdn = default, ContainerAppTemplate template = default, bool? isActive = default, int? replicas = default, int? trafficWeight = default, IEnumerable<string> labels = default, string provisioningError = default, ContainerAppRevisionHealthState? healthState = default, ContainerAppRevisionProvisioningState? provisioningState = default, RevisionRunningState? runningState = default)
+        {
+            return new ContainerAppRevisionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                createdOn is null && lastActiveOn is null && fqdn is null && template is null && isActive is null && replicas is null && trafficWeight is null && labels is null && provisioningError is null && healthState is null && provisioningState is null && runningState is null ? default : new RevisionProperties(
+                    createdOn,
+                    lastActiveOn,
+                    fqdn,
+                    template,
+                    isActive,
+                    replicas,
+                    trafficWeight,
+                    (labels ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningError,
+                    healthState,
+                    provisioningState,
+                    runningState,
+                    null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="labelHistoryRecords"> List of label history records. </param>
         /// <returns> A new <see cref="AppContainers.LabelHistoryData"/> instance for mocking. </returns>
         public static LabelHistoryData LabelHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LabelHistoryRecordItem> labelHistoryRecords = default)
@@ -1808,6 +1856,54 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppWorkloadProfileStateProperties(minimumCount, maximumCount, currentCount, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="componentType"> Component type. </param>
+        /// <param name="version"> Component version. </param>
+        /// <param name="ignoreErrors"> Boolean describing if the component errors are ignores. </param>
+        /// <param name="initTimeout"> Initialization timeout. </param>
+        /// <param name="secrets"> Collection of secrets used by a Dapr component. </param>
+        /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
+        /// <param name="metadata"> Component metadata. </param>
+        /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
+        /// <param name="serviceComponentBind"> List of container app services that are bound to the Dapr component. </param>
+        /// <param name="provisioningState"> Provisioning state of the Connected Environment Dapr Component. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
+        /// <returns> A new <see cref="AppContainers.ContainerAppDaprComponentData"/> instance for mocking. </returns>
+        public static ContainerAppDaprComponentData ContainerAppDaprComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string componentType = default, string version = default, bool? ignoreErrors = default, string initTimeout = default, IEnumerable<ContainerAppWritableSecret> secrets = default, string secretStoreComponent = default, IEnumerable<ContainerAppDaprMetadata> metadata = default, IEnumerable<string> scopes = default, IEnumerable<DaprComponentServiceBinding> serviceComponentBind = default, DaprComponentProvisioningState? provisioningState = default, string deploymentErrors = default)
+        {
+            return new ContainerAppDaprComponentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                componentType is null && version is null && ignoreErrors is null && initTimeout is null && secrets is null && secretStoreComponent is null && metadata is null && scopes is null && serviceComponentBind is null && provisioningState is null && deploymentErrors is null ? default : new DaprComponentProperties(
+                    componentType,
+                    version,
+                    ignoreErrors,
+                    initTimeout,
+                    (secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>()).ToList(),
+                    secretStoreComponent,
+                    (metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>()).ToList(),
+                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
+                    (serviceComponentBind ?? new ChangeTrackingList<DaprComponentServiceBinding>()).ToList(),
+                    provisioningState,
+                    deploymentErrors,
+                    null));
+        }
+
+        /// <summary> Dapr component Secret for ListSecrets Action. </summary>
+        /// <param name="name"> Secret Name. </param>
+        /// <param name="value"> Secret Value. </param>
+        /// <returns> A new <see cref="Models.ContainerAppDaprSecret"/> instance for mocking. </returns>
+        public static ContainerAppDaprSecret ContainerAppDaprSecret(string name = default, string value = default)
+        {
+            return new ContainerAppDaprSecret(name, value, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Storage resource for connectedEnvironment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2253,54 +2349,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="createdOn">
-        /// Timestamp describing when the revision was created
-        /// by controller
-        /// </param>
-        /// <param name="lastActiveOn"> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the revision. </param>
-        /// <param name="template">
-        /// Container App Revision Template with all possible settings and the
-        /// defaults if user did not provide them. The defaults are populated
-        /// as they were at the creation time
-        /// </param>
-        /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
-        /// <param name="replicas"> Number of pods currently running for this revision. </param>
-        /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
-        /// <param name="labels"> List of labels assigned to this revision. </param>
-        /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
-        /// <param name="healthState"> Current health State of the revision. </param>
-        /// <param name="provisioningState"> Current provisioning State of the revision. </param>
-        /// <param name="runningState"> Current running state of the revision. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppRevisionData"/> instance for mocking. </returns>
-        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastActiveOn = default, string fqdn = default, ContainerAppTemplate template = default, bool? isActive = default, int? replicas = default, int? trafficWeight = default, IEnumerable<string> labels = default, string provisioningError = default, ContainerAppRevisionHealthState? healthState = default, ContainerAppRevisionProvisioningState? provisioningState = default, RevisionRunningState? runningState = default)
-        {
-            return new ContainerAppRevisionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                createdOn is null && lastActiveOn is null && fqdn is null && template is null && isActive is null && replicas is null && trafficWeight is null && labels is null && provisioningError is null && healthState is null && provisioningState is null && runningState is null ? default : new RevisionProperties(
-                    createdOn,
-                    lastActiveOn,
-                    fqdn,
-                    template,
-                    isActive,
-                    replicas,
-                    trafficWeight,
-                    (labels ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningError,
-                    healthState,
-                    provisioningState,
-                    runningState,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="timeoutPolicy"> Policy to set request timeouts. </param>
         /// <param name="httpRetryPolicy"> Policy that defines http request retry conditions. </param>
         /// <param name="circuitBreakerPolicy"> Policy that defines circuit breaker conditions. </param>
@@ -2435,54 +2483,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new AppContainersPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="componentType"> Component type. </param>
-        /// <param name="version"> Component version. </param>
-        /// <param name="ignoreErrors"> Boolean describing if the component errors are ignores. </param>
-        /// <param name="initTimeout"> Initialization timeout. </param>
-        /// <param name="secrets"> Collection of secrets used by a Dapr component. </param>
-        /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
-        /// <param name="metadata"> Component metadata. </param>
-        /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
-        /// <param name="serviceComponentBind"> List of container app services that are bound to the Dapr component. </param>
-        /// <param name="provisioningState"> Provisioning state of the Connected Environment Dapr Component. </param>
-        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppDaprComponentData"/> instance for mocking. </returns>
-        public static ContainerAppDaprComponentData ContainerAppDaprComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string componentType = default, string version = default, bool? ignoreErrors = default, string initTimeout = default, IEnumerable<ContainerAppWritableSecret> secrets = default, string secretStoreComponent = default, IEnumerable<ContainerAppDaprMetadata> metadata = default, IEnumerable<string> scopes = default, IEnumerable<DaprComponentServiceBinding> serviceComponentBind = default, DaprComponentProvisioningState? provisioningState = default, string deploymentErrors = default)
-        {
-            return new ContainerAppDaprComponentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                componentType is null && version is null && ignoreErrors is null && initTimeout is null && secrets is null && secretStoreComponent is null && metadata is null && scopes is null && serviceComponentBind is null && provisioningState is null && deploymentErrors is null ? default : new DaprComponentProperties(
-                    componentType,
-                    version,
-                    ignoreErrors,
-                    initTimeout,
-                    (secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>()).ToList(),
-                    secretStoreComponent,
-                    (metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>()).ToList(),
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    (serviceComponentBind ?? new ChangeTrackingList<DaprComponentServiceBinding>()).ToList(),
-                    provisioningState,
-                    deploymentErrors,
-                    null));
-        }
-
-        /// <summary> Dapr component Secret for ListSecrets Action. </summary>
-        /// <param name="name"> Secret Name. </param>
-        /// <param name="value"> Secret Value. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDaprSecret"/> instance for mocking. </returns>
-        public static ContainerAppDaprSecret ContainerAppDaprSecret(string name = default, string value = default)
-        {
-            return new ContainerAppDaprSecret(name, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Advanced Ingress routing for path/header based routing for a Container App Environment. </summary>
