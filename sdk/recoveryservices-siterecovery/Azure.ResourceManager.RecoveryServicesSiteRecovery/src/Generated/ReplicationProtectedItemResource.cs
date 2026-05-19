@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Request to update the mobility service on the protected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> ReinstallMobilityServiceAsync(WaitUntil waitUntil, ReinstallMobilityServiceRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> ReinstallMobilityServiceAsync(WaitUntil waitUntil, ReinstallMobilityServiceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectedItemsRestClient.CreateReinstallMobilityServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReinstallMobilityServiceRequest.ToRequestContent(content), context);
+                HttpMessage message = _replicationProtectedItemsRestClient.CreateReinstallMobilityServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReinstallMobilityServiceContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(
                     new ReplicationProtectedItemOperationSource(Client),
@@ -1174,7 +1174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Request to update the mobility service on the protected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectedItemResource> ReinstallMobilityService(WaitUntil waitUntil, ReinstallMobilityServiceRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReplicationProtectedItemResource> ReinstallMobilityService(WaitUntil waitUntil, ReinstallMobilityServiceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectedItemsRestClient.CreateReinstallMobilityServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReinstallMobilityServiceRequest.ToRequestContent(content), context);
+                HttpMessage message = _replicationProtectedItemsRestClient.CreateReinstallMobilityServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReinstallMobilityServiceContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(
                     new ReplicationProtectedItemOperationSource(Client),

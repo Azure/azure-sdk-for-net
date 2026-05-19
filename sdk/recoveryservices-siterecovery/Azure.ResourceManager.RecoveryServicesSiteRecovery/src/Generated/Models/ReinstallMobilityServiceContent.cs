@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Request to Reinstall the mobility service on a protected item. </summary>
-    public partial class ReinstallMobilityServiceRequest
+    public partial class ReinstallMobilityServiceContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReinstallMobilityServiceRequest"/>. </summary>
-        public ReinstallMobilityServiceRequest()
+        /// <summary> Initializes a new instance of <see cref="ReinstallMobilityServiceContent"/>. </summary>
+        public ReinstallMobilityServiceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReinstallMobilityServiceRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReinstallMobilityServiceContent"/>. </summary>
         /// <param name="properties"> The properties of the reinstall mobility service request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReinstallMobilityServiceRequest(ReinstallMobilityServiceRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReinstallMobilityServiceContent(ReinstallMobilityServiceRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

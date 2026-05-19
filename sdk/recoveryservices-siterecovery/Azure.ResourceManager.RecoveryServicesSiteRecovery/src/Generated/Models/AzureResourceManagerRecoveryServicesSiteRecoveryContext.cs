@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(RecoveryServicesSiteRecoverySecurityProfileProperties))]
     [ModelReaderWriterBuildable(typeof(RecoveryVirtualNetworkCustomDetails))]
     [ModelReaderWriterBuildable(typeof(RegisteredClusterNodes))]
-    [ModelReaderWriterBuildable(typeof(ReinstallMobilityServiceRequest))]
+    [ModelReaderWriterBuildable(typeof(ReinstallMobilityServiceContent))]
     [ModelReaderWriterBuildable(typeof(ReinstallMobilityServiceRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RemoveDisksContent))]
     [ModelReaderWriterBuildable(typeof(RemoveDisksInputProperties))]

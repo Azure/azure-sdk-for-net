@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier kekKeyVaultArmId = default;
             string failoverDiskName = default;
             string tfoDiskName = default;
-            DiskNetworkAccessPolicy? recoveryNetworkAccessPolicy = default;
+            SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy = default;
             string recoveryDiskAccessId = default;
-            DiskPublicNetworkAccess? recoveryPublicNetworkAccess = default;
+            SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryNetworkAccessPolicy = new DiskNetworkAccessPolicy(prop.Value.GetString());
+                    recoveryNetworkAccessPolicy = new SiteRecoveryDiskNetworkAccessPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("recoveryDiskAccessId"u8))
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryPublicNetworkAccess = new DiskPublicNetworkAccess(prop.Value.GetString());
+                    recoveryPublicNetworkAccess = new SiteRecoveryDiskPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

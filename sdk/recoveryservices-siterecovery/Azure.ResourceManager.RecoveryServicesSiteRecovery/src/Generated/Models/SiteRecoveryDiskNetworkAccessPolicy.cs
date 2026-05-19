@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The network access policy for managed disks. </summary>
-    public readonly partial struct DiskNetworkAccessPolicy : IEquatable<DiskNetworkAccessPolicy>
+    public readonly partial struct SiteRecoveryDiskNetworkAccessPolicy : IEquatable<SiteRecoveryDiskNetworkAccessPolicy>
     {
         private readonly string _value;
         /// <summary> Allow all network access. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Deny all network access. </summary>
         private const string DenyAllValue = "DenyAll";
 
-        /// <summary> Initializes a new instance of <see cref="DiskNetworkAccessPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskNetworkAccessPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DiskNetworkAccessPolicy(string value)
+        public SiteRecoveryDiskNetworkAccessPolicy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Allow all network access. </summary>
-        public static DiskNetworkAccessPolicy AllowAll { get; } = new DiskNetworkAccessPolicy(AllowAllValue);
+        public static SiteRecoveryDiskNetworkAccessPolicy AllowAll { get; } = new SiteRecoveryDiskNetworkAccessPolicy(AllowAllValue);
 
         /// <summary> Allow private access through disk access resource. </summary>
-        public static DiskNetworkAccessPolicy AllowPrivate { get; } = new DiskNetworkAccessPolicy(AllowPrivateValue);
+        public static SiteRecoveryDiskNetworkAccessPolicy AllowPrivate { get; } = new SiteRecoveryDiskNetworkAccessPolicy(AllowPrivateValue);
 
         /// <summary> Deny all network access. </summary>
-        public static DiskNetworkAccessPolicy DenyAll { get; } = new DiskNetworkAccessPolicy(DenyAllValue);
+        public static SiteRecoveryDiskNetworkAccessPolicy DenyAll { get; } = new SiteRecoveryDiskNetworkAccessPolicy(DenyAllValue);
 
-        /// <summary> Determines if two <see cref="DiskNetworkAccessPolicy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SiteRecoveryDiskNetworkAccessPolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DiskNetworkAccessPolicy left, DiskNetworkAccessPolicy right) => left.Equals(right);
+        public static bool operator ==(SiteRecoveryDiskNetworkAccessPolicy left, SiteRecoveryDiskNetworkAccessPolicy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DiskNetworkAccessPolicy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SiteRecoveryDiskNetworkAccessPolicy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DiskNetworkAccessPolicy left, DiskNetworkAccessPolicy right) => !left.Equals(right);
+        public static bool operator !=(SiteRecoveryDiskNetworkAccessPolicy left, SiteRecoveryDiskNetworkAccessPolicy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DiskNetworkAccessPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SiteRecoveryDiskNetworkAccessPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskNetworkAccessPolicy(string value) => new DiskNetworkAccessPolicy(value);
+        public static implicit operator SiteRecoveryDiskNetworkAccessPolicy(string value) => new SiteRecoveryDiskNetworkAccessPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="DiskNetworkAccessPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SiteRecoveryDiskNetworkAccessPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiskNetworkAccessPolicy?(string value) => value == null ? null : new DiskNetworkAccessPolicy(value);
+        public static implicit operator SiteRecoveryDiskNetworkAccessPolicy?(string value) => value == null ? null : new SiteRecoveryDiskNetworkAccessPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DiskNetworkAccessPolicy other && Equals(other);
+        public override bool Equals(object obj) => obj is SiteRecoveryDiskNetworkAccessPolicy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DiskNetworkAccessPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SiteRecoveryDiskNetworkAccessPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

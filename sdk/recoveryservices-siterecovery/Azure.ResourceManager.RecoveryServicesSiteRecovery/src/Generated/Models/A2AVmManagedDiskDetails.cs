@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
         /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, DiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, DiskPublicNetworkAccess? recoveryPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
 
         /// <summary> The network access policy for the recovery managed disk. </summary>
-        public DiskNetworkAccessPolicy? RecoveryNetworkAccessPolicy { get; set; }
+        public SiteRecoveryDiskNetworkAccessPolicy? RecoveryNetworkAccessPolicy { get; set; }
 
         /// <summary> The recovery disk access Arm Id. </summary>
         public string RecoveryDiskAccessId { get; set; }
 
         /// <summary> The public network access setting for the recovery managed disk. </summary>
-        public DiskPublicNetworkAccess? RecoveryPublicNetworkAccess { get; set; }
+        public SiteRecoveryDiskPublicNetworkAccess? RecoveryPublicNetworkAccess { get; set; }
     }
 }
