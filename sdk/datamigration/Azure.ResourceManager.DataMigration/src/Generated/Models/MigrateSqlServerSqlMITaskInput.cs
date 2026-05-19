@@ -7,30 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for task that migrates SQL Server databases to Azure SQL Database Managed Instance. </summary>
     public partial class MigrateSqlServerSqlMITaskInput : SqlMigrationTaskInput
     {
-        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
-        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
-        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="selectedDatabases"> Databases to migrate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public MigrateSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases) : base(sourceConnectionInfo, targetConnectionInfo)
-        {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
-
-            SelectedDatabases = selectedDatabases.ToList();
-            SelectedLogins = new ChangeTrackingList<string>();
-            SelectedAgentJobs = new ChangeTrackingList<string>();
-        }
-
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>

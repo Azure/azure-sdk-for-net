@@ -13,10 +13,10 @@ using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownServerConnectionInfo : ServerConnectionInfo, IJsonModel<ServerConnectionInfo>
+    internal partial class UnknownConnectionInfo : ServerConnectionInfo, IJsonModel<ServerConnectionInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownServerConnectionInfo"/> for deserialization. </summary>
-        internal UnknownServerConnectionInfo()
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectionInfo"/> for deserialization. </summary>
+        internal UnknownConnectionInfo()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownServerConnectionInfo DeserializeUnknownServerConnectionInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownConnectionInfo DeserializeUnknownConnectionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownServerConnectionInfo(@type, userName, password, additionalBinaryDataProperties);
+            return new UnknownConnectionInfo(@type, userName, password, additionalBinaryDataProperties);
         }
     }
 }
