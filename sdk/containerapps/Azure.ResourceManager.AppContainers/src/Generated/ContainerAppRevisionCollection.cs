@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly ClientDiagnostics _containerAppRevisionsClientDiagnostics;
         private readonly ContainerAppRevisions _containerAppRevisionsRestClient;
-        private readonly ClientDiagnostics _containerAppsRevisionsClientDiagnostics;
-        private readonly ContainerAppsRevisions _containerAppsRevisionsRestClient;
-        private readonly ClientDiagnostics _functionsExtensionClientDiagnostics;
-        private readonly FunctionsExtension _functionsExtensionRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppRevisionCollection for mocking. </summary>
         protected ContainerAppRevisionCollection()
@@ -45,10 +41,6 @@ namespace Azure.ResourceManager.AppContainers
             TryGetApiVersion(ContainerAppRevisionResource.ResourceType, out string containerAppRevisionApiVersion);
             _containerAppRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppRevisionResource.ResourceType.Namespace, Diagnostics);
             _containerAppRevisionsRestClient = new ContainerAppRevisions(_containerAppRevisionsClientDiagnostics, Pipeline, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
-            _containerAppsRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppRevisionResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsRevisionsRestClient = new ContainerAppsRevisions(_containerAppsRevisionsClientDiagnostics, Pipeline, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
-            _functionsExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppRevisionResource.ResourceType.Namespace, Diagnostics);
-            _functionsExtensionRestClient = new FunctionsExtension(_functionsExtensionClientDiagnostics, Pipeline, Endpoint, containerAppRevisionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

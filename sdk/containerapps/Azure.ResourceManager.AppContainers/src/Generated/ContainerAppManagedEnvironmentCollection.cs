@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly ClientDiagnostics _containerAppManagedEnvironmentsClientDiagnostics;
         private readonly ContainerAppManagedEnvironments _containerAppManagedEnvironmentsRestClient;
-        private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly Namespaces _namespacesRestClient;
-        private readonly ClientDiagnostics _managedEnvironmentPrivateLinkResourcesClientDiagnostics;
-        private readonly ManagedEnvironmentPrivateLinkResources _managedEnvironmentPrivateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _managedEnvironmentUsagesClientDiagnostics;
-        private readonly ManagedEnvironmentUsages _managedEnvironmentUsagesRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentCollection for mocking. </summary>
         protected ContainerAppManagedEnvironmentCollection()
@@ -48,12 +42,6 @@ namespace Azure.ResourceManager.AppContainers
             TryGetApiVersion(ContainerAppManagedEnvironmentResource.ResourceType, out string containerAppManagedEnvironmentApiVersion);
             _containerAppManagedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
             _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
-            _managedEnvironmentPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _managedEnvironmentPrivateLinkResourcesRestClient = new ManagedEnvironmentPrivateLinkResources(_managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
-            _managedEnvironmentUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _managedEnvironmentUsagesRestClient = new ManagedEnvironmentUsages(_managedEnvironmentUsagesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

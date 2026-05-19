@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly ClientDiagnostics _containerAppJobsClientDiagnostics;
         private readonly ContainerAppJobs _containerAppJobsRestClient;
-        private readonly ClientDiagnostics _jobsExecutionsClientDiagnostics;
-        private readonly JobsExecutions _jobsExecutionsRestClient;
         private readonly ContainerAppJobExecutionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/jobs/executions";
@@ -53,8 +51,6 @@ namespace Azure.ResourceManager.AppContainers
             TryGetApiVersion(ResourceType, out string containerAppJobExecutionApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Endpoint, containerAppJobExecutionApiVersion ?? "2025-10-02-preview");
-            _jobsExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _jobsExecutionsRestClient = new JobsExecutions(_jobsExecutionsClientDiagnostics, Pipeline, Endpoint, containerAppJobExecutionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

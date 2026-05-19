@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.AppContainers
         private readonly Builds _buildsRestClient;
         private readonly ClientDiagnostics _buildsByBuilderResourceClientDiagnostics;
         private readonly BuildsByBuilderResource _buildsByBuilderResourceRestClient;
-        private readonly ClientDiagnostics _buildAuthTokenClientDiagnostics;
-        private readonly BuildAuthToken _buildAuthTokenRestClient;
 
         /// <summary> Initializes a new instance of BuildCollection for mocking. </summary>
         protected BuildCollection()
@@ -47,8 +45,6 @@ namespace Azure.ResourceManager.AppContainers
             _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Endpoint, buildApiVersion ?? "2025-10-02-preview");
             _buildsByBuilderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", BuildResource.ResourceType.Namespace, Diagnostics);
             _buildsByBuilderResourceRestClient = new BuildsByBuilderResource(_buildsByBuilderResourceClientDiagnostics, Pipeline, Endpoint, buildApiVersion ?? "2025-10-02-preview");
-            _buildAuthTokenClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", BuildResource.ResourceType.Namespace, Diagnostics);
-            _buildAuthTokenRestClient = new BuildAuthToken(_buildAuthTokenClientDiagnostics, Pipeline, Endpoint, buildApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly ClientDiagnostics _containerAppsBuildsClientDiagnostics;
         private readonly ContainerAppsBuilds _containerAppsBuildsRestClient;
-        private readonly ClientDiagnostics _containerAppsBuildsByContainerAppClientDiagnostics;
-        private readonly ContainerAppsBuildsByContainerApp _containerAppsBuildsByContainerAppRestClient;
         private readonly ContainerAppsBuildData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/builds";
@@ -53,8 +51,6 @@ namespace Azure.ResourceManager.AppContainers
             TryGetApiVersion(ResourceType, out string containerAppsBuildApiVersion);
             _containerAppsBuildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             _containerAppsBuildsRestClient = new ContainerAppsBuilds(_containerAppsBuildsClientDiagnostics, Pipeline, Endpoint, containerAppsBuildApiVersion ?? "2025-10-02-preview");
-            _containerAppsBuildsByContainerAppClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsBuildsByContainerAppRestClient = new ContainerAppsBuildsByContainerApp(_containerAppsBuildsByContainerAppClientDiagnostics, Pipeline, Endpoint, containerAppsBuildApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
