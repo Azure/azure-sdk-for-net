@@ -12,7 +12,7 @@ import pluralize from "pluralize";
 type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
 type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
   kind: "path";
-  type: { kind: "enum"; values: { value: unknown }[] };
+  type: { kind: "enum"; values: { value: unknown }[]; isFixed: boolean };
 };
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
@@ -735,6 +735,59 @@ export function isResourceInstancePath(
     }
   }
   return true;
+}
+
+/**
+ * Derives singleton resource names that are fixed by the path itself.
+ * A singleton name can be represented either as a literal final path segment
+ * or as a final path parameter whose type is a fixed enum with one value.
+ */
+export function getSingletonResourceNameFromPath(
+  method: SdkMethod<SdkHttpOperation>,
+  path: RequestPath
+): string | undefined {
+  return resolveFixedEnumNameSegments(method, path).singletonName;
+}
+
+/**
+ * Treats name path parameters with fixed one-value enum types as constants.
+ */
+export function resolveFixedEnumNameSegments(
+  method: SdkMethod<SdkHttpOperation>,
+  path: RequestPath
+): RequestPath {
+  let changed = false;
+  const segments = [...path.segments];
+  for (
+    let providerIndex = 0;
+    providerIndex < segments.length;
+    providerIndex++
+  ) {
+    if (segments[providerIndex].toLowerCase() !== "providers") continue;
+
+    const nextProviderIndex = segments.findIndex(
+      (segment, index) =>
+        index > providerIndex && segment.toLowerCase() === "providers"
+    );
+    const tailEnd =
+      nextProviderIndex === -1 ? segments.length : nextProviderIndex;
+
+    for (let i = providerIndex + 3; i < tailEnd; i += 2) {
+      const segment = segments[i];
+      if (!isVariableSegment(segment)) continue;
+
+      const fixedValue = getSingleFixedEnumValueForPathParam(
+        method,
+        segment.slice(1, -1)
+      );
+      if (!fixedValue) continue;
+
+      segments[i] = fixedValue;
+      changed = true;
+    }
+  }
+
+  return changed ? RequestPath.fromSegments(segments) : path;
 }
 
 /**
@@ -1517,4 +1570,17 @@ function getEnumValuesForPathParam(
   return param?.type.values
     .map((v) => v.value)
     .filter((v): v is string => typeof v === "string");
+}
+
+function getSingleFixedEnumValueForPathParam(
+  method: SdkMethod<SdkHttpOperation>,
+  paramName: string
+): string | undefined {
+  const param = findEnumPathParam(method, paramName);
+  if (!param?.type.isFixed || param.type.values.length !== 1) {
+    return undefined;
+  }
+
+  const value = param.type.values[0].value;
+  return typeof value === "string" ? value : undefined;
 }

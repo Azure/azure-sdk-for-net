@@ -26,7 +26,9 @@ import {
   isResourceInstancePath,
   sortResourceMethods,
   RequestPath,
-  extractNameConstraintOverrides
+  extractNameConstraintOverrides,
+  getSingletonResourceNameFromPath,
+  resolveFixedEnumNameSegments
 } from "./resource-metadata.js";
 import {
   SdkHttpOperation,
@@ -126,6 +128,7 @@ export function buildArmProviderSchema(
       operationPath: RequestPath;
     }>;
     explicitResourceName?: string;
+    singletonResourceName?: string;
   };
   const resourceEntries: ResourceEntry[] = [];
   const consumedMethodIds = new Set<string>();
@@ -137,15 +140,20 @@ export function buildArmProviderSchema(
     const respModelId = getDirectResponseModelId(sdkMethod);
     if (!respModelId || !resourceModelIds.has(respModelId)) continue;
 
-    const path = new RequestPath(method.operation.path);
-    if (!isResourceInstancePath(sdkMethod, path)) continue;
+    const rawPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawPath)) continue;
+    const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
 
     const entry: ResourceEntry = {
       modelId: respModelId,
       instancePath: path,
       client,
       methods: [],
-      explicitResourceName: getExplicitResourceName(sdkMethod)
+      explicitResourceName: getExplicitResourceName(sdkMethod),
+      singletonResourceName: getSingletonResourceNameFromPath(
+        sdkMethod,
+        rawPath
+      )
     };
     resourceEntries.push(entry);
     entry.methods.push({
@@ -199,8 +207,9 @@ export function buildArmProviderSchema(
       default:
         continue;
     }
-    const opPath = new RequestPath(method.operation.path);
-    if (!isResourceInstancePath(sdkMethod, opPath)) continue;
+    const rawOpPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawOpPath)) continue;
+    const opPath = resolveFixedEnumNameSegments(sdkMethod, rawOpPath);
     const matched = resourceEntries.find((entry) =>
       entry.instancePath.equals(opPath)
     );
@@ -238,7 +247,7 @@ export function buildArmProviderSchema(
     const metadata: ResourceMetadata = {
       resourceIdPattern: entry.instancePath,
       resourceType: entry.instancePath.resourceType ?? "",
-      singletonResourceName: entry.instancePath.singletonName,
+      singletonResourceName: entry.singletonResourceName,
       scope: {
         kind: ResourceScopeKind.Tenant,
         scopeIdPattern: RequestPath.empty
@@ -427,8 +436,11 @@ function assignRemainingOperations(
     const methodId = method.crossLanguageDefinitionId;
     if (consumedMethodIds.has(methodId)) continue;
 
-    const operationPath = new RequestPath(method.operation.path);
     const sdkMethod = serviceMethods.get(methodId);
+    const rawOperationPath = new RequestPath(method.operation.path);
+    const operationPath = sdkMethod
+      ? resolveFixedEnumNameSegments(sdkMethod, rawOperationPath)
+      : rawOperationPath;
     const itemModelId =
       sdkMethod?.operation?.verb === "get"
         ? getPagingItemModelIdLocal(sdkMethod)

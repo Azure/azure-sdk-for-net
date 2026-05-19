@@ -464,6 +464,76 @@ interface ContainerApps {
     );
   });
 
+  it("derives singleton name from single-value enum name parameter", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Container app resource */
+model ContainerApp is TrackedResource<ContainerAppProperties> {
+  ...ResourceNameParameter<ContainerApp>;
+}
+
+/** Container app properties */
+model ContainerAppProperties {
+  description?: string;
+}
+
+/** Fixed detector resource name */
+enum DetectorName {
+  rootApi: "rootApi",
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface ContainerApps {
+  get is ArmResourceRead<ContainerApp>;
+
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/{detectorName}")
+  getRootDetector(
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+    ...ResourceGroupParameter,
+    @path containerAppName: string,
+    @path detectorName: DetectorName
+  ): ContainerApp;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.App" }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchemaResult);
+
+    const detectorResource = armProviderSchemaResult.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.path ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/rootApi"
+    );
+    ok(
+      detectorResource,
+      "Single-value enum name parameter should produce a resource"
+    );
+    strictEqual(
+      detectorResource.metadata.resourceType,
+      "Microsoft.App/containerApps/detectorProperties"
+    );
+    strictEqual(detectorResource.metadata.singletonResourceName, "rootApi");
+    strictEqual(
+      detectorResource.metadata.methods.find((m) => m.kind === "Read")
+        ?.operationPath.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/rootApi"
+    );
+    strictEqual(
+      detectorResource.metadata.parentResourceId?.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}"
+    );
+  });
+
   it("resource with grand parent under a resource group", async () => {
     const program = await typeSpecCompile(
       `
