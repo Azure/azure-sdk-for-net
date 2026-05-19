@@ -861,5 +861,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Properties.EnableResilientEphemeralOsDisk = value;
             }
         }
+
+        /// <summary> Specifies the settings for the proxy agent on the node type. </summary>
+        public ProxyAgentSettings ProxyAgentSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProxyAgentSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.ProxyAgentSettings = value;
+            }
+        }
+
+        /// <summary> The scale in policy mode for a node type. </summary>
+        public ScaleInPolicyMode? ScaleInMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleInMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.ScaleInMode = value;
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreatePostManagedApplyMaintenanceWindowRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreatePostManagedApplyMaintenanceWindowRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
+            request.Content = content;
             return message;
         }
     }

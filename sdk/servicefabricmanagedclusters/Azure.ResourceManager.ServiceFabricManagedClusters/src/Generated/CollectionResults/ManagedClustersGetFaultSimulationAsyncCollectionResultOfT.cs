@@ -15,34 +15,37 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    internal partial class ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesAsyncCollectionResultOfT : AsyncPageable<ServiceFabricManagedUnsupportedVmSize>
+    internal partial class ManagedClustersGetFaultSimulationAsyncCollectionResultOfT : AsyncPageable<FaultSimulation>
     {
-        private readonly ManagedUnsupportedVMSizes _client;
+        private readonly ManagedClusters _client;
         private readonly string _subscriptionId;
-        private readonly AzureLocation _location;
+        private readonly string _resourceGroupName;
+        private readonly string _clusterName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ManagedUnsupportedVMSizes client used to send requests. </param>
+        /// <summary> Initializes a new instance of ManagedClustersGetFaultSimulationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ManagedClusters client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the unsupported VM sizes. This is different from cluster location. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesAsyncCollectionResultOfT(ManagedUnsupportedVMSizes client, string subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ManagedClustersGetFaultSimulationAsyncCollectionResultOfT(ManagedClusters client, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _location = location;
+            _resourceGroupName = resourceGroupName;
+            _clusterName = clusterName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ManagedClustersGetFaultSimulationAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ServiceFabricManagedUnsupportedVmSize>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ManagedClustersGetFaultSimulationAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<FaultSimulation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,8 +55,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     yield break;
                 }
-                ServiceFabricManagedUnsupportedVmSizeListResult result = ServiceFabricManagedUnsupportedVmSizeListResult.FromResponse(response);
-                yield return Page<ServiceFabricManagedUnsupportedVmSize>.FromValues((IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                FaultSimulationListResult result = FaultSimulationListResult.FromResponse(response);
+                yield return Page<FaultSimulation>.FromValues((IReadOnlyList<FaultSimulation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetManagedUnsupportedVmSizesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetManagedUnsupportedVmSizesRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetFaultSimulationRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetFaultSimulationRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
