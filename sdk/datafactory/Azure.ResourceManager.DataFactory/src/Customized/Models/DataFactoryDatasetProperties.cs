@@ -26,9 +26,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// linked-service reference. Restored as workaround for issue #59298 to match main API surface.
         /// </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
-        protected DataFactoryDatasetProperties(DataFactoryLinkedServiceReference linkedServiceName) : this(default(string))
+        protected DataFactoryDatasetProperties(DataFactoryLinkedServiceReference linkedServiceName) : this(default(string), linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

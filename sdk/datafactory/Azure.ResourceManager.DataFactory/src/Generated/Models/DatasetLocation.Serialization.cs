@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDatasetLocation))]
     public abstract partial class DatasetLocation : IJsonModel<DatasetLocation>
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetLocation"/> for deserialization. </summary>
-        internal DatasetLocation()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DatasetLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

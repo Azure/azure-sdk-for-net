@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
-        /// <param name="type"> Type of linked service. </param>
-        private protected DataFactoryLinkedServiceProperties(string @type)
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        private protected DataFactoryLinkedServiceProperties(string linkedServiceType)
         {
-            Type = @type;
+            LinkedServiceType = linkedServiceType;
             Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             Annotations = new ChangeTrackingList<BinaryData>();
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
-        /// <param name="type"> Type of linked service. </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
-        internal DataFactoryLinkedServiceProperties(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryLinkedServiceProperties(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            LinkedServiceType = linkedServiceType;
             LinkedServiceVersion = linkedServiceVersion;
             ConnectVia = connectVia;
             Description = description;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of linked service. </summary>
-        internal string Type { get; set; }
+        internal string LinkedServiceType { get; set; }
 
         /// <summary> Version of the linked service. </summary>
         public string LinkedServiceVersion { get; set; }

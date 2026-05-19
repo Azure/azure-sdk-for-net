@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeOperationResult"/>. </summary>
-        /// <param name="type"> The operation type. Could be start or stop. </param>
+        /// <param name="managedIntegrationRuntimeOperationResultType"> The operation type. Could be start or stop. </param>
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="result"> The operation result. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="parameters"> Managed integration runtime error parameters. </param>
         /// <param name="activityId"> The activity id for the operation request. </param>
         /// <param name="additionalProperties"></param>
-        internal ManagedIntegrationRuntimeOperationResult(string @type, DateTimeOffset? startOn, string result, string errorCode, IReadOnlyList<string> parameters, string activityId, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType, DateTimeOffset? startOn, string result, string errorCode, IReadOnlyList<string> parameters, string activityId, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            ManagedIntegrationRuntimeOperationResultType = managedIntegrationRuntimeOperationResultType;
             StartOn = startOn;
             Result = result;
             ErrorCode = errorCode;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The operation type. Could be start or stop. </summary>
-        public string Type { get; }
+        public string ManagedIntegrationRuntimeOperationResultType { get; }
 
         /// <summary> The start time of the operation. </summary>
         public DateTimeOffset? StartOn { get; }

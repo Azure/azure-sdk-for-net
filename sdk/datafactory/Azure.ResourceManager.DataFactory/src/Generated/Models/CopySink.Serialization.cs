@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownCopySink))]
     public abstract partial class CopySink : IJsonModel<CopySink>
     {
-        /// <summary> Initializes a new instance of <see cref="CopySink"/> for deserialization. </summary>
-        internal CopySink()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CopySink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

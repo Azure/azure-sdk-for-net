@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownFormatWriteSettings))]
     public abstract partial class FormatWriteSettings : IJsonModel<FormatWriteSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/> for deserialization. </summary>
-        internal FormatWriteSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FormatWriteSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

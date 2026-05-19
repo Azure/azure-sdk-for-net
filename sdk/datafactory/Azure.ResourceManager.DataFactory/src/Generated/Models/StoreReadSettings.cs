@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StoreReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
-        private protected StoreReadSettings(string @type)
+        /// <param name="storeReadSettingsType"> The read setting type. </param>
+        private protected StoreReadSettings(string storeReadSettingsType)
         {
-            Type = @type;
+            StoreReadSettingsType = storeReadSettingsType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StoreReadSettings"/>. </summary>
-        /// <param name="type"> The read setting type. </param>
+        /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
-        internal StoreReadSettings(string @type, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
+        internal StoreReadSettings(string storeReadSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            StoreReadSettingsType = storeReadSettingsType;
             MaxConcurrentConnections = maxConcurrentConnections;
             DisableMetricsCollection = disableMetricsCollection;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The read setting type. </summary>
-        internal string Type { get; set; }
+        internal string StoreReadSettingsType { get; set; }
 
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> MaxConcurrentConnections { get; set; }

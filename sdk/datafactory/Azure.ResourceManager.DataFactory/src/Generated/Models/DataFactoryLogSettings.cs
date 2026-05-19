@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,21 +19,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
-        public DataFactoryLogSettings()
+        /// <param name="logLocation"> Log location settings customer needs to provide when enabling log. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logLocation"/> is null. </exception>
+        public DataFactoryLogSettings(LogLocationSettings logLocation)
         {
+            Argument.AssertNotNull(logLocation, nameof(logLocation));
 
+            LogLocation = logLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
         /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyActivityLogSettings"> Specifies settings for copy activity log. </param>
-        /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
+        /// <param name="logLocation"> Log location settings customer needs to provide when enabling log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryLogSettings(DataFactoryElement<bool> enableCopyActivityLog, CopyActivityLogSettings copyActivityLogSettings, LogLocationSettings logLocationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryLogSettings(DataFactoryElement<bool> enableCopyActivityLog, CopyActivityLogSettings copyActivityLogSettings, LogLocationSettings logLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableCopyActivityLog = enableCopyActivityLog;
             CopyActivityLogSettings = copyActivityLogSettings;
-            LogLocationSettings = logLocationSettings;
+            LogLocation = logLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,23 +48,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public CopyActivityLogSettings CopyActivityLogSettings { get; set; }
 
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
-        public LogLocationSettings LogLocationSettings { get; set; }
-
-        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> LogLocationPath
-        {
-            get
-            {
-                return LogLocationSettings is null ? default : LogLocationSettings.Path;
-            }
-            set
-            {
-                if (LogLocationSettings is null)
-                {
-                    LogLocationSettings = new LogLocationSettings();
-                }
-                LogLocationSettings.Path = value;
-            }
-        }
+        public LogLocationSettings LogLocation { get; set; }
     }
 }

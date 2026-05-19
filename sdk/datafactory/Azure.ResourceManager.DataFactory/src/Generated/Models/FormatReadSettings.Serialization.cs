@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownFormatReadSettings))]
     public abstract partial class FormatReadSettings : IJsonModel<FormatReadSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/> for deserialization. </summary>
-        internal FormatReadSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FormatReadSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -84,6 +85,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
+            if (Optional.IsDefined(CatalogAdminPassword))
+            {
+                writer.WritePropertyName("catalogAdminPassword"u8);
+                writer.WriteObjectValue(CatalogAdminPassword, options);
+            }
             if (Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
@@ -135,6 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string catalogServerEndpoint = default;
             string catalogAdminUserName = default;
+            DataFactorySecretString catalogAdminPassword = default;
             IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier = default;
             string dualStandbyPairName = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,6 +155,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("catalogAdminUserName"u8))
                 {
                     catalogAdminUserName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("catalogAdminPassword"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    catalogAdminPassword = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("catalogPricingTier"u8))
@@ -166,7 +182,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint, catalogAdminUserName, catalogPricingTier, dualStandbyPairName, additionalProperties);
+            return new IntegrationRuntimeSsisCatalogInfo(
+                catalogServerEndpoint,
+                catalogAdminUserName,
+                catalogAdminPassword,
+                catalogPricingTier,
+                dualStandbyPairName,
+                additionalProperties);
         }
     }
 }

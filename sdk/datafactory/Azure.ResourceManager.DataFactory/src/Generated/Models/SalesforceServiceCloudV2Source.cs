@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         internal SalesforceServiceCloudV2Source(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> soqlQuery, DataFactoryElement<string> query, DataFactoryElement<bool> includeDeletedObjects, BinaryData additionalColumns) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
-            SOQLQuery = soqlQuery;
+            SoqlQuery = soqlQuery;
             Query = query;
             IncludeDeletedObjects = includeDeletedObjects;
             AdditionalColumns = additionalColumns;
         }
 
         /// <summary> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SOQLQuery { get; set; }
+        public DataFactoryElement<string> SoqlQuery { get; set; }
 
         /// <summary> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }

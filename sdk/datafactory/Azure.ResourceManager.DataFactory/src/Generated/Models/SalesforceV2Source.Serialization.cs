@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SalesforceV2Source)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(SOQLQuery))
+            if (Optional.IsDefined(SoqlQuery))
             {
                 writer.WritePropertyName("SOQLQuery"u8);
-                writer.WriteObjectValue(SOQLQuery, options);
+                writer.WriteObjectValue(SoqlQuery, options);
             }
             if (Optional.IsDefined(Query))
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    soqlQuery = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    soqlQuery = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("query"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText())); /* TODO(#59298): generator emitted wrong local name */
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SalesforceV2Source(

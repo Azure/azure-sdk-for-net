@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("latestVersion"u8);
                 writer.WriteStringValue(LatestVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoUpdateETA))
+            if (options.Format != "W" && Optional.IsDefined(AutoUpdateEta))
             {
                 writer.WritePropertyName("autoUpdateETA"u8);
-                writer.WriteStringValue(AutoUpdateETA.Value, "O");
+                writer.WriteStringValue(AutoUpdateEta.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Guid? taskQueueId = default;
             IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = default;
             string version = default;
-            IList<SelfHostedIntegrationRuntimeNode> nodes = default;
+            IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes = default;
             DateTimeOffset? scheduledUpdateOn = default;
             TimeSpan? updateDelayOffset = default;
             TimeSpan? localTimeZoneOffset = default;
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             IReadOnlyList<string> serviceUriStringList = default;
             IntegrationRuntimeAutoUpdateState? autoUpdate = default;
             string versionStatus = default;
-            IList<LinkedIntegrationRuntime> links = default;
+            IReadOnlyList<LinkedIntegrationRuntime> links = default;
             string pushedVersion = default;
             string latestVersion = default;
-            DateTimeOffset? autoUpdateETA = default;
+            DateTimeOffset? autoUpdateEta = default;
             bool? isSelfContainedInteractiveAuthoringEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    autoUpdateETA = prop.Value.GetDateTimeOffset("O");
+                    autoUpdateEta = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("selfContainedInteractiveAuthoringEnabled"u8))
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 links ?? new ChangeTrackingList<LinkedIntegrationRuntime>(),
                 pushedVersion,
                 latestVersion,
-                autoUpdateETA,
+                autoUpdateEta,
                 isSelfContainedInteractiveAuthoringEnabled,
                 additionalBinaryDataProperties);
         }

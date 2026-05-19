@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AzureDataLakeStoreReadSettings";
+            string storeReadSettingsType = "AzureDataLakeStoreReadSettings";
             DataFactoryElement<int> maxConcurrentConnections = default;
             DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    storeReadSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new AzureDataLakeStoreReadSettings(
-                @type,
+                storeReadSettingsType,
                 maxConcurrentConnections,
                 disableMetricsCollection,
                 additionalProperties,

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,17 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StagingSettings"/>. </summary>
-        public StagingSettings()
-        {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StagingSettings"/>. </summary>
+        /// <param name="linkedServiceName"> Staging linked service reference. </param>
         /// <param name="path"> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </param>
         /// <param name="enableCompression"> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
-        internal StagingSettings(DataFactoryElement<string> path, DataFactoryElement<bool> enableCompression, IDictionary<string, BinaryData> additionalProperties)
+        internal StagingSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, DataFactoryElement<bool> enableCompression, IDictionary<string, BinaryData> additionalProperties)
         {
+            LinkedServiceName = linkedServiceName;
             Path = path;
             EnableCompression = enableCompression;
             _additionalBinaryDataProperties = additionalProperties;

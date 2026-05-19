@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -80,6 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFlowSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(SchemaLinkedService))
+            {
+                writer.WritePropertyName("schemaLinkedService"u8);
+                writer.WriteObjectValue(SchemaLinkedService, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -110,8 +116,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string description = default;
             DatasetReference dataset = default;
+            DataFactoryLinkedServiceReference linkedService = default;
             DataFlowReference flowlet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryLinkedServiceReference schemaLinkedService = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -133,6 +141,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dataset = DatasetReference.DeserializeDatasetReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("linkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedService = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("flowlet"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -142,12 +159,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                     flowlet = DataFlowReference.DeserializeDataFlowReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("schemaLinkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schemaLinkedService = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFlowSource(name, description, dataset, flowlet, additionalBinaryDataProperties);
+            return new DataFlowSource(
+                name,
+                description,
+                dataset,
+                linkedService,
+                flowlet,
+                additionalBinaryDataProperties,
+                schemaLinkedService);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisProject"/>. </summary>
-        /// <param name="type"> Type of metadata. </param>
+        /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="version"> Project version. </param>
         /// <param name="environmentRefs"> Environment reference in project. </param>
         /// <param name="parameters"> Parameters in project. </param>
-        internal SsisProject(SsisObjectMetadataType @type, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameterInfo> parameters) : base(@type, id, name, description, additionalBinaryDataProperties)
+        internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description, additionalBinaryDataProperties)
         {
             FolderId = folderId;
             Version = version;

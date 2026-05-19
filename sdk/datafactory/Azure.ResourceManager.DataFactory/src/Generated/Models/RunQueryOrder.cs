@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         private readonly string _value;
         /// <summary> ASC. </summary>
-        private const string ASCValue = "ASC";
+        private const string AscValue = "ASC";
         /// <summary> DESC. </summary>
-        private const string DESCValue = "DESC";
+        private const string DescValue = "DESC";
 
         /// <summary> Initializes a new instance of <see cref="RunQueryOrder"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> ASC. </summary>
-        public static RunQueryOrder ASC { get; } = new RunQueryOrder(ASCValue);
+        public static RunQueryOrder Asc { get; } = new RunQueryOrder(AscValue);
 
         /// <summary> DESC. </summary>
-        public static RunQueryOrder DESC { get; } = new RunQueryOrder(DESCValue);
+        public static RunQueryOrder Desc { get; } = new RunQueryOrder(DescValue);
 
         /// <summary> Determines if two <see cref="RunQueryOrder"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

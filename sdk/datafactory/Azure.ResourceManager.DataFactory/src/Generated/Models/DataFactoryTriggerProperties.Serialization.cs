@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDataFactoryTriggerProperties))]
     public abstract partial class DataFactoryTriggerProperties : IJsonModel<DataFactoryTriggerProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/> for deserialization. </summary>
-        internal DataFactoryTriggerProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryTriggerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

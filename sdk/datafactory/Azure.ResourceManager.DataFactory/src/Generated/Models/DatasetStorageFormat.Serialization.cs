@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDatasetStorageFormat))]
     public abstract partial class DatasetStorageFormat : IJsonModel<DatasetStorageFormat>
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/> for deserialization. </summary>
-        internal DatasetStorageFormat()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DatasetStorageFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

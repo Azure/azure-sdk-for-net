@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IntegrationRuntimeType @type = default;
+            IntegrationRuntimeType integrationRuntimeType = default;
             string description = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SelfHostedIntegrationRuntimeTypeProperties typeProperties = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new IntegrationRuntimeType(prop.Value.GetString());
+                    integrationRuntimeType = new IntegrationRuntimeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new SelfHostedIntegrationRuntime(@type, description, additionalProperties, typeProperties);
+            return new SelfHostedIntegrationRuntime(integrationRuntimeType, description, additionalProperties, typeProperties);
         }
     }
 }

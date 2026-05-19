@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownCompressionReadSettings))]
     public abstract partial class CompressionReadSettings : IJsonModel<CompressionReadSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/> for deserialization. </summary>
-        internal CompressionReadSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CompressionReadSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

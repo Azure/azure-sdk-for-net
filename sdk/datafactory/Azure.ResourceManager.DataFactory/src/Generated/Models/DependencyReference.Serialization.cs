@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDependencyReference))]
     public abstract partial class DependencyReference : IJsonModel<DependencyReference>
     {
-        /// <summary> Initializes a new instance of <see cref="DependencyReference"/> for deserialization. </summary>
-        internal DependencyReference()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DependencyReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

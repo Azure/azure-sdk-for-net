@@ -861,11 +861,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<IntegrationRuntimeNodeIpAddress>> GetIpAddressAsync(string nodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationRuntimeNodeIPAddress>> GetIPAddressIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIpAddress");
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIPAddressIntegrationRuntimeNode");
             scope.Start();
             try
             {
@@ -873,9 +873,9 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIPAddressIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IntegrationRuntimeNodeIpAddress> response = Response.FromValue(IntegrationRuntimeNodeIpAddress.FromResponse(result), result);
+                Response<IntegrationRuntimeNodeIPAddress> response = Response.FromValue(IntegrationRuntimeNodeIPAddress.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -914,11 +914,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<IntegrationRuntimeNodeIpAddress> GetIpAddress(string nodeName, CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationRuntimeNodeIPAddress> GetIPAddressIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIpAddress");
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIPAddressIntegrationRuntimeNode");
             scope.Start();
             try
             {
@@ -926,9 +926,9 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIPAddressIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<IntegrationRuntimeNodeIpAddress> response = Response.FromValue(IntegrationRuntimeNodeIpAddress.FromResponse(result), result);
+                Response<IntegrationRuntimeNodeIPAddress> response = Response.FromValue(IntegrationRuntimeNodeIPAddress.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

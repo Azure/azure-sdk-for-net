@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            SsisObjectMetadataType @type = default;
+            SsisObjectMetadataType metadataType = default;
             long? id = default;
             string name = default;
             string description = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SsisObjectMetadataType(prop.Value.GetString());
+                    metadataType = new SsisObjectMetadataType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownSsisObjectMetadata(@type, id, name, description, additionalBinaryDataProperties);
+            return new UnknownSsisObjectMetadata(metadataType, id, name, description, additionalBinaryDataProperties);
         }
     }
 }

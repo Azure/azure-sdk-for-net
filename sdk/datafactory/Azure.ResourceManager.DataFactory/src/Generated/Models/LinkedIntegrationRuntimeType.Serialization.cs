@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownLinkedIntegrationRuntimeType))]
     public abstract partial class LinkedIntegrationRuntimeType : IJsonModel<LinkedIntegrationRuntimeType>
     {
-        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/> for deserialization. </summary>
-        internal LinkedIntegrationRuntimeType()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LinkedIntegrationRuntimeType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

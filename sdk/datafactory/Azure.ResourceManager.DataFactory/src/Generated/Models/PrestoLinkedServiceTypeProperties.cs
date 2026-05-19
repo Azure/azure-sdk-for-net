@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Only used for Version 1.0. </param>
         /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. Only used for Version 1.0. </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. Only used for Version 1.0. </param>
-        /// <param name="timeZoneID"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </param>
+        /// <param name="timeZoneId"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrestoLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, DataFactoryElement<int> port, PrestoAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, DataFactoryElement<string> timeZoneID, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrestoLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, DataFactoryElement<int> port, PrestoAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, DataFactoryElement<string> timeZoneId, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             ServerVersion = serverVersion;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             UseSystemTrustStore = useSystemTrustStore;
             AllowHostNameCNMismatch = allowHostNameCNMismatch;
             AllowSelfSignedServerCert = allowSelfSignedServerCert;
-            TimeZoneID = timeZoneID;
+            TimeZoneId = timeZoneId;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
 
         /// <summary> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </summary>
-        public DataFactoryElement<string> TimeZoneID { get; set; }
+        public DataFactoryElement<string> TimeZoneId { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeDataFlowProperties))]
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeDataProxyProperties))]
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeMonitoringData))]
-    [ModelReaderWriterBuildable(typeof(IntegrationRuntimeNodeIpAddress))]
+    [ModelReaderWriterBuildable(typeof(IntegrationRuntimeNodeIPAddress))]
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeNodeMonitoringData))]
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint))]
     [ModelReaderWriterBuildable(typeof(IntegrationRuntimeOutboundNetworkDependenciesEndpoint))]

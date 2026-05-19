@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownImportSettings))]
     public abstract partial class ImportSettings : IJsonModel<ImportSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="ImportSettings"/> for deserialization. </summary>
-        internal ImportSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ImportSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

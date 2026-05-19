@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -137,6 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
             CopyActivityTypeProperties typeProperties = default;
             IList<DatasetReference> inputs = default;
@@ -204,6 +206,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userProperties = array;
                     continue;
                 }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("policy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -248,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText())); /* TODO(#59298): generator emitted wrong local name */
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new CopyActivity(
@@ -260,6 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
+                linkedServiceName,
                 policy,
                 typeProperties,
                 inputs ?? new ChangeTrackingList<DatasetReference>(),

@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeOperationResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ManagedIntegrationRuntimeOperationResultType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ManagedIntegrationRuntimeOperationResultType);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = default;
+            string managedIntegrationRuntimeOperationResultType = default;
             DateTimeOffset? startOn = default;
             string result = default;
             string errorCode = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    managedIntegrationRuntimeOperationResultType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new ManagedIntegrationRuntimeOperationResult(
-                @type,
+                managedIntegrationRuntimeOperationResultType,
                 startOn,
                 result,
                 errorCode,

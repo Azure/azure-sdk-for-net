@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 writer.WriteObjectValue(AllowSelfSignedServerCert, options);
             }
-            if (Optional.IsDefined(TimeZoneID))
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneID"u8);
-                writer.WriteObjectValue(TimeZoneID, options);
+                writer.WriteObjectValue(TimeZoneId, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<bool> useSystemTrustStore = default;
             DataFactoryElement<bool> allowHostNameCNMismatch = default;
             DataFactoryElement<bool> allowSelfSignedServerCert = default;
-            DataFactoryElement<string> timeZoneID = default;
+            DataFactoryElement<string> timeZoneId = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    timeZoneID = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    timeZoneId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 useSystemTrustStore,
                 allowHostNameCNMismatch,
                 allowSelfSignedServerCert,
-                timeZoneID,
+                timeZoneId,
                 encryptedCredential,
                 additionalBinaryDataProperties);
         }

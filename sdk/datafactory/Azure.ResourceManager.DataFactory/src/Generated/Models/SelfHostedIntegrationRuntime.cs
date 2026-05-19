@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntime"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> When this property is not null, means this is a linked integration runtime. The property is used to access original integration runtime. </param>
-        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType @type, string description, IDictionary<string, BinaryData> additionalProperties, SelfHostedIntegrationRuntimeTypeProperties typeProperties) : base(@type, description, additionalProperties)
+        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, SelfHostedIntegrationRuntimeTypeProperties typeProperties) : base(integrationRuntimeType, description, additionalProperties)
         {
             TypeProperties = typeProperties;
         }

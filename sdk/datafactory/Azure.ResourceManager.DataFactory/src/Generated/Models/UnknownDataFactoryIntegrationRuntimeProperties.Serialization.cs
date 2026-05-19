@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IntegrationRuntimeType @type = default;
+            IntegrationRuntimeType integrationRuntimeType = default;
             string description = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new IntegrationRuntimeType(prop.Value.GetString());
+                    integrationRuntimeType = new IntegrationRuntimeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new UnknownDataFactoryIntegrationRuntimeProperties(@type, description, additionalProperties);
+            return new UnknownDataFactoryIntegrationRuntimeProperties(integrationRuntimeType, description, additionalProperties);
         }
     }
 }

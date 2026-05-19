@@ -80,6 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(RedshiftUnloadSettings)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("s3LinkedServiceName"u8);
+            writer.WriteObjectValue(S3LinkedServiceName, options);
             writer.WritePropertyName("bucketName"u8);
             writer.WriteObjectValue(BucketName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -124,10 +126,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            DataFactoryLinkedServiceReference s3LinkedServiceName = default;
             DataFactoryElement<string> bucketName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("s3LinkedServiceName"u8))
+                {
+                    s3LinkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("bucketName"u8))
                 {
                     bucketName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
@@ -138,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RedshiftUnloadSettings(bucketName, additionalBinaryDataProperties);
+            return new RedshiftUnloadSettings(s3LinkedServiceName, bucketName, additionalBinaryDataProperties);
         }
     }
 }

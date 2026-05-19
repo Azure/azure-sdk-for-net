@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SalesforceServiceCloudV2Source)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(SOQLQuery))
+            if (Optional.IsDefined(SoqlQuery))
             {
                 writer.WritePropertyName("SOQLQuery"u8);
-                writer.WriteObjectValue(SOQLQuery, options);
+                writer.WriteObjectValue(SoqlQuery, options);
             }
             if (Optional.IsDefined(Query))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    soqlQuery = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    soqlQuery = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("query"u8))

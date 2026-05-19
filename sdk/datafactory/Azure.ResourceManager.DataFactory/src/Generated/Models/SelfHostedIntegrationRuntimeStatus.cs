@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The list of nodes for this integration runtime. </summary>
-        public IList<SelfHostedIntegrationRuntimeNode> Nodes
+        public IReadOnlyList<SelfHostedIntegrationRuntimeNode> Nodes
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The list of linked integration runtimes that are created to share with this integration runtime. </summary>
-        public IList<LinkedIntegrationRuntime> Links
+        public IReadOnlyList<LinkedIntegrationRuntime> Links
         {
             get
             {
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The estimated time when the self-hosted integration runtime will be updated. </summary>
-        public DateTimeOffset? AutoUpdateETA
+        public DateTimeOffset? AutoUpdateEta
         {
             get
             {
-                return TypeProperties.AutoUpdateETA;
+                return TypeProperties.AutoUpdateEta;
             }
         }
 

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownSsisObjectMetadata : SsisObjectMetadata
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSsisObjectMetadata"/>. </summary>
-        /// <param name="type"> Type of metadata. </param>
+        /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSsisObjectMetadata(SsisObjectMetadataType @type, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, name, description, additionalBinaryDataProperties)
+        internal UnknownSsisObjectMetadata(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(metadataType != default ? metadataType : "unknown", id, name, description, additionalBinaryDataProperties)
         {
         }
     }

@@ -23,9 +23,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
         public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password)
-            : this(domain, userName, new ChangeTrackingDictionary<string, BinaryData>())
+            : this(domain, userName, password, new ChangeTrackingDictionary<string, BinaryData>())
         {
-            Password = password;
         }
     }
 }

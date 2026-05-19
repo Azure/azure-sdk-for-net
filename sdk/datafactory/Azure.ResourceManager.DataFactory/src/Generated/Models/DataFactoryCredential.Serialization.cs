@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDataFactoryCredential))]
     public abstract partial class DataFactoryCredential : IJsonModel<DataFactoryCredential>
     {
-        /// <summary> Initializes a new instance of <see cref="DataFactoryCredential"/> for deserialization. </summary>
-        internal DataFactoryCredential()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

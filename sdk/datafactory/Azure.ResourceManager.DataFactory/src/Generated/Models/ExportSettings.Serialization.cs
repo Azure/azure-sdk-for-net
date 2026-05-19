@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownExportSettings))]
     public abstract partial class ExportSettings : IJsonModel<ExportSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="ExportSettings"/> for deserialization. </summary>
-        internal ExportSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExportSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> The resource Id for private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

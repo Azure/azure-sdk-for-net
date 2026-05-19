@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Log location settings. </summary>
     public partial class LogLocationSettings : IJsonModel<LogLocationSettings>
     {
+        /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/> for deserialization. </summary>
+        internal LogLocationSettings()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LogLocationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -75,10 +80,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(LogLocationSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Path))
+            writer.WritePropertyName("linkedServiceName"u8);
+            writer.WriteObjectValue(LinkedServiceName, options);
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path, options);
+                writer.WriteObjectValue(Settings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -122,17 +129,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryElement<string> path = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryElement<string> settings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("path"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    path = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    settings = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogLocationSettings(path, additionalBinaryDataProperties);
+            return new LogLocationSettings(linkedServiceName, settings, additionalBinaryDataProperties);
         }
     }
 }

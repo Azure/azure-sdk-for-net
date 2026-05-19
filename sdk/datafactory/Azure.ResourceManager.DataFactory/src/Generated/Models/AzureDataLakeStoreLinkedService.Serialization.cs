@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AzureDataLakeStore";
+            string linkedServiceType = "AzureDataLakeStore";
             string linkedServiceVersion = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    linkedServiceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new AzureDataLakeStoreLinkedService(
-                @type,
+                linkedServiceType,
                 linkedServiceVersion,
                 connectVia,
                 description,

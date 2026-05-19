@@ -12,20 +12,20 @@ using System.Net;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The IP address of self-hosted integration runtime node. </summary>
-    public partial class IntegrationRuntimeNodeIpAddress
+    public partial class IntegrationRuntimeNodeIPAddress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIpAddress"/>. </summary>
-        internal IntegrationRuntimeNodeIpAddress()
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
+        internal IntegrationRuntimeNodeIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIpAddress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IntegrationRuntimeNodeIpAddress(IPAddress ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

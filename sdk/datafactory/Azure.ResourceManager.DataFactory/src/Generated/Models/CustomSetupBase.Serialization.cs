@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownCustomSetupBase))]
     public abstract partial class CustomSetupBase : IJsonModel<CustomSetupBase>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/> for deserialization. </summary>
-        internal CustomSetupBase()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CustomSetupBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

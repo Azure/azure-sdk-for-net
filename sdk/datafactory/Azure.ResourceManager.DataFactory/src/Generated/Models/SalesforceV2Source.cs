@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="partitionOption"> Partition option for the SalesforceV2 connector in copy activity, AutoDetect or None. Type: string (or Expression with resultType string). </param>
         internal SalesforceV2Source(string @type, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> soqlQuery, DataFactoryElement<string> query, DataFactoryElement<bool> includeDeletedObjects, DataFactoryElement<int> pageSize, DataFactoryElement<string> partitionOption) : base(@type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
-            SOQLQuery = soqlQuery;
+            SoqlQuery = soqlQuery;
             Query = query;
             IncludeDeletedObjects = includeDeletedObjects;
             PageSize = pageSize;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SOQLQuery { get; set; }
+        public DataFactoryElement<string> SoqlQuery { get; set; }
 
         /// <summary> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }

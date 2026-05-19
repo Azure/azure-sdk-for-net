@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeProperties"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
-        private protected DataFactoryIntegrationRuntimeProperties(IntegrationRuntimeType @type)
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        private protected DataFactoryIntegrationRuntimeProperties(IntegrationRuntimeType integrationRuntimeType)
         {
-            Type = @type;
+            IntegrationRuntimeType = integrationRuntimeType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeProperties"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"></param>
-        internal DataFactoryIntegrationRuntimeProperties(IntegrationRuntimeType @type, string description, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryIntegrationRuntimeProperties(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            IntegrationRuntimeType = integrationRuntimeType;
             Description = description;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of integration runtime. </summary>
-        internal IntegrationRuntimeType Type { get; set; }
+        internal IntegrationRuntimeType IntegrationRuntimeType { get; set; }
 
         /// <summary> Integration runtime description. </summary>
         public string Description { get; set; }

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateGetIpAddressRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContext context)
+        internal HttpMessage CreateGetIPAddressIntegrationRuntimeNodeRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

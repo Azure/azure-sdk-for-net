@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,24 +20,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
         /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> or <paramref name="userName"/> is null. </exception>
-        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName)
-        {
-            Argument.AssertNotNull(domain, nameof(domain));
-            Argument.AssertNotNull(userName, nameof(userName));
-
-            Domain = domain;
-            UserName = userName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
-        /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for windows authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             UserName = userName;
+            Password = password;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

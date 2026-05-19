@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownCopyActivitySource))]
     public abstract partial class CopyActivitySource : IJsonModel<CopyActivitySource>
     {
-        /// <summary> Initializes a new instance of <see cref="CopyActivitySource"/> for deserialization. </summary>
-        internal CopyActivitySource()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CopyActivitySource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

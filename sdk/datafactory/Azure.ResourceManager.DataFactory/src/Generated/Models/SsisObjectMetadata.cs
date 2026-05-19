@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/>. </summary>
-        /// <param name="type"> Type of metadata. </param>
-        private protected SsisObjectMetadata(SsisObjectMetadataType @type)
+        /// <param name="metadataType"> Type of metadata. </param>
+        private protected SsisObjectMetadata(SsisObjectMetadataType metadataType)
         {
-            Type = @type;
+            MetadataType = metadataType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/>. </summary>
-        /// <param name="type"> Type of metadata. </param>
+        /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SsisObjectMetadata(SsisObjectMetadataType @type, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SsisObjectMetadata(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            MetadataType = metadataType;
             Id = id;
             Name = name;
             Description = description;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of metadata. </summary>
-        internal SsisObjectMetadataType Type { get; set; }
+        internal SsisObjectMetadataType MetadataType { get; set; }
 
         /// <summary> Metadata id. </summary>
         public long? Id { get; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -26,13 +27,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MapperConnection"/>. </summary>
+        /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="linkedServiceType"> Type of the linked service e.g.: AzureBlobFS. </param>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         /// <param name="isInlineDataset"> A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets are supported. </param>
         /// <param name="commonDslConnectorProperties"> List of name/value pairs for connection properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapperConnection(string linkedServiceType, MapperConnectionType connectionType, bool? isInlineDataset, IList<MapperDslConnectorProperties> commonDslConnectorProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapperConnection(DataFactoryLinkedServiceReference linkedService, string linkedServiceType, MapperConnectionType connectionType, bool? isInlineDataset, IList<MapperDslConnectorProperties> commonDslConnectorProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            LinkedService = linkedService;
             LinkedServiceType = linkedServiceType;
             ConnectionType = connectionType;
             IsInlineDataset = isInlineDataset;

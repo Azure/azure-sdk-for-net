@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownIntegrationRuntimeStatus))]
     public abstract partial class IntegrationRuntimeStatus : IJsonModel<IntegrationRuntimeStatus>
     {
-        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeStatus"/> for deserialization. </summary>
-        internal IntegrationRuntimeStatus()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IntegrationRuntimeStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

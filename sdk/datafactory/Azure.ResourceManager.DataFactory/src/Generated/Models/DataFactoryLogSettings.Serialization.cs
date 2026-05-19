@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Log settings. </summary>
     public partial class DataFactoryLogSettings : IJsonModel<DataFactoryLogSettings>
     {
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/> for deserialization. </summary>
+        internal DataFactoryLogSettings()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryLogSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -86,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(CopyActivityLogSettings, options);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocationSettings, options);
+            writer.WriteObjectValue(LogLocation, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<bool> enableCopyActivityLog = default;
             CopyActivityLogSettings copyActivityLogSettings = default;
-            LogLocationSettings logLocationSettings = default;
+            LogLocationSettings logLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("logLocationSettings"u8))
                 {
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(prop.Value, options);
+                    logLocation = LogLocationSettings.DeserializeLogLocationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFactoryLogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings, additionalBinaryDataProperties);
+            return new DataFactoryLogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocation, additionalBinaryDataProperties);
         }
     }
 }

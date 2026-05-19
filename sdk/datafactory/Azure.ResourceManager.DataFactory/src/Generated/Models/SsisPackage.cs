@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisPackage"/>. </summary>
-        /// <param name="type"> Type of metadata. </param>
+        /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="projectVersion"> Project version which contains package. </param>
         /// <param name="projectId"> Project id which contains package. </param>
         /// <param name="parameters"> Parameters in package. </param>
-        internal SsisPackage(SsisObjectMetadataType @type, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? folderId, long? projectVersion, long? projectId, IReadOnlyList<SsisParameterInfo> parameters) : base(@type, id, name, description, additionalBinaryDataProperties)
+        internal SsisPackage(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? folderId, long? projectVersion, long? projectId, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description, additionalBinaryDataProperties)
         {
             FolderId = folderId;
             ProjectVersion = projectVersion;

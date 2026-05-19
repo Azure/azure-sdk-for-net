@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisFolder"/>. </summary>
-        /// <param name="type"> Type of metadata. </param>
+        /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SsisFolder(SsisObjectMetadataType @type, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, id, name, description, additionalBinaryDataProperties)
+        internal SsisFolder(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(metadataType, id, name, description, additionalBinaryDataProperties)
         {
         }
     }

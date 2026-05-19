@@ -101,6 +101,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema, options);
             }
+            writer.WritePropertyName("linkedServiceName"u8);
+            writer.WriteObjectValue(LinkedServiceName, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

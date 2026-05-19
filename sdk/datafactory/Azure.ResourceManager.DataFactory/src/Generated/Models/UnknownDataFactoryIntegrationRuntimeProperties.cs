@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal partial class UnknownDataFactoryIntegrationRuntimeProperties : DataFactoryIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataFactoryIntegrationRuntimeProperties"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownDataFactoryIntegrationRuntimeProperties(IntegrationRuntimeType @type, string description, IDictionary<string, BinaryData> additionalProperties) : base(@type != default ? @type : "unknown", description, additionalProperties)
+        internal UnknownDataFactoryIntegrationRuntimeProperties(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties) : base(integrationRuntimeType != default ? integrationRuntimeType : "unknown", description, additionalProperties)
         {
         }
     }

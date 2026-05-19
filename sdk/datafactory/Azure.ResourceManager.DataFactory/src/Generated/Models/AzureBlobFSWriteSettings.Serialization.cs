@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string @type = "AzureBlobFSWriteSettings";
+            string storeWriteSettingsType = "AzureBlobFSWriteSettings";
             DataFactoryElement<int> maxConcurrentConnections = default;
             DataFactoryElement<bool> disableMetricsCollection = default;
             DataFactoryElement<string> copyBehavior = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    storeWriteSettingsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new AzureBlobFSWriteSettings(
-                @type,
+                storeWriteSettingsType,
                 maxConcurrentConnections,
                 disableMetricsCollection,
                 copyBehavior,

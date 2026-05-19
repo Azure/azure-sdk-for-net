@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDataFactoryLinkedServiceProperties))]
     public abstract partial class DataFactoryLinkedServiceProperties : IJsonModel<DataFactoryLinkedServiceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/> for deserialization. </summary>
-        internal DataFactoryLinkedServiceProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -83,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(LinkedServiceVersion))
             {
                 writer.WritePropertyName("version"u8);

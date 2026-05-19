@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -91,6 +92,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset, options);
             }
+            if (Optional.IsDefined(LinkedService))
+            {
+                writer.WritePropertyName("linkedService"u8);
+                writer.WriteObjectValue(LinkedService, options);
+            }
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
@@ -141,6 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string description = default;
             DatasetReference dataset = default;
+            DataFactoryLinkedServiceReference linkedService = default;
             DataFlowReference flowlet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,6 +171,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dataset = DatasetReference.DeserializeDatasetReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("linkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedService = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("flowlet"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -178,7 +194,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFlowTransformation(name, description, dataset, flowlet, additionalBinaryDataProperties);
+            return new DataFlowTransformation(
+                name,
+                description,
+                dataset,
+                linkedService,
+                flowlet,
+                additionalBinaryDataProperties);
         }
     }
 }

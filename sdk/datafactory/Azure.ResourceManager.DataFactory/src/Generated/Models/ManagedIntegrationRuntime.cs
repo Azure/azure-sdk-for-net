@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntime"/>. </summary>
-        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
         /// <param name="typeProperties"> Managed integration runtime properties. </param>
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType @type, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedIntegrationRuntimeTypeProperties typeProperties, ManagedVirtualNetworkReference managedVirtualNetwork) : base(@type, description, additionalProperties)
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedIntegrationRuntimeTypeProperties typeProperties, ManagedVirtualNetworkReference managedVirtualNetwork) : base(integrationRuntimeType, description, additionalProperties)
         {
             State = state;
             TypeProperties = typeProperties;

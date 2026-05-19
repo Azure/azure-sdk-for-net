@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
-        /// <param name="type"> Type of linked service. </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Presto server linked service properties. </param>
-        internal PrestoLinkedService(string @type, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, PrestoLinkedServiceTypeProperties typeProperties) : base(@type, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal PrestoLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, PrestoLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </summary>
-        public DataFactoryElement<string> TimeZoneID
+        public DataFactoryElement<string> TimeZoneId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.TimeZoneID;
+                return TypeProperties is null ? default : TypeProperties.TimeZoneId;
             }
             set
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new PrestoLinkedServiceTypeProperties();
                 }
-                TypeProperties.TimeZoneID = value;
+                TypeProperties.TimeZoneId = value;
             }
         }
 

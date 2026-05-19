@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Anonymous. </summary>
         private const string AnonymousValue = "Anonymous";
         /// <summary> LDAP. </summary>
-        private const string LDAPValue = "LDAP";
+        private const string LdapValue = "LDAP";
 
         /// <summary> Initializes a new instance of <see cref="PrestoAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static PrestoAuthenticationType Anonymous { get; } = new PrestoAuthenticationType(AnonymousValue);
 
         /// <summary> LDAP. </summary>
-        public static PrestoAuthenticationType LDAP { get; } = new PrestoAuthenticationType(LDAPValue);
+        public static PrestoAuthenticationType Ldap { get; } = new PrestoAuthenticationType(LdapValue);
 
         /// <summary> Determines if two <see cref="PrestoAuthenticationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

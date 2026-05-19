@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="links"> The list of linked integration runtimes that are created to share with this integration runtime. </param>
         /// <param name="pushedVersion"> The version that the integration runtime is going to update to. </param>
         /// <param name="latestVersion"> The latest version on download center. </param>
-        /// <param name="autoUpdateETA"> The estimated time when the self-hosted integration runtime will be updated. </param>
+        /// <param name="autoUpdateEta"> The estimated time when the self-hosted integration runtime will be updated. </param>
         /// <param name="isSelfContainedInteractiveAuthoringEnabled"> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHostedIntegrationRuntimeStatusTypeProperties(DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUriStringList, IntegrationRuntimeAutoUpdateState? autoUpdate, string versionStatus, IList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA, bool? isSelfContainedInteractiveAuthoringEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SelfHostedIntegrationRuntimeStatusTypeProperties(DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUriStringList, IntegrationRuntimeAutoUpdateState? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta, bool? isSelfContainedInteractiveAuthoringEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             TaskQueueId = taskQueueId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Links = links;
             PushedVersion = pushedVersion;
             LatestVersion = latestVersion;
-            AutoUpdateETA = autoUpdateETA;
+            AutoUpdateEta = autoUpdateEta;
             IsSelfContainedInteractiveAuthoringEnabled = isSelfContainedInteractiveAuthoringEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Version { get; }
 
         /// <summary> The list of nodes for this integration runtime. </summary>
-        public IList<SelfHostedIntegrationRuntimeNode> Nodes { get; } = new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
+        public IReadOnlyList<SelfHostedIntegrationRuntimeNode> Nodes { get; } = new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
 
         /// <summary> The date at which the integration runtime will be scheduled to update, in ISO8601 format. </summary>
         public DateTimeOffset? ScheduledUpdateOn { get; }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string VersionStatus { get; }
 
         /// <summary> The list of linked integration runtimes that are created to share with this integration runtime. </summary>
-        public IList<LinkedIntegrationRuntime> Links { get; } = new ChangeTrackingList<LinkedIntegrationRuntime>();
+        public IReadOnlyList<LinkedIntegrationRuntime> Links { get; } = new ChangeTrackingList<LinkedIntegrationRuntime>();
 
         /// <summary> The version that the integration runtime is going to update to. </summary>
         public string PushedVersion { get; }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string LatestVersion { get; }
 
         /// <summary> The estimated time when the self-hosted integration runtime will be updated. </summary>
-        public DateTimeOffset? AutoUpdateETA { get; }
+        public DateTimeOffset? AutoUpdateEta { get; }
 
         /// <summary> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </summary>
         public bool? IsSelfContainedInteractiveAuthoringEnabled { get; }

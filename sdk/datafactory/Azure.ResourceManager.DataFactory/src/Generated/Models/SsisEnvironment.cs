@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisEnvironment"/>. </summary>
-        /// <param name="type"> Type of metadata. </param>
+        /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="folderId"> Folder id which contains environment. </param>
         /// <param name="variables"> Variable in environment. </param>
-        internal SsisEnvironment(SsisObjectMetadataType @type, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? folderId, IReadOnlyList<SsisVariable> variables) : base(@type, id, name, description, additionalBinaryDataProperties)
+        internal SsisEnvironment(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? folderId, IReadOnlyList<SsisVariable> variables) : base(metadataType, id, name, description, additionalBinaryDataProperties)
         {
             FolderId = folderId;
             Variables = variables;

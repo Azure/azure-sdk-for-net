@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -74,6 +75,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(CustomActivityReferenceObject)} does not support writing '{format}' format.");
             }
+            if (Optional.IsCollectionDefined(LinkedServices))
+            {
+                writer.WritePropertyName("linkedServices"u8);
+                writer.WriteStartArray();
+                foreach (DataFactoryLinkedServiceReference item in LinkedServices)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets"u8);
@@ -126,10 +137,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            IList<DataFactoryLinkedServiceReference> linkedServices = default;
             IList<DatasetReference> datasets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("linkedServices"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(default); /* TODO(#59298): Deserialize is not implemented; stub until generator fix */
+                    }
+                    linkedServices = array;
+                    continue;
+                }
                 if (prop.NameEquals("datasets"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -149,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomActivityReferenceObject(datasets ?? new ChangeTrackingList<DatasetReference>(), additionalBinaryDataProperties);
+            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>(), additionalBinaryDataProperties);
         }
     }
 }

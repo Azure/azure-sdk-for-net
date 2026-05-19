@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The AmazonRdsForOracle database dataset. </summary>
     public partial class AmazonRdsForOracleTableDataset : DataFactoryDatasetProperties, IJsonModel<AmazonRdsForOracleTableDataset>
     {
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/> for deserialization. </summary>
+        internal AmazonRdsForOracleTableDataset()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataFactoryDatasetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -112,6 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string description = default;
             DataFactoryElement<IList<DatasetDataElement>> structure = default;
             DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
@@ -145,6 +151,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     schema = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    continue;
+                }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -207,6 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
+                linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 folder,
