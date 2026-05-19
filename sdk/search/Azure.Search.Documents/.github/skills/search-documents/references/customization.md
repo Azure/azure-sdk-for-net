@@ -344,7 +344,7 @@ The generator only sees the enum type and exposes it as `XxxType?`, **silently h
 
 **Wiring template** (three files, mirror `QueryAnswer` exactly):
 
-1. **Handwritten wrapper class** at `src/Models/Xxx.cs` — public typed properties (the enum + each parameter) and an `internal string XxxRaw` getter/setter that parses and emits the compound string. See [Models/QueryAnswer.cs](../../../src/Models/QueryAnswer.cs) as the canonical reference.
+1. **Handwritten wrapper class** at `src/Models/Xxx.cs` — public typed properties (the enum + each parameter) and an `internal string XxxRaw` getter/setter that parses and emits the compound string. See [Models/QueryAnswer.cs](../../../../src/Models/QueryAnswer.cs) as the canonical reference.
 
 2. **Raw redirector on the owner model.** When the property lives on `SearchOptions`, add a redirector in `Options/SearchOptions.cs` that **lazy-initializes both the sub-object and the wrapper** so a value coming back from deserialization (continuation tokens, response models) isn't silently dropped:
    ```csharp
@@ -377,7 +377,7 @@ The generator only sees the enum type and exposes it as `XxxType?`, **silently h
 
 3. **Public sub-object property** (when applicable) — change the public property on `SemanticSearchOptions` / `VectorSearchOptions` from the bare enum (`XxxType?`) to the new wrapper class so callers can set parameters.
 
-Reference implementations: [Models/QueryAnswer.cs](../../../src/Models/QueryAnswer.cs), [Models/QueryCaption.cs](../../../src/Models/QueryCaption.cs), [Models/QueryRewrites.cs](../../../src/Models/QueryRewrites.cs), with matching redirectors in [Options/SearchOptions.cs](../../../src/Options/SearchOptions.cs) and the `VectorizableTextQuery` partial in [Models/VectorizableTextQuery.cs](../../../src/Models/VectorizableTextQuery.cs).
+Reference implementations: [Models/QueryAnswer.cs](../../../../src/Models/QueryAnswer.cs), [Models/QueryCaption.cs](../../../../src/Models/QueryCaption.cs), [Models/QueryRewrites.cs](../../../../src/Models/QueryRewrites.cs), with matching redirectors in [Options/SearchOptions.cs](../../../../src/Options/SearchOptions.cs) and the `VectorizableTextQuery` partial in [Models/VectorizableTextQuery.cs](../../../../src/Models/VectorizableTextQuery.cs).
 
 ### `[CodeGenSuppress("MemberName", typeof(Arg1))]`
 Removes a generated constructor or method.
