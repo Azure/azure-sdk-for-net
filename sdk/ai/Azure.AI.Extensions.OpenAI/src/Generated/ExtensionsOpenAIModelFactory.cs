@@ -1535,7 +1535,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
         /// <returns> A new <see cref="OpenAI.OutputItemToolSearchOutput"/> instance for mocking. </returns>
-        public static OutputItemToolSearchOutput OutputItemToolSearchOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, ResponsesToolSearchExecutionType execution = default, IEnumerable<ResponsesTool> tools = default, ResponsesFunctionCallOutputStatusEnum status = default, string createdBy = default)
+        public static OutputItemToolSearchOutput OutputItemToolSearchOutput(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, ResponsesToolSearchExecutionType execution = default, IEnumerable<ResponsesTool> tools = default, ResponsesFunctionCallOutputStatus status = default, string createdBy = default)
         {
             tools ??= new ChangeTrackingList<ResponsesTool>();
 
@@ -1607,7 +1607,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
         /// <returns> A new <see cref="OpenAI.OutputItemCustomToolCallOutputResource"/> instance for mocking. </returns>
-        public static OutputItemCustomToolCallOutputResource OutputItemCustomToolCallOutputResource(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ResponsesFunctionCallOutputStatusEnum status = default, string createdBy = default)
+        public static OutputItemCustomToolCallOutputResource OutputItemCustomToolCallOutputResource(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ResponsesFunctionCallOutputStatus status = default, string createdBy = default)
         {
             return new OutputItemCustomToolCallOutputResource(
                 AgentResponseItemKind.CustomToolCallOutput,

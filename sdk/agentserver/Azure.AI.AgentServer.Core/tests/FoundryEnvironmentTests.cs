@@ -22,6 +22,10 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
         Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", null);
         Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED", null);
         FoundryEnvironment.Reload();
     }
 
@@ -206,5 +210,100 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.False);
+    }
+
+    // ---------------------------------------------------------------
+    // AgentInstanceClientId
+    // ---------------------------------------------------------------
+
+    [Test]
+    public void AgentInstanceClientId_ReturnsValue_WhenSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID", "instance-123");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.AgentInstanceClientId, Is.EqualTo("instance-123"));
+    }
+
+    [Test]
+    public void AgentInstanceClientId_ReturnsNull_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.AgentInstanceClientId, Is.Null);
+    }
+
+    // ---------------------------------------------------------------
+    // AgentBlueprintClientId
+    // ---------------------------------------------------------------
+
+    [Test]
+    public void AgentBlueprintClientId_ReturnsValue_WhenSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID", "blueprint-456");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.AgentBlueprintClientId, Is.EqualTo("blueprint-456"));
+    }
+
+    [Test]
+    public void AgentBlueprintClientId_ReturnsNull_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.AgentBlueprintClientId, Is.Null);
+    }
+
+    // ---------------------------------------------------------------
+    // AgentTenantId
+    // ---------------------------------------------------------------
+
+    [Test]
+    public void AgentTenantId_ReturnsValue_WhenSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID", "tenant-789");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.AgentTenantId, Is.EqualTo("tenant-789"));
+    }
+
+    [Test]
+    public void AgentTenantId_ReturnsNull_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.AgentTenantId, Is.Null);
+    }
+
+    // ---------------------------------------------------------------
+    // IsAgent365TracingEnabled
+    // ---------------------------------------------------------------
+
+    [Test]
+    public void IsAgent365TracingEnabled_ReturnsTrue_WhenHostedAndEnvVarSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED", "true");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAgent365TracingEnabled, Is.True);
+    }
+
+    [Test]
+    public void IsAgent365TracingEnabled_ReturnsFalse_WhenNotHosted()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED", "true");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAgent365TracingEnabled, Is.False);
+    }
+
+    [Test]
+    public void IsAgent365TracingEnabled_ReturnsFalse_WhenEnvVarNotSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAgent365TracingEnabled, Is.False);
+    }
+
+    [Test]
+    public void IsAgent365TracingEnabled_ReturnsFalse_WhenEnvVarIsFalse()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED", "false");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsAgent365TracingEnabled, Is.False);
     }
 }

@@ -42,6 +42,7 @@ public static class AgentHostMiddlewareExtensions
         services.TryAddSingleton<RequestIdMiddleware>();
         services.TryAddSingleton<ServerVersionMiddleware>();
         services.TryAddSingleton<RequestIdBaggagePropagator>();
+        services.TryAddSingleton<W3CBaggagePropagator>();
         services.TryAddSingleton<InboundRequestLoggingMiddleware>();
         services.Configure<AgentHostOptions>(_ => { });
         return services;
@@ -57,6 +58,7 @@ public static class AgentHostMiddlewareExtensions
     {
         app.UseMiddleware<RequestIdMiddleware>();
         app.UseMiddleware<ServerVersionMiddleware>();
+        app.UseMiddleware<W3CBaggagePropagator>();
         app.UseMiddleware<RequestIdBaggagePropagator>();
         app.UseMiddleware<InboundRequestLoggingMiddleware>();
         return app;
