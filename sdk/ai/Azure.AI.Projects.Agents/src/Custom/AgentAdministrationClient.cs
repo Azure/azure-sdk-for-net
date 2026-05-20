@@ -824,31 +824,27 @@ public partial class AgentAdministrationClient
 
     /// <summary>
     /// CreateAgentVersionFromCode
-    /// <list type="bullet">
-    /// <item>
-    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-    /// </item>
-    /// </list>
     /// </summary>
     /// <param name="agentName">
     /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
     /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
     /// </param>
     /// <param name="filePath"> The path to the entry point file. </param>
+    /// <param name="metadata">Metadata, including metadata itself, hosted agent definition and agent description. </param>
     /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, string contentType, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, string contentType, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-        (BinaryData data, string codeZipSha256) = FileHelper.CreateAndReadZipFile(filePath);
-        using BinaryContent content = BinaryContent.Create(data);
+        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
+        string codeZipSha256 = FileHelper.GetSha256Sum(data);
+        CreateAgentFromCodeOptions content = new(metadata, data);
         ClientResult result = CreateAgentVersionFromCode(
             agentName: agentName,
             codeZipSha256: codeZipSha256,
@@ -861,31 +857,27 @@ public partial class AgentAdministrationClient
 
     /// <summary>
     /// CreateAgentVersionFromCode
-    /// <list type="bullet">
-    /// <item>
-    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-    /// </item>
-    /// </list>
     /// </summary>
     /// <param name="agentName">
     /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
     /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
     /// </param>
     /// <param name="filePath"> The path to the entry point file. </param>
+    /// <param name="metadata">Metadata, including metadata itself, hosted agent definition and agent description. </param>
     /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-    /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, string contentType, string foundryFeatures = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, string contentType, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-        (BinaryData data, string codeZipSha256) = FileHelper.CreateAndReadZipFile(filePath);
-        using BinaryContent content = BinaryContent.Create(data);
+        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
+        string codeZipSha256 = FileHelper.GetSha256Sum(data);
+        CreateAgentFromCodeOptions content = new(metadata, data);
         ClientResult result = await CreateAgentVersionFromCodeAsync(
             agentName: agentName,
             codeZipSha256: codeZipSha256,

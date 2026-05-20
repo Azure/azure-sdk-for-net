@@ -1138,6 +1138,38 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
+        /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
+        /// <param name="code"> The code zip file (max 250 MB). </param>
+        /// <returns> A new <see cref="Agents.CreateAgentFromCodeOptions"/> instance for mocking. </returns>
+        public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, BinaryData code = default)
+        {
+            return new CreateAgentFromCodeOptions(metadata, code, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// JSON metadata for code-based agent operations (create, update, create version).
+        /// The agent name comes from the URL path parameter or the `x-ms-agent-name` header,
+        /// so it is not included in this model.
+        /// The content hash (SHA-256 of the zip) is carried in the `x-ms-code-zip-sha256` header.
+        /// </summary>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="definition"> The hosted agent definition including code_configuration (runtime, entry_point), cpu, memory, and protocol_versions. </param>
+        /// <returns> A new <see cref="Agents.CreateAgentVersionFromCodeMetadata"/> instance for mocking. </returns>
+        public static CreateAgentVersionFromCodeMetadata CreateAgentVersionFromCodeMetadata(string description = default, IDictionary<string, string> metadata = default, HostedAgentDefinition definition = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateAgentVersionFromCodeMetadata(description, metadata, definition, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The AgentManifestOptions. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
