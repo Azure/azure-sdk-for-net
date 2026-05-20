@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -50,8 +49,18 @@ namespace Azure.ResourceManager.Reservations
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
-                return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
+                ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
+                    new ReservationDetailDataListOperationSource(),
+                    _reservationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -71,8 +80,18 @@ namespace Azure.ResourceManager.Reservations
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
-                return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
+                ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
+                    new ReservationDetailDataListOperationSource(),
+                    _reservationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -92,8 +111,18 @@ namespace Azure.ResourceManager.Reservations
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
-                return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
+                ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
+                    new ReservationDetailDataListOperationSource(),
+                    _reservationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -113,8 +142,18 @@ namespace Azure.ResourceManager.Reservations
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                IList<ReservationDetailData> value = ParseReservationDetailDataList(response);
-                return new ReservationsArmOperation<IList<ReservationDetailData>>(Response.FromValue(value, response));
+                ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
+                    new ReservationDetailDataListOperationSource(),
+                    _reservationClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -171,16 +210,29 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        private static IList<ReservationDetailData> ParseReservationDetailDataList(Response response)
+        private sealed class ReservationDetailDataListOperationSource : IOperationSource<IList<ReservationDetailData>>
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            JsonElement root = document.RootElement;
+            IList<ReservationDetailData> IOperationSource<IList<ReservationDetailData>>.CreateResult(Response response, CancellationToken cancellationToken)
+            {
+                using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+                return ParseReservationDetailDataList(document.RootElement);
+            }
+
+            async ValueTask<IList<ReservationDetailData>> IOperationSource<IList<ReservationDetailData>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+            {
+                using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                return ParseReservationDetailDataList(document.RootElement);
+            }
+        }
+
+        private static IList<ReservationDetailData> ParseReservationDetailDataList(JsonElement root)
+        {
             List<ReservationDetailData> result = new List<ReservationDetailData>();
             if (root.ValueKind == JsonValueKind.Array)
             {
                 foreach (JsonElement element in root.EnumerateArray())
                 {
-                    result.Add(ModelReaderWriter.Read<ReservationDetailData>(BinaryData.FromString(element.GetRawText()), ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default));
+                    result.Add(ReservationDetailData.DeserializeReservationDetailData(element, ModelSerializationExtensions.WireOptions));
                 }
             }
             return result;

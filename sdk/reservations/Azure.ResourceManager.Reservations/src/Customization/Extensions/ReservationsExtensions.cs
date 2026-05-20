@@ -19,43 +19,65 @@ namespace Azure.ResourceManager.Reservations
     {
         [ForwardsClientCalls]
         public static Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-            => GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetailAsync(providerId, location, id, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetailAsync(providerId, location, id, cancellationToken);
+        }
 
         [ForwardsClientCalls]
         public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-            => GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetail(providerId, location, id, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetail(providerId, location, id, cancellationToken);
+        }
 
         [ForwardsClientCalls]
         public static Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
-            => GetMockableReservationsTenantResource(tenantResource).GetReservationOrderAsync(reservationOrderId, expand, cancellationToken);
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return GetMockableReservationsTenantResource(tenantResource).GetReservationOrderAsync(reservationOrderId, expand, cancellationToken);
+        }
 
         [ForwardsClientCalls]
         public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
-            => GetMockableReservationsTenantResource(tenantResource).GetReservationOrder(reservationOrderId, expand, cancellationToken);
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            return GetMockableReservationsTenantResource(tenantResource).GetReservationOrder(reservationOrderId, expand, cancellationToken);
+        }
 
         public static AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
-            => GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
+        }
 
         public static Pageable<Models.ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
-            => GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalog(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalog(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
+        }
 
         public static AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, Models.SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalogAsync(options, cancellationToken);
         }
 
         public static Pageable<Models.ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, Models.SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalog(options, cancellationToken);
         }
 
         public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, Models.TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
             return GetMockableReservationsTenantResource(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
         }
 
         public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, Models.TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
             return GetMockableReservationsTenantResource(tenantResource).GetReservationDetails(options, cancellationToken);
         }
     }
