@@ -11,7 +11,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     [CodeGenSuppress("EsuKey", typeof(string), typeof(int?))]
-    [CodeGenSuppress("LicenseProfileMachineInstanceViewEsuProperties", typeof(Guid?), typeof(IEnumerable<EsuKey>), typeof(EsuServerType?), typeof(EsuEligibility?), typeof(EsuKeyState?), typeof(HybridComputeLicenseData), typeof(LicenseAssignmentState?))]
+    [CodeGenSuppress("HybridComputePrivateLinkScopeProperties", typeof(HybridComputePublicNetworkAccessType?), typeof(string), typeof(string), typeof(IEnumerable<PrivateEndpointConnectionDataModel>), typeof(IEnumerable<ServiceExtension>))]
+    [CodeGenSuppress("HybridComputePrivateLinkScopeProperties", typeof(HybridComputePublicNetworkAccessType?), typeof(string), typeof(string), typeof(IEnumerable<PrivateEndpointConnectionDataModel>))]
+    [CodeGenSuppress("HybridComputeWindowsConfiguration")]
+    [CodeGenSuppress("HybridComputeWindowsConfiguration", typeof(AssessmentModeType?), typeof(PatchModeType?), typeof(bool?), typeof(HybridComputePatchSettingsStatus))]
+    [CodeGenSuppress("HybridComputeWindowsConfiguration", typeof(PatchSettings), typeof(IDictionary<string, BinaryData>))]
     public static partial class ArmHybridComputeModelFactory
     {
         /// <summary>
@@ -29,8 +33,29 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// Use the overload that accepts a string privateEndpointId instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId, HybridComputePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
+        public static HybridComputePrivateEndpointConnectionProperties HybridComputePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = default, HybridComputePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
             => new HybridComputePrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, additionalBinaryDataProperties: null), connectionState, provisioningState, groupIds is null ? new List<string>() : new List<string>(groupIds), additionalBinaryDataProperties: null);
+
+        /// <summary>
+        /// Creates a HybridComputePrivateLinkScopeProperties for mocking.
+        /// This overload preserves the AutoRest-generated model factory API for backward compatibility.
+        /// </summary>
+        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default)
+        {
+            privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
+
+            return new HybridComputePrivateLinkScopeProperties(
+                publicNetworkAccess,
+                provisioningState,
+                privateLinkScopeId,
+                new List<PrivateEndpointConnectionDataModel>(privateEndpointConnections),
+                serviceExtensions: new ChangeTrackingList<ServiceExtension>(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Creates a HybridComputeWindowsConfiguration for mocking. </summary>
+        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
+            => new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, additionalBinaryDataProperties: null), additionalBinaryDataProperties: null);
 
         /// <summary> Creates an EsuKey for mocking. </summary>
         public static EsuKey EsuKey(string sku = default, int? licenseStatus = default)
@@ -50,22 +75,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 tags,
                 location,
                 provisioningState is null && tenantId is null && licenseType is null && licenseDetails is null ? default : new LicenseProperties(provisioningState, tenantId, licenseType, licenseDetails, additionalBinaryDataProperties: null));
-        }
-
-        /// <summary> Creates a LicenseProfileMachineInstanceViewEsuProperties for mocking. </summary>
-        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, HybridComputeLicenseData assignedLicense = default, LicenseAssignmentState? licenseAssignmentState = default)
-        {
-            esuKeys ??= new ChangeTrackingList<EsuKey>();
-
-            return new LicenseProfileMachineInstanceViewEsuProperties(
-                assignedLicenseImmutableId,
-                new List<EsuKey>(esuKeys),
-                additionalBinaryDataProperties: null,
-                serverType,
-                esuEligibility,
-                esuKeyState,
-                assignedLicense,
-                licenseAssignmentState);
         }
     }
 }

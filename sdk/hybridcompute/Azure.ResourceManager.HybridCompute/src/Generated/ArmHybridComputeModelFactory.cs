@@ -1129,27 +1129,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 properties);
         }
 
-        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
-        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
-        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
-        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
-        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
-        /// <param name="serviceExtensions"> Enable private link validation for an Azure Arc Extension. </param>
-        /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
-        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default, IEnumerable<ServiceExtension> serviceExtensions = default)
-        {
-            privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
-            serviceExtensions ??= new ChangeTrackingList<ServiceExtension>();
-
-            return new HybridComputePrivateLinkScopeProperties(
-                publicNetworkAccess,
-                provisioningState,
-                privateLinkScopeId,
-                privateEndpointConnections.ToList(),
-                serviceExtensions.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopePatch"/> instance for mocking. </returns>
@@ -1294,18 +1273,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return HybridComputeMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, locationData: locationData, agentConfiguration: agentConfiguration, serviceStatuses: serviceStatuses, hardwareProfile: default, firmwareProfile: default, agentUpgrade: agentUpgrade, osProfile: osProfile, licenseProfile: licenseProfile, provisioningState: provisioningState, status: status, lastStatusChange: lastStatusChange, errorDetails: errorDetails, agentVersion: agentVersion, vmId: vmId, displayName: displayName, machineFqdn: machineFqdn, clientPublicKey: clientPublicKey, identityKeyStore: default, tpmEkCertificate: default, osName: osName, osVersion: osVersion, osType: osType, vmUuid: vmUuid, extensions: extensions, osSku: osSku, osEdition: osEdition, domainName: domainName, adFqdn: adFqdn, dnsFqdn: dnsFqdn, privateLinkScopeResourceId: privateLinkScopeResourceId, parentClusterResourceId: parentClusterResourceId, hardwareResourceId: default, msSqlDiscovered: msSqlDiscovered, detectedProperties: detectedProperties, storageDisks: default, cloudMetadataProvider: cloudMetadataProvider, networkInterfaces: networkInterfaces, resources: resources, identity: identity, kind: kind);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeWindowsConfiguration"/>. </summary>
-        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
-        /// <param name="patchMode"> Specifies the patch mode. </param>
-        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
-        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
-        /// <returns> A new <see cref="Models.HybridComputeWindowsConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, bool? isHotpatchingEnabled, HybridComputePatchSettingsStatus status)
-        {
-            return new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, default), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLinuxConfiguration"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
@@ -1393,18 +1360,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 tags,
                 location,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateLinkScopeProperties"/>. </summary>
-        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
-        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
-        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
-        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
-        /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess, string provisioningState, string privateLinkScopeId, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections)
-        {
-            return HybridComputePrivateLinkScopeProperties(publicNetworkAccess: publicNetworkAccess, provisioningState: provisioningState, privateLinkScopeId: privateLinkScopeId, privateEndpointConnections: privateEndpointConnections, serviceExtensions: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionDataModel"/>. </summary>
