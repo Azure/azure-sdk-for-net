@@ -249,6 +249,32 @@ namespace Azure.ResourceManager.DataMigration
             _inner = inner;
         }
 
+        [ForwardsClientCalls]
+        public override ArmOperation<DataMigrationServiceTaskResource> CreateOrUpdate(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<TaskResource> operation = _inner.CreateOrUpdate(waitUntil, taskName, data, cancellationToken);
+            return new DataMigrationArmOperation<DataMigrationServiceTaskResource>(
+                Response.FromValue<DataMigrationServiceTaskResource>(new ProjectDataMigrationServiceTaskResourceShim(operation.Value), operation.GetRawResponse()),
+                operation.GetRehydrationToken());
+        }
+
+        [ForwardsClientCalls]
+        public override async Task<ArmOperation<DataMigrationServiceTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<TaskResource> operation = await _inner.CreateOrUpdateAsync(waitUntil, taskName, data, cancellationToken).ConfigureAwait(false);
+            return new DataMigrationArmOperation<DataMigrationServiceTaskResource>(
+                Response.FromValue<DataMigrationServiceTaskResource>(new ProjectDataMigrationServiceTaskResourceShim(operation.Value), operation.GetRawResponse()),
+                operation.GetRehydrationToken());
+        }
+
+        [ForwardsClientCalls]
+        public override Response<bool> Exists(string taskName, string expand = default, CancellationToken cancellationToken = default)
+            => _inner.Exists(taskName, expand, cancellationToken);
+
+        [ForwardsClientCalls]
+        public override Task<Response<bool>> ExistsAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
+            => _inner.ExistsAsync(taskName, expand, cancellationToken);
+
         public override Response<DataMigrationServiceTaskResource> Get(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Response<TaskResource> response = _inner.Get(taskName, expand, cancellationToken);

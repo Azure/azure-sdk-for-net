@@ -13,14 +13,15 @@ using Azure.ResourceManager.DataMigration.Models;
 namespace Azure.ResourceManager.DataMigration
 {
     // Backward-compatible constructors for GA resource data types.
+    // These call base(location) instead of this() so that Tags is properly
+    // initialized via TrackedResourceData(AzureLocation).
     public partial class DataMigrationProjectData
     {
         // Backward-compatible constructor for the previous TrackedResourceData shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DataMigrationProjectData(AzureLocation location)
-            : this()
+            : base(location)
         {
-            Location = location;
         }
     }
 
@@ -30,9 +31,8 @@ namespace Azure.ResourceManager.DataMigration
         // Backward-compatible constructor for the previous TrackedResourceData shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DataMigrationServiceData(AzureLocation location)
-            : this()
+            : base(location)
         {
-            Location = location;
         }
     }
 
@@ -42,9 +42,8 @@ namespace Azure.ResourceManager.DataMigration
         // Backward-compatible constructor for the previous TrackedResourceData shape.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SqlMigrationServiceData(AzureLocation location)
-            : this()
+            : base(location)
         {
-            Location = location;
         }
     }
 }
