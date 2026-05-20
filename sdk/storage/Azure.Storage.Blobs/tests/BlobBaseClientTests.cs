@@ -9651,30 +9651,16 @@ namespace Azure.Storage.Blobs.Test
             int downloadOffset = 0;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout items and pick the endpoint
-            // whose range covers downloadOffset, then route a single-shot
-            // download through it.
-            string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
-            {
-                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
-                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
-                if (coveringRange == null)
-                {
-                    continue;
-                }
+            // Act - ask GetLayout for just the single entry covering
+            // our download offset by passing Range = new HttpRange(downloadOffset, 1).
+            // The service responds with exactly one segment and its endpoint, so
+            // there's no pagination or client-side range scanning to do.
+            BlobLayoutInfo layoutInfo = await downloadBlob
+                .GetLayoutAsync(new BlobGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
+                .FirstAsync();
 
-                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
-                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
-                if (layoutEndpoint != null)
-                {
-                    break;
-                }
-            }
-
-            Assert.IsNotNull(
-                layoutEndpoint,
-                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
+            // Single-entry layout means exactly one endpoint - just grab it.
+            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
@@ -9768,35 +9754,21 @@ namespace Azure.Storage.Blobs.Test
 
             string originalHost = blob.Uri.Host;
 
-            // Pick a non-zero offset that lands well into the blob so the customer's
-            // segment-selection loop has to actually walk past the first range.
+            // Pick a non-zero offset that lands well into the blob so the rewritten
+            // request actually has to fetch bytes from a non-first segment.
             int downloadOffset = 12 * Constants.MB;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout items and pick the endpoint
-            // whose range covers downloadOffset, then route a single-shot
-            // download through it.
-            string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
-            {
-                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
-                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
-                if (coveringRange == null)
-                {
-                    continue;
-                }
+            // Act - ask GetLayout for just the single entry covering
+            // our download offset by passing Range = new HttpRange(downloadOffset, 1).
+            // The service responds with exactly one segment and its endpoint, so
+            // there's no pagination or client-side range scanning to do.
+            BlobLayoutInfo layoutInfo = await downloadBlob
+                .GetLayoutAsync(new BlobGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
+                .FirstAsync();
 
-                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
-                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
-                if (layoutEndpoint != null)
-                {
-                    break;
-                }
-            }
-
-            Assert.IsNotNull(
-                layoutEndpoint,
-                $"Service should return a layout entry covering offset {downloadOffset} for a 20 MB blob.");
+            // Single-entry layout means exactly one endpoint - just grab it.
+            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
@@ -9906,30 +9878,16 @@ namespace Azure.Storage.Blobs.Test
             int downloadOffset = 0;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout items and pick the endpoint
-            // whose range covers downloadOffset, then route a single-shot
-            // download through it.
-            string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
-            {
-                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
-                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
-                if (coveringRange == null)
-                {
-                    continue;
-                }
+            // Act - ask GetLayout for just the single entry covering
+            // our download offset by passing Range = new HttpRange(downloadOffset, 1).
+            // The service responds with exactly one segment and its endpoint, so
+            // there's no pagination or client-side range scanning to do.
+            BlobLayoutInfo layoutInfo = await downloadBlob
+                .GetLayoutAsync(new BlobGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
+                .FirstAsync();
 
-                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
-                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
-                if (layoutEndpoint != null)
-                {
-                    break;
-                }
-            }
-
-            Assert.IsNotNull(
-                layoutEndpoint,
-                "Service should return a layout entry covering offset 0 for a 20 MB blob.");
+            // Single-entry layout means exactly one endpoint - just grab it.
+            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
@@ -10020,35 +9978,21 @@ namespace Azure.Storage.Blobs.Test
 
             string originalHost = blob.Uri.Host;
 
-            // Pick a non-zero offset that lands well into the blob so the customer's
-            // segment-selection loop has to actually walk past the first range.
+            // Pick a non-zero offset that lands well into the blob so the rewritten
+            // request actually has to fetch bytes from a non-first segment.
             int downloadOffset = 12 * Constants.MB;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - customer code: enumerate layout items and pick the endpoint
-            // whose range covers downloadOffset, then route a single-shot
-            // download through it.
-            string layoutEndpoint = null;
-            await foreach (BlobLayoutInfo layoutInfo in downloadBlob.GetLayoutAsync())
-            {
-                BlobLayoutRangesRangeItem coveringRange = layoutInfo.Ranges?.Range
-                    ?.FirstOrDefault(r => r.Start <= downloadOffset && downloadOffset <= r.End);
-                if (coveringRange == null)
-                {
-                    continue;
-                }
+            // Act - ask GetLayout for just the single entry covering
+            // our download offset by passing Range = new HttpRange(downloadOffset, 1).
+            // The service responds with exactly one segment and its endpoint, so
+            // there's no pagination or client-side range scanning to do.
+            BlobLayoutInfo layoutInfo = await downloadBlob
+                .GetLayoutAsync(new BlobGetLayoutOptions { Range = new HttpRange(downloadOffset, 1) })
+                .FirstAsync();
 
-                layoutEndpoint = layoutInfo.Endpoints?.Endpoint
-                    ?.FirstOrDefault(e => e.Index == coveringRange.EndpointIndex)?.Value;
-                if (layoutEndpoint != null)
-                {
-                    break;
-                }
-            }
-
-            Assert.IsNotNull(
-                layoutEndpoint,
-                $"Service should return a layout entry covering offset {downloadOffset} for a 20 MB blob.");
+            // Single-entry layout means exactly one endpoint - just grab it.
+            string layoutEndpoint = layoutInfo.Endpoints.Endpoint[0].Value;
 
             BlobDownloadOptions downloadOptions = new()
             {
