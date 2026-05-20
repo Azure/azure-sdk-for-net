@@ -421,6 +421,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("enableResilientEphemeralOsDisk"u8);
                 writer.WriteBooleanValue(EnableResilientEphemeralOsDisk.Value);
             }
+            if (Optional.IsDefined(ScaleInPolicy))
+            {
+                writer.WritePropertyName("scaleInPolicy"u8);
+                writer.WriteObjectValue(ScaleInPolicy, options);
+            }
+            if (Optional.IsDefined(ProxyAgentSettings))
+            {
+                writer.WritePropertyName("proxyAgentSettings"u8);
+                writer.WriteObjectValue(ProxyAgentSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -517,6 +527,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             bool? isZoneBalanceEnabled = default;
             bool? isOutboundOnly = default;
             bool? enableResilientEphemeralOsDisk = default;
+            ScaleInPolicy scaleInPolicy = default;
+            ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1043,6 +1055,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     enableResilientEphemeralOsDisk = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("scaleInPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scaleInPolicy = ScaleInPolicy.DeserializeScaleInPolicy(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("proxyAgentSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -1103,6 +1133,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 isZoneBalanceEnabled,
                 isOutboundOnly,
                 enableResilientEphemeralOsDisk,
+                scaleInPolicy,
+                proxyAgentSettings,
                 additionalBinaryDataProperties);
         }
     }
