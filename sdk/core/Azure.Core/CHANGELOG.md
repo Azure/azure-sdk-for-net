@@ -14,6 +14,8 @@
 
 ### Breaking Changes
 
+- Removed experimental (`SCME0002`) `WithAzureCredential` extension methods on `ClientSettings` and `IClientBuilder`. Use `AddAzureCredentialResolver` (DI) or `GetAzureClientSettings`/`GetAzureCredentialSettings` (standalone) instead.
+
 ### Bugs Fixed
 
 ### Other Changes
