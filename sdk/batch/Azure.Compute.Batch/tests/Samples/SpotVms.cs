@@ -53,10 +53,12 @@ internal static class SpotVms
 
     public static async Task ReadPoolNodeCountsAsync()
     {
+        BatchAccountResource batchAccount = Stubs.GetBatchAccount();
+
         #region Snippet:spot_vms_pool_node_counts
-        BatchPool pool1 = await batchClient.GetPoolAsync("vmpool");
-        int? numDedicated = pool1.CurrentDedicatedNodes;
-        int? numLowPri = pool1.CurrentLowPriorityNodes;
+        BatchAccountPoolResource pool = await batchAccount.GetBatchAccountPools().GetAsync("vmpool");
+        int? numDedicated = pool.Data.CurrentDedicatedNodes;
+        int? numLowPri = pool.Data.CurrentLowPriorityNodes;
         #endregion
         _ = (numDedicated, numLowPri);
     }
