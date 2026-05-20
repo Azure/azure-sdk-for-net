@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
+    /// <summary></summary>
     public partial class ContainerAppHttpRouteConfigResource : IJsonModel<ContainerAppHttpRouteConfigData>
     {
-        private static ContainerAppHttpRouteConfigData s_dataDeserializationInstance;
-        private static ContainerAppHttpRouteConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ContainerAppHttpRouteConfigData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ContainerAppHttpRouteConfigData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerAppHttpRouteConfigData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppHttpRouteConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppHttpRouteConfigData>)Data).Write(writer, options);
 
-        ContainerAppHttpRouteConfigData IJsonModel<ContainerAppHttpRouteConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppHttpRouteConfigData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppHttpRouteConfigData IJsonModel<ContainerAppHttpRouteConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerAppHttpRouteConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppHttpRouteConfigData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerAppHttpRouteConfigData IPersistableModel<ContainerAppHttpRouteConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppHttpRouteConfigData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppHttpRouteConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppHttpRouteConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerAppHttpRouteConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

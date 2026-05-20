@@ -72,6 +72,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ControlPlaneAclConfiguration))
+            {
+                writer.WritePropertyName("controlPlaneAclConfiguration"u8);
+                writer.WriteStartArray();
+                foreach (var item in ControlPlaneAclConfiguration)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AclType))
+            {
+                writer.WritePropertyName("aclType"u8);
+                writer.WriteStringValue(AclType.Value.ToString());
+            }
+            if (Optional.IsDefined(DeviceRole))
+            {
+                writer.WritePropertyName("deviceRole"u8);
+                writer.WriteStringValue(DeviceRole.Value.ToString());
+            }
+            if (Optional.IsDefined(GlobalAccessControlListActions))
+            {
+                writer.WritePropertyName("globalAccessControlListActions"u8);
+                writer.WriteObjectValue(GlobalAccessControlListActions, options);
+            }
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
@@ -106,6 +131,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityActionType? defaultAction = default;
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
+            IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default;
+            NetworkFabricAclType? aclType = default;
+            NetworkFabricDeviceRole? deviceRole = default;
+            GlobalAccessControlListActionPatchProperties globalAccessControlListActions = default;
             string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -189,6 +218,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             dynamicMatchConfigurations = array;
                             continue;
                         }
+                        if (property0.NameEquals("controlPlaneAclConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ControlPlaneAclPatchProperties> array = new List<ControlPlaneAclPatchProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ControlPlaneAclPatchProperties.DeserializeControlPlaneAclPatchProperties(item, options));
+                            }
+                            controlPlaneAclConfiguration = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("aclType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            aclType = new NetworkFabricAclType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("deviceRole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deviceRole = new NetworkFabricDeviceRole(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("globalAccessControlListActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            globalAccessControlListActions = GlobalAccessControlListActionPatchProperties.DeserializeGlobalAccessControlListActionPatchProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("annotation"u8))
                         {
                             annotation = property0.Value.GetString();
@@ -211,6 +281,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 defaultAction,
                 matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclPatchProperties>(),
+                aclType,
+                deviceRole,
+                globalAccessControlListActions,
                 annotation);
         }
 
