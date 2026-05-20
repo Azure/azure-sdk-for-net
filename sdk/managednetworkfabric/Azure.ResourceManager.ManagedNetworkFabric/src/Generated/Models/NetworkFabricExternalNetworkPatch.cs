@@ -53,33 +53,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkPatch"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
         /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
         /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties object. </param>
         /// <param name="optionAProperties"> option A properties object. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricExternalNetworkPatch(string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFabricExternalNetworkPatch(string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties, ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Annotation = annotation;
-            ImportRoutePolicyId = importRoutePolicyId;
-            ExportRoutePolicyId = exportRoutePolicyId;
+            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             ImportRoutePolicy = importRoutePolicy;
             ExportRoutePolicy = exportRoutePolicy;
             PeeringOption = peeringOption;
             OptionBProperties = optionBProperties;
             OptionAProperties = optionAProperties;
+            StaticRouteConfiguration = staticRouteConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ImportRoutePolicyId { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ExportRoutePolicyId { get; set; }
+        /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </summary>
+        public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         public ImportRoutePolicy ImportRoutePolicy { get; set; }
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
@@ -90,5 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public L3OptionBProperties OptionBProperties { get; set; }
         /// <summary> option A properties object. </summary>
         public ExternalNetworkPatchOptionAProperties OptionAProperties { get; set; }
+        /// <summary> Static Route Configuration. </summary>
+        public ExternalNetworkStaticRoutePatchConfiguration StaticRouteConfiguration { get; set; }
     }
 }

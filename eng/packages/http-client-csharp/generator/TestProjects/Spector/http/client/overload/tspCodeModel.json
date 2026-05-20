@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "listContentType",
+      "name": "ListAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "listByScopeContentType",
+      "name": "ListAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {

@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _queueClientDiagnostics;
         private readonly Queue _queueRestClient;
-        private readonly ClientDiagnostics _queueServicesClientDiagnostics;
-        private readonly QueueServices _queueServicesRestClient;
         private readonly StorageQueueData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/queues";
@@ -53,8 +51,6 @@ namespace Azure.ResourceManager.Storage
             TryGetApiVersion(ResourceType, out string storageQueueApiVersion);
             _queueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             _queueRestClient = new Queue(_queueClientDiagnostics, Pipeline, Endpoint, storageQueueApiVersion ?? "2025-06-01");
-            _queueServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, storageQueueApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

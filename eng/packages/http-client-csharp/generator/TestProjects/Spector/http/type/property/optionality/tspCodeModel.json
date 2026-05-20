@@ -275,7 +275,7 @@
     {
       "$id": "27",
       "kind": "constant",
-      "name": "getAllContentType",
+      "name": "GetAllAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -291,7 +291,7 @@
     {
       "$id": "29",
       "kind": "constant",
-      "name": "getDefaultContentType",
+      "name": "GetAllAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -307,7 +307,7 @@
     {
       "$id": "31",
       "kind": "constant",
-      "name": "putAllContentType",
+      "name": "GetAllAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -323,7 +323,7 @@
     {
       "$id": "33",
       "kind": "constant",
-      "name": "putDefaultContentType",
+      "name": "GetAllAccept3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -339,7 +339,7 @@
     {
       "$id": "35",
       "kind": "constant",
-      "name": "getAllContentType1",
+      "name": "GetAllAccept4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -355,7 +355,7 @@
     {
       "$id": "37",
       "kind": "constant",
-      "name": "getDefaultContentType1",
+      "name": "GetAllAccept5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -371,7 +371,7 @@
     {
       "$id": "39",
       "kind": "constant",
-      "name": "putAllContentType1",
+      "name": "GetAllAccept6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -387,7 +387,7 @@
     {
       "$id": "41",
       "kind": "constant",
-      "name": "putDefaultContentType1",
+      "name": "GetAllAccept7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -403,7 +403,7 @@
     {
       "$id": "43",
       "kind": "constant",
-      "name": "getAllContentType2",
+      "name": "GetAllAccept8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -419,7 +419,7 @@
     {
       "$id": "45",
       "kind": "constant",
-      "name": "getDefaultContentType2",
+      "name": "GetAllAccept9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -435,7 +435,7 @@
     {
       "$id": "47",
       "kind": "constant",
-      "name": "putAllContentType2",
+      "name": "GetAllAccept10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -451,7 +451,7 @@
     {
       "$id": "49",
       "kind": "constant",
-      "name": "putDefaultContentType2",
+      "name": "GetAllAccept11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -467,7 +467,7 @@
     {
       "$id": "51",
       "kind": "constant",
-      "name": "getAllContentType3",
+      "name": "GetAllAccept12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -483,7 +483,7 @@
     {
       "$id": "53",
       "kind": "constant",
-      "name": "getDefaultContentType3",
+      "name": "GetAllAccept13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -499,7 +499,7 @@
     {
       "$id": "55",
       "kind": "constant",
-      "name": "putAllContentType3",
+      "name": "GetAllAccept14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -515,7 +515,7 @@
     {
       "$id": "57",
       "kind": "constant",
-      "name": "putDefaultContentType3",
+      "name": "GetAllAccept15",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -531,7 +531,7 @@
     {
       "$id": "59",
       "kind": "constant",
-      "name": "getAllContentType4",
+      "name": "GetAllAccept16",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -547,7 +547,7 @@
     {
       "$id": "61",
       "kind": "constant",
-      "name": "getDefaultContentType4",
+      "name": "GetAllAccept17",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -563,7 +563,7 @@
     {
       "$id": "63",
       "kind": "constant",
-      "name": "putAllContentType4",
+      "name": "GetAllAccept18",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -579,7 +579,7 @@
     {
       "$id": "65",
       "kind": "constant",
-      "name": "putDefaultContentType4",
+      "name": "GetAllAccept19",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -595,7 +595,7 @@
     {
       "$id": "67",
       "kind": "constant",
-      "name": "getAllContentType5",
+      "name": "GetAllAccept20",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -611,7 +611,7 @@
     {
       "$id": "69",
       "kind": "constant",
-      "name": "getDefaultContentType5",
+      "name": "GetAllAccept21",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -627,7 +627,7 @@
     {
       "$id": "71",
       "kind": "constant",
-      "name": "putAllContentType5",
+      "name": "GetAllAccept22",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -643,7 +643,7 @@
     {
       "$id": "73",
       "kind": "constant",
-      "name": "putDefaultContentType5",
+      "name": "GetAllAccept23",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -659,7 +659,7 @@
     {
       "$id": "75",
       "kind": "constant",
-      "name": "getAllContentType6",
+      "name": "GetAllAccept24",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -675,7 +675,7 @@
     {
       "$id": "77",
       "kind": "constant",
-      "name": "getDefaultContentType6",
+      "name": "GetAllAccept25",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -691,7 +691,7 @@
     {
       "$id": "79",
       "kind": "constant",
-      "name": "putAllContentType6",
+      "name": "GetAllAccept26",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -707,7 +707,7 @@
     {
       "$id": "81",
       "kind": "constant",
-      "name": "putDefaultContentType6",
+      "name": "GetAllAccept27",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -723,7 +723,7 @@
     {
       "$id": "83",
       "kind": "constant",
-      "name": "getAllContentType7",
+      "name": "GetAllAccept28",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -739,7 +739,7 @@
     {
       "$id": "85",
       "kind": "constant",
-      "name": "getDefaultContentType7",
+      "name": "GetAllAccept29",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -755,7 +755,7 @@
     {
       "$id": "87",
       "kind": "constant",
-      "name": "putAllContentType7",
+      "name": "GetAllAccept30",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -771,7 +771,7 @@
     {
       "$id": "89",
       "kind": "constant",
-      "name": "putDefaultContentType7",
+      "name": "GetAllAccept31",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -787,7 +787,7 @@
     {
       "$id": "91",
       "kind": "constant",
-      "name": "getAllContentType8",
+      "name": "GetAllAccept32",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -803,7 +803,7 @@
     {
       "$id": "93",
       "kind": "constant",
-      "name": "getDefaultContentType8",
+      "name": "GetAllAccept33",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -819,7 +819,7 @@
     {
       "$id": "95",
       "kind": "constant",
-      "name": "putAllContentType8",
+      "name": "GetAllAccept34",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -835,7 +835,7 @@
     {
       "$id": "97",
       "kind": "constant",
-      "name": "putDefaultContentType8",
+      "name": "GetAllAccept35",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -851,7 +851,7 @@
     {
       "$id": "99",
       "kind": "constant",
-      "name": "getAllContentType9",
+      "name": "GetAllAccept36",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -867,7 +867,7 @@
     {
       "$id": "101",
       "kind": "constant",
-      "name": "getDefaultContentType9",
+      "name": "GetAllAccept37",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -883,7 +883,7 @@
     {
       "$id": "103",
       "kind": "constant",
-      "name": "putAllContentType9",
+      "name": "GetAllAccept38",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -899,7 +899,7 @@
     {
       "$id": "105",
       "kind": "constant",
-      "name": "putDefaultContentType9",
+      "name": "GetAllAccept39",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -915,7 +915,7 @@
     {
       "$id": "107",
       "kind": "constant",
-      "name": "getAllContentType10",
+      "name": "GetAllAccept40",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -931,7 +931,7 @@
     {
       "$id": "109",
       "kind": "constant",
-      "name": "getDefaultContentType10",
+      "name": "GetAllAccept41",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -947,7 +947,7 @@
     {
       "$id": "111",
       "kind": "constant",
-      "name": "putAllContentType10",
+      "name": "GetAllAccept42",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -963,7 +963,7 @@
     {
       "$id": "113",
       "kind": "constant",
-      "name": "putDefaultContentType10",
+      "name": "GetAllAccept43",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -979,7 +979,7 @@
     {
       "$id": "115",
       "kind": "constant",
-      "name": "getAllContentType11",
+      "name": "GetAllAccept44",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -995,7 +995,7 @@
     {
       "$id": "117",
       "kind": "constant",
-      "name": "getDefaultContentType11",
+      "name": "GetAllAccept45",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1011,7 +1011,7 @@
     {
       "$id": "119",
       "kind": "constant",
-      "name": "putAllContentType11",
+      "name": "GetAllAccept46",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1027,7 +1027,7 @@
     {
       "$id": "121",
       "kind": "constant",
-      "name": "putDefaultContentType11",
+      "name": "GetAllAccept47",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1043,7 +1043,7 @@
     {
       "$id": "123",
       "kind": "constant",
-      "name": "getAllContentType12",
+      "name": "GetAllAccept48",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1059,7 +1059,7 @@
     {
       "$id": "125",
       "kind": "constant",
-      "name": "getDefaultContentType12",
+      "name": "GetAllAccept49",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1075,7 +1075,7 @@
     {
       "$id": "127",
       "kind": "constant",
-      "name": "putAllContentType12",
+      "name": "GetAllAccept50",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1091,7 +1091,7 @@
     {
       "$id": "129",
       "kind": "constant",
-      "name": "putDefaultContentType12",
+      "name": "GetAllAccept51",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1107,7 +1107,7 @@
     {
       "$id": "131",
       "kind": "constant",
-      "name": "getAllContentType13",
+      "name": "GetAllAccept52",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1123,7 +1123,7 @@
     {
       "$id": "133",
       "kind": "constant",
-      "name": "getDefaultContentType13",
+      "name": "GetAllAccept53",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1139,7 +1139,7 @@
     {
       "$id": "135",
       "kind": "constant",
-      "name": "putAllContentType13",
+      "name": "GetAllAccept54",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1155,7 +1155,7 @@
     {
       "$id": "137",
       "kind": "constant",
-      "name": "putDefaultContentType13",
+      "name": "GetAllAccept55",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1171,7 +1171,7 @@
     {
       "$id": "139",
       "kind": "constant",
-      "name": "getAllContentType14",
+      "name": "GetAllAccept56",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1187,7 +1187,7 @@
     {
       "$id": "141",
       "kind": "constant",
-      "name": "getDefaultContentType14",
+      "name": "GetAllAccept57",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1203,7 +1203,7 @@
     {
       "$id": "143",
       "kind": "constant",
-      "name": "putAllContentType14",
+      "name": "GetAllAccept58",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1219,7 +1219,7 @@
     {
       "$id": "145",
       "kind": "constant",
-      "name": "putDefaultContentType14",
+      "name": "GetAllAccept59",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1235,7 +1235,7 @@
     {
       "$id": "147",
       "kind": "constant",
-      "name": "getAllContentType15",
+      "name": "GetAllAccept60",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1251,7 +1251,7 @@
     {
       "$id": "149",
       "kind": "constant",
-      "name": "getRequiredOnlyContentType",
+      "name": "GetAllAccept61",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1267,7 +1267,7 @@
     {
       "$id": "151",
       "kind": "constant",
-      "name": "putAllContentType15",
+      "name": "GetAllAccept62",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1283,7 +1283,7 @@
     {
       "$id": "153",
       "kind": "constant",
-      "name": "putRequiredOnlyContentType",
+      "name": "GetAllAccept63",
       "namespace": "",
       "usage": "None",
       "valueType": {

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App base container definition. </summary>
     public partial class ContainerAppBaseContainer
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppBaseContainer"/>. </summary>
         public ContainerAppBaseContainer()
@@ -56,43 +28,55 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppBaseContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
+        /// <param name="imageType"> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>
         /// <param name="args"> Container start command arguments. </param>
         /// <param name="env"> Container environment variables. </param>
         /// <param name="resources"> Container resource requirements. </param>
         /// <param name="volumeMounts"> Container volume mounts. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppBaseContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppBaseContainer(string image, ImageType? imageType, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
+            ImageType = imageType;
             Name = name;
             Command = command;
             Args = args;
             Env = env;
             Resources = resources;
             VolumeMounts = volumeMounts;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Container image tag. </summary>
         [WirePath("image")]
         public string Image { get; set; }
+
+        /// <summary> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </summary>
+        [WirePath("imageType")]
+        public ImageType? ImageType { get; set; }
+
         /// <summary> Custom container name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Container start command. </summary>
         [WirePath("command")]
         public IList<string> Command { get; }
+
         /// <summary> Container start command arguments. </summary>
         [WirePath("args")]
         public IList<string> Args { get; }
+
         /// <summary> Container environment variables. </summary>
         [WirePath("env")]
         public IList<ContainerAppEnvironmentVariable> Env { get; }
+
         /// <summary> Container resource requirements. </summary>
         [WirePath("resources")]
         public AppContainerResources Resources { get; set; }
+
         /// <summary> Container volume mounts. </summary>
         [WirePath("volumeMounts")]
         public IList<ContainerAppVolumeMount> VolumeMounts { get; }

@@ -32,7 +32,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
+        /// <param name="bmpConfiguration"> BMP Monitor Configuration. </param>
+        /// <param name="v4OverV6BgpSession"> V4OverV6 BGP Session state. </param>
+        /// <param name="v6OverV4BgpSession"> V6OverV4 BGP Session state. </param>
+        /// <param name="nativeIPv4PrefixLimit"> Native IPv4 prefix limit configuration. </param>
+        /// <param name="nativeIPv6PrefixLimit"> Native IPv6 prefix limit configuration. </param>
+        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, ExternalNetworkBmpPatchProperties bmpConfiguration, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
         {
             Mtu = mtu;
             VlanId = vlanId;
@@ -41,6 +46,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             BfdConfiguration = bfdConfiguration;
             IngressAclId = ingressAclId;
             EgressAclId = egressAclId;
+            BmpConfiguration = bmpConfiguration;
+            V4OverV6BgpSession = v4OverV6BgpSession;
+            V6OverV4BgpSession = v6OverV4BgpSession;
+            NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
+            NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
         }
 
         /// <summary> MTU to use for option A peering. </summary>
@@ -57,5 +67,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier IngressAclId { get; set; }
         /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
         public ResourceIdentifier EgressAclId { get; set; }
+        /// <summary> BMP Monitor Configuration. </summary>
+        internal ExternalNetworkBmpPatchProperties BmpConfiguration { get; set; }
+        /// <summary> BMP Configuration State. </summary>
+        public BmpConfigurationState? BmpConfigurationState
+        {
+            get => BmpConfiguration is null ? default : BmpConfiguration.ConfigurationState;
+            set
+            {
+                if (BmpConfiguration is null)
+                    BmpConfiguration = new ExternalNetworkBmpPatchProperties();
+                BmpConfiguration.ConfigurationState = value;
+            }
+        }
+
+        /// <summary> V4OverV6 BGP Session state. </summary>
+        public NetworkFabricV4OverV6BgpSessionState? V4OverV6BgpSession { get; set; }
+        /// <summary> V6OverV4 BGP Session state. </summary>
+        public NetworkFabricV6OverV4BgpSessionState? V6OverV4BgpSession { get; set; }
+        /// <summary> Native IPv4 prefix limit configuration. </summary>
+        internal NativeIPv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitPatchProperties> NativeIPv4PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv4PrefixLimit is null)
+                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitPatchProperties();
+                return NativeIPv4PrefixLimit.PrefixLimits;
+            }
+        }
+
+        /// <summary> Native IPv6 prefix limit configuration. </summary>
+        internal NativeIPv6PrefixLimitPatchProperties NativeIPv6PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitPatchProperties> NativeIPv6PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv6PrefixLimit is null)
+                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitPatchProperties();
+                return NativeIPv6PrefixLimit.PrefixLimits;
+            }
+        }
     }
 }
