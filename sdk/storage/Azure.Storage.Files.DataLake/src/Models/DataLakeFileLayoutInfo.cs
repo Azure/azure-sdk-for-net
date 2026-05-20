@@ -29,22 +29,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileLayoutEndpoints Endpoints { get; internal set; }
 
         /// <summary>
-        /// The continuation marker used for this request.
-        /// </summary>
-        public string Marker { get; internal set; }
-
-        /// <summary>
-        /// If the number of ranges exceeds MaxResults, a NextMarker is returned
-        /// for use in subsequent requests to continue listing.
-        /// </summary>
-        public string NextMarker { get; internal set; }
-
-        /// <summary>
-        /// The maximum number of ranges returned per request.
-        /// </summary>
-        public int? MaxResults { get; internal set; }
-
-        /// <summary>
         /// Returns the date and time the file was last modified. Any operation that modifies the file,
         /// including an update of the file's metadata or properties, changes the last-modified time of the file.
         /// </summary>

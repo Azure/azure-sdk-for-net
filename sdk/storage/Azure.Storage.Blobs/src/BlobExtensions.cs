@@ -822,9 +822,6 @@ namespace Azure.Storage.Blobs
             {
                 Ranges = response.Value?.Ranges,
                 Endpoints = response.Value?.Endpoints,
-                Marker = response.Value?.Marker,
-                NextMarker = response.Value?.NextMarker,
-                MaxResults = response.Value?.MaxResults,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 CreatedOn = response.Headers.CreationTime.GetValueOrDefault(),
                 Metadata = response.Headers.Metadata,

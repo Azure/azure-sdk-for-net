@@ -5535,8 +5535,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobLayoutInfo}"/> describing the
-        /// blob's layout and properties.
+        /// A <see cref="ResponseWithHeaders{BlobLayout, BlobGetLayoutHeaders}"/> containing
+        /// the wire-level layout envelope and typed response headers. The collection
+        /// caller is responsible for projecting this to a public <see cref="BlobLayoutInfo"/>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -5544,7 +5545,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<BlobLayoutInfo>> GetLayoutInternal(
+        internal async Task<ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders>> GetLayoutInternal(
             string marker,
             int? maxResults,
             HttpRange range,
@@ -5573,11 +5574,10 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> response;
 
                     if (async)
                     {
-                        response = await BlobRestClient.GetLayoutAsync(
+                        return await BlobRestClient.GetLayoutAsync(
                             marker: marker,
                             maxresults: maxResults,
                             range: range.ToString(),
@@ -5595,7 +5595,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.GetLayout(
+                        return BlobRestClient.GetLayout(
                             marker: marker,
                             maxresults: maxResults,
                             range: range.ToString(),
@@ -5610,10 +5610,6 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
-
-                    return Response.FromValue(
-                        response.ToBlobLayoutInfo(),
-                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

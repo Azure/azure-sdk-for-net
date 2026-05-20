@@ -701,9 +701,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 Endpoints = blobLayoutInfo.Endpoints.ToDataLakeFileLayoutEndpoints(),
                 Ranges = blobLayoutInfo.Ranges.ToDataLakeFileLayoutRanges(),
-                Marker = blobLayoutInfo.Marker,
-                NextMarker = blobLayoutInfo.NextMarker,
-                MaxResults = blobLayoutInfo.MaxResults,
                 LastModified = blobLayoutInfo.LastModified,
                 CreatedOn = blobLayoutInfo.CreatedOn,
                 Metadata = blobLayoutInfo.Metadata,

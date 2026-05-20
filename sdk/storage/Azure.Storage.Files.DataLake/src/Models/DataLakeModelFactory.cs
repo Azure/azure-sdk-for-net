@@ -1164,9 +1164,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public static DataLakeFileLayoutInfo DataLakeFileLayoutInfo(
             DataLakeFileLayoutRanges ranges,
             DataLakeFileLayoutEndpoints endpoints,
-            string marker,
-            string nextMarker,
-            int? maxResults,
             DateTimeOffset lastModified,
             DateTimeOffset createdOn,
             IDictionary<string, string> metadata,
@@ -1207,9 +1204,6 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 Ranges = ranges,
                 Endpoints = endpoints,
-                Marker = marker,
-                NextMarker = nextMarker,
-                MaxResults = maxResults,
                 LastModified = lastModified,
                 CreatedOn = createdOn,
                 Metadata = metadata,

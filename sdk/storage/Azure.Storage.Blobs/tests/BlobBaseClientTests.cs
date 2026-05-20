@@ -4412,9 +4412,6 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.Null(blobLayoutInfo.Ranges);
                 Assert.Null(blobLayoutInfo.Endpoints);
-                Assert.Null(blobLayoutInfo.Marker);
-                Assert.Null(blobLayoutInfo.NextMarker);
-                Assert.Null(blobLayoutInfo.MaxResults);
             }
         }
 
@@ -4509,7 +4506,6 @@ namespace Azure.Storage.Blobs.Test
                 foreach (BlobLayoutInfo blobLayoutInfo in page.Values)
                 {
                     // Assert
-                    Assert.AreEqual(maxPageSize, blobLayoutInfo.MaxResults);
                     Assert.AreEqual(maxPageSize, blobLayoutInfo.Ranges.Range.Count);
                     Assert.AreEqual(maxPageSize, blobLayoutInfo.Endpoints.Endpoint.Count);
                 }
@@ -4543,12 +4539,13 @@ namespace Azure.Storage.Blobs.Test
             BlobLayoutInfo blobLayoutInfo1 = page1.Values.First();
             Assert.AreEqual(1, blobLayoutInfo1.Ranges.Range.Count);
 
-            string continuationToken = blobLayoutInfo1.NextMarker;
+            string continuationToken = page1.ContinuationToken;
+            Assert.IsNotNull(continuationToken);
             ETag prevETag = blobLayoutInfo1.ETag;
             BlobRequestConditions conditions = new BlobRequestConditions().WithIfMatch(prevETag);
             Page <BlobLayoutInfo> page2 = blob.GetLayoutAsync(conditions: conditions).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
             BlobLayoutInfo blobLayoutInfo2 = page2.Values.First();
-            Assert.AreEqual(continuationToken, blobLayoutInfo2.Marker);
+            Assert.IsNotNull(blobLayoutInfo2);
         }
 
         [RecordedTest]

@@ -5,6 +5,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized;
 
@@ -33,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobLayoutInfo> response;
+            ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> response;
 
             // ETag locking on subsequent GetLayout requests
             BlobRequestConditions conditions = _etag.HasValue
@@ -63,12 +64,14 @@ namespace Azure.Storage.Blobs.Models
                     .EnsureCompleted();
             }
 
+            BlobLayoutInfo blobLayoutInfo = response.ToBlobLayoutInfo();
+
             // Set the initial Get Layout etag for subsequent requests
-            _etag ??= response.Value.ETag;
+            _etag ??= blobLayoutInfo.ETag;
 
             return Page<BlobLayoutInfo>.FromValues(
-                new[] { response.Value },
-                response.Value.NextMarker,
+                new[] { blobLayoutInfo },
+                response.Value?.NextMarker,
                 response.GetRawResponse());
         }
     }

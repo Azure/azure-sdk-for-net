@@ -2758,9 +2758,6 @@ namespace Azure.Storage.Blobs.Models
         public static BlobLayoutInfo BlobLayoutInfo(
             BlobLayoutRanges ranges = default,
             BlobLayoutEndpoints endpoints = default,
-            string marker = default,
-            string nextMarker = default,
-            int? maxResults = default,
             DateTimeOffset lastModified = default,
             DateTimeOffset createdOn = default,
             IDictionary<string, string> metadata = default,
@@ -2816,9 +2813,6 @@ namespace Azure.Storage.Blobs.Models
             {
                 Ranges = ranges,
                 Endpoints = endpoints,
-                Marker = marker,
-                NextMarker = nextMarker,
-                MaxResults = maxResults,
                 LastModified = lastModified,
                 CreatedOn = createdOn,
                 Metadata = metadata,

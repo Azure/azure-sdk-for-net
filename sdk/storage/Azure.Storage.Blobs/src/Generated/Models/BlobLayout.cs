@@ -8,7 +8,7 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobLayout. </summary>
-    public partial class BlobLayout
+    internal partial class BlobLayout
     {
         /// <summary> Initializes a new instance of <see cref="BlobLayout"/>. </summary>
         internal BlobLayout()

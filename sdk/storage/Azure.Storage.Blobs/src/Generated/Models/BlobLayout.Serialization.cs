@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobLayout
+    internal partial class BlobLayout
     {
         internal static BlobLayout DeserializeBlobLayout(XElement element)
         {

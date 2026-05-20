@@ -5710,9 +5710,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Assert
                 Assert.Null(layoutInfo.Ranges);
                 Assert.Null(layoutInfo.Endpoints);
-                Assert.Null(layoutInfo.Marker);
-                Assert.Null(layoutInfo.NextMarker);
-                Assert.Null(layoutInfo.MaxResults);
             }
         }
 
@@ -5803,7 +5800,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 foreach (DataLakeFileLayoutInfo layoutInfo in page.Values)
                 {
                     // Assert
-                    Assert.AreEqual(maxPageSize, layoutInfo.MaxResults);
                     Assert.AreEqual(maxPageSize, layoutInfo.Ranges.Range.Count);
                     Assert.AreEqual(maxPageSize, layoutInfo.Endpoints.Endpoint.Count);
                 }
@@ -5835,12 +5831,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileLayoutInfo layoutInfo1 = page1.Values.First();
             Assert.AreEqual(1, layoutInfo1.Ranges.Range.Count);
 
-            string continuationToken = layoutInfo1.NextMarker;
+            string continuationToken = page1.ContinuationToken;
+            Assert.IsNotNull(continuationToken);
             ETag prevETag = layoutInfo1.ETag;
             DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfMatch = prevETag };
             Page<DataLakeFileLayoutInfo> page2 = file.GetLayoutAsync(conditions: conditions).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
             DataLakeFileLayoutInfo layoutInfo2 = page2.Values.First();
-            Assert.AreEqual(continuationToken, layoutInfo2.Marker);
+            Assert.IsNotNull(layoutInfo2);
+
+            // Verify the continuation token actually advanced the cursor:
+            // page 2's first range must start strictly after page 1's first range.
+            Assert.Greater(
+                layoutInfo2.Ranges.Range[0].Start,
+                layoutInfo1.Ranges.Range[0].Start);
         }
 
         [RecordedTest]
