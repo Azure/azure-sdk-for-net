@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -16,6 +18,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     [CodeGenSuppress("HybridComputeWindowsConfiguration")]
     [CodeGenSuppress("HybridComputeWindowsConfiguration", typeof(AssessmentModeType?), typeof(PatchModeType?), typeof(bool?), typeof(HybridComputePatchSettingsStatus))]
     [CodeGenSuppress("HybridComputeWindowsConfiguration", typeof(PatchSettings), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("HybridComputeLinuxConfiguration")]
+    [CodeGenSuppress("HybridComputeLinuxConfiguration", typeof(AssessmentModeType?), typeof(PatchModeType?), typeof(bool?), typeof(HybridComputePatchSettingsStatus))]
+    [CodeGenSuppress("HybridComputeLinuxConfiguration", typeof(AssessmentModeType), typeof(PatchModeType), typeof(bool), typeof(HybridComputePatchSettingsStatus))]
+    [CodeGenSuppress("HybridComputeLinuxConfiguration", typeof(PatchSettings), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("HybridComputeMachineData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(HybridComputeLocation), typeof(AgentConfiguration), typeof(HybridComputeServiceStatuses), typeof(HybridComputeHardwareProfile), typeof(HybridComputeFirmwareProfile), typeof(AgentUpgrade), typeof(HybridComputeOSProfile), typeof(LicenseProfileMachineInstanceView), typeof(string), typeof(HybridComputeStatusType?), typeof(DateTimeOffset?), typeof(IEnumerable<ResponseError>), typeof(string), typeof(Guid?), typeof(string), typeof(string), typeof(string), typeof(IdentityKeyStore?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(Guid?), typeof(IEnumerable<MachineExtensionInstanceView>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(string), typeof(IReadOnlyDictionary<string, string>), typeof(IEnumerable<HybridComputeDisk>), typeof(string), typeof(IEnumerable<HybridComputeNetworkInterface>), typeof(IEnumerable<HybridComputeMachineExtensionData>), typeof(ManagedServiceIdentity), typeof(ArcKindEnum?))]
+    [CodeGenSuppress("HybridComputeMachineData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(IEnumerable<HybridComputeMachineExtensionData>), typeof(ManagedServiceIdentity), typeof(ArcKindEnum?), typeof(HybridComputeLocation), typeof(AgentConfiguration), typeof(HybridComputeServiceStatuses), typeof(string), typeof(AgentUpgrade), typeof(HybridComputeOSProfile), typeof(LicenseProfileMachineInstanceView), typeof(string), typeof(HybridComputeStatusType?), typeof(DateTimeOffset?), typeof(IEnumerable<ResponseError>), typeof(string), typeof(Guid?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(Guid?), typeof(IEnumerable<MachineExtensionInstanceView>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(string), typeof(IReadOnlyDictionary<string, string>), typeof(IEnumerable<HybridComputeNetworkInterface>))]
     public static partial class ArmHybridComputeModelFactory
     {
         /// <summary>
@@ -56,6 +64,70 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Creates a HybridComputeWindowsConfiguration for mocking. </summary>
         public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
             => new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, additionalBinaryDataProperties: null), additionalBinaryDataProperties: null);
+
+        /// <summary> Creates a HybridComputeLinuxConfiguration for mocking. </summary>
+        public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
+            => new HybridComputeLinuxConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, additionalBinaryDataProperties: null), additionalBinaryDataProperties: null);
+
+        /// <summary> Creates a HybridComputeMachineData for mocking. </summary>
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, string cloudMetadataProvider = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
+
+            MachineProperties properties = locationData is null && agentConfiguration is null && serviceStatuses is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
+                locationData,
+                agentConfiguration,
+                serviceStatuses,
+                hardwareProfile: null,
+                storageProfile: new StorageProfile(new ChangeTrackingList<HybridComputeDisk>(), additionalBinaryDataProperties: null),
+                firmwareProfile: null,
+                cloudMetadata: new HybridComputeCloudMetadata(cloudMetadataProvider, additionalBinaryDataProperties: null),
+                agentUpgrade,
+                osProfile,
+                licenseProfile,
+                provisioningState,
+                status,
+                lastStatusChange,
+                errorDetails is null ? new ChangeTrackingList<ResponseError>() : new List<ResponseError>(errorDetails),
+                agentVersion,
+                vmId,
+                displayName,
+                machineFqdn,
+                clientPublicKey,
+                identityKeyStore: null,
+                tpmEkCertificate: null,
+                osName,
+                osVersion,
+                osType,
+                vmUuid,
+                extensions is null ? new ChangeTrackingList<MachineExtensionInstanceView>() : new List<MachineExtensionInstanceView>(extensions),
+                osSku,
+                osEdition,
+                domainName,
+                adFqdn,
+                dnsFqdn,
+                privateLinkScopeResourceId,
+                parentClusterResourceId,
+                hardwareResourceId: null,
+                msSqlDiscovered,
+                detectedProperties,
+                new HybridComputeNetworkProfile(networkInterfaces is null ? new ChangeTrackingList<HybridComputeNetworkInterface>() : new List<HybridComputeNetworkInterface>(networkInterfaces), additionalBinaryDataProperties: null),
+                additionalBinaryDataProperties: null);
+
+            return new HybridComputeMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                new List<HybridComputeMachineExtensionData>(resources),
+                identity,
+                kind);
+        }
 
         /// <summary> Creates an EsuKey for mocking. </summary>
         public static EsuKey EsuKey(string sku = default, int? licenseStatus = default)
