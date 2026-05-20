@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
-        /// <param name="logLocation"> Log location settings customer needs to provide when enabling log. </param>
+        /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogDestination = logDestination;
-            LogLocation = logLocation;
+            LogLocationSettings = logLocationSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ScriptActivityLogDestination LogDestination { get; set; }
 
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
-        public LogLocationSettings LogLocation { get; set; }
+        public LogLocationSettings LogLocationSettings { get; set; }
     }
 }

@@ -15,10 +15,10 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execute SSIS package activity. </summary>
-    public partial class ExecuteSSISPackageActivity : ExecutionActivity, IJsonModel<ExecuteSSISPackageActivity>
+    public partial class ExecuteSsisPackageActivity : ExecutionActivity, IJsonModel<ExecuteSsisPackageActivity>
     {
-        /// <summary> Initializes a new instance of <see cref="ExecuteSSISPackageActivity"/> for deserialization. </summary>
-        internal ExecuteSSISPackageActivity()
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/> for deserialization. </summary>
+        internal ExecuteSsisPackageActivity()
         {
         }
 
@@ -26,45 +26,45 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override PipelineActivity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSSISPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExecuteSSISPackageActivity(document.RootElement, options);
+                        return DeserializeExecuteSsisPackageActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteSSISPackageActivity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSSISPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteSSISPackageActivity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExecuteSSISPackageActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExecuteSsisPackageActivity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteSSISPackageActivity IPersistableModel<ExecuteSSISPackageActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExecuteSSISPackageActivity)PersistableModelCreateCore(data, options);
+        ExecuteSsisPackageActivity IPersistableModel<ExecuteSsisPackageActivity>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExecuteSsisPackageActivity)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExecuteSSISPackageActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExecuteSsisPackageActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExecuteSSISPackageActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExecuteSsisPackageActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSSISPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteSSISPackageActivity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteSSISPackageActivity IJsonModel<ExecuteSSISPackageActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExecuteSSISPackageActivity)JsonModelCreateCore(ref reader, options);
+        ExecuteSsisPackageActivity IJsonModel<ExecuteSsisPackageActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExecuteSsisPackageActivity)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override PipelineActivity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSSISPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteSSISPackageActivity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExecuteSSISPackageActivity(document.RootElement, options);
+            return DeserializeExecuteSsisPackageActivity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExecuteSSISPackageActivity DeserializeExecuteSSISPackageActivity(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
-            ExecuteSSISPackageActivityTypeProperties typeProperties = default;
+            ExecuteSsisPackageActivityTypeProperties typeProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("policy"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = ExecuteSSISPackageActivityTypeProperties.DeserializeExecuteSSISPackageActivityTypeProperties(prop.Value, options);
+                    typeProperties = ExecuteSsisPackageActivityTypeProperties.DeserializeExecuteSsisPackageActivityTypeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExecuteSSISPackageActivity(
+            return new ExecuteSsisPackageActivity(
                 name,
                 @type,
                 description,

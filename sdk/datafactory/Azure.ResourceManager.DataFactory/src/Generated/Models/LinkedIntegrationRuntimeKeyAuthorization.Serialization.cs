@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("key"u8))
                 {
-                    key = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    key = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

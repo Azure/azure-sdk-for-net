@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ClientCustomerID))
+            if (Optional.IsDefined(ClientCustomerId))
             {
                 writer.WritePropertyName("clientCustomerID"u8);
-                writer.WriteObjectValue(ClientCustomerID, options);
+                writer.WriteObjectValue(ClientCustomerId, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue(UseSystemTrustStore, options);
             }
-            if (Optional.IsDefined(LoginCustomerID))
+            if (Optional.IsDefined(LoginCustomerId))
             {
                 writer.WritePropertyName("loginCustomerID"u8);
-                writer.WriteObjectValue(LoginCustomerID, options);
+                writer.WriteObjectValue(LoginCustomerId, options);
             }
             if (Optional.IsDefined(GoogleAdsApiVersion))
             {
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             BinaryData connectionProperties = default;
-            DataFactoryElement<string> clientCustomerID = default;
+            DataFactoryElement<string> clientCustomerId = default;
             GoogleAdWordsAuthenticationType? authenticationType = default;
             DataFactoryElement<string> clientId = default;
             DataFactoryElement<string> email = default;
             DataFactoryElement<string> keyFilePath = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> useSystemTrustStore = default;
-            DataFactoryElement<string> loginCustomerID = default;
+            DataFactoryElement<string> loginCustomerId = default;
             DataFactoryElement<string> googleAdsApiVersion = default;
             DataFactoryElement<bool> supportLegacyDataTypes = default;
             string encryptedCredential = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    clientCustomerID = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    clientCustomerId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    loginCustomerID = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    loginCustomerId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("googleAdsApiVersion"u8))
@@ -310,14 +310,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new GoogleAdWordsLinkedServiceTypeProperties(
                 connectionProperties,
-                clientCustomerID,
+                clientCustomerId,
                 authenticationType,
                 clientId,
                 email,
                 keyFilePath,
                 trustedCertPath,
                 useSystemTrustStore,
-                loginCustomerID,
+                loginCustomerId,
                 googleAdsApiVersion,
                 supportLegacyDataTypes,
                 encryptedCredential,

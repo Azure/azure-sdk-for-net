@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "HDInsightSpark":
                         return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element, options);
                     case "ExecuteSSISPackage":
-                        return ExecuteSSISPackageActivity.DeserializeExecuteSSISPackageActivity(element, options);
+                        return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element, options);
                     case "Custom":
                         return CustomActivity.DeserializeCustomActivity(element, options);
                     case "SqlServerStoredProcedure":

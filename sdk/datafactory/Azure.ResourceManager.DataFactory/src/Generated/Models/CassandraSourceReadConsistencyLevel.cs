@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> ALL. </summary>
         private const string AllValue = "ALL";
         /// <summary> EACH_QUORUM. </summary>
-        private const string EACHQUORUMValue = "EACH_QUORUM";
+        private const string EachQuorumValue = "EACH_QUORUM";
         /// <summary> QUORUM. </summary>
-        private const string QUORUMValue = "QUORUM";
+        private const string QuorumValue = "QUORUM";
         /// <summary> LOCAL_QUORUM. </summary>
-        private const string LOCALQUORUMValue = "LOCAL_QUORUM";
+        private const string LocalQuorumValue = "LOCAL_QUORUM";
         /// <summary> ONE. </summary>
         private const string OneValue = "ONE";
         /// <summary> TWO. </summary>
         private const string TwoValue = "TWO";
         /// <summary> THREE. </summary>
-        private const string THREEValue = "THREE";
+        private const string ThreeValue = "THREE";
         /// <summary> LOCAL_ONE. </summary>
         private const string LocalOneValue = "LOCAL_ONE";
         /// <summary> SERIAL. </summary>
-        private const string SERIALValue = "SERIAL";
+        private const string SerialValue = "SERIAL";
         /// <summary> LOCAL_SERIAL. </summary>
-        private const string LOCALSERIALValue = "LOCAL_SERIAL";
+        private const string LocalSerialValue = "LOCAL_SERIAL";
 
         /// <summary> Initializes a new instance of <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static CassandraSourceReadConsistencyLevel All { get; } = new CassandraSourceReadConsistencyLevel(AllValue);
 
         /// <summary> EACH_QUORUM. </summary>
-        public static CassandraSourceReadConsistencyLevel EACHQUORUM { get; } = new CassandraSourceReadConsistencyLevel(EACHQUORUMValue);
+        public static CassandraSourceReadConsistencyLevel EachQuorum { get; } = new CassandraSourceReadConsistencyLevel(EachQuorumValue);
 
         /// <summary> QUORUM. </summary>
-        public static CassandraSourceReadConsistencyLevel QUORUM { get; } = new CassandraSourceReadConsistencyLevel(QUORUMValue);
+        public static CassandraSourceReadConsistencyLevel Quorum { get; } = new CassandraSourceReadConsistencyLevel(QuorumValue);
 
         /// <summary> LOCAL_QUORUM. </summary>
-        public static CassandraSourceReadConsistencyLevel LOCALQUORUM { get; } = new CassandraSourceReadConsistencyLevel(LOCALQUORUMValue);
+        public static CassandraSourceReadConsistencyLevel LocalQuorum { get; } = new CassandraSourceReadConsistencyLevel(LocalQuorumValue);
 
         /// <summary> ONE. </summary>
         public static CassandraSourceReadConsistencyLevel One { get; } = new CassandraSourceReadConsistencyLevel(OneValue);
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static CassandraSourceReadConsistencyLevel Two { get; } = new CassandraSourceReadConsistencyLevel(TwoValue);
 
         /// <summary> THREE. </summary>
-        public static CassandraSourceReadConsistencyLevel THREE { get; } = new CassandraSourceReadConsistencyLevel(THREEValue);
+        public static CassandraSourceReadConsistencyLevel Three { get; } = new CassandraSourceReadConsistencyLevel(ThreeValue);
 
         /// <summary> LOCAL_ONE. </summary>
         public static CassandraSourceReadConsistencyLevel LocalOne { get; } = new CassandraSourceReadConsistencyLevel(LocalOneValue);
 
         /// <summary> SERIAL. </summary>
-        public static CassandraSourceReadConsistencyLevel SERIAL { get; } = new CassandraSourceReadConsistencyLevel(SERIALValue);
+        public static CassandraSourceReadConsistencyLevel Serial { get; } = new CassandraSourceReadConsistencyLevel(SerialValue);
 
         /// <summary> LOCAL_SERIAL. </summary>
-        public static CassandraSourceReadConsistencyLevel LOCALSERIAL { get; } = new CassandraSourceReadConsistencyLevel(LOCALSERIALValue);
+        public static CassandraSourceReadConsistencyLevel LocalSerial { get; } = new CassandraSourceReadConsistencyLevel(LocalSerialValue);
 
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomActivityTypeProperties(DataFactoryElement<string> command, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, DataFactoryElement<double> retentionTimeInDays, DataFactoryElement<string> autoUserSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomActivityTypeProperties(DataFactoryElement<string> command, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, DataFactoryElement<string> autoUserSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Command = command;
             FolderPath = folderPath;
@@ -86,8 +86,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public IDictionary<string, BinaryData> ExtendedProperties { get; } = new ChangeTrackingDictionary<string, BinaryData>();
 
-        /// <summary> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </summary>
-        public DataFactoryElement<double> RetentionTimeInDays { get; set; }
+        /// <summary>
+        /// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData RetentionTimeInDays { get; set; }
 
         /// <summary> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </summary>
         public DataFactoryElement<string> AutoUserSpecification { get; set; }

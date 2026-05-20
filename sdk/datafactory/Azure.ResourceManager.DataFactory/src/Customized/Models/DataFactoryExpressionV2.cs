@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,15 +14,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Back-compat alias for legacy "operator" property. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
         public string Operator { get; set; }
-
-        /// <summary> Back-compat alias of <see cref="Type"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DataFactoryExpressionV2Type? V2Type
-        {
-            get => Type;
-            set => Type = value;
-        }
 
         /// <summary> Back-compat alias for legacy "value" property. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

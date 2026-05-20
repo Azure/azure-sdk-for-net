@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -26,5 +27,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret ServicePrincipalKey { get; set; }
+
+        /// <summary> Back-compat constructor restoring the previously published single-arg shape. </summary>
+        /// <param name="connectionString"> The connection string. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureSqlMILinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            ConnectionString = connectionString;
+        }
     }
 }

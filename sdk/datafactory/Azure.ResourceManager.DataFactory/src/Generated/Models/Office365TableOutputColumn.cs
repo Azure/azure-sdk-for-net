@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="Office365TableOutputColumn"/>. </summary>
-        internal Office365TableOutputColumn()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Office365TableOutputColumn"/>. </summary>
         /// <param name="name"> Name of the table column. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal Office365TableOutputColumn(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -29,8 +24,5 @@ namespace Azure.ResourceManager.DataFactory.Models
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Name of the table column. Type: string. </summary>
-        public string Name { get; }
     }
 }

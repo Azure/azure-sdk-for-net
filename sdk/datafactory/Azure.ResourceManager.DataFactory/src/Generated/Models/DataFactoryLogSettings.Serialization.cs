@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(CopyActivityLogSettings, options);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocation, options);
+            writer.WriteObjectValue(LogLocationSettings, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<bool> enableCopyActivityLog = default;
             CopyActivityLogSettings copyActivityLogSettings = default;
-            LogLocationSettings logLocation = default;
+            LogLocationSettings logLocationSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("logLocationSettings"u8))
                 {
-                    logLocation = LogLocationSettings.DeserializeLogLocationSettings(prop.Value, options);
+                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFactoryLogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocation, additionalBinaryDataProperties);
+            return new DataFactoryLogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings, additionalBinaryDataProperties);
         }
     }
 }

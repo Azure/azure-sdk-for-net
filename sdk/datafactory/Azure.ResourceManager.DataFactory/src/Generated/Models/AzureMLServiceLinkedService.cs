@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure ML Service workspace name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlWorkspaceName
+        public DataFactoryElement<string> MLWorkspaceName
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.MlWorkspaceName;
+                return TypeProperties is null ? default : TypeProperties.MLWorkspaceName;
             }
             set
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AzureMLServiceLinkedServiceTypeProperties();
                 }
-                TypeProperties.MlWorkspaceName = value;
+                TypeProperties.MLWorkspaceName = value;
             }
         }
 

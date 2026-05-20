@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryExpressionV2"/>. </summary>
-        /// <param name="type"> Type of expressions supported by the system. Type: string. </param>
+        /// <param name="v2Type"> Type of expressions supported by the system. Type: string. </param>
         /// <param name="v2Value"> Value for Constant/Field Type: object. </param>
         /// <param name="operators"> Expression operator value Type: list of strings. </param>
         /// <param name="operands"> List of nested expressions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryExpressionV2(DataFactoryExpressionV2Type? @type, DataFactoryElement<string> v2Value, IList<DataFactoryElement<string>> operators, IList<DataFactoryExpressionV2> operands, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryExpressionV2(DataFactoryExpressionV2Type? v2Type, DataFactoryElement<string> v2Value, IList<DataFactoryElement<string>> operators, IList<DataFactoryExpressionV2> operands, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            V2Type = v2Type;
             V2Value = v2Value;
             Operators = operators;
             Operands = operands;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of expressions supported by the system. Type: string. </summary>
-        public DataFactoryExpressionV2Type? Type { get; set; }
+        public DataFactoryExpressionV2Type? V2Type { get; set; }
 
         /// <summary> Value for Constant/Field Type: object. </summary>
         public DataFactoryElement<string> V2Value { get; set; }

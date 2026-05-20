@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

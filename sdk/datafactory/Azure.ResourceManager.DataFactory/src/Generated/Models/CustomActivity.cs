@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </summary>
-        public DataFactoryElement<double> RetentionTimeInDays
+        public BinaryData RetentionTimeInDays
         {
             get
             {

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("events"u8);
             writer.WriteStartArray();
-            foreach (BlobEventTypes item in Events)
+            foreach (DataFactoryBlobEventType item in Events)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string blobPathBeginsWith = default;
             string blobPathEndsWith = default;
             bool? ignoreEmptyBlobs = default;
-            IList<BlobEventTypes> events = default;
+            IList<DataFactoryBlobEventType> events = default;
             string scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("events"u8))
                 {
-                    List<BlobEventTypes> array = new List<BlobEventTypes>();
+                    List<DataFactoryBlobEventType> array = new List<DataFactoryBlobEventType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new BlobEventTypes(item.GetString()));
+                        array.Add(new DataFactoryBlobEventType(item.GetString()));
                     }
                     events = array;
                     continue;

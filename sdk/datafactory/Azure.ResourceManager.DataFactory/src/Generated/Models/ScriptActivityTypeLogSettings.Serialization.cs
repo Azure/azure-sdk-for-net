@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
-            if (Optional.IsDefined(LogLocation))
+            if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocation, options);
+                writer.WriteObjectValue(LogLocationSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
-            LogLocationSettings logLocation = default;
+            LogLocationSettings logLocationSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    logLocation = LogLocationSettings.DeserializeLogLocationSettings(prop.Value, options);
+                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScriptActivityTypeLogSettings(logDestination, logLocation, additionalBinaryDataProperties);
+            return new ScriptActivityTypeLogSettings(logDestination, logLocationSettings, additionalBinaryDataProperties);
         }
     }
 }

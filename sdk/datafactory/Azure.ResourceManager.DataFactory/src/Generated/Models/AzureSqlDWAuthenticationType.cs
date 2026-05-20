@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         private readonly string _value;
         /// <summary> SQL. </summary>
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         /// <summary> ServicePrincipal. </summary>
         private const string ServicePrincipalValue = "ServicePrincipal";
         /// <summary> SystemAssignedManagedIdentity. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL. </summary>
-        public static AzureSqlDWAuthenticationType SQL { get; } = new AzureSqlDWAuthenticationType(SQLValue);
+        public static AzureSqlDWAuthenticationType Sql { get; } = new AzureSqlDWAuthenticationType(SqlValue);
 
         /// <summary> ServicePrincipal. </summary>
         public static AzureSqlDWAuthenticationType ServicePrincipal { get; } = new AzureSqlDWAuthenticationType(ServicePrincipalValue);

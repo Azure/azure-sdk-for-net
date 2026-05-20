@@ -13,16 +13,16 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execute SSIS package activity properties. </summary>
-    internal partial class ExecuteSSISPackageActivityTypeProperties
+    internal partial class ExecuteSsisPackageActivityTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteSSISPackageActivityTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivityTypeProperties"/>. </summary>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageLocation"/> or <paramref name="connectVia"/> is null. </exception>
-        public ExecuteSSISPackageActivityTypeProperties(SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia)
+        public ExecuteSsisPackageActivityTypeProperties(SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia)
         {
             Argument.AssertNotNull(packageLocation, nameof(packageLocation));
             Argument.AssertNotNull(connectVia, nameof(connectVia));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             PropertyOverrides = new ChangeTrackingDictionary<string, SsisPropertyOverride>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteSSISPackageActivityTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivityTypeProperties"/>. </summary>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="runtime"> Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string). </param>
         /// <param name="loggingLevel"> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
         /// <param name="logLocation"> SSIS package execution log location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteSSISPackageActivityTypeProperties(SsisPackageLocation packageLocation, DataFactoryElement<string> runtime, DataFactoryElement<string> loggingLevel, DataFactoryElement<string> environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteSsisPackageActivityTypeProperties(SsisPackageLocation packageLocation, DataFactoryElement<string> runtime, DataFactoryElement<string> loggingLevel, DataFactoryElement<string> environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageLocation = packageLocation;
             Runtime = runtime;

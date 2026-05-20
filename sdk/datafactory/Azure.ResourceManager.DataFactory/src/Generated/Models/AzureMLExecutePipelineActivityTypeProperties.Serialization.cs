@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivityTypeProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MlPipelineId))
+            if (Optional.IsDefined(MLPipelineId))
             {
                 writer.WritePropertyName("mlPipelineId"u8);
-                writer.WriteObjectValue(MlPipelineId, options);
+                writer.WriteObjectValue(MLPipelineId, options);
             }
-            if (Optional.IsDefined(MlPipelineEndpointId))
+            if (Optional.IsDefined(MLPipelineEndpointId))
             {
                 writer.WritePropertyName("mlPipelineEndpointId"u8);
-                writer.WriteObjectValue(MlPipelineEndpointId, options);
+                writer.WriteObjectValue(MLPipelineEndpointId, options);
             }
             if (Optional.IsDefined(Version))
             {
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteObjectValue(ExperimentName, options);
             }
-            if (Optional.IsDefined(MlPipelineParameters))
+            if (Optional.IsDefined(MLPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
-                writer.WriteObjectValue(MlPipelineParameters, options);
+                writer.WriteObjectValue(MLPipelineParameters, options);
             }
             if (Optional.IsDefined(DataPathAssignments))
             {
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(MlParentRunId))
+            if (Optional.IsDefined(MLParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
-                writer.WriteObjectValue(MlParentRunId, options);
+                writer.WriteObjectValue(MLParentRunId, options);
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Binary. </summary>
         private const string BinaryValue = "Binary";
         /// <summary> SASL. </summary>
-        private const string SASLValue = "SASL";
+        private const string SaslValue = "SASL";
         /// <summary> HTTP. </summary>
-        private const string HTTPValue = "HTTP ";
+        private const string HttpValue = "HTTP ";
 
         /// <summary> Initializes a new instance of <see cref="HiveThriftTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static HiveThriftTransportProtocol Binary { get; } = new HiveThriftTransportProtocol(BinaryValue);
 
         /// <summary> SASL. </summary>
-        public static HiveThriftTransportProtocol SASL { get; } = new HiveThriftTransportProtocol(SASLValue);
+        public static HiveThriftTransportProtocol Sasl { get; } = new HiveThriftTransportProtocol(SaslValue);
 
         /// <summary> HTTP. </summary>
-        public static HiveThriftTransportProtocol HTTP { get; } = new HiveThriftTransportProtocol(HTTPValue);
+        public static HiveThriftTransportProtocol Http { get; } = new HiveThriftTransportProtocol(HttpValue);
 
         /// <summary> Determines if two <see cref="HiveThriftTransportProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

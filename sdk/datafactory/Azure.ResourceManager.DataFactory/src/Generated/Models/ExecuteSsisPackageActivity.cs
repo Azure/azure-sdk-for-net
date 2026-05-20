@@ -13,23 +13,23 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execute SSIS package activity. </summary>
-    public partial class ExecuteSSISPackageActivity : ExecutionActivity
+    public partial class ExecuteSsisPackageActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of <see cref="ExecuteSSISPackageActivity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="packageLocation"/> or <paramref name="connectVia"/> is null. </exception>
-        public ExecuteSSISPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia) : base("ExecuteSSISPackage", name)
+        public ExecuteSsisPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia) : base("ExecuteSSISPackage", name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(packageLocation, nameof(packageLocation));
             Argument.AssertNotNull(connectVia, nameof(connectVia));
 
-            TypeProperties = new ExecuteSSISPackageActivityTypeProperties(packageLocation, connectVia);
+            TypeProperties = new ExecuteSsisPackageActivityTypeProperties(packageLocation, connectVia);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteSSISPackageActivity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="typeProperties"> Execute SSIS package activity properties. </param>
-        internal ExecuteSSISPackageActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, ExecuteSSISPackageActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal ExecuteSsisPackageActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, ExecuteSsisPackageActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> Execute SSIS package activity properties. </summary>
-        internal ExecuteSSISPackageActivityTypeProperties TypeProperties { get; set; }
+        internal ExecuteSsisPackageActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> SSIS package location. </summary>
         public SsisPackageLocation PackageLocation
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 TypeProperties.PackageLocation = value;
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 TypeProperties.Runtime = value;
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 TypeProperties.LoggingLevel = value;
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 TypeProperties.EnvironmentPath = value;
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 TypeProperties.ExecutionCredential = value;
             }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 TypeProperties.ConnectVia = value;
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 return TypeProperties.ProjectParameters;
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 return TypeProperties.PackageParameters;
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 return TypeProperties.ProjectConnectionManagers;
             }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 return TypeProperties.PackageConnectionManagers;
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 return TypeProperties.PropertyOverrides;
             }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new ExecuteSSISPackageActivityTypeProperties();
+                    TypeProperties = new ExecuteSsisPackageActivityTypeProperties();
                 }
                 TypeProperties.LogLocation = value;
             }

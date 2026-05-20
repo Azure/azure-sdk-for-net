@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureMLExecutePipelineActivityTypeProperties(DataFactoryElement<string> mlPipelineId, DataFactoryElement<string> mlPipelineEndpointId, DataFactoryElement<string> version, DataFactoryElement<string> experimentName, DataFactoryElement<IDictionary<string, string>> mlPipelineParameters, BinaryData dataPathAssignments, DataFactoryElement<string> mlParentRunId, DataFactoryElement<bool> continueOnStepFailure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MlPipelineId = mlPipelineId;
-            MlPipelineEndpointId = mlPipelineEndpointId;
+            MLPipelineId = mlPipelineId;
+            MLPipelineEndpointId = mlPipelineEndpointId;
             Version = version;
             ExperimentName = experimentName;
-            MlPipelineParameters = mlPipelineParameters;
+            MLPipelineParameters = mlPipelineParameters;
             DataPathAssignments = dataPathAssignments;
-            MlParentRunId = mlParentRunId;
+            MLParentRunId = mlParentRunId;
             ContinueOnStepFailure = continueOnStepFailure;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlPipelineId { get; set; }
+        public DataFactoryElement<string> MLPipelineId { get; set; }
 
         /// <summary> ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlPipelineEndpointId { get; set; }
+        public DataFactoryElement<string> MLPipelineEndpointId { get; set; }
 
         /// <summary> Version of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Version { get; set; }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> ExperimentName { get; set; }
 
         /// <summary> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </summary>
-        public DataFactoryElement<IDictionary<string, string>> MlPipelineParameters { get; set; }
+        public DataFactoryElement<IDictionary<string, string>> MLPipelineParameters { get; set; }
 
         /// <summary>
         /// Dictionary used for changing data path assignments without retraining. Values will be passed in the dataPathAssignments property of the published pipeline execution request. Type: object (or Expression with resultType object).
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData DataPathAssignments { get; set; }
 
         /// <summary> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlParentRunId { get; set; }
+        public DataFactoryElement<string> MLParentRunId { get; set; }
 
         /// <summary> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> ContinueOnStepFailure { get; set; }

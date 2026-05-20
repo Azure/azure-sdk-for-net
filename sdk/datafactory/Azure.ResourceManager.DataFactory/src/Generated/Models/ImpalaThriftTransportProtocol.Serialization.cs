@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static string ToSerialString(this ImpalaThriftTransportProtocol value) => value switch
         {
             ImpalaThriftTransportProtocol.Binary => "Binary",
-            ImpalaThriftTransportProtocol.HTTP => "HTTP",
+            ImpalaThriftTransportProtocol.Http => "HTTP",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImpalaThriftTransportProtocol value.")
         };
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "HTTP"))
             {
-                return ImpalaThriftTransportProtocol.HTTP;
+                return ImpalaThriftTransportProtocol.Http;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImpalaThriftTransportProtocol value.");
         }

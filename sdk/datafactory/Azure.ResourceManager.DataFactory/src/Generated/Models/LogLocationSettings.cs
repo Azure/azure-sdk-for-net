@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
-        /// <param name="settings"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
+        /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkedServiceName = linkedServiceName;
-            Settings = settings;
+            Path = path;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Settings { get; set; }
+        public DataFactoryElement<string> Path { get; set; }
     }
 }

@@ -7,26 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
-    public partial class DataFactoryPrivateEndpointConnectionCreateOrUpdateContent : SubResource
+    public partial class DataFactoryPrivateEndpointConnectionCreateOrUpdateContent : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
         public DataFactoryPrivateEndpointConnectionCreateOrUpdateContent()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(string id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkConnectionApprovalRequest properties) : base(id, name, @type, eTag, additionalBinaryDataProperties)
+        internal DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkConnectionApprovalRequest properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

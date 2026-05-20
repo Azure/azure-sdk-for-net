@@ -118,7 +118,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays"u8);
-                writer.WriteObjectValue(RetentionTimeInDays, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(RetentionTimeInDays);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RetentionTimeInDays))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AutoUserSpecification))
             {
@@ -171,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> folderPath = default;
             CustomActivityReferenceObject referenceObjects = default;
             IDictionary<string, BinaryData> extendedProperties = default;
-            DataFactoryElement<double> retentionTimeInDays = default;
+            BinaryData retentionTimeInDays = default;
             DataFactoryElement<string> autoUserSpecification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -226,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    retentionTimeInDays = ModelReaderWriter.Read<DataFactoryElement<double>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    retentionTimeInDays = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("autoUserSpecification"u8))

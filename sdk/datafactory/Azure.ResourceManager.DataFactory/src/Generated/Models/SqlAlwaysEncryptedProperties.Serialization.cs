@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    servicePrincipalKey = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    servicePrincipalKey = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal AzureMLLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlEndpoint
+        public DataFactoryElement<string> MLEndpoint
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.MlEndpoint;
+                return TypeProperties is null ? default : TypeProperties.MLEndpoint;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AzureMLLinkedServiceTypeProperties();
                 }
-                TypeProperties.MlEndpoint = value;
+                TypeProperties.MLEndpoint = value;
             }
         }
 

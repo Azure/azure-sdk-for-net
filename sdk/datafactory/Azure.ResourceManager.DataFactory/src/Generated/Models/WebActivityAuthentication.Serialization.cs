@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    pfx = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("username"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("resource"u8))

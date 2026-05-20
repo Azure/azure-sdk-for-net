@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
-            MlWorkspaceName = mlWorkspaceName;
+            MLWorkspaceName = mlWorkspaceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedServiceTypeProperties"/>. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
-            MlWorkspaceName = mlWorkspaceName;
+            MLWorkspaceName = mlWorkspaceName;
             Authentication = authentication;
             ServicePrincipalId = servicePrincipalId;
             Tenant = tenant;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> ResourceGroupName { get; set; }
 
         /// <summary> Azure ML Service workspace name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlWorkspaceName { get; set; }
+        public DataFactoryElement<string> MLWorkspaceName { get; set; }
 
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Authentication { get; set; }

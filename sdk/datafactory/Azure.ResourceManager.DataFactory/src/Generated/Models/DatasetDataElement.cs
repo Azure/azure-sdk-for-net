@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
-        internal DatasetDataElement()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
         /// <param name="columnName"> Name of the column. Type: string (or Expression with resultType string). </param>
         /// <param name="columnType"> Type of the column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -32,11 +27,5 @@ namespace Azure.ResourceManager.DataFactory.Models
             ColumnType = columnType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ColumnName { get; }
-
-        /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ColumnType { get; }
     }
 }

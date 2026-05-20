@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("resourceGroupName"u8);
             writer.WriteObjectValue(ResourceGroupName, options);
             writer.WritePropertyName("mlWorkspaceName"u8);
-            writer.WriteObjectValue(MlWorkspaceName, options);
+            writer.WriteObjectValue(MLWorkspaceName, options);
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);

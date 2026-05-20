@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
-        public BlobEventsTriggerTypeProperties(IEnumerable<BlobEventTypes> events, string scope)
+        public BlobEventsTriggerTypeProperties(IEnumerable<DataFactoryBlobEventType> events, string scope)
         {
             Argument.AssertNotNull(events, nameof(events));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobEventsTriggerTypeProperties(string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<BlobEventTypes> events, string scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobEventsTriggerTypeProperties(string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<DataFactoryBlobEventType> events, string scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobPathBeginsWith = blobPathBeginsWith;
             BlobPathEndsWith = blobPathEndsWith;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public bool? IgnoreEmptyBlobs { get; set; }
 
         /// <summary> The type of events that cause this trigger to fire. </summary>
-        public IList<BlobEventTypes> Events { get; } = new ChangeTrackingList<BlobEventTypes>();
+        public IList<DataFactoryBlobEventType> Events { get; } = new ChangeTrackingList<DataFactoryBlobEventType>();
 
         /// <summary> The ARM resource ID of the Storage Account. </summary>
         public string Scope { get; set; }

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    linkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("flowlet"u8))

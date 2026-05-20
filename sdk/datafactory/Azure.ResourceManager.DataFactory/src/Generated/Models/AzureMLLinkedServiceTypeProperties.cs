@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(mlEndpoint, nameof(mlEndpoint));
 
-            MlEndpoint = mlEndpoint;
+            MLEndpoint = mlEndpoint;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedServiceTypeProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureMLLinkedServiceTypeProperties(DataFactoryElement<string> mlEndpoint, DataFactoryElement<string> updateResourceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, string encryptedCredential, DataFactoryElement<string> authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MlEndpoint = mlEndpoint;
+            MLEndpoint = mlEndpoint;
             UpdateResourceEndpoint = updateResourceEndpoint;
             ServicePrincipalId = servicePrincipalId;
             Tenant = tenant;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlEndpoint { get; set; }
+        public DataFactoryElement<string> MLEndpoint { get; set; }
 
         /// <summary> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UpdateResourceEndpoint { get; set; }

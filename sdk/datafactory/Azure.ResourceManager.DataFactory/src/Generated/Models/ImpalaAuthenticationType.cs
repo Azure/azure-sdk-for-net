@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Anonymous. </summary>
         private const string AnonymousValue = "Anonymous";
         /// <summary> SASLUsername. </summary>
-        private const string SASLUsernameValue = "SASLUsername";
+        private const string SaslUsernameValue = "SASLUsername";
         /// <summary> UsernameAndPassword. </summary>
         private const string UsernameAndPasswordValue = "UsernameAndPassword";
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static ImpalaAuthenticationType Anonymous { get; } = new ImpalaAuthenticationType(AnonymousValue);
 
         /// <summary> SASLUsername. </summary>
-        public static ImpalaAuthenticationType SASLUsername { get; } = new ImpalaAuthenticationType(SASLUsernameValue);
+        public static ImpalaAuthenticationType SaslUsername { get; } = new ImpalaAuthenticationType(SaslUsernameValue);
 
         /// <summary> UsernameAndPassword. </summary>
         public static ImpalaAuthenticationType UsernameAndPassword { get; } = new ImpalaAuthenticationType(UsernameAndPasswordValue);

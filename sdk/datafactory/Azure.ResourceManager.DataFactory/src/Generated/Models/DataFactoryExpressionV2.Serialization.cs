@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(V2Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(V2Type.Value.ToString());
             }
             if (Optional.IsDefined(V2Value))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryExpressionV2Type? @type = default;
+            DataFactoryExpressionV2Type? v2Type = default;
             DataFactoryElement<string> v2Value = default;
             IList<DataFactoryElement<string>> operators = default;
             IList<DataFactoryExpressionV2> operands = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    @type = new DataFactoryExpressionV2Type(prop.Value.GetString());
+                    v2Type = new DataFactoryExpressionV2Type(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFactoryExpressionV2(@type, v2Value, operators ?? new ChangeTrackingList<DataFactoryElement<string>>(), operands ?? new ChangeTrackingList<DataFactoryExpressionV2>(), additionalBinaryDataProperties);
+            return new DataFactoryExpressionV2(v2Type, v2Value, operators ?? new ChangeTrackingList<DataFactoryElement<string>>(), operands ?? new ChangeTrackingList<DataFactoryExpressionV2>(), additionalBinaryDataProperties);
         }
     }
 }

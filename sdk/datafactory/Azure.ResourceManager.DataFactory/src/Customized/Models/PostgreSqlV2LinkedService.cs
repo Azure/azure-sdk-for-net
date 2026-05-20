@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,5 +21,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactoryKeyVaultSecret Password { get; set; }
+
+        /// <summary> Back-compat constructor restoring the previously published 4-arg shape (no authenticationType). </summary>
+        /// <param name="server"> Server name for connection. Type: string. </param>
+        /// <param name="username"> Username for authentication. Type: string. </param>
+        /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="sslMode"> SSL mode for connection. Type: integer. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public PostgreSqlV2LinkedService(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode)
+            : this(server, username, database, default, sslMode)
+        {
+        }
     }
 }

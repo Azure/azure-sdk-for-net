@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <returns> A new <see cref="Models.DataFactoryBlobEventsTrigger"/> instance for mocking. </returns>
-        public static DataFactoryBlobEventsTrigger DataFactoryBlobEventsTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string blobPathBeginsWith = default, string blobPathEndsWith = default, bool? ignoreEmptyBlobs = default, IEnumerable<BlobEventTypes> events = default, string scope = default)
+        public static DataFactoryBlobEventsTrigger DataFactoryBlobEventsTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string blobPathBeginsWith = default, string blobPathEndsWith = default, bool? ignoreEmptyBlobs = default, IEnumerable<DataFactoryBlobEventType> events = default, string scope = default)
         {
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     blobPathBeginsWith,
                     blobPathEndsWith,
                     ignoreEmptyBlobs,
-                    (events ?? new ChangeTrackingList<BlobEventTypes>()).ToList(),
+                    (events ?? new ChangeTrackingList<DataFactoryBlobEventType>()).ToList(),
                     scope,
                     null));
         }
@@ -1097,15 +1097,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
                 additionalProperties);
-        }
-
-        /// <summary> Columns that define the structure of the dataset. </summary>
-        /// <param name="columnName"> Name of the column. Type: string (or Expression with resultType string). </param>
-        /// <param name="columnType"> Type of the column. Type: string (or Expression with resultType string). </param>
-        /// <returns> A new <see cref="Models.DatasetDataElement"/> instance for mocking. </returns>
-        public static DatasetDataElement DatasetDataElement(DataFactoryElement<string> columnName = default, DataFactoryElement<string> columnType = default)
-        {
-            return new DatasetDataElement(columnName, columnType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Columns that define the physical type schema of the dataset. </summary>
@@ -9030,19 +9021,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionProperties"> (Deprecated) Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="clientCustomerID"> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientCustomerId"> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
         /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="keyFilePath"> (Deprecated) The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="trustedCertPath"> (Deprecated) The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </param>
         /// <param name="useSystemTrustStore"> (Deprecated) Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="loginCustomerID"> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </param>
+        /// <param name="loginCustomerId"> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </param>
         /// <param name="googleAdsApiVersion"> The Google Ads API major version such as v14. The supported major versions could be found on https://developers.google.com/google-ads/api/docs/release-notes. Type: string (or Expression with resultType string). </param>
         /// <param name="supportLegacyDataTypes"> Specifies whether to use the legacy data type mappings, which maps float, int32 and int64 from Google to string. Do not set this to true unless you want to keep backward compatibility with legacy driver's data type mappings. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.GoogleAdWordsLinkedService"/> instance for mocking. </returns>
-        public static GoogleAdWordsLinkedService GoogleAdWordsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> clientCustomerID = default, GoogleAdWordsAuthenticationType? authenticationType = default, DataFactoryElement<string> clientId = default, DataFactoryElement<string> email = default, DataFactoryElement<string> keyFilePath = default, DataFactoryElement<string> trustedCertPath = default, DataFactoryElement<bool> useSystemTrustStore = default, DataFactoryElement<string> loginCustomerID = default, DataFactoryElement<string> googleAdsApiVersion = default, DataFactoryElement<bool> supportLegacyDataTypes = default, string encryptedCredential = default)
+        public static GoogleAdWordsLinkedService GoogleAdWordsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> clientCustomerId = default, GoogleAdWordsAuthenticationType? authenticationType = default, DataFactoryElement<string> clientId = default, DataFactoryElement<string> email = default, DataFactoryElement<string> keyFilePath = default, DataFactoryElement<string> trustedCertPath = default, DataFactoryElement<bool> useSystemTrustStore = default, DataFactoryElement<string> loginCustomerId = default, DataFactoryElement<string> googleAdsApiVersion = default, DataFactoryElement<bool> supportLegacyDataTypes = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -9058,14 +9049,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 new GoogleAdWordsLinkedServiceTypeProperties(
                     connectionProperties,
-                    clientCustomerID,
+                    clientCustomerId,
                     authenticationType,
                     clientId,
                     email,
                     keyFilePath,
                     trustedCertPath,
                     useSystemTrustStore,
-                    loginCustomerID,
+                    loginCustomerId,
                     googleAdsApiVersion,
                     supportLegacyDataTypes,
                     encryptedCredential,
@@ -10243,7 +10234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// A pipeline activity.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ControlActivity"/>, <see cref="Models.ExecutionActivity"/>, <see cref="Models.CopyActivity"/>, <see cref="Models.HDInsightHiveActivity"/>, <see cref="Models.HDInsightPigActivity"/>, <see cref="Models.HDInsightMapReduceActivity"/>, <see cref="Models.HDInsightStreamingActivity"/>, <see cref="Models.HDInsightSparkActivity"/>, <see cref="Models.ExecuteSSISPackageActivity"/>, <see cref="Models.CustomActivity"/>, <see cref="Models.SqlServerStoredProcedureActivity"/>, <see cref="Models.ExecutePipelineActivity"/>, <see cref="Models.DeleteActivity"/>, <see cref="Models.AzureDataExplorerCommandActivity"/>, <see cref="Models.LookupActivity"/>, <see cref="Models.WebActivity"/>, <see cref="Models.GetDatasetMetadataActivity"/>, <see cref="Models.IfConditionActivity"/>, <see cref="Models.SwitchActivity"/>, <see cref="Models.ForEachActivity"/>, <see cref="Models.AzureMLBatchExecutionActivity"/>, <see cref="Models.AzureMLUpdateResourceActivity"/>, <see cref="Models.AzureMLExecutePipelineActivity"/>, <see cref="Models.DataLakeAnalyticsUsqlActivity"/>, <see cref="Models.WaitActivity"/>, <see cref="Models.FailActivity"/>, <see cref="Models.UntilActivity"/>, <see cref="Models.ValidationActivity"/>, <see cref="Models.FilterActivity"/>, <see cref="Models.DatabricksNotebookActivity"/>, <see cref="Models.DatabricksSparkJarActivity"/>, <see cref="Models.DatabricksSparkPythonActivity"/>, <see cref="Models.DatabricksJobActivity"/>, <see cref="Models.SetVariableActivity"/>, <see cref="Models.AppendVariableActivity"/>, <see cref="Models.AzureFunctionActivity"/>, <see cref="Models.WebHookActivity"/>, <see cref="Models.ExecuteDataFlowActivity"/>, <see cref="Models.ExecuteWranglingDataflowActivity"/>, <see cref="Models.DataFactoryScriptActivity"/>, <see cref="Models.SynapseNotebookActivity"/>, and <see cref="Models.SynapseSparkJobDefinitionActivity"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ControlActivity"/>, <see cref="Models.ExecutionActivity"/>, <see cref="Models.CopyActivity"/>, <see cref="Models.HDInsightHiveActivity"/>, <see cref="Models.HDInsightPigActivity"/>, <see cref="Models.HDInsightMapReduceActivity"/>, <see cref="Models.HDInsightStreamingActivity"/>, <see cref="Models.HDInsightSparkActivity"/>, <see cref="Models.ExecuteSsisPackageActivity"/>, <see cref="Models.CustomActivity"/>, <see cref="Models.SqlServerStoredProcedureActivity"/>, <see cref="Models.ExecutePipelineActivity"/>, <see cref="Models.DeleteActivity"/>, <see cref="Models.AzureDataExplorerCommandActivity"/>, <see cref="Models.LookupActivity"/>, <see cref="Models.WebActivity"/>, <see cref="Models.GetDatasetMetadataActivity"/>, <see cref="Models.IfConditionActivity"/>, <see cref="Models.SwitchActivity"/>, <see cref="Models.ForEachActivity"/>, <see cref="Models.AzureMLBatchExecutionActivity"/>, <see cref="Models.AzureMLUpdateResourceActivity"/>, <see cref="Models.AzureMLExecutePipelineActivity"/>, <see cref="Models.DataLakeAnalyticsUsqlActivity"/>, <see cref="Models.WaitActivity"/>, <see cref="Models.FailActivity"/>, <see cref="Models.UntilActivity"/>, <see cref="Models.ValidationActivity"/>, <see cref="Models.FilterActivity"/>, <see cref="Models.DatabricksNotebookActivity"/>, <see cref="Models.DatabricksSparkJarActivity"/>, <see cref="Models.DatabricksSparkPythonActivity"/>, <see cref="Models.DatabricksJobActivity"/>, <see cref="Models.SetVariableActivity"/>, <see cref="Models.AppendVariableActivity"/>, <see cref="Models.AzureFunctionActivity"/>, <see cref="Models.WebHookActivity"/>, <see cref="Models.ExecuteDataFlowActivity"/>, <see cref="Models.ExecuteWranglingDataflowActivity"/>, <see cref="Models.DataFactoryScriptActivity"/>, <see cref="Models.SynapseNotebookActivity"/>, and <see cref="Models.SynapseSparkJobDefinitionActivity"/>.
         /// </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
@@ -13510,17 +13501,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Nested representation of a complex expression. </summary>
-        /// <param name="type"> Type of expressions supported by the system. Type: string. </param>
+        /// <param name="v2Type"> Type of expressions supported by the system. Type: string. </param>
         /// <param name="v2Value"> Value for Constant/Field Type: object. </param>
         /// <param name="operators"> Expression operator value Type: list of strings. </param>
         /// <param name="operands"> List of nested expressions. </param>
         /// <returns> A new <see cref="Models.DataFactoryExpressionV2"/> instance for mocking. </returns>
-        public static DataFactoryExpressionV2 DataFactoryExpressionV2(DataFactoryExpressionV2Type? @type = default, DataFactoryElement<string> v2Value = default, IEnumerable<DataFactoryElement<string>> operators = default, IEnumerable<DataFactoryExpressionV2> operands = default)
+        public static DataFactoryExpressionV2 DataFactoryExpressionV2(DataFactoryExpressionV2Type? v2Type = default, DataFactoryElement<string> v2Value = default, IEnumerable<DataFactoryElement<string>> operators = default, IEnumerable<DataFactoryExpressionV2> operands = default)
         {
             operators ??= new ChangeTrackingList<DataFactoryElement<string>>();
             operands ??= new ChangeTrackingList<DataFactoryExpressionV2>();
 
-            return new DataFactoryExpressionV2(@type, v2Value, operators.ToList(), operands.ToList(), additionalBinaryDataProperties: null);
+            return new DataFactoryExpressionV2(v2Type, v2Value, operators.ToList(), operands.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A copy activity Azure Blob source. </summary>
@@ -14137,14 +14128,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 startOn,
                 endOn,
                 outputColumns);
-        }
-
-        /// <summary> The columns to be read out from the Office 365 table. </summary>
-        /// <param name="name"> Name of the table column. Type: string. </param>
-        /// <returns> A new <see cref="Models.Office365TableOutputColumn"/> instance for mocking. </returns>
-        public static Office365TableOutputColumn Office365TableOutputColumn(string name = default)
-        {
-            return new Office365TableOutputColumn(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A copy activity Azure Data Lake source. </summary>
@@ -16454,14 +16437,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageConnectionManagers"> The package level connection managers to execute the SSIS package. </param>
         /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
         /// <param name="logLocation"> SSIS package execution log location. </param>
-        /// <returns> A new <see cref="Models.ExecuteSSISPackageActivity"/> instance for mocking. </returns>
-        public static ExecuteSSISPackageActivity ExecuteSSISPackageActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SsisPackageLocation packageLocation = default, DataFactoryElement<string> runtime = default, DataFactoryElement<string> loggingLevel = default, DataFactoryElement<string> environmentPath = default, SsisExecutionCredential executionCredential = default, IntegrationRuntimeReference connectVia = default, IDictionary<string, SsisExecutionParameter> projectParameters = default, IDictionary<string, SsisExecutionParameter> packageParameters = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default, IDictionary<string, SsisPropertyOverride> propertyOverrides = default, SsisLogLocation logLocation = default)
+        /// <returns> A new <see cref="Models.ExecuteSsisPackageActivity"/> instance for mocking. </returns>
+        public static ExecuteSsisPackageActivity ExecuteSsisPackageActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SsisPackageLocation packageLocation = default, DataFactoryElement<string> runtime = default, DataFactoryElement<string> loggingLevel = default, DataFactoryElement<string> environmentPath = default, SsisExecutionCredential executionCredential = default, IntegrationRuntimeReference connectVia = default, IDictionary<string, SsisExecutionParameter> projectParameters = default, IDictionary<string, SsisExecutionParameter> packageParameters = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default, IDictionary<string, SsisPropertyOverride> propertyOverrides = default, SsisLogLocation logLocation = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new ExecuteSSISPackageActivity(
+            return new ExecuteSsisPackageActivity(
                 name,
                 "Execution",
                 description,
@@ -16472,7 +16455,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 linkedServiceName,
                 policy,
-                new ExecuteSSISPackageActivityTypeProperties(
+                new ExecuteSsisPackageActivityTypeProperties(
                     packageLocation,
                     runtime,
                     loggingLevel,
@@ -16504,7 +16487,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
         /// <returns> A new <see cref="Models.CustomActivity"/> instance for mocking. </returns>
-        public static CustomActivity CustomActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> command = default, DataFactoryElement<string> folderPath = default, CustomActivityReferenceObject referenceObjects = default, IDictionary<string, BinaryData> extendedProperties = default, DataFactoryElement<double> retentionTimeInDays = default, DataFactoryElement<string> autoUserSpecification = default)
+        public static CustomActivity CustomActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> command = default, DataFactoryElement<string> folderPath = default, CustomActivityReferenceObject referenceObjects = default, IDictionary<string, BinaryData> extendedProperties = default, BinaryData retentionTimeInDays = default, DataFactoryElement<string> autoUserSpecification = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17575,19 +17558,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Core resource properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(string id = default, string name = default, string @type = default, string eTag = default, PrivateLinkConnectionApprovalRequest properties = default)
+        public static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateLinkConnectionApprovalRequest properties = default)
         {
             return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(
                 id,
                 name,
-                @type,
-                eTag,
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties: null,
                 properties);
         }
@@ -17826,8 +17809,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(
                 id,
                 name,
-                default,
-                eTag?.ToString(),
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties: null,
                 properties);
         }

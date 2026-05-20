@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClientCustomerID
+        public DataFactoryElement<string> ClientCustomerId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.ClientCustomerID;
+                return TypeProperties is null ? default : TypeProperties.ClientCustomerId;
             }
             set
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
                 }
-                TypeProperties.ClientCustomerID = value;
+                TypeProperties.ClientCustomerId = value;
             }
         }
 
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> LoginCustomerID
+        public DataFactoryElement<string> LoginCustomerId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.LoginCustomerID;
+                return TypeProperties is null ? default : TypeProperties.LoginCustomerId;
             }
             set
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new GoogleAdWordsLinkedServiceTypeProperties();
                 }
-                TypeProperties.LoginCustomerID = value;
+                TypeProperties.LoginCustomerId = value;
             }
         }
 

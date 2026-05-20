@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         private readonly string _value;
         /// <summary> GET. </summary>
-        private const string GETValue = "GET";
+        private const string GetValue = "GET";
         /// <summary> POST. </summary>
-        private const string POSTValue = "POST";
+        private const string PostValue = "POST";
         /// <summary> PUT. </summary>
-        private const string PUTValue = "PUT";
+        private const string PutValue = "PUT";
         /// <summary> DELETE. </summary>
-        private const string DELETEValue = "DELETE";
+        private const string DeleteValue = "DELETE";
         /// <summary> OPTIONS. </summary>
-        private const string OPTIONSValue = "OPTIONS";
+        private const string OptionsValue = "OPTIONS";
         /// <summary> HEAD. </summary>
-        private const string HEADValue = "HEAD";
+        private const string HeadValue = "HEAD";
         /// <summary> TRACE. </summary>
-        private const string TRACEValue = "TRACE";
+        private const string TraceValue = "TRACE";
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionActivityMethod"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,25 +41,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> GET. </summary>
-        public static AzureFunctionActivityMethod GET { get; } = new AzureFunctionActivityMethod(GETValue);
+        public static AzureFunctionActivityMethod Get { get; } = new AzureFunctionActivityMethod(GetValue);
 
         /// <summary> POST. </summary>
-        public static AzureFunctionActivityMethod POST { get; } = new AzureFunctionActivityMethod(POSTValue);
+        public static AzureFunctionActivityMethod Post { get; } = new AzureFunctionActivityMethod(PostValue);
 
         /// <summary> PUT. </summary>
-        public static AzureFunctionActivityMethod PUT { get; } = new AzureFunctionActivityMethod(PUTValue);
+        public static AzureFunctionActivityMethod Put { get; } = new AzureFunctionActivityMethod(PutValue);
 
         /// <summary> DELETE. </summary>
-        public static AzureFunctionActivityMethod DELETE { get; } = new AzureFunctionActivityMethod(DELETEValue);
+        public static AzureFunctionActivityMethod Delete { get; } = new AzureFunctionActivityMethod(DeleteValue);
 
         /// <summary> OPTIONS. </summary>
-        public static AzureFunctionActivityMethod OPTIONS { get; } = new AzureFunctionActivityMethod(OPTIONSValue);
+        public static AzureFunctionActivityMethod Options { get; } = new AzureFunctionActivityMethod(OptionsValue);
 
         /// <summary> HEAD. </summary>
-        public static AzureFunctionActivityMethod HEAD { get; } = new AzureFunctionActivityMethod(HEADValue);
+        public static AzureFunctionActivityMethod Head { get; } = new AzureFunctionActivityMethod(HeadValue);
 
         /// <summary> TRACE. </summary>
-        public static AzureFunctionActivityMethod TRACE { get; } = new AzureFunctionActivityMethod(TRACEValue);
+        public static AzureFunctionActivityMethod Trace { get; } = new AzureFunctionActivityMethod(TraceValue);
 
         /// <summary> Determines if two <see cref="AzureFunctionActivityMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

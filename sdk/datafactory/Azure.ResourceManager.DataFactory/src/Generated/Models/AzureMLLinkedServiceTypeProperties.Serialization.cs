@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureMLLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("mlEndpoint"u8);
-            writer.WriteObjectValue(MlEndpoint, options);
+            writer.WriteObjectValue(MLEndpoint, options);
             if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint"u8);

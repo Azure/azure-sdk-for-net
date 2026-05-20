@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sasToken = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sasToken = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

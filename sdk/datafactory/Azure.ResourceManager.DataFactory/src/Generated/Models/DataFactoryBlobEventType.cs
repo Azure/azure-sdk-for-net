@@ -12,7 +12,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary></summary>
-    public readonly partial struct BlobEventTypes : IEquatable<BlobEventTypes>
+    public readonly partial struct DataFactoryBlobEventType : IEquatable<DataFactoryBlobEventType>
     {
         private readonly string _value;
         /// <summary> Microsoft.Storage.BlobCreated. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Microsoft.Storage.BlobDeleted. </summary>
         private const string MicrosoftStorageBlobDeletedValue = "Microsoft.Storage.BlobDeleted";
 
-        /// <summary> Initializes a new instance of <see cref="BlobEventTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobEventType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BlobEventTypes(string value)
+        public DataFactoryBlobEventType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Microsoft.Storage.BlobCreated. </summary>
-        public static BlobEventTypes MicrosoftStorageBlobCreated { get; } = new BlobEventTypes(MicrosoftStorageBlobCreatedValue);
+        public static DataFactoryBlobEventType MicrosoftStorageBlobCreated { get; } = new DataFactoryBlobEventType(MicrosoftStorageBlobCreatedValue);
 
         /// <summary> Microsoft.Storage.BlobDeleted. </summary>
-        public static BlobEventTypes MicrosoftStorageBlobDeleted { get; } = new BlobEventTypes(MicrosoftStorageBlobDeletedValue);
+        public static DataFactoryBlobEventType MicrosoftStorageBlobDeleted { get; } = new DataFactoryBlobEventType(MicrosoftStorageBlobDeletedValue);
 
-        /// <summary> Determines if two <see cref="BlobEventTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DataFactoryBlobEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(BlobEventTypes left, BlobEventTypes right) => left.Equals(right);
+        public static bool operator ==(DataFactoryBlobEventType left, DataFactoryBlobEventType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BlobEventTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DataFactoryBlobEventType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(BlobEventTypes left, BlobEventTypes right) => !left.Equals(right);
+        public static bool operator !=(DataFactoryBlobEventType left, DataFactoryBlobEventType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BlobEventTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DataFactoryBlobEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobEventTypes(string value) => new BlobEventTypes(value);
+        public static implicit operator DataFactoryBlobEventType(string value) => new DataFactoryBlobEventType(value);
 
-        /// <summary> Converts a string to a <see cref="BlobEventTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DataFactoryBlobEventType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BlobEventTypes?(string value) => value == null ? null : new BlobEventTypes(value);
+        public static implicit operator DataFactoryBlobEventType?(string value) => value == null ? null : new DataFactoryBlobEventType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BlobEventTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is DataFactoryBlobEventType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(BlobEventTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataFactoryBlobEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

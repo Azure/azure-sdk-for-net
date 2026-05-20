@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
-        public DataFactoryBlobEventsTrigger(IEnumerable<BlobEventTypes> events, string scope)
+        public DataFactoryBlobEventsTrigger(IEnumerable<DataFactoryBlobEventType> events, string scope)
         {
             Argument.AssertNotNull(events, nameof(events));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The type of events that cause this trigger to fire. </summary>
-        public IList<BlobEventTypes> Events
+        public IList<DataFactoryBlobEventType> Events
         {
             get
             {

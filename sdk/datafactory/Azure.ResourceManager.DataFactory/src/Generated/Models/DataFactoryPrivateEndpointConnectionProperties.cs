@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionProperties"/>. </summary>
-        internal DataFactoryPrivateEndpointConnectionProperties()
+        public DataFactoryPrivateEndpointConnectionProperties()
         {
         }
 
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string ProvisioningState { get; }
 
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
-        internal ArmIdWrapper PrivateEndpoint { get; }
+        internal ArmIdWrapper PrivateEndpoint { get; set; }
 
         /// <summary> The state of a private link connection. </summary>
-        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; }
+        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> Gets the Id. </summary>
         public string PrivateEndpointId

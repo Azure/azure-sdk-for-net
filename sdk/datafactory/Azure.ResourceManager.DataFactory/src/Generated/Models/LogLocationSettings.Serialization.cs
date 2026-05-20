@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName, options);
-            if (Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Settings, options);
+                writer.WriteObjectValue(Path, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            DataFactoryElement<string> settings = default;
+            DataFactoryElement<string> path = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("path"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    settings = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    path = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogLocationSettings(linkedServiceName, settings, additionalBinaryDataProperties);
+            return new LogLocationSettings(linkedServiceName, path, additionalBinaryDataProperties);
         }
     }
 }

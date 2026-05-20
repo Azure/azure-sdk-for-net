@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal AzureMLExecutePipelineActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlPipelineId
+        public DataFactoryElement<string> MLPipelineId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.MlPipelineId;
+                return TypeProperties is null ? default : TypeProperties.MLPipelineId;
             }
             set
             {
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AzureMLExecutePipelineActivityTypeProperties();
                 }
-                TypeProperties.MlPipelineId = value;
+                TypeProperties.MLPipelineId = value;
             }
         }
 
         /// <summary> ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlPipelineEndpointId
+        public DataFactoryElement<string> MLPipelineEndpointId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.MlPipelineEndpointId;
+                return TypeProperties is null ? default : TypeProperties.MLPipelineEndpointId;
             }
             set
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AzureMLExecutePipelineActivityTypeProperties();
                 }
-                TypeProperties.MlPipelineEndpointId = value;
+                TypeProperties.MLPipelineEndpointId = value;
             }
         }
 
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </summary>
-        public DataFactoryElement<IDictionary<string, string>> MlPipelineParameters
+        public DataFactoryElement<IDictionary<string, string>> MLPipelineParameters
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.MlPipelineParameters;
+                return TypeProperties is null ? default : TypeProperties.MLPipelineParameters;
             }
             set
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AzureMLExecutePipelineActivityTypeProperties();
                 }
-                TypeProperties.MlPipelineParameters = value;
+                TypeProperties.MLPipelineParameters = value;
             }
         }
 
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlParentRunId
+        public DataFactoryElement<string> MLParentRunId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.MlParentRunId;
+                return TypeProperties is null ? default : TypeProperties.MLParentRunId;
             }
             set
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AzureMLExecutePipelineActivityTypeProperties();
                 }
-                TypeProperties.MlParentRunId = value;
+                TypeProperties.MLParentRunId = value;
             }
         }
 

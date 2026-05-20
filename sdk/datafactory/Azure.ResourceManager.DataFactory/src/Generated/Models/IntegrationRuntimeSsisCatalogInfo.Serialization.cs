@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    catalogAdminPassword = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("catalogPricingTier"u8))
