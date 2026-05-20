@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -303,15 +303,13 @@ namespace Azure.Storage.Blobs.Test
             if (_async)
             {
                 blockClient.Verify(c => c.GetLayoutAsync(
-                    It.Is<HttpRange>(r => r.Offset == 20 && r.Length == 80),
-                    It.IsAny<BlobRequestConditions>(),
+                    It.Is<BlobGetLayoutOptions>(o => (o == null ? default(HttpRange) : o.Range).Offset == 20 && (o == null ? default(HttpRange) : o.Range).Length == 80),
                     It.IsAny<CancellationToken>()), Times.Once);
             }
             else
             {
                 blockClient.Verify(c => c.GetLayout(
-                    It.Is<HttpRange>(r => r.Offset == 20 && r.Length == 80),
-                    It.IsAny<BlobRequestConditions>(),
+                    It.Is<BlobGetLayoutOptions>(o => (o == null ? default(HttpRange) : o.Range).Offset == 20 && (o == null ? default(HttpRange) : o.Range).Length == 80),
                     It.IsAny<CancellationToken>()), Times.Once);
             }
 
@@ -350,14 +348,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.NotNull(result);
 
             // Assert - GetLayout was NOT called
-            blockClient.Verify(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
-            blockClient.Verify(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
 
             Assert.AreEqual(9, capturedCalls.Count, "Expected 1 initial + 8 subsequent chunk calls");
 
@@ -400,14 +392,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.NotNull(result);
 
             // Assert - GetLayout was NOT called
-            blockClient.Verify(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
-            blockClient.Verify(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
 
             Assert.AreEqual(9, capturedCalls.Count, "Expected 1 initial + 8 subsequent chunk calls");
 
@@ -441,14 +427,8 @@ namespace Azure.Storage.Blobs.Test
                 errorCode: null,
                 innerException: null);
 
-            blockClient.Setup(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(softFailure);
-            blockClient.Setup(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(softFailure);
+            blockClient.Setup(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(softFailure);
+            blockClient.Setup(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(softFailure);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
@@ -481,17 +461,11 @@ namespace Azure.Storage.Blobs.Test
             // Assert - GetLayout invoked at most once across all chunks (cache de-dups the failure)
             if (_async)
             {
-                blockClient.Verify(c => c.GetLayoutAsync(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             }
             else
             {
-                blockClient.Verify(c => c.GetLayout(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             }
         }
 
@@ -545,17 +519,11 @@ namespace Azure.Storage.Blobs.Test
             // Assert - GetLayout was called exactly once across all chunks
             if (_async)
             {
-                blockClient.Verify(c => c.GetLayoutAsync(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             }
             else
             {
-                blockClient.Verify(c => c.GetLayout(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             }
         }
 
@@ -599,14 +567,8 @@ namespace Azure.Storage.Blobs.Test
                 errorCode: null,
                 innerException: null);
 
-            blockClient.Setup(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(nonSoftFailure);
-            blockClient.Setup(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(nonSoftFailure);
+            blockClient.Setup(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(nonSoftFailure);
+            blockClient.Setup(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(nonSoftFailure);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
@@ -702,17 +664,11 @@ namespace Azure.Storage.Blobs.Test
             // Assert - GetLayout was called exactly once even though it returned 2 pages.
             if (_async)
             {
-                blockClient.Verify(c => c.GetLayoutAsync(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             }
             else
             {
-                blockClient.Verify(c => c.GetLayout(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Once);
             }
         }
 
@@ -780,17 +736,11 @@ namespace Azure.Storage.Blobs.Test
             // Assert - GetLayout was invoked once per download (one per cache resolve).
             if (_async)
             {
-                blockClient.Verify(c => c.GetLayoutAsync(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Exactly(2));
+                blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
             }
             else
             {
-                blockClient.Verify(c => c.GetLayout(
-                    It.IsAny<HttpRange>(),
-                    It.IsAny<BlobRequestConditions>(),
-                    It.IsAny<CancellationToken>()), Times.Exactly(2));
+                blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
             }
         }
 
@@ -828,14 +778,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, capturedCalls.Count, "One-shot download should issue exactly one DownloadStreamingInternal call");
             Assert.IsNull(capturedCalls[0].LayoutCache, "One-shot download should not construct a layout cache");
 
-            blockClient.Verify(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
-            blockClient.Verify(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         private void AssertContent(int expectedLength, MemoryStream stream)
@@ -905,15 +849,13 @@ namespace Azure.Storage.Blobs.Test
 
             // Setup GetLayoutAsync (for async path)
             blockClient.Setup(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<BlobGetLayoutOptions>(),
                 It.IsAny<CancellationToken>()
             )).Returns(new MockAsyncPageable(layoutInfo));
 
             // Setup GetLayout (for sync path)
             blockClient.Setup(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<BlobGetLayoutOptions>(),
                 It.IsAny<CancellationToken>()
             )).Returns(new MockPageable(layoutInfo));
         }
@@ -948,14 +890,12 @@ namespace Azure.Storage.Blobs.Test
             }
 
             blockClient.Setup(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<BlobGetLayoutOptions>(),
                 It.IsAny<CancellationToken>()
             )).Returns(new MockAsyncPageable(layoutInfos));
 
             blockClient.Setup(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<BlobGetLayoutOptions>(),
                 It.IsAny<CancellationToken>()
             )).Returns(new MockPageable(layoutInfos));
         }

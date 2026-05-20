@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -5835,7 +5835,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(continuationToken);
             ETag prevETag = layoutInfo1.ETag;
             DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfMatch = prevETag };
-            Page<DataLakeFileLayoutInfo> page2 = file.GetLayoutAsync(conditions: conditions).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
+            Page<DataLakeFileLayoutInfo> page2 = file.GetLayoutAsync(new DataLakeFileGetLayoutOptions { Conditions = conditions }).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
             DataLakeFileLayoutInfo layoutInfo2 = page2.Values.First();
             Assert.IsNotNull(layoutInfo2);
 
@@ -5871,7 +5871,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             HttpRange range = new HttpRange(rangeOffset, rangeCount);
 
             // Act
-            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(range))
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(new DataLakeFileGetLayoutOptions { Range = range }))
             {
                 // Assert
                 Assert.IsNotNull(layoutInfo.Ranges);
@@ -5934,7 +5934,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
-                    conditions: conditions))
+                    new DataLakeFileGetLayoutOptions { Conditions = conditions }))
                 {
                     // Assert
                     Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
@@ -5968,7 +5968,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     async () =>
                     {
                         await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
-                            conditions: conditions))
+                            new DataLakeFileGetLayoutOptions { Conditions = conditions }))
                         {
                             // intentionally empty
                         }
@@ -6002,7 +6002,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
-                conditions: conditions))
+                new DataLakeFileGetLayoutOptions { Conditions = conditions }))
             {
                 // Assert
                 Assert.AreEqual(DataLakeLeaseStatus.Locked, layoutInfo.LeaseStatus);
@@ -6034,7 +6034,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.GetLayoutAsync(conditions: conditions).ToListAsync(),
+                file.GetLayoutAsync(new DataLakeFileGetLayoutOptions { Conditions = conditions }).ToListAsync(),
                 e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
         }
 

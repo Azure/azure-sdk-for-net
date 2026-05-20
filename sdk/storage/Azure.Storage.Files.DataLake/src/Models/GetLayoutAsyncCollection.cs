@@ -11,8 +11,8 @@ using Azure.Storage.Blobs.Specialized;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Wraps <see cref="BlobBaseClient.GetLayout(HttpRange, BlobRequestConditions, CancellationToken)"/> /
-    /// <see cref="BlobBaseClient.GetLayoutAsync(HttpRange, BlobRequestConditions, CancellationToken)"/> and
+    /// Wraps <see cref="BlobBaseClient.GetLayout(BlobGetLayoutOptions, CancellationToken)"/> /
+    /// <see cref="BlobBaseClient.GetLayoutAsync(BlobGetLayoutOptions, CancellationToken)"/> and
     /// projects the returned <see cref="BlobLayoutInfo"/> values into <see cref="DataLakeFileLayoutInfo"/>
     /// values without altering the underlying paging behavior. All pagination state (continuation tokens,
     /// page boundaries, ETag locking) is owned by the inner Blobs pageable, so this wrapper makes the
@@ -21,17 +21,14 @@ namespace Azure.Storage.Files.DataLake.Models
     internal class GetLayoutAsyncCollection
     {
         private readonly BlockBlobClient _client;
-        private readonly HttpRange _range;
-        private readonly BlobRequestConditions _conditions;
+        private readonly BlobGetLayoutOptions _options;
 
         public GetLayoutAsyncCollection(
             BlockBlobClient client,
-            HttpRange range,
-            BlobRequestConditions conditions)
+            BlobGetLayoutOptions options)
         {
             _client = client;
-            _range = range;
-            _conditions = conditions;
+            _options = options;
         }
 
         private static Page<DataLakeFileLayoutInfo> ConvertPage(Page<BlobLayoutInfo> page)
@@ -50,16 +47,14 @@ namespace Azure.Storage.Files.DataLake.Models
         private static AsyncPageable<BlobLayoutInfo> ConvertCollectionAsync(GetLayoutAsyncCollection collection, CancellationToken cancellationToken)
         {
             return collection._client.GetLayoutAsync(
-                collection._range,
-                collection._conditions,
+                collection._options,
                 cancellationToken);
         }
 
         private static Pageable<BlobLayoutInfo> ConvertCollection(GetLayoutAsyncCollection collection, CancellationToken cancellationToken)
         {
             return collection._client.GetLayout(
-                collection._range,
-                collection._conditions,
+                collection._options,
                 cancellationToken);
         }
 

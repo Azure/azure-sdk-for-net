@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6223,13 +6223,8 @@ namespace Azure.Storage.Files.DataLake
         /// standard HTTP properties, and system properties for the file.
         /// In addition, it may optionally return the layout of the file.
         /// </summary>
-        /// <param name="range">
-        /// If provided, returns metadata only for the specified range.
-        /// If not provided, returns the metadata for the entire file.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on getting the file's properties and layout.
+        /// <param name="options">
+        /// Optional <see cref="DataLakeFileGetLayoutOptions"/> for shaping the request.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -6247,13 +6242,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Pageable<DataLakeFileLayoutInfo> GetLayout(
-            HttpRange range = default,
-            DataLakeRequestConditions conditions = default,
+            DataLakeFileGetLayoutOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetLayoutAsyncCollection(
                 _blockBlobClient,
-                range: range,
-                conditions: conditions.ToBlobRequestConditions())
+                options.ToBlobGetLayoutOptions())
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -6261,13 +6254,8 @@ namespace Azure.Storage.Files.DataLake
         /// standard HTTP properties, and system properties for the file.
         /// In addition, it may optionally return the layout of the file.
         /// </summary>
-        /// <param name="range">
-        /// If provided, returns metadata only for the specified range.
-        /// If not provided, returns the metadata for the entire file.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on getting the file's properties and layout.
+        /// <param name="options">
+        /// Optional <see cref="DataLakeFileGetLayoutOptions"/> for shaping the request.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -6285,13 +6273,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [ForwardsClientCalls]
         public virtual AsyncPageable<DataLakeFileLayoutInfo> GetLayoutAsync(
-            HttpRange range = default,
-            DataLakeRequestConditions conditions = default,
+            DataLakeFileGetLayoutOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetLayoutAsyncCollection(
                 _blockBlobClient,
-                range: range,
-                conditions: conditions.ToBlobRequestConditions())
+                options.ToBlobGetLayoutOptions())
             .ToAsyncCollection(cancellationToken);
 
         #endregion GetLayout

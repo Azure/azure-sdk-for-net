@@ -584,6 +584,20 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        internal static BlobGetLayoutOptions ToBlobGetLayoutOptions(this DataLakeFileGetLayoutOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobGetLayoutOptions
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+            };
+        }
+
         internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
         {
             if (options == null)

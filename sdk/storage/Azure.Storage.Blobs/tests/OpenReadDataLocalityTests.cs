@@ -196,14 +196,8 @@ namespace Azure.Storage.Blobs.Test
             AssertContent(blobLength, destination);
 
             // Assert - GetLayout was NOT called
-            blockClient.Verify(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
-            blockClient.Verify(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
+            blockClient.Verify(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>()), Times.Never);
 
             // Assert - every chunk received a null cache
             Assert.AreEqual(5, capturedCalls.Count);
@@ -237,14 +231,8 @@ namespace Azure.Storage.Blobs.Test
                 errorCode: null,
                 innerException: null);
 
-            blockClient.Setup(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(softFailure);
-            blockClient.Setup(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(softFailure);
+            blockClient.Setup(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(softFailure);
+            blockClient.Setup(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(softFailure);
 
             // Act
             Stream readStream = await InvokeOpenReadAsync(blockClient.Object, bufferSize, enableDataLocality: true);
@@ -303,14 +291,8 @@ namespace Azure.Storage.Blobs.Test
                 errorCode: null,
                 innerException: null);
 
-            blockClient.Setup(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(hardFailure);
-            blockClient.Setup(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
-                It.IsAny<CancellationToken>())).Throws(hardFailure);
+            blockClient.Setup(c => c.GetLayoutAsync(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(hardFailure);
+            blockClient.Setup(c => c.GetLayout(It.IsAny<BlobGetLayoutOptions>(), It.IsAny<CancellationToken>())).Throws(hardFailure);
 
             // Act + Assert - OpenRead must propagate the exception unchanged.
             RequestFailedException thrown = Assert.ThrowsAsync<RequestFailedException>(
@@ -539,14 +521,12 @@ namespace Azure.Storage.Blobs.Test
             };
 
             blockClient.Setup(c => c.GetLayoutAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<BlobGetLayoutOptions>(),
                 It.IsAny<CancellationToken>()
             )).Returns(new MockAsyncPageable(layoutInfo));
 
             blockClient.Setup(c => c.GetLayout(
-                It.IsAny<HttpRange>(),
-                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<BlobGetLayoutOptions>(),
                 It.IsAny<CancellationToken>()
             )).Returns(new MockPageable(layoutInfo));
         }
@@ -559,15 +539,13 @@ namespace Azure.Storage.Blobs.Test
             if (_async)
             {
                 blockClient.Verify(c => c.GetLayoutAsync(
-                    It.Is<HttpRange>(r => r.Offset == 0 && r.Length == null),
-                    It.IsAny<BlobRequestConditions>(),
+                    It.Is<BlobGetLayoutOptions>(o => (o == null ? default(HttpRange) : o.Range).Offset == 0 && (o == null ? default(HttpRange) : o.Range).Length == null),
                     It.IsAny<CancellationToken>()), Times.Once);
             }
             else
             {
                 blockClient.Verify(c => c.GetLayout(
-                    It.Is<HttpRange>(r => r.Offset == 0 && r.Length == null),
-                    It.IsAny<BlobRequestConditions>(),
+                    It.Is<BlobGetLayoutOptions>(o => (o == null ? default(HttpRange) : o.Range).Offset == 0 && (o == null ? default(HttpRange) : o.Range).Length == null),
                     It.IsAny<CancellationToken>()), Times.Once);
             }
         }

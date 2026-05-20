@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
         /// host/port to the specified endpoint while preserving the original Host header.
         /// <para>
         /// Enumerate the pages returned by
-        /// <see cref="Specialized.BlobBaseClient.GetLayout(Azure.HttpRange, BlobRequestConditions, System.Threading.CancellationToken)"/>
+        /// <see cref="Specialized.BlobBaseClient.GetLayoutAsync(BlobGetLayoutOptions, System.Threading.CancellationToken)"/>
         /// and select the endpoint whose layout range covers the offset of the
         /// requested <see cref="Range"/>; pass that value here.
         /// </para>

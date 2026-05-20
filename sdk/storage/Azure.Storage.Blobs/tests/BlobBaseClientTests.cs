@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -4543,7 +4543,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(continuationToken);
             ETag prevETag = blobLayoutInfo1.ETag;
             BlobRequestConditions conditions = new BlobRequestConditions().WithIfMatch(prevETag);
-            Page <BlobLayoutInfo> page2 = blob.GetLayoutAsync(conditions: conditions).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
+            Page <BlobLayoutInfo> page2 = blob.GetLayoutAsync(new BlobGetLayoutOptions { Conditions = conditions }).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
             BlobLayoutInfo blobLayoutInfo2 = page2.Values.First();
             Assert.IsNotNull(blobLayoutInfo2);
         }
@@ -4575,7 +4575,7 @@ namespace Azure.Storage.Blobs.Test
             HttpRange range = new HttpRange(rangeOffset, rangeCount);
 
             // Act
-            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(range))
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(new BlobGetLayoutOptions { Range = range }))
             {
                 // Assert
                 Assert.IsNotNull(blobLayoutInfo.Ranges);
@@ -4636,7 +4636,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
-                    conditions: accessConditions))
+                    new BlobGetLayoutOptions { Conditions = accessConditions }))
                 {
                     // Assert
                     Assert.IsNotNull(blobLayoutInfo.ETag);
@@ -4669,7 +4669,7 @@ namespace Azure.Storage.Blobs.Test
                     async () =>
                     {
                         await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
-                            conditions: accessConditions))
+                            new BlobGetLayoutOptions { Conditions = accessConditions }))
                         {
                             // intentionally empty
                         }
@@ -4706,7 +4706,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
-                conditions: conditions))
+                new BlobGetLayoutOptions { Conditions = conditions }))
             {
                 // Assert
                 Assert.IsNotNull(blobLayoutInfo.ETag);
@@ -4736,7 +4736,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetLayoutAsync(conditions: conditions).ToListAsync(),
+                blob.GetLayoutAsync(new BlobGetLayoutOptions { Conditions = conditions }).ToListAsync(),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -4765,7 +4765,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
-                conditions: conditions))
+                new BlobGetLayoutOptions { Conditions = conditions }))
             {
                 // Assert
                 Assert.AreEqual(LeaseStatus.Locked, blobLayoutInfo.LeaseStatus);
@@ -4796,7 +4796,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetLayoutAsync(conditions: conditions).ToListAsync(),
+                blob.GetLayoutAsync(new BlobGetLayoutOptions { Conditions = conditions }).ToListAsync(),
                 e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
         }
 

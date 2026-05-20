@@ -736,6 +736,12 @@ namespace Azure.Storage.Blobs.Models
         Bootstrap = 1,
         Unavailable = 2,
     }
+    public partial class BlobGetLayoutOptions
+    {
+        public BlobGetLayoutOptions() { }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.HttpRange Range { get { throw null; } set { } }
+    }
     public partial class BlobGetUserDelegationKeyOptions
     {
         public BlobGetUserDelegationKeyOptions(System.DateTimeOffset expiresOn) { }
@@ -1762,8 +1768,8 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Blobs.Specialized.BlobLeaseClient GetBlobLeaseClientCore(string leaseId) { throw null; }
         protected static System.Threading.Tasks.Task<Azure.HttpAuthorization> GetCopyAuthorizationHeaderAsync(Azure.Storage.Blobs.Specialized.BlobBaseClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Storage.Blobs.Models.BlobLayoutInfo> GetLayout(Azure.HttpRange range = default(Azure.HttpRange), Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Storage.Blobs.Models.BlobLayoutInfo> GetLayoutAsync(Azure.HttpRange range = default(Azure.HttpRange), Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Blobs.Models.BlobLayoutInfo> GetLayout(Azure.Storage.Blobs.Models.BlobGetLayoutOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Blobs.Models.BlobLayoutInfo> GetLayoutAsync(Azure.Storage.Blobs.Models.BlobGetLayoutOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Blobs.BlobContainerClient GetParentBlobContainerClientCore() { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetProperties(Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

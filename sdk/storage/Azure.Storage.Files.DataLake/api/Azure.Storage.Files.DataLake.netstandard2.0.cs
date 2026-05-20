@@ -150,8 +150,8 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> FlushAsync(long position, bool? retainUncommittedData, bool? close, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutInfo> GetLayout(Azure.HttpRange range = default(Azure.HttpRange), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutInfo> GetLayoutAsync(Azure.HttpRange range = default(Azure.HttpRange), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutInfo> GetLayout(Azure.Storage.Files.DataLake.Models.DataLakeFileGetLayoutOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutInfo> GetLayoutAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileGetLayoutOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties> GetSystemProperties(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -617,6 +617,12 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string ProposedLeaseId { get { throw null; } set { } }
         public bool? RetainUncommittedData { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileGetLayoutOptions
+    {
+        public DataLakeFileGetLayoutOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.HttpRange Range { get { throw null; } set { } }
     }
     public partial class DataLakeFileLayoutEndpoints
     {

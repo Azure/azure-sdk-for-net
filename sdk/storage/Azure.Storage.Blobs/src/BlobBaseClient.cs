@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -5433,13 +5433,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// standard HTTP properties, and system properties for the blob.
         /// In addition, it may optionally return the layout of the blob.
         /// </summary>
-        /// <param name="range">
-        /// If provided, returns metadata only for the specified range.
-        /// If not provided, returns the metadata for the entire blob.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob's properties and layout.
+        /// <param name="options">
+        /// Optional <see cref="BlobGetLayoutOptions"/> for shaping the request.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -5456,13 +5451,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// containing each failure instance.
         /// </remarks>
         public virtual Pageable<BlobLayoutInfo> GetLayout(
-            HttpRange range = default,
-            BlobRequestConditions conditions = default,
+            BlobGetLayoutOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetLayoutAsyncCollection(
                 this,
-                range: range,
-                conditions: conditions)
+                range: options?.Range ?? default,
+                conditions: options?.Conditions)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -5470,13 +5464,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// standard HTTP properties, and system properties for the blob.
         /// In addition, it may optionally return the layout of the blob.
         /// </summary>
-        /// <param name="range">
-        /// If provided, returns metadata only for the specified range.
-        /// If not provided, returns the metadata for the entire blob.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob's properties and layout.
+        /// <param name="options">
+        /// Optional <see cref="BlobGetLayoutOptions"/> for shaping the request.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -5493,13 +5482,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// containing each failure instance.
         /// </remarks>
         public virtual AsyncPageable<BlobLayoutInfo> GetLayoutAsync(
-            HttpRange range = default,
-            BlobRequestConditions conditions = default,
+            BlobGetLayoutOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetLayoutAsyncCollection(
                 this,
-                range: range,
-                conditions: conditions)
+                range: options?.Range ?? default,
+                conditions: options?.Conditions)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -5644,11 +5632,16 @@ namespace Azure.Storage.Blobs.Specialized
         {
             BlobLayoutInfo properties = null;
             List<BlobLayoutSegment> allSegments = new();
+            BlobGetLayoutOptions options = new BlobGetLayoutOptions
+            {
+                Range = range,
+                Conditions = conditions,
+            };
             try
             {
                 if (async)
                 {
-                    await foreach (BlobLayoutInfo layoutInfo in GetLayoutAsync(range, conditions, cancellationToken).ConfigureAwait(false))
+                    await foreach (BlobLayoutInfo layoutInfo in GetLayoutAsync(options, cancellationToken).ConfigureAwait(false))
                     {
                         properties ??= layoutInfo;
                         allSegments.AddRange(layoutInfo.ToBlobLayoutSegments());
@@ -5656,7 +5649,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 else
                 {
-                    foreach (BlobLayoutInfo layoutInfo in GetLayout(range, conditions, cancellationToken))
+                    foreach (BlobLayoutInfo layoutInfo in GetLayout(options, cancellationToken))
                     {
                         properties ??= layoutInfo;
                         allSegments.AddRange(layoutInfo.ToBlobLayoutSegments());

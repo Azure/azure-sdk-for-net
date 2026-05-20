@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading;
@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// the specified endpoint while preserving the original Host header.
         /// <para>
         /// Enumerate the pages returned by
-        /// <see cref="DataLakeFileClient.GetLayout(HttpRange, DataLakeRequestConditions, CancellationToken)"/>
+        /// <see cref="DataLakeFileClient.GetLayout(DataLakeFileGetLayoutOptions, CancellationToken)"/>
         /// and select the endpoint whose layout range covers the offset of the
         /// requested <see cref="Range"/>; pass that value here.
         /// </para>
