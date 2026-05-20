@@ -42,7 +42,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
             }
 
             // Quick check: skip if parent has no GenAI attributes at all.
-            // This avoids 8 tag lookups per span on non-GenAI workloads.
+            // Checking Name and AgentName suffices because any conforming GenAI
+            // span will always carry at least the agent name attribute.
             if (parent.GetTagItem(MainAgentName) == null &&
                 parent.GetTagItem(GenAiAgentName) == null)
             {
@@ -51,6 +52,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
 
             foreach (var (target, primary, fallback) in s_attributeMappings)
             {
+                // Don't overwrite attributes already set on the child span
+                // (e.g., a nested agent that set its own main_agent context).
+                if (activity.GetTagItem(target) != null)
+                {
+                    continue;
+                }
+
                 var value = parent.GetTagItem(primary);
                 if (value != null)
                 {
@@ -75,17 +83,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
                 return;
             }
 
-            // If any main_agent attribute already exists, do not overwrite.
-            if (activity.GetTagItem(MainAgentName) != null ||
-                activity.GetTagItem(MainAgentId) != null ||
-                activity.GetTagItem(MainAgentVersion) != null ||
-                activity.GetTagItem(MainAgentConversationId) != null)
-            {
-                return;
-            }
-
             foreach (var (target, source) in s_selfCopyMappings)
             {
+                // Only copy if this specific attribute is not already set,
+                // allowing partial attribution from parent propagation.
+                if (activity.GetTagItem(target) != null)
+                {
+                    continue;
+                }
+
                 var value = activity.GetTagItem(source);
                 if (value != null)
                 {

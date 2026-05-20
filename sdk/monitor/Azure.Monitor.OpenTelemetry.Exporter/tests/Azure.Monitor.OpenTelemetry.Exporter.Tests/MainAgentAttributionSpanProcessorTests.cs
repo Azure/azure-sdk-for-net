@@ -110,6 +110,61 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void OnStart_ChildAlreadyHasMainAgentAttrs_DoesNotOverwrite()
+        {
+            var processor = new MainAgentAttributionSpanProcessor();
+
+            using var listener = CreateListener(processor);
+
+            using var parent = s_activitySource.StartActivity("parent");
+            Assert.NotNull(parent);
+            parent!.SetTag(MainAgentName, "ParentBot");
+            parent.SetTag(MainAgentId, "parent-001");
+
+            using var child = s_activitySource.StartActivity("child");
+            Assert.NotNull(child);
+
+            // Simulate child setting its own attrs before processor sees them.
+            // In practice, the listener fires OnStart which runs before this,
+            // so we validate that already-set attrs are preserved by the
+            // per-attribute guard.
+            child!.SetTag(MainAgentName, "ChildOverride");
+
+            // Re-invoke processor manually to test the guard
+            processor.OnStart(child);
+
+            // Child's own value must be preserved
+            Assert.Equal("ChildOverride", child.GetTagItem(MainAgentName));
+            // Id was not set on child, so parent's value propagates
+            Assert.Equal("parent-001", child.GetTagItem(MainAgentId));
+        }
+
+        [Fact]
+        public void OnEnd_InvokeAgentPartialMainAttrs_FillsMissingOnly()
+        {
+            var processor = new MainAgentAttributionSpanProcessor();
+
+            using var activity = new Activity("invoke");
+            activity.SetTag(GenAiOperationName, InvokeAgentOperationName);
+            activity.SetTag(GenAiAgentName, "SelfBot");
+            activity.SetTag(GenAiAgentId, "self-789");
+            activity.SetTag(GenAiAgentVersion, "3.0");
+            activity.SetTag(GenAiConversationId, "conv-self");
+
+            // Pre-set only the name from parent propagation
+            activity.SetTag(MainAgentName, "ParentBot");
+
+            processor.OnEnd(activity);
+
+            // Name should NOT be overwritten
+            Assert.Equal("ParentBot", activity.GetTagItem(MainAgentName));
+            // Missing attrs should be filled from gen_ai.agent.*
+            Assert.Equal("self-789", activity.GetTagItem(MainAgentId));
+            Assert.Equal("3.0", activity.GetTagItem(MainAgentVersion));
+            Assert.Equal("conv-self", activity.GetTagItem(MainAgentConversationId));
+        }
+
+        [Fact]
         public void OnEnd_InvokeAgentAlreadyHasMainAttrs_DoesNotOverwrite()
         {
             var processor = new MainAgentAttributionSpanProcessor();

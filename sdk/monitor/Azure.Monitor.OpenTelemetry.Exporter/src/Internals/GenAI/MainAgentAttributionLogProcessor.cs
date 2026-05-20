@@ -33,10 +33,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
             }
 
             // Quick check: skip if current span has no main agent attributes.
+            // Checking Name and Id suffices because any conforming GenAI
+            // span will always carry at least the agent name attribute.
             if (activity.GetTagItem(MainAgentName) == null &&
                 activity.GetTagItem(MainAgentId) == null)
             {
                 return;
+            }
+
+            // Build a set of keys already present on the log record to avoid
+            // adding duplicate attributes.
+            var existingAttributes = logRecord.Attributes;
+            HashSet<string>? existingKeys = null;
+            if (existingAttributes != null && existingAttributes.Count > 0)
+            {
+                existingKeys = new HashSet<string>(existingAttributes.Count);
+                foreach (var kvp in existingAttributes)
+                {
+                    existingKeys.Add(kvp.Key);
+                }
             }
 
             // Collect values into a stack-friendly fixed-size buffer to avoid
@@ -46,6 +61,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
 
             foreach (var attributeKey in s_mainAgentAttributes)
             {
+                // Skip if the log record already carries this attribute.
+                if (existingKeys != null && existingKeys.Contains(attributeKey))
+                {
+                    continue;
+                }
+
                 var value = activity.GetTagItem(attributeKey);
                 if (value != null)
                 {
@@ -58,7 +79,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
                 return;
             }
 
-            var existingAttributes = logRecord.Attributes;
             var merged = new List<KeyValuePair<string, object?>>(
                 (existingAttributes?.Count ?? 0) + count);
 
