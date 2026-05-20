@@ -10659,6 +10659,94 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("original-host.blob.core.windows.net", request.Uri.Host);
         }
 
+        [Test]
+        public async Task DownloadStreamingAsync_InStreamRetry_PreservesLayoutEndpointScope()
+        {
+            // Arrange - Force RetriableStream inside DownloadStreamingInternal to invoke
+            // its Factory(offset, ...) closure by returning a faulty content stream on the
+            // initial download, then a clean stream on the retry. The Factory closure is
+            // expected to re-establish the LayoutEndpointKey scope so DataLocalityPolicy
+            // rewrites the retry request to the layout endpoint as well.
+            const string layoutEndpoint = "https://layout-host.blob.core.windows.net:443";
+            Uri originalUri = new Uri("https://original-host.blob.core.windows.net/container/blob");
+
+            byte[] payload = new byte[16];
+            for (int i = 0; i < payload.Length; i++)
+            {
+                payload[i] = (byte)i;
+            }
+
+            // First response: faulty ContentStream that throws after a few bytes.
+            FaultyStream faulty = new FaultyStream(
+                new MemoryStream(payload),
+                raiseExceptionAt: 4,
+                maxExceptions: 1,
+                exceptionToRaise: new IOException("Simulated mid-stream failure."),
+                onFault: () => { });
+
+            MockResponse first = new MockResponse(206);
+            first.AddHeader("ETag", "\"etag-1\"");
+            first.AddHeader("Content-Length", payload.Length.ToString());
+            first.AddHeader("Content-Range", $"bytes 0-{payload.Length - 1}/{payload.Length}");
+            first.AddHeader("x-ms-blob-type", "BlockBlob");
+            first.ContentStream = faulty;
+
+            // Second response: clean stream returned by the Factory(offset, ...) retry.
+            // RetriableStream supplies the offset of the *next* unread byte; because the
+            // first stream threw before yielding any bytes, the retry offset is 0 and the
+            // mock simply returns the full payload again.
+            MockResponse second = new MockResponse(206);
+            second.AddHeader("ETag", "\"etag-1\"");
+            second.AddHeader("Content-Length", payload.Length.ToString());
+            second.AddHeader("Content-Range", $"bytes 0-{payload.Length - 1}/{payload.Length}");
+            second.AddHeader("x-ms-blob-type", "BlockBlob");
+            second.ContentStream = new MemoryStream(payload);
+
+            MockTransport transport = new MockTransport(first, second);
+
+            DataLocalityTrackingPolicy tracking = new DataLocalityTrackingPolicy();
+
+            // BlobClientOptions registers DataLocalityPolicy.Shared as PerCall in its ctor;
+            // adding `tracking` PerCall lets us observe the URI and Host header *after* the
+            // rewrite.
+            BlobClientOptions options = new BlobClientOptions { Transport = transport };
+            options.AddPolicy(tracking, HttpPipelinePosition.PerCall);
+
+            BlobBaseClient client = new BlobBaseClient(originalUri, options);
+
+            BlobDownloadOptions downloadOptions = new BlobDownloadOptions
+            {
+                LayoutEndpoint = layoutEndpoint,
+            };
+
+            // Act
+            Response<BlobDownloadStreamingResult> response =
+                await client.DownloadStreamingAsync(downloadOptions);
+
+            // Drain the stream - this is what triggers the in-stream retry through Factory(...).
+            using MemoryStream sink = new MemoryStream();
+            await response.Value.Content.CopyToAsync(sink);
+
+            // Assert - exactly one initial request + one retry request went over the wire.
+            Assert.AreEqual(2, transport.Requests.Count, "Expected initial + retry request.");
+            Assert.AreEqual(2, tracking.TrackedRequests.Count);
+
+            // Both requests must have been rewritten by DataLocalityPolicy.
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in tracking.TrackedRequests)
+            {
+                Assert.AreEqual("layout-host.blob.core.windows.net", req.RequestHost,
+                    "Every request (initial AND retry) must be routed to the layout endpoint.");
+                Assert.AreEqual(443, req.RequestPort);
+                Assert.IsTrue(req.HasHostHeader,
+                    "DataLocalityPolicy should preserve the original authority on the Host header.");
+                Assert.AreEqual(originalUri.Host, req.HostHeaderValue,
+                    "Host header should preserve the original authority for SharedKey signing.");
+            }
+
+            // And the full payload was reconstructed end-to-end via the retry.
+            CollectionAssert.AreEqual(payload, sink.ToArray());
+        }
+
         /// <summary>
         /// Pipeline policy that records the host/port and Host header of each
         /// outgoing request. Added as PerCall after DataLocalityPolicy to observe
