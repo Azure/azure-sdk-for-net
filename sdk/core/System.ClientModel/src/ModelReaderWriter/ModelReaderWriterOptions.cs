@@ -52,8 +52,9 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Registers a proxy for the specified type. Proxies are appended to a list per type.
-    /// For writes, the last proxy in the list is used.
-    /// For reads, proxies are consulted first-to-last; the first whose Create returns non-null wins.
+    /// Both reads and writes use FIFO order (first registered is consulted first).
+    /// For reads, the first proxy whose Create returns non-null wins.
+    /// For writes, the first proxy in the list is used.
     /// </summary>
     /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> implementation that will be used as the proxy. </param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
@@ -69,8 +70,9 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Registers a proxy for the specified type. Proxies are appended to a list per type.
-    /// For writes, the last proxy in the list is used.
-    /// For reads, proxies are consulted first-to-last; the first whose Create returns non-null wins.
+    /// Both reads and writes use FIFO order (first registered is consulted first).
+    /// For reads, the first proxy whose Create returns non-null wins.
+    /// For writes, the first proxy in the list is used.
     /// </summary>
     /// <param name="proxy"> The <see cref="IJsonModel{T}"/> implementation that will be used as the proxy. </param>
     public void AddProxy<T>(IJsonModel<T> proxy)
@@ -91,7 +93,7 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Resolves the write proxy for the specified model type.
-    /// Uses the last registered proxy in the list. If no proxy is registered, returns the model itself.
+    /// Uses FIFO order (first registered proxy wins). If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IPersistableModel{T}"/> model to proxy. </param>
     /// <returns> The <see cref="IPersistableModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
@@ -102,10 +104,10 @@ public class ModelReaderWriterOptions
             return model;
         }
 
-        // Last in list wins for write
-        for (int i = list.Count - 1; i >= 0; i--)
+        // FIFO: first in list wins for write
+        foreach (var entry in list)
         {
-            if (list[i] is IPersistableModel<T> typedProxy)
+            if (entry is IPersistableModel<T> typedProxy)
             {
                 ProxiedModel = model;
                 return typedProxy;
@@ -117,7 +119,7 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Resolves the write proxy for the specified model type, returning
-    /// the last registered proxy that implements <see cref="IJsonModel{T}"/>.
+    /// the first registered proxy that implements <see cref="IJsonModel{T}"/>.
     /// If no proxy is registered, returns the model itself.
     /// </summary>
     /// <param name="model"> The <see cref="IJsonModel{T}"/> model to proxy. </param>
@@ -129,10 +131,10 @@ public class ModelReaderWriterOptions
             return model;
         }
 
-        // Last in list wins for write
-        for (int i = list.Count - 1; i >= 0; i--)
+        // FIFO: first in list wins for write
+        foreach (var entry in list)
         {
-            if (list[i] is IJsonModel<T> jsonProxy)
+            if (entry is IJsonModel<T> jsonProxy)
             {
                 ProxiedModel = model;
                 return jsonProxy;
@@ -170,7 +172,8 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves reading from a <see cref="Utf8JsonReader"/> by consulting the proxy list first-to-last.
+    /// Resolves reading from a <see cref="Utf8JsonReader"/> by consulting the proxy list first-to-last (FIFO).
+    /// Each proxy receives a snapshot of the reader that it may freely advance.
     /// The first proxy whose Create returns non-null wins. Falls back to the model itself.
     /// </summary>
     internal T? ReadWithChain<T>(IJsonModel<T> model, ref Utf8JsonReader reader)
