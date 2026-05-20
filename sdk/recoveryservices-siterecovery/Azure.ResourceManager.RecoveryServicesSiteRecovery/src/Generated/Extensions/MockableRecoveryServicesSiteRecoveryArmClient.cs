@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableRecoveryServicesSiteRecoveryArmClient : ArmResource
     {
+        private ClientDiagnostics _replicationEligibilityResultsClientDiagnostics;
+        private ReplicationEligibilityResults _replicationEligibilityResultsRestClient;
+
         /// <summary> Initializes a new instance of MockableRecoveryServicesSiteRecoveryArmClient for mocking. </summary>
         protected MockableRecoveryServicesSiteRecoveryArmClient()
         {
@@ -25,6 +34,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         internal MockableRecoveryServicesSiteRecoveryArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ReplicationEligibilityResultsClientDiagnostics => _replicationEligibilityResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ReplicationEligibilityResults ReplicationEligibilityResultsRestClient => _replicationEligibilityResultsRestClient ??= new ReplicationEligibilityResults(ReplicationEligibilityResultsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         /// <summary> Gets an object representing a <see cref="MigrationRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -248,6 +261,102 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         {
             SiteRecoveryVaultSettingResource.ValidateResourceId(id);
             return new SiteRecoveryVaultSettingResource(Client, id);
+        }
+
+        /// <summary>
+        /// Validates whether a given VM can be protected or not in which case returns list of errors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReplicationEligibilityResultsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<ReplicationEligibilityResultListResult>> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = ReplicationEligibilityResultsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryArmClient.GetAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReplicationEligibilityResultsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReplicationEligibilityResultListResult> response = Response.FromValue(ReplicationEligibilityResultListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates whether a given VM can be protected or not in which case returns list of errors.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReplicationEligibilityResultsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<ReplicationEligibilityResultListResult> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = ReplicationEligibilityResultsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryArmClient.GetAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReplicationEligibilityResultsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReplicationEligibilityResultListResult> response = Response.FromValue(ReplicationEligibilityResultListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

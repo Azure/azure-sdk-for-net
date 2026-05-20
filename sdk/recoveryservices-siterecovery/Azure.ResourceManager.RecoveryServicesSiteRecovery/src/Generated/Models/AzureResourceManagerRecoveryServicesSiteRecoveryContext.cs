@@ -314,6 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(ReplicationClusterProviderSpecificSettings))]
     [ModelReaderWriterBuildable(typeof(ReplicationEligibilityResultData))]
     [ModelReaderWriterBuildable(typeof(ReplicationEligibilityResultErrorInfo))]
+    [ModelReaderWriterBuildable(typeof(ReplicationEligibilityResultListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicationEligibilityResultProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicationEligibilityResultResource))]
     [ModelReaderWriterBuildable(typeof(ReplicationGroupDetails))]

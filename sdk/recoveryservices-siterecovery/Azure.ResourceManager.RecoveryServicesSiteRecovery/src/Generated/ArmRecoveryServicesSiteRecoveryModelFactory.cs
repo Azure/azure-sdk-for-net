@@ -3513,6 +3513,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Replication eligibility results collection response model. </summary>
+        /// <param name="value"> The replication eligibility results details. </param>
+        /// <returns> A new <see cref="Models.ReplicationEligibilityResultListResult"/> instance for mocking. </returns>
+        public static ReplicationEligibilityResultListResult ReplicationEligibilityResultListResult(IEnumerable<ReplicationEligibilityResultData> value = default)
+        {
+            value ??= new ChangeTrackingList<ReplicationEligibilityResultData>();
+
+            return new ReplicationEligibilityResultListResult(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Implements the Event class. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
