@@ -58,8 +58,20 @@ steps:
         runProxy: false
 
     - pwsh: |
-        ./eng/scripts/Restore-RecordingsShared.ps1 `
-          -PackageInfoFolder "${{ parameters.PackageInfo }}" `
-          -ProjectNames "$(ProjectNames)" `
-          -RepoRoot "$(Build.SourcesDirectory)"
-      displayName: Restore Recordings (shared clone)
+        $packageProperties = Get-ChildItem -Recurse '${{ parameters.PackageInfo }}' -Filter *.json `
+          | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
+        $packageSet = "$(ProjectNames)" -split ","
+        $changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
+
+        foreach ($proj in $changedProjects) {
+          $assets = Join-Path (Join-Path "$(Build.SourcesDirectory)" $proj.DirectoryPath) "assets.json"
+          if (Test-Path $assets) {
+            Write-Host "Restoring $assets"
+            if ($IsWindows) {
+              & "$(Build.BinariesDirectory)/test-proxy/test-proxy.exe" restore -a $assets
+            } else {
+              & "$(Build.BinariesDirectory)/test-proxy/test-proxy" restore -a $assets
+            }
+          }
+        }
+      displayName: Restore Recordings
