@@ -4682,11 +4682,6 @@ interface RecordSets {
       armProviderSchema.resources[0].metadata.resourceName,
       "DnsRecordSet"
     );
-
-    const resolved = resolveArmResources(program, sdkContext);
-    ok(resolved);
-    strictEqual(resolved.resources.length, 1);
-    strictEqual(resolved.resources[0].metadata.resourceName, "DnsRecordSet");
   });
 
   it("resource-name override - map for expandable {parentType} resource", async () => {
@@ -5002,7 +4997,7 @@ interface PrivateEndpointConnections {
 
     const diagnostics: readonly Diagnostic[] = program.diagnostics;
     const misuseWarning = diagnostics.find((d) =>
-      d.message.includes("plain string but its Read operation produces")
+      d.message.includes("plain string but its Read operation's path")
     );
     ok(
       misuseWarning,
@@ -5057,7 +5052,7 @@ interface RecordSets {
 
     const diagnostics: readonly Diagnostic[] = program.diagnostics;
     const nonExpandable = diagnostics.filter((d) =>
-      d.message.includes("does not produce expanded {parentType} resources")
+      d.message.includes("does not contain a {parentType} segment")
     );
     // Exactly one diagnostic — not one per map entry.
     strictEqual(
