@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="name"> Represents the name of the network interface. </param>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeNetworkInterface(string macAddress, string id, string name, IReadOnlyList<HybridComputeIPAddress> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeNetworkInterface(string macAddress, ResourceIdentifier id, string name, IReadOnlyList<HybridComputeIPAddress> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MacAddress = macAddress;
             Id = id;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Represents the ID of the network interface. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Represents the name of the network interface. </summary>
         [WirePath("name")]

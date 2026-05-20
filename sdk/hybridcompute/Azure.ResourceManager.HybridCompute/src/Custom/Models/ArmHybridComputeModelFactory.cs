@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Creates a LicenseProfileMachineInstanceViewEsuProperties for mocking. </summary>
-        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, HybridComputeLicense assignedLicense = default, LicenseAssignmentState? licenseAssignmentState = default)
+        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, HybridComputeLicenseData assignedLicense = default, LicenseAssignmentState? licenseAssignmentState = default)
         {
             esuKeys ??= new ChangeTrackingList<EsuKey>();
 

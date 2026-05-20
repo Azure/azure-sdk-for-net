@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string path = default;
             string diskType = default;
             string generatedId = default;
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             long? maxSizeInBytes = default;
             long? usedSpaceInBytes = default;
@@ -178,7 +179,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

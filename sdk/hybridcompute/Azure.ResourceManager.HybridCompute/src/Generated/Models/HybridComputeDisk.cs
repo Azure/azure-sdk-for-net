@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="maxSizeInBytes"> The size of the disk, in bytes. </param>
         /// <param name="usedSpaceInBytes"> The amount of space used on the disk, in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeDisk(string path, string diskType, string generatedId, string id, string name, long? maxSizeInBytes, long? usedSpaceInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeDisk(string path, string diskType, string generatedId, ResourceIdentifier id, string name, long? maxSizeInBytes, long? usedSpaceInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             DiskType = diskType;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The ID of the disk. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The name of the disk. </summary>
         [WirePath("name")]

@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="maxSizeInBytes"> The size of the disk, in bytes. </param>
         /// <param name="usedSpaceInBytes"> The amount of space used on the disk, in bytes. </param>
         /// <returns> A new <see cref="Models.HybridComputeDisk"/> instance for mocking. </returns>
-        public static HybridComputeDisk HybridComputeDisk(string path = default, string diskType = default, string generatedId = default, string id = default, string name = default, long? maxSizeInBytes = default, long? usedSpaceInBytes = default)
+        public static HybridComputeDisk HybridComputeDisk(string path = default, string diskType = default, string generatedId = default, ResourceIdentifier id = default, string name = default, long? maxSizeInBytes = default, long? usedSpaceInBytes = default)
         {
             return new HybridComputeDisk(
                 path,
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Describes the firmware of the machine. </summary>
         /// <param name="serialNumber"> The serial number of the firmware. </param>
-        /// <param name="type"> The type of the firmware. </param>
+        /// <param name="firmwareProfileType"> The type of the firmware. </param>
         /// <returns> A new <see cref="Models.HybridComputeFirmwareProfile"/> instance for mocking. </returns>
-        public static HybridComputeFirmwareProfile HybridComputeFirmwareProfile(string serialNumber = default, string @type = default)
+        public static HybridComputeFirmwareProfile HybridComputeFirmwareProfile(string serialNumber = default, string firmwareProfileType = default)
         {
-            return new HybridComputeFirmwareProfile(serialNumber, @type, additionalBinaryDataProperties: null);
+            return new HybridComputeFirmwareProfile(serialNumber, firmwareProfileType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The info w.r.t Agent Upgrade. </summary>
@@ -408,6 +408,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus = default, ResponseError error = default)
         {
             return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for the Machine ESU profile. </summary>
+        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
+        /// <param name="esuKeys"> The list of ESU keys. </param>
+        /// <param name="serverType"> The type of the Esu servers. </param>
+        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
+        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
+        /// <param name="assignedLicense"> The assigned license resource. </param>
+        /// <param name="licenseAssignmentState"> Describes the license assignment state (Assigned or NotAssigned). </param>
+        /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceViewEsuProperties"/> instance for mocking. </returns>
+        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, HybridComputeLicense assignedLicense = default, LicenseAssignmentState? licenseAssignmentState = default)
+        {
+            esuKeys ??= new ChangeTrackingList<EsuKey>();
+
+            return new LicenseProfileMachineInstanceViewEsuProperties(
+                assignedLicenseImmutableId,
+                esuKeys.ToList(),
+                additionalBinaryDataProperties: null,
+                serverType,
+                esuEligibility,
+                esuKeyState,
+                assignedLicense,
+                licenseAssignmentState);
         }
 
         /// <summary> Describes the properties of a License Profile ARM model. </summary>
@@ -479,7 +503,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="name"> Represents the name of the network interface. </param>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.HybridComputeNetworkInterface"/> instance for mocking. </returns>
-        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = default, string id = default, string name = default, IEnumerable<HybridComputeIPAddress> ipAddresses = default)
+        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(string macAddress = default, ResourceIdentifier id = default, string name = default, IEnumerable<HybridComputeIPAddress> ipAddresses = default)
         {
             ipAddresses ??= new ChangeTrackingList<HybridComputeIPAddress>();
 

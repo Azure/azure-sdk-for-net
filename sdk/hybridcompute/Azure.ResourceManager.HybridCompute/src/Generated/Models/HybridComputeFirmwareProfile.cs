@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeFirmwareProfile"/>. </summary>
         /// <param name="serialNumber"> The serial number of the firmware. </param>
-        /// <param name="type"> The type of the firmware. </param>
+        /// <param name="firmwareProfileType"> The type of the firmware. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeFirmwareProfile(string serialNumber, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeFirmwareProfile(string serialNumber, string firmwareProfileType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SerialNumber = serialNumber;
-            Type = @type;
+            FirmwareProfileType = firmwareProfileType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The type of the firmware. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string FirmwareProfileType { get; }
     }
 }
