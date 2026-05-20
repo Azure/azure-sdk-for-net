@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         7,
                         new StatementConditionProperties()
                         {
-                            RoutePolicyConditionType = RoutePolicyConditionType.Or,
-                            IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
+                            Type = RoutePolicyConditionType.Or,
+                            IpPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
                         },
                         new StatementActionProperties(RoutePolicyActionType.Deny)
                         {

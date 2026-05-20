@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
-                    PeerAsn = 61234,
-                    IPv4ListenRangePrefixes =
+                    PeerASN = 61234,
+                    Ipv4ListenRangePrefixes =
                     {
                         "100.0.0.0/25"
                     },
-                    IPv4NeighborAddress =
+                    Ipv4NeighborAddress =
                     {
                         new NeighborAddress()
                         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         IntervalInMilliSeconds = 300,
                         Multiplier = 15,
                     },
-                    IPv4Routes =
+                    Ipv4Routes =
                     {
                         new StaticRouteProperties("100.0.0.0/24",new string[] { "20.0.0.1" })
                     },

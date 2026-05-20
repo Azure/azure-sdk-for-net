@@ -75,16 +75,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(PeerASN))
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerASN.Value);
-            }
-            if (Optional.IsDefined(VlanId))
-            {
-                writer.WritePropertyName("vlanId"u8);
-                writer.WriteNumberValue(VlanId.Value);
-            }
+            writer.WritePropertyName("peerASN"u8);
+            writer.WriteNumberValue(PeerASN);
+            writer.WritePropertyName("vlanId"u8);
+            writer.WriteNumberValue(VlanId);
             if (options.Format != "W" && Optional.IsDefined(FabricASN))
             {
                 writer.WritePropertyName("fabricASN"u8);
@@ -152,8 +146,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string secondaryIpv4Prefix = default;
             string secondaryIpv6Prefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            long? peerASN = default;
-            int? vlanId = default;
+            long peerASN = default;
+            int vlanId = default;
             long? fabricASN = default;
             IList<string> peLoopbackIpAddress = default;
             NniBmpProperties bmpConfiguration = default;
@@ -182,19 +176,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("peerASN"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     peerASN = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("vlanId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vlanId = prop.Value.GetInt32();
                     continue;
                 }

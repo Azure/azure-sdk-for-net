@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Access Control List Properties defines the resource properties. </summary>
     internal partial class AccessControlListProperties : IJsonModel<AccessControlListProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="AccessControlListProperties"/> for deserialization. </summary>
+        internal AccessControlListProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AccessControlListProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,11 +85,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(ConfigurationType))
-            {
-                writer.WritePropertyName("configurationType"u8);
-                writer.WriteStringValue(ConfigurationType.Value.ToString());
-            }
+            writer.WritePropertyName("configurationType"u8);
+            writer.WriteStringValue(ConfigurationType.ToString());
             if (Optional.IsDefined(AclsUri))
             {
                 writer.WritePropertyName("aclsUrl"u8);
@@ -223,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string annotation = default;
-            NetworkFabricConfigurationType? configurationType = default;
+            NetworkFabricConfigurationType configurationType = default;
             Uri aclsUri = default;
             CommunityActionType? defaultAction = default;
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
@@ -248,10 +250,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("configurationType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     configurationType = new NetworkFabricConfigurationType(prop.Value.GetString());
                     continue;
                 }

@@ -21,9 +21,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public NetworkFabricAccessControlListData(AzureLocation location) : base(location)
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        public NetworkFabricAccessControlListData(AzureLocation location, NetworkFabricConfigurationType configurationType) : base(location)
         {
 
+            Properties = new AccessControlListProperties(configurationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
@@ -58,23 +60,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     Properties = new AccessControlListProperties();
                 }
                 Properties.Annotation = value;
-            }
-        }
-
-        /// <summary> Input method to configure Access Control List. </summary>
-        public NetworkFabricConfigurationType? ConfigurationType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConfigurationType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccessControlListProperties();
-                }
-                Properties.ConfigurationType = value;
             }
         }
 

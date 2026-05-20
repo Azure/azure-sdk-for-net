@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     Location = new AzureLocation(TestEnvironment.Location),
                 },
                 IsWorkloadManagementNetworkEnabled = IsWorkloadManagementNetworkEnabled.True,
-                IPv4AddressSpace = "172.253.0.0/19",
-                IPv6AddressSpace = "::/60",
+                Ipv4AddressSpace = "172.253.0.0/19",
+                Ipv6AddressSpace = "::/60",
                 NfcSku = NetworkFabricControllerSKU.Standard,
             };
 

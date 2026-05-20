@@ -15,8 +15,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : Layer3IPPrefixProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
-        public NetworkToNetworkInterconnectOptionBLayer3Configuration()
+        /// <param name="peerASN"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        public NetworkToNetworkInterconnectOptionBLayer3Configuration(long peerASN, int vlanId)
         {
+            PeerASN = peerASN;
+            VlanId = vlanId;
             PeLoopbackIpAddress = new ChangeTrackingList<string>();
             PrefixLimits = new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>();
         }
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="peLoopbackIpAddress"> Provider Edge (PE) Loopback IP Address. </param>
         /// <param name="bmpConfiguration"> BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
-        internal NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? peerASN, int? vlanId, long? fabricASN, IList<string> peLoopbackIpAddress, NniBmpProperties bmpConfiguration, IList<OptionBLayer3PrefixLimitProperties> prefixLimits) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
+        internal NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, long peerASN, int vlanId, long? fabricASN, IList<string> peLoopbackIpAddress, NniBmpProperties bmpConfiguration, IList<OptionBLayer3PrefixLimitProperties> prefixLimits) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
         {
             PeerASN = peerASN;
             VlanId = vlanId;
@@ -44,10 +48,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> ASN of PE devices for CE/PE connectivity.Example : 28. </summary>
-        public long? PeerASN { get; set; }
+        public long PeerASN { get; set; }
 
         /// <summary> VLAN for CE/PE Layer 3 connectivity.Example : 501. </summary>
-        public int? VlanId { get; set; }
+        public int VlanId { get; set; }
 
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
         public long? FabricASN { get; }

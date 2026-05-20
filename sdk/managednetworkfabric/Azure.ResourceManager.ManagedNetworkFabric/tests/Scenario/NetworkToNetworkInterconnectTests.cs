@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -54,20 +54,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
                 {
-                    PeerAsn = 61234,
+                    PeerASN = 61234,
                     VlanId = 1234,
-                    PrimaryIPv4Prefix = "10.0.0.12/30",
-                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIPv4Prefix = "40.0.0.14/30",
-                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                    PrimaryIpv4Prefix = "10.0.0.12/30",
+                    PrimaryIpv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIpv4Prefix = "40.0.0.14/30",
+                    SecondaryIpv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                 },
                 ImportRoutePolicy = new ImportRoutePolicyInformation()
                 {
-                    ImportIPv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
+                    ImportIpv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
                 },
                 ExportRoutePolicy = new ExportRoutePolicyInformation()
                 {
-                    ExportIPv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
+                    ExportIpv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
                 }
             };
             ArmOperation<NetworkToNetworkInterconnectResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkToNetworkInterConnectName, data);

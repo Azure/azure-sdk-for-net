@@ -1,8 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -33,11 +32,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"PUT started.....");
             NetworkFabricNeighborGroupData data = new NetworkFabricNeighborGroupData(new AzureLocation("eastus"), new NeighborGroupDestination()
             {
-                IPv4Addresses =
+                Ipv4Addresses =
                     {
-                        IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("30.10.10.10"),IPAddress.Parse("40.10.10.10"),IPAddress.Parse("50.10.10.10"),IPAddress.Parse("60.10.10.10"),IPAddress.Parse("70.10.10.10"),IPAddress.Parse("80.10.10.10"),IPAddress.Parse("90.10.10.10")
+                        "10.10.10.10", "20.10.10.10", "30.10.10.10", "40.10.10.10", "50.10.10.10", "60.10.10.10", "70.10.10.10", "80.10.10.10", "90.10.10.10"
                     },
-                IPv6Addresses =
+                Ipv6Addresses =
                     {
                     "2F::/100"
                     },
@@ -58,13 +57,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkFabricNeighborGroupPatch patch = new NetworkFabricNeighborGroupPatch()
             {
                 Annotation = "Updating",
-                Destination = new NeighborGroupDestination()
+                Destination = new NeighborGroupDestinationPatch()
                 {
-                    IPv4Addresses =
+                    Ipv4Addresses =
                     {
-                        IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("30.10.10.10"),IPAddress.Parse("40.10.10.10"),IPAddress.Parse("50.10.10.10"),IPAddress.Parse("60.10.10.10"),IPAddress.Parse("70.10.10.10"),IPAddress.Parse("80.10.10.10"),IPAddress.Parse("90.10.10.10")
+                        "10.10.10.10", "20.10.10.10", "30.10.10.10", "40.10.10.10", "50.10.10.10", "60.10.10.10", "70.10.10.10", "80.10.10.10", "90.10.10.10"
                     },
-                    IPv6Addresses =
+                    Ipv6Addresses =
                         {
                             "2F::/100", "3F::/100"
                         },
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkFabricNeighborGroupResource> lroPatch = await networkFabricNeighborGroup.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricNeighborGroupResource resultPatch = lroPatch.Value;
             NetworkFabricNeighborGroupData resourcePatchData = resultPatch.Data;
-            Assert.AreEqual(resourcePatchData.Destination.IPv6Addresses.Count, 2);
+            Assert.AreEqual(resourcePatchData.Destination.Ipv6Addresses.Count, 2);
             TestContext.Out.WriteLine($"PATCH - test completed.");
 
             NetworkFabricNeighborGroupResource ntpResource = Client.GetNetworkFabricNeighborGroupResource(neighborGroupResourceId);
