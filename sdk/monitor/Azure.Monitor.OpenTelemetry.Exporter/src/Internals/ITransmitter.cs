@@ -20,6 +20,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Immediately transmits any telemetry accumulated in offline storage.
+        /// </summary>
+        void FlushOfflineStorage();
+
         string InstrumentationKey { get; }
     }
 }

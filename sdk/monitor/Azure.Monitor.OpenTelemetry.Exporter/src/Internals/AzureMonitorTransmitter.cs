@@ -32,6 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private readonly bool _isAadEnabled;
+        private readonly bool _disableNetworkTransmission;
         private bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
@@ -41,9 +42,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 throw new ArgumentNullException(nameof(options));
             }
 
+            if (options.DisableNetworkTransmission && options.DisableOfflineStorage)
+            {
+                throw new InvalidOperationException("DisableNetworkTransmission and DisableOfflineStorage cannot both be true. Telemetry would have no destination.");
+            }
+
             options.Retry.MaxRetries = 0;
 
             _connectionVars = InitializeConnectionVars(options, platform);
+            _disableNetworkTransmission = options.DisableNetworkTransmission;
 
             _transmissionStateManager = new TransmissionStateManager();
 
@@ -53,7 +60,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled);
+                var interval = _disableNetworkTransmission
+                    ? System.Threading.Timeout.InfiniteTimeSpan
+                    : options.StorageTransmitInterval;
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled, interval);
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
@@ -159,6 +169,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
+        /// <inheritdoc/>
+        public void FlushOfflineStorage()
+        {
+            _transmitFromStorageHandler?.DrainAll();
+        }
+
         public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
@@ -169,6 +185,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             try
             {
+                // In offline-only mode, bypass network entirely and persist to disk.
+                if (_disableNetworkTransmission)
+                {
+                    if (_fileBlobProvider != null)
+                    {
+                        byte[] requestContent = HttpPipelineHelper.GetSerializedContent(telemetryItems);
+                        result = _fileBlobProvider.SaveTelemetry(requestContent);
+                    }
+
+                    return result;
+                }
+
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
                     using var httpMessage = async ?
