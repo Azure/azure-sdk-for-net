@@ -52,13 +52,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
 
             foreach (var (target, primary, fallback) in s_attributeMappings)
             {
-                // Don't overwrite attributes already set on the child span
-                // (e.g., a nested agent that set its own main_agent context).
-                if (activity.GetTagItem(target) != null)
-                {
-                    continue;
-                }
-
                 var value = parent.GetTagItem(primary);
                 if (value != null)
                 {

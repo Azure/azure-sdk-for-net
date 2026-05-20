@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void OnStart_ChildAlreadyHasMainAgentAttrs_DoesNotOverwrite()
+        public void OnStart_ChildAlreadyHasMainAgentAttrs_ParentOverwrites()
         {
             var processor = new MainAgentAttributionSpanProcessor();
 
@@ -124,18 +124,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var child = s_activitySource.StartActivity("child");
             Assert.NotNull(child);
 
-            // Simulate child setting its own attrs before processor sees them.
-            // In practice, the listener fires OnStart which runs before this,
-            // so we validate that already-set attrs are preserved by the
-            // per-attribute guard.
-            child!.SetTag(MainAgentName, "ChildOverride");
-
-            // Re-invoke processor manually to test the guard
-            processor.OnStart(child);
-
-            // Child's own value must be preserved
-            Assert.Equal("ChildOverride", child.GetTagItem(MainAgentName));
-            // Id was not set on child, so parent's value propagates
+            // OnStart already ran via the listener, overwriting with parent values.
+            // Per spec, OnStart always copies from parent without checking child.
+            Assert.Equal("ParentBot", child!.GetTagItem(MainAgentName));
             Assert.Equal("parent-001", child.GetTagItem(MainAgentId));
         }
 
