@@ -29,6 +29,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             get => Connections?.Length > 0 ? Connections[0] : null;
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
                 if (Connections == null || Connections.Length == 0)
                 {
                     Connections = new[] { value };
