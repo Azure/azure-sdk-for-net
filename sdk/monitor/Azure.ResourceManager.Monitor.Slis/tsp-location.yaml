@@ -1,4 +1,4 @@
 directory: specification/monitoringservice/resource-manager/Microsoft.Monitor/Slis
-commit: cbafdff192ed6ae5bad220cf0288180b33529c6f
+commit: 855b8f7710ba328666d691251a664492f5682ef3
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
