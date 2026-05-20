@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     [CodeGenSuppress("DeserializeEsuKey", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class EsuKey
     {
-        internal EsuKey(string sku, string licenseStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EsuKey(string sku, int? licenseStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             LicenseStatus = licenseStatus;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The current status of the license profile key. </summary>
         [WirePath("licenseStatus")]
-        public string LicenseStatus { get; }
+        public int? LicenseStatus { get; }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -47,14 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LicenseStatus))
             {
                 writer.WritePropertyName("licenseStatus"u8);
-                if (int.TryParse(LicenseStatus, NumberStyles.Integer, CultureInfo.InvariantCulture, out int licenseStatus))
-                {
-                    writer.WriteNumberValue(licenseStatus);
-                }
-                else
-                {
-                    writer.WriteStringValue(LicenseStatus);
-                }
+                writer.WriteNumberValue(LicenseStatus.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -80,7 +73,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string sku = default;
-            string licenseStatus = default;
+            int? licenseStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -95,7 +88,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    licenseStatus = prop.Value.ValueKind == JsonValueKind.String ? prop.Value.GetString() : prop.Value.GetRawText();
+                    if (prop.Value.ValueKind == JsonValueKind.Number && prop.Value.TryGetInt32(out int numericLicenseStatus))
+                    {
+                        licenseStatus = numericLicenseStatus;
+                    }
+                    else if (prop.Value.ValueKind == JsonValueKind.String && int.TryParse(prop.Value.GetString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out int stringLicenseStatus))
+                    {
+                        licenseStatus = stringLicenseStatus;
+                    }
+                    else if (options.Format != "W")
+                    {
+                        additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    }
                     continue;
                 }
                 if (options.Format != "W")

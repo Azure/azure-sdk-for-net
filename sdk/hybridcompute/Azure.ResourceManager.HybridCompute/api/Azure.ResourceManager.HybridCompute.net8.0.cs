@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.ArcSettings ArcSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), Azure.Core.ResourceIdentifier gatewayResourceId = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.ArcSettingsData ArcSettingsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string tenantId = null, Azure.Core.ResourceIdentifier gatewayResourceId = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification AvailablePatchCountByClassification(int? security = default(int?), int? critical = default(int?), int? definition = default(int?), int? updateRollup = default(int?), int? featurePack = default(int?), int? servicePack = default(int?), int? tools = default(int?), int? updates = default(int?), int? other = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HybridCompute.Models.EsuKey EsuKey(string sku = null, string licenseStatus = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.EsuKey EsuKey(string sku = null, int? licenseStatus = default(int?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.ExtensionPublisher ExtensionPublisher(string id = null, string name = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus ExtensionsResourceStatus(string code = null, Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType? level = default(Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType?), string displayStatus = null, string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.ExtensionType ExtensionType(string id = null, string name = null) { throw null; }
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public partial class EsuKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.EsuKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.EsuKey>
     {
         internal EsuKey() { }
-        public string LicenseStatus { get { throw null; } }
+        public int? LicenseStatus { get { throw null; } }
         public string Sku { get { throw null; } }
         protected virtual Azure.ResourceManager.HybridCompute.Models.EsuKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

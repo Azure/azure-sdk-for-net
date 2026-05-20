@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             => new HybridComputePrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, additionalBinaryDataProperties: null), connectionState, provisioningState, groupIds is null ? new List<string>() : new List<string>(groupIds), additionalBinaryDataProperties: null);
 
         /// <summary> Creates an EsuKey for mocking. </summary>
-        public static EsuKey EsuKey(string sku = default, string licenseStatus = default)
+        public static EsuKey EsuKey(string sku = default, int? licenseStatus = default)
             => new EsuKey(sku, licenseStatus, additionalBinaryDataProperties: null);
 
         /// <summary> Creates a HybridComputeLicense for mocking. </summary>
