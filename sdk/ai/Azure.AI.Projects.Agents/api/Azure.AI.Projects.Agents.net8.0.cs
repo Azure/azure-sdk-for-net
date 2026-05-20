@@ -203,6 +203,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.AgentEndpointProtocol A2a { get { throw null; } }
         public static Azure.AI.Projects.Agents.AgentEndpointProtocol Activity { get { throw null; } }
         public static Azure.AI.Projects.Agents.AgentEndpointProtocol Invocations { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentEndpointProtocol Mcp { get { throw null; } }
         public static Azure.AI.Projects.Agents.AgentEndpointProtocol Responses { get { throw null; } }
         public bool Equals(Azure.AI.Projects.Agents.AgentEndpointProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -909,14 +910,16 @@ namespace Azure.AI.Projects.Agents
     }
     public enum FoundryFeaturesOptInKeys
     {
-        SkillsV1Preview = 0,
-        EvaluationsV1Preview = 1,
-        SchedulesV1Preview = 2,
-        RedTeamsV1Preview = 3,
-        InsightsV1Preview = 4,
-        MemoryStoresV1Preview = 5,
-        ToolboxesV1Preview = 6,
+        EvaluationsV1Preview = 0,
+        SchedulesV1Preview = 1,
+        RedTeamsV1Preview = 2,
+        InsightsV1Preview = 3,
+        MemoryStoresV1Preview = 4,
+        ToolboxesV1Preview = 5,
+        SkillsV1Preview = 6,
         DataGenerationJobsV1Preview = 7,
+        ModelsV1Preview = 8,
+        AgentsOptimizationV1Preview = 9,
     }
     public partial class HeaderTelemetryEndpointAuth : Azure.AI.Projects.Agents.TelemetryEndpointAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>
     {
@@ -1300,6 +1303,7 @@ namespace Azure.AI.Projects.Agents
         public ProjectsAgentProtocol(string value) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol ActivityProtocol { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Invocations { get { throw null; } }
+        public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Mcp { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Responses { get { throw null; } }
         public bool Equals(Azure.AI.Projects.Agents.ProjectsAgentProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
