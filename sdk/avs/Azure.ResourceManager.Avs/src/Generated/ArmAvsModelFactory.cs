@@ -817,19 +817,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
         /// <param name="clusterId"> The identity. </param>
         /// <param name="hosts"> The hosts. </param>
-        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
         /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
-        public static AvsManagementCluster AvsManagementCluster(int? clusterSize = default, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default, string vsanDatastoreName = default)
+        public static AvsManagementCluster AvsManagementCluster(int? clusterSize = default, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default)
         {
             hosts ??= new ChangeTrackingList<string>();
 
-            return new AvsManagementCluster(
-                clusterSize,
-                provisioningState,
-                clusterId,
-                hosts.ToList(),
-                additionalBinaryDataProperties: null,
-                vsanDatastoreName);
+            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The common properties of a cluster. </summary>
@@ -1586,6 +1579,21 @@ namespace Azure.ResourceManager.Avs.Models
                 provisioningState is null && displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(provisioningState, displayName, vmType, null));
         }
 
+        /// <summary> The properties of a management cluster. </summary>
+        /// <param name="clusterSize"> The cluster size. </param>
+        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
+        /// <param name="clusterId"> The identity. </param>
+        /// <param name="hosts"> The hosts. </param>
+        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
+        /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsManagementCluster AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts, string vsanDatastoreName)
+        {
+            hosts ??= new ChangeTrackingList<string>();
+
+            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1767,18 +1775,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager)
         {
             return AvsPrivateCloudEndpoints(nsxtManager: nsxtManager, vcsa: vcsa, hcxCloudManager: hcxCloudManager, nsxtManagerIP: default, vcenterIP: default, hcxCloudManagerIP: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AvsManagementCluster"/>. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsManagementCluster AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts)
-        {
-            return AvsManagementCluster(clusterSize: clusterSize, provisioningState: provisioningState, clusterId: clusterId, hosts: hosts, vsanDatastoreName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.HcxEnterpriseSiteData"/>. </summary>

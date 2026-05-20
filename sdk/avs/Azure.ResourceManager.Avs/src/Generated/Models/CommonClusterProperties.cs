@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The cluster size. </summary>
-        public virtual int? ClusterSize { get; set; }
+        public int? ClusterSize { get; set; }
 
         /// <summary> The state of the cluster provisioning. </summary>
-        public virtual AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
 
         /// <summary> The identity. </summary>
-        public virtual int? ClusterId { get; }
+        public int? ClusterId { get; }
 
         /// <summary> The hosts. </summary>
-        public virtual IList<string> Hosts { get; }
+        public IList<string> Hosts { get; }
     }
 }
