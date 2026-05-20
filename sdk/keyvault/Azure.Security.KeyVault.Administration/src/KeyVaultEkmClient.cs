@@ -15,16 +15,6 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault External Key Manager (EKM) service.
     /// </summary>
     [CodeGenType("KeyVaultEkmRestClient")]
-    [CodeGenSuppress(nameof(GetEkmConnection), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(GetEkmConnectionAsync), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(GetEkmCertificate), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(GetEkmCertificateAsync), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(CheckEkmConnection), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(CheckEkmConnectionAsync), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(CreateEkmConnection), typeof(KeyVaultEkmConnection), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(CreateEkmConnectionAsync), typeof(KeyVaultEkmConnection), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(DeleteEkmConnection), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(DeleteEkmConnectionAsync), typeof(CancellationToken))]
     public partial class KeyVaultEkmClient
     {
         /// <summary>
