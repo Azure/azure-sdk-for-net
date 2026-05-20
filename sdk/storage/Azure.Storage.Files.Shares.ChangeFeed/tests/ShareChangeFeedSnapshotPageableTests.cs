@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Storage.Blobs;
 using Azure.Storage.Files.Shares;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
@@ -184,45 +186,119 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Verifies that passing a continuation token to snapshot pageables throws ArgumentException.
+        /// Verifies that a <see cref="ShareChangeFeedSnapshotCursor"/> round-trips through
+        /// <see cref="SnapshotCursorSerializer"/> with every field preserved. This pins the
+        /// wire contract callers depend on when persisting a continuation token across runs.
         /// </summary>
         [Test]
-        public void ContinuationToken_Throws()
+        public void ContinuationToken_RoundTrips()
         {
-            ShareChangeFeedSnapshotPageable pageable = new ShareChangeFeedSnapshotPageable(
-                client: null,
-                maxTransferSize: null,
+            ShareChangeFeedSnapshotCursor original = new ShareChangeFeedSnapshotCursor(
+                urlHost: "account.blob.core.windows.net",
                 beginSnapshot: "2024-01-15T08:00:00.000Z",
-                endSnapshot: "2024-01-15T12:00:00.000Z");
+                endSnapshot: "2024-01-15T12:00:00.000Z",
+                beginCvId: 50,
+                endCvId: 200,
+                innerContinuation: @"{""CursorVersion"":1,""UrlHost"":""account.blob.core.windows.net""}");
 
-            Assert.Throws<ArgumentException>(() =>
-            {
-                foreach (Page<ShareChangeFeedEvent> page in pageable.AsPages(continuationToken: "some-token"))
-                {
-                    // Should not reach here
-                }
-            });
+            string serialized = SnapshotCursorSerializer.Serialize(original);
+            ShareChangeFeedSnapshotCursor roundTripped = SnapshotCursorSerializer.Deserialize(serialized);
+
+            Assert.AreEqual(original.CursorVersion, roundTripped.CursorVersion);
+            Assert.AreEqual(original.UrlHost, roundTripped.UrlHost);
+            Assert.AreEqual(original.BeginSnapshot, roundTripped.BeginSnapshot);
+            Assert.AreEqual(original.EndSnapshot, roundTripped.EndSnapshot);
+            Assert.AreEqual(original.BeginCvId, roundTripped.BeginCvId);
+            Assert.AreEqual(original.EndCvId, roundTripped.EndCvId);
+            Assert.AreEqual(original.InnerContinuation, roundTripped.InnerContinuation);
         }
 
         /// <summary>
-        /// Verifies that passing a continuation token to the async snapshot pageable throws ArgumentException.
+        /// Garbage tokens are rejected with <see cref="ArgumentException"/> at the boundary
+        /// rather than crashing the underlying <c>JsonSerializer</c>.
         /// </summary>
         [Test]
-        public void AsyncContinuationToken_Throws()
+        public void ContinuationToken_MalformedJson_Throws()
         {
-            ShareChangeFeedSnapshotAsyncPageable pageable = new ShareChangeFeedSnapshotAsyncPageable(
-                client: null,
-                maxTransferSize: null,
-                beginSnapshot: "2024-01-15T08:00:00.000Z",
-                endSnapshot: "2024-01-15T12:00:00.000Z");
+            Assert.Throws<ArgumentException>(
+                () => SnapshotCursorSerializer.Deserialize("{not json"));
+        }
 
-            Assert.ThrowsAsync<ArgumentException>(async () =>
-            {
-                await foreach (Page<ShareChangeFeedEvent> page in pageable.AsPages(continuationToken: "some-token"))
-                {
-                    // Should not reach here
-                }
-            });
+        /// <summary>
+        /// Cursors missing required snapshot context (e.g. an empty envelope) are rejected.
+        /// </summary>
+        [Test]
+        public void ContinuationToken_MissingFields_Throws()
+        {
+            // Valid JSON but no snapshot context.
+            Assert.Throws<ArgumentException>(
+                () => SnapshotCursorSerializer.Deserialize("{}"));
+        }
+
+        /// <summary>
+        /// Resuming a snapshot query against a different storage account is rejected by
+        /// <see cref="SnapshotCursorSerializer.Validate"/>. Pins parity with the host check
+        /// in the underlying change-feed cursor.
+        /// </summary>
+        [Test]
+        public void ContinuationToken_UrlHostMismatch_Throws()
+        {
+            ShareChangeFeedSnapshotCursor cursor = new ShareChangeFeedSnapshotCursor(
+                urlHost: "first.blob.core.windows.net",
+                beginSnapshot: "2024-01-15T08:00:00.000Z",
+                endSnapshot: "2024-01-15T12:00:00.000Z",
+                beginCvId: 50,
+                endCvId: 200,
+                innerContinuation: "{}");
+
+            Mock<BlobContainerClient> container = new Mock<BlobContainerClient>();
+            container.Setup(c => c.Uri).Returns(new Uri("https://second.blob.core.windows.net/$changefeed"));
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => SnapshotCursorSerializer.Validate(container.Object, cursor));
+            StringAssert.Contains("URL Host", ex.Message);
+        }
+
+        /// <summary>
+        /// Cursors with an unrecognized <c>CursorVersion</c> are rejected so future schema
+        /// changes can fail fast instead of silently misinterpreting fields.
+        /// </summary>
+        [Test]
+        public void ContinuationToken_UnsupportedVersion_Throws()
+        {
+            ShareChangeFeedSnapshotCursor cursor = new ShareChangeFeedSnapshotCursor(
+                urlHost: "account.blob.core.windows.net",
+                beginSnapshot: "2024-01-15T08:00:00.000Z",
+                endSnapshot: "2024-01-15T12:00:00.000Z",
+                beginCvId: 50,
+                endCvId: 200,
+                innerContinuation: "{}");
+            cursor.CursorVersion = 99;
+
+            Mock<BlobContainerClient> container = new Mock<BlobContainerClient>();
+            container.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/$changefeed"));
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => SnapshotCursorSerializer.Validate(container.Object, cursor));
+            StringAssert.Contains("version", ex.Message);
+        }
+
+        /// <summary>
+        /// The construction-time continuation-only ctor rejects a null/empty token so callers
+        /// see the problem at the <c>GetChangesBetweenSnapshots(string)</c> call site rather
+        /// than deep inside enumeration.
+        /// </summary>
+        [Test]
+        public void ContinuationOnlyCtor_NullToken_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotPageable(client: null, maxTransferSize: null, continuation: null));
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(client: null, maxTransferSize: null, continuation: null));
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotPageable(client: null, maxTransferSize: null, continuation: ""));
+            Assert.Throws<ArgumentNullException>(
+                () => new ShareChangeFeedSnapshotAsyncPageable(client: null, maxTransferSize: null, continuation: ""));
         }
 
         // Input-string validation runs synchronously in the pageable constructor, so these tests

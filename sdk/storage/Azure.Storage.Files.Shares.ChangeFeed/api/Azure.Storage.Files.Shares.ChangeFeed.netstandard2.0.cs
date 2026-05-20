@@ -13,7 +13,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesAsync() { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesAsync(System.DateTimeOffset? start, System.DateTimeOffset? end) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesAsync(string continuationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesBetweenSnapshots(string continuationToken) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesBetweenSnapshots(string beginSnapshot, string endSnapshot) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesBetweenSnapshotsAsync(string continuationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesBetweenSnapshotsAsync(string beginSnapshot, string endSnapshot) { throw null; }
         public virtual System.DateTimeOffset? GetLastConsumable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.DateTimeOffset?> GetLastConsumableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
