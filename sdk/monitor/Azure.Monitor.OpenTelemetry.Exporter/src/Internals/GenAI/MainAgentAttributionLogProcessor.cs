@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
             HashSet<string>? existingKeys = null;
             if (existingAttributes != null && existingAttributes.Count > 0)
             {
-                existingKeys = new HashSet<string>(existingAttributes.Count);
+                existingKeys = new HashSet<string>();
                 foreach (var kvp in existingAttributes)
                 {
                     existingKeys.Add(kvp.Key);
