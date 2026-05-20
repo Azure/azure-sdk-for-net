@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the token store. </summary>
     public partial class ContainerAppTokenStore
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppTokenStore"/>. </summary>
         public ContainerAppTokenStore()
@@ -53,42 +25,110 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppTokenStore"/>. </summary>
         /// <param name="isEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  The default is &lt;code&gt;false&lt;/code&gt;.
+        /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </param>
         /// <param name="tokenRefreshExtensionHours">
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
         /// </param>
         /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, BlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, BlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             AzureBlobStorage = azureBlobStorage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///  The default is &lt;code&gt;false&lt;/code&gt;.
+        /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
         /// <summary>
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
         /// </summary>
         [WirePath("tokenRefreshExtensionHours")]
         public double? TokenRefreshExtensionHours { get; set; }
+
         /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
+        [WirePath("azureBlobStorage")]
         internal BlobStorageTokenStore AzureBlobStorage { get; set; }
-        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
+
+        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
         [WirePath("azureBlobStorage.sasUrlSettingName")]
         public string AzureBlobStorageSasUrlSettingName
         {
-            get => AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
-            set => AzureBlobStorage = new BlobStorageTokenStore(value);
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.AzureBlobStorageSasUrlSettingName;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.AzureBlobStorageSasUrlSettingName = value;
+            }
+        }
+
+        /// <summary> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </summary>
+        [WirePath("azureBlobStorage.blobContainerUri")]
+        public string BlobContainerUri
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.BlobContainerUri;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.BlobContainerUri = value;
+            }
+        }
+
+        /// <summary> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </summary>
+        [WirePath("azureBlobStorage.clientId")]
+        public string ClientId
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.ClientId;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.ClientId = value;
+            }
+        }
+
+        /// <summary> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </summary>
+        [WirePath("azureBlobStorage.managedIdentityResourceId")]
+        public string ManagedIdentityResourceId
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.ManagedIdentityResourceId;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.ManagedIdentityResourceId = value;
+            }
         }
     }
 }
