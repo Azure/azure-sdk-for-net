@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Dns.Models
         {
             DnsRecordType.A => "A",
             DnsRecordType.Aaaa => "AAAA",
-            DnsRecordType.Caa => "CAA",
+            DnsRecordType.CAA => "CAA",
             DnsRecordType.Cname => "CNAME",
             DnsRecordType.MX => "MX",
             DnsRecordType.NS => "NS",
-            DnsRecordType.Ptr => "PTR",
-            DnsRecordType.Soa => "SOA",
-            DnsRecordType.Srv => "SRV",
-            DnsRecordType.Txt => "TXT",
+            DnsRecordType.PTR => "PTR",
+            DnsRecordType.SOA => "SOA",
+            DnsRecordType.SRV => "SRV",
+            DnsRecordType.TXT => "TXT",
             DnsRecordType.Tlsa => "TLSA",
             DnsRecordType.DS => "DS",
             DnsRecordType.Naptr => "NAPTR",
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Dns.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "A")) return DnsRecordType.A;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAAA")) return DnsRecordType.Aaaa;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CAA")) return DnsRecordType.Caa;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CAA")) return DnsRecordType.CAA;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CNAME")) return DnsRecordType.Cname;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "MX")) return DnsRecordType.MX;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "NS")) return DnsRecordType.NS;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PTR")) return DnsRecordType.Ptr;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SOA")) return DnsRecordType.Soa;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SRV")) return DnsRecordType.Srv;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TXT")) return DnsRecordType.Txt;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PTR")) return DnsRecordType.PTR;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SOA")) return DnsRecordType.SOA;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SRV")) return DnsRecordType.SRV;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TXT")) return DnsRecordType.TXT;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLSA")) return DnsRecordType.Tlsa;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "DS")) return DnsRecordType.DS;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "NAPTR")) return DnsRecordType.Naptr;
