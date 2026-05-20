@@ -83,15 +83,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
                 return;
             }
 
+            // Per spec: if the span already has ANY microsoft.gen_ai.main_agent.*
+            // attribute, return without modifying. This is all-or-nothing by design.
+            if (activity.GetTagItem(MainAgentName) != null ||
+                activity.GetTagItem(MainAgentId) != null ||
+                activity.GetTagItem(MainAgentVersion) != null ||
+                activity.GetTagItem(MainAgentConversationId) != null)
+            {
+                return;
+            }
+
             foreach (var (target, source) in s_selfCopyMappings)
             {
-                // Only copy if this specific attribute is not already set,
-                // allowing partial attribution from parent propagation.
-                if (activity.GetTagItem(target) != null)
-                {
-                    continue;
-                }
-
                 var value = activity.GetTagItem(source);
                 if (value != null)
                 {

@@ -140,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void OnEnd_InvokeAgentPartialMainAttrs_FillsMissingOnly()
+        public void OnEnd_InvokeAgentPartialMainAttrs_ReturnsWithoutModifying()
         {
             var processor = new MainAgentAttributionSpanProcessor();
 
@@ -156,12 +156,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             processor.OnEnd(activity);
 
-            // Name should NOT be overwritten
+            // Per spec: if ANY main_agent attr is present, return without modifying.
+            // Name stays as-is, and missing attrs are NOT filled.
             Assert.Equal("ParentBot", activity.GetTagItem(MainAgentName));
-            // Missing attrs should be filled from gen_ai.agent.*
-            Assert.Equal("self-789", activity.GetTagItem(MainAgentId));
-            Assert.Equal("3.0", activity.GetTagItem(MainAgentVersion));
-            Assert.Equal("conv-self", activity.GetTagItem(MainAgentConversationId));
+            Assert.Null(activity.GetTagItem(MainAgentId));
+            Assert.Null(activity.GetTagItem(MainAgentVersion));
+            Assert.Null(activity.GetTagItem(MainAgentConversationId));
         }
 
         [Fact]
