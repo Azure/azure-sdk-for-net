@@ -464,7 +464,10 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
                 .Build();
             var directSettings = config.GetAzureClientSettings<SimpleTestSettings>("DirectClient");
 
-            // Create a credential via the DI path with the same credential values
+            // Create a credential via the DI path with the same credential values.
+            // AddAzureClient registers the static AzureCredentialResolver.Instance, so the
+            // DI and direct paths key into the same SCM CredentialCache bucket and share
+            // a single credential instance whenever the credential sections are content-equal.
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
             {
@@ -472,7 +475,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
                 ["DIClient:Credential:CredentialSource"] = "AzureCli",
                 ["DIClient:Credential:TenantId"] = "cross-path-tenant",
             });
-            builder.AddClient<SimpleTestClient, SimpleTestSettings>("DIClient").WithAzureCredential();
+            builder.AddAzureClient<SimpleTestClient, SimpleTestSettings>("DIClient");
 
             IHost host = builder.Build();
             var diClient = host.Services.GetRequiredService<SimpleTestClient>();
@@ -502,7 +505,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
                 ["DIClient:Credential:CredentialSource"] = "AzureCli",
                 ["DIClient:Credential:TenantId"] = "di-tenant",
             });
-            builder.AddClient<SimpleTestClient, SimpleTestSettings>("DIClient").WithAzureCredential();
+            builder.AddAzureClient<SimpleTestClient, SimpleTestSettings>("DIClient");
 
             IHost host = builder.Build();
             var diClient = host.Services.GetRequiredService<SimpleTestClient>();
