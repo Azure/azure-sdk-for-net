@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The network tap destination properties. </summary>
+    /// <summary> Network Tap destination properties. </summary>
     public partial class NetworkTapDestinationProperties
     {
         /// <summary>

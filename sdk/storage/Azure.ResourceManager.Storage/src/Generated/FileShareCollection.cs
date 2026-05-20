@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileServicesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FileShareData, FileShareResource>(new FileServicesListAsyncCollectionResultOfT(
                 _fileServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FileShareData, FileShareResource>(new FileServicesGetAllCollectionResultOfT(
+            return new PageableWrapper<FileShareData, FileShareResource>(new FileServicesListCollectionResultOfT(
                 _fileServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
