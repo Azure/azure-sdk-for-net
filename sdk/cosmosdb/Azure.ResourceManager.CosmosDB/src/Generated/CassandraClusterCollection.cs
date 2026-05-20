@@ -6,19 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A class representing a collection of <see cref="CassandraClusterResource"/> and their operations.
-    /// Each <see cref="CassandraClusterResource"/> in the collection will belong to the same instance of <see cref="CassandraClusterResource"/>.
-    /// To get a <see cref="CassandraClusterCollection"/> instance call the GetCassandraClusters method from an instance of <see cref="CassandraClusterResource"/>.
+    /// Each <see cref="CassandraClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CassandraClusterCollection"/> instance call the GetCassandraClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class CassandraClusterCollection : ArmCollection
+    public partial class CassandraClusterCollection : ArmCollection, IEnumerable<CassandraClusterResource>, IAsyncEnumerable<CassandraClusterResource>
     {
         private readonly ClientDiagnostics _cassandraClustersClientDiagnostics;
         private readonly CassandraClusters _cassandraClustersRestClient;
@@ -36,16 +38,16 @@ namespace Azure.ResourceManager.CosmosDB
             TryGetApiVersion(CassandraClusterResource.ResourceType, out string cassandraClusterApiVersion);
             _cassandraClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraClusterResource.ResourceType.Namespace, Diagnostics);
             _cassandraClustersRestClient = new CassandraClusters(_cassandraClustersClientDiagnostics, Pipeline, Endpoint, cassandraClusterApiVersion ?? "2025-11-01-preview");
-            CassandraClusterCollection.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CassandraClusterResource.ResourceType)
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CassandraClusterResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
     }

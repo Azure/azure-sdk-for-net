@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
         CosmosDBBackupInformation IOperationSource<CosmosDBBackupInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CosmosDBBackupInformation result = CosmosDBBackupInformation.DeserializeCosmosDBBackupInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return CosmosDBBackupInformation.DeserializeCosmosDBBackupInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         async ValueTask<CosmosDBBackupInformation> IOperationSource<CosmosDBBackupInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CosmosDBBackupInformation result = CosmosDBBackupInformation.DeserializeCosmosDBBackupInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return CosmosDBBackupInformation.DeserializeCosmosDBBackupInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

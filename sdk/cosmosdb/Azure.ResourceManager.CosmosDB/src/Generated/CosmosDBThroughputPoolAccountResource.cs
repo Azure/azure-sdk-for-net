@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly ClientDiagnostics _throughputPoolAccountClientDiagnostics;
         private readonly ThroughputPoolAccount _throughputPoolAccountRestClient;
-        private readonly ClientDiagnostics _throughputPoolAccountsClientDiagnostics;
-        private readonly ThroughputPoolAccounts _throughputPoolAccountsRestClient;
         private readonly CosmosDBThroughputPoolAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts";
@@ -53,8 +51,6 @@ namespace Azure.ResourceManager.CosmosDB
             TryGetApiVersion(ResourceType, out string cosmosDBThroughputPoolAccountApiVersion);
             _throughputPoolAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             _throughputPoolAccountRestClient = new ThroughputPoolAccount(_throughputPoolAccountClientDiagnostics, Pipeline, Endpoint, cosmosDBThroughputPoolAccountApiVersion ?? "2025-11-01-preview");
-            _throughputPoolAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _throughputPoolAccountsRestClient = new ThroughputPoolAccounts(_throughputPoolAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBThroughputPoolAccountApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

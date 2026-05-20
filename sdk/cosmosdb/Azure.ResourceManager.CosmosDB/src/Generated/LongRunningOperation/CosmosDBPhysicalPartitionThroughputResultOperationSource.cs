@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
         CosmosDBPhysicalPartitionThroughputResult IOperationSource<CosmosDBPhysicalPartitionThroughputResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CosmosDBPhysicalPartitionThroughputResult result = CosmosDBPhysicalPartitionThroughputResult.DeserializeCosmosDBPhysicalPartitionThroughputResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return CosmosDBPhysicalPartitionThroughputResult.DeserializeCosmosDBPhysicalPartitionThroughputResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
         async ValueTask<CosmosDBPhysicalPartitionThroughputResult> IOperationSource<CosmosDBPhysicalPartitionThroughputResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CosmosDBPhysicalPartitionThroughputResult result = CosmosDBPhysicalPartitionThroughputResult.DeserializeCosmosDBPhysicalPartitionThroughputResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return CosmosDBPhysicalPartitionThroughputResult.DeserializeCosmosDBPhysicalPartitionThroughputResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -50,8 +50,6 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly PercentileSourceTarget _percentileSourceTargetRestClient;
         private readonly ClientDiagnostics _percentileTargetClientDiagnostics;
         private readonly PercentileTarget _percentileTargetRestClient;
-        private readonly ClientDiagnostics _notebookWorkspacesClientDiagnostics;
-        private readonly NotebookWorkspaces _notebookWorkspacesRestClient;
         private readonly CosmosDBAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts";
@@ -100,8 +98,6 @@ namespace Azure.ResourceManager.CosmosDB
             _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
             _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _notebookWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _notebookWorkspacesRestClient = new NotebookWorkspaces(_notebookWorkspacesClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -2873,126 +2869,6 @@ namespace Azure.ResourceManager.CosmosDB
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates the notebook workspace for a Cosmos DB account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NotebookWorkspaces_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBAccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notebookWorkspaceName"> The name of the notebook workspace resource. </param>
-        /// <param name="content"> The notebook workspace to create for the current database account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NotebookWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _notebookWorkspacesClientDiagnostics.CreateScope("CosmosDBAccountResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _notebookWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notebookWorkspaceName.ToString(), NotebookWorkspaceCreateOrUpdateContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation<NotebookWorkspaceResource> operation = new CosmosDBArmOperation<NotebookWorkspaceResource>(
-                    new NotebookWorkspaceOperationSource(Client),
-                    _notebookWorkspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates the notebook workspace for a Cosmos DB account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NotebookWorkspaces_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CosmosDBAccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notebookWorkspaceName"> The name of the notebook workspace resource. </param>
-        /// <param name="content"> The notebook workspace to create for the current database account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NotebookWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _notebookWorkspacesClientDiagnostics.CreateScope("CosmosDBAccountResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _notebookWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notebookWorkspaceName.ToString(), NotebookWorkspaceCreateOrUpdateContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation<NotebookWorkspaceResource> operation = new CosmosDBArmOperation<NotebookWorkspaceResource>(
-                    new NotebookWorkspaceOperationSource(Client),
-                    _notebookWorkspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }

@@ -28,30 +28,6 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly ClientDiagnostics _databaseAccountsClientDiagnostics;
         private readonly DatabaseAccounts _databaseAccountsRestClient;
-        private readonly ClientDiagnostics _collectionClientDiagnostics;
-        private readonly Collection _collectionRestClient;
-        private readonly ClientDiagnostics _collectionPartitionClientDiagnostics;
-        private readonly CollectionPartition _collectionPartitionRestClient;
-        private readonly ClientDiagnostics _collectionPartitionRegionClientDiagnostics;
-        private readonly CollectionPartitionRegion _collectionPartitionRegionRestClient;
-        private readonly ClientDiagnostics _collectionRegionClientDiagnostics;
-        private readonly CollectionRegion _collectionRegionRestClient;
-        private readonly ClientDiagnostics _databaseAccountRegionClientDiagnostics;
-        private readonly DatabaseAccountRegion _databaseAccountRegionRestClient;
-        private readonly ClientDiagnostics _databaseClientDiagnostics;
-        private readonly Database _databaseRestClient;
-        private readonly ClientDiagnostics _partitionKeyRangeIdClientDiagnostics;
-        private readonly PartitionKeyRangeId _partitionKeyRangeIdRestClient;
-        private readonly ClientDiagnostics _partitionKeyRangeIdRegionClientDiagnostics;
-        private readonly PartitionKeyRangeIdRegion _partitionKeyRangeIdRegionRestClient;
-        private readonly ClientDiagnostics _percentileClientDiagnostics;
-        private readonly Percentile _percentileRestClient;
-        private readonly ClientDiagnostics _percentileSourceTargetClientDiagnostics;
-        private readonly PercentileSourceTarget _percentileSourceTargetRestClient;
-        private readonly ClientDiagnostics _percentileTargetClientDiagnostics;
-        private readonly PercentileTarget _percentileTargetRestClient;
-        private readonly ClientDiagnostics _notebookWorkspacesClientDiagnostics;
-        private readonly NotebookWorkspaces _notebookWorkspacesRestClient;
 
         /// <summary> Initializes a new instance of CosmosDBAccountCollection for mocking. </summary>
         protected CosmosDBAccountCollection()
@@ -66,30 +42,6 @@ namespace Azure.ResourceManager.CosmosDB
             TryGetApiVersion(CosmosDBAccountResource.ResourceType, out string cosmosDBAccountApiVersion);
             _databaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
             _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRestClient = new CollectionPartition(_collectionPartitionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _collectionPartitionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegion(_collectionPartitionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _collectionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _collectionRegionRestClient = new CollectionRegion(_collectionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _databaseAccountRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegion(_databaseAccountRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _partitionKeyRangeIdClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeId(_partitionKeyRangeIdClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _partitionKeyRangeIdRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegion(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _percentileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _percentileRestClient = new Percentile(_percentileClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _percentileSourceTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
-            _notebookWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _notebookWorkspacesRestClient = new NotebookWorkspaces(_notebookWorkspacesClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
