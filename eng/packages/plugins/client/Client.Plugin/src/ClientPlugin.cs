@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.ClientModel;
 using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -35,8 +34,7 @@ namespace Client.Plugin
             generator.AddVisitor(new NamespaceVisitor());
             generator.AddVisitor(new DistributedTracingVisitor(
                 new CSharpType(typeof(ClientDiagnostics)),
-                new CSharpType(typeof(DiagnosticScope)),
-                method => method.ServiceMethod is InputPagingServiceMethod));
+                new CSharpType(typeof(DiagnosticScope))));
             generator.AddVisitor(new ClientRequestIdHeaderVisitor(includeXmsClientRequestIdInRequest: true));
             // Note the shared source TaskExtensions must be added manually to the csproj currently as plugins
             // don't support modifying the shared source files currently.

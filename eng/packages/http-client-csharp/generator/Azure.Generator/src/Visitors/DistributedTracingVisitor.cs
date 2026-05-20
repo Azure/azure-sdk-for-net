@@ -28,22 +28,27 @@ namespace Azure.Generator.Visitors
 
         private readonly CSharpType _clientDiagnosticsType;
         private readonly CSharpType _diagnosticScopeType;
-        private readonly Func<ScmMethodProvider, bool>? _shouldSkipMethod;
+        private readonly Func<ScmMethodProvider, bool>? _shouldPassScopeToPageableConstructor;
 
         /// <summary>
         /// Creates a new instance of <see cref="DistributedTracingVisitor"/> with the specified types.
         /// </summary>
         /// <param name="clientDiagnosticsType">The CSharpType for ClientDiagnostics (e.g., Azure.Core.Pipeline.ClientDiagnostics or System.ClientModel.Primitives.ClientDiagnostics).</param>
         /// <param name="diagnosticScopeType">The CSharpType for DiagnosticScope (e.g., Azure.Core.Pipeline.DiagnosticScope or System.ClientModel.Primitives.DiagnosticScope).</param>
-        /// <param name="shouldSkipMethod">Optional delegate to determine if a method should be skipped for tracing instrumentation.</param>
+        /// <param name="shouldPassScopeToPageableConstructor">Optional delegate to determine if a paging method should have its scope name
+        /// passed to the pageable collection result constructor via <see cref="UpdatePagingMethodWithScope"/>.
+        /// When provided and returns true, the scope name is appended as a constructor argument
+        /// (required for types like AzureCollectionResultDefinition that accept a diagnosticScope parameter).
+        /// When null or returns false, paging methods are still excluded from protocol-level tracing,
+        /// and tracing is handled by <see cref="WrapCollectionResultMethodWithTracing"/> on the base CollectionResultDefinition.</param>
         public DistributedTracingVisitor(
             CSharpType clientDiagnosticsType,
             CSharpType diagnosticScopeType,
-            Func<ScmMethodProvider, bool>? shouldSkipMethod = null)
+            Func<ScmMethodProvider, bool>? shouldPassScopeToPageableConstructor = null)
         {
             _clientDiagnosticsType = clientDiagnosticsType;
             _diagnosticScopeType = diagnosticScopeType;
-            _shouldSkipMethod = shouldSkipMethod;
+            _shouldPassScopeToPageableConstructor = shouldPassScopeToPageableConstructor;
         }
 
         /// <summary>
@@ -57,13 +62,14 @@ namespace Azure.Generator.Visitors
         protected CSharpType DiagnosticScopeType => _diagnosticScopeType;
 
         /// <summary>
-        /// Determines whether the specified method should be skipped for distributed tracing instrumentation.
+        /// Determines whether the specified method is a paging method whose scope name should be
+        /// passed to the pageable collection result constructor (e.g., AzureCollectionResultDefinition).
         /// </summary>
         /// <param name="method">The method to check.</param>
-        /// <returns>True if the method should be skipped; otherwise, false.</returns>
-        protected bool ShouldSkipMethodForTracing(ScmMethodProvider method)
+        /// <returns>True if the scope name should be passed to the pageable constructor; otherwise, false.</returns>
+        protected bool ShouldPassScopeToPageableConstructor(ScmMethodProvider method)
         {
-            return _shouldSkipMethod?.Invoke(method) ?? false;
+            return _shouldPassScopeToPageableConstructor?.Invoke(method) ?? false;
         }
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
@@ -158,12 +164,10 @@ namespace Azure.Generator.Visitors
                 return base.VisitMethod(method);
             }
 
-            if (ShouldSkipMethodForTracing(method))
+            if (ShouldPassScopeToPageableConstructor(method))
             {
-                // Paging methods are identified via the injected shouldSkipMethod delegate.
-                // They don't get standard try/catch scope wrapping (tracing is handled inside
-                // the CollectionResultDefinition.GetNextResponse method), but we still need to
-                // pass the scope name through to the Pageable/AsyncPageable constructor.
+                // For Azure paging methods, tracing is handled inside AzureCollectionResultDefinition.GetNextResponse,
+                // so we skip standard try/catch wrapping and instead pass the scope name to the pageable constructor.
                 UpdatePagingMethodWithScope(method);
             }
             else if (method.Kind == ScmMethodKind.Protocol)
@@ -385,7 +389,7 @@ namespace Azure.Generator.Visitors
 
         private static void UpdatePagingMethodWithScope(ScmMethodProvider method)
         {
-            string scopeName = method.GetScopeName();
+            string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
             const string asyncSuffix = "Async";
             if (scopeName.EndsWith(asyncSuffix))
             {
