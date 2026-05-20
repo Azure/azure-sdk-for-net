@@ -12,16 +12,16 @@ using Azure.ResourceManager.AppContainers;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Logger settings for java workloads. </summary>
-    internal partial class LoggerSetting
+    public partial class ContainerAppJavaLoggerSetting
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoggerSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJavaLoggerSetting"/>. </summary>
         /// <param name="logger"> Logger name. </param>
         /// <param name="level"> The specified logger's log level. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logger"/> is null. </exception>
-        public LoggerSetting(string logger, Level level)
+        public ContainerAppJavaLoggerSetting(string logger, ContainerAppJavaLoggerLevel level)
         {
             Argument.AssertNotNull(logger, nameof(logger));
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             Level = level;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoggerSetting"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJavaLoggerSetting"/>. </summary>
         /// <param name="logger"> Logger name. </param>
         /// <param name="level"> The specified logger's log level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoggerSetting(string logger, Level level, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppJavaLoggerSetting(string logger, ContainerAppJavaLoggerLevel level, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Logger = logger;
             Level = level;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The specified logger's log level. </summary>
         [WirePath("level")]
-        public Level Level { get; set; }
+        public ContainerAppJavaLoggerLevel Level { get; set; }
     }
 }

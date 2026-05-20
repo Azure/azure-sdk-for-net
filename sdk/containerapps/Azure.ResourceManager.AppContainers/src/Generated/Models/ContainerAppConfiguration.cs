@@ -116,6 +116,42 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
+        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+        [WirePath("runtime.java.javaAgent")]
+        public ContainerAppRuntimeJavaAgent JavaAgent
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.JavaAgent;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.JavaAgent = value;
+            }
+        }
+
+        /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
+        [WirePath("runtime.dotnet.autoConfigureDataProtection")]
+        public bool? AutoConfigureDataProtection
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.AutoConfigureDataProtection;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.AutoConfigureDataProtection = value;
+            }
+        }
+
         /// <summary> Dev ContainerApp service type. </summary>
         [WirePath("service.type")]
         public string ServiceType

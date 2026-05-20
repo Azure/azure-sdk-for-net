@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     // The TypeSpec model uses an intentionally empty LogicAppProperties envelope. The generator keeps that
     // empty envelope internal, so suppress the public model-factory overload that would expose the internal type.
     [CodeGenSuppress("LogicAppData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(ContainerAppLogicAppConfiguration))]
-    [CodeGenSuppress("ContainerAppConfiguration", typeof(IEnumerable<ContainerAppWritableSecret>), typeof(ContainerAppActiveRevisionsMode?), typeof(string), typeof(ContainerAppIngressConfiguration), typeof(IEnumerable<ContainerAppRegistryCredentials>), typeof(ContainerAppDaprConfiguration), typeof(bool?), typeof(RuntimeJavaJavaAgent), typeof(bool?), typeof(int?), typeof(int?), typeof(string), typeof(IEnumerable<ContainerAppIdentitySettings>))]
+    [CodeGenSuppress("ContainerAppConfiguration", typeof(IEnumerable<ContainerAppWritableSecret>), typeof(ContainerAppActiveRevisionsMode?), typeof(string), typeof(ContainerAppIngressConfiguration), typeof(IEnumerable<ContainerAppRegistryCredentials>), typeof(ContainerAppDaprConfiguration), typeof(bool?), typeof(ContainerAppRuntimeJavaAgent), typeof(bool?), typeof(int?), typeof(int?), typeof(string), typeof(IEnumerable<ContainerAppIdentitySettings>))]
     public static partial class ArmAppContainersModelFactory
     {
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>

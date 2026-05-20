@@ -4,14 +4,9 @@
 #nullable disable
 
 using Azure.ResourceManager.AppContainers;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    [CodeGenSuppress("SasUrlSettingName")]
-    [CodeGenSuppress("BlobContainerUri")]
-    [CodeGenSuppress("ClientId")]
-    [CodeGenSuppress("ManagedIdentityResourceId")]
     public partial class ContainerAppTokenStore
     {
         /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>

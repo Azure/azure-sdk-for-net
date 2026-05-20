@@ -13,57 +13,52 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Logger settings for java workloads. </summary>
-    internal partial class LoggerSetting : IJsonModel<LoggerSetting>
+    /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+    public partial class ContainerAppRuntimeJavaAgent : IJsonModel<ContainerAppRuntimeJavaAgent>
     {
-        /// <summary> Initializes a new instance of <see cref="LoggerSetting"/> for deserialization. </summary>
-        internal LoggerSetting()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoggerSetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerAppRuntimeJavaAgent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoggerSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppRuntimeJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLoggerSetting(document.RootElement, options);
+                        return DeserializeContainerAppRuntimeJavaAgent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoggerSetting)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRuntimeJavaAgent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoggerSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppRuntimeJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LoggerSetting)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRuntimeJavaAgent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoggerSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerAppRuntimeJavaAgent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoggerSetting IPersistableModel<LoggerSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerAppRuntimeJavaAgent IPersistableModel<ContainerAppRuntimeJavaAgent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoggerSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppRuntimeJavaAgent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LoggerSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppRuntimeJavaAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +69,21 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoggerSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppRuntimeJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggerSetting)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRuntimeJavaAgent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("logger"u8);
-            writer.WriteStringValue(Logger);
-            writer.WritePropertyName("level"u8);
-            writer.WriteStringValue(Level.ToString());
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
+            }
+            if (Optional.IsDefined(Logging))
+            {
+                writer.WritePropertyName("logging"u8);
+                writer.WriteObjectValue(Logging, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,42 +103,50 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoggerSetting IJsonModel<LoggerSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerAppRuntimeJavaAgent IJsonModel<ContainerAppRuntimeJavaAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoggerSetting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerAppRuntimeJavaAgent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoggerSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppRuntimeJavaAgent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggerSetting)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRuntimeJavaAgent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLoggerSetting(document.RootElement, options);
+            return DeserializeContainerAppRuntimeJavaAgent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LoggerSetting DeserializeLoggerSetting(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerAppRuntimeJavaAgent DeserializeContainerAppRuntimeJavaAgent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string logger = default;
-            Level level = default;
+            bool? enabled = default;
+            RuntimeJavaJavaAgentLogging logging = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("logger"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    logger = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("level"u8))
+                if (prop.NameEquals("logging"u8))
                 {
-                    level = new Level(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logging = RuntimeJavaJavaAgentLogging.DeserializeRuntimeJavaJavaAgentLogging(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LoggerSetting(logger, level, additionalBinaryDataProperties);
+            return new ContainerAppRuntimeJavaAgent(enabled, logging, additionalBinaryDataProperties);
         }
     }
 }

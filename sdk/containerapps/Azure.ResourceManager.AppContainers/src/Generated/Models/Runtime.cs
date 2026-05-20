@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Diagnostic capabilities achieved by java agent. </summary>
         [WirePath("java.javaAgent")]
-        public RuntimeJavaJavaAgent JavaAgent
+        public ContainerAppRuntimeJavaAgent JavaAgent
         {
             get
             {

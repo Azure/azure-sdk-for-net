@@ -58,5 +58,77 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
         [WirePath("azureBlobStorage")]
         internal BlobStorageTokenStore AzureBlobStorage { get; set; }
+
+        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
+        [WirePath("azureBlobStorage.sasUrlSettingName")]
+        public string SasUrlSettingName
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.SasUrlSettingName = value;
+            }
+        }
+
+        /// <summary> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </summary>
+        [WirePath("azureBlobStorage.blobContainerUri")]
+        public string BlobContainerUri
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.BlobContainerUri;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.BlobContainerUri = value;
+            }
+        }
+
+        /// <summary> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </summary>
+        [WirePath("azureBlobStorage.clientId")]
+        public string ClientId
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.ClientId;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.ClientId = value;
+            }
+        }
+
+        /// <summary> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </summary>
+        [WirePath("azureBlobStorage.managedIdentityResourceId")]
+        public string ManagedIdentityResourceId
+        {
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.ManagedIdentityResourceId;
+            }
+            set
+            {
+                if (AzureBlobStorage is null)
+                {
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                }
+                AzureBlobStorage.ManagedIdentityResourceId = value;
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="enableMetrics"> Enable jmx core metrics for the java app. </param>
         /// <param name="javaAgent"> Diagnostic capabilities achieved by java agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeJava(bool? enableMetrics, RuntimeJavaJavaAgent javaAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeJava(bool? enableMetrics, ContainerAppRuntimeJavaAgent javaAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableMetrics = enableMetrics;
             JavaAgent = javaAgent;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Diagnostic capabilities achieved by java agent. </summary>
         [WirePath("javaAgent")]
-        public RuntimeJavaJavaAgent JavaAgent { get; set; }
+        public ContainerAppRuntimeJavaAgent JavaAgent { get; set; }
     }
 }

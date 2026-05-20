@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppContainers;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The specified logger's log level. </summary>
-    internal readonly partial struct Level : IEquatable<Level>
+    public readonly partial struct ContainerAppJavaLoggerLevel : IEquatable<ContainerAppJavaLoggerLevel>
     {
         private readonly string _value;
         /// <summary> off. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> warn. </summary>
         private const string WarnValue = "warn";
 
-        /// <summary> Initializes a new instance of <see cref="Level"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJavaLoggerLevel"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Level(string value)
+        public ContainerAppJavaLoggerLevel(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> off. </summary>
-        public static Level Off { get; } = new Level(OffValue);
+        public static ContainerAppJavaLoggerLevel Off { get; } = new ContainerAppJavaLoggerLevel(OffValue);
 
         /// <summary> error. </summary>
-        public static Level Error { get; } = new Level(ErrorValue);
+        public static ContainerAppJavaLoggerLevel Error { get; } = new ContainerAppJavaLoggerLevel(ErrorValue);
 
         /// <summary> info. </summary>
-        public static Level Info { get; } = new Level(InfoValue);
+        public static ContainerAppJavaLoggerLevel Info { get; } = new ContainerAppJavaLoggerLevel(InfoValue);
 
         /// <summary> debug. </summary>
-        public static Level Debug { get; } = new Level(DebugValue);
+        public static ContainerAppJavaLoggerLevel Debug { get; } = new ContainerAppJavaLoggerLevel(DebugValue);
 
         /// <summary> trace. </summary>
-        public static Level Trace { get; } = new Level(TraceValue);
+        public static ContainerAppJavaLoggerLevel Trace { get; } = new ContainerAppJavaLoggerLevel(TraceValue);
 
         /// <summary> warn. </summary>
-        public static Level Warn { get; } = new Level(WarnValue);
+        public static ContainerAppJavaLoggerLevel Warn { get; } = new ContainerAppJavaLoggerLevel(WarnValue);
 
-        /// <summary> Determines if two <see cref="Level"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerAppJavaLoggerLevel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Level left, Level right) => left.Equals(right);
+        public static bool operator ==(ContainerAppJavaLoggerLevel left, ContainerAppJavaLoggerLevel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Level"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerAppJavaLoggerLevel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Level left, Level right) => !left.Equals(right);
+        public static bool operator !=(ContainerAppJavaLoggerLevel left, ContainerAppJavaLoggerLevel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Level"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerAppJavaLoggerLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Level(string value) => new Level(value);
+        public static implicit operator ContainerAppJavaLoggerLevel(string value) => new ContainerAppJavaLoggerLevel(value);
 
-        /// <summary> Converts a string to a <see cref="Level"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerAppJavaLoggerLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Level?(string value) => value == null ? null : new Level(value);
+        public static implicit operator ContainerAppJavaLoggerLevel?(string value) => value == null ? null : new ContainerAppJavaLoggerLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Level other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerAppJavaLoggerLevel other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Level other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerAppJavaLoggerLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

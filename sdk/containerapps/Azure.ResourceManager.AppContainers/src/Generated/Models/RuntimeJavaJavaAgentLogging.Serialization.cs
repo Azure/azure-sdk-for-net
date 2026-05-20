@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("loggerSettings"u8);
                 writer.WriteStartArray();
-                foreach (LoggerSetting item in LoggerSettings)
+                foreach (ContainerAppJavaLoggerSetting item in LoggerSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IList<LoggerSetting> loggerSettings = default;
+            IList<ContainerAppJavaLoggerSetting> loggerSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<LoggerSetting> array = new List<LoggerSetting>();
+                    List<ContainerAppJavaLoggerSetting> array = new List<ContainerAppJavaLoggerSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LoggerSetting.DeserializeLoggerSetting(item, options));
+                        array.Add(ContainerAppJavaLoggerSetting.DeserializeContainerAppJavaLoggerSetting(item, options));
                     }
                     loggerSettings = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuntimeJavaJavaAgentLogging(loggerSettings ?? new ChangeTrackingList<LoggerSetting>(), additionalBinaryDataProperties);
+            return new RuntimeJavaJavaAgentLogging(loggerSettings ?? new ChangeTrackingList<ContainerAppJavaLoggerSetting>(), additionalBinaryDataProperties);
         }
     }
 }

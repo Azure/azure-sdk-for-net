@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             bool? enableMetrics = default;
-            RuntimeJavaJavaAgent javaAgent = default;
+            ContainerAppRuntimeJavaAgent javaAgent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    javaAgent = RuntimeJavaJavaAgent.DeserializeRuntimeJavaJavaAgent(prop.Value, options);
+                    javaAgent = ContainerAppRuntimeJavaAgent.DeserializeContainerAppRuntimeJavaAgent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

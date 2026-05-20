@@ -6,11 +6,61 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> C# compatibility usage unit extensible enum. </summary>
+    /// <summary> Usage unit extensible enum. </summary>
     public readonly partial struct ContainerAppUsageUnit : IEquatable<ContainerAppUsageUnit>
     {
+        private readonly string _value;
+        /// <summary> Count. </summary>
+        private const string CountValue = "Count";
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerAppUsageUnit(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Count. </summary>
+        public static ContainerAppUsageUnit Count { get; } = new ContainerAppUsageUnit(CountValue);
+
+        /// <summary> Determines if two <see cref="ContainerAppUsageUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ContainerAppUsageUnit left, ContainerAppUsageUnit right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ContainerAppUsageUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ContainerAppUsageUnit left, ContainerAppUsageUnit right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ContainerAppUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppUsageUnit(string value) => new ContainerAppUsageUnit(value);
+
+        /// <summary> Converts a string to a <see cref="ContainerAppUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppUsageUnit?(string value) => value == null ? null : new ContainerAppUsageUnit(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ContainerAppUsageUnit other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ContainerAppUsageUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

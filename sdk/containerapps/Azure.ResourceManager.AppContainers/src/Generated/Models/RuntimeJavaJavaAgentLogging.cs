@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="RuntimeJavaJavaAgentLogging"/>. </summary>
         public RuntimeJavaJavaAgentLogging()
         {
-            LoggerSettings = new ChangeTrackingList<LoggerSetting>();
+            LoggerSettings = new ChangeTrackingList<ContainerAppJavaLoggerSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RuntimeJavaJavaAgentLogging"/>. </summary>
         /// <param name="loggerSettings"> Settings of the logger for the java app. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeJavaJavaAgentLogging(IList<LoggerSetting> loggerSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeJavaJavaAgentLogging(IList<ContainerAppJavaLoggerSetting> loggerSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoggerSettings = loggerSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Settings of the logger for the java app. </summary>
         [WirePath("loggerSettings")]
-        public IList<LoggerSetting> LoggerSettings { get; }
+        public IList<ContainerAppJavaLoggerSetting> LoggerSettings { get; }
     }
 }

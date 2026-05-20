@@ -6,11 +6,61 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> C# compatibility custom OpenID Connect client credential method extensible enum. </summary>
+    /// <summary> Custom OpenID Connect client credential method extensible enum. </summary>
     public readonly partial struct ContainerAppOpenIdConnectClientCredentialMethod : IEquatable<ContainerAppOpenIdConnectClientCredentialMethod>
     {
+        private readonly string _value;
+        /// <summary> Client secret post authentication. </summary>
+        private const string ClientSecretPostValue = "ClientSecretPost";
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerAppOpenIdConnectClientCredentialMethod(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Client secret post authentication. </summary>
+        public static ContainerAppOpenIdConnectClientCredentialMethod ClientSecretPost { get; } = new ContainerAppOpenIdConnectClientCredentialMethod(ClientSecretPostValue);
+
+        /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppOpenIdConnectClientCredentialMethod(string value) => new ContainerAppOpenIdConnectClientCredentialMethod(value);
+
+        /// <summary> Converts a string to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppOpenIdConnectClientCredentialMethod?(string value) => value == null ? null : new ContainerAppOpenIdConnectClientCredentialMethod(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ContainerAppOpenIdConnectClientCredentialMethod other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ContainerAppOpenIdConnectClientCredentialMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }
