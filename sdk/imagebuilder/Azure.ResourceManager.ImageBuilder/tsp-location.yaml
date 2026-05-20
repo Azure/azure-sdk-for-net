@@ -1,0 +1,6 @@
+directory: specification/imagebuilder/resource-manager/Microsoft.VirtualMachineImages/ImageBuilder
+commit: 7c184b1698a04ad263664eafafc3287a288d34d9
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json
