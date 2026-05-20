@@ -233,16 +233,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             public override void OnEnd(LogRecord data)
             {
-                // Copy attributes since they may be recycled
-                var attributes = new List<KeyValuePair<string, object?>>();
+                // Snapshot attributes before the LogRecord may be recycled.
+                var snapshot = new List<KeyValuePair<string, object?>>();
                 if (data.Attributes != null)
                 {
                     foreach (var kvp in data.Attributes)
                     {
-                        attributes.Add(kvp);
+                        snapshot.Add(kvp);
                     }
                 }
 
+                data.Attributes = snapshot;
                 _exportedItems.Add(data);
             }
         }

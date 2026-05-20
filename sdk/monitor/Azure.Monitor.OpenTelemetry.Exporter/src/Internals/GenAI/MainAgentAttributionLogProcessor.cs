@@ -54,8 +54,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
                 }
             }
 
-            // Collect values into a stack-friendly fixed-size buffer to avoid
-            // unnecessary List allocations on every log record.
+            // Collect values into a fixed-size buffer so we can check count
+            // before allocating the merged list.
             var values = new KeyValuePair<string, object?>[s_mainAgentAttributes.Length];
             int count = 0;
 
