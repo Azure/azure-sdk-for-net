@@ -12,7 +12,8 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ContainerAppsFunctionCollection
+    /// <summary> Container App Functions collection ARM resource. </summary>
+    public partial class ContainerAppsFunctionCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

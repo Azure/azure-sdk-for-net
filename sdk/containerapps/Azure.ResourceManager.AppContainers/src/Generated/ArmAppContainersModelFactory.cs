@@ -211,6 +211,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Session pool collection Azure resource. </summary>
+        /// <param name="value"> The SessionPool items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.SessionPoolCollection"/> instance for mocking. </returns>
+        public static SessionPoolCollection SessionPoolCollection(IEnumerable<SessionPoolData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SessionPoolData>();
+
+            return new SessionPoolCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The credentials used for the MCP server endpoint authentication. </summary>
         /// <param name="apiKey"> The API key for the MCP server. </param>
         /// <returns> A new <see cref="Models.McpServerCredential"/> instance for mocking. </returns>
@@ -669,6 +680,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppServiceBind(serviceId, name, clientType, customizedKeys, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App collection ARM resource. </summary>
+        /// <param name="value"> The ContainerApp items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ContainerAppCollection"/> instance for mocking. </returns>
+        public static ContainerAppCollection ContainerAppCollection(IEnumerable<ContainerAppData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ContainerAppData>();
+
+            return new ContainerAppCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Custom domain analysis. </summary>
         /// <param name="hostName"> Host name that was analyzed. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -855,6 +877,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 invokeUrlTemplate is null && triggerType is null && language is null && isDisabled is null ? default : new ContainerAppsFunctionProperties(invokeUrlTemplate, triggerType, language, isDisabled, null));
+        }
+
+        /// <summary> Container App Functions collection ARM resource. </summary>
+        /// <param name="value"> The ContainerAppsFunction items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ContainerAppsFunctionCollection"/> instance for mocking. </returns>
+        public static ContainerAppsFunctionCollection ContainerAppsFunctionCollection(IEnumerable<ContainerAppsFunctionData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ContainerAppsFunctionData>();
+
+            return new ContainerAppsFunctionCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2477,6 +2510,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                     httpConnectionPool,
                     new TcpConnectionPool(tcpConnectionPoolMaxConnections, null),
                     null));
+        }
+
+        /// <summary> Collection of AppResiliency policies. </summary>
+        /// <param name="value"> The AppResiliency items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.AppResiliencyCollection"/> instance for mocking. </returns>
+        public static AppResiliencyCollection AppResiliencyCollection(IEnumerable<AppResiliencyData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<AppResiliencyData>();
+
+            return new AppResiliencyCollection(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Build Auth Token. </summary>

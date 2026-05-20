@@ -14,7 +14,8 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ContainerAppCollection : IJsonModel<ContainerAppCollection>
+    /// <summary> Container App collection ARM resource. </summary>
+    public partial class ContainerAppCollection : IJsonModel<ContainerAppCollection>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerAppCollection"/> for deserialization. </summary>
         internal ContainerAppCollection()
