@@ -276,6 +276,50 @@ namespace Azure.ResourceManager.Chaos
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosCapabilityTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosCapabilityTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ChaosDiscoveredCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>, System.Collections.IEnumerable
+    {
+        protected ChaosDiscoveredCollection() { }
+        public virtual Azure.Response<bool> Exists(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> Get(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>> GetAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> GetIfExists(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>> GetIfExistsAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ChaosDiscoveredData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>
+    {
+        internal ChaosDiscoveredData() { }
+        public Azure.ResourceManager.Chaos.Models.DiscoveredResourceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.ChaosDiscoveredData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.ChaosDiscoveredData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosDiscoveredResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ChaosDiscoveredResource() { }
+        public virtual Azure.ResourceManager.Chaos.ChaosDiscoveredData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string discoveredResourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Chaos.ChaosDiscoveredData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.ChaosDiscoveredData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosDiscoveredData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ChaosExperimentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ChaosExperimentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ChaosExperimentResource>, System.Collections.IEnumerable
     {
         protected ChaosExperimentCollection() { }
@@ -409,6 +453,7 @@ namespace Azure.ResourceManager.Chaos
         public static Azure.ResourceManager.Chaos.ChaosCapabilityResource GetChaosCapabilityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         [System.ObsoleteAttribute("This method no longer works in all API versions.", false)]
         public static Azure.ResourceManager.Chaos.ChaosCapabilityTypeResource GetChaosCapabilityTypeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Chaos.ChaosDiscoveredResource GetChaosDiscoveredResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Chaos.ChaosExperimentResource> GetChaosExperiment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosExperimentResource>> GetChaosExperimentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosExperimentExecutionResource GetChaosExperimentExecutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -418,6 +463,10 @@ namespace Azure.ResourceManager.Chaos
         public static Azure.AsyncPageable<Azure.ResourceManager.Chaos.ChaosExperimentResource> GetChaosExperimentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Models.OperationStatusResult> GetChaosOperationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Models.OperationStatusResult>> GetChaosOperationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetChaosPrivateAccess(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> GetChaosPrivateAccessAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Chaos.ChaosPrivateAccessCollection GetChaosPrivateAccesses(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.ResourceManager.Chaos.ChaosPrivateAccessResource GetChaosPrivateAccessResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosScenarioConfigurationResource GetChaosScenarioConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosScenarioResource GetChaosScenarioResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosScenarioRunResource GetChaosScenarioRunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -443,16 +492,72 @@ namespace Azure.ResourceManager.Chaos
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource>> GetChaosWorkspaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosWorkspaceResource GetChaosWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosWorkspaceCollection GetChaosWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.ResourceManager.Chaos.DiscoveredResource GetDiscoveredResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource> GetPrivateAccess(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource>> GetPrivateAccessAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Chaos.PrivateAccessCollection GetPrivateAccesses(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Chaos.PrivateAccessResource> GetPrivateAccesses(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Chaos.PrivateAccessResource> GetPrivateAccessesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Chaos.PrivateAccessResource GetPrivateAccessResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetPrivateAccesses(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetPrivateAccessesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> GetWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> GetWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ChaosPrivateAccessCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>, System.Collections.IEnumerable
+    {
+        protected ChaosPrivateAccessCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateAccessName, Azure.ResourceManager.Chaos.ChaosPrivateAccessData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateAccessName, Azure.ResourceManager.Chaos.ChaosPrivateAccessData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> Get(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetAll(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetAllAsync(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> GetAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetIfExists(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> GetIfExistsAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ChaosPrivateAccessData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>
+    {
+        public ChaosPrivateAccessData(Azure.Core.AzureLocation location, Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties properties) { }
+        public Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.ChaosPrivateAccessData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.ChaosPrivateAccessData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosPrivateAccessResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ChaosPrivateAccessResource() { }
+        public virtual Azure.ResourceManager.Chaos.ChaosPrivateAccessData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateAccessName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResourceListResult> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResourceListResult>> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Chaos.ChaosPrivateAccessData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.ChaosPrivateAccessData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateAccessData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ChaosPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosPrivateEndpointConnectionData>
     {
@@ -525,10 +630,10 @@ namespace Azure.ResourceManager.Chaos
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string scenarioName, string scenarioConfigurationName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Execute(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ExecuteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.PermissionsFix> FixResourcePermissions(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.PermissionsFix>> FixResourcePermissionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosScenarioRunResource> Execute(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosScenarioRunResource>> ExecuteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData> FixResourcePermissions(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>> FixResourcePermissionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosScenarioConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosScenarioConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Chaos.ChaosScenarioConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosScenarioConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -538,8 +643,8 @@ namespace Azure.ResourceManager.Chaos
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosScenarioConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosScenarioConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.ChaosScenarioConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosScenarioConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.ChaosScenarioConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.Validation> Validate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.Validation>> ValidateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData> Validate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>> ValidateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ChaosScenarioData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ChaosScenarioData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosScenarioData>
     {
@@ -615,8 +720,8 @@ namespace Azure.ResourceManager.Chaos
         protected ChaosScenarioRunResource() { }
         public virtual Azure.ResourceManager.Chaos.ChaosScenarioRunData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosScenarioRunResource> Cancel(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosScenarioRunResource>> CancelAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string scenarioName, string runId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosScenarioRunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosScenarioRunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -826,14 +931,14 @@ namespace Azure.ResourceManager.Chaos
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosDiscoveredResource> GetChaosDiscovered(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosDiscoveredResource>> GetChaosDiscoveredAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ChaosDiscoveredCollection GetChaosDiscovereds() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosScenarioResource> GetChaosScenario(string scenarioName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosScenarioResource>> GetChaosScenarioAsync(string scenarioName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosScenarioCollection GetChaosScenarios() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.DiscoveredResource> GetDiscoveredResource(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.DiscoveredResource>> GetDiscoveredResourceAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.DiscoveredResourceCollection GetDiscoveredResources() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation> RefreshRecommendations(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>> RefreshRecommendationsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData> RefreshRecommendations(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>> RefreshRecommendationsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -845,111 +950,6 @@ namespace Azure.ResourceManager.Chaos
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ChaosWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.ChaosWorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DiscoveredResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DiscoveredResource() { }
-        public virtual Azure.ResourceManager.Chaos.DiscoveredResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string discoveredResourceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.DiscoveredResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.DiscoveredResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Chaos.DiscoveredResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.DiscoveredResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DiscoveredResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.DiscoveredResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.DiscoveredResource>, System.Collections.IEnumerable
-    {
-        protected DiscoveredResourceCollection() { }
-        public virtual Azure.Response<bool> Exists(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.DiscoveredResource> Get(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.DiscoveredResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.DiscoveredResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.DiscoveredResource>> GetAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Chaos.DiscoveredResource> GetIfExists(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Chaos.DiscoveredResource>> GetIfExistsAsync(string discoveredResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Chaos.DiscoveredResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.DiscoveredResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.DiscoveredResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.DiscoveredResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class DiscoveredResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>
-    {
-        internal DiscoveredResourceData() { }
-        public Azure.ResourceManager.Chaos.Models.DiscoveredResourceProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.DiscoveredResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.DiscoveredResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.DiscoveredResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateAccessCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.PrivateAccessResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.PrivateAccessResource>, System.Collections.IEnumerable
-    {
-        protected PrivateAccessCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.PrivateAccessResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateAccessName, Azure.ResourceManager.Chaos.PrivateAccessData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.PrivateAccessResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateAccessName, Azure.ResourceManager.Chaos.PrivateAccessData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource> Get(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.PrivateAccessResource> GetAll(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.PrivateAccessResource> GetAllAsync(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource>> GetAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Chaos.PrivateAccessResource> GetIfExists(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Chaos.PrivateAccessResource>> GetIfExistsAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Chaos.PrivateAccessResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.PrivateAccessResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.PrivateAccessResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.PrivateAccessResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class PrivateAccessData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.PrivateAccessData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>
-    {
-        public PrivateAccessData(Azure.Core.AzureLocation location, Azure.ResourceManager.Chaos.Models.PrivateAccessProperties properties) { }
-        public Azure.ResourceManager.Chaos.Models.PrivateAccessProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.PrivateAccessData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.PrivateAccessData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateAccessResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.PrivateAccessData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected PrivateAccessResource() { }
-        public virtual Azure.ResourceManager.Chaos.PrivateAccessData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateAccessName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResourceListResult> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResourceListResult>> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Chaos.PrivateAccessData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.PrivateAccessData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.PrivateAccessData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.PrivateAccessResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.PrivateAccessPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Chaos.PrivateAccessResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Chaos.Models.PrivateAccessPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -998,8 +998,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
         public virtual Azure.ResourceManager.Chaos.ChaosCapabilityResource GetChaosCapabilityResource(Azure.Core.ResourceIdentifier id) { throw null; }
         [System.ObsoleteAttribute("This method no longer works in all API versions.", false)]
         public virtual Azure.ResourceManager.Chaos.ChaosCapabilityTypeResource GetChaosCapabilityTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ChaosDiscoveredResource GetChaosDiscoveredResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosExperimentExecutionResource GetChaosExperimentExecutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosExperimentResource GetChaosExperimentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ChaosPrivateAccessResource GetChaosPrivateAccessResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosScenarioConfigurationResource GetChaosScenarioConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosScenarioResource GetChaosScenarioResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosScenarioRunResource GetChaosScenarioRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1011,8 +1013,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         [System.ObsoleteAttribute("This method no longer works in all API versions.", false)]
         public virtual Azure.ResourceManager.Chaos.ChaosTargetTypeResource GetChaosTargetTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosWorkspaceResource GetChaosWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.DiscoveredResource GetDiscoveredResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.PrivateAccessResource GetPrivateAccessResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Chaos.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableChaosResourceGroupResource : Azure.ResourceManager.ArmResource
@@ -1021,15 +1021,15 @@ namespace Azure.ResourceManager.Chaos.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosExperimentResource> GetChaosExperiment(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosExperimentResource>> GetChaosExperimentAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosExperimentCollection GetChaosExperiments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetChaosPrivateAccess(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource>> GetChaosPrivateAccessAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ChaosPrivateAccessCollection GetChaosPrivateAccesses() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosTargetResource> GetChaosTarget(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosTargetResource>> GetChaosTargetAsync(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosTargetCollection GetChaosTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> GetChaosWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosWorkspaceResource>> GetChaosWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Chaos.ChaosWorkspaceCollection GetChaosWorkspaces() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource> GetPrivateAccess(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.PrivateAccessResource>> GetPrivateAccessAsync(string privateAccessName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Chaos.PrivateAccessCollection GetPrivateAccesses() { throw null; }
     }
     public partial class MockableChaosSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -1052,8 +1052,8 @@ namespace Azure.ResourceManager.Chaos.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ChaosTargetTypeResource>> GetChaosTargetTypeAsync(string locationName, string targetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ObsoleteAttribute("This method no longer works in all API versions.", false)]
         public virtual Azure.ResourceManager.Chaos.ChaosTargetTypeCollection GetChaosTargetTypes(string locationName) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.PrivateAccessResource> GetPrivateAccesses(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.PrivateAccessResource> GetPrivateAccessesAsync(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetPrivateAccesses(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ChaosPrivateAccessResource> GetPrivateAccessesAsync(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> GetWorkspaces(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ChaosWorkspaceResource> GetWorkspacesAsync(string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1137,6 +1137,7 @@ namespace Azure.ResourceManager.Chaos.Models
         [System.ObsoleteAttribute("This method no longer works in all API versions.", false)]
         public static Azure.ResourceManager.Chaos.ChaosCapabilityTypeData ChaosCapabilityTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, System.Collections.Generic.IEnumerable<string> azureRbacActions = null, System.Collections.Generic.IEnumerable<string> azureRbacDataActions = null, string runtimeKind = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosContinuousAction ChaosContinuousAction(string name = null, System.TimeSpan duration = default(System.TimeSpan), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> parameters = null, string selectorId = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.ChaosDiscoveredData ChaosDiscoveredData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.DiscoveredResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosDiscreteAction ChaosDiscreteAction(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> parameters = null, string selectorId = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosExperimentBranch ChaosExperimentBranch(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentAction> actions = null) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosExperimentData ChaosExperimentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentStep> steps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosTargetSelector> selectors) { throw null; }
@@ -1148,14 +1149,23 @@ namespace Azure.ResourceManager.Chaos.Models
         public static Azure.ResourceManager.Chaos.Models.ChaosExperimentRunBranchStatus ChaosExperimentRunBranchStatus(string branchName = null, string branchId = null, string status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentRunActionStatus> actions = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosExperimentRunStepStatus ChaosExperimentRunStepStatus(string stepName = null, string stepId = null, string status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentRunBranchStatus> branches = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosExperimentStep ChaosExperimentStep(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentBranch> branches = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosOperationError ChaosOperationError(string errorCode = null, string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData ChaosPermissionsFixData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.PermissionsFixProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.ChaosPrivateAccessData ChaosPrivateAccessData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch ChaosPrivateAccessPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties ChaosPrivateAccessProperties(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ChaosPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption? publicNetworkAccess = default(Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption?)) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosPrivateEndpointConnectionData ChaosPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.PrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResource ChaosPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResourceListResult ChaosPrivateLinkResourceListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResource> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkResourceProperties ChaosPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null, Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkServiceConnectionState ChaosPrivateLinkServiceConnectionState(Azure.ResourceManager.Chaos.Models.ChaosPrivateEndpointServiceConnectionStatus? status = default(Azure.ResourceManager.Chaos.Models.ChaosPrivateEndpointServiceConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosScenarioConfigurationData ChaosScenarioConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.ScenarioConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions ChaosScenarioConfigurationExclusions(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> tags = null, System.Collections.Generic.IEnumerable<string> types = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters ChaosScenarioConfigurationFilters(System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<string> physicalZones = null) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosScenarioData ChaosScenarioData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.ScenarioProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation ChaosScenarioRecommendation(Azure.ResourceManager.Chaos.Models.RecommendationStatus recommendationStatus = default(Azure.ResourceManager.Chaos.Models.RecommendationStatus), System.DateTimeOffset? evaluationRunOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosScenarioRunData ChaosScenarioRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.ScenarioRunProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData ChaosScenarioValidationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.ValidationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosTargetData ChaosTargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         [System.ObsoleteAttribute("This method no longer works in all API versions.", false)]
         public static Azure.ResourceManager.Chaos.ChaosTargetData ChaosTargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null) { throw null; }
@@ -1165,43 +1175,33 @@ namespace Azure.ResourceManager.Chaos.Models
         [System.ObsoleteAttribute("This method no longer works in all API versions.", false)]
         public static Azure.ResourceManager.Chaos.ChaosTargetTypeData ChaosTargetTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string displayName = null, string description = null, string propertiesSchema = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
         public static Azure.ResourceManager.Chaos.ChaosWorkspaceData ChaosWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Chaos.Models.WorkspaceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData ChaosWorkspaceEvaluationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch ChaosWorkspacePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ConfigurationExclusions ConfigurationExclusions(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> tags = null, System.Collections.Generic.IEnumerable<string> types = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ConfigurationFilters ConfigurationFilters(System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<string> physicalZones = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.DiscoveredResourceData DiscoveredResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.DiscoveredResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.DiscoveredResourceProperties DiscoveredResourceProperties(string resourceNamespace = null, string resourceName = null, string resourceType = null, string fullyQualifiedIdentifier = null, System.DateTimeOffset discoveredOn = default(System.DateTimeOffset), string scope = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.EntraIdentity EntraIdentity(string objectId = null, string tenantId = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError ExperimentExecutionActionTargetDetailsError(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties ExperimentExecutionActionTargetDetailsProperties(string status = null, string target = null, System.DateTimeOffset? targetFailedOn = default(System.DateTimeOffset?), System.DateTimeOffset? targetCompletedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError error = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails ExperimentExecutionDetails(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string name = null, string status = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? stoppedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), string failureReason = null, System.DateTimeOffset? lastActionOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentRunStepStatus> runInformationSteps = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails ExperimentExecutionDetails(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string status, System.DateTimeOffset? startedOn, System.DateTimeOffset? stoppedOn, string failureReason, System.DateTimeOffset? lastActionOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosExperimentRunStepStatus> runInformationSteps) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.OperationError OperationError(string errorCode = null, string errorMessage = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.PermissionError PermissionError(string resourceId = null, System.Collections.Generic.IEnumerable<string> missingPermissions = null, System.Collections.Generic.IEnumerable<string> requiredPermissions = null, System.Collections.Generic.IEnumerable<string> recommendedRoles = null, Azure.ResourceManager.Chaos.Models.EntraIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.PermissionsFix PermissionsFix(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.PermissionsFixProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.PermissionsFixProperties PermissionsFixProperties(Azure.ResourceManager.Chaos.Models.PermissionsFixState state = default(Azure.ResourceManager.Chaos.Models.PermissionsFixState), System.DateTimeOffset startedOn = default(System.DateTimeOffset), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), bool whatIfMode = false, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.RoleAssignmentResult> roleAssignments = null, Azure.ResourceManager.Chaos.Models.PermissionsFixSummary summary = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.PermissionError PermissionError(Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<string> missingPermissions = null, System.Collections.Generic.IEnumerable<string> requiredPermissions = null, System.Collections.Generic.IEnumerable<string> recommendedRoles = null, Azure.ResourceManager.Chaos.Models.EntraIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.PermissionsFixProperties PermissionsFixProperties(Azure.ResourceManager.Chaos.Models.PermissionsFixState state = default(Azure.ResourceManager.Chaos.Models.PermissionsFixState), System.DateTimeOffset startedOn = default(System.DateTimeOffset), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), bool isWhatIfMode = false, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.RoleAssignmentResult> roleAssignments = null, Azure.ResourceManager.Chaos.Models.PermissionsFixSummary summary = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.PermissionsFixSummary PermissionsFixSummary(int totalRequired = 0, int succeeded = 0, int failed = 0, int skipped = 0) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.PhysicalToLogicalZoneMapping PhysicalToLogicalZoneMapping(string physicalZone = null, string logicalZone = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.PrivateAccessData PrivateAccessData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Chaos.Models.PrivateAccessProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.PrivateAccessPatch PrivateAccessPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.PrivateAccessProperties PrivateAccessProperties(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ChaosPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption? publicNetworkAccess = default(Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption?)) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, string privateEndpointId = null, Azure.ResourceManager.Chaos.Models.ChaosPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.Recommendation Recommendation(Azure.ResourceManager.Chaos.Models.RecommendationStatus recommendationStatus = default(Azure.ResourceManager.Chaos.Models.RecommendationStatus), System.DateTimeOffset? evaluationRunOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ResourceStateError ResourceStateError(string resourceId = null, int errorCode = 0, string errorMessage = null, string remediationUri = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ResourceStateError ResourceStateError(Azure.Core.ResourceIdentifier resourceId = null, int errorCode = 0, string errorMessage = null, string remediationUri = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.RoleAssignmentError RoleAssignmentError(string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.RoleAssignmentResult RoleAssignmentResult(string targetResourceId = null, string principalId = null, string roleDefinitionId = null, string roleDefinitionName = null, string scope = null, Azure.ResourceManager.Chaos.Models.RoleAssignmentStatus status = default(Azure.ResourceManager.Chaos.Models.RoleAssignmentStatus), string roleAssignmentId = null, Azure.ResourceManager.Chaos.Models.RoleAssignmentError error = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.RoleAssignmentResult RoleAssignmentResult(Azure.Core.ResourceIdentifier targetResourceId = null, string principalId = null, string roleDefinitionId = null, string roleDefinitionName = null, string scope = null, Azure.ResourceManager.Chaos.Models.RoleAssignmentStatus status = default(Azure.ResourceManager.Chaos.Models.RoleAssignmentStatus), Azure.Core.ResourceIdentifier roleAssignmentId = null, Azure.ResourceManager.Chaos.Models.RoleAssignmentError error = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.RunAfter RunAfter(Azure.ResourceManager.Chaos.Models.RunAfterBehavior? behavior = default(Azure.ResourceManager.Chaos.Models.RunAfterBehavior?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ActionDependency> items = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ScenarioAction ScenarioAction(string name = null, string actionId = null, string description = null, string duration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> parameters = null, Azure.ResourceManager.Chaos.Models.RunAfter runAfter = null, string waitBefore = null, string timeout = null, Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ScenarioConfigurationProperties ScenarioConfigurationProperties(Azure.Core.ResourceIdentifier scenarioId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> parameters = null, Azure.ResourceManager.Chaos.Models.ConfigurationExclusions exclusions = null, Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), Azure.ResourceManager.Chaos.Models.ConfigurationFilters filters = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ScenarioConfigurationProperties ScenarioConfigurationProperties(Azure.Core.ResourceIdentifier scenarioId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> parameters = null, Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions exclusions = null, Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters filters = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ScenarioErrors ScenarioErrors(string errorCode = null, string errorMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.PermissionError> permission = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ResourceStateError> resource = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ScenarioEvaluationResultItem ScenarioEvaluationResultItem(string scenarioName = null, Azure.ResourceManager.Chaos.Models.RecommendationStatus evaluationResult = default(Azure.ResourceManager.Chaos.Models.RecommendationStatus)) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ScenarioProperties ScenarioProperties(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), string createdFrom = null, string version = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioAction> actions = null, Azure.ResourceManager.Chaos.Models.Recommendation recommendation = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ScenarioRunProperties ScenarioRunProperties(string workspaceName = null, string scenarioName = null, string scenarioConfigurationName = null, string managedIdentityPrincipalId = null, Azure.ResourceManager.Chaos.Models.ScenarioRunState status = default(Azure.ResourceManager.Chaos.Models.ScenarioRunState), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioRunResource> resources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.OperationError> errors = null, Azure.ResourceManager.Chaos.Models.ScenarioErrors executionErrors = null, string scenarioRunJson = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioRunSummaryAction> scenarioRunSummary = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Chaos.Models.ZoneResolutionInfo zoneResolution = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ScenarioProperties ScenarioProperties(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), string createdFrom = null, string version = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioAction> actions = null, Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation recommendation = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ScenarioRunProperties ScenarioRunProperties(string workspaceName = null, string scenarioName = null, string scenarioConfigurationName = null, string managedIdentityPrincipalId = null, Azure.ResourceManager.Chaos.Models.ScenarioRunState status = default(Azure.ResourceManager.Chaos.Models.ScenarioRunState), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioRunResource> resources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosOperationError> errors = null, Azure.ResourceManager.Chaos.Models.ScenarioErrors executionErrors = null, string scenarioRunJson = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioRunSummaryAction> scenarioRunSummary = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Chaos.Models.ZoneResolutionInfo zoneResolution = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ScenarioRunResource ScenarioRunResource(string id = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ScenarioRunSummaryAction ScenarioRunSummaryAction(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioRunResource> resources = null, string actionUrn = null, Azure.ResourceManager.Chaos.Models.ScenarioSummaryState state = default(Azure.ResourceManager.Chaos.Models.ScenarioSummaryState), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.Validation Validation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.ValidationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ValidationProperties ValidationProperties(Azure.ResourceManager.Chaos.Models.ScenarioValidationState status = default(Azure.ResourceManager.Chaos.Models.ScenarioValidationState), System.DateTimeOffset startOn = default(System.DateTimeOffset), string executionPlanJson = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.OperationError> errors = null, Azure.ResourceManager.Chaos.Models.ScenarioErrors validationErrors = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation WorkspaceEvaluation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties WorkspaceEvaluationProperties(Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationStatus status = default(Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationStatus), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.OperationError> errors = null, string workspaceId = null, int? numScenariosToEvaluate = default(int?), int? numScenariosEvaluatedSucceeded = default(int?), int? numScenariosEvaluatedFailed = default(int?), int? numScenariosEvaluatedCancelled = default(int?), Azure.ResourceManager.Chaos.Models.RecommendationStatus? evaluationResult = default(Azure.ResourceManager.Chaos.Models.RecommendationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioEvaluationResultItem> results = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ValidationProperties ValidationProperties(Azure.ResourceManager.Chaos.Models.ScenarioValidationState status = default(Azure.ResourceManager.Chaos.Models.ScenarioValidationState), System.DateTimeOffset startOn = default(System.DateTimeOffset), string executionPlanJson = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosOperationError> errors = null, Azure.ResourceManager.Chaos.Models.ScenarioErrors validationErrors = null) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties WorkspaceEvaluationProperties(Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationStatus status = default(Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationStatus), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ChaosOperationError> errors = null, Azure.Core.ResourceIdentifier workspaceId = null, int? numScenariosToEvaluate = default(int?), int? numScenariosEvaluatedSucceeded = default(int?), int? numScenariosEvaluatedFailed = default(int?), int? numScenariosEvaluatedCancelled = default(int?), Azure.ResourceManager.Chaos.Models.RecommendationStatus? evaluationResult = default(Azure.ResourceManager.Chaos.Models.RecommendationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ScenarioEvaluationResultItem> results = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.WorkspaceProperties WorkspaceProperties(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? provisioningState = default(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState?), string communicationEndpoint = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> scopes = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ZoneResolutionInfo ZoneResolutionInfo(Azure.ResourceManager.Chaos.Models.ZoneResolutionMode mode = default(Azure.ResourceManager.Chaos.Models.ZoneResolutionMode), System.Collections.Generic.IEnumerable<string> requestedPhysicalZones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ZoneResolutionMapping> subscriptionZoneMappings = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.ZoneResolutionMapping ZoneResolutionMapping(string subscriptionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.PhysicalToLogicalZoneMapping> zoneMappings = null) { throw null; }
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.Chaos.Models
     public partial class ChaosFixResourcePermissionsRequestContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent>
     {
         public ChaosFixResourcePermissionsRequestContent() { }
-        public bool? WhatIf { get { throw null; } set { } }
+        public bool? IsWhatIf { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Chaos.Models.ChaosFixResourcePermissionsRequestContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1424,6 +1424,65 @@ namespace Azure.ResourceManager.Chaos.Models
         Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosOperationError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosOperationError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosOperationError>
+    {
+        internal ChaosOperationError() { }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosOperationError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosOperationError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosOperationError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosOperationError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosOperationError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosOperationError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosOperationError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosOperationError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosOperationError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosPermissionsFixData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>
+    {
+        internal ChaosPermissionsFixData() { }
+        public Azure.ResourceManager.Chaos.Models.PermissionsFixProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPermissionsFixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosPrivateAccessPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch>
+    {
+        public ChaosPrivateAccessPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosPrivateAccessProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties>
+    {
+        public ChaosPrivateAccessProperties() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.ChaosPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
+        public Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption? PublicNetworkAccess { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosPrivateAccessProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChaosPrivateEndpointServiceConnectionStatus : System.IEquatable<Azure.ResourceManager.Chaos.Models.ChaosPrivateEndpointServiceConnectionStatus>
@@ -1527,14 +1586,46 @@ namespace Azure.ResourceManager.Chaos.Models
         public static bool operator !=(Azure.ResourceManager.Chaos.Models.ChaosProvisioningState left, Azure.ResourceManager.Chaos.Models.ChaosProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ChaosScenarioConfigurationExclusions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions>
+    {
+        public ChaosScenarioConfigurationExclusions() { }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> Resources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> Tags { get { throw null; } }
+        public System.Collections.Generic.IList<string> Types { get { throw null; } }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosScenarioConfigurationFilters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters>
+    {
+        public ChaosScenarioConfigurationFilters() { }
+        public System.Collections.Generic.IList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IList<string> PhysicalZones { get { throw null; } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ChaosScenarioParameterInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo>
     {
-        public ChaosScenarioParameterInfo(string name, Azure.ResourceManager.Chaos.Models.ParameterType type) { }
+        public ChaosScenarioParameterInfo(string name, Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType type) { }
         public string Default { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public bool? IsRequired { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public bool? Required { get { throw null; } set { } }
-        public Azure.ResourceManager.Chaos.Models.ParameterType Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1544,6 +1635,55 @@ namespace Azure.ResourceManager.Chaos.Models
         Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ChaosScenarioParameterType : System.IEquatable<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ChaosScenarioParameterType(string value) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType Array { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType Boolean { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType Number { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType Object { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType left, Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType left, Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ChaosScenarioRecommendation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation>
+    {
+        internal ChaosScenarioRecommendation() { }
+        public System.DateTimeOffset? EvaluationRunOn { get { throw null; } }
+        public Azure.ResourceManager.Chaos.Models.RecommendationStatus RecommendationStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChaosScenarioValidationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>
+    {
+        internal ChaosScenarioValidationData() { }
+        public Azure.ResourceManager.Chaos.Models.ValidationProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosScenarioValidationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class ChaosTargetFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosTargetFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosTargetFilter>
     {
@@ -1649,6 +1789,20 @@ namespace Azure.ResourceManager.Chaos.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosTargetSimpleFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosTargetSimpleFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ChaosWorkspaceEvaluationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>
+    {
+        internal ChaosWorkspaceEvaluationData() { }
+        public Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspaceEvaluationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ChaosWorkspacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch>
     {
         public ChaosWorkspacePatch() { }
@@ -1663,38 +1817,6 @@ namespace Azure.ResourceManager.Chaos.Models
         Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ChaosWorkspacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ConfigurationExclusions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ConfigurationExclusions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationExclusions>
-    {
-        public ConfigurationExclusions() { }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> Resources { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> Tags { get { throw null; } }
-        public System.Collections.Generic.IList<string> Types { get { throw null; } }
-        protected virtual Azure.ResourceManager.Chaos.Models.ConfigurationExclusions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Chaos.Models.ConfigurationExclusions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.ConfigurationExclusions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ConfigurationExclusions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ConfigurationExclusions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.ConfigurationExclusions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationExclusions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationExclusions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationExclusions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ConfigurationFilters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ConfigurationFilters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationFilters>
-    {
-        public ConfigurationFilters() { }
-        public System.Collections.Generic.IList<string> Locations { get { throw null; } }
-        public System.Collections.Generic.IList<string> PhysicalZones { get { throw null; } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-        protected virtual Azure.ResourceManager.Chaos.Models.ConfigurationFilters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Chaos.Models.ConfigurationFilters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.ConfigurationFilters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ConfigurationFilters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ConfigurationFilters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.ConfigurationFilters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationFilters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationFilters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ConfigurationFilters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CustomerDataStorageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.CustomerDataStorageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.CustomerDataStorageProperties>
     {
@@ -1798,41 +1920,6 @@ namespace Azure.ResourceManager.Chaos.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.OperationError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.OperationError>
-    {
-        internal OperationError() { }
-        public string ErrorCode { get { throw null; } }
-        public string ErrorMessage { get { throw null; } }
-        protected virtual Azure.ResourceManager.Chaos.Models.OperationError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Chaos.Models.OperationError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.OperationError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.OperationError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.OperationError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.OperationError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.OperationError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.OperationError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.OperationError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ParameterType : System.IEquatable<Azure.ResourceManager.Chaos.Models.ParameterType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ParameterType(string value) { throw null; }
-        public static Azure.ResourceManager.Chaos.Models.ParameterType Array { get { throw null; } }
-        public static Azure.ResourceManager.Chaos.Models.ParameterType Boolean { get { throw null; } }
-        public static Azure.ResourceManager.Chaos.Models.ParameterType Number { get { throw null; } }
-        public static Azure.ResourceManager.Chaos.Models.ParameterType Object { get { throw null; } }
-        public static Azure.ResourceManager.Chaos.Models.ParameterType String { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Chaos.Models.ParameterType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Chaos.Models.ParameterType left, Azure.ResourceManager.Chaos.Models.ParameterType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Chaos.Models.ParameterType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Chaos.Models.ParameterType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Chaos.Models.ParameterType left, Azure.ResourceManager.Chaos.Models.ParameterType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PermissionError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PermissionError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionError>
     {
         internal PermissionError() { }
@@ -1840,7 +1927,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public System.Collections.Generic.IReadOnlyList<string> MissingPermissions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RecommendedRoles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredPermissions { get { throw null; } }
-        public string ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Chaos.Models.PermissionError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Chaos.Models.PermissionError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1851,29 +1938,15 @@ namespace Azure.ResourceManager.Chaos.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PermissionsFix : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PermissionsFix>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionsFix>
-    {
-        internal PermissionsFix() { }
-        public Azure.ResourceManager.Chaos.Models.PermissionsFixProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.PermissionsFix System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PermissionsFix>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PermissionsFix>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.PermissionsFix System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionsFix>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionsFix>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionsFix>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class PermissionsFixProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PermissionsFixProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PermissionsFixProperties>
     {
         internal PermissionsFixProperties() { }
         public System.DateTimeOffset? CompletedOn { get { throw null; } }
+        public bool IsWhatIfMode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.RoleAssignmentResult> RoleAssignments { get { throw null; } }
         public System.DateTimeOffset StartedOn { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.PermissionsFixState State { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.PermissionsFixSummary Summary { get { throw null; } }
-        public bool WhatIfMode { get { throw null; } }
         protected virtual Azure.ResourceManager.Chaos.Models.PermissionsFixProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Chaos.Models.PermissionsFixProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1937,36 +2010,6 @@ namespace Azure.ResourceManager.Chaos.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PhysicalToLogicalZoneMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PhysicalToLogicalZoneMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateAccessPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PrivateAccessPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessPatch>
-    {
-        public PrivateAccessPatch() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.Chaos.Models.PrivateAccessPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Chaos.Models.PrivateAccessPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.PrivateAccessPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PrivateAccessPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PrivateAccessPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.PrivateAccessPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateAccessProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PrivateAccessProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessProperties>
-    {
-        public PrivateAccessProperties() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.ChaosPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption? PublicNetworkAccess { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Chaos.Models.PrivateAccessProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Chaos.Models.PrivateAccessProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.PrivateAccessProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PrivateAccessProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PrivateAccessProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.PrivateAccessProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateAccessProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class PrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.PrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.PrivateEndpointConnectionProperties>
     {
         internal PrivateEndpointConnectionProperties() { }
@@ -2001,21 +2044,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public static bool operator !=(Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption left, Azure.ResourceManager.Chaos.Models.PublicNetworkAccessOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Recommendation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Recommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Recommendation>
-    {
-        internal Recommendation() { }
-        public System.DateTimeOffset? EvaluationRunOn { get { throw null; } }
-        public Azure.ResourceManager.Chaos.Models.RecommendationStatus RecommendationStatus { get { throw null; } }
-        protected virtual Azure.ResourceManager.Chaos.Models.Recommendation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Chaos.Models.Recommendation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.Recommendation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Recommendation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Recommendation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.Recommendation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Recommendation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Recommendation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Recommendation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecommendationStatus : System.IEquatable<Azure.ResourceManager.Chaos.Models.RecommendationStatus>
     {
@@ -2043,7 +2071,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public int ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public string RemediationUri { get { throw null; } }
-        public string ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Chaos.Models.ResourceStateError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Chaos.Models.ResourceStateError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2074,12 +2102,12 @@ namespace Azure.ResourceManager.Chaos.Models
         internal RoleAssignmentResult() { }
         public Azure.ResourceManager.Chaos.Models.RoleAssignmentError Error { get { throw null; } }
         public string PrincipalId { get { throw null; } }
-        public string RoleAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleAssignmentId { get { throw null; } }
         public string RoleDefinitionId { get { throw null; } }
         public string RoleDefinitionName { get { throw null; } }
         public string Scope { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.RoleAssignmentStatus Status { get { throw null; } }
-        public string TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Chaos.Models.RoleAssignmentResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Chaos.Models.RoleAssignmentResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2167,8 +2195,8 @@ namespace Azure.ResourceManager.Chaos.Models
     public partial class ScenarioConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ScenarioConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ScenarioConfigurationProperties>
     {
         public ScenarioConfigurationProperties(Azure.Core.ResourceIdentifier scenarioId) { }
-        public Azure.ResourceManager.Chaos.Models.ConfigurationExclusions Exclusions { get { throw null; } set { } }
-        public Azure.ResourceManager.Chaos.Models.ConfigurationFilters Filters { get { throw null; } set { } }
+        public Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationExclusions Exclusions { get { throw null; } set { } }
+        public Azure.ResourceManager.Chaos.Models.ChaosScenarioConfigurationFilters Filters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosKeyValuePair> Parameters { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ScenarioId { get { throw null; } set { } }
@@ -2222,7 +2250,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.ChaosScenarioParameterInfo> Parameters { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.ChaosProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Chaos.Models.Recommendation Recommendation { get { throw null; } }
+        public Azure.ResourceManager.Chaos.Models.ChaosScenarioRecommendation Recommendation { get { throw null; } }
         public string Version { get { throw null; } }
         protected virtual Azure.ResourceManager.Chaos.Models.ScenarioProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2238,7 +2266,7 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal ScenarioRunProperties() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.OperationError> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ChaosOperationError> Errors { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.ScenarioErrors ExecutionErrors { get { throw null; } }
         public string ManagedIdentityPrincipalId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ScenarioRunResource> Resources { get { throw null; } }
@@ -2368,25 +2396,11 @@ namespace Azure.ResourceManager.Chaos.Models
         public static bool operator !=(Azure.ResourceManager.Chaos.Models.ScenarioValidationState left, Azure.ResourceManager.Chaos.Models.ScenarioValidationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Validation : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Validation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Validation>
-    {
-        internal Validation() { }
-        public Azure.ResourceManager.Chaos.Models.ValidationProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.Validation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Validation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Validation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.Validation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Validation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Validation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Validation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ValidationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ValidationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ValidationProperties>
     {
         internal ValidationProperties() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.OperationError> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ChaosOperationError> Errors { get { throw null; } }
         public string ExecutionPlanJson { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.ScenarioValidationState Status { get { throw null; } }
@@ -2401,25 +2415,11 @@ namespace Azure.ResourceManager.Chaos.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ValidationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ValidationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WorkspaceEvaluation : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>
-    {
-        internal WorkspaceEvaluation() { }
-        public Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class WorkspaceEvaluationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties>
     {
         internal WorkspaceEvaluationProperties() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.OperationError> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ChaosOperationError> Errors { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.RecommendationStatus? EvaluationResult { get { throw null; } }
         public int? NumScenariosEvaluatedCancelled { get { throw null; } }
         public int? NumScenariosEvaluatedFailed { get { throw null; } }
@@ -2428,7 +2428,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ScenarioEvaluationResultItem> Results { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationStatus Status { get { throw null; } }
-        public string WorkspaceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Chaos.Models.WorkspaceEvaluationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

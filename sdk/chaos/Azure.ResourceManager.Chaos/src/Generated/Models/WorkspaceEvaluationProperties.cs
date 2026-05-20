@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="WorkspaceEvaluationProperties"/>. </summary>
         internal WorkspaceEvaluationProperties()
         {
-            Errors = new ChangeTrackingList<OperationError>();
+            Errors = new ChangeTrackingList<ChaosOperationError>();
             Results = new ChangeTrackingList<ScenarioEvaluationResultItem>();
         }
 
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="evaluationResult"> The overall evaluation result. </param>
         /// <param name="results"> Per-scenario evaluation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationError> errors, string workspaceId, int? numScenariosToEvaluate, int? numScenariosEvaluatedSucceeded, int? numScenariosEvaluatedFailed, int? numScenariosEvaluatedCancelled, RecommendationStatus? evaluationResult, IReadOnlyList<ScenarioEvaluationResultItem> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceEvaluationProperties(WorkspaceEvaluationStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, int? numScenariosToEvaluate, int? numScenariosEvaluatedSucceeded, int? numScenariosEvaluatedFailed, int? numScenariosEvaluatedCancelled, RecommendationStatus? evaluationResult, IReadOnlyList<ScenarioEvaluationResultItem> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartOn = startOn;
@@ -63,10 +64,10 @@ namespace Azure.ResourceManager.Chaos.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> System or infrastructure errors encountered during evaluation. </summary>
-        public IReadOnlyList<OperationError> Errors { get; }
+        public IReadOnlyList<ChaosOperationError> Errors { get; }
 
         /// <summary> The workspace ID this evaluation belongs to. </summary>
-        public string WorkspaceId { get; }
+        public ResourceIdentifier WorkspaceId { get; }
 
         /// <summary> The number of scenarios to evaluate. </summary>
         public int? NumScenariosToEvaluate { get; }

@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosExperimentExecutionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateAccessResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ChaosPrivateAccessResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateAccessResource"/> object. </returns>
-        public virtual PrivateAccessResource GetPrivateAccessResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosPrivateAccessResource"/> object. </returns>
+        public virtual ChaosPrivateAccessResource GetChaosPrivateAccessResource(ResourceIdentifier id)
         {
-            PrivateAccessResource.ValidateResourceId(id);
-            return new PrivateAccessResource(Client, id);
+            ChaosPrivateAccessResource.ValidateResourceId(id);
+            return new ChaosPrivateAccessResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -201,13 +201,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosWorkspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiscoveredResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ChaosDiscoveredResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiscoveredResource"/> object. </returns>
-        public virtual DiscoveredResource GetDiscoveredResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosDiscoveredResource"/> object. </returns>
+        public virtual ChaosDiscoveredResource GetChaosDiscoveredResource(ResourceIdentifier id)
         {
-            DiscoveredResource.ValidateResourceId(id);
-            return new DiscoveredResource(Client, id);
+            ChaosDiscoveredResource.ValidateResourceId(id);
+            return new ChaosDiscoveredResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ChaosScenarioResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -219,15 +219,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosScenarioResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ChaosScenarioRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosScenarioRunResource"/> object. </returns>
-        public virtual ChaosScenarioRunResource GetChaosScenarioRunResource(ResourceIdentifier id)
-        {
-            ChaosScenarioRunResource.ValidateResourceId(id);
-            return new ChaosScenarioRunResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ChaosScenarioConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ChaosScenarioConfigurationResource"/> object. </returns>
@@ -235,6 +226,15 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosScenarioConfigurationResource.ValidateResourceId(id);
             return new ChaosScenarioConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioRunResource"/> object. </returns>
+        public virtual ChaosScenarioRunResource GetChaosScenarioRunResource(ResourceIdentifier id)
+        {
+            ChaosScenarioRunResource.ValidateResourceId(id);
+            return new ChaosScenarioRunResource(Client, id);
         }
     }
 }

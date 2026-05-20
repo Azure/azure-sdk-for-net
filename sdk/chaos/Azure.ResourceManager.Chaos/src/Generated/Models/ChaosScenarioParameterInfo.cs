@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name of the parameter. </param>
         /// <param name="type"> Parameter data type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ChaosScenarioParameterInfo(string name, ParameterType @type)
+        public ChaosScenarioParameterInfo(string name, ChaosScenarioParameterType @type)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name of the parameter. </param>
         /// <param name="type"> Parameter data type. </param>
         /// <param name="default"> Default value for the parameter. </param>
-        /// <param name="required"> Whether this parameter is required. </param>
+        /// <param name="isRequired"> Whether this parameter is required. </param>
         /// <param name="description"> Description of the parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioParameterInfo(string name, ParameterType @type, string @default, bool? @required, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioParameterInfo(string name, ChaosScenarioParameterType @type, string @default, bool? isRequired, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
             Default = @default;
-            Required = @required;
+            IsRequired = isRequired;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Name { get; set; }
 
         /// <summary> Parameter data type. </summary>
-        public ParameterType Type { get; set; }
+        public ChaosScenarioParameterType Type { get; set; }
 
         /// <summary> Default value for the parameter. </summary>
         public string Default { get; set; }
 
         /// <summary> Whether this parameter is required. </summary>
-        public bool? Required { get; set; }
+        public bool? IsRequired { get; set; }
 
         /// <summary> Description of the parameter. </summary>
         public string Description { get; set; }

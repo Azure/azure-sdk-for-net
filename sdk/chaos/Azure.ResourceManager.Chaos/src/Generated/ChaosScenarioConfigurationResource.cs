@@ -308,8 +308,9 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ExecuteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ChaosScenarioRunResource>> ExecuteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scenarioConfigurationsClientDiagnostics.CreateScope("ChaosScenarioConfigurationResource.Execute");
             scope.Start();
@@ -321,7 +322,18 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
+                ChaosArmOperation<ChaosScenarioRunResource> operation = new ChaosArmOperation<ChaosScenarioRunResource>(
+                    new ChaosScenarioRunOperationSource(Client),
+                    _scenarioConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -351,8 +363,9 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Execute(CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ChaosScenarioRunResource> Execute(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scenarioConfigurationsClientDiagnostics.CreateScope("ChaosScenarioConfigurationResource.Execute");
             scope.Start();
@@ -364,7 +377,18 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                return response;
+                ChaosArmOperation<ChaosScenarioRunResource> operation = new ChaosArmOperation<ChaosScenarioRunResource>(
+                    new ChaosScenarioRunOperationSource(Client),
+                    _scenarioConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -397,7 +421,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<PermissionsFix>> FixResourcePermissionsAsync(WaitUntil waitUntil, ChaosFixResourcePermissionsRequestContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ChaosPermissionsFixData>> FixResourcePermissionsAsync(WaitUntil waitUntil, ChaosFixResourcePermissionsRequestContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scenarioConfigurationsClientDiagnostics.CreateScope("ChaosScenarioConfigurationResource.FixResourcePermissions");
             scope.Start();
@@ -409,8 +433,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateFixResourcePermissionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChaosFixResourcePermissionsRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ChaosArmOperation<PermissionsFix> operation = new ChaosArmOperation<PermissionsFix>(
-                    new PermissionsFixOperationSource(),
+                ChaosArmOperation<ChaosPermissionsFixData> operation = new ChaosArmOperation<ChaosPermissionsFixData>(
+                    new ChaosPermissionsFixDataOperationSource(),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -453,7 +477,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<PermissionsFix> FixResourcePermissions(WaitUntil waitUntil, ChaosFixResourcePermissionsRequestContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ChaosPermissionsFixData> FixResourcePermissions(WaitUntil waitUntil, ChaosFixResourcePermissionsRequestContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scenarioConfigurationsClientDiagnostics.CreateScope("ChaosScenarioConfigurationResource.FixResourcePermissions");
             scope.Start();
@@ -465,8 +489,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateFixResourcePermissionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChaosFixResourcePermissionsRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ChaosArmOperation<PermissionsFix> operation = new ChaosArmOperation<PermissionsFix>(
-                    new PermissionsFixOperationSource(),
+                ChaosArmOperation<ChaosPermissionsFixData> operation = new ChaosArmOperation<ChaosPermissionsFixData>(
+                    new ChaosPermissionsFixDataOperationSource(),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -508,7 +532,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<Validation>> ValidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ChaosScenarioValidationData>> ValidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scenarioConfigurationsClientDiagnostics.CreateScope("ChaosScenarioConfigurationResource.Validate");
             scope.Start();
@@ -520,8 +544,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ChaosArmOperation<Validation> operation = new ChaosArmOperation<Validation>(
-                    new ValidationOperationSource(),
+                ChaosArmOperation<ChaosScenarioValidationData> operation = new ChaosArmOperation<ChaosScenarioValidationData>(
+                    new ChaosScenarioValidationDataOperationSource(),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -563,7 +587,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<Validation> Validate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ChaosScenarioValidationData> Validate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scenarioConfigurationsClientDiagnostics.CreateScope("ChaosScenarioConfigurationResource.Validate");
             scope.Start();
@@ -575,8 +599,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ChaosArmOperation<Validation> operation = new ChaosArmOperation<Validation>(
-                    new ValidationOperationSource(),
+                ChaosArmOperation<ChaosScenarioValidationData> operation = new ChaosArmOperation<ChaosScenarioValidationData>(
+                    new ChaosScenarioValidationDataOperationSource(),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

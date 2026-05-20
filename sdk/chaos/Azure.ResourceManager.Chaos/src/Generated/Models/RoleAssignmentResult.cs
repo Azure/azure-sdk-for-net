@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="roleAssignmentId"> The created role assignment resource ID (null if failed or what-if mode). </param>
         /// <param name="error"> Error details if the assignment failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentResult(string targetResourceId, string principalId, string roleDefinitionId, string roleDefinitionName, string scope, RoleAssignmentStatus status, string roleAssignmentId, RoleAssignmentError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentResult(ResourceIdentifier targetResourceId, string principalId, string roleDefinitionId, string roleDefinitionName, string scope, RoleAssignmentStatus status, ResourceIdentifier roleAssignmentId, RoleAssignmentError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             PrincipalId = principalId;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The target Azure resource ID. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
 
         /// <summary> The managed identity principal ID. </summary>
         public string PrincipalId { get; }
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public RoleAssignmentStatus Status { get; }
 
         /// <summary> The created role assignment resource ID (null if failed or what-if mode). </summary>
-        public string RoleAssignmentId { get; }
+        public ResourceIdentifier RoleAssignmentId { get; }
 
         /// <summary> Error details if the assignment failed. </summary>
         public RoleAssignmentError Error { get; }

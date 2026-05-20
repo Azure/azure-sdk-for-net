@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateAccessResource> GetPrivateAccessesAsync(string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ChaosPrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosPrivateAccessResource> GetPrivateAccessesAsync(string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateAccessData, PrivateAccessResource>(new PrivateAccessesGetPrivateAccessesAsyncCollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new PrivateAccessResource(Client, data));
+            return new AsyncPageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetPrivateAccessesAsyncCollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new ChaosPrivateAccessResource(Client, data));
         }
 
         /// <summary>
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateAccessResource> GetPrivateAccesses(string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ChaosPrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosPrivateAccessResource> GetPrivateAccesses(string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateAccessData, PrivateAccessResource>(new PrivateAccessesGetPrivateAccessesCollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new PrivateAccessResource(Client, data));
+            return new PageableWrapper<ChaosPrivateAccessData, ChaosPrivateAccessResource>(new PrivateAccessesGetPrivateAccessesCollectionResultOfT(PrivateAccessesRestClient, Guid.Parse(Id.SubscriptionId), continuationToken, context, "MockableChaosSubscriptionResource.GetPrivateAccesses"), data => new ChaosPrivateAccessResource(Client, data));
         }
 
         /// <summary>

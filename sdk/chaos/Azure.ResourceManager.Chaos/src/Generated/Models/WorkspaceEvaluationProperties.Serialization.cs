@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (OperationError item in Errors)
+                foreach (ChaosOperationError item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -184,8 +185,8 @@ namespace Azure.ResourceManager.Chaos.Models
             WorkspaceEvaluationStatus status = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            IReadOnlyList<OperationError> errors = default;
-            string workspaceId = default;
+            IReadOnlyList<ChaosOperationError> errors = default;
+            ResourceIdentifier workspaceId = default;
             int? numScenariosToEvaluate = default;
             int? numScenariosEvaluatedSucceeded = default;
             int? numScenariosEvaluatedFailed = default;
@@ -224,17 +225,17 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    List<OperationError> array = new List<OperationError>();
+                    List<ChaosOperationError> array = new List<ChaosOperationError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationError.DeserializeOperationError(item, options));
+                        array.Add(ChaosOperationError.DeserializeChaosOperationError(item, options));
                     }
                     errors = array;
                     continue;
                 }
                 if (prop.NameEquals("workspaceId"u8))
                 {
-                    workspaceId = prop.Value.GetString();
+                    workspaceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numScenariosToEvaluate"u8))
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 status,
                 startOn,
                 endOn,
-                errors ?? new ChangeTrackingList<OperationError>(),
+                errors ?? new ChangeTrackingList<ChaosOperationError>(),
                 workspaceId,
                 numScenariosToEvaluate,
                 numScenariosEvaluatedSucceeded,

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Chaos.Models
         internal ScenarioRunProperties()
         {
             Resources = new ChangeTrackingList<ScenarioRunResource>();
-            Errors = new ChangeTrackingList<OperationError>();
+            Errors = new ChangeTrackingList<ChaosOperationError>();
             ScenarioRunSummary = new ChangeTrackingList<ScenarioRunSummaryAction>();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// requested physical zones, and per-subscription logical zone mappings.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, string managedIdentityPrincipalId, ScenarioRunState status, IReadOnlyList<ScenarioRunResource> resources, IReadOnlyList<OperationError> errors, ScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startOn, DateTimeOffset? endOn, ZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, string managedIdentityPrincipalId, ScenarioRunState status, IReadOnlyList<ScenarioRunResource> resources, IReadOnlyList<ChaosOperationError> errors, ScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startOn, DateTimeOffset? endOn, ZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceName = workspaceName;
             ScenarioName = scenarioName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public IReadOnlyList<ScenarioRunResource> Resources { get; }
 
         /// <summary> System or infrastructure errors encountered during the scenario run. </summary>
-        public IReadOnlyList<OperationError> Errors { get; }
+        public IReadOnlyList<ChaosOperationError> Errors { get; }
 
         /// <summary> Business errors from fault injection — permission and resource state issues. </summary>
         public ScenarioErrors ExecutionErrors { get; }

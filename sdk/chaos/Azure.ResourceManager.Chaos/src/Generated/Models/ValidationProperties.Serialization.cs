@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (OperationError item in Errors)
+                foreach (ChaosOperationError item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Chaos.Models
             DateTimeOffset startOn = default;
             string executionPlanJson = default;
             DateTimeOffset? endOn = default;
-            IReadOnlyList<OperationError> errors = default;
+            IReadOnlyList<ChaosOperationError> errors = default;
             ScenarioErrors validationErrors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    List<OperationError> array = new List<OperationError>();
+                    List<ChaosOperationError> array = new List<ChaosOperationError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationError.DeserializeOperationError(item, options));
+                        array.Add(ChaosOperationError.DeserializeChaosOperationError(item, options));
                     }
                     errors = array;
                     continue;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 startOn,
                 executionPlanJson,
                 endOn,
-                errors ?? new ChangeTrackingList<OperationError>(),
+                errors ?? new ChangeTrackingList<ChaosOperationError>(),
                 validationErrors,
                 additionalBinaryDataProperties);
         }

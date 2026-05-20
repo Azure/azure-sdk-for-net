@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 throw new FormatException($"The model {nameof(ChaosFixResourcePermissionsRequestContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(WhatIf))
+            if (Optional.IsDefined(IsWhatIf))
             {
                 writer.WritePropertyName("whatIf"u8);
-                writer.WriteBooleanValue(WhatIf.Value);
+                writer.WriteBooleanValue(IsWhatIf.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            bool? whatIf = default;
+            bool? isWhatIf = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    whatIf = prop.Value.GetBoolean();
+                    isWhatIf = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ChaosFixResourcePermissionsRequestContent(whatIf, additionalBinaryDataProperties);
+            return new ChaosFixResourcePermissionsRequestContent(isWhatIf, additionalBinaryDataProperties);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
         /// <param name="filters"> Filter criteria used to constrain which discovered resources participate in fault injection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioConfigurationProperties(ResourceIdentifier scenarioId, IList<ChaosKeyValuePair> parameters, ConfigurationExclusions exclusions, ChaosProvisioningState? provisioningState, ConfigurationFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioConfigurationProperties(ResourceIdentifier scenarioId, IList<ChaosKeyValuePair> parameters, ChaosScenarioConfigurationExclusions exclusions, ChaosProvisioningState? provisioningState, ChaosScenarioConfigurationFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScenarioId = scenarioId;
             Parameters = parameters;
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Chaos.Models
         public IList<ChaosKeyValuePair> Parameters { get; }
 
         /// <summary> Exclusion criteria for protecting resources from fault injection. </summary>
-        public ConfigurationExclusions Exclusions { get; set; }
+        public ChaosScenarioConfigurationExclusions Exclusions { get; set; }
 
         /// <summary> Most recent provisioning state for the given scenario resource. </summary>
         public ChaosProvisioningState? ProvisioningState { get; }
 
         /// <summary> Filter criteria used to constrain which discovered resources participate in fault injection. </summary>
-        public ConfigurationFilters Filters { get; set; }
+        public ChaosScenarioConfigurationFilters Filters { get; set; }
     }
 }

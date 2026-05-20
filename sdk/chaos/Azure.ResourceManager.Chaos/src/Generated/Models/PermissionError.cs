@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="recommendedRoles"> The recommended roles. </param>
         /// <param name="identity"> The identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PermissionError(string resourceId, IReadOnlyList<string> missingPermissions, IReadOnlyList<string> requiredPermissions, IReadOnlyList<string> recommendedRoles, EntraIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PermissionError(ResourceIdentifier resourceId, IReadOnlyList<string> missingPermissions, IReadOnlyList<string> requiredPermissions, IReadOnlyList<string> recommendedRoles, EntraIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             MissingPermissions = missingPermissions;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The resource id for the affected resource. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The missing permissions. </summary>
         public IReadOnlyList<string> MissingPermissions { get; }

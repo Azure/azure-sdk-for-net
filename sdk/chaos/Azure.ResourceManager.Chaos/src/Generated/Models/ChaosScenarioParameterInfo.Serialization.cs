@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);
             }
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             string name = default;
-            ParameterType @type = default;
+            ChaosScenarioParameterType @type = default;
             string @default = default;
-            bool? @required = default;
+            bool? isRequired = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ParameterType(prop.Value.GetString());
+                    @type = new ChaosScenarioParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("default"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    @required = prop.Value.GetBoolean();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 @type,
                 @default,
-                @required,
+                isRequired,
                 description,
                 additionalBinaryDataProperties);
         }

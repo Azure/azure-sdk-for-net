@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string description = default;
             IList<ChaosScenarioParameterInfo> parameters = default;
             IList<ScenarioAction> actions = default;
-            Recommendation recommendation = default;
+            ChaosScenarioRecommendation recommendation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    recommendation = Recommendation.DeserializeRecommendation(prop.Value, options);
+                    recommendation = ChaosScenarioRecommendation.DeserializeChaosScenarioRecommendation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

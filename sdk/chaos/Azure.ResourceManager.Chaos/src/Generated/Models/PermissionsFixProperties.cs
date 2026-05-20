@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="state"> The permission fix state. </param>
         /// <param name="startedOn"> The permission fix UTC start time. </param>
         /// <param name="completedOn"> The permission fix UTC end time. </param>
-        /// <param name="whatIfMode"> Whether this was a what-if (dry run) operation. </param>
+        /// <param name="isWhatIfMode"> Whether this was a what-if (dry run) operation. </param>
         /// <param name="roleAssignments"> The list of role assignment results. </param>
         /// <param name="summary"> Summary of the permission fix operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PermissionsFixProperties(PermissionsFixState state, DateTimeOffset startedOn, DateTimeOffset? completedOn, bool whatIfMode, IReadOnlyList<RoleAssignmentResult> roleAssignments, PermissionsFixSummary summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PermissionsFixProperties(PermissionsFixState state, DateTimeOffset startedOn, DateTimeOffset? completedOn, bool isWhatIfMode, IReadOnlyList<RoleAssignmentResult> roleAssignments, PermissionsFixSummary summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StartedOn = startedOn;
             CompletedOn = completedOn;
-            WhatIfMode = whatIfMode;
+            IsWhatIfMode = isWhatIfMode;
             RoleAssignments = roleAssignments;
             Summary = summary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> Whether this was a what-if (dry run) operation. </summary>
-        public bool WhatIfMode { get; }
+        public bool IsWhatIfMode { get; }
 
         /// <summary> The list of role assignment results. </summary>
         public IReadOnlyList<RoleAssignmentResult> RoleAssignments { get; }

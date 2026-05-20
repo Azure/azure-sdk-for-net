@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="DiscoveredResourceListResult"/>. </summary>
         /// <param name="value"> The DiscoveredResource items on this page. </param>
-        internal DiscoveredResourceListResult(IEnumerable<DiscoveredResourceData> value)
+        internal DiscoveredResourceListResult(IEnumerable<ChaosDiscoveredData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="value"> The DiscoveredResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveredResourceListResult(IList<DiscoveredResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveredResourceListResult(IList<ChaosDiscoveredData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The DiscoveredResource items on this page. </summary>
-        public IList<DiscoveredResourceData> Value { get; }
+        public IList<ChaosDiscoveredData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

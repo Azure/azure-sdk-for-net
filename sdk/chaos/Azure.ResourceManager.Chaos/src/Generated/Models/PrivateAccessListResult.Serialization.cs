@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PrivateAccessData item in Value)
+            foreach (ChaosPrivateAccessData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            IList<PrivateAccessData> value = default;
+            IList<ChaosPrivateAccessData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PrivateAccessData> array = new List<PrivateAccessData>();
+                    List<ChaosPrivateAccessData> array = new List<ChaosPrivateAccessData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateAccessData.DeserializePrivateAccessData(item, options));
+                        array.Add(ChaosPrivateAccessData.DeserializeChaosPrivateAccessData(item, options));
                     }
                     value = array;
                     continue;

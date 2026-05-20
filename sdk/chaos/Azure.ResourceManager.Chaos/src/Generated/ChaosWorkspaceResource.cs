@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<WorkspaceEvaluation>> RefreshRecommendationsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ChaosWorkspaceEvaluationData>> RefreshRecommendationsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ChaosWorkspaceResource.RefreshRecommendations");
             scope.Start();
@@ -440,8 +440,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _workspacesRestClient.CreateRefreshRecommendationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ChaosArmOperation<WorkspaceEvaluation> operation = new ChaosArmOperation<WorkspaceEvaluation>(
-                    new WorkspaceEvaluationOperationSource(),
+                ChaosArmOperation<ChaosWorkspaceEvaluationData> operation = new ChaosArmOperation<ChaosWorkspaceEvaluationData>(
+                    new ChaosWorkspaceEvaluationDataOperationSource(),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<WorkspaceEvaluation> RefreshRecommendations(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ChaosWorkspaceEvaluationData> RefreshRecommendations(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ChaosWorkspaceResource.RefreshRecommendations");
             scope.Start();
@@ -495,8 +495,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _workspacesRestClient.CreateRefreshRecommendationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ChaosArmOperation<WorkspaceEvaluation> operation = new ChaosArmOperation<WorkspaceEvaluation>(
-                    new WorkspaceEvaluationOperationSource(),
+                ChaosArmOperation<ChaosWorkspaceEvaluationData> operation = new ChaosArmOperation<ChaosWorkspaceEvaluationData>(
+                    new ChaosWorkspaceEvaluationDataOperationSource(),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -789,11 +789,11 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Gets a collection of DiscoveredResources in the <see cref="ChaosWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of DiscoveredResources and their operations over a DiscoveredResource. </returns>
-        public virtual DiscoveredResourceCollection GetDiscoveredResources()
+        /// <summary> Gets a collection of ChaosDiscovereds in the <see cref="ChaosWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosDiscovereds and their operations over a ChaosDiscoveredResource. </returns>
+        public virtual ChaosDiscoveredCollection GetChaosDiscovereds()
         {
-            return GetCachedClient(client => new DiscoveredResourceCollection(client, Id));
+            return GetCachedClient(client => new ChaosDiscoveredCollection(client, Id));
         }
 
         /// <summary> Get a discovered resource. </summary>
@@ -802,11 +802,11 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveredResource>> GetDiscoveredResourceAsync(string discoveredResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosDiscoveredResource>> GetChaosDiscoveredAsync(string discoveredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveredResourceName, nameof(discoveredResourceName));
 
-            return await GetDiscoveredResources().GetAsync(discoveredResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetChaosDiscovereds().GetAsync(discoveredResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a discovered resource. </summary>
@@ -815,11 +815,11 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveredResource> GetDiscoveredResource(string discoveredResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosDiscoveredResource> GetChaosDiscovered(string discoveredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveredResourceName, nameof(discoveredResourceName));
 
-            return GetDiscoveredResources().Get(discoveredResourceName, cancellationToken);
+            return GetChaosDiscovereds().Get(discoveredResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ChaosScenarios in the <see cref="ChaosWorkspaceResource"/>. </summary>

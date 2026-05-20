@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             ResourceIdentifier scenarioId = default;
             IList<ChaosKeyValuePair> parameters = default;
-            ConfigurationExclusions exclusions = default;
+            ChaosScenarioConfigurationExclusions exclusions = default;
             ChaosProvisioningState? provisioningState = default;
-            ConfigurationFilters filters = default;
+            ChaosScenarioConfigurationFilters filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    exclusions = ConfigurationExclusions.DeserializeConfigurationExclusions(prop.Value, options);
+                    exclusions = ChaosScenarioConfigurationExclusions.DeserializeChaosScenarioConfigurationExclusions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    filters = ConfigurationFilters.DeserializeConfigurationFilters(prop.Value, options);
+                    filters = ChaosScenarioConfigurationFilters.DeserializeChaosScenarioConfigurationFilters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

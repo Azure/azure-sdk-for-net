@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosFixResourcePermissionsRequestContent"/>. </summary>
-        /// <param name="whatIf"> Optional value that indicates whether to run a "dry run" of fixing resource permissions. </param>
+        /// <param name="isWhatIf"> Optional value that indicates whether to run a "dry run" of fixing resource permissions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosFixResourcePermissionsRequestContent(bool? whatIf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosFixResourcePermissionsRequestContent(bool? isWhatIf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            WhatIf = whatIf;
+            IsWhatIf = isWhatIf;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional value that indicates whether to run a "dry run" of fixing resource permissions. </summary>
-        public bool? WhatIf { get; set; }
+        public bool? IsWhatIf { get; set; }
     }
 }

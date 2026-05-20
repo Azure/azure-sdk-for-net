@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return GetChaosExperiments().Get(experimentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateAccesses in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateAccesses and their operations over a PrivateAccessResource. </returns>
-        public virtual PrivateAccessCollection GetPrivateAccesses()
+        /// <summary> Gets a collection of ChaosPrivateAccesses in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosPrivateAccesses and their operations over a ChaosPrivateAccessResource. </returns>
+        public virtual ChaosPrivateAccessCollection GetChaosPrivateAccesses()
         {
-            return GetCachedClient(client => new PrivateAccessCollection(client, Id));
+            return GetCachedClient(client => new ChaosPrivateAccessCollection(client, Id));
         }
 
         /// <summary>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateAccessName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateAccessResource>> GetPrivateAccessAsync(string privateAccessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosPrivateAccessResource>> GetChaosPrivateAccessAsync(string privateAccessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateAccessName, nameof(privateAccessName));
 
-            return await GetPrivateAccesses().GetAsync(privateAccessName, cancellationToken).ConfigureAwait(false);
+            return await GetChaosPrivateAccesses().GetAsync(privateAccessName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateAccessName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateAccessResource> GetPrivateAccess(string privateAccessName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosPrivateAccessResource> GetChaosPrivateAccess(string privateAccessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateAccessName, nameof(privateAccessName));
 
-            return GetPrivateAccesses().Get(privateAccessName, cancellationToken);
+            return GetChaosPrivateAccesses().Get(privateAccessName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ChaosWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -156,20 +157,20 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            string targetResourceId = default;
+            ResourceIdentifier targetResourceId = default;
             string principalId = default;
             string roleDefinitionId = default;
             string roleDefinitionName = default;
             string scope = default;
             RoleAssignmentStatus status = default;
-            string roleAssignmentId = default;
+            ResourceIdentifier roleAssignmentId = default;
             RoleAssignmentError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = prop.Value.GetString();
+                    targetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("principalId"u8))
@@ -199,7 +200,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("roleAssignmentId"u8))
                 {
-                    roleAssignmentId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    roleAssignmentId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

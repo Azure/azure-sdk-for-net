@@ -401,39 +401,6 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Gets a collection of ChaosScenarioRuns in the <see cref="ChaosScenarioResource"/>. </summary>
-        /// <returns> An object representing collection of ChaosScenarioRuns and their operations over a ChaosScenarioRunResource. </returns>
-        public virtual ChaosScenarioRunCollection GetChaosScenarioRuns()
-        {
-            return GetCachedClient(client => new ChaosScenarioRunCollection(client, Id));
-        }
-
-        /// <summary> Get a scenario run. </summary>
-        /// <param name="runId"> The name of the ScenarioRun. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosScenarioRunResource>> GetChaosScenarioRunAsync(string runId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            return await GetChaosScenarioRuns().GetAsync(runId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a scenario run. </summary>
-        /// <param name="runId"> The name of the ScenarioRun. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ChaosScenarioRunResource> GetChaosScenarioRun(string runId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            return GetChaosScenarioRuns().Get(runId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ChaosScenarioConfigurations in the <see cref="ChaosScenarioResource"/>. </summary>
         /// <returns> An object representing collection of ChaosScenarioConfigurations and their operations over a ChaosScenarioConfigurationResource. </returns>
         public virtual ChaosScenarioConfigurationCollection GetChaosScenarioConfigurations()
@@ -465,6 +432,53 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNullOrEmpty(scenarioConfigurationName, nameof(scenarioConfigurationName));
 
             return GetChaosScenarioConfigurations().Get(scenarioConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ChaosScenarioRuns in the <see cref="ChaosScenarioResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosScenarioRuns and their operations over a ChaosScenarioRunResource. </returns>
+        public virtual ChaosScenarioRunCollection GetChaosScenarioRuns()
+        {
+            return GetCachedClient(client => new ChaosScenarioRunCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a scenario run.
+        /// This endpoint is also the polling target for ScenarioConfigurations.execute
+        /// and ScenarioRuns.cancel (final-state-via: location). While the run is in
+        /// progress the service returns 202 with a Location header pointing back to
+        /// this URL; clients must keep polling until they receive 200, which carries
+        /// the final ScenarioRun body.
+        /// </summary>
+        /// <param name="runId"> The name of the ScenarioRun. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosScenarioRunResource>> GetChaosScenarioRunAsync(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            return await GetChaosScenarioRuns().GetAsync(runId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a scenario run.
+        /// This endpoint is also the polling target for ScenarioConfigurations.execute
+        /// and ScenarioRuns.cancel (final-state-via: location). While the run is in
+        /// progress the service returns 202 with a Location header pointing back to
+        /// this URL; clients must keep polling until they receive 200, which carries
+        /// the final ScenarioRun body.
+        /// </summary>
+        /// <param name="runId"> The name of the ScenarioRun. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosScenarioRunResource> GetChaosScenarioRun(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            return GetChaosScenarioRuns().Get(runId, cancellationToken);
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DiscoveredResourceData item in Value)
+            foreach (ChaosDiscoveredData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            IList<DiscoveredResourceData> value = default;
+            IList<ChaosDiscoveredData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DiscoveredResourceData> array = new List<DiscoveredResourceData>();
+                    List<ChaosDiscoveredData> array = new List<ChaosDiscoveredData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiscoveredResourceData.DeserializeDiscoveredResourceData(item, options));
+                        array.Add(ChaosDiscoveredData.DeserializeChaosDiscoveredData(item, options));
                     }
                     value = array;
                     continue;

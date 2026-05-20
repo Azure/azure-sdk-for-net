@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="actions"> Array of actions that define the scenario's orchestration. </param>
         /// <param name="recommendation"> The recommendation information for this scenario. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioProperties(ChaosProvisioningState? provisioningState, string createdFrom, string version, string description, IList<ChaosScenarioParameterInfo> parameters, IList<ScenarioAction> actions, Recommendation recommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioProperties(ChaosProvisioningState? provisioningState, string createdFrom, string version, string description, IList<ChaosScenarioParameterInfo> parameters, IList<ScenarioAction> actions, ChaosScenarioRecommendation recommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedFrom = createdFrom;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public IList<ScenarioAction> Actions { get; }
 
         /// <summary> The recommendation information for this scenario. </summary>
-        public Recommendation Recommendation { get; }
+        public ChaosScenarioRecommendation Recommendation { get; }
     }
 }

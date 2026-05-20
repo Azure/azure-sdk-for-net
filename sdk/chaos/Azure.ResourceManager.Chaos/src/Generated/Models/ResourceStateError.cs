@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="remediationUri"> The remediation uri. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceStateError(string resourceId, int errorCode, string errorMessage, string remediationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceStateError(ResourceIdentifier resourceId, int errorCode, string errorMessage, string remediationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ErrorCode = errorCode;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The resource id for the affected resource. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The error code. </summary>
         public int ErrorCode { get; }

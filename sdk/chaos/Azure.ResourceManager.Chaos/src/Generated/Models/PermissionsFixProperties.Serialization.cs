@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("whatIfMode"u8);
-                writer.WriteBooleanValue(WhatIfMode);
+                writer.WriteBooleanValue(IsWhatIfMode);
             }
             if (options.Format != "W")
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Chaos.Models
             PermissionsFixState state = default;
             DateTimeOffset startedOn = default;
             DateTimeOffset? completedOn = default;
-            bool whatIfMode = default;
+            bool isWhatIfMode = default;
             IReadOnlyList<RoleAssignmentResult> roleAssignments = default;
             PermissionsFixSummary summary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("whatIfMode"u8))
                 {
-                    whatIfMode = prop.Value.GetBoolean();
+                    isWhatIfMode = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("roleAssignments"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 state,
                 startedOn,
                 completedOn,
-                whatIfMode,
+                isWhatIfMode,
                 roleAssignments,
                 summary,
                 additionalBinaryDataProperties);

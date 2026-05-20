@@ -14,7 +14,7 @@ using Azure.ResourceManager.Chaos.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    internal partial class PrivateAccessesGetAllCollectionResultOfT : Pageable<PrivateAccessData>
+    internal partial class PrivateAccessesGetAllCollectionResultOfT : Pageable<ChaosPrivateAccessData>
     {
         private readonly PrivateAccesses _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateAccessesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PrivateAccessData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ChaosPrivateAccessData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos
                     yield break;
                 }
                 PrivateAccessListResult result = PrivateAccessListResult.FromResponse(response);
-                yield return Page<PrivateAccessData>.FromValues((IReadOnlyList<PrivateAccessData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ChaosPrivateAccessData>.FromValues((IReadOnlyList<ChaosPrivateAccessData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
