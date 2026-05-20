@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Resources.Policy
     {
         private readonly ClientDiagnostics _policyDefinitionsClientDiagnostics;
         private readonly PolicyDefinitions _policyDefinitionsRestClient;
-        private readonly ClientDiagnostics _policyDefinitionVersionsClientDiagnostics;
-        private readonly PolicyDefinitionVersions _policyDefinitionVersionsRestClient;
         private readonly PolicyDefinitionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyDefinitions";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.Resources.Policy
             TryGetApiVersion(ResourceType, out string policyDefinitionApiVersion);
             _policyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", ResourceType.Namespace, Diagnostics);
             _policyDefinitionsRestClient = new PolicyDefinitions(_policyDefinitionsClientDiagnostics, Pipeline, Endpoint, policyDefinitionApiVersion ?? "2025-12-01-preview");
-            _policyDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", ResourceType.Namespace, Diagnostics);
-            _policyDefinitionVersionsRestClient = new PolicyDefinitionVersions(_policyDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, policyDefinitionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

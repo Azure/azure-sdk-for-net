@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.13.0 (2026-05-18)
+
+### Features Added
+
+- Added `CredentialSettings.TokenProvider` to hold the resolved `AuthenticationTokenProvider` for the credential.
+
+### Breaking Changes
+
+- `IConfiguration.GetCredential(...)` renamed to `IConfiguration.GetCredentialSettings(...)` and its return type changed from `AuthenticationTokenProvider?` to `CredentialSettings?` (experimental `SCME0002`).
+
+### Other Changes
+
+- `ClientSettings.CredentialProvider` will be removed in a future release; migrate to `settings.Credential.TokenProvider` (experimental `SCME0002`).
+
+## 1.12.0 (2026-05-12)
+
+### Features Added
+
+- Added `CredentialSettings.this[string key]` indexer for reading custom properties from the credential configuration section.
+
+### Other Changes
+
+- `AuthenticationPolicy.Create` no longer throws when an ApiKey credential section carries a `Scope` value; `Scope` is ignored for ApiKey auth.
 
 ## 1.11.0 (2026-05-05)
 

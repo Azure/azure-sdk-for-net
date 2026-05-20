@@ -102,15 +102,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBucketResource netAppBucket = client.GetNetAppBucketResource(netAppBucketResourceId);
 
             // invoke the operation
-            NetAppBucketPatch patch = new NetAppBucketPatch
+            BucketPatch patch = new BucketPatch
             {
-                Server = new NetAppBucketServerPatchProperties
+                Server = new BucketServerPatchProperties
                 {
                     Fqdn = "fullyqualified.domainname.com",
                     CertificateObject = "<REDACTED>",
                     OnCertificateConflictAction = NetAppOnCertificateConflictAction.Update,
                 },
-                Permissions = NetAppBucketPatchPermission.ReadWrite,
+                Permissions = BucketPatchPermissions.ReadWrite,
             };
             ArmOperation<NetAppBucketResource> lro = await netAppBucket.UpdateAsync(WaitUntil.Completed, patch);
             NetAppBucketResource result = lro.Value;
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBucketResource netAppBucket = client.GetNetAppBucketResource(netAppBucketResourceId);
 
             // invoke the operation
-            NetAppBucketCredentialsExpiry body = new NetAppBucketCredentialsExpiry
+            BucketCredentialsExpiry body = new BucketCredentialsExpiry
             {
                 KeyPairExpiryDays = 3,
             };
-            NetAppBucketGenerateCredentials result = await netAppBucket.GenerateCredentialsAsync(body);
+            BucketGenerateCredentials result = await netAppBucket.GenerateCredentialsAsync(body);
 
             Console.WriteLine($"Succeeded: {result}");
         }

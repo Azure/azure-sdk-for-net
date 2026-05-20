@@ -23,6 +23,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> application/json. </summary>
         public static ImportContentType ApplicationJson { get; } = new ImportContentType(ApplicationJsonValue);
 
+        /// <summary> Determines if two <see cref="ImportContentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ImportContentType left, ImportContentType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ImportContentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ImportContentType left, ImportContentType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ImportContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImportContentType(string value) => new ImportContentType(value);
+
+        /// <summary> Converts a string to a <see cref="ImportContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImportContentType?(string value) => value == null ? null : new ImportContentType(value);
+
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImportContentType other && Equals(other);

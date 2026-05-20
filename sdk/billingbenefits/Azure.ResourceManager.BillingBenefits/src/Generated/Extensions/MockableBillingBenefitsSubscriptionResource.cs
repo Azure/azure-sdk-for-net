@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableBillingBenefitsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _discountsClientDiagnostics;
-        private Discounts _discountsRestClient;
         private ClientDiagnostics _creditsClientDiagnostics;
         private Credits _creditsRestClient;
         private ClientDiagnostics _conditionalCreditsClientDiagnostics;
         private ConditionalCredits _conditionalCreditsRestClient;
         private ClientDiagnostics _maccsClientDiagnostics;
         private Maccs _maccsRestClient;
+        private ClientDiagnostics _discountsClientDiagnostics;
+        private Discounts _discountsRestClient;
         private ClientDiagnostics _freeServicesClientDiagnostics;
         private FreeServices _freeServicesRestClient;
 
@@ -42,10 +42,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         {
         }
 
-        private ClientDiagnostics DiscountsClientDiagnostics => _discountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(DiscountsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
         private ClientDiagnostics CreditsClientDiagnostics => _creditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Credits CreditsRestClient => _creditsRestClient ??= new Credits(CreditsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
@@ -58,65 +54,13 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
         private Maccs MaccsRestClient => _maccsRestClient ??= new Maccs(MaccsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
+        private ClientDiagnostics DiscountsClientDiagnostics => _discountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(DiscountsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+
         private ClientDiagnostics FreeServicesClientDiagnostics => _freeServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private FreeServices FreeServicesRestClient => _freeServicesRestClient ??= new FreeServices(FreeServicesClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        /// <summary>
-        /// List discounts at subscription level
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.BillingBenefits/discounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Discounts_SubscriptionList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiscountResource> GetDiscountsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListAsyncCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
-        }
-
-        /// <summary>
-        /// List discounts at subscription level
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.BillingBenefits/discounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Discounts_SubscriptionList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiscountResource> GetDiscounts(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
-        }
 
         /// <summary>
         /// List credits under a subscription from primary service tenant.
@@ -284,6 +228,62 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<MaccData, MaccResource>(new MaccsGetBySubscriptionCollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetMaccs"), data => new MaccResource(Client, data));
+        }
+
+        /// <summary>
+        /// List discounts at subscription level
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.BillingBenefits/discounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Discounts_SubscriptionList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscountResource> GetDiscountsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListAsyncCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
+        }
+
+        /// <summary>
+        /// List discounts at subscription level
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.BillingBenefits/discounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Discounts_SubscriptionList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscountResource> GetDiscounts(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
