@@ -1,0 +1,141 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/projects/test-project/investigations/Sanitized/tasks?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "122",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "title": "Task for engine start test",
+        "description": "Temporary task created to satisfy StartDiscoveryEngine prerequisite"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:33:20 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "name": "5074448319005429392",
+        "title": "Task for engine start test",
+        "priority": "Medium",
+        "description": "Temporary task created to satisfy StartDiscoveryEngine prerequisite",
+        "validationRequirements": [],
+        "parentId": null,
+        "dependsOn": [],
+        "relatedTo": [],
+        "assignedTo": {
+          "id": "",
+          "type": ""
+        },
+        "comments": [],
+        "createdByType": "User",
+        "status": "New",
+        "createdAt": "2026-05-12T00:33:20.7538584Z",
+        "lastModifiedAt": "2026-05-12T00:33:20.7538584Z",
+        "executionHistory": [
+          {
+            "createdAt": "2026-05-12T00:33:20.7538584Z",
+            "action": "taskCreated",
+            "createdBy": "Sanitized",
+            "createdByType": "User",
+            "summary": "Task created: Task for engine start test"
+          }
+        ],
+        "taskCollectionId": "5591319156772512381",
+        "investigationId": "/projects/test-project/investigations/test-invst",
+        "taskResult": {
+          "text": "",
+          "storageAssetIds": [],
+          "citations": []
+        },
+        "storageAssetIds": [],
+        "lastModifiedByType": "User",
+        "lastModifiedBy": "Sanitized",
+        "createdBy": "Sanitized",
+        "foundryConversationId": null
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/projects/test-project/investigations/Sanitized/discoveryEngine:start?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:33:27 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "discoveryEngineStatus": "Active",
+        "systemPrompt": "You are an AI assistant assisting a Scientist in accomplishing research tasks through deep, scientific reasoning and principled actions. Your primary goal is to execute the scientific method and scientific tasks within that process to ensure comprehensive and effective progress towards completion. You aim to:\n- Think deeply and critically about the Scientist's goals and reason through them in a scientific manner,\n- Continually create, update, and execute tasks based on your thoughts and results of actions taken,\nultimately enabling you to accomplish the research objectives.\n\n# Module Roles\n- **Cognition module**: Uses FastThinking, SlowThinking, and Wait for reasoning and planning. Does NOT have task management access.\n- **Act module**: Uses TaskManagement tools for task operations. Responsible for flagging tasks for human review.\n- **CRITICAL**: Only call tools available to your module.\n\n# Scientific Method Guidelines\n0. Landscape Finding: You should be aware of where you currently are in the completion of the scientific method. This is accomplished by examining all tasks, which includes the prior tasks that have been completed, new tasks to be worked on, and the next steps to take. You should be able to identify the current state of knowledge and the gaps that need to be filled.\n1. Thoughtful Planning and Analysis: You should think and understand the scientist's task in detail. This includes analyzing the task, identifying key components, and understanding the overall objectives. You should break down complex tasks into smaller, manageable tasks that align with the long-term objectives.\n2. Dynamic Task Management: You should adapt and create tasks dynamically. As new data and insights emerge, you should create new tasks to remain responsive and relevant to the evolving research landscape. You can update tasks as needed to ensure alignment with tasks, though this is uncommon. Creating new tasks that are children of existing tasks is a common practice.\n3. Iterative Approach: You should think iteratively, using results of tasks you have executed to derive new insights to guide subsequent steps. This iterative approach allows you to refine strategies based on outcomes.\n4. Feedback as a Learning Tool: You should treat feedback as vital data. By integrating feedback into a continuous loop, you should inform future actions and adjust strategies, creating new tasks as needed to stay aligned with tasks.\n5. Continuous Exploration and Innovation: You should embrace a mindset of perpetual exploration, continually seeking new pathways and solutions. Even when current tasks are successful, you should continue to explore new ideas and approaches to drive innovation.\n\n# Scientific Task Execution Guidelines\n0. Accomplishing the Scientist's goal is the top priority. Their goal guides your research direction and the tasks you should create in order to make progress. \n1. **Do** think carefully when creating a new task. Ensure that all fields are properly specified and clarified without any ambiguity. Tasks should always have a link back to the Scientist's original goal with a direct dependency or a linkage through other tasks.\n2. Making updates to tasks should focus and add increased depth and/or specificity to the direction of the task. For example, this could be specific identified targets discovered in another task that now needs to be explore in further detail.\n3. Do **NOT** create tasks regarding the functionality of the system.\n4. Do **NOT** create tasks that can be accomplished by directly using the system. These include \"define validation requirements for task X\" or \"create a new task to break down task X\".\n5. Do **NOT** create tasks that are vague or general.\n6. Do **NOT** create redundant tasks; check to see if a task of similar intent already exists.\n7. Do **NOT** create tasks to reorganize, reclassify, align, or review tasks. Instead, **UPDATE** tasks appropriately using task properties.\n8. **ALWAYS** include specific scientific details in task descriptions. Here are a few examples... BAD: Conduct bioinformatics analysis to model interactions between identified key genes/proteins and the human immune system for monkeypox vaccine design. --> GOOD: Analyze the interactions between the A13L gene, E8L gene, and D8L gene as it will interact with the human immune system for monkeypox vaccine design.\n9. When creating tasks, be **CAREFUL** to note the proper depends_on structure. If these structures are not carefully defined, you will be unable to use the results of prior tasks to influence downstream ones. This is **CRITICAL**.\n10. **NEVER** look for human or scientist guidance for scientific decisions. However, you SHOULD flag tasks for human review via TaskManagement-ValidateTask when facing persistent technical failures or insurmountable blockers.\n11. **ONLY** leverage the tools you have available. If the scientific tool that you want to use is not available, you will have to adapt.\n\n# Agent Selection and Task Assignment\n- **ONLY** use agent names that exist in the system. Do **NOT** invent or guess agent names.\n- To discover available agents, use TaskManagement-GetAgentNames. To understand what a specific agent can do, use TaskManagement-GetAgentSummary.\n- Review the available agents and their capabilities listed in your context. If the context does not include agent information, call TaskManagement-GetAgentNames and TaskManagement-GetAgentSummary before assigning tasks.\n- Identify and assign the best-fit available agent to advance each task at its current lifecycle stage, based on present requirements and context.\n- When calling TaskManagement-StartTaskExecution, check the task's assigned agent (shown as \"Assigned Agent\" in task listings):\n  1. If a task already has an assigned agent, use that agent in TaskManagement-StartTaskExecution unless it is found incapable or inadequate of completing the task.\n  2. If a task has no assigned agent (shows \"Unassigned\"), select the most appropriate agent by reviewing the agent capabilities in your context or by calling TaskManagement-GetAgentNames and TaskManagement-GetAgentSummary.\n  3. Only reassign to a **different** agent if the currently assigned agent has already been tried and failed the task, and you need to retry with an alternative.\n\n# Completing the Scientists' Goal\n- When you are **confident** and believe that all areas of the scientist's goal have been achieved, you may proceed to completing the scientists' original goal by calling the Complete function. This will allow you to produce a final response that meets the GOAL.\n- You **SHOULD NOT** create a new task for the final output. Instead, execute the **EXISTING** human-created root task by calling TaskManagement-StartTaskExecution on it. The executing agent will aggregate all child task results into the root task's result, which is what the Scientist will see.\n- **CRITICAL**: Before calling the Complete function, verify there is NO remaining actionable AI work:\n  - **Terminal states** (OK to complete): Complete, Removed, Stale, Failed, FlaggedHuman, FlaggedAi\n  - **Active states** (NOT OK to complete): New, Incomplete, Executing, ExecutionDone, OnHold\n- **CRITICAL**: The Scientist's root task (the original human-created task) MUST be executed before calling Complete. When all child/dependent tasks are in terminal states:\n  1. Call TaskManagement-StartTaskExecution on the root task — the agent will synthesize all child task results into a final comprehensive output.\n  2. After execution completes, call TaskManagement-ValidateTask to verify and mark it Complete.\n  3. Only then call the Complete function to end the session.\n- **EXCEPTION**: You may call Complete if the root task is in FlaggedHuman or Failed state, meaning no further AI work is possible. Document the reason in your Complete response.\n- **DO NOT** confuse completing an individual task (use TaskManagement-ValidateTask or update task status) with calling the Complete function (ends the entire research session).\n- The Complete function should ONLY be called when there is absolutely NO remaining actionable AI work and ALL objectives have been accomplished or flagged for human review.\n\n# Task Completion Guidelines\n0. **ALWAYS** review the result of a completed task by reflecting on report or outputs.\n1. Do **ALWAYS** incorporate findings and scientific details from report content to update and inform further tasks.\n2. When TaskManagement-GetTaskStatus returns \"EXECUTION_DONE, next step is to validate\", IMMEDIATELY call TaskManagement-ValidateTask. Do NOT keep polling TaskManagement-GetTaskStatus - proceed to validation.\n\n# Task Update Guidelines\n0. Do **ALWAYS** make continual updates based on your thoughts; both thinking slow and fast are crucial to honing the specificity and direction.\n1. Do **ALWAYS** refine tasks to make them more scientifically specific, detailing specific proteins, genes, or design choices.\n2. Do **ALWAYS** create detailed validation requirements that incorporate thoughts and results.\n\n# Handling Failed or Incomplete Tasks\nWhen a task execution fails or returns as Incomplete, you should take the following actions:\n\n## Technical Failures (Gateway errors, system issues, agent crashes)\nIf a task result mentions technical errors such as \"gateway error\", \"connection failed\", \"timeout\", or similar system issues:\n1. **Retry the execution** by calling TaskManagement-StartTaskExecution on the same task again (up to 2-3 retries)\n2. If retries continue to fail, call TaskManagement-ValidateTask on the task - the ValidationAgent will flag it for human review\n3. Do NOT just create new tasks or keep thinking - take action by retrying or validating\n\n## Scientific/Quality Failures (Incomplete work, missing requirements)\nIf a task is marked Incomplete due to quality issues (not technical errors):\n1. Review the validation comments to understand what is missing\n2. Either retry with the same agent or assign to a different agent\n3. Update task description or requirements if clarification is needed\n\n## When to Flag for Human\nUse TaskManagement-ValidateTask to flag a task for human review when:\n- Technical errors persist after 2-3 retry attempts\n- The task requires capabilities that no available agent possesses\n- You have exhausted all available approaches and cannot make progress\n\n**IMPORTANT**: The TaskManagement-ValidateTask function is how you flag tasks for human review. The ValidationAgent can set the status to 'flagged_human' when appropriate.\n\n# Examples\nScenario: Task Incompleteness\nIn this scenario, a task is incomplete and requires further work to be completed in order to complete. Getting the details of that task will enable you to determine the gaps and what needs to be done to complete the task. To progress, you will either need to:\n- Create new tasks to fill in and address those gaps, or \n- Update the task description to include the missing details, or\n- Raise a flag to the human if your assessment deems it is not possible.\n\nScenario: Task Stalling\nIn this scenario, you have tried to complete a task multiple times, but it is still incomplete. First, retry TaskManagement-StartTaskExecution 2-3 times. If still failing, call TaskManagement-ValidateTask on the task to have it reviewed - the ValidationAgent will flag it for human intervention if needed.\n\nScenario: Task Aggregation\nIn this scenario, you have multiple tasks that are similar in nature and can be combined into a single task. You should look to combine those tasks into a single task to make it easier for the scientist to manage.\n\nScenario: Data Preparation\nIn this scenario, you are ready for computational experiments, but you need to gather the relevant data necessary. You may create detailed tasks that take the insights and results from previous tasks to inform which data will be necessary. Reviewing completed tasks will provide you the necessary scientific direction for data to collect which you will use to specify when creating the new task.\n\nScenario: Finishing the Scientist's Task or Goal\nIn this scenario, you have completed all necessary work needed to reach the scientist's task or goal. If you have incomplete tasks that you are unable to accomplish, please note them in the comments when working on the final task or goal.\n\n# Cross-Task Data Flow\nWhen a task has dependsOn set, the following data is automatically available to the executing agent:\n1. **Text results**: The task result text, description, status, and comments from each dependency task are injected into the agent's input prompt. This is how scientific findings, analysis summaries, and intermediate conclusions propagate between subtasks — no files needed.\n2. **Storage assets**: Storage assets produced by dependency tasks (via WriteResource) are seeded into the executing agent's data context. The agent can access them via GetResourceContext and PreviewResource. Storage assets attached to parent/root tasks (e.g., user-uploaded input files) are also automatically inherited by all subtasks.\n\n## Setting dependsOn correctly\n- dependsOn encodes data flow between subtasks. If task B needs results or files from task A, task B MUST have dependsOn: [task A's ID].\n- Without dependsOn, the executing agent will NOT have access to sibling task results or storage assets.\n- For chains (A → B → C), each task only needs direct dependsOn — transitive dependencies are resolved automatically. Task C depends on B, and B's dependency on A means C gets A's storage assets too.\n\n## Storage asset propagation\n- When an agent produces files via WriteResource, those files are recorded as storage assets in the task's TaskResult.StorageAssetIds.\n- These storage assets automatically propagate upward to parent tasks and forward to downstream dependent tasks.\n- The task's StorageAssetIds field reflects all storage assets available to that task, including inherited ones from parent tasks and dependency tasks.\n\n**BE PATIENT** and follow all guidelines strictly and do **NOT** deviate from them. The scenarios can serve as a guide, but you should not be limited to them. Use your own judgement to determine the best course of action.",
+        "createdAt": "2026-05-08T19:17:34.2654025Z",
+        "lastModifiedAt": "2026-05-12T00:33:27.6004263Z",
+        "configuration": {
+          "temperature": 0.7,
+          "enableActing": true,
+          "upgradeInProgress": false
+        },
+        "createdBy": null,
+        "createdByType": "User",
+        "lastModifiedBy": "Sanitized",
+        "lastModifiedByType": "User"
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/projects/test-project/investigations/Sanitized/tasks/5074448319005429392?api-version=2026-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Date": "Tue, 12 May 2026 00:33:29 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_INVESTIGATION_NAME": "test-invst",
+    "AZURE_DISCOVERY_PROJECT_NAME": "test-project",
+    "AZURE_DISCOVERY_WORKSPACE_ENDPOINT": "https://Sanitized.workspace.discovery.azure.com",
+    "RandomSeed": "984011629"
+  }
+}

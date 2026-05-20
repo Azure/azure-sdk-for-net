@@ -1,0 +1,11 @@
+# Generator scratch files. Each sub-folder under _workspace and _bookshelf is
+# an isolated tsp-client output used only for per-sub-project compilation
+# validation by the generator. They share AssemblyName=Azure.AI.Discovery with
+# the shipping src/Azure.AI.Discovery.csproj, which would collide in CI's
+# recursive csproj enumeration. The shipping package consumes the generated
+# .cs files directly via globs in src/Azure.AI.Discovery.csproj, so the sub-
+# package csproj/sln files have no role in the shipped artifact.
+_workspace/**/*.csproj
+_workspace/**/*.sln
+_bookshelf/**/*.csproj
+_bookshelf/**/*.sln

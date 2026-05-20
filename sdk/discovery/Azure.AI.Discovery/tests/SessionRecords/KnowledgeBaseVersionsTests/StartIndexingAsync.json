@@ -1,0 +1,53 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.bookshelf.discovery.azure.com/knowledgeBases/test-kb/versions/v1:startIndexing?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "372",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "nodePoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+        "projectId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/workspaces/test-wkspc/projects/test-project"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 03:02:48 GMT",
+        "mise-correlation-id": "Sanitized",
+        "operation-location": "https://Sanitized.bookshelf.discovery.azure.com/knowledgeBases/test-kb/versions/v1/operations//knowledgeBases/test-kb/versions/v1?api-version=2026-02-01-preview",
+        "repeatability-result": "accepted",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "id": "/knowledgeBases/test-kb/versions/v1",
+        "status": "Processing",
+        "result": {
+          "runId": "indexingrune68cc6beff3361d6502a66fb8d1633fe"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_BOOKSHELF_ENDPOINT": "https://Sanitized.bookshelf.discovery.azure.com",
+    "KNOWLEDGE_BASE_NAME": "test-kb",
+    "KNOWLEDGE_BASE_VERSION": "v1",
+    "NODE_POOL_ID": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+    "PROJECT_ARM_ID": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/workspaces/test-wkspc/projects/test-project",
+    "RandomSeed": "1683042138"
+  }
+}

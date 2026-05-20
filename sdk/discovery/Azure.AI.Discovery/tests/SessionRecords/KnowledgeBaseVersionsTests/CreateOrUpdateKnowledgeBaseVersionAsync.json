@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.bookshelf.discovery.azure.com/knowledgeBases/kbcrtkbnmr7a9/versions/v1?api-version=2026-02-01-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "458",
+        "Content-Type": "application/merge-patch+json",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "Test KB version",
+        "copilotInstruction": "Test instruction",
+        "storageAssetReferences": [
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/microsoft.discovery/storagecontainers/test-storage/storageassets/test-sa",
+            "userAssignedIdentity": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-mi"
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 03:02:09 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "id": "/knowledgeBases/kbcrtkbnmr7a9/versions/v1",
+        "name": "kbcrtkbnmr7a9",
+        "version": "v1",
+        "knowledgeBaseUrl": "",
+        "bookshelfName": "Sanitized",
+        "createdAt": "2026-05-12T03:02:09.0842156Z",
+        "createdBy": "Sanitized",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-05-12T03:02:09.0842156Z",
+        "lastModifiedBy": "Sanitized",
+        "lastModifiedByType": "User",
+        "storageAssetReferences": [
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/microsoft.discovery/storagecontainers/test-storage/storageassets/test-sa",
+            "userAssignedIdentity": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-mi"
+          }
+        ],
+        "provisioningState": "Succeeded",
+        "status": "NotStarted",
+        "tags": [
+          {
+            "key": "indexerType",
+            "value": "LGR"
+          }
+        ],
+        "description": "Test KB version",
+        "copilotInstruction": "Test instruction",
+        "apiVersion": "2026-02-01-preview"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_BOOKSHELF_ENDPOINT": "https://Sanitized.bookshelf.discovery.azure.com",
+    "RandomSeed": "1594100010",
+    "STORAGE_ASSET_ID": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/microsoft.discovery/storagecontainers/test-storage/storageassets/test-sa",
+    "USER_ASSIGNED_IDENTITY": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-mi"
+  }
+}

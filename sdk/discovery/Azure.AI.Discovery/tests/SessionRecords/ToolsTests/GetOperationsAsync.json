@@ -1,0 +1,488 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/tools/projects/test-project/operations?api-version=2026-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 01:04:31 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "4aa0a0aaed5644ecb1ec5ac0d723de83",
+            "status": "Canceled",
+            "runtimeDetails": "Tool has been cancelled",
+            "createdAt": "2026-05-02T22:00:53.2622931Z",
+            "completedAt": "2026-05-02T22:01:07.0717576Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "c5b4723347764e32a0ad9a73e56addb4",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-02T22:00:59.1242916Z",
+            "completedAt": "2026-05-02T22:03:18.644044Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "fbd062b54ed44e22be8f6e91f28c84f3",
+            "status": "Canceled",
+            "runtimeDetails": "Tool has been cancelled",
+            "createdAt": "2026-05-02T22:01:02.4644463Z",
+            "completedAt": "2026-05-02T22:01:06.9867081Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "1a31fc8add324280a7a0094f14f1df45",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-02T22:01:08.2095532Z",
+            "completedAt": "2026-05-02T22:03:24.0901194Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "ff84f38908a64da391f6353c581a352c",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T03:06:30.0710615Z",
+            "completedAt": "2026-05-03T03:08:59.1951807Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "12c7a812978e48758d423e8441325e8f",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T03:06:32.1647543Z",
+            "completedAt": "2026-05-03T03:09:04.7010371Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "04c8edf9b30d498c9b44427d7f09975e",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T03:06:32.9684144Z",
+            "completedAt": "2026-05-03T03:09:12.450529Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "de2f4ed5f3b444beb62265281438778d",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T03:06:36.9150228Z",
+            "completedAt": "2026-05-03T03:09:04.6739501Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "9e17035218cf48d5a524dc5cd83520c5",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:26:52.3462766Z",
+            "completedAt": "2026-05-03T04:29:21.5049591Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "d286a5d00d9943e3814175026750e041",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:26:52.7196423Z",
+            "completedAt": "2026-05-03T04:29:23.8678699Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "f06f967dc22946d88811dd08699be764",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:26:55.2699636Z",
+            "completedAt": "2026-05-03T04:29:22.0303755Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "81285a2501bd43d89aa3b198fdd0e4e6",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:26:58.9883031Z",
+            "completedAt": "2026-05-03T04:29:21.53672Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "954c82d9a22d4896a09656e6b370d4a5",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:42:40.2814506Z",
+            "completedAt": "2026-05-03T04:42:52.6116499Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "274f22be1ec549c48587260c0a26676b",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:42:41.4020928Z",
+            "completedAt": "2026-05-03T04:43:04.6386303Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "c5d4a3e6242a4d17bdc21f57971e196a",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:42:43.4693781Z",
+            "completedAt": "2026-05-03T04:43:04.5784206Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "af14a88529d04c8180c11da3c9f15e9d",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:42:45.5390494Z",
+            "completedAt": "2026-05-03T04:42:52.6059639Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "5b0764ccf6774d99b02bf088c4d5ff8d",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:54:06.7749879Z",
+            "completedAt": "2026-05-03T04:56:40.5304853Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "b8f462e3b4f7422ba388f36bf596f9d5",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:54:09.5530909Z",
+            "completedAt": "2026-05-03T04:56:40.2436027Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "f4c881c1a7614b6ca6625838d25fcafb",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:54:09.7802256Z",
+            "completedAt": "2026-05-03T04:56:40.532075Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "826d641395444652bb3fde8dee527d6b",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T04:54:13.5496637Z",
+            "completedAt": "2026-05-03T04:56:47.836046Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "74fb68df8b314c7e9e174e8820b43ebe",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T20:04:02.8800306Z",
+            "completedAt": "2026-05-03T20:04:19.6995105Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "1db2c88932ae409cb8017527883ee2c0",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T20:04:07.0267098Z",
+            "completedAt": "2026-05-03T20:04:19.7122902Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "ca7d05ea0e3d4e898c7760e5ea299872",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T20:04:11.3523197Z",
+            "completedAt": "2026-05-03T20:04:31.5338918Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "3d6d922479104ade9e0c3f2827f7d638",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T20:04:12.1844484Z",
+            "completedAt": "2026-05-03T20:04:19.8168414Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "b80093b64466490ca0aebaaa04cba3f5",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:09:24.6426229Z",
+            "completedAt": "2026-05-03T23:09:43.5404439Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "2b04803f1fa6415f8caa29496140c6ce",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:09:26.1670139Z",
+            "completedAt": "2026-05-03T23:09:42.4193064Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "612f98c7aeeb4731bb929ad28d43340d",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:09:27.9890273Z",
+            "completedAt": "2026-05-03T23:10:03.7515017Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "6d01b0479b3540e5ac605b0efde32fa8",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:09:31.3042001Z",
+            "completedAt": "2026-05-03T23:09:48.8352436Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "07da2768dc984160864274f8987d1815",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:10:11.1186417Z",
+            "completedAt": "2026-05-03T23:10:20.9010913Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "4acddc431bba46189275c8bdc053b724",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:10:13.4188277Z",
+            "completedAt": "2026-05-03T23:10:24.4665679Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "af7ef67dd0f74c8f8072fc50727f5032",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:10:14.9465882Z",
+            "completedAt": "2026-05-03T23:10:22.9372429Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "4928b428bc6f4b7499d80be1b0c758ad",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-03T23:10:19.2264216Z",
+            "completedAt": "2026-05-03T23:10:25.3620365Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "c71314c4d235440eb6540d05a2c9fd49",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-04T00:30:08.0995441Z",
+            "completedAt": "2026-05-04T00:30:32.0663762Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "1519b86c80f14ab88a0e54c35dd79245",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-04T00:33:03.0814634Z",
+            "completedAt": "2026-05-04T00:33:38.8125463Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "5be1ce0360684b8f969a46d355a5c822",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-04T00:35:00.3515041Z",
+            "completedAt": "2026-05-04T00:35:12.5846217Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "bd3c67c8b8464a79a6feb4898ba21511",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-04T00:38:20.8389985Z",
+            "completedAt": "2026-05-04T00:38:40.7994568Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "cb07e20f63b24c1eada68a58e50a6153",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-04T00:46:58.4894007Z",
+            "completedAt": "2026-05-04T00:47:11.8175525Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "457632e9891945c4a9c4aec4bd9ca32b",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-09T06:02:12.0657334Z",
+            "completedAt": "2026-05-09T06:02:26.0311951Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "167b86f2457c45378c73c68b76919383",
+            "status": "Canceled",
+            "runtimeDetails": "Tool has been cancelled",
+            "createdAt": "2026-05-09T06:03:16.6948297Z",
+            "completedAt": "2026-05-09T06:03:31.0015262Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "4bba96d21e69479fb4514cbfa5d45bdb",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-09T06:07:15.3140877Z",
+            "completedAt": "2026-05-09T06:07:24.1165252Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "666ba8f230674b4ea0591a5d7f540a66",
+            "status": "Canceled",
+            "runtimeDetails": "Tool has been cancelled",
+            "createdAt": "2026-05-09T06:08:04.5768427Z",
+            "completedAt": "2026-05-09T06:08:07.959556Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "7b427d03e5ee431aa4fb54848356ff54",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-09T20:43:56.9589268Z",
+            "completedAt": "2026-05-09T20:44:32.0079126Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "bbc3b70f23e0460fb44e9e11af5606ab",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-09T20:44:41.6537166Z",
+            "completedAt": "2026-05-09T20:44:53.8345219Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "7654d44576594554a8d030907ef80b4b",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-09T20:45:26.223824Z",
+            "completedAt": "2026-05-09T20:45:52.1507257Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "ee375433157341f8858f21111c69d3b1",
+            "status": "Canceled",
+            "runtimeDetails": "Tool has been cancelled",
+            "createdAt": "2026-05-09T20:46:08.8548549Z",
+            "completedAt": "2026-05-09T20:46:14.3143804Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "7a935a5c4490407daa6751ead2855c1e",
+            "status": "Canceled",
+            "runtimeDetails": "Tool has been cancelled",
+            "createdAt": "2026-05-12T01:02:57.6181697Z",
+            "completedAt": "2026-05-12T01:03:09.1129164Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "a49df7925c624248895f51cbc18a3e86",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-12T01:03:14.0345128Z",
+            "completedAt": "2026-05-12T01:03:30.2765544Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "916869bcc49149f288655edc18db7bc8",
+            "status": "Succeeded",
+            "runtimeDetails": "Tool has completed successfully",
+            "createdAt": "2026-05-12T01:03:37.8913789Z",
+            "completedAt": "2026-05-12T01:04:09.3058988Z",
+            "createdBy": null
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "666d319dd10c462f9da40016064d3838",
+            "status": "NotStarted",
+            "runtimeDetails": "Tool run has been requested",
+            "createdAt": "2026-05-12T01:04:18.3619174Z",
+            "completedAt": null,
+            "createdBy": "Sanitized"
+          },
+          {
+            "nodepoolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1",
+            "id": "7d86188d531d4e998bd8c38c94acfca9",
+            "status": "NotStarted",
+            "runtimeDetails": "Tool run has been requested",
+            "createdAt": "2026-05-12T01:04:22.97746Z",
+            "completedAt": null,
+            "createdBy": "Sanitized"
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_PROJECT_NAME": "test-project",
+    "AZURE_DISCOVERY_WORKSPACE_ENDPOINT": "https://Sanitized.workspace.discovery.azure.com",
+    "RandomSeed": "576278210"
+  }
+}
