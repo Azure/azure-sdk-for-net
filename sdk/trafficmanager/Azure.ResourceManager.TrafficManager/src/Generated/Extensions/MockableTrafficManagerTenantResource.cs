@@ -41,6 +41,33 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
 
         /// <summary>
+        /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Network/trafficManagerGeographicHierarchies/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrafficManagerGeographicHierarchies_GetDefault. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TrafficManagerGeographicHierarchyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
+        public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy()
+        {
+            return new TrafficManagerGeographicHierarchyResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerGeographicHierarchies", "default"));
+        }
+
+        /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
         /// <list type="bullet">
         /// <item>
