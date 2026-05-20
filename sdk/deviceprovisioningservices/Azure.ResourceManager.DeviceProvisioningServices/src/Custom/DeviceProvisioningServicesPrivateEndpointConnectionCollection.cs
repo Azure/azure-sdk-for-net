@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        // TODO: Remove this compatibility shim once the generator/root-cause fix restores the list operation on this collection.
+        // TODO: Remove this compatibility shim once https://github.com/Azure/azure-sdk-for-net/issues/59355 is fixed.
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        // TODO: Remove this compatibility shim once the generator/root-cause fix restores the list operation on this collection.
+        // TODO: Remove this compatibility shim once https://github.com/Azure/azure-sdk-for-net/issues/59355 is fixed.
         public virtual Pageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
