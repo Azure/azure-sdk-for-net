@@ -390,7 +390,6 @@ function getDirectResponseModelId(
 function getPagingItemModelIdLocal(
   method: SdkMethod<SdkHttpOperation>
 ): string | undefined {
-  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
   const r = method.response?.type;
   if (r?.kind === "array" && r.valueType.kind === "model") {
     return (r.valueType as SdkModelType).crossLanguageDefinitionId;
@@ -491,12 +490,11 @@ function findListTargetResource(
     (resource) => resource.resourceModelId === itemModelId
   );
 
-  const exactCollectionMatches = candidates.filter(
-    (resource) =>
-      resource.metadata.resourceIdPattern.trimLastSegment?.equals(operationPath)
+  const collectionMatches = candidates.filter((resource) =>
+    operationPath.isPrefixOf(resource.metadata.resourceIdPattern)
   );
-  if (exactCollectionMatches.length > 0) {
-    return shortestResourcePath(exactCollectionMatches);
+  if (collectionMatches.length > 0) {
+    return shortestResourcePath(collectionMatches);
   }
 
   const operationType = operationPath.resourceType;
