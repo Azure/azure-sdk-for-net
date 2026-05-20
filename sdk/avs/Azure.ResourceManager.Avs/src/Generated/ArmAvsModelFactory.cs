@@ -812,32 +812,6 @@ namespace Azure.ResourceManager.Avs.Models
                 zones.ToList());
         }
 
-        /// <summary> The properties of a management cluster. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
-        public static AvsManagementCluster AvsManagementCluster(int? clusterSize = default, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default)
-        {
-            hosts ??= new ChangeTrackingList<string>();
-
-            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The common properties of a cluster. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <returns> A new <see cref="Models.CommonClusterProperties"/> instance for mocking. </returns>
-        public static CommonClusterProperties CommonClusterProperties(int? clusterSize = default, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default)
-        {
-            hosts ??= new ChangeTrackingList<string>();
-
-            return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> An Encryption Key. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="keyVersion"> The version of the key. </param>
@@ -1577,21 +1551,6 @@ namespace Azure.ResourceManager.Avs.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 provisioningState is null && displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(provisioningState, displayName, vmType, null));
-        }
-
-        /// <summary> The properties of a management cluster. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
-        /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvsManagementCluster AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts, string vsanDatastoreName)
-        {
-            hosts ??= new ChangeTrackingList<string>();
-
-            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>

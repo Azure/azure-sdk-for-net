@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -419,37 +418,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <param name="identity"> Managed service identity. </param>
-        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedHsmPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null),
-                sku,
-                identity,
-                eTag);
-        }
-
         /// <summary> Resource information with extended details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -609,67 +577,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 tags,
                 location,
                 properties);
-        }
-
-        /// <summary> Resource information with extended details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the managed HSM. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <param name="identity"> Managed service identity. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="KeyVault.ManagedHsmData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedHsmData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                sku,
-                identity);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <param name="identity"> Managed service identity. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, ManagedHsmSku sku, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, string> tags)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedHsmPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
-                sku,
-                identity,
-                etag);
         }
     }
 }
