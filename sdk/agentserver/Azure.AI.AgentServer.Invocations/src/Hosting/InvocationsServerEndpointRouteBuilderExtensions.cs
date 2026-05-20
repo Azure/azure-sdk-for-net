@@ -76,6 +76,19 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             await handler.HandleGetOpenApiAsync(httpContext, invocationHandler);
         }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
+        // /invocations_ws — WebSocket transport.
+        // Endpoint short-circuits to 404 when the handler does not override
+        // `InvocationHandler.HandleWebSocketAsync`, so an upgrade attempt
+        // against a host without a registered WS handler fails fast with
+        // "endpoint not registered".
+        group.Map(InvocationsWebSocketConstants.RoutePath, async (
+            HttpContext httpContext,
+            WebSocketEndpointHandler handler,
+            InvocationHandler invocationHandler) =>
+        {
+            await handler.HandleAsync(httpContext, invocationHandler);
+        });
+
         group.WithTags("Invocations");
 
         return group;

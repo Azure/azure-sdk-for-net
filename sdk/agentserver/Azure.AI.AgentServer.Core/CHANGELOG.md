@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.24 (2026-05-15)
+## 1.0.0-beta.24 (2026-05-19)
 
 ### Features Added
 
@@ -13,8 +13,19 @@
 - Added `PlatformHeaders.ErrorSource` (`x-platform-error-source`), `PlatformHeaders.ErrorDetail`
   (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
   `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.
-
 - Replaced `Azure.Monitor.OpenTelemetry.AspNetCore` with the unified `Microsoft.OpenTelemetry` distro for telemetry. The new distro auto-detects Azure Monitor and OTLP exporters from environment variables and eliminates the need for duplicate-instrumentation guards.
+- Added `FoundryEnvironment.WebSocketKeepAliveInterval` (sourced from the
+  `WS_KEEPALIVE_INTERVAL` environment variable) for the new
+  `invocations_ws` (WebSocket) protocol. Wired through
+  `AgentHostMiddlewareExtensions.UseAgentServerCore` into Kestrel's
+  `WebSocketOptions.KeepAliveInterval`, so a positive value emits RFC 6455
+  protocol-level Ping frames (opcode `0x9`) that keep idle WebSocket
+  connections alive across upstream proxy / load-balancer idle timeouts.
+  Disabled by default (`Timeout.InfiniteTimeSpan`).
+- `UseAgentServerCore` now also calls `IApplicationBuilder.UseWebSockets`,
+  so any protocol library that hosts WebSocket endpoints (e.g., the
+  Invocations `/invocations_ws` endpoint) works out of the box without
+  the consumer having to wire `UseWebSockets` themselves.
 
 ## 1.0.0-beta.23 (2026-04-22)
 
