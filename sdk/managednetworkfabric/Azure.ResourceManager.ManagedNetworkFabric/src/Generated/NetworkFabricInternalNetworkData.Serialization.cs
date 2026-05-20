@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
+            if (Optional.IsDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStringValue(Extension.Value.ToString());
+            }
             if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
@@ -69,16 +74,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ImportRoutePolicyId))
-            {
-                writer.WritePropertyName("importRoutePolicyId"u8);
-                writer.WriteStringValue(ImportRoutePolicyId);
-            }
-            if (Optional.IsDefined(ExportRoutePolicyId))
-            {
-                writer.WritePropertyName("exportRoutePolicyId"u8);
-                writer.WriteStringValue(ExportRoutePolicyId);
             }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
@@ -105,11 +100,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("isMonitoringEnabled"u8);
                 writer.WriteStringValue(IsMonitoringEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(Extension))
-            {
-                writer.WritePropertyName("extension"u8);
-                writer.WriteStringValue(Extension.Value.ToString());
-            }
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId);
             if (Optional.IsDefined(BgpConfiguration))
@@ -121,6 +111,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
                 writer.WriteObjectValue(StaticRouteConfiguration, options);
+            }
+            if (Optional.IsDefined(NativeIPv4PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
+            }
+            if (Optional.IsDefined(NativeIPv6PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkFabricId))
+            {
+                writer.WritePropertyName("networkFabricId"u8);
+                writer.WriteStringValue(NetworkFabricId);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -165,20 +175,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             SystemData systemData = default;
             string annotation = default;
+            StaticRouteConfigurationExtension? extension = default;
             int? mtu = default;
             IList<ConnectedSubnet> connectedIPv4Subnets = default;
             IList<ConnectedSubnet> connectedIPv6Subnets = default;
-            ResourceIdentifier importRoutePolicyId = default;
-            ResourceIdentifier exportRoutePolicyId = default;
             ImportRoutePolicy importRoutePolicy = default;
             ExportRoutePolicy exportRoutePolicy = default;
             ResourceIdentifier ingressAclId = default;
             ResourceIdentifier egressAclId = default;
             IsMonitoringEnabled? isMonitoringEnabled = default;
-            StaticRouteConfigurationExtension? extension = default;
             int vlanId = default;
             InternalNetworkBgpConfiguration bgpConfiguration = default;
             InternalNetworkStaticRouteConfiguration staticRouteConfiguration = default;
+            NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
+            NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
+            LastOperationProperties lastOperation = default;
+            ResourceIdentifier networkFabricId = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -224,6 +236,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("extension"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            extension = new StaticRouteConfigurationExtension(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("mtu"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -259,24 +280,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                                 array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                             }
                             connectedIPv6Subnets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("importRoutePolicyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            importRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("exportRoutePolicyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicy"u8))
@@ -324,15 +327,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             isMonitoringEnabled = new IsMonitoringEnabled(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("extension"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            extension = new StaticRouteConfigurationExtension(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("vlanId"u8))
                         {
                             vlanId = property0.Value.GetInt32();
@@ -354,6 +348,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                                 continue;
                             }
                             staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("nativeIpv4PrefixLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nativeIPv4PrefixLimit = NativeIPv4PrefixLimitProperties.DeserializeNativeIPv4PrefixLimitProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("nativeIpv6PrefixLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nativeIPv6PrefixLimit = NativeIPv6PrefixLimitProperties.DeserializeNativeIPv6PrefixLimitProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkFabricId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -398,20 +428,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 type,
                 systemData,
                 annotation,
+                extension,
                 mtu,
                 connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
                 connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
-                importRoutePolicyId,
-                exportRoutePolicyId,
                 importRoutePolicy,
                 exportRoutePolicy,
                 ingressAclId,
                 egressAclId,
                 isMonitoringEnabled,
-                extension,
                 vlanId,
                 bgpConfiguration,
                 staticRouteConfiguration,
+                nativeIPv4PrefixLimit,
+                nativeIPv6PrefixLimit,
+                lastOperation,
+                networkFabricId,
                 configurationState,
                 provisioningState,
                 administrativeState,

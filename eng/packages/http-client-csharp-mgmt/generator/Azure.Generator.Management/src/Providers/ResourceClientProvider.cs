@@ -69,14 +69,14 @@ namespace Azure.Generator.Management.Providers
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
 
-            ResourceName = resourceName;
+            ResourceName = resourceName.ToIdentifierName();
 
             _resourceServiceMethods = resourceMethods;
             _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
             // Initialize client info dictionary using extension method
-            _clientInfos = resourceMetadata.CreateClientInfosMap(this);
+            _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
