@@ -171,6 +171,117 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             }
         }
 
+        // ---------- Snapshot-resume wiring ----------
+
+        /// <summary>
+        /// When the caller passes a snapshot continuation token to
+        /// <c>GetChangesBetweenSnapshots(string)</c>, the pageable should use the cvIds embedded
+        /// on the token instead of re-downloading the begin/end <c>meta.json</c> blobs. This
+        /// test pins that contract: the snapshot meta paths are never resolved on the
+        /// container, even though the snapshot identifiers are recoverable from the token.
+        /// </summary>
+        [Test]
+        public async Task GetChangesBetweenSnapshots_Resume_DoesNotReadSnapshotMeta()
+        {
+            string beginSnap = "2024-01-15T08:00:00.000Z";
+            string endSnap = "2024-01-15T12:00:00.000Z";
+
+            Harness h = Harness.Create(this);
+
+            ShareChangeFeedSnapshotCursor cursor = new ShareChangeFeedSnapshotCursor(
+                urlHost: "account.blob.core.windows.net",
+                beginSnapshot: beginSnap,
+                endSnapshot: endSnap,
+                beginCvId: 50,
+                endCvId: 200,
+                innerCursor: null);
+            string token = SnapshotCursorSerializer.Serialize(cursor);
+
+            List<ShareChangeFeedEvent> collected = new List<ShareChangeFeedEvent>();
+            if (IsAsync)
+            {
+                await foreach (ShareChangeFeedEvent e in h.Client.GetChangesBetweenSnapshotsAsync(token))
+                    collected.Add(e);
+            }
+            else
+            {
+                foreach (ShareChangeFeedEvent e in h.Client.GetChangesBetweenSnapshots(token))
+                    collected.Add(e);
+            }
+
+            Assert.IsEmpty(collected);
+            // Neither snapshot meta blob should be fetched on resume — the cvIds come from the token.
+            h.Container.Verify(
+                c => c.GetBlobClient(SnapshotQueryHelper.SnapshotTimestampToPath(beginSnap)),
+                Times.Never);
+            h.Container.Verify(
+                c => c.GetBlobClient(SnapshotQueryHelper.SnapshotTimestampToPath(endSnap)),
+                Times.Never);
+        }
+
+        /// <summary>
+        /// Resuming with a token issued against a different storage-account host is rejected.
+        /// Mirrors the host check in <c>ChangeFeedFactoryBase.ValidateCursor</c>.
+        /// </summary>
+        [Test]
+        public void GetChangesBetweenSnapshots_Resume_UrlHostMismatch_Throws()
+        {
+            Harness h = Harness.Create(this);
+
+            ShareChangeFeedSnapshotCursor cursor = new ShareChangeFeedSnapshotCursor(
+                urlHost: "different-account.blob.core.windows.net",
+                beginSnapshot: "2024-01-15T08:00:00.000Z",
+                endSnapshot: "2024-01-15T12:00:00.000Z",
+                beginCvId: 50,
+                endCvId: 200,
+                innerCursor: null);
+            string token = SnapshotCursorSerializer.Serialize(cursor);
+
+            if (IsAsync)
+            {
+                Assert.ThrowsAsync<ArgumentException>(async () =>
+                {
+                    await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshotsAsync(token))
+                    { }
+                });
+            }
+            else
+            {
+                Assert.Throws<ArgumentException>(() =>
+                {
+                    foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshots(token))
+                    { }
+                });
+            }
+        }
+
+        /// <summary>
+        /// Malformed tokens surface as <see cref="ArgumentException"/> at enumeration time
+        /// rather than escaping as <c>JsonException</c>.
+        /// </summary>
+        [Test]
+        public void GetChangesBetweenSnapshots_Resume_MalformedToken_Throws()
+        {
+            Harness h = Harness.Create(this);
+
+            if (IsAsync)
+            {
+                Assert.ThrowsAsync<ArgumentException>(async () =>
+                {
+                    await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshotsAsync("{not-json"))
+                    { }
+                });
+            }
+            else
+            {
+                Assert.Throws<ArgumentException>(() =>
+                {
+                    foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshots("{not-json"))
+                    { }
+                });
+            }
+        }
+
         // ---------- Gap 30: flag OFF + no metadata returns empty ----------
 
         [Test]

@@ -40,8 +40,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string shareName,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
-            if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
-            if (string.IsNullOrEmpty(shareName)) throw new ArgumentNullException(nameof(shareName));
+            if (string.IsNullOrEmpty(connectionString))
+                throw new ArgumentNullException(nameof(connectionString));
+            if (string.IsNullOrEmpty(shareName))
+                throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
@@ -60,8 +62,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             StorageSharedKeyCredential credential,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
-            if (fileServiceUri == null) throw new ArgumentNullException(nameof(fileServiceUri));
-            if (string.IsNullOrEmpty(shareName)) throw new ArgumentNullException(nameof(shareName));
+            if (fileServiceUri == null)
+                throw new ArgumentNullException(nameof(fileServiceUri));
+            if (string.IsNullOrEmpty(shareName))
+                throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
@@ -324,6 +328,50 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 _maxTransferSize,
                 beginSnapshot,
                 endSnapshot);
+
+        /// <summary>
+        /// Resumes reading change feed events between two snapshots from a continuation
+        /// token previously captured from <see cref="Page{T}.ContinuationToken"/> on a
+        /// page returned by <see cref="GetChangesBetweenSnapshots(string, string)"/>.
+        /// </summary>
+        /// <param name="continuationToken">
+        /// A continuation token previously emitted by a between-snapshots query. The
+        /// begin and end snapshot identifiers and their container version ids are carried
+        /// on the token, so the original snapshot strings do not need to be supplied again.
+        /// </param>
+        /// <returns>A pageable resuming from the saved position.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the token is malformed, was issued against a different storage
+        /// account, or uses an unsupported cursor version.
+        /// </exception>
+        public virtual Pageable<ShareChangeFeedEvent> GetChangesBetweenSnapshots(
+            string continuationToken)
+            => new ShareChangeFeedSnapshotPageable(
+                this,
+                _maxTransferSize,
+                continuation: continuationToken);
+
+        /// <summary>
+        /// Resumes reading change feed events between two snapshots from a continuation
+        /// token previously captured from <see cref="Page{T}.ContinuationToken"/> on a
+        /// page returned by <see cref="GetChangesBetweenSnapshotsAsync(string, string)"/>.
+        /// </summary>
+        /// <param name="continuationToken">
+        /// A continuation token previously emitted by a between-snapshots query. The
+        /// begin and end snapshot identifiers and their container version ids are carried
+        /// on the token, so the original snapshot strings do not need to be supplied again.
+        /// </param>
+        /// <returns>An async pageable resuming from the saved position.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the token is malformed, was issued against a different storage
+        /// account, or uses an unsupported cursor version.
+        /// </exception>
+        public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesBetweenSnapshotsAsync(
+            string continuationToken)
+            => new ShareChangeFeedSnapshotAsyncPageable(
+                this,
+                _maxTransferSize,
+                continuation: continuationToken);
         #endregion GetChangesBetweenSnapshots
 
         #region GetLastConsumable

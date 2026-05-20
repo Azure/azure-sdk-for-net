@@ -15,6 +15,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private readonly long? _maxTransferSize;
         private readonly string _beginSnapshot;
         private readonly string _endSnapshot;
+        private readonly string _continuation;
 
         internal ShareChangeFeedSnapshotPageable(
             ShareChangeFeedClient client,
@@ -27,75 +28,67 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _maxTransferSize = maxTransferSize;
             _beginSnapshot = beginSnapshot;
             _endSnapshot = endSnapshot;
+            _continuation = null;
+        }
+
+        internal ShareChangeFeedSnapshotPageable(
+            ShareChangeFeedClient client,
+            long? maxTransferSize,
+            string continuation)
+        {
+            if (string.IsNullOrEmpty(continuation))
+                throw new ArgumentNullException(nameof(continuation));
+            _client = client;
+            _maxTransferSize = maxTransferSize;
+            _continuation = continuation;
+            // beginSnapshot/endSnapshot are recovered from the cursor envelope at enumeration time.
+            _beginSnapshot = null;
+            _endSnapshot = null;
         }
 
         public override IEnumerable<Page<ShareChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
         {
-            if (continuationToken != null)
-                throw new ArgumentException("Continuation not supported for snapshot queries.");
+            // Prefer a token supplied directly to AsPages (the standard Azure.Core pattern)
+            // over the one captured at construction by GetChangesBetweenSnapshots(string).
+            string effectiveContinuation = continuationToken ?? _continuation;
 
             (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(
                 async: false,
                 cancellationToken: default)
                 .EnsureCompleted();
 
-            SnapshotMetadata beginMeta = SnapshotQueryHelper.ReadSnapshotMetadataAsync(
+            ShareChangeFeedSnapshotIteration iter = ShareChangeFeedSnapshotIteration.CreateAsync(
                 containerClient,
-                _beginSnapshot,
-                async: false,
-                cancellationToken: default)
-                .EnsureCompleted();
-
-            SnapshotMetadata endMeta = SnapshotQueryHelper.ReadSnapshotMetadataAsync(
-                containerClient,
-                _endSnapshot,
-                async: false,
-                cancellationToken: default)
-                .EnsureCompleted();
-
-            SnapshotInputValidator.ValidateMetadata(beginMeta, _beginSnapshot, endMeta, _endSnapshot);
-
-            long beginCvId = beginMeta.CvId;
-            long endCvId = endMeta.CvId;
-
-            // The log-window times bound only which Avro segments are read. Rows inside those
-            // segments are filtered solely by container version id (see SnapshotEventFilter):
-            // disableEventTimeFilter keeps the segment selection but suppresses any per-event
-            // EventTime filtering, which would otherwise drop every row when the begin/end log
-            // windows fall in the same minute bucket.
-            DateTimeOffset startTime = beginMeta.MinLogWindowForNextSnapshot;
-            DateTimeOffset endTime = endMeta.MaxLogWindowForCurrentSnapshot;
-
-            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
-                containerClient,
+                config,
                 _maxTransferSize,
-                config);
-
-            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(
-                startTime,
-                endTime,
-                continuation: null,
+                _beginSnapshot,
+                _endSnapshot,
+                effectiveContinuation,
                 async: false,
-                cancellationToken: default,
-                disableEventTimeFilter: true)
+                cancellationToken: default)
                 .EnsureCompleted();
 
             int pageSize = pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize;
-            while (changeFeed.HasNext())
+            while (iter.ChangeFeed.HasNext())
             {
-                Page<ShareChangeFeedEvent> rawPage = changeFeed.GetPage(async: false, pageSize: pageSize).EnsureCompleted();
+                Page<ShareChangeFeedEvent> rawPage = iter.ChangeFeed
+                    .GetPage(async: false, pageSize: pageSize)
+                    .EnsureCompleted();
 
                 List<ShareChangeFeedEvent> filtered = new List<ShareChangeFeedEvent>();
                 foreach (ShareChangeFeedEvent evt in rawPage.Values)
                 {
-                    if (SnapshotEventFilter.IsInRange(evt, beginCvId, endCvId))
+                    if (SnapshotEventFilter.IsInRange(evt, iter.BeginCvId, iter.EndCvId))
                         filtered.Add(evt);
                 }
 
                 if (filtered.Count > 0)
-                    yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(filtered, rawPage.ContinuationToken);
+                {
+                    string outerToken = iter.WrapInnerCursor(containerClient, iter.ChangeFeed.GetCursor());
+                    yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(filtered, outerToken);
+                }
             }
         }
     }
