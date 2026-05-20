@@ -2759,10 +2759,10 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 AllowSharedKeyAccessForServices = new StorageAccountSharedKeyAccessProperties()
                 {
-                    BlobEnabled = true,
-                    FileEnabled = true,
-                    TableEnabled = false,
-                    QueueEnabled = false
+                    IsBlobEnabled = true,
+                    IsFileEnabled = true,
+                    IsTableEnabled = false,
+                    IsQueueEnabled = false
                 }
             };
 
@@ -2772,18 +2772,18 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate create response
             Assert.IsNotNull(account.Data.AllowSharedKeyAccessForServices);
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.BlobEnabled);
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.FileEnabled);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.TableEnabled);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.QueueEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
 
             //validate round-trip via GetAsync
             account = await account.GetAsync();
             Assert.IsNotNull(account.Data.AllowSharedKeyAccessForServices);
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.BlobEnabled);
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.FileEnabled);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.TableEnabled);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.QueueEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
         }
 
         [Test]
@@ -2803,10 +2803,10 @@ namespace Azure.ResourceManager.Storage.Tests
                 AllowBlobPublicAccess = false,
                 AllowSharedKeyAccessForServices = new StorageAccountSharedKeyAccessProperties()
                 {
-                    BlobEnabled = false,
-                    FileEnabled = false,
-                    TableEnabled = true,
-                    QueueEnabled = true
+                    IsBlobEnabled = false,
+                    IsFileEnabled = false,
+                    IsTableEnabled = true,
+                    IsQueueEnabled = true
                 }
             };
             account = await account.UpdateAsync(patch);
@@ -2814,10 +2814,10 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate
             Assert.IsNotNull(account.Data.AllowSharedKeyAccessForServices);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.BlobEnabled);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.FileEnabled);
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.TableEnabled);
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.QueueEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
 
             //update again to flip settings
             patch = new StorageAccountPatch()
@@ -2825,19 +2825,19 @@ namespace Azure.ResourceManager.Storage.Tests
                 AllowBlobPublicAccess = false,
                 AllowSharedKeyAccessForServices = new StorageAccountSharedKeyAccessProperties()
                 {
-                    BlobEnabled = true,
-                    FileEnabled = true,
-                    TableEnabled = false,
-                    QueueEnabled = false
+                    IsBlobEnabled = true,
+                    IsFileEnabled = true,
+                    IsTableEnabled = false,
+                    IsQueueEnabled = false
                 }
             };
             account = await account.UpdateAsync(patch);
             account = await account.GetAsync();
 
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.BlobEnabled);
-            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.FileEnabled);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.TableEnabled);
-            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.QueueEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsBlobEnabled);
+            Assert.IsTrue(account.Data.AllowSharedKeyAccessForServices.IsFileEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsTableEnabled);
+            Assert.IsFalse(account.Data.AllowSharedKeyAccessForServices.IsQueueEnabled);
         }
 
         [Test]

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
-    public partial class StorageConnectorPatch : TrackedResourceUpdate
+    public partial class StorageConnectorPatch : StorageTrackedResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="StorageConnectorPatch"/>. </summary>
         public StorageConnectorPatch()
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties of the Storage Connector. </param>
-        internal StorageConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, StorageConnectorPropertiesUpdate properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, tags)
+        internal StorageConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, StorageConnectorPropertiesPatch properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, tags)
         {
             Properties = properties;
         }
 
         /// <summary> The properties of the Storage Connector. </summary>
         [WirePath("properties")]
-        public StorageConnectorPropertiesUpdate Properties { get; set; }
+        public StorageConnectorPropertiesPatch Properties { get; set; }
     }
 }

@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The properties of data share source. </summary>
-    public partial class DataShareSourceUpdate : StorageConnectorSourceUpdate, IJsonModel<DataShareSourceUpdate>
+    /// <summary> The managed identity auth properties for dataShare connection. </summary>
+    public partial class ManagedIdentityAuthPropertiesPatch : StorageConnectorAuthPropertiesPatch, IJsonModel<ManagedIdentityAuthPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageConnectorSourceUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override StorageConnectorAuthPropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataShareSourceUpdate(document.RootElement, options);
+                        return DeserializeManagedIdentityAuthPropertiesPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataShareSourceUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIdentityAuthPropertiesPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataShareSourceUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIdentityAuthPropertiesPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataShareSourceUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedIdentityAuthPropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataShareSourceUpdate IPersistableModel<DataShareSourceUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataShareSourceUpdate)PersistableModelCreateCore(data, options);
+        ManagedIdentityAuthPropertiesPatch IPersistableModel<ManagedIdentityAuthPropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedIdentityAuthPropertiesPatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataShareSourceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedIdentityAuthPropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataShareSourceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedIdentityAuthPropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,61 +70,61 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareSourceUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIdentityAuthPropertiesPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(AuthProperties))
+            if (Optional.IsDefined(IdentityResourceId))
             {
-                writer.WritePropertyName("authProperties"u8);
-                writer.WriteObjectValue(AuthProperties, options);
+                writer.WritePropertyName("identityResourceId"u8);
+                writer.WriteStringValue(IdentityResourceId);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataShareSourceUpdate IJsonModel<DataShareSourceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataShareSourceUpdate)JsonModelCreateCore(ref reader, options);
+        ManagedIdentityAuthPropertiesPatch IJsonModel<ManagedIdentityAuthPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedIdentityAuthPropertiesPatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageConnectorSourceUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override StorageConnectorAuthPropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataShareSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareSourceUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIdentityAuthPropertiesPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataShareSourceUpdate(document.RootElement, options);
+            return DeserializeManagedIdentityAuthPropertiesPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataShareSourceUpdate DeserializeDataShareSourceUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedIdentityAuthPropertiesPatch DeserializeManagedIdentityAuthPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            StorageConnectorSourceType @type = default;
+            StorageConnectorAuthType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StorageConnectorAuthPropertiesUpdate authProperties = default;
+            ResourceIdentifier identityResourceId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new StorageConnectorSourceType(prop.Value.GetString());
+                    @type = new StorageConnectorAuthType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("authProperties"u8))
+                if (prop.NameEquals("identityResourceId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authProperties = StorageConnectorAuthPropertiesUpdate.DeserializeStorageConnectorAuthPropertiesUpdate(prop.Value, options);
+                    identityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataShareSourceUpdate(@type, additionalBinaryDataProperties, authProperties);
+            return new ManagedIdentityAuthPropertiesPatch(@type, additionalBinaryDataProperties, identityResourceId);
         }
     }
 }

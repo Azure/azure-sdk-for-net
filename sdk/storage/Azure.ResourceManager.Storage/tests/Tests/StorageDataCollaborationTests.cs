@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Authorization;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Tests
             ////update data share
             StorageDataSharePatch patchData = new StorageDataSharePatch()
             {
-                Properties = new StorageDataSharePropertiesUpdate()
+                Properties = new StorageDataSharePropertiesPatch()
                 {
                     Description = "Updated data share",
                 },
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //string managedIdentityId = string.Format("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testid");
             StorageConnectorPatch patchData = new StorageConnectorPatch()
             {
-                Properties = new StorageConnectorPropertiesUpdate()
+                Properties = new StorageConnectorPropertiesPatch()
                 {
                     Description = "Updated connector",
                 },
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.Storage.Tests
                     { "key2", "value2" }
                 }
             };
-            //ManagedIdentityAuthPropertiesUpdate authPropertiesUpdate = new ManagedIdentityAuthPropertiesUpdate(StorageConnectorAuthType.ManagedIdentity, null, managedIdentityId);
-            //patchData.Properties.Source = new DataShareSourceUpdate(StorageConnectorSourceType.DataShare, null, authPropertiesUpdate);
+            //ManagedIdentityAuthPropertiesPatch authPropertiesUpdate = new ManagedIdentityAuthPropertiesPatch(StorageConnectorAuthType.ManagedIdentity, null, managedIdentityId);
+            //patchData.Properties.Source = new DataShareSourcePatch(StorageConnectorSourceType.DataShare, null, authPropertiesUpdate);
 
             StorageConnectorResource updatedConnector = (await connector.UpdateAsync(WaitUntil.Completed, patchData)).Value;
 
-            //Assert.AreEqual(((ManagedIdentityAuthPropertiesUpdate)((DataShareSourceUpdate)patchData.Properties.Source).AuthProperties).IdentityResourceId,
+            //Assert.AreEqual(((ManagedIdentityAuthPropertiesPatch)((DataShareSourcePatch)patchData.Properties.Source).AuthProperties).IdentityResourceId,
             //    ((ManagedIdentityAuthProperties)((DataShareSource)updatedConnector.Data.Properties.Source).AuthProperties).IdentityResourceId);
             Assert.AreEqual(patchData.Properties.Description, updatedConnector.Data.Properties.Description);
             Assert.AreEqual(patchData.Tags.Count, updatedConnector.Data.Tags.Count);

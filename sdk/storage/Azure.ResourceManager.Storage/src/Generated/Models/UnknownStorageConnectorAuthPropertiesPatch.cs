@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class UnknownStorageConnectorAuthPropertiesUpdate : StorageConnectorAuthPropertiesUpdate
+    internal partial class UnknownStorageConnectorAuthPropertiesPatch : StorageConnectorAuthPropertiesPatch
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownStorageConnectorAuthPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownStorageConnectorAuthPropertiesPatch"/>. </summary>
         /// <param name="type"> Type of the authentication properties. Controls the type of the authProperties object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStorageConnectorAuthPropertiesUpdate(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownStorageConnectorAuthPropertiesPatch(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

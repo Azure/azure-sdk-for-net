@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 SourceAccount = srcAccount.Id.ToString(),
                 DestinationAccount = dstAccount.Id.ToString(),
-                TagsReplicationEnabled = true,
+                IsTagsReplicationEnabled = true,
             };
             policyData.Rules.Add(new ObjectReplicationPolicyRule(containerName, dstContainerName));
 
@@ -837,14 +837,14 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(1, dstPolicy.Data.Rules.Count);
             Assert.AreEqual(containerName, dstPolicy.Data.Rules[0].SourceContainer);
             Assert.AreEqual(dstContainerName, dstPolicy.Data.Rules[0].DestinationContainer);
-            Assert.IsTrue(dstPolicy.Data.TagsReplicationEnabled);
+            Assert.IsTrue(dstPolicy.Data.IsTagsReplicationEnabled);
 
             //create the mirrored policy on the source account (required for live runs)
             ObjectReplicationPolicyData srcPolicyData = new ObjectReplicationPolicyData()
             {
                 SourceAccount = srcAccount.Id.ToString(),
                 DestinationAccount = dstAccount.Id.ToString(),
-                TagsReplicationEnabled = true,
+                IsTagsReplicationEnabled = true,
             };
             srcPolicyData.Rules.Add(new ObjectReplicationPolicyRule(containerName, dstContainerName)
             {
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Storage.Tests
             dstPolicy = await dstPolicy.GetAsync();
             Assert.AreEqual(dstPolicy.Data.SourceAccount, srcAccount.Id.ToString());
             Assert.AreEqual(dstPolicy.Data.DestinationAccount, dstAccount.Id.ToString());
-            Assert.IsTrue(dstPolicy.Data.TagsReplicationEnabled);
+            Assert.IsTrue(dstPolicy.Data.IsTagsReplicationEnabled);
         }
 
         [Test]

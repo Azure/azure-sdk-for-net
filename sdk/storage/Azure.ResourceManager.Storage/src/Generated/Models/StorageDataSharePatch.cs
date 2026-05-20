@@ -14,7 +14,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> A DataShare is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
-    public partial class StorageDataSharePatch : TrackedResourceUpdate
+    public partial class StorageDataSharePatch : StorageTrackedResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="StorageDataSharePatch"/>. </summary>
         public StorageDataSharePatch()
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties of the Storage DataShare. </param>
-        internal StorageDataSharePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, StorageDataSharePropertiesUpdate properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, tags)
+        internal StorageDataSharePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, StorageDataSharePropertiesPatch properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, tags)
         {
             Properties = properties;
         }
 
         /// <summary> The properties of the Storage DataShare. </summary>
         [WirePath("properties")]
-        public StorageDataSharePropertiesUpdate Properties { get; set; }
+        public StorageDataSharePropertiesPatch Properties { get; set; }
     }
 }

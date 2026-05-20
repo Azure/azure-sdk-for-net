@@ -7,29 +7,30 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The managed identity auth properties for dataShare connection. </summary>
-    public partial class ManagedIdentityAuthPropertiesUpdate : StorageConnectorAuthPropertiesUpdate
+    public partial class ManagedIdentityAuthPropertiesPatch : StorageConnectorAuthPropertiesPatch
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthPropertiesUpdate"/>. </summary>
-        public ManagedIdentityAuthPropertiesUpdate() : base(StorageConnectorAuthType.ManagedIdentity)
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthPropertiesPatch"/>. </summary>
+        public ManagedIdentityAuthPropertiesPatch() : base(StorageConnectorAuthType.ManagedIdentity)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthPropertiesPatch"/>. </summary>
         /// <param name="type"> Type of the authentication properties. Controls the type of the authProperties object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identityResourceId"> ARM ResourceId of the managed identity that should be used to authenticate to the backing data source. </param>
-        internal ManagedIdentityAuthPropertiesUpdate(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string identityResourceId) : base(@type, additionalBinaryDataProperties)
+        internal ManagedIdentityAuthPropertiesPatch(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier identityResourceId) : base(@type, additionalBinaryDataProperties)
         {
             IdentityResourceId = identityResourceId;
         }
 
         /// <summary> ARM ResourceId of the managed identity that should be used to authenticate to the backing data source. </summary>
         [WirePath("identityResourceId")]
-        public string IdentityResourceId { get; set; }
+        public ResourceIdentifier IdentityResourceId { get; set; }
     }
 }
