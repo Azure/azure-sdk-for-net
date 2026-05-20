@@ -705,6 +705,82 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/retrieveCertificateEmailHistoryPathLengthRepro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateEmailHistoryPathLengthRepro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooDependency"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FooDependency> GetPathLengthReproAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MgmtTypeSpecFoosMicrosoftCertificateRegistra21AB4B80E610AsyncCollectionResultOfT(
+                _foosRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FooResource.GetPathLengthRepro");
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/retrieveCertificateEmailHistoryPathLengthRepro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_MicrosoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateEmailHistoryPathLengthRepro. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooDependency"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FooDependency> GetPathLengthRepro(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MgmtTypeSpecFoosMicrosoftCertificateRegistrationABCDC5559E58CCollectionResultOfT(
+                _foosRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FooResource.GetPathLengthRepro");
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
         /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/listGrandparentFlattenLeaves. </description>
         /// </item>
         /// <item>
