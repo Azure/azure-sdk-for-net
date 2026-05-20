@@ -430,6 +430,50 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return Properties is null ? default : Properties.NodeImageVersion;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.NodeImageVersion = value;
+            }
+        }
+
+        /// <summary> Defines the upgrade strategy for the agent pool. The default is Rolling. </summary>
+        [WirePath("properties.upgradeStrategy")]
+        public AgentPoolUpgradeStrategy? UpgradeStrategy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeStrategy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.UpgradeStrategy = value;
+            }
+        }
+
+        /// <summary> Whether to enable the full-cache ephemeral OS disk feature. When this feature is enabled, the entire operating system will be locally cached on the ephemeral OS disk, preventing E17 events caused by network failures. </summary>
+        [WirePath("properties.enableOSDiskFullCaching")]
+        public bool? IsOSDiskFullCachingEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsOSDiskFullCachingEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.IsOSDiskFullCachingEnabled = value;
+            }
         }
 
         /// <summary> Settings for upgrading the agentpool. </summary>
@@ -447,6 +491,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
                 Properties.UpgradeSettings = value;
+            }
+        }
+
+        /// <summary> Settings for Blue-Green upgrade on the agentpool. Applies when upgrade strategy is set to BlueGreen. </summary>
+        [WirePath("properties.upgradeSettingsBlueGreen")]
+        public AgentPoolBlueGreenUpgradeSettings UpgradeSettingsBlueGreen
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeSettingsBlueGreen;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.UpgradeSettingsBlueGreen = value;
             }
         }
 
@@ -603,6 +665,20 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
                 return Properties.NodeTaints;
+            }
+        }
+
+        /// <summary> Taints added on the nodes during creation that will not be reconciled by AKS. These taints will not be reconciled by AKS and can be removed with a kubectl call. This field can be modified after node pool is created, but nodes will not be recreated with new taints until another operation that requires recreation (e.g. node image upgrade) happens. These taints allow for required configuration to run before the node is ready to accept workloads, for example 'key1=value1:NoSchedule' that then can be removed with `kubectl taint nodes node1 key1=value1:NoSchedule-`. </summary>
+        [WirePath("properties.nodeInitializationTaints")]
+        public IList<string> NodeInitializationTaints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                return Properties.NodeInitializationTaints;
             }
         }
 
@@ -804,6 +880,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> GPU settings for the Agent Pool. </summary>
+        [WirePath("properties.gpuProfile")]
+        public AgentPoolGpuProfile GpuProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GpuProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.GpuProfile = value;
+            }
+        }
+
         /// <summary> The status of nodes in a VirtualMachines agent pool. </summary>
         [WirePath("properties.virtualMachineNodesStatus")]
         public IList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus
@@ -926,6 +1020,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
+        [WirePath("properties.virtualMachinesProfile.scale")]
+        public AgentPoolScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachinesScale;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.VirtualMachinesScale = value;
+            }
+        }
+
         /// <summary> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </summary>
         [WirePath("properties.status.provisioningError")]
         public ResponseError StatusProvisioningError
@@ -933,6 +1045,24 @@ namespace Azure.ResourceManager.ContainerService
             get
             {
                 return Properties is null ? default : Properties.StatusProvisioningError;
+            }
+        }
+
+        /// <summary> The resource ID of the prepared image specification resource to use. This can include a version. Omitting the version will use the latest version of the prepared image specification. </summary>
+        [WirePath("properties.preparedImageSpecificationProfile.preparedImageSpecificationId")]
+        public ResourceIdentifier PreparedImageSpecificationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreparedImageSpecificationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.PreparedImageSpecificationId = value;
             }
         }
     }

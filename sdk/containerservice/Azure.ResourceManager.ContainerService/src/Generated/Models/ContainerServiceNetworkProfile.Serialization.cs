@@ -184,6 +184,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PodLinkLocalAccess))
+            {
+                writer.WritePropertyName("podLinkLocalAccess"u8);
+                writer.WriteStringValue(PodLinkLocalAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(KubeProxyConfig))
+            {
+                writer.WritePropertyName("kubeProxyConfig"u8);
+                writer.WriteObjectValue(KubeProxyConfig, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -243,6 +253,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
             IList<ContainerServiceIPFamily> networkIPFamilies = default;
+            PodLinkLocalAccess? podLinkLocalAccess = default;
+            ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -416,6 +428,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     networkIPFamilies = array;
                     continue;
                 }
+                if (prop.NameEquals("podLinkLocalAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    podLinkLocalAccess = new PodLinkLocalAccess(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("kubeProxyConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kubeProxyConfig = ContainerServiceNetworkProfileKubeProxyConfig.DeserializeContainerServiceNetworkProfileKubeProxyConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -439,6 +469,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
                 networkIPFamilies ?? new ChangeTrackingList<ContainerServiceIPFamily>(),
+                podLinkLocalAccess,
+                kubeProxyConfig,
                 additionalBinaryDataProperties);
         }
     }

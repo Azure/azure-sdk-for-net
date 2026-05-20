@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
-    internal partial class AgentPoolScaleProfile : IJsonModel<AgentPoolScaleProfile>
+    public partial class AgentPoolScaleProfile : IJsonModel<AgentPoolScaleProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Autoscale))
+            {
+                writer.WritePropertyName("autoscale"u8);
+                writer.WriteStartArray();
+                foreach (AgentPoolAutoScaleProfile item in Autoscale)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IList<ManualScaleProfile> manual = default;
+            IList<AgentPoolAutoScaleProfile> autoscale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +155,26 @@ namespace Azure.ResourceManager.ContainerService.Models
                     manual = array;
                     continue;
                 }
+                if (prop.NameEquals("autoscale"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AgentPoolAutoScaleProfile> array = new List<AgentPoolAutoScaleProfile>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AgentPoolAutoScaleProfile.DeserializeAgentPoolAutoScaleProfile(item, options));
+                    }
+                    autoscale = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolScaleProfile(manual ?? new ChangeTrackingList<ManualScaleProfile>(), additionalBinaryDataProperties);
+            return new AgentPoolScaleProfile(manual ?? new ChangeTrackingList<ManualScaleProfile>(), autoscale ?? new ChangeTrackingList<AgentPoolAutoScaleProfile>(), additionalBinaryDataProperties);
         }
     }
 }
