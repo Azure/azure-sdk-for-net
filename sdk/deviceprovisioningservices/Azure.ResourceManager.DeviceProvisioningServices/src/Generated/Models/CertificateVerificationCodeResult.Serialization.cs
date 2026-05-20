@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
             ETag? eTag = default;
             CertificateVerificationCodeProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -139,6 +139,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -157,11 +162,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDeviceProvisioningServicesContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             return new CertificateVerificationCodeResult(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                name,
                 eTag,
                 properties);
         }
