@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricAccessControlListPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricAccessControlListPatch>
+    /// <summary> The Access Control Lists patch resource definition. </summary>
+    public partial class NetworkFabricAccessControlListPatch : TagsUpdate, IJsonModel<NetworkFabricAccessControlListPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricAccessControlListPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricAccessControlListPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFabricAccessControlListPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricAccessControlListPatch IPersistableModel<NetworkFabricAccessControlListPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkFabricAccessControlListPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricAccessControlListPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkFabricAccessControlListPatch"> The <see cref="NetworkFabricAccessControlListPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkFabricAccessControlListPatch networkFabricAccessControlListPatch)
+        {
+            if (networkFabricAccessControlListPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkFabricAccessControlListPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricAccessControlListPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,295 +80,85 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationType))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("configurationType"u8);
-                writer.WriteStringValue(ConfigurationType.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(AclsUri))
-            {
-                writer.WritePropertyName("aclsUrl"u8);
-                writer.WriteStringValue(AclsUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(DefaultAction))
-            {
-                writer.WritePropertyName("defaultAction"u8);
-                writer.WriteStringValue(DefaultAction.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(MatchConfigurations))
-            {
-                writer.WritePropertyName("matchConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in MatchConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
-            {
-                writer.WritePropertyName("dynamicMatchConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in DynamicMatchConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ControlPlaneAclConfiguration))
-            {
-                writer.WritePropertyName("controlPlaneAclConfiguration"u8);
-                writer.WriteStartArray();
-                foreach (var item in ControlPlaneAclConfiguration)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AclType))
-            {
-                writer.WritePropertyName("aclType"u8);
-                writer.WriteStringValue(AclType.Value.ToString());
-            }
-            if (Optional.IsDefined(DeviceRole))
-            {
-                writer.WritePropertyName("deviceRole"u8);
-                writer.WriteStringValue(DeviceRole.Value.ToString());
-            }
-            if (Optional.IsDefined(GlobalAccessControlListActions))
-            {
-                writer.WritePropertyName("globalAccessControlListActions"u8);
-                writer.WriteObjectValue(GlobalAccessControlListActions, options);
-            }
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            writer.WriteEndObject();
         }
 
-        NetworkFabricAccessControlListPatch IJsonModel<NetworkFabricAccessControlListPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricAccessControlListPatch IJsonModel<NetworkFabricAccessControlListPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFabricAccessControlListPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkFabricAccessControlListPatch(document.RootElement, options);
         }
 
-        internal static NetworkFabricAccessControlListPatch DeserializeNetworkFabricAccessControlListPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFabricAccessControlListPatch DeserializeNetworkFabricAccessControlListPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            NetworkFabricConfigurationType? configurationType = default;
-            Uri aclsUrl = default;
-            CommunityActionType? defaultAction = default;
-            IList<AccessControlListMatchConfiguration> matchConfigurations = default;
-            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
-            IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default;
-            NetworkFabricAclType? aclType = default;
-            NetworkFabricDeviceRole? deviceRole = default;
-            GlobalAccessControlListActionPatchProperties globalAccessControlListActions = default;
-            string annotation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AccessControlListPatchProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("configurationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("aclsUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aclsUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultAction"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            defaultAction = new CommunityActionType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("matchConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AccessControlListMatchConfiguration> array = new List<AccessControlListMatchConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item, options));
-                            }
-                            matchConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dynamicMatchConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
-                            }
-                            dynamicMatchConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("controlPlaneAclConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ControlPlaneAclPatchProperties> array = new List<ControlPlaneAclPatchProperties>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ControlPlaneAclPatchProperties.DeserializeControlPlaneAclPatchProperties(item, options));
-                            }
-                            controlPlaneAclConfiguration = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("aclType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aclType = new NetworkFabricAclType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("deviceRole"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deviceRole = new NetworkFabricDeviceRole(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("globalAccessControlListActions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            globalAccessControlListActions = GlobalAccessControlListActionPatchProperties.DeserializeGlobalAccessControlListActionPatchProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = AccessControlListPatchProperties.DeserializeAccessControlListPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricAccessControlListPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                configurationType,
-                aclsUrl,
-                defaultAction,
-                matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
-                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
-                controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclPatchProperties>(),
-                aclType,
-                deviceRole,
-                globalAccessControlListActions,
-                annotation);
+            return new NetworkFabricAccessControlListPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
-
-        BinaryData IPersistableModel<NetworkFabricAccessControlListPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkFabricAccessControlListPatch IPersistableModel<NetworkFabricAccessControlListPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkFabricAccessControlListPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkFabricAccessControlListPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

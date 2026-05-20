@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkPacketBrokerOperationSource : IOperationSource<NetworkPacketBrokerResource>
+    /// <summary></summary>
+    internal partial class NetworkPacketBrokerOperationSource : IOperationSource<NetworkPacketBrokerResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkPacketBrokerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkPacketBrokerResource IOperationSource<NetworkPacketBrokerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkPacketBrokerData data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkPacketBrokerResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkPacketBrokerResource> IOperationSource<NetworkPacketBrokerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkPacketBrokerResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkPacketBrokerData data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkPacketBrokerResource(_client, data);
         }
     }
 }

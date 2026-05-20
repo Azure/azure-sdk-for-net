@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> BMP Configuration patch properties. </summary>
     public partial class BmpConfigurationPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BmpConfigurationPatchProperties"/>. </summary>
         public BmpConfigurationPatchProperties()
@@ -57,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="stationConfigurationState"> Enabling a station. Either True/False. </param>
         /// <param name="scopeResourceId"> Scope resource ARM Identifier. </param>
         /// <param name="stationName"> Name of the station. </param>
-        /// <param name="stationIP"> IP Address of the station. </param>
+        /// <param name="stationIp"> IP Address of the station. </param>
         /// <param name="stationPort"> Port of the station. Default value is 5000. </param>
         /// <param name="stationConnectionMode"> Station Connection Mode. </param>
         /// <param name="stationConnectionProperties"> Station Connection Properties. </param>
@@ -66,13 +38,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="exportPolicy"> Export Policy for the BMP Configuration. </param>
         /// <param name="exportPolicyConfiguration"> Export Policy configuration properties for the BMP. </param>
         /// <param name="monitoredAddressFamilies"> Monitored Address Families for the BMP Configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BmpConfigurationPatchProperties(NetworkFabricStationConfigurationState? stationConfigurationState, ResourceIdentifier scopeResourceId, string stationName, string stationIP, int? stationPort, NetworkFabricStationConnectionMode? stationConnectionMode, StationConnectionPatchProperties stationConnectionProperties, ResourceIdentifier stationNetwork, IList<ResourceIdentifier> monitoredNetworks, BmpExportPolicy? exportPolicy, BmpExportPolicyPatchProperties exportPolicyConfiguration, IList<BmpMonitoredAddressFamily> monitoredAddressFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BmpConfigurationPatchProperties(StationConfigurationState? stationConfigurationState, ResourceIdentifier scopeResourceId, string stationName, string stationIp, int? stationPort, StationConnectionMode? stationConnectionMode, StationConnectionPatchProperties stationConnectionProperties, ResourceIdentifier stationNetwork, IList<ResourceIdentifier> monitoredNetworks, BmpExportPolicy? exportPolicy, BmpExportPolicyPatchProperties exportPolicyConfiguration, IList<BmpMonitoredAddressFamily> monitoredAddressFamilies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StationConfigurationState = stationConfigurationState;
             ScopeResourceId = scopeResourceId;
             StationName = stationName;
-            StationIP = stationIP;
+            StationIp = stationIp;
             StationPort = stationPort;
             StationConnectionMode = stationConnectionMode;
             StationConnectionProperties = stationConnectionProperties;
@@ -81,43 +53,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ExportPolicy = exportPolicy;
             ExportPolicyConfiguration = exportPolicyConfiguration;
             MonitoredAddressFamilies = monitoredAddressFamilies;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enabling a station. Either True/False. </summary>
-        public NetworkFabricStationConfigurationState? StationConfigurationState { get; set; }
+        public StationConfigurationState? StationConfigurationState { get; set; }
+
         /// <summary> Scope resource ARM Identifier. </summary>
         public ResourceIdentifier ScopeResourceId { get; set; }
+
         /// <summary> Name of the station. </summary>
         public string StationName { get; set; }
+
         /// <summary> IP Address of the station. </summary>
-        public string StationIP { get; set; }
+        public string StationIp { get; set; }
+
         /// <summary> Port of the station. Default value is 5000. </summary>
         public int? StationPort { get; set; }
+
         /// <summary> Station Connection Mode. </summary>
-        public NetworkFabricStationConnectionMode? StationConnectionMode { get; set; }
+        public StationConnectionMode? StationConnectionMode { get; set; }
+
         /// <summary> Station Connection Properties. </summary>
         public StationConnectionPatchProperties StationConnectionProperties { get; set; }
+
         /// <summary> Network of the station. </summary>
         public ResourceIdentifier StationNetwork { get; set; }
+
         /// <summary> The List of Network ID's that need to be monitored. </summary>
         public IList<ResourceIdentifier> MonitoredNetworks { get; }
+
         /// <summary> Export Policy for the BMP Configuration. </summary>
         public BmpExportPolicy? ExportPolicy { get; set; }
+
         /// <summary> Export Policy configuration properties for the BMP. </summary>
         internal BmpExportPolicyPatchProperties ExportPolicyConfiguration { get; set; }
+
+        /// <summary> Monitored Address Families for the BMP Configuration. </summary>
+        public IList<BmpMonitoredAddressFamily> MonitoredAddressFamilies { get; }
+
         /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
         public IList<BmpExportPolicy> ExportPolicies
         {
             get
             {
                 if (ExportPolicyConfiguration is null)
+                {
                     ExportPolicyConfiguration = new BmpExportPolicyPatchProperties();
+                }
                 return ExportPolicyConfiguration.ExportPolicies;
             }
         }
-
-        /// <summary> Monitored Address Families for the BMP Configuration. </summary>
-        public IList<BmpMonitoredAddressFamily> MonitoredAddressFamilies { get; }
     }
 }

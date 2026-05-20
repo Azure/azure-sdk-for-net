@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ExternalNetworkOptionAProperties : IUtf8JsonSerializable, IJsonModel<ExternalNetworkOptionAProperties>
+    /// <summary> option A properties object. </summary>
+    public partial class ExternalNetworkOptionAProperties : IJsonModel<ExternalNetworkOptionAProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExternalNetworkOptionAProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworkOptionAProperties"/> for deserialization. </summary>
+        internal ExternalNetworkOptionAProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExternalNetworkOptionAProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExternalNetworkOptionAProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExternalNetworkOptionAProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExternalNetworkOptionAProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExternalNetworkOptionAProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExternalNetworkOptionAProperties IPersistableModel<ExternalNetworkOptionAProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExternalNetworkOptionAProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExternalNetworkOptionAProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,43 +73,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExternalNetworkOptionAProperties)} does not support writing '{format}' format.");
             }
-
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PrimaryIpv4Prefix))
+            {
+                writer.WritePropertyName("primaryIpv4Prefix"u8);
+                writer.WriteStringValue(PrimaryIpv4Prefix);
+            }
+            if (Optional.IsDefined(PrimaryIpv6Prefix))
+            {
+                writer.WritePropertyName("primaryIpv6Prefix"u8);
+                writer.WriteStringValue(PrimaryIpv6Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIpv4Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv4Prefix"u8);
+                writer.WriteStringValue(SecondaryIpv4Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIpv6Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv6Prefix"u8);
+                writer.WriteStringValue(SecondaryIpv6Prefix);
+            }
             if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (VlanId != null)
-            {
-                writer.WritePropertyName("vlanId"u8);
-                writer.WriteNumberValue(VlanId.Value);
-            }
-            else
-            {
-                writer.WriteNull("vlanId");
-            }
-            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
+            writer.WritePropertyName("vlanId"u8);
+            writer.WriteNumberValue(VlanId.Value);
+            if (options.Format != "W" && Optional.IsDefined(FabricASN))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricAsn.Value);
+                writer.WriteNumberValue(FabricASN.Value);
             }
-            if (PeerAsn != null)
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerAsn.Value);
-            }
-            else
-            {
-                writer.WriteNull("peerASN");
-            }
+            writer.WritePropertyName("peerASN"u8);
+            writer.WriteNumberValue(PeerASN);
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
@@ -93,243 +144,220 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("v6OverV4BgpSession"u8);
                 writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
             }
-            if (Optional.IsDefined(NativeIPv4PrefixLimit))
+            if (Optional.IsDefined(NativeIpv4PrefixLimit))
             {
                 writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
+                writer.WriteObjectValue(NativeIpv4PrefixLimit, options);
             }
-            if (Optional.IsDefined(NativeIPv6PrefixLimit))
+            if (Optional.IsDefined(NativeIpv6PrefixLimit))
             {
                 writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
+                writer.WriteObjectValue(NativeIpv6PrefixLimit, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
-        ExternalNetworkOptionAProperties IJsonModel<ExternalNetworkOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExternalNetworkOptionAProperties IJsonModel<ExternalNetworkOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExternalNetworkOptionAProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExternalNetworkOptionAProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExternalNetworkOptionAProperties(document.RootElement, options);
         }
 
-        internal static ExternalNetworkOptionAProperties DeserializeExternalNetworkOptionAProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExternalNetworkOptionAProperties DeserializeExternalNetworkOptionAProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string primaryIpv4Prefix = default;
+            string primaryIpv6Prefix = default;
+            string secondaryIpv4Prefix = default;
+            string secondaryIpv6Prefix = default;
             int? mtu = default;
             int? vlanId = default;
-            long? fabricAsn = default;
-            long? peerAsn = default;
+            long? fabricASN = default;
+            long peerASN = default;
             BfdConfiguration bfdConfiguration = default;
             ResourceIdentifier ingressAclId = default;
             ExternalNetworkBmpProperties bmpConfiguration = default;
             ResourceIdentifier egressAclId = default;
-            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
-            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
-            NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
-            NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
-            string primaryIPv4Prefix = default;
-            string primaryIPv6Prefix = default;
-            string secondaryIPv4Prefix = default;
-            string secondaryIPv6Prefix = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            NativeIpv4PrefixLimitProperties nativeIpv4PrefixLimit = default;
+            NativeIpv6PrefixLimitProperties nativeIpv6PrefixLimit = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mtu"u8))
+                if (prop.NameEquals("primaryIpv4Prefix"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    primaryIpv4Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("primaryIpv6Prefix"u8))
+                {
+                    primaryIpv6Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("secondaryIpv4Prefix"u8))
+                {
+                    secondaryIpv4Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("secondaryIpv6Prefix"u8))
+                {
+                    secondaryIpv6Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("mtu"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mtu = property.Value.GetInt32();
+                    mtu = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vlanId"u8))
+                if (prop.NameEquals("vlanId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vlanId = null;
-                        continue;
-                    }
-                    vlanId = property.Value.GetInt32();
+                    vlanId = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fabricASN"u8))
+                if (prop.NameEquals("fabricASN"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricAsn = property.Value.GetInt64();
+                    fabricASN = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("peerASN"u8))
+                if (prop.NameEquals("peerASN"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        peerAsn = null;
-                        continue;
-                    }
-                    peerAsn = property.Value.GetInt64();
+                    peerASN = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("bfdConfiguration"u8))
+                if (prop.NameEquals("bfdConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ingressAclId"u8))
+                if (prop.NameEquals("ingressAclId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ingressAclId = new ResourceIdentifier(property.Value.GetString());
+                    ingressAclId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bmpConfiguration"u8))
+                if (prop.NameEquals("bmpConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bmpConfiguration = ExternalNetworkBmpProperties.DeserializeExternalNetworkBmpProperties(property.Value, options);
+                    bmpConfiguration = ExternalNetworkBmpProperties.DeserializeExternalNetworkBmpProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("egressAclId"u8))
+                if (prop.NameEquals("egressAclId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    egressAclId = new ResourceIdentifier(property.Value.GetString());
+                    egressAclId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("v4OverV6BgpSession"u8))
+                if (prop.NameEquals("v4OverV6BgpSession"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(property.Value.GetString());
+                    v4OverV6BgpSession = new V4OverV6BgpSessionState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("v6OverV4BgpSession"u8))
+                if (prop.NameEquals("v6OverV4BgpSession"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(property.Value.GetString());
+                    v6OverV4BgpSession = new V6OverV4BgpSessionState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nativeIpv4PrefixLimit"u8))
+                if (prop.NameEquals("nativeIpv4PrefixLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nativeIPv4PrefixLimit = NativeIPv4PrefixLimitProperties.DeserializeNativeIPv4PrefixLimitProperties(property.Value, options);
+                    nativeIpv4PrefixLimit = NativeIpv4PrefixLimitProperties.DeserializeNativeIpv4PrefixLimitProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nativeIpv6PrefixLimit"u8))
+                if (prop.NameEquals("nativeIpv6PrefixLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nativeIPv6PrefixLimit = NativeIPv6PrefixLimitProperties.DeserializeNativeIPv6PrefixLimitProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("primaryIpv4Prefix"u8))
-                {
-                    primaryIPv4Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("primaryIpv6Prefix"u8))
-                {
-                    primaryIPv6Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryIpv4Prefix"u8))
-                {
-                    secondaryIPv4Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryIpv6Prefix"u8))
-                {
-                    secondaryIPv6Prefix = property.Value.GetString();
+                    nativeIpv6PrefixLimit = NativeIpv6PrefixLimitProperties.DeserializeNativeIpv6PrefixLimitProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExternalNetworkOptionAProperties(
-                primaryIPv4Prefix,
-                primaryIPv6Prefix,
-                secondaryIPv4Prefix,
-                secondaryIPv6Prefix,
-                serializedAdditionalRawData,
+                primaryIpv4Prefix,
+                primaryIpv6Prefix,
+                secondaryIpv4Prefix,
+                secondaryIpv6Prefix,
                 mtu,
                 vlanId,
-                fabricAsn,
-                peerAsn,
+                fabricASN,
+                peerASN,
                 bfdConfiguration,
                 ingressAclId,
                 bmpConfiguration,
                 egressAclId,
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
-                nativeIPv4PrefixLimit,
-                nativeIPv6PrefixLimit);
+                nativeIpv4PrefixLimit,
+                nativeIpv6PrefixLimit,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ExternalNetworkOptionAProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExternalNetworkOptionAProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExternalNetworkOptionAProperties IPersistableModel<ExternalNetworkOptionAProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExternalNetworkOptionAProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExternalNetworkOptionAProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExternalNetworkOptionAProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,53 +11,139 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkTapRule resource definition. </summary>
-    public partial class NetworkTapRulePatch : NetworkRackPatch
+    public partial class NetworkTapRulePatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapRulePatch"/>. </summary>
         public NetworkTapRulePatch()
         {
-            MatchConfigurations = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRulePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Network Tap Rule Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
-        /// <param name="tapRulesUri"> Network Tap Rules file URL. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="globalNetworkTapRuleActions"> Global network tap rule actions. </param>
-        internal NetworkTapRulePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, NetworkFabricIdentitySelectorPatch identitySelector, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions) : base(tags, serializedAdditionalRawData)
+        internal NetworkTapRulePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkTapRulePatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            ConfigurationType = configurationType;
-            TapRulesUri = tapRulesUri;
-            MatchConfigurations = matchConfigurations;
-            DynamicMatchConfigurations = dynamicMatchConfigurations;
-            IdentitySelector = identitySelector;
-            GlobalNetworkTapRuleActions = globalNetworkTapRuleActions;
         }
 
+        /// <summary> Network Tap Rule Patch properties. </summary>
+        internal NetworkTapRulePatchProperties Properties { get; set; }
+
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+        public ManagedServiceIdentityPatch Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRulePatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> Input method to configure Network Tap Rule. </summary>
-        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
+        public NetworkFabricConfigurationType? ConfigurationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRulePatchProperties();
+                }
+                Properties.ConfigurationType = value;
+            }
+        }
+
         /// <summary> Network Tap Rules file URL. </summary>
-        public Uri TapRulesUri { get; set; }
+        public Uri TapRulesUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TapRulesUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRulePatchProperties();
+                }
+                Properties.TapRulesUri = value;
+            }
+        }
+
         /// <summary> List of match configurations. </summary>
-        public IList<NetworkTapRuleMatchConfiguration> MatchConfigurations { get; }
+        public IList<NetworkTapRuleMatchConfigurationPatch> MatchConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRulePatchProperties();
+                }
+                return Properties.MatchConfigurations;
+            }
+        }
+
         /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
+        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRulePatchProperties();
+                }
+                return Properties.DynamicMatchConfigurations;
+            }
+        }
+
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public NetworkFabricIdentitySelectorPatch IdentitySelector { get; set; }
+        public IdentitySelectorPatch IdentitySelector
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentitySelector;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRulePatchProperties();
+                }
+                Properties.IdentitySelector = value;
+            }
+        }
+
         /// <summary> Global network tap rule actions. </summary>
-        public GlobalNetworkTapRuleActionPatchProperties GlobalNetworkTapRuleActions { get; set; }
+        public GlobalNetworkTapRuleActionPatchProperties GlobalNetworkTapRuleActions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalNetworkTapRuleActions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRulePatchProperties();
+                }
+                Properties.GlobalNetworkTapRuleActions = value;
+            }
+        }
     }
 }

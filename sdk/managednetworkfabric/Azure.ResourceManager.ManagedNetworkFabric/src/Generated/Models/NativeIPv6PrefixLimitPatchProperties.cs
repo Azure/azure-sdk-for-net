@@ -7,57 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> External Network native IPv6 prefix limits patch properties. </summary>
-    internal partial class NativeIPv6PrefixLimitPatchProperties
+    internal partial class NativeIpv6PrefixLimitPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NativeIPv6PrefixLimitPatchProperties"/>. </summary>
-        public NativeIPv6PrefixLimitPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="NativeIpv6PrefixLimitPatchProperties"/>. </summary>
+        public NativeIpv6PrefixLimitPatchProperties()
         {
             PrefixLimits = new ChangeTrackingList<PrefixLimitPatchProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NativeIPv6PrefixLimitPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NativeIpv6PrefixLimitPatchProperties"/>. </summary>
         /// <param name="prefixLimits"> Prefix limits. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NativeIPv6PrefixLimitPatchProperties(IList<PrefixLimitPatchProperties> prefixLimits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NativeIpv6PrefixLimitPatchProperties(IList<PrefixLimitPatchProperties> prefixLimits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrefixLimits = prefixLimits;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Prefix limits. </summary>

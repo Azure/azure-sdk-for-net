@@ -7,163 +7,260 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkDevice data model.
-    /// The Network Device resource definition.
-    /// </summary>
+    /// <summary> The Network Device resource definition. </summary>
     public partial class NetworkDeviceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         public NetworkDeviceData(AzureLocation location, string serialNumber) : base(location)
         {
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
 
-            SerialNumber = serialNumber;
-            SecretRotationStatus = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
-            CertificateRotationStatus = new ChangeTrackingList<NetworkFabricCertificateRotationStatus>();
+            Properties = new NetworkDeviceProperties(serialNumber);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The NetworkDevice properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="hostName"> The host name of the device. </param>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="version"> Current version of the device as defined in SKU. </param>
-        /// <param name="networkDeviceSku"> Network Device SKU name. </param>
-        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
-        /// <param name="networkRackId"> Reference to network rack resource id. </param>
-        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
-        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
-        /// <param name="rwDeviceConfig"> User configured read-write configuration applied on the network devices. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="secretRotationStatus"> Secret rotation status for the device's secrets. </param>
-        /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus, IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, NetworkDeviceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            HostName = hostName;
-            SerialNumber = serialNumber;
-            IdentitySelector = identitySelector;
-            Version = version;
-            NetworkDeviceSku = networkDeviceSku;
-            NetworkDeviceRole = networkDeviceRole;
-            NetworkRackId = networkRackId;
-            ManagementIPv4Address = managementIPv4Address;
-            ManagementIPv6Address = managementIPv6Address;
-            RwDeviceConfig = rwDeviceConfig;
-            LastOperation = lastOperation;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
-            SecretRotationStatus = secretRotationStatus;
-            CertificateRotationStatus = certificateRotationStatus;
-            NetworkFabricId = networkFabricId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/> for deserialization. </summary>
-        internal NetworkDeviceData()
-        {
-        }
+        /// <summary> The NetworkDevice properties. </summary>
+        internal NetworkDeviceProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> The host name of the device. </summary>
-        public string HostName { get; set; }
-        /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
-        public string SerialNumber { get; set; }
-        /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public NetworkFabricIdentitySelector IdentitySelector { get; set; }
-        /// <summary> Current version of the device as defined in SKU. </summary>
-        public string Version { get; }
-        /// <summary> Network Device SKU name. </summary>
-        public string NetworkDeviceSku { get; set; }
-        /// <summary> NetworkDeviceRole is the device role: Example: CE | ToR. </summary>
-        public NetworkDeviceRole? NetworkDeviceRole { get; }
-        /// <summary> Reference to network rack resource id. </summary>
-        public ResourceIdentifier NetworkRackId { get; }
-        /// <summary> Management IPv4 Address. </summary>
-        public IPAddress ManagementIPv4Address { get; }
-        /// <summary> Management IPv6 Address. </summary>
-        public string ManagementIPv6Address { get; }
-        /// <summary> User configured read-write configuration applied on the network devices. </summary>
-        public string RwDeviceConfig { get; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
+        public string Annotation
         {
-            get => LastOperation?.Details;
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> The host name of the device. </summary>
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceProperties();
+                }
+                Properties.HostName = value;
+            }
+        }
+
+        /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
+        public string SerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerialNumber;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceProperties();
+                }
+                Properties.SerialNumber = value;
+            }
+        }
+
+        /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
+        public IdentitySelector IdentitySelector
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentitySelector;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceProperties();
+                }
+                Properties.IdentitySelector = value;
+            }
+        }
+
+        /// <summary> Current version of the device as defined in SKU. </summary>
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
+        /// <summary> Network Device SKU name. </summary>
+        public string NetworkDeviceSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkDeviceSku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceProperties();
+                }
+                Properties.NetworkDeviceSku = value;
+            }
+        }
+
+        /// <summary> NetworkDeviceRole is the device role: Example: CE | ToR. </summary>
+        public NetworkDeviceRole? NetworkDeviceRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkDeviceRole;
+            }
+        }
+
+        /// <summary> Reference to network rack resource id. </summary>
+        public string NetworkRackId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRackId;
+            }
+        }
+
+        /// <summary> Management IPv4 Address. </summary>
+        public string ManagementIpv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementIpv4Address;
+            }
+        }
+
+        /// <summary> Management IPv6 Address. </summary>
+        public string ManagementIpv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementIpv6Address;
+            }
+        }
+
+        /// <summary> User configured read-write configuration applied on the network devices. </summary>
+        public string RwDeviceConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RwDeviceConfig;
+            }
         }
 
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
         /// <summary> Secret rotation status for the device's secrets. </summary>
-        public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus { get; }
+        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceProperties();
+                }
+                return Properties.SecretRotationStatus;
+            }
+        }
+
         /// <summary> Certificate rotation status for the device's certificates. </summary>
-        public IReadOnlyList<NetworkFabricCertificateRotationStatus> CertificateRotationStatus { get; }
+        public IReadOnlyList<CertificateRotationStatus> CertificateRotationStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceProperties();
+                }
+                return Properties.CertificateRotationStatus;
+            }
+        }
+
         /// <summary> Associated Network Fabric Resource ID. </summary>
-        public ResourceIdentifier NetworkFabricId { get; }
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

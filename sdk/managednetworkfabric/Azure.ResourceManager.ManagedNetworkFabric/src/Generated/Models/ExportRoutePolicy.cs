@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
     public partial class ExportRoutePolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportRoutePolicy"/>. </summary>
         public ExportRoutePolicy()
@@ -52,19 +23,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportRoutePolicy"/>. </summary>
-        /// <param name="exportIPv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
-        /// <param name="exportIPv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportRoutePolicy(ResourceIdentifier exportIPv4RoutePolicyId, ResourceIdentifier exportIPv6RoutePolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="exportIpv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
+        /// <param name="exportIpv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportRoutePolicy(ResourceIdentifier exportIpv4RoutePolicyId, ResourceIdentifier exportIpv6RoutePolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExportIPv4RoutePolicyId = exportIPv4RoutePolicyId;
-            ExportIPv6RoutePolicyId = exportIPv6RoutePolicyId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ExportIpv4RoutePolicyId = exportIpv4RoutePolicyId;
+            ExportIpv6RoutePolicyId = exportIpv6RoutePolicyId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ARM resource ID of RoutePolicy. </summary>
-        public ResourceIdentifier ExportIPv4RoutePolicyId { get; set; }
+        public ResourceIdentifier ExportIpv4RoutePolicyId { get; set; }
+
         /// <summary> ARM resource ID of RoutePolicy. </summary>
-        public ResourceIdentifier ExportIPv6RoutePolicyId { get; set; }
+        public ResourceIdentifier ExportIpv6RoutePolicyId { get; set; }
     }
 }

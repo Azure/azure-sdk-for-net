@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkDeviceOperationSource : IOperationSource<NetworkDeviceResource>
+    /// <summary></summary>
+    internal partial class NetworkDeviceOperationSource : IOperationSource<NetworkDeviceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkDeviceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkDeviceResource IOperationSource<NetworkDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkDeviceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkDeviceData data = NetworkDeviceData.DeserializeNetworkDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkDeviceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkDeviceResource> IOperationSource<NetworkDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkDeviceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkDeviceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkDeviceData data = NetworkDeviceData.DeserializeNetworkDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkDeviceResource(_client, data);
         }
     }
 }

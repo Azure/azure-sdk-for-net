@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapRulePatch : IUtf8JsonSerializable, IJsonModel<NetworkTapRulePatch>
+    /// <summary> The NetworkTapRule resource definition. </summary>
+    public partial class NetworkTapRulePatch : TagsUpdate, IJsonModel<NetworkTapRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapRulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkTapRulePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapRulePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapRulePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkTapRulePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkTapRulePatch IPersistableModel<NetworkTapRulePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkTapRulePatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkTapRulePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkTapRulePatch"> The <see cref="NetworkTapRulePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkTapRulePatch networkTapRulePatch)
+        {
+            if (networkTapRulePatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkTapRulePatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkTapRulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,253 +80,100 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkTapRulePatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            if (Optional.IsDefined(ConfigurationType))
-            {
-                writer.WritePropertyName("configurationType"u8);
-                writer.WriteStringValue(ConfigurationType.Value.ToString());
-            }
-            if (Optional.IsDefined(TapRulesUri))
-            {
-                writer.WritePropertyName("tapRulesUrl"u8);
-                writer.WriteStringValue(TapRulesUri.AbsoluteUri);
-            }
-            if (Optional.IsCollectionDefined(MatchConfigurations))
-            {
-                writer.WritePropertyName("matchConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in MatchConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
-            {
-                writer.WritePropertyName("dynamicMatchConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (var item in DynamicMatchConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IdentitySelector))
-            {
-                writer.WritePropertyName("identitySelector"u8);
-                writer.WriteObjectValue(IdentitySelector, options);
-            }
-            if (Optional.IsDefined(GlobalNetworkTapRuleActions))
-            {
-                writer.WritePropertyName("globalNetworkTapRuleActions"u8);
-                writer.WriteObjectValue(GlobalNetworkTapRuleActions, options);
-            }
-            writer.WriteEndObject();
         }
 
-        NetworkTapRulePatch IJsonModel<NetworkTapRulePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkTapRulePatch IJsonModel<NetworkTapRulePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkTapRulePatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkTapRulePatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkTapRulePatch(document.RootElement, options);
         }
 
-        internal static NetworkTapRulePatch DeserializeNetworkTapRulePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkTapRulePatch DeserializeNetworkTapRulePatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
-            string annotation = default;
-            NetworkFabricConfigurationType? configurationType = default;
-            Uri tapRulesUrl = default;
-            IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
-            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
-            NetworkFabricIdentitySelectorPatch identitySelector = default;
-            GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NetworkTapRulePatchProperties properties = default;
+            ManagedServiceIdentityPatch identity = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    properties = NetworkTapRulePatchProperties.DeserializeNetworkTapRulePatchProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tapRulesUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tapRulesUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("matchConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NetworkTapRuleMatchConfiguration> array = new List<NetworkTapRuleMatchConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item, options));
-                            }
-                            matchConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dynamicMatchConfigurations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
-                            }
-                            dynamicMatchConfigurations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("identitySelector"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            identitySelector = NetworkFabricIdentitySelectorPatch.DeserializeNetworkFabricIdentitySelectorPatch(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("globalNetworkTapRuleActions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            globalNetworkTapRuleActions = GlobalNetworkTapRuleActionPatchProperties.DeserializeGlobalNetworkTapRuleActionPatchProperties(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkTapRulePatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                identity,
-                annotation,
-                configurationType,
-                tapRulesUrl,
-                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
-                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
-                identitySelector,
-                globalNetworkTapRuleActions);
+            return new NetworkTapRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
         }
-
-        BinaryData IPersistableModel<NetworkTapRulePatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkTapRulePatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkTapRulePatch IPersistableModel<NetworkTapRulePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRulePatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkTapRulePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkTapRulePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkTapRulePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

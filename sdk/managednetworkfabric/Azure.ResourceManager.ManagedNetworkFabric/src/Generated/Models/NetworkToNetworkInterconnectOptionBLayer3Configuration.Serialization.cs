@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : IUtf8JsonSerializable, IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>
+    /// <summary> OptionB Layer3 Configuration properties. </summary>
+    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : Layer3IPPrefixProperties, IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkToNetworkInterconnectOptionBLayer3Configuration IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkToNetworkInterconnectOptionBLayer3Configuration)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,184 +69,205 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PeerASN))
+            {
+                writer.WritePropertyName("peerASN"u8);
+                writer.WriteNumberValue(PeerASN.Value);
+            }
+            if (Optional.IsDefined(VlanId))
+            {
+                writer.WritePropertyName("vlanId"u8);
+                writer.WriteNumberValue(VlanId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FabricASN))
+            {
+                writer.WritePropertyName("fabricASN"u8);
+                writer.WriteNumberValue(FabricASN.Value);
+            }
+            if (Optional.IsCollectionDefined(PeLoopbackIpAddress))
+            {
+                writer.WritePropertyName("peLoopbackIpAddress"u8);
+                writer.WriteStartArray();
+                foreach (string item in PeLoopbackIpAddress)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(BmpConfiguration))
+            {
+                writer.WritePropertyName("bmpConfiguration"u8);
+                writer.WriteObjectValue(BmpConfiguration, options);
+            }
+            if (Optional.IsCollectionDefined(PrefixLimits))
+            {
+                writer.WritePropertyName("prefixLimits"u8);
+                writer.WriteStartArray();
+                foreach (OptionBLayer3PrefixLimitProperties item in PrefixLimits)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
-        NetworkToNetworkInterconnectOptionBLayer3Configuration IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkToNetworkInterconnectOptionBLayer3Configuration IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkToNetworkInterconnectOptionBLayer3Configuration)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Layer3IPPrefixProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(document.RootElement, options);
         }
 
-        internal static NetworkToNetworkInterconnectOptionBLayer3Configuration DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkToNetworkInterconnectOptionBLayer3Configuration DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? peerAsn = default;
+            string primaryIpv4Prefix = default;
+            string primaryIpv6Prefix = default;
+            string secondaryIpv4Prefix = default;
+            string secondaryIpv6Prefix = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            long? peerASN = default;
             int? vlanId = default;
-            long? fabricAsn = default;
-            IList<string> peLoopbackIPAddress = default;
+            long? fabricASN = default;
+            IList<string> peLoopbackIpAddress = default;
             NniBmpProperties bmpConfiguration = default;
             IList<OptionBLayer3PrefixLimitProperties> prefixLimits = default;
-            string primaryIPv4Prefix = default;
-            string primaryIPv6Prefix = default;
-            string secondaryIPv4Prefix = default;
-            string secondaryIPv6Prefix = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("peerASN"u8))
+                if (prop.NameEquals("primaryIpv4Prefix"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        peerAsn = null;
-                        continue;
-                    }
-                    peerAsn = property.Value.GetInt64();
+                    primaryIpv4Prefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vlanId"u8))
+                if (prop.NameEquals("primaryIpv6Prefix"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vlanId = null;
-                        continue;
-                    }
-                    vlanId = property.Value.GetInt32();
+                    primaryIpv6Prefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricASN"u8))
+                if (prop.NameEquals("secondaryIpv4Prefix"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    secondaryIpv4Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("secondaryIpv6Prefix"u8))
+                {
+                    secondaryIpv6Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("peerASN"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricAsn = property.Value.GetInt64();
+                    peerASN = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("peLoopbackIpAddress"u8))
+                if (prop.NameEquals("vlanId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vlanId = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("fabricASN"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricASN = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("peLoopbackIpAddress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    peLoopbackIPAddress = array;
+                    peLoopbackIpAddress = array;
                     continue;
                 }
-                if (property.NameEquals("bmpConfiguration"u8))
+                if (prop.NameEquals("bmpConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bmpConfiguration = NniBmpProperties.DeserializeNniBmpProperties(property.Value, options);
+                    bmpConfiguration = NniBmpProperties.DeserializeNniBmpProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("prefixLimits"u8))
+                if (prop.NameEquals("prefixLimits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OptionBLayer3PrefixLimitProperties> array = new List<OptionBLayer3PrefixLimitProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OptionBLayer3PrefixLimitProperties.DeserializeOptionBLayer3PrefixLimitProperties(item, options));
                     }
                     prefixLimits = array;
                     continue;
                 }
-                if (property.NameEquals("primaryIpv4Prefix"u8))
-                {
-                    primaryIPv4Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("primaryIpv6Prefix"u8))
-                {
-                    primaryIPv6Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryIpv4Prefix"u8))
-                {
-                    secondaryIPv4Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryIpv6Prefix"u8))
-                {
-                    secondaryIPv6Prefix = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkToNetworkInterconnectOptionBLayer3Configuration(
-                primaryIPv4Prefix,
-                primaryIPv6Prefix,
-                secondaryIPv4Prefix,
-                secondaryIPv6Prefix,
-                serializedAdditionalRawData,
-                peerAsn,
+                primaryIpv4Prefix,
+                primaryIpv6Prefix,
+                secondaryIpv4Prefix,
+                secondaryIpv6Prefix,
+                additionalBinaryDataProperties,
+                peerASN,
                 vlanId,
-                fabricAsn,
-                peLoopbackIPAddress ?? new ChangeTrackingList<string>(),
+                fabricASN,
+                peLoopbackIpAddress ?? new ChangeTrackingList<string>(),
                 bmpConfiguration,
                 prefixLimits ?? new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>());
         }
-
-        BinaryData IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkToNetworkInterconnectOptionBLayer3Configuration IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

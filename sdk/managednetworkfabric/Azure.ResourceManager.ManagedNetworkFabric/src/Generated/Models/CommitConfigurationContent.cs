@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Commit Configuration Request. </summary>
     public partial class CommitConfigurationContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommitConfigurationContent"/>. </summary>
         public CommitConfigurationContent()
@@ -55,19 +27,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="commitStage"> Commit stage Action to be performed. </param>
         /// <param name="commitPolicy"> Commit configuration Policy. Supported policy is StageCEConfiguration, which indicates to prepare the configuration for the CE device type. </param>
         /// <param name="devices"> List of ARM resource IDs of devices to be included in the commit operation. Either CE1 or CE2 is allowed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommitConfigurationContent(NetworkFabricCommitStage? commitStage, NetworkFabricCommitConfigurationPolicy? commitPolicy, IList<string> devices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommitConfigurationContent(CommitStage? commitStage, CommitConfigurationPolicy? commitPolicy, IList<string> devices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommitStage = commitStage;
             CommitPolicy = commitPolicy;
             Devices = devices;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Commit stage Action to be performed. </summary>
-        public NetworkFabricCommitStage? CommitStage { get; set; }
+        public CommitStage? CommitStage { get; set; }
+
         /// <summary> Commit configuration Policy. Supported policy is StageCEConfiguration, which indicates to prepare the configuration for the CE device type. </summary>
-        public NetworkFabricCommitConfigurationPolicy? CommitPolicy { get; set; }
+        public CommitConfigurationPolicy? CommitPolicy { get; set; }
+
         /// <summary> List of ARM resource IDs of devices to be included in the commit operation. Either CE1 or CE2 is allowed. </summary>
         public IList<string> Devices { get; }
     }

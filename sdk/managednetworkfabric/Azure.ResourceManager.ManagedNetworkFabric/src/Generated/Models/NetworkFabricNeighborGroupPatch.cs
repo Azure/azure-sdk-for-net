@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Neighbor Group Patch definition. </summary>
-    public partial class NetworkFabricNeighborGroupPatch : NetworkRackPatch
+    public partial class NetworkFabricNeighborGroupPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
         public NetworkFabricNeighborGroupPatch()
@@ -20,22 +20,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Neighbor Group Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
-        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, NeighborGroupDestination destination) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NeighborGroupPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            Destination = destination;
         }
 
+        /// <summary> Neighbor Group Patch properties. </summary>
+        internal NeighborGroupPatchProperties Properties { get; set; }
+
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+        public ManagedServiceIdentityPatch Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
-        public NeighborGroupDestination Destination { get; set; }
+        public NeighborGroupDestinationPatch Destination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Destination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupPatchProperties();
+                }
+                Properties.Destination = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct IsolationDomainEncapsulationType : IEquatable<IsolationDomainEncapsulationType>
     {
         private readonly string _value;
+        /// <summary> Encapsulation-None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Encapsulation-GRE. </summary>
+        private const string GREValue = "GRE";
 
         /// <summary> Initializes a new instance of <see cref="IsolationDomainEncapsulationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IsolationDomainEncapsulationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string GreValue = "GRE";
+            _value = value;
+        }
 
         /// <summary> Encapsulation-None. </summary>
         public static IsolationDomainEncapsulationType None { get; } = new IsolationDomainEncapsulationType(NoneValue);
+
         /// <summary> Encapsulation-GRE. </summary>
-        public static IsolationDomainEncapsulationType Gre { get; } = new IsolationDomainEncapsulationType(GreValue);
+        public static IsolationDomainEncapsulationType GRE { get; } = new IsolationDomainEncapsulationType(GREValue);
+
         /// <summary> Determines if two <see cref="IsolationDomainEncapsulationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IsolationDomainEncapsulationType left, IsolationDomainEncapsulationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IsolationDomainEncapsulationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IsolationDomainEncapsulationType left, IsolationDomainEncapsulationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IsolationDomainEncapsulationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IsolationDomainEncapsulationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IsolationDomainEncapsulationType(string value) => new IsolationDomainEncapsulationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IsolationDomainEncapsulationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IsolationDomainEncapsulationType?(string value) => value == null ? null : new IsolationDomainEncapsulationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IsolationDomainEncapsulationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IsolationDomainEncapsulationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

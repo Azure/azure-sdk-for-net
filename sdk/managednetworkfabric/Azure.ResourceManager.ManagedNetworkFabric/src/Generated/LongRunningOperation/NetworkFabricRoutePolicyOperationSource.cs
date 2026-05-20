@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricRoutePolicyOperationSource : IOperationSource<NetworkFabricRoutePolicyResource>
+    /// <summary></summary>
+    internal partial class NetworkFabricRoutePolicyOperationSource : IOperationSource<NetworkFabricRoutePolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkFabricRoutePolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkFabricRoutePolicyResource IOperationSource<NetworkFabricRoutePolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricRoutePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkFabricRoutePolicyData data = NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkFabricRoutePolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkFabricRoutePolicyResource> IOperationSource<NetworkFabricRoutePolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricRoutePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkFabricRoutePolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkFabricRoutePolicyData data = NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricRoutePolicyResource(_client, data);
         }
     }
 }

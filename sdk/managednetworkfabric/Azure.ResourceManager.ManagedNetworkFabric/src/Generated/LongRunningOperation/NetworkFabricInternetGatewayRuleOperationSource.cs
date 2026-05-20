@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricInternetGatewayRuleOperationSource : IOperationSource<NetworkFabricInternetGatewayRuleResource>
+    /// <summary></summary>
+    internal partial class NetworkFabricInternetGatewayRuleOperationSource : IOperationSource<NetworkFabricInternetGatewayRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkFabricInternetGatewayRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkFabricInternetGatewayRuleResource IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkFabricInternetGatewayRuleData data = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkFabricInternetGatewayRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkFabricInternetGatewayRuleResource> IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkFabricInternetGatewayRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkFabricInternetGatewayRuleData data = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricInternetGatewayRuleResource(_client, data);
         }
     }
 }

@@ -11,28 +11,53 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Route Policy patch resource definition. </summary>
-    public partial class NetworkFabricRoutePolicyPatch : NetworkRackPatch
+    public partial class NetworkFabricRoutePolicyPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
         public NetworkFabricRoutePolicyPatch()
         {
-            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="statements"> Route Policy statements. </param>
-        internal NetworkFabricRoutePolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The RoutePolicy patchable properties. </param>
+        internal NetworkFabricRoutePolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoutePolicyPatchableProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            DefaultAction = defaultAction;
-            Statements = statements;
+            Properties = properties;
         }
 
+        /// <summary> The RoutePolicy patchable properties. </summary>
+        internal RoutePolicyPatchableProperties Properties { get; set; }
+
         /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
-        public CommunityActionType? DefaultAction { get; set; }
+        public CommunityActionType? DefaultAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePolicyPatchableProperties();
+                }
+                Properties.DefaultAction = value;
+            }
+        }
+
         /// <summary> Route Policy statements. </summary>
-        public IList<RoutePolicyStatementProperties> Statements { get; }
+        public IList<RoutePolicyStatementPatchProperties> Statements
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePolicyPatchableProperties();
+                }
+                return Properties.Statements;
+            }
+        }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Commit Batch Status Response Properties. </summary>
     public partial class CommitBatchStatusResponseProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommitBatchStatusResponseProperties"/>. </summary>
         internal CommitBatchStatusResponseProperties()
@@ -54,25 +25,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="commitBatchId"> Commit Batch Identifier. </param>
         /// <param name="commitBatchState"> Commit Batch State. </param>
         /// <param name="commitBatchDetails"> Commit Batch Details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommitBatchStatusResponseProperties(string commitBatchId, NetworkFabricCommitBatchState? commitBatchState, CommitBatchDetails commitBatchDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommitBatchStatusResponseProperties(string commitBatchId, CommitBatchState? commitBatchState, CommitBatchDetails commitBatchDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommitBatchId = commitBatchId;
             CommitBatchState = commitBatchState;
             CommitBatchDetails = commitBatchDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Commit Batch Identifier. </summary>
         public string CommitBatchId { get; }
+
         /// <summary> Commit Batch State. </summary>
-        public NetworkFabricCommitBatchState? CommitBatchState { get; }
+        public CommitBatchState? CommitBatchState { get; }
+
         /// <summary> Commit Batch Details. </summary>
         internal CommitBatchDetails CommitBatchDetails { get; }
+
         /// <summary> List of devices for which the commit operation failed. </summary>
-        public IReadOnlyList<string> CommitBatchDetailsFailedDevices
+        public IList<string> CommitBatchDetailsFailedDevices
         {
-            get => CommitBatchDetails?.FailedDevices;
+            get
+            {
+                return CommitBatchDetails is null ? default : CommitBatchDetails.FailedDevices;
+            }
         }
     }
 }

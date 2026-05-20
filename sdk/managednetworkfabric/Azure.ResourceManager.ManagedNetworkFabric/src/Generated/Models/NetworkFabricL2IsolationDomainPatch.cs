@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L2 Isolation Domain patch resource definition. </summary>
-    public partial class NetworkFabricL2IsolationDomainPatch : NetworkRackPatch
+    public partial class NetworkFabricL2IsolationDomainPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL2IsolationDomainPatch"/>. </summary>
         public NetworkFabricL2IsolationDomainPatch()
@@ -21,30 +21,87 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL2IsolationDomainPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> L2 Isolation Domain resource patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="extendedVlan"> Extended VLAN status. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, int? mtu, NetworkFabricExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, L2IsolationDomainPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            Mtu = mtu;
-            ExtendedVlan = extendedVlan;
-            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
         }
 
+        /// <summary> L2 Isolation Domain resource patch properties. </summary>
+        internal L2IsolationDomainPatchProperties Properties { get; set; }
+
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+        public ManagedServiceIdentityPatch Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2IsolationDomainPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
-        public int? Mtu { get; set; }
+        public int? Mtu
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mtu;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2IsolationDomainPatchProperties();
+                }
+                Properties.Mtu = value;
+            }
+        }
+
         /// <summary> Extended VLAN status. </summary>
-        public NetworkFabricExtendedVlan? ExtendedVlan { get; set; }
+        public ExtendedVlan? ExtendedVlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtendedVlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2IsolationDomainPatchProperties();
+                }
+                Properties.ExtendedVlan = value;
+            }
+        }
+
         /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </summary>
-        public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
+        public ResourceIdentifier NetworkToNetworkInterconnectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkToNetworkInterconnectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2IsolationDomainPatchProperties();
+                }
+                Properties.NetworkToNetworkInterconnectId = value;
+            }
+        }
     }
 }

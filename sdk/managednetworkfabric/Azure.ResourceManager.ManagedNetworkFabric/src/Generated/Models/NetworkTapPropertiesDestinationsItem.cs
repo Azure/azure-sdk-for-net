@@ -8,15 +8,29 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The network tap destination properties. </summary>
-    public partial class NetworkTapPropertiesDestinationsItem : NetworkTapDestinationProperties
+    public partial class NetworkTapPropertiesDestinationsItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="NetworkTapPropertiesDestinationsItem"/>. </summary>
-        public NetworkTapPropertiesDestinationsItem()
+        /// <param name="name"> Destination name. </param>
+        /// <param name="destinationType"> Type of destination. Input can be IsolationDomain or Direct. </param>
+        /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="destinationId"/> is null. </exception>
+        public NetworkTapPropertiesDestinationsItem(string name, NetworkTapDestinationType destinationType, ResourceIdentifier destinationId)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(destinationId, nameof(destinationId));
+
+            Name = name;
+            DestinationType = destinationType;
+            DestinationId = destinationId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapPropertiesDestinationsItem"/>. </summary>
@@ -25,9 +39,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>
         /// <param name="isolationDomainProperties"> Isolation Domain Properties. </param>
         /// <param name="destinationTapRuleId"> ARM Resource ID of destination Tap Rule that contains match configurations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapPropertiesDestinationsItem(string name, NetworkTapDestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, destinationType, destinationId, isolationDomainProperties, destinationTapRuleId, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkTapPropertiesDestinationsItem(string name, NetworkTapDestinationType destinationType, ResourceIdentifier destinationId, IsolationDomainProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            DestinationType = destinationType;
+            DestinationId = destinationId;
+            IsolationDomainProperties = isolationDomainProperties;
+            DestinationTapRuleId = destinationTapRuleId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Destination name. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Type of destination. Input can be IsolationDomain or Direct. </summary>
+        public NetworkTapDestinationType DestinationType { get; set; }
+
+        /// <summary> The destination Id. ARM Resource ID of either NNI or Internal Networks. </summary>
+        public ResourceIdentifier DestinationId { get; set; }
+
+        /// <summary> Isolation Domain Properties. </summary>
+        public IsolationDomainProperties IsolationDomainProperties { get; set; }
+
+        /// <summary> ARM Resource ID of destination Tap Rule that contains match configurations. </summary>
+        public ResourceIdentifier DestinationTapRuleId { get; set; }
     }
 }

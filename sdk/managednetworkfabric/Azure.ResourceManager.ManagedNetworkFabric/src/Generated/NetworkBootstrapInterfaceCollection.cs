@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkBootstrapInterfaceCollection : ArmCollection, IEnumerable<NetworkBootstrapInterfaceResource>, IAsyncEnumerable<NetworkBootstrapInterfaceResource>
     {
-        private readonly ClientDiagnostics _networkBootstrapInterfaceClientDiagnostics;
-        private readonly NetworkBootstrapInterfacesRestOperations _networkBootstrapInterfaceRestClient;
+        private readonly ClientDiagnostics _networkBootstrapInterfacesClientDiagnostics;
+        private readonly NetworkBootstrapInterfaces _networkBootstrapInterfacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkBootstrapInterfaceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkBootstrapInterfaceCollection for mocking. </summary>
         protected NetworkBootstrapInterfaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkBootstrapInterfaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapInterfaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkBootstrapInterfaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkBootstrapInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkBootstrapInterfaceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkBootstrapInterfaceResource.ResourceType, out string networkBootstrapInterfaceApiVersion);
-            _networkBootstrapInterfaceRestClient = new NetworkBootstrapInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkBootstrapInterfaceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkBootstrapInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkBootstrapInterfaceResource.ResourceType.Namespace, Diagnostics);
+            _networkBootstrapInterfacesRestClient = new NetworkBootstrapInterfaces(_networkBootstrapInterfacesClientDiagnostics, Pipeline, Endpoint, networkBootstrapInterfaceApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkBootstrapDeviceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkBootstrapDeviceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkBootstrapDeviceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a Network Bootstrap Interface resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkBootstrapInterfaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkBootstrapInterfaceName, NetworkBootstrapInterfaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapInterfaceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfaceOperationSource(Client), _networkBootstrapInterfaceClientDiagnostics, Pipeline, _networkBootstrapInterfaceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, NetworkBootstrapInterfaceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource>(
+                    new NetworkBootstrapInterfaceOperationSource(Client),
+                    _networkBootstrapInterfacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Create a Network Bootstrap Interface resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkBootstrapInterfaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkBootstrapInterfaceName, NetworkBootstrapInterfaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkBootstrapInterfaceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfaceOperationSource(Client), _networkBootstrapInterfaceClientDiagnostics, Pipeline, _networkBootstrapInterfaceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, NetworkBootstrapInterfaceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource>(
+                    new NetworkBootstrapInterfaceOperationSource(Client),
+                    _networkBootstrapInterfacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Get the Network Bootstrap Interface resource details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkBootstrapInterfaceResource>> GetAsync(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Get");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkBootstrapInterfaceData> response = Response.FromValue(NetworkBootstrapInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkBootstrapInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Get the Network Bootstrap Interface resource details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkBootstrapInterfaceResource> Get(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Get");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkBootstrapInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkBootstrapInterfaceData> response = Response.FromValue(NetworkBootstrapInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkBootstrapInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// List all the Network Bootstrap Interface resources in a given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_ListByNetworkBootstrapDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_ListByNetworkBootstrapDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkBootstrapInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkBootstrapInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkBootstrapInterfaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkBootstrapInterfaceRestClient.CreateListByNetworkBootstrapDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkBootstrapInterfaceRestClient.CreateListByNetworkBootstrapDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkBootstrapInterfaceResource(Client, NetworkBootstrapInterfaceData.DeserializeNetworkBootstrapInterfaceData(e)), _networkBootstrapInterfaceClientDiagnostics, Pipeline, "NetworkBootstrapInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkBootstrapInterfaceData, NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfacesGetByNetworkBootstrapDeviceAsyncCollectionResultOfT(
+                _networkBootstrapInterfacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkBootstrapInterfaceCollection.GetAll"), data => new NetworkBootstrapInterfaceResource(Client, data));
         }
 
         /// <summary>
         /// List all the Network Bootstrap Interface resources in a given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_ListByNetworkBootstrapDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_ListByNetworkBootstrapDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkBootstrapInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkBootstrapInterfaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkBootstrapInterfaceRestClient.CreateListByNetworkBootstrapDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkBootstrapInterfaceRestClient.CreateListByNetworkBootstrapDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkBootstrapInterfaceResource(Client, NetworkBootstrapInterfaceData.DeserializeNetworkBootstrapInterfaceData(e)), _networkBootstrapInterfaceClientDiagnostics, Pipeline, "NetworkBootstrapInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkBootstrapInterfaceData, NetworkBootstrapInterfaceResource>(new NetworkBootstrapInterfacesGetByNetworkBootstrapDeviceCollectionResultOfT(
+                _networkBootstrapInterfacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkBootstrapInterfaceCollection.GetAll"), data => new NetworkBootstrapInterfaceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Exists");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkBootstrapInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkBootstrapInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkBootstrapInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Exists");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkBootstrapInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkBootstrapInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkBootstrapInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkBootstrapInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkBootstrapInterfaceResource>> GetIfExistsAsync(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkBootstrapInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkBootstrapInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkBootstrapInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkBootstrapInterfaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkBootstrapInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapInterfaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkBootstrapInterfaceResource> GetIfExists(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
 
-            using var scope = _networkBootstrapInterfaceClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkBootstrapInterfacesClientDiagnostics.CreateScope("NetworkBootstrapInterfaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkBootstrapInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkBootstrapInterfaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkBootstrapInterfaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkBootstrapInterfaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkBootstrapInterfaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkBootstrapInterfaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkBootstrapInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkBootstrapInterfaceResource> IAsyncEnumerable<NetworkBootstrapInterfaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

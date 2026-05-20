@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkTapCollection : ArmCollection, IEnumerable<NetworkTapResource>, IAsyncEnumerable<NetworkTapResource>
     {
-        private readonly ClientDiagnostics _networkTapClientDiagnostics;
-        private readonly NetworkTapsRestOperations _networkTapRestClient;
+        private readonly ClientDiagnostics _networkTapsClientDiagnostics;
+        private readonly NetworkTaps _networkTapsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkTapCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkTapCollection for mocking. </summary>
         protected NetworkTapCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkTapCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkTapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkTapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkTapResource.ResourceType, out string networkTapApiVersion);
-            _networkTapRestClient = new NetworkTapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkTapApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkTapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapResource.ResourceType.Namespace, Diagnostics);
+            _networkTapsRestClient = new NetworkTaps(_networkTapsClientDiagnostics, Pipeline, Endpoint, networkTapApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a Network Tap.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkTapResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkTapName, NetworkTapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkTapRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapResource>(new NetworkTapOperationSource(Client), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, NetworkTapData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkTapResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapResource>(
+                    new NetworkTapOperationSource(Client),
+                    _networkTapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Creates a Network Tap.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkTapResource> CreateOrUpdate(WaitUntil waitUntil, string networkTapName, NetworkTapData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkTapRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapResource>(new NetworkTapOperationSource(Client), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, NetworkTapData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkTapResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapResource>(
+                    new NetworkTapOperationSource(Client),
+                    _networkTapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Retrieves details of this Network Tap.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkTapResource>> GetAsync(string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Get");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkTapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkTapData> response = Response.FromValue(NetworkTapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkTapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Retrieves details of this Network Tap.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkTapResource> Get(string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Get");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkTapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkTapData> response = Response.FromValue(NetworkTapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkTapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Displays Network Taps list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTapResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkTapRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), _networkTapClientDiagnostics, Pipeline, "NetworkTapCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetByResourceGroupAsyncCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>
         /// Displays Network Taps list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTapResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkTapRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), _networkTapClientDiagnostics, Pipeline, "NetworkTapCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetByResourceGroupCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Exists");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkTapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkTapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkTapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkTapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Exists");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkTapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkTapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkTapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkTapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkTapResource>> GetIfExistsAsync(string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkTapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkTapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkTapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkTapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkTapResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkTapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapName"> Name of the Network Tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkTapResource> GetIfExists(string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkTapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkTapName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkTapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkTapName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkTapData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkTapData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkTapData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkTapResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkTapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkTapResource> IAsyncEnumerable<NetworkTapResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

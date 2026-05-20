@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Storage account configuration. </summary>
     public partial class StorageAccountConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountConfiguration"/>. </summary>
         public StorageAccountConfiguration()
@@ -54,17 +25,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="StorageAccountConfiguration"/>. </summary>
         /// <param name="storageAccountId"> Network Fabric storage account resource identifier. </param>
         /// <param name="storageAccountIdentity"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountConfiguration(ResourceIdentifier storageAccountId, NetworkFabricIdentitySelector storageAccountIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountConfiguration(ResourceIdentifier storageAccountId, IdentitySelector storageAccountIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
             StorageAccountIdentity = storageAccountIdentity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Network Fabric storage account resource identifier. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }
+
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public NetworkFabricIdentitySelector StorageAccountIdentity { get; set; }
+        public IdentitySelector StorageAccountIdentity { get; set; }
     }
 }

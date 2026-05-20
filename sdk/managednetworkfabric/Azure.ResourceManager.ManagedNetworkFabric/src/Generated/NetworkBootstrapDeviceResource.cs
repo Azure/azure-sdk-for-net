@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A Class representing a NetworkBootstrapDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkBootstrapDeviceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkBootstrapDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkBootstrapDevice method.
+    /// A class representing a NetworkBootstrapDevice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkBootstrapDeviceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkBootstrapDevices method.
     /// </summary>
     public partial class NetworkBootstrapDeviceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkBootstrapDeviceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkBootstrapDeviceName"> The networkBootstrapDeviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkBootstrapDeviceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkBootstrapDeviceClientDiagnostics;
-        private readonly NetworkBootstrapDevicesRestOperations _networkBootstrapDeviceRestClient;
+        private readonly ClientDiagnostics _networkBootstrapDevicesClientDiagnostics;
+        private readonly NetworkBootstrapDevices _networkBootstrapDevicesRestClient;
         private readonly NetworkBootstrapDeviceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkBootstrapDevices";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkBootstrapDeviceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkBootstrapDeviceResource for mocking. </summary>
         protected NetworkBootstrapDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkBootstrapDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkBootstrapDeviceResource(ArmClient client, NetworkBootstrapDeviceData data) : this(client, data.Id)
@@ -56,140 +46,92 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkBootstrapDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkBootstrapDeviceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkBootstrapDeviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkBootstrapDeviceApiVersion);
-            _networkBootstrapDeviceRestClient = new NetworkBootstrapDevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkBootstrapDeviceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkBootstrapDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
+            _networkBootstrapDevicesRestClient = new NetworkBootstrapDevices(_networkBootstrapDevicesClientDiagnostics, Pipeline, Endpoint, networkBootstrapDeviceApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkBootstrapDeviceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkBootstrapDeviceName"> The networkBootstrapDeviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkBootstrapDeviceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of NetworkBootstrapInterfaceResources in the NetworkBootstrapDevice. </summary>
-        /// <returns> An object representing collection of NetworkBootstrapInterfaceResources and their operations over a NetworkBootstrapInterfaceResource. </returns>
-        public virtual NetworkBootstrapInterfaceCollection GetNetworkBootstrapInterfaces()
-        {
-            return GetCachedClient(client => new NetworkBootstrapInterfaceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the Network Bootstrap Interface resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkBootstrapInterfaceResource>> GetNetworkBootstrapInterfaceAsync(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkBootstrapInterfaces().GetAsync(networkBootstrapInterfaceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the Network Bootstrap Interface resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/networkBootstrapInterfaces/{networkBootstrapInterfaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapInterfaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkBootstrapInterfaceResource> GetNetworkBootstrapInterface(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkBootstrapInterfaces().Get(networkBootstrapInterfaceName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a Network Bootstrap Device resource details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkBootstrapDeviceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Get");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,118 +145,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Gets a Network Bootstrap Device resource details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkBootstrapDeviceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Get");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = _networkBootstrapDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a Network Bootstrap Device resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _networkBootstrapDeviceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a Network Bootstrap Device resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _networkBootstrapDeviceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -327,20 +193,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Update certain properties of the Network Bootstrap Device resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,14 +218,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Update");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapDeviceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(new NetworkBootstrapDeviceOperationSource(Client), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkBootstrapDevicePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(
+                    new NetworkBootstrapDeviceOperationSource(Client),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -373,20 +252,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Update certain properties of the Network Bootstrap Device resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,14 +277,125 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Update");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = _networkBootstrapDeviceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(new NetworkBootstrapDeviceOperationSource(Client), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkBootstrapDevicePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(
+                    new NetworkBootstrapDeviceOperationSource(Client),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Network Bootstrap Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkBootstrapDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Network Bootstrap Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkBootstrapDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -419,20 +409,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Reboot the Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/reboot</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/reboot. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Reboot</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Reboot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,14 +430,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkBootstrapDeviceRebootResult>> RebootAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Reboot");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Reboot");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapDeviceRestClient.RebootAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult>(new NetworkBootstrapDeviceRebootResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRebootRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult>(
+                    new NetworkBootstrapDeviceRebootResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -461,20 +464,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Reboot the Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/reboot</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/reboot. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Reboot</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Reboot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,14 +485,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkBootstrapDeviceRebootResult> Reboot(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Reboot");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Reboot");
             scope.Start();
             try
             {
-                var response = _networkBootstrapDeviceRestClient.Reboot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult>(new NetworkBootstrapDeviceRebootResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRebootRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRebootResult>(
+                    new NetworkBootstrapDeviceRebootResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -503,20 +519,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Refreshes the configuration of Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/refreshConfiguration</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/refreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_RefreshConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_RefreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,14 +540,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RefreshConfiguration");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RefreshConfiguration");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapDeviceRestClient.RefreshConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>(new NetworkBootstrapDeviceRefreshConfigurationResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRefreshConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateRefreshConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>(
+                    new NetworkBootstrapDeviceRefreshConfigurationResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -545,20 +574,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Refreshes the configuration of Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/refreshConfiguration</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/refreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_RefreshConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_RefreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -566,14 +595,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RefreshConfiguration");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RefreshConfiguration");
             scope.Start();
             try
             {
-                var response = _networkBootstrapDeviceRestClient.RefreshConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>(new NetworkBootstrapDeviceRefreshConfigurationResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateRefreshConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateRefreshConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceRefreshConfigurationResult>(
+                    new NetworkBootstrapDeviceRefreshConfigurationResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -587,20 +629,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Network Bootstrap Device to use the latest passwords. Does not generate new passwords. Allows network bootstrap devices missed during a previous password rotation to be brought back into sync.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/resyncPasswords</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/resyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_ResyncPasswords</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_ResyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -608,14 +650,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>> ResyncPasswordsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.ResyncPasswords");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.ResyncPasswords");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapDeviceRestClient.ResyncPasswordsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>(new NetworkBootstrapDeviceResyncPasswordsResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>(
+                    new NetworkBootstrapDeviceResyncPasswordsResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -629,20 +684,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Network Bootstrap Device to use the latest passwords. Does not generate new passwords. Allows network bootstrap devices missed during a previous password rotation to be brought back into sync.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/resyncPasswords</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/resyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_ResyncPasswords</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_ResyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -650,14 +705,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkBootstrapDeviceResyncPasswordsResult> ResyncPasswords(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.ResyncPasswords");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.ResyncPasswords");
             scope.Start();
             try
             {
-                var response = _networkBootstrapDeviceRestClient.ResyncPasswords(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>(new NetworkBootstrapDeviceResyncPasswordsResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResyncPasswordsResult>(
+                    new NetworkBootstrapDeviceResyncPasswordsResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -671,20 +739,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Administrative state of the Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_UpdateAdministrativeState</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_UpdateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -696,14 +764,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapDeviceRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult>(new NetworkBootstrapDeviceUpdateAdministrativeStateResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult>(
+                    new NetworkBootstrapDeviceUpdateAdministrativeStateResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -717,20 +798,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Administrative state of the Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/updateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_UpdateAdministrativeState</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_UpdateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -742,14 +823,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
-                var response = _networkBootstrapDeviceRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult>(new NetworkBootstrapDeviceUpdateAdministrativeStateResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpdateAdministrativeStateResult>(
+                    new NetworkBootstrapDeviceUpdateAdministrativeStateResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -763,20 +857,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Upgrades the version of the Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Upgrade</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -788,14 +882,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
             scope.Start();
             try
             {
-                var response = await _networkBootstrapDeviceRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult>(new NetworkBootstrapDeviceUpgradeResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricUpdateVersionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult>(
+                    new NetworkBootstrapDeviceUpgradeResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -809,20 +916,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Upgrades the version of the Network Bootstrap Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}/upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Upgrade</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkBootstrapDevices_Upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkBootstrapDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -834,14 +941,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.Upgrade");
             scope.Start();
             try
             {
-                var response = _networkBootstrapDeviceRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult>(new NetworkBootstrapDeviceUpgradeResultOperationSource(), _networkBootstrapDeviceClientDiagnostics, Pipeline, _networkBootstrapDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricUpdateVersionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceUpgradeResult>(
+                    new NetworkBootstrapDeviceUpgradeResultOperationSource(),
+                    _networkBootstrapDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -851,27 +971,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -881,28 +981,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.AddTag");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkBootstrapDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkBootstrapDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkBootstrapDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkBootstrapDevicePatch patch = new NetworkBootstrapDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkBootstrapDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -913,27 +1019,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -943,28 +1029,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.AddTag");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkBootstrapDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkBootstrapDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkBootstrapDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkBootstrapDevicePatch patch = new NetworkBootstrapDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkBootstrapDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -975,53 +1067,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkBootstrapDeviceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.SetTags");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkBootstrapDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkBootstrapDevicePatch();
+                    NetworkBootstrapDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkBootstrapDevicePatch patch = new NetworkBootstrapDevicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkBootstrapDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1032,53 +1110,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkBootstrapDeviceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.SetTags");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkBootstrapDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkBootstrapDevicePatch();
+                    NetworkBootstrapDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkBootstrapDevicePatch patch = new NetworkBootstrapDevicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkBootstrapDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1089,27 +1153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1117,28 +1161,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkBootstrapDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkBootstrapDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkBootstrapDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkBootstrapDevicePatch patch = new NetworkBootstrapDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkBootstrapDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1149,27 +1199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkBootstrapDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1177,28 +1207,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkBootstrapDeviceClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _networkBootstrapDevicesClientDiagnostics.CreateScope("NetworkBootstrapDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkBootstrapDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkBootstrapDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkBootstrapDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkBootstrapDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkBootstrapDevicePatch patch = new NetworkBootstrapDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkBootstrapDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1207,6 +1243,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of NetworkBootstrapInterfaces in the <see cref="NetworkBootstrapDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkBootstrapInterfaces and their operations over a NetworkBootstrapInterfaceResource. </returns>
+        public virtual NetworkBootstrapInterfaceCollection GetNetworkBootstrapInterfaces()
+        {
+            return GetCachedClient(client => new NetworkBootstrapInterfaceCollection(client, Id));
+        }
+
+        /// <summary> Get the Network Bootstrap Interface resource details. </summary>
+        /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkBootstrapInterfaceResource>> GetNetworkBootstrapInterfaceAsync(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
+
+            return await GetNetworkBootstrapInterfaces().GetAsync(networkBootstrapInterfaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the Network Bootstrap Interface resource details. </summary>
+        /// <param name="networkBootstrapInterfaceName"> Name of the Network Bootstrap Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkBootstrapInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkBootstrapInterfaceResource> GetNetworkBootstrapInterface(string networkBootstrapInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkBootstrapInterfaceName, nameof(networkBootstrapInterfaceName));
+
+            return GetNetworkBootstrapInterfaces().Get(networkBootstrapInterfaceName, cancellationToken);
         }
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ControlPlaneAclMatchConditionPatch : IUtf8JsonSerializable, IJsonModel<ControlPlaneAclMatchConditionPatch>
+    /// <summary> Control Plane Access Control List (ACL) match conditions properties. </summary>
+    public partial class ControlPlaneAclMatchConditionPatch : IJsonModel<ControlPlaneAclMatchConditionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlPlaneAclMatchConditionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ControlPlaneAclMatchConditionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeControlPlaneAclMatchConditionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ControlPlaneAclMatchConditionPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ControlPlaneAclMatchConditionPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ControlPlaneAclMatchConditionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ControlPlaneAclMatchConditionPatch IPersistableModel<ControlPlaneAclMatchConditionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ControlPlaneAclMatchConditionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ControlPlaneAclMatchConditionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,26 +69,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ControlPlaneAclMatchConditionPatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ProtocolTypes))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStringValue(ProtocolTypes);
             }
-            if (Optional.IsDefined(IPCondition))
+            if (Optional.IsDefined(IpCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition, options);
+                writer.WriteObjectValue(IpCondition, options);
             }
-            if (Optional.IsDefined(TimeToLiveMatchCondition))
+            if (Optional.IsDefined(TtlMatchCondition))
             {
                 writer.WritePropertyName("ttlMatchCondition"u8);
-                writer.WriteObjectValue(TimeToLiveMatchCondition, options);
+                writer.WriteObjectValue(TtlMatchCondition, options);
             }
             if (Optional.IsDefined(PortCondition))
             {
@@ -58,8 +98,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStartArray();
-                foreach (var item in Flags)
+                foreach (string item in Flags)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -69,15 +114,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("icmpConfiguration"u8);
                 writer.WriteObjectValue(IcmpConfiguration, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,97 +131,107 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        ControlPlaneAclMatchConditionPatch IJsonModel<ControlPlaneAclMatchConditionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ControlPlaneAclMatchConditionPatch IJsonModel<ControlPlaneAclMatchConditionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ControlPlaneAclMatchConditionPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ControlPlaneAclMatchConditionPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeControlPlaneAclMatchConditionPatch(document.RootElement, options);
         }
 
-        internal static ControlPlaneAclMatchConditionPatch DeserializeControlPlaneAclMatchConditionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ControlPlaneAclMatchConditionPatch DeserializeControlPlaneAclMatchConditionPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string protocolTypes = default;
-            ControlPlaneAclIPMatchConditionPatch ipCondition = default;
-            ControlPlaneAclTimeToLiveMatchConditionPatch ttlMatchCondition = default;
+            ControlPlaneAclIpMatchConditionPatch ipCondition = default;
+            ControlPlaneAclTtlMatchConditionPatch ttlMatchCondition = default;
             ControlPlaneAclPortMatchConditionPatch portCondition = default;
             IList<string> flags = default;
             IcmpConfigurationPatchProperties icmpConfiguration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("protocolTypes"u8))
+                if (prop.NameEquals("protocolTypes"u8))
                 {
-                    protocolTypes = property.Value.GetString();
+                    protocolTypes = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipCondition"u8))
+                if (prop.NameEquals("ipCondition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipCondition = ControlPlaneAclIPMatchConditionPatch.DeserializeControlPlaneAclIPMatchConditionPatch(property.Value, options);
+                    ipCondition = ControlPlaneAclIpMatchConditionPatch.DeserializeControlPlaneAclIpMatchConditionPatch(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ttlMatchCondition"u8))
+                if (prop.NameEquals("ttlMatchCondition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ttlMatchCondition = ControlPlaneAclTimeToLiveMatchConditionPatch.DeserializeControlPlaneAclTimeToLiveMatchConditionPatch(property.Value, options);
+                    ttlMatchCondition = ControlPlaneAclTtlMatchConditionPatch.DeserializeControlPlaneAclTtlMatchConditionPatch(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("portCondition"u8))
+                if (prop.NameEquals("portCondition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    portCondition = ControlPlaneAclPortMatchConditionPatch.DeserializeControlPlaneAclPortMatchConditionPatch(property.Value, options);
+                    portCondition = ControlPlaneAclPortMatchConditionPatch.DeserializeControlPlaneAclPortMatchConditionPatch(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("flags"u8))
+                if (prop.NameEquals("flags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     flags = array;
                     continue;
                 }
-                if (property.NameEquals("icmpConfiguration"u8))
+                if (prop.NameEquals("icmpConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    icmpConfiguration = IcmpConfigurationPatchProperties.DeserializeIcmpConfigurationPatchProperties(property.Value, options);
+                    icmpConfiguration = IcmpConfigurationPatchProperties.DeserializeIcmpConfigurationPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ControlPlaneAclMatchConditionPatch(
                 protocolTypes,
                 ipCondition,
@@ -184,38 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 portCondition,
                 flags ?? new ChangeTrackingList<string>(),
                 icmpConfiguration,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ControlPlaneAclMatchConditionPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ControlPlaneAclMatchConditionPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ControlPlaneAclMatchConditionPatch IPersistableModel<ControlPlaneAclMatchConditionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneAclMatchConditionPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeControlPlaneAclMatchConditionPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ControlPlaneAclMatchConditionPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ControlPlaneAclMatchConditionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

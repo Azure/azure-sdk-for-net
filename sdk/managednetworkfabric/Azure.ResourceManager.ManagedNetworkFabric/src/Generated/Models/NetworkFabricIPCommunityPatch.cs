@@ -11,24 +11,36 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The IP Community patch resource definition. </summary>
-    public partial class NetworkFabricIPCommunityPatch : NetworkRackPatch
+    public partial class NetworkFabricIPCommunityPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
         public NetworkFabricIPCommunityPatch()
         {
-            IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
-        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IPCommunityRule> ipCommunityRules) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> IP Community patchable properties. </param>
+        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpCommunityPatchableProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            IPCommunityRules = ipCommunityRules;
+            Properties = properties;
         }
 
+        /// <summary> IP Community patchable properties. </summary>
+        internal IpCommunityPatchableProperties Properties { get; set; }
+
         /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IPCommunityRules { get; }
+        public IList<IPCommunityRule> IpCommunityRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpCommunityPatchableProperties();
+                }
+                return Properties.IpCommunityRules;
+            }
+        }
     }
 }

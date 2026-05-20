@@ -7,41 +7,86 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-    public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : TerminalServerPatchableProperties
+    /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
+    public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
-        public NetworkFabricPatchablePropertiesTerminalServerConfiguration()
+        /// <param name="username"> Username for the terminal server connection. </param>
+        /// <param name="password"> Password for the terminal server connection. </param>
+        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/>, <paramref name="password"/>, <paramref name="primaryIpv4Prefix"/> or <paramref name="secondaryIpv4Prefix"/> is null. </exception>
+        public NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string primaryIpv4Prefix, string secondaryIpv4Prefix)
         {
+            Argument.AssertNotNull(username, nameof(username));
+            Argument.AssertNotNull(password, nameof(password));
+            Argument.AssertNotNull(primaryIpv4Prefix, nameof(primaryIpv4Prefix));
+            Argument.AssertNotNull(secondaryIpv4Prefix, nameof(secondaryIpv4Prefix));
+
+            Username = username;
+            Password = password;
+            PrimaryIpv4Prefix = primaryIpv4Prefix;
+            SecondaryIpv4Prefix = secondaryIpv4Prefix;
+            SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber, serializedAdditionalRawData)
+        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
+        /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string serialNumber, string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, string networkDeviceId, IReadOnlyList<SecretRotationStatus> secretRotationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrimaryIPv4Prefix = primaryIPv4Prefix;
-            PrimaryIPv6Prefix = primaryIPv6Prefix;
-            SecondaryIPv4Prefix = secondaryIPv4Prefix;
-            SecondaryIPv6Prefix = secondaryIPv6Prefix;
+            Username = username;
+            Password = password;
+            SerialNumber = serialNumber;
+            PrimaryIpv4Prefix = primaryIpv4Prefix;
+            PrimaryIpv6Prefix = primaryIpv6Prefix;
+            SecondaryIpv4Prefix = secondaryIpv4Prefix;
+            SecondaryIpv6Prefix = secondaryIpv6Prefix;
+            NetworkDeviceId = networkDeviceId;
+            SecretRotationStatus = secretRotationStatus;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Username for the terminal server connection. </summary>
+        public string Username { get; set; }
+
+        /// <summary> Password for the terminal server connection. </summary>
+        public string Password { get; set; }
+
+        /// <summary> Serial Number of Terminal server. </summary>
+        public string SerialNumber { get; set; }
+
         /// <summary> IPv4 Address Prefix. </summary>
-        public string PrimaryIPv4Prefix { get; set; }
+        public string PrimaryIpv4Prefix { get; set; }
+
         /// <summary> IPv6 Address Prefix. </summary>
-        public string PrimaryIPv6Prefix { get; set; }
+        public string PrimaryIpv6Prefix { get; set; }
+
         /// <summary> Secondary IPv4 Address Prefix. </summary>
-        public string SecondaryIPv4Prefix { get; set; }
+        public string SecondaryIpv4Prefix { get; set; }
+
         /// <summary> Secondary IPv6 Address Prefix. </summary>
-        public string SecondaryIPv6Prefix { get; set; }
+        public string SecondaryIpv6Prefix { get; set; }
+
+        /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
+        public string NetworkDeviceId { get; }
+
+        /// <summary> Secret rotation status for the terminal server's secrets. </summary>
+        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; }
     }
 }

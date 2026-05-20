@@ -7,15 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Internal network static route configuration. </summary>
-    public partial class InternalNetworkStaticRouteConfiguration : StaticRouteConfiguration
+    /// <summary> Static Route Configuration properties. </summary>
+    public partial class InternalNetworkStaticRouteConfiguration
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalNetworkStaticRouteConfiguration"/>. </summary>
         public InternalNetworkStaticRouteConfiguration()
         {
+            Ipv4Routes = new ChangeTrackingList<StaticRouteProperties>();
+            Ipv6Routes = new ChangeTrackingList<StaticRouteProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalNetworkStaticRouteConfiguration"/>. </summary>
@@ -23,9 +29,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, StaticRouteConfigurationExtension? extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(bfdConfiguration, ipv4Routes, ipv6Routes, extension, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, StaticRouteConfigurationExtension? extension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            BfdConfiguration = bfdConfiguration;
+            Ipv4Routes = ipv4Routes;
+            Ipv6Routes = ipv6Routes;
+            Extension = extension;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> BFD configuration properties. </summary>
+        public BfdConfiguration BfdConfiguration { get; set; }
+
+        /// <summary> List of IPv4 Routes. </summary>
+        public IList<StaticRouteProperties> Ipv4Routes { get; }
+
+        /// <summary> List of IPv6 Routes. </summary>
+        public IList<StaticRouteProperties> Ipv6Routes { get; }
+
+        /// <summary> Extension. Example: NoExtension | NPB. </summary>
+        public StaticRouteConfigurationExtension? Extension { get; set; }
     }
 }

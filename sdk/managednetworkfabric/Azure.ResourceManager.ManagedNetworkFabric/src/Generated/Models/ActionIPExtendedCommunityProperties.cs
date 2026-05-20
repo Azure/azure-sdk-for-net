@@ -7,13 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community Properties. </summary>
-    public partial class ActionIPExtendedCommunityProperties : IPExtendedCommunityAddOperationProperties
+    public partial class ActionIPExtendedCommunityProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ActionIPExtendedCommunityProperties"/>. </summary>
         public ActionIPExtendedCommunityProperties()
         {
@@ -21,38 +23,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ActionIPExtendedCommunityProperties"/>. </summary>
         /// <param name="add"> List of IP Extended Community IDs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="delete"> List of IP Extended Community IDs. </param>
         /// <param name="set"> List of IP Extended Community IDs. </param>
-        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IDictionary<string, BinaryData> serializedAdditionalRawData, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set) : base(@add, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Add = @add;
             Delete = delete;
             Set = @set;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IP Extended Community IDs. </summary>
+        internal IPExtendedCommunityIdList Add { get; set; }
+
+        /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Delete { get; set; }
+
+        /// <summary> List of IP Extended Community IDs. </summary>
+        internal IPExtendedCommunityIdList Set { get; set; }
+
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> DeleteIPExtendedCommunityIds
+        public IList<string> AddIpExtendedCommunityIds
+        {
+            get
+            {
+                if (Add is null)
+                {
+                    Add = new IPExtendedCommunityIdList();
+                }
+                return Add.IpExtendedCommunityIds;
+            }
+        }
+
+        /// <summary> List of IP Extended Community resource IDs. </summary>
+        public IList<string> DeleteIpExtendedCommunityIds
         {
             get
             {
                 if (Delete is null)
+                {
                     Delete = new IPExtendedCommunityIdList();
-                return Delete.IPExtendedCommunityIds;
+                }
+                return Delete.IpExtendedCommunityIds;
             }
         }
 
-        /// <summary> List of IP Extended Community IDs. </summary>
-        internal IPExtendedCommunityIdList Set { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> SetIPExtendedCommunityIds
+        public IList<string> SetIpExtendedCommunityIds
         {
             get
             {
                 if (Set is null)
+                {
                     Set = new IPExtendedCommunityIdList();
-                return Set.IPExtendedCommunityIds;
+                }
+                return Set.IpExtendedCommunityIds;
             }
         }
     }

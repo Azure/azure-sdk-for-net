@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Internet Gateway patch resource definition. </summary>
-    public partial class NetworkFabricInternetGatewayPatch : NetworkRackPatch
+    public partial class NetworkFabricInternetGatewayPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayPatch"/>. </summary>
         public NetworkFabricInternetGatewayPatch()
@@ -21,14 +21,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
-        internal NetworkFabricInternetGatewayPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier internetGatewayRuleId) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal NetworkFabricInternetGatewayPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternetGatewayPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            InternetGatewayRuleId = internetGatewayRuleId;
+            Properties = properties;
         }
 
+        /// <summary> Resource properties. </summary>
+        internal InternetGatewayPatchProperties Properties { get; set; }
+
         /// <summary> ARM Resource ID of the Internet Gateway Rule. </summary>
-        public ResourceIdentifier InternetGatewayRuleId { get; set; }
+        public ResourceIdentifier InternetGatewayRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InternetGatewayRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternetGatewayPatchProperties();
+                }
+                Properties.InternetGatewayRuleId = value;
+            }
+        }
     }
 }

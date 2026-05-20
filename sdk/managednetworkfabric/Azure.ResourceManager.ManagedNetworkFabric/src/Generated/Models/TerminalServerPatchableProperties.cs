@@ -10,40 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Terminal server patchable properties. </summary>
+    /// <summary> Network and credentials configuration already applied to terminal server. </summary>
     public partial class TerminalServerPatchableProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
         public TerminalServerPatchableProperties()
@@ -54,20 +25,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerminalServerPatchableProperties(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TerminalServerPatchableProperties(string username, string password, string serialNumber, string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Username = username;
             Password = password;
             SerialNumber = serialNumber;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PrimaryIpv4Prefix = primaryIpv4Prefix;
+            PrimaryIpv6Prefix = primaryIpv6Prefix;
+            SecondaryIpv4Prefix = secondaryIpv4Prefix;
+            SecondaryIpv6Prefix = secondaryIpv6Prefix;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Username for the terminal server connection. </summary>
         public string Username { get; set; }
+
         /// <summary> Password for the terminal server connection. </summary>
         public string Password { get; set; }
+
         /// <summary> Serial Number of Terminal server. </summary>
         public string SerialNumber { get; set; }
+
+        /// <summary> IPv4 Address Prefix. </summary>
+        public string PrimaryIpv4Prefix { get; set; }
+
+        /// <summary> IPv6 Address Prefix. </summary>
+        public string PrimaryIpv6Prefix { get; set; }
+
+        /// <summary> Secondary IPv4 Address Prefix. </summary>
+        public string SecondaryIpv4Prefix { get; set; }
+
+        /// <summary> Secondary IPv6 Address Prefix. </summary>
+        public string SecondaryIpv6Prefix { get; set; }
     }
 }

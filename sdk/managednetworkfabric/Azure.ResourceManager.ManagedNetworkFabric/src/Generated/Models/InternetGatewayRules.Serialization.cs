@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class InternetGatewayRules : IUtf8JsonSerializable, IJsonModel<InternetGatewayRules>
+    /// <summary> Rules for the InternetGateways. </summary>
+    public partial class InternetGatewayRules : IJsonModel<InternetGatewayRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternetGatewayRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/> for deserialization. </summary>
+        internal InternetGatewayRules()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternetGatewayRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternetGatewayRules(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternetGatewayRules)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InternetGatewayRules)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternetGatewayRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternetGatewayRules IPersistableModel<InternetGatewayRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternetGatewayRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternetGatewayRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,20 +74,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternetGatewayRules)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
             if (Optional.IsCollectionDefined(AddressList))
             {
                 writer.WritePropertyName("addressList"u8);
                 writer.WriteStartArray();
-                foreach (var item in AddressList)
+                foreach (string item in AddressList)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -55,8 +105,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("destinationAddressList"u8);
                 writer.WriteStartArray();
-                foreach (var item in DestinationAddressList)
+                foreach (string item in DestinationAddressList)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -65,8 +120,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("sourceAddressList"u8);
                 writer.WriteStartArray();
-                foreach (var item in SourceAddressList)
+                foreach (string item in SourceAddressList)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -75,21 +135,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("headerAddressList"u8);
                 writer.WriteStartArray();
-                foreach (var item in HeaderAddressList)
+                foreach (HeaderAddressProperties item in HeaderAddressList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,151 +158,144 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        InternetGatewayRules IJsonModel<InternetGatewayRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternetGatewayRules IJsonModel<InternetGatewayRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternetGatewayRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternetGatewayRules)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInternetGatewayRules(document.RootElement, options);
         }
 
-        internal static InternetGatewayRules DeserializeInternetGatewayRules(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InternetGatewayRules DeserializeInternetGatewayRules(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             InternetGatewayRuleAction action = default;
             IList<string> addressList = default;
-            NetworkFabricRuleCondition? condition = default;
+            RuleCondition? condition = default;
             IList<string> destinationAddressList = default;
             IList<string> sourceAddressList = default;
-            IList<NetworkFabricHeaderAddress> headerAddressList = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<HeaderAddressProperties> headerAddressList = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("action"u8))
+                if (prop.NameEquals("action"u8))
                 {
-                    action = new InternetGatewayRuleAction(property.Value.GetString());
+                    action = new InternetGatewayRuleAction(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("addressList"u8))
+                if (prop.NameEquals("addressList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     addressList = array;
                     continue;
                 }
-                if (property.NameEquals("condition"u8))
+                if (prop.NameEquals("condition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    condition = new NetworkFabricRuleCondition(property.Value.GetString());
+                    condition = new RuleCondition(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("destinationAddressList"u8))
+                if (prop.NameEquals("destinationAddressList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     destinationAddressList = array;
                     continue;
                 }
-                if (property.NameEquals("sourceAddressList"u8))
+                if (prop.NameEquals("sourceAddressList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     sourceAddressList = array;
                     continue;
                 }
-                if (property.NameEquals("headerAddressList"u8))
+                if (prop.NameEquals("headerAddressList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<NetworkFabricHeaderAddress> array = new List<NetworkFabricHeaderAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<HeaderAddressProperties> array = new List<HeaderAddressProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricHeaderAddress.DeserializeNetworkFabricHeaderAddress(item, options));
+                        array.Add(HeaderAddressProperties.DeserializeHeaderAddressProperties(item, options));
                     }
                     headerAddressList = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InternetGatewayRules(
                 action,
                 addressList ?? new ChangeTrackingList<string>(),
                 condition,
                 destinationAddressList ?? new ChangeTrackingList<string>(),
                 sourceAddressList ?? new ChangeTrackingList<string>(),
-                headerAddressList ?? new ChangeTrackingList<NetworkFabricHeaderAddress>(),
-                serializedAdditionalRawData);
+                headerAddressList ?? new ChangeTrackingList<HeaderAddressProperties>(),
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<InternetGatewayRules>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InternetGatewayRules)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InternetGatewayRules IPersistableModel<InternetGatewayRules>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InternetGatewayRules>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInternetGatewayRules(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternetGatewayRules)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InternetGatewayRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

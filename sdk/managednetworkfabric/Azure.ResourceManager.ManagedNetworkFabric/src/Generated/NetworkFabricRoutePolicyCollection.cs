@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricRoutePolicyCollection : ArmCollection, IEnumerable<NetworkFabricRoutePolicyResource>, IAsyncEnumerable<NetworkFabricRoutePolicyResource>
     {
-        private readonly ClientDiagnostics _networkFabricRoutePolicyRoutePoliciesClientDiagnostics;
-        private readonly RoutePoliciesRestOperations _networkFabricRoutePolicyRoutePoliciesRestClient;
+        private readonly ClientDiagnostics _routePoliciesClientDiagnostics;
+        private readonly RoutePolicies _routePoliciesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricRoutePolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkFabricRoutePolicyCollection for mocking. </summary>
         protected NetworkFabricRoutePolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricRoutePolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricRoutePolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkFabricRoutePolicyRoutePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricRoutePolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkFabricRoutePolicyResource.ResourceType, out string networkFabricRoutePolicyRoutePoliciesApiVersion);
-            _networkFabricRoutePolicyRoutePoliciesRestClient = new RoutePoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricRoutePolicyRoutePoliciesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkFabricRoutePolicyResource.ResourceType, out string networkFabricRoutePolicyApiVersion);
+            _routePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricRoutePolicyResource.ResourceType.Namespace, Diagnostics);
+            _routePoliciesRestClient = new RoutePolicies(_routePoliciesClientDiagnostics, Pipeline, Endpoint, networkFabricRoutePolicyApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Implements Route Policy PUT method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkFabricRoutePolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routePolicyName, NetworkFabricRoutePolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyOperationSource(Client), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, NetworkFabricRoutePolicyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(
+                    new NetworkFabricRoutePolicyOperationSource(Client),
+                    _routePoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements Route Policy PUT method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkFabricRoutePolicyResource> CreateOrUpdate(WaitUntil waitUntil, string routePolicyName, NetworkFabricRoutePolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkFabricRoutePolicyRoutePoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyOperationSource(Client), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, NetworkFabricRoutePolicyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(
+                    new NetworkFabricRoutePolicyOperationSource(Client),
+                    _routePoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements Route Policy GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkFabricRoutePolicyResource>> GetAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Get");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkFabricRoutePolicyData> response = Response.FromValue(NetworkFabricRoutePolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricRoutePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements Route Policy GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkFabricRoutePolicyResource> Get(string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Get");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkFabricRoutePolicyRoutePoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkFabricRoutePolicyData> response = Response.FromValue(NetworkFabricRoutePolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricRoutePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements RoutePolicies list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricRoutePolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "NetworkFabricRoutePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetByResourceGroupAsyncCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>
         /// Implements RoutePolicies list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricRoutePolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricRoutePolicyRoutePoliciesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "NetworkFabricRoutePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetByResourceGroupCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Exists");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricRoutePolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricRoutePolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricRoutePolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Exists");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkFabricRoutePolicyRoutePoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricRoutePolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricRoutePolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricRoutePolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkFabricRoutePolicyResource>> GetIfExistsAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricRoutePolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricRoutePolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricRoutePolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricRoutePolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricRoutePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutePolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="routePolicyName"> Name of the Route Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkFabricRoutePolicyResource> GetIfExists(string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
-            using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _routePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkFabricRoutePolicyRoutePoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routePolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routePoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, routePolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricRoutePolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricRoutePolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricRoutePolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricRoutePolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricRoutePolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkFabricRoutePolicyResource> IAsyncEnumerable<NetworkFabricRoutePolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

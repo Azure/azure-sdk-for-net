@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricL3IsolationDomainPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricL3IsolationDomainPatch>
+    /// <summary> The L3 Isolation Domain patch resource definition. </summary>
+    public partial class NetworkFabricL3IsolationDomainPatch : TagsUpdate, IJsonModel<NetworkFabricL3IsolationDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricL3IsolationDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricL3IsolationDomainPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricL3IsolationDomainPatch IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkFabricL3IsolationDomainPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricL3IsolationDomainPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkFabricL3IsolationDomainPatch"> The <see cref="NetworkFabricL3IsolationDomainPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkFabricL3IsolationDomainPatch networkFabricL3IsolationDomainPatch)
+        {
+            if (networkFabricL3IsolationDomainPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkFabricL3IsolationDomainPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricL3IsolationDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,265 +80,100 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            if (Optional.IsDefined(RedistributeConnectedSubnets))
-            {
-                writer.WritePropertyName("redistributeConnectedSubnets"u8);
-                writer.WriteStringValue(RedistributeConnectedSubnets.Value.ToString());
-            }
-            if (Optional.IsDefined(RedistributeStaticRoutes))
-            {
-                writer.WritePropertyName("redistributeStaticRoutes"u8);
-                writer.WriteStringValue(RedistributeStaticRoutes.Value.ToString());
-            }
-            if (Optional.IsDefined(AggregateRouteConfiguration))
-            {
-                writer.WritePropertyName("aggregateRouteConfiguration"u8);
-                writer.WriteObjectValue(AggregateRouteConfiguration, options);
-            }
-            if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
-            {
-                writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
-                writer.WriteObjectValue(ConnectedSubnetRoutePolicy, options);
-            }
-            if (Optional.IsDefined(StaticRoutePolicy))
-            {
-                writer.WritePropertyName("staticRouteRoutePolicy"u8);
-                writer.WriteObjectValue(StaticRoutePolicy, options);
-            }
-            if (Optional.IsDefined(V4RoutePrefixLimit))
-            {
-                writer.WritePropertyName("v4routePrefixLimit"u8);
-                writer.WriteObjectValue(V4RoutePrefixLimit, options);
-            }
-            if (Optional.IsDefined(V6RoutePrefixLimit))
-            {
-                writer.WritePropertyName("v6routePrefixLimit"u8);
-                writer.WriteObjectValue(V6RoutePrefixLimit, options);
-            }
-            if (Optional.IsDefined(ExportPolicyConfiguration))
-            {
-                writer.WritePropertyName("exportPolicyConfiguration"u8);
-                writer.WriteObjectValue(ExportPolicyConfiguration, options);
-            }
-            writer.WriteEndObject();
         }
 
-        NetworkFabricL3IsolationDomainPatch IJsonModel<NetworkFabricL3IsolationDomainPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricL3IsolationDomainPatch IJsonModel<NetworkFabricL3IsolationDomainPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFabricL3IsolationDomainPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkFabricL3IsolationDomainPatch(document.RootElement, options);
         }
 
-        internal static NetworkFabricL3IsolationDomainPatch DeserializeNetworkFabricL3IsolationDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFabricL3IsolationDomainPatch DeserializeNetworkFabricL3IsolationDomainPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
-            string annotation = default;
-            RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
-            RedistributeStaticRoute? redistributeStaticRoutes = default;
-            AggregateRouteConfiguration aggregateRouteConfiguration = default;
-            ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
-            StaticRoutePolicyPatch staticRouteRoutePolicy = default;
-            RoutePrefixLimitPatchProperties v4routePrefixLimit = default;
-            RoutePrefixLimitPatchProperties v6routePrefixLimit = default;
-            BmpExportPolicyPatchProperties exportPolicyConfiguration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            L3IsolationDomainPatchProperties properties = default;
+            ManagedServiceIdentityPatch identity = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    properties = L3IsolationDomainPatchProperties.DeserializeL3IsolationDomainPatchProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("redistributeConnectedSubnets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            redistributeConnectedSubnets = new RedistributeConnectedSubnet(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("redistributeStaticRoutes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            redistributeStaticRoutes = new RedistributeStaticRoute(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("aggregateRouteConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("connectedSubnetRoutePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("staticRouteRoutePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            staticRouteRoutePolicy = StaticRoutePolicyPatch.DeserializeStaticRoutePolicyPatch(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("v4routePrefixLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            v4routePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("v6routePrefixLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            v6routePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("exportPolicyConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportPolicyConfiguration = BmpExportPolicyPatchProperties.DeserializeBmpExportPolicyPatchProperties(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricL3IsolationDomainPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                identity,
-                annotation,
-                redistributeConnectedSubnets,
-                redistributeStaticRoutes,
-                aggregateRouteConfiguration,
-                connectedSubnetRoutePolicy,
-                staticRouteRoutePolicy,
-                v4routePrefixLimit,
-                v6routePrefixLimit,
-                exportPolicyConfiguration);
+            return new NetworkFabricL3IsolationDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
         }
-
-        BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkFabricL3IsolationDomainPatch IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkFabricL3IsolationDomainPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkFabricL3IsolationDomainPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

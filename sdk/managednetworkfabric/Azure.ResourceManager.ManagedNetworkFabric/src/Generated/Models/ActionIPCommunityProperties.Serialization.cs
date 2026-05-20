@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ActionIPCommunityProperties : IUtf8JsonSerializable, IJsonModel<ActionIPCommunityProperties>
+    /// <summary> IP Community Properties. </summary>
+    public partial class ActionIPCommunityProperties : IJsonModel<ActionIPCommunityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionIPCommunityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActionIPCommunityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeActionIPCommunityProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ActionIPCommunityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActionIPCommunityProperties IPersistableModel<ActionIPCommunityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ActionIPCommunityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ActionIPCommunityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,15 +67,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{format}' format.");
             }
-
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Add))
+            {
+                writer.WritePropertyName("add"u8);
+                writer.WriteObjectValue(Add, options);
+            }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
@@ -45,100 +89,87 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("set"u8);
                 writer.WriteObjectValue(Set, options);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        ActionIPCommunityProperties IJsonModel<ActionIPCommunityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActionIPCommunityProperties IJsonModel<ActionIPCommunityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActionIPCommunityProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeActionIPCommunityProperties(document.RootElement, options);
         }
 
-        internal static ActionIPCommunityProperties DeserializeActionIPCommunityProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ActionIPCommunityProperties DeserializeActionIPCommunityProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            IPCommunityIdList @add = default;
             IPCommunityIdList delete = default;
             IPCommunityIdList @set = default;
-            IPCommunityIdList @add = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("delete"u8))
+                if (prop.NameEquals("add"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    delete = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
+                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("set"u8))
+                if (prop.NameEquals("delete"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @set = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
+                    delete = IPCommunityIdList.DeserializeIPCommunityIdList(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("add"u8))
+                if (prop.NameEquals("set"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
+                    @set = IPCommunityIdList.DeserializeIPCommunityIdList(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ActionIPCommunityProperties(@add, serializedAdditionalRawData, delete, @set);
+            return new ActionIPCommunityProperties(@add, delete, @set, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ActionIPCommunityProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ActionIPCommunityProperties IPersistableModel<ActionIPCommunityProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeActionIPCommunityProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ActionIPCommunityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

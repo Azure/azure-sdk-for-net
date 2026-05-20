@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkDeviceAdministrativeState : IEquatable<NetworkDeviceAdministrativeState>
     {
         private readonly string _value;
+        /// <summary> Device AdministrativeState-RMA. </summary>
+        private const string RMAValue = "RMA";
+        /// <summary> Device AdministrativeState-RMA(Return Material Authorization) Ungraceful. </summary>
+        private const string UngracefulRMAValue = "UngracefulRMA";
+        /// <summary> Device AdministrativeState-Resync. </summary>
+        private const string ResyncValue = "Resync";
+        /// <summary> Device AdministrativeState-GracefulQuarantine. </summary>
+        private const string GracefulQuarantineValue = "GracefulQuarantine";
+        /// <summary> Device AdministrativeState-UngracefulQuarantine. </summary>
+        private const string UngracefulQuarantineValue = "UngracefulQuarantine";
+        /// <summary> Device AdministrativeState-Quarantine. </summary>
+        private const string QuarantineValue = "Quarantine";
+        /// <summary> Device AdministrativeState-UnderMaintenance. </summary>
+        private const string UnderMaintenanceValue = "UnderMaintenance";
+        /// <summary> Device AdministrativeState-Enable. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> Device AdministrativeState-Disable. </summary>
+        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkDeviceAdministrativeState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RmaValue = "RMA";
-        private const string UngracefulRmaValue = "UngracefulRMA";
-        private const string ResyncValue = "Resync";
-        private const string GracefulQuarantineValue = "GracefulQuarantine";
-        private const string UngracefulQuarantineValue = "UngracefulQuarantine";
-        private const string QuarantineValue = "Quarantine";
-        private const string UnderMaintenanceValue = "UnderMaintenance";
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
-
         /// <summary> Device AdministrativeState-RMA. </summary>
-        public static NetworkDeviceAdministrativeState Rma { get; } = new NetworkDeviceAdministrativeState(RmaValue);
+        public static NetworkDeviceAdministrativeState RMA { get; } = new NetworkDeviceAdministrativeState(RMAValue);
+
         /// <summary> Device AdministrativeState-RMA(Return Material Authorization) Ungraceful. </summary>
-        public static NetworkDeviceAdministrativeState UngracefulRma { get; } = new NetworkDeviceAdministrativeState(UngracefulRmaValue);
+        public static NetworkDeviceAdministrativeState UngracefulRMA { get; } = new NetworkDeviceAdministrativeState(UngracefulRMAValue);
+
         /// <summary> Device AdministrativeState-Resync. </summary>
         public static NetworkDeviceAdministrativeState Resync { get; } = new NetworkDeviceAdministrativeState(ResyncValue);
+
         /// <summary> Device AdministrativeState-GracefulQuarantine. </summary>
         public static NetworkDeviceAdministrativeState GracefulQuarantine { get; } = new NetworkDeviceAdministrativeState(GracefulQuarantineValue);
+
         /// <summary> Device AdministrativeState-UngracefulQuarantine. </summary>
         public static NetworkDeviceAdministrativeState UngracefulQuarantine { get; } = new NetworkDeviceAdministrativeState(UngracefulQuarantineValue);
+
         /// <summary> Device AdministrativeState-Quarantine. </summary>
         public static NetworkDeviceAdministrativeState Quarantine { get; } = new NetworkDeviceAdministrativeState(QuarantineValue);
+
         /// <summary> Device AdministrativeState-UnderMaintenance. </summary>
         public static NetworkDeviceAdministrativeState UnderMaintenance { get; } = new NetworkDeviceAdministrativeState(UnderMaintenanceValue);
+
         /// <summary> Device AdministrativeState-Enable. </summary>
         public static NetworkDeviceAdministrativeState Enable { get; } = new NetworkDeviceAdministrativeState(EnableValue);
+
         /// <summary> Device AdministrativeState-Disable. </summary>
         public static NetworkDeviceAdministrativeState Disable { get; } = new NetworkDeviceAdministrativeState(DisableValue);
+
         /// <summary> Determines if two <see cref="NetworkDeviceAdministrativeState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkDeviceAdministrativeState left, NetworkDeviceAdministrativeState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkDeviceAdministrativeState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkDeviceAdministrativeState left, NetworkDeviceAdministrativeState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDeviceAdministrativeState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkDeviceAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkDeviceAdministrativeState(string value) => new NetworkDeviceAdministrativeState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkDeviceAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkDeviceAdministrativeState?(string value) => value == null ? null : new NetworkDeviceAdministrativeState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkDeviceAdministrativeState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkDeviceAdministrativeState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

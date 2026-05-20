@@ -9,121 +9,34 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class InternalNetworkStaticRouteConfiguration : IUtf8JsonSerializable, IJsonModel<InternalNetworkStaticRouteConfiguration>
+    /// <summary> Static Route Configuration properties. </summary>
+    public partial class InternalNetworkStaticRouteConfiguration : IJsonModel<InternalNetworkStaticRouteConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkStaticRouteConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<InternalNetworkStaticRouteConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual InternalNetworkStaticRouteConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support writing '{format}' format.");
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalNetworkStaticRouteConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support reading '{options.Format}' format.");
             }
-
-            base.JsonModelWriteCore(writer, options);
         }
 
-        InternalNetworkStaticRouteConfiguration IJsonModel<InternalNetworkStaticRouteConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalNetworkStaticRouteConfiguration(document.RootElement, options);
-        }
-
-        internal static InternalNetworkStaticRouteConfiguration DeserializeInternalNetworkStaticRouteConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            BfdConfiguration bfdConfiguration = default;
-            IList<StaticRouteProperties> ipv4Routes = default;
-            IList<StaticRouteProperties> ipv6Routes = default;
-            StaticRouteConfigurationExtension? extension = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("bfdConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("ipv4Routes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<StaticRouteProperties> array = new List<StaticRouteProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
-                    }
-                    ipv4Routes = array;
-                    continue;
-                }
-                if (property.NameEquals("ipv6Routes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<StaticRouteProperties> array = new List<StaticRouteProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
-                    }
-                    ipv6Routes = array;
-                    continue;
-                }
-                if (property.NameEquals("extension"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    extension = new StaticRouteConfigurationExtension(property.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new InternalNetworkStaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), extension, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<InternalNetworkStaticRouteConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -133,22 +46,165 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        InternalNetworkStaticRouteConfiguration IPersistableModel<InternalNetworkStaticRouteConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InternalNetworkStaticRouteConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-            switch (format)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalNetworkStaticRouteConfiguration IPersistableModel<InternalNetworkStaticRouteConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InternalNetworkStaticRouteConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<InternalNetworkStaticRouteConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                case "J":
+                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(BfdConfiguration))
+            {
+                writer.WritePropertyName("bfdConfiguration"u8);
+                writer.WriteObjectValue(BfdConfiguration, options);
+            }
+            if (Optional.IsCollectionDefined(Ipv4Routes))
+            {
+                writer.WritePropertyName("ipv4Routes"u8);
+                writer.WriteStartArray();
+                foreach (StaticRouteProperties item in Ipv4Routes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Ipv6Routes))
+            {
+                writer.WritePropertyName("ipv6Routes"u8);
+                writer.WriteStartArray();
+                foreach (StaticRouteProperties item in Ipv6Routes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStringValue(Extension.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInternalNetworkStaticRouteConfiguration(document.RootElement, options);
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                default:
-                    throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support reading '{options.Format}' format.");
+#endif
+                }
             }
         }
 
-        string IPersistableModel<InternalNetworkStaticRouteConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InternalNetworkStaticRouteConfiguration IJsonModel<InternalNetworkStaticRouteConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternalNetworkStaticRouteConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInternalNetworkStaticRouteConfiguration(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InternalNetworkStaticRouteConfiguration DeserializeInternalNetworkStaticRouteConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            BfdConfiguration bfdConfiguration = default;
+            IList<StaticRouteProperties> ipv4Routes = default;
+            IList<StaticRouteProperties> ipv6Routes = default;
+            StaticRouteConfigurationExtension? extension = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("bfdConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("ipv4Routes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StaticRouteProperties> array = new List<StaticRouteProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
+                    }
+                    ipv4Routes = array;
+                    continue;
+                }
+                if (prop.NameEquals("ipv6Routes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StaticRouteProperties> array = new List<StaticRouteProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
+                    }
+                    ipv6Routes = array;
+                    continue;
+                }
+                if (prop.NameEquals("extension"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extension = new StaticRouteConfigurationExtension(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new InternalNetworkStaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), extension, additionalBinaryDataProperties);
+        }
     }
 }

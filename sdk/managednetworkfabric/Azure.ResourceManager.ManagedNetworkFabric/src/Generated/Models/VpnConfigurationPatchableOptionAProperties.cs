@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Peering optionA properties. </summary>
-    public partial class VpnConfigurationPatchableOptionAProperties : OptionAProperties
+    public partial class VpnConfigurationPatchableOptionAProperties : Layer3IPPrefixPatchProperties
     {
         /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableOptionAProperties"/>. </summary>
         public VpnConfigurationPatchableOptionAProperties()
@@ -19,30 +19,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableOptionAProperties"/>. </summary>
-        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
-        /// <param name="vlanId"> Vlan Id.Example : 501. </param>
+        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
+        /// <param name="vlanId"> Vlan Id.Example : 501. </param>
+        /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal VpnConfigurationPatchableOptionAProperties(long? peerAsn, int? vlanId, int? mtu, BfdConfiguration bfdConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(peerAsn, vlanId, mtu, bfdConfiguration, serializedAdditionalRawData)
+        internal VpnConfigurationPatchableOptionAProperties(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, int? vlanId, long? peerASN, BfdPatchConfiguration bfdConfiguration) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
         {
-            PrimaryIPv4Prefix = primaryIPv4Prefix;
-            PrimaryIPv6Prefix = primaryIPv6Prefix;
-            SecondaryIPv4Prefix = secondaryIPv4Prefix;
-            SecondaryIPv6Prefix = secondaryIPv6Prefix;
+            Mtu = mtu;
+            VlanId = vlanId;
+            PeerASN = peerASN;
+            BfdConfiguration = bfdConfiguration;
         }
 
-        /// <summary> IPv4 Address Prefix. </summary>
-        public string PrimaryIPv4Prefix { get; set; }
-        /// <summary> IPv6 Address Prefix. </summary>
-        public string PrimaryIPv6Prefix { get; set; }
-        /// <summary> Secondary IPv4 Address Prefix. </summary>
-        public string SecondaryIPv4Prefix { get; set; }
-        /// <summary> Secondary IPv6 Address Prefix. </summary>
-        public string SecondaryIPv6Prefix { get; set; }
+        /// <summary> MTU to use for option A peering. </summary>
+        public int? Mtu { get; set; }
+
+        /// <summary> Vlan Id.Example : 501. </summary>
+        public int? VlanId { get; set; }
+
+        /// <summary> Peer ASN number.Example : 28. </summary>
+        public long? PeerASN { get; set; }
+
+        /// <summary> BFD Configuration properties. </summary>
+        public BfdPatchConfiguration BfdConfiguration { get; set; }
     }
 }

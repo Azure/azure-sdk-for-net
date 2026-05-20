@@ -11,74 +11,181 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Access Control Lists patch resource definition. </summary>
-    public partial class NetworkFabricAccessControlListPatch : NetworkRackPatch
+    public partial class NetworkFabricAccessControlListPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         public NetworkFabricAccessControlListPatch()
         {
-            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
-            ControlPlaneAclConfiguration = new ChangeTrackingList<ControlPlaneAclPatchProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="configurationType"> Input method to configure Access Control List. </param>
-        /// <param name="aclsUri"> Access Control List file URL. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="controlPlaneAclConfiguration"> Access Control List (ACL) configurations. </param>
-        /// <param name="aclType"> Access Control List (ACL) Type. </param>
-        /// <param name="deviceRole"> Device Role. </param>
-        /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Access Control Lists patch properties. </param>
+        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AccessControlListPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            ConfigurationType = configurationType;
-            AclsUri = aclsUri;
-            DefaultAction = defaultAction;
-            MatchConfigurations = matchConfigurations;
-            DynamicMatchConfigurations = dynamicMatchConfigurations;
-            ControlPlaneAclConfiguration = controlPlaneAclConfiguration;
-            AclType = aclType;
-            DeviceRole = deviceRole;
-            GlobalAccessControlListActions = globalAccessControlListActions;
-            Annotation = annotation;
+            Properties = properties;
         }
 
+        /// <summary> Access Control Lists patch properties. </summary>
+        internal AccessControlListPatchProperties Properties { get; set; }
+
         /// <summary> Input method to configure Access Control List. </summary>
-        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
-        /// <summary> Access Control List file URL. </summary>
-        public Uri AclsUri { get; set; }
-        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
-        public CommunityActionType? DefaultAction { get; set; }
-        /// <summary> List of match configurations. </summary>
-        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
-        /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
-        /// <summary> Access Control List (ACL) configurations. </summary>
-        public IList<ControlPlaneAclPatchProperties> ControlPlaneAclConfiguration { get; }
-        /// <summary> Access Control List (ACL) Type. </summary>
-        public NetworkFabricAclType? AclType { get; set; }
-        /// <summary> Device Role. </summary>
-        public NetworkFabricDeviceRole? DeviceRole { get; set; }
-        /// <summary> Global Access Control List (ACL) actions. </summary>
-        internal GlobalAccessControlListActionPatchProperties GlobalAccessControlListActions { get; set; }
-        /// <summary> Configuration to enable or disable ACL action count. </summary>
-        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
+        public NetworkFabricConfigurationType? ConfigurationType
         {
-            get => GlobalAccessControlListActions is null ? default : GlobalAccessControlListActions.EnableCount;
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationType;
+            }
             set
             {
-                if (GlobalAccessControlListActions is null)
-                    GlobalAccessControlListActions = new GlobalAccessControlListActionPatchProperties();
-                GlobalAccessControlListActions.EnableCount = value;
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                Properties.ConfigurationType = value;
+            }
+        }
+
+        /// <summary> Access Control List file URL. </summary>
+        public Uri AclsUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AclsUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                Properties.AclsUri = value;
+            }
+        }
+
+        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
+        public CommunityActionType? DefaultAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                Properties.DefaultAction = value;
+            }
+        }
+
+        /// <summary> List of match configurations. </summary>
+        public IList<AccessControlListMatchConfigurationPatch> MatchConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                return Properties.MatchConfigurations;
+            }
+        }
+
+        /// <summary> List of dynamic match configurations. </summary>
+        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                return Properties.DynamicMatchConfigurations;
+            }
+        }
+
+        /// <summary> Access Control List (ACL) configurations. </summary>
+        public IList<ControlPlaneAclPatchProperties> ControlPlaneAclConfiguration
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                return Properties.ControlPlaneAclConfiguration;
+            }
+        }
+
+        /// <summary> Access Control List (ACL) Type. </summary>
+        public AclType? AclType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AclType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                Properties.AclType = value;
+            }
+        }
+
+        /// <summary> Device Role. </summary>
+        public DeviceRole? DeviceRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeviceRole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                Properties.DeviceRole = value;
             }
         }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> Configuration to enable or disable ACL action count. </summary>
+        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalAccessControlListActionsEnableCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListPatchProperties();
+                }
+                Properties.GlobalAccessControlListActionsEnableCount = value;
+            }
+        }
     }
 }

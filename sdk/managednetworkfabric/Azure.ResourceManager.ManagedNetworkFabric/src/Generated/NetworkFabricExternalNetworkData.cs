@@ -13,124 +13,215 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricExternalNetwork data model.
-    /// Defines the External Network resource.
-    /// </summary>
+    /// <summary> Defines the External Network resource. </summary>
     public partial class NetworkFabricExternalNetworkData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/>. </summary>
         /// <param name="peeringOption"> Peering option list. </param>
         public NetworkFabricExternalNetworkData(PeeringOption peeringOption)
         {
-            PeeringOption = peeringOption;
+
+            Properties = new ExternalNetworkProperties(peeringOption);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
-        /// <param name="optionAProperties"> option A properties object. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, ExternalNetworkStaticRouteConfiguration staticRouteConfiguration, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> External Network Properties. </param>
+        internal NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExternalNetworkProperties properties) : base(id, name, resourceType, systemData)
         {
-            Annotation = annotation;
-            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            PeeringOption = peeringOption;
-            OptionBProperties = optionBProperties;
-            OptionAProperties = optionAProperties;
-            StaticRouteConfiguration = staticRouteConfiguration;
-            LastOperation = lastOperation;
-            NetworkFabricId = networkFabricId;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/> for deserialization. </summary>
-        internal NetworkFabricExternalNetworkData()
-        {
-        }
+        /// <summary> External Network Properties. </summary>
+        internal ExternalNetworkProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </summary>
-        public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
-        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy { get; set; }
-        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy { get; set; }
-        /// <summary> Peering option list. </summary>
-        public PeeringOption PeeringOption { get; set; }
-        /// <summary> option B properties object. </summary>
-        public L3OptionBProperties OptionBProperties { get; set; }
-        /// <summary> option A properties object. </summary>
-        public ExternalNetworkOptionAProperties OptionAProperties { get; set; }
-        /// <summary> Static Route Configuration. </summary>
-        public ExternalNetworkStaticRouteConfiguration StaticRouteConfiguration { get; set; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
+        public string Annotation
         {
-            get => LastOperation?.Details;
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </summary>
+        public ResourceIdentifier NetworkToNetworkInterconnectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkToNetworkInterconnectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.NetworkToNetworkInterconnectId = value;
+            }
+        }
+
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        public ImportRoutePolicy ImportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.ImportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        public ExportRoutePolicy ExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.ExportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> Peering option list. </summary>
+        public PeeringOption PeeringOption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringOption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.PeeringOption = value;
+            }
+        }
+
+        /// <summary> option B properties object. </summary>
+        public L3OptionBProperties OptionBProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OptionBProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.OptionBProperties = value;
+            }
+        }
+
+        /// <summary> option A properties object. </summary>
+        public ExternalNetworkOptionAProperties OptionAProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OptionAProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.OptionAProperties = value;
+            }
+        }
+
+        /// <summary> Static Route Configuration. </summary>
+        public ExternalNetworkStaticRouteConfiguration StaticRouteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticRouteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkProperties();
+                }
+                Properties.StaticRouteConfiguration = value;
+            }
         }
 
         /// <summary> Associated Network Fabric Resource ID. </summary>
-        public ResourceIdentifier NetworkFabricId { get; }
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+        }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

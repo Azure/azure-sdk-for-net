@@ -7,128 +7,176 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkDeviceInterface data model.
-    /// Defines the NetworkInterface resource.
-    /// </summary>
+    /// <summary> Defines the NetworkInterface resource. </summary>
     public partial class NetworkDeviceInterfaceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
         public NetworkDeviceInterfaceData()
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The NetworkInterface properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
-        /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
-        /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
-        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
-        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
-        /// <param name="description"> Description of the interface. </param>
-        /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkInterfaceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            PhysicalIdentifier = physicalIdentifier;
-            ConnectedTo = connectedTo;
-            InterfaceType = interfaceType;
-            IPv4Address = ipv4Address;
-            IPv6Address = ipv6Address;
-            Description = description;
-            AdditionalDescription = additionalDescription;
-            LastOperation = lastOperation;
-            NetworkFabricId = networkFabricId;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
-            ConfigurationState = configurationState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The NetworkInterface properties. </summary>
+        internal NetworkInterfaceProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Physical Identifier of the network interface. </summary>
-        public string PhysicalIdentifier { get; }
-        /// <summary> The ARM resource id of the interface or compute server its connected to. </summary>
-        public string ConnectedTo { get; }
-        /// <summary> The Interface Type. Example: Management/Data. </summary>
-        public NetworkDeviceInterfaceType? InterfaceType { get; }
-        /// <summary> IPv4Address of the interface. </summary>
-        public IPAddress IPv4Address { get; }
-        /// <summary> IPv6Address of the interface. </summary>
-        public string IPv6Address { get; }
-        /// <summary> Description of the interface. </summary>
-        public string Description { get; }
-        /// <summary> Additional description of the interface. </summary>
-        public string AdditionalDescription { get; set; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
+        public string Annotation
         {
-            get => LastOperation?.Details;
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfaceProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> Physical Identifier of the network interface. </summary>
+        public string PhysicalIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PhysicalIdentifier;
+            }
+        }
+
+        /// <summary> The ARM resource id of the interface or compute server its connected to. </summary>
+        public string ConnectedTo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectedTo;
+            }
+        }
+
+        /// <summary> The Interface Type. Example: Management/Data. </summary>
+        public NetworkDeviceInterfaceType? InterfaceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterfaceType;
+            }
+        }
+
+        /// <summary> IPv4Address of the interface. </summary>
+        public string Ipv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Ipv4Address;
+            }
+        }
+
+        /// <summary> IPv6Address of the interface. </summary>
+        public string Ipv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Ipv6Address;
+            }
+        }
+
+        /// <summary> Description of the interface. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
+        /// <summary> Additional description of the interface. </summary>
+        public string AdditionalDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfaceProperties();
+                }
+                Properties.AdditionalDescription = value;
+            }
         }
 
         /// <summary> Associated Network Fabric Resource ID. </summary>
-        public ResourceIdentifier NetworkFabricId { get; }
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

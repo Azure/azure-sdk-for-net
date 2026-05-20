@@ -11,59 +11,31 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Control Plane Access Control List (ACL) IP condition properties. </summary>
-    public partial class ControlPlanAclIPMatchCondition
+    public partial class ControlPlanAclIpMatchCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIPMatchCondition"/>. </summary>
-        public ControlPlanAclIPMatchCondition()
+        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIpMatchCondition"/>. </summary>
+        public ControlPlanAclIpMatchCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIPMatchCondition"/>. </summary>
-        /// <param name="sourceIPPrefix"> List of the source IP addresses that need to be matched. </param>
-        /// <param name="destinationIPPrefix"> List of the destination IP addresses that need to be matched. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlanAclIPMatchCondition(string sourceIPPrefix, string destinationIPPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIpMatchCondition"/>. </summary>
+        /// <param name="sourceIpPrefix"> List of the source IP addresses that need to be matched. </param>
+        /// <param name="destinationIpPrefix"> List of the destination IP addresses that need to be matched. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ControlPlanAclIpMatchCondition(string sourceIpPrefix, string destinationIpPrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceIPPrefix = sourceIPPrefix;
-            DestinationIPPrefix = destinationIPPrefix;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SourceIpPrefix = sourceIpPrefix;
+            DestinationIpPrefix = destinationIpPrefix;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of the source IP addresses that need to be matched. </summary>
-        public string SourceIPPrefix { get; set; }
+        public string SourceIpPrefix { get; set; }
+
         /// <summary> List of the destination IP addresses that need to be matched. </summary>
-        public string DestinationIPPrefix { get; set; }
+        public string DestinationIpPrefix { get; set; }
     }
 }

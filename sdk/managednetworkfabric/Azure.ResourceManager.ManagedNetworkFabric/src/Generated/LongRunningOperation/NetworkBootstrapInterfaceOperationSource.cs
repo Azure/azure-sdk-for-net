@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkBootstrapInterfaceOperationSource : IOperationSource<NetworkBootstrapInterfaceResource>
+    /// <summary></summary>
+    internal partial class NetworkBootstrapInterfaceOperationSource : IOperationSource<NetworkBootstrapInterfaceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkBootstrapInterfaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkBootstrapInterfaceResource IOperationSource<NetworkBootstrapInterfaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkBootstrapInterfaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkBootstrapInterfaceData data = NetworkBootstrapInterfaceData.DeserializeNetworkBootstrapInterfaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkBootstrapInterfaceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkBootstrapInterfaceResource> IOperationSource<NetworkBootstrapInterfaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkBootstrapInterfaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkBootstrapInterfaceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkBootstrapInterfaceData data = NetworkBootstrapInterfaceData.DeserializeNetworkBootstrapInterfaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkBootstrapInterfaceResource(_client, data);
         }
     }
 }

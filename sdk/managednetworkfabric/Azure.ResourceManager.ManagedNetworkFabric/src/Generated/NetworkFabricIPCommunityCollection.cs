@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricIPCommunityCollection : ArmCollection, IEnumerable<NetworkFabricIPCommunityResource>, IAsyncEnumerable<NetworkFabricIPCommunityResource>
     {
-        private readonly ClientDiagnostics _networkFabricIPCommunityIPCommunitiesClientDiagnostics;
-        private readonly IpCommunitiesRestOperations _networkFabricIPCommunityIPCommunitiesRestClient;
+        private readonly ClientDiagnostics _ipCommunitiesClientDiagnostics;
+        private readonly IpCommunities _ipCommunitiesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricIPCommunityCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkFabricIPCommunityCollection for mocking. </summary>
         protected NetworkFabricIPCommunityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricIPCommunityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricIPCommunityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkFabricIPCommunityIPCommunitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPCommunityResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkFabricIPCommunityResource.ResourceType, out string networkFabricIPCommunityIPCommunitiesApiVersion);
-            _networkFabricIPCommunityIPCommunitiesRestClient = new IpCommunitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPCommunityIPCommunitiesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkFabricIPCommunityResource.ResourceType, out string networkFabricIPCommunityApiVersion);
+            _ipCommunitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPCommunityResource.ResourceType.Namespace, Diagnostics);
+            _ipCommunitiesRestClient = new IpCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Implements an IP Community PUT method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkFabricIPCommunityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipCommunityName, NetworkFabricIPCommunityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPCommunityIPCommunitiesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityOperationSource(Client), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, _networkFabricIPCommunityIPCommunitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, NetworkFabricIPCommunityData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
+                    new NetworkFabricIPCommunityOperationSource(Client),
+                    _ipCommunitiesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements an IP Community PUT method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkFabricIPCommunityResource> CreateOrUpdate(WaitUntil waitUntil, string ipCommunityName, NetworkFabricIPCommunityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkFabricIPCommunityIPCommunitiesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityOperationSource(Client), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, _networkFabricIPCommunityIPCommunitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, NetworkFabricIPCommunityData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
+                    new NetworkFabricIPCommunityOperationSource(Client),
+                    _ipCommunitiesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements an IP Community GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkFabricIPCommunityResource>> GetAsync(string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Get");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPCommunityIPCommunitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements an IP Community GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkFabricIPCommunityResource> Get(string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Get");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkFabricIPCommunityIPCommunitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements IP Communities list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricIPCommunityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new IpCommunitiesGetByResourceGroupAsyncCollectionResultOfT(_ipCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPCommunityCollection.GetAll"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>
         /// Implements IP Communities list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricIPCommunityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new IpCommunitiesGetByResourceGroupCollectionResultOfT(_ipCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPCommunityCollection.GetAll"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Exists");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPCommunityIPCommunitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricIPCommunityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPCommunityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Exists");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkFabricIPCommunityIPCommunitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricIPCommunityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPCommunityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkFabricIPCommunityResource>> GetIfExistsAsync(string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.GetIfExists");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPCommunityIPCommunitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricIPCommunityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPCommunityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricIPCommunityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpCommunities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkFabricIPCommunityResource> GetIfExists(string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
 
-            using var scope = _networkFabricIPCommunityIPCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.GetIfExists");
+            using DiagnosticScope scope = _ipCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPCommunityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkFabricIPCommunityIPCommunitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricIPCommunityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPCommunityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricIPCommunityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkFabricIPCommunityResource> IAsyncEnumerable<NetworkFabricIPCommunityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

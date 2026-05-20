@@ -11,28 +11,53 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The IP Prefix patch resource definition. </summary>
-    public partial class NetworkFabricIPPrefixPatch : NetworkRackPatch
+    public partial class NetworkFabricIPPrefixPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
         public NetworkFabricIPPrefixPatch()
         {
-            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        internal NetworkFabricIPPrefixPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, IList<IPPrefixRule> ipPrefixRules) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> IP Prefix patchable properties. </param>
+        internal NetworkFabricIPPrefixPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpPrefixPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            Annotation = annotation;
-            IPPrefixRules = ipPrefixRules;
+            Properties = properties;
         }
 
+        /// <summary> IP Prefix patchable properties. </summary>
+        internal IpPrefixPatchProperties Properties { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpPrefixPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> The list of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IPPrefixRules { get; }
+        public IList<IPPrefixRule> IpPrefixRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpPrefixPatchProperties();
+                }
+                return Properties.IpPrefixRules;
+            }
+        }
     }
 }

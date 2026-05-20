@@ -20,26 +20,70 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Network Bootstrap Device Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="hostName"> The host name of the device. </param>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        internal NetworkBootstrapDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, string hostName, string serialNumber) : base(tags, serializedAdditionalRawData)
+        internal NetworkBootstrapDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkBootstrapDevicePatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            HostName = hostName;
-            SerialNumber = serialNumber;
         }
 
+        /// <summary> Network Bootstrap Device Patch properties. </summary>
+        internal NetworkBootstrapDevicePatchProperties Properties { get; set; }
+
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+        public ManagedServiceIdentityPatch Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDevicePatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> The host name of the device. </summary>
-        public string HostName { get; set; }
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDevicePatchProperties();
+                }
+                Properties.HostName = value;
+            }
+        }
+
         /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
-        public string SerialNumber { get; set; }
+        public string SerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerialNumber;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDevicePatchProperties();
+                }
+                Properties.SerialNumber = value;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
-    public partial class NetworkFabricL3IsolationDomainPatch : NetworkRackPatch
+    public partial class NetworkFabricL3IsolationDomainPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
         public NetworkFabricL3IsolationDomainPatch()
@@ -20,71 +20,167 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> L3 Isolation Domain resource patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
-        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
-        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
-        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
-        /// <param name="staticRoutePolicy"> Static Route - route policy. </param>
-        /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
-        /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
-        /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
-        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, StaticRoutePolicyPatch staticRoutePolicy, RoutePrefixLimitPatchProperties v4RoutePrefixLimit, RoutePrefixLimitPatchProperties v6RoutePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, L3IsolationDomainPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            RedistributeConnectedSubnets = redistributeConnectedSubnets;
-            RedistributeStaticRoutes = redistributeStaticRoutes;
-            AggregateRouteConfiguration = aggregateRouteConfiguration;
-            ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
-            StaticRoutePolicy = staticRoutePolicy;
-            V4RoutePrefixLimit = v4RoutePrefixLimit;
-            V6RoutePrefixLimit = v6RoutePrefixLimit;
-            ExportPolicyConfiguration = exportPolicyConfiguration;
         }
 
+        /// <summary> L3 Isolation Domain resource patch properties. </summary>
+        internal L3IsolationDomainPatchProperties Properties { get; set; }
+
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+        public ManagedServiceIdentityPatch Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
-        public RedistributeConnectedSubnet? RedistributeConnectedSubnets { get; set; }
-        /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
-        public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
-        /// <summary> Aggregate route configurations. </summary>
-        public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
-        /// <summary> Connected Subnet RoutePolicy. </summary>
-        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
-        /// <summary> Static Route - route policy. </summary>
-        internal StaticRoutePolicyPatch StaticRoutePolicy { get; set; }
-        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicyPatch StaticRouteExportRoutePolicy
+        public string Annotation
         {
-            get => StaticRoutePolicy is null ? default : StaticRoutePolicy.StaticRouteExportRoutePolicy;
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
             set
             {
-                if (StaticRoutePolicy is null)
-                    StaticRoutePolicy = new StaticRoutePolicyPatch();
-                StaticRoutePolicy.StaticRouteExportRoutePolicy = value;
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
+        public RedistributeConnectedSubnet? RedistributeConnectedSubnets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedistributeConnectedSubnets;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.RedistributeConnectedSubnets = value;
+            }
+        }
+
+        /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
+        public RedistributeStaticRoute? RedistributeStaticRoutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedistributeStaticRoutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.RedistributeStaticRoutes = value;
+            }
+        }
+
+        /// <summary> Aggregate route configurations. </summary>
+        public AggregateRoutePatchConfiguration AggregateRouteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AggregateRouteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.AggregateRouteConfiguration = value;
             }
         }
 
         /// <summary> IPv4 VRF Limit configuration. </summary>
-        public RoutePrefixLimitPatchProperties V4RoutePrefixLimit { get; set; }
+        public RoutePrefixLimitPatchProperties V4routePrefixLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.V4routePrefixLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.V4routePrefixLimit = value;
+            }
+        }
+
         /// <summary> IPv6 VRF Limit configuration. </summary>
-        public RoutePrefixLimitPatchProperties V6RoutePrefixLimit { get; set; }
-        /// <summary> BMP Export Policy configuration. </summary>
-        internal BmpExportPolicyPatchProperties ExportPolicyConfiguration { get; set; }
+        public RoutePrefixLimitPatchProperties V6routePrefixLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.V6routePrefixLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.V6routePrefixLimit = value;
+            }
+        }
+
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
+        public L3ExportRoutePolicyPatch ExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.ExportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
+        public L3ExportRoutePolicyPatch StaticExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.StaticExportRoutePolicy = value;
+            }
+        }
+
         /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
         public IList<BmpExportPolicy> ExportPolicies
         {
             get
             {
-                if (ExportPolicyConfiguration is null)
-                    ExportPolicyConfiguration = new BmpExportPolicyPatchProperties();
-                return ExportPolicyConfiguration.ExportPolicies;
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                return Properties.ExportPolicies;
             }
         }
     }

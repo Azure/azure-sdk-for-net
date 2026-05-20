@@ -20,14 +20,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkMonitorPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bmpConfiguration"> BGP Monitoring Protocol (BMP) Configurations for the Network Monitor. </param>
-        internal NetworkMonitorPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, BmpConfigurationPatchProperties bmpConfiguration) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Network Monitor Patch properties. </param>
+        internal NetworkMonitorPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkMonitorPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            BmpConfiguration = bmpConfiguration;
+            Properties = properties;
         }
 
+        /// <summary> Network Monitor Patch properties. </summary>
+        internal NetworkMonitorPatchProperties Properties { get; set; }
+
         /// <summary> BGP Monitoring Protocol (BMP) Configurations for the Network Monitor. </summary>
-        public BmpConfigurationPatchProperties BmpConfiguration { get; set; }
+        public BmpConfigurationPatchProperties BmpConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BmpConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkMonitorPatchProperties();
+                }
+                Properties.BmpConfiguration = value;
+            }
+        }
     }
 }

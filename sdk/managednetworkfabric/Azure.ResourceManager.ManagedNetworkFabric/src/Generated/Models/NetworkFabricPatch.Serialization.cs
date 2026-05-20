@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricPatch>
+    /// <summary> The Network Fabric resource definition. </summary>
+    public partial class NetworkFabricPatch : TagsUpdate, IJsonModel<NetworkFabricPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricPatch IPersistableModel<NetworkFabricPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkFabricPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkFabricPatch"> The <see cref="NetworkFabricPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkFabricPatch networkFabricPatch)
+        {
+            if (networkFabricPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkFabricPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,423 +80,100 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            if (Optional.IsDefined(RackCount))
-            {
-                writer.WritePropertyName("rackCount"u8);
-                writer.WriteNumberValue(RackCount.Value);
-            }
-            if (Optional.IsDefined(ServerCountPerRack))
-            {
-                writer.WritePropertyName("serverCountPerRack"u8);
-                writer.WriteNumberValue(ServerCountPerRack.Value);
-            }
-            if (Optional.IsDefined(IPv4Prefix))
-            {
-                writer.WritePropertyName("ipv4Prefix"u8);
-                writer.WriteStringValue(IPv4Prefix);
-            }
-            if (Optional.IsDefined(IPv6Prefix))
-            {
-                writer.WritePropertyName("ipv6Prefix"u8);
-                writer.WriteStringValue(IPv6Prefix);
-            }
-            if (Optional.IsDefined(FabricAsn))
-            {
-                writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricAsn.Value);
-            }
-            if (Optional.IsDefined(TerminalServerConfiguration))
-            {
-                writer.WritePropertyName("terminalServerConfiguration"u8);
-                writer.WriteObjectValue(TerminalServerConfiguration, options);
-            }
-            if (Optional.IsDefined(ManagementNetworkConfiguration))
-            {
-                writer.WritePropertyName("managementNetworkConfiguration"u8);
-                writer.WriteObjectValue(ManagementNetworkConfiguration, options);
-            }
-            if (Optional.IsDefined(StorageAccountConfiguration))
-            {
-                writer.WritePropertyName("storageAccountConfiguration"u8);
-                writer.WriteObjectValue(StorageAccountConfiguration, options);
-            }
-            if (Optional.IsDefined(HardwareAlertThreshold))
-            {
-                writer.WritePropertyName("hardwareAlertThreshold"u8);
-                writer.WriteNumberValue(HardwareAlertThreshold.Value);
-            }
-            if (Optional.IsCollectionDefined(ControlPlaneAcls))
-            {
-                writer.WritePropertyName("controlPlaneAcls"u8);
-                writer.WriteStartArray();
-                foreach (var item in ControlPlaneAcls)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TrustedIPPrefixes))
-            {
-                writer.WritePropertyName("trustedIpPrefixes"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrustedIPPrefixes)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(UniqueRdConfiguration))
-            {
-                writer.WritePropertyName("uniqueRdConfiguration"u8);
-                writer.WriteObjectValue(UniqueRdConfiguration, options);
-            }
-            if (Optional.IsDefined(QosConfiguration))
-            {
-                writer.WritePropertyName("qosConfiguration"u8);
-                writer.WriteObjectValue(QosConfiguration, options);
-            }
-            if (Optional.IsCollectionDefined(FeatureFlags))
-            {
-                writer.WritePropertyName("featureFlags"u8);
-                writer.WriteStartArray();
-                foreach (var item in FeatureFlags)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AuthorizedTransceiver))
-            {
-                writer.WritePropertyName("authorizedTransceiver"u8);
-                writer.WriteObjectValue(AuthorizedTransceiver, options);
-            }
-            writer.WriteEndObject();
         }
 
-        NetworkFabricPatch IJsonModel<NetworkFabricPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricPatch IJsonModel<NetworkFabricPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFabricPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TagsUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkFabricPatch(document.RootElement, options);
         }
 
-        internal static NetworkFabricPatch DeserializeNetworkFabricPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFabricPatch DeserializeNetworkFabricPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
-            string annotation = default;
-            int? rackCount = default;
-            int? serverCountPerRack = default;
-            string ipv4Prefix = default;
-            string ipv6Prefix = default;
-            long? fabricAsn = default;
-            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
-            ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
-            StorageAccountPatchConfiguration storageAccountConfiguration = default;
-            int? hardwareAlertThreshold = default;
-            IList<ResourceIdentifier> controlPlaneAcls = default;
-            IList<ResourceIdentifier> trustedIPPrefixes = default;
-            UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default;
-            QosPatchProperties qosConfiguration = default;
-            IList<NetworkFabricFeatureFlag> featureFlags = default;
-            AuthorizedTransceiverPatchProperties authorizedTransceiver = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NetworkFabricPatchProperties properties = default;
+            ManagedServiceIdentityPatch identity = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    properties = NetworkFabricPatchProperties.DeserializeNetworkFabricPatchProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("rackCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rackCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("serverCountPerRack"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serverCountPerRack = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv4Prefix"u8))
-                        {
-                            ipv4Prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv6Prefix"u8))
-                        {
-                            ipv6Prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fabricASN"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            fabricAsn = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("terminalServerConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managementNetworkConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageAccountConfiguration = StorageAccountPatchConfiguration.DeserializeStorageAccountPatchConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("hardwareAlertThreshold"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hardwareAlertThreshold = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("controlPlaneAcls"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            controlPlaneAcls = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("trustedIpPrefixes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            trustedIPPrefixes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("uniqueRdConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            uniqueRdConfiguration = UniqueRouteDistinguisherPatchProperties.DeserializeUniqueRouteDistinguisherPatchProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("qosConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            qosConfiguration = QosPatchProperties.DeserializeQosPatchProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("featureFlags"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NetworkFabricFeatureFlag> array = new List<NetworkFabricFeatureFlag>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetworkFabricFeatureFlag.DeserializeNetworkFabricFeatureFlag(item, options));
-                            }
-                            featureFlags = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("authorizedTransceiver"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authorizedTransceiver = AuthorizedTransceiverPatchProperties.DeserializeAuthorizedTransceiverPatchProperties(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                identity,
-                annotation,
-                rackCount,
-                serverCountPerRack,
-                ipv4Prefix,
-                ipv6Prefix,
-                fabricAsn,
-                terminalServerConfiguration,
-                managementNetworkConfiguration,
-                storageAccountConfiguration,
-                hardwareAlertThreshold,
-                controlPlaneAcls ?? new ChangeTrackingList<ResourceIdentifier>(),
-                trustedIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(),
-                uniqueRdConfiguration,
-                qosConfiguration,
-                featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>(),
-                authorizedTransceiver);
+            return new NetworkFabricPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
         }
-
-        BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkFabricPatch IPersistableModel<NetworkFabricPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkFabricPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkFabricPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

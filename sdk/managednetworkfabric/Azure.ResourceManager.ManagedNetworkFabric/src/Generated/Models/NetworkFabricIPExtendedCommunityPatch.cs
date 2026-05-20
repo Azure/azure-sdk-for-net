@@ -11,28 +11,53 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The IP Extended Communities patch resource definition. </summary>
-    public partial class NetworkFabricIPExtendedCommunityPatch : NetworkRackPatch
+    public partial class NetworkFabricIPExtendedCommunityPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityPatch"/>. </summary>
         public NetworkFabricIPExtendedCommunityPatch()
         {
-            IPExtendedCommunityRules = new ChangeTrackingList<IPExtendedCommunityRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
-        internal NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> IP Extended Community patchable properties. </param>
+        internal NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpExtendedCommunityPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            Annotation = annotation;
-            IPExtendedCommunityRules = ipExtendedCommunityRules;
+            Properties = properties;
         }
 
+        /// <summary> IP Extended Community patchable properties. </summary>
+        internal IpExtendedCommunityPatchProperties Properties { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpExtendedCommunityPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> List of IP Extended Community Rules. </summary>
-        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; }
+        public IList<IPExtendedCommunityRule> IpExtendedCommunityRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpExtendedCommunityPatchProperties();
+                }
+                return Properties.IpExtendedCommunityRules;
+            }
+        }
     }
 }
