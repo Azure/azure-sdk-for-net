@@ -139,7 +139,7 @@ namespace Azure.Search.Documents.Tests.Models
             // IndexedSqlKnowledgeSource — content/embedding column mappings exercise ContentColumnMapping + EmbeddingColumnMapping serializers.
             yield return new TestCaseData(
                 typeof(IndexedSqlKnowledgeSource),
-                @"{""name"":""sql-ks"",""kind"":""indexedSql"",""indexedSqlParameters"":{""connectionString"":""Server=fake;Database=fake;"",""tableOrView"":""dbo.Articles"",""highWaterMarkColumnName"":""rowVersion"",""contentColumns"":[{""name"":""body""}],""embeddingColumns"":[{""name"":""embedding"",""dimensions"":1536}]}}")
+                @"{""name"":""sql-ks"",""kind"":""indexedSql"",""indexedSqlParameters"":{""connectionString"":""Server=fake;Database=fake;"",""tableOrView"":""dbo.Articles"",""highWaterMarkColumnName"":""rowVersion"",""contentColumns"":[{""name"":""body""}],""embeddingColumns"":[{""name"":""embedding"",""sourceField"":""field""}]}}")
                 .SetName("Roundtrip_IndexedSqlKnowledgeSource");
 
             // WorkIQKnowledgeSource — no parameters object, exercises base-only payload with new kind.
