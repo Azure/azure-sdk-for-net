@@ -50,7 +50,8 @@ public static class AgentHostMiddlewareExtensions
 
     /// <summary>
     /// Adds all Core middleware to the pipeline in the correct order:
-    /// request ID → server version → request ID baggage → inbound request logging.
+    /// request ID → server version → request ID baggage → inbound request logging
+    /// → WebSocket upgrade handling.
     /// </summary>
     /// <param name="app">The application builder.</param>
     /// <returns>The application builder for chaining.</returns>
@@ -61,6 +62,17 @@ public static class AgentHostMiddlewareExtensions
         app.UseMiddleware<W3CBaggagePropagator>();
         app.UseMiddleware<RequestIdBaggagePropagator>();
         app.UseMiddleware<InboundRequestLoggingMiddleware>();
+
+        // Enable WebSocket upgrade handling so protocol endpoints (e.g., Invocations
+        // `/invocations_ws`) can call `HttpContext.WebSockets.AcceptWebSocketAsync()`.
+        // `KeepAliveInterval` comes from FOUNDRY env (`WS_KEEPALIVE_INTERVAL`); a
+        // disabled (InfiniteTimeSpan) value suppresses Kestrel's RFC 6455 Ping/Pong
+        // frames so the spec's "disabled by default" contract holds.
+        app.UseWebSockets(new WebSocketOptions
+        {
+            KeepAliveInterval = FoundryEnvironment.WebSocketKeepAliveInterval,
+        });
+
         return app;
     }
 }
