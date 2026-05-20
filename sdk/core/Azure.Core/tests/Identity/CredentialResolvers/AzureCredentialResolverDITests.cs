@@ -22,8 +22,8 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             using ServiceProvider sp = services.BuildServiceProvider();
             CredentialResolver[] resolvers = sp.GetServices<CredentialResolver>().ToArray();
 
-            Assert.AreEqual(1, resolvers.Length);
-            Assert.IsInstanceOf<AzureCredentialResolver>(resolvers[0]);
+            Assert.That(resolvers.Length, Is.EqualTo(1));
+            Assert.That(resolvers[0], Is.InstanceOf<AzureCredentialResolver>());
         }
 
         [Test]
@@ -37,8 +37,8 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             using ServiceProvider sp = services.BuildServiceProvider();
             CredentialResolver[] resolvers = sp.GetServices<CredentialResolver>().ToArray();
 
-            Assert.AreEqual(1, resolvers.Length);
-            Assert.IsInstanceOf<AzureCredentialResolver>(resolvers[0]);
+            Assert.That(resolvers.Length, Is.EqualTo(1));
+            Assert.That(resolvers[0], Is.InstanceOf<AzureCredentialResolver>());
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             using ServiceProvider sp = services.BuildServiceProvider();
             CredentialResolver[] resolvers = sp.GetServices<CredentialResolver>().ToArray();
 
-            Assert.AreEqual(1, resolvers.Length);
+            Assert.That(resolvers.Length, Is.EqualTo(1));
         }
 
         [Test]
@@ -66,8 +66,8 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             using IHost host = builder.Build();
             CredentialResolver[] resolvers = host.Services.GetServices<CredentialResolver>().ToArray();
 
-            Assert.AreEqual(1, resolvers.Length);
-            Assert.IsInstanceOf<AzureCredentialResolver>(resolvers[0]);
+            Assert.That(resolvers.Length, Is.EqualTo(1));
+            Assert.That(resolvers[0], Is.InstanceOf<AzureCredentialResolver>());
         }
     }
 }
