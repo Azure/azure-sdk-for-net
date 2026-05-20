@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Policy;
 
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
-    /// <summary> The option whether validate the exemption is at or under the assignment scope. </summary>
+    /// <summary> The option to validate whether the exemption or enrollment is at or under the assignment scope. </summary>
     public readonly partial struct PolicyAssignmentScopeValidation : IEquatable<PolicyAssignmentScopeValidation>
     {
         private readonly string _value;

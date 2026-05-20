@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = GetNextResponse(message);
                 yield return result;
 
                 nextPageUri = ((PagedDatasetVersion)result).NextLink;
@@ -66,6 +66,13 @@ namespace Azure.AI.Projects
         protected override IEnumerable<AIProjectDataset> GetValuesFromPage(ClientResult page)
         {
             return ((PagedDatasetVersion)page).Value;
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private ClientResult GetNextResponse(PipelineMessage message)
+        {
+            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
         }
     }
 }
