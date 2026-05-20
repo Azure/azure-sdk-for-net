@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
         [WirePath("azureBlobStorage.sasUrlSettingName")]
-        public string SasUrlSettingName
+        public string AzureBlobStorageSasUrlSettingName
         {
             get
             {
-                return AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
+                return AzureBlobStorage is null ? default : AzureBlobStorage.AzureBlobStorageSasUrlSettingName;
             }
             set
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     AzureBlobStorage = new BlobStorageTokenStore();
                 }
-                AzureBlobStorage.SasUrlSettingName = value;
+                AzureBlobStorage.AzureBlobStorageSasUrlSettingName = value;
             }
         }
 

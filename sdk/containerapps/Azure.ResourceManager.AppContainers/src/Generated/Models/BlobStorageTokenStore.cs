@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/>. </summary>
-        /// <param name="sasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </param>
+        /// <param name="azureBlobStorageSasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </param>
         /// <param name="blobContainerUri"> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </param>
         /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
         /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobStorageTokenStore(string sasUrlSettingName, string blobContainerUri, string clientId, string managedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobStorageTokenStore(string azureBlobStorageSasUrlSettingName, string blobContainerUri, string clientId, string managedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SasUrlSettingName = sasUrlSettingName;
+            AzureBlobStorageSasUrlSettingName = azureBlobStorageSasUrlSettingName;
             BlobContainerUri = blobContainerUri;
             ClientId = clientId;
             ManagedIdentityResourceId = managedIdentityResourceId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
         [WirePath("sasUrlSettingName")]
-        public string SasUrlSettingName { get; set; }
+        public string AzureBlobStorageSasUrlSettingName { get; set; }
 
         /// <summary> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </summary>
         [WirePath("blobContainerUri")]

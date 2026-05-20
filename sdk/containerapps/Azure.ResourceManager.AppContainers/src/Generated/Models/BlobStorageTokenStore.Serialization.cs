@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SasUrlSettingName))
+            if (Optional.IsDefined(AzureBlobStorageSasUrlSettingName))
             {
                 writer.WritePropertyName("sasUrlSettingName"u8);
-                writer.WriteStringValue(SasUrlSettingName);
+                writer.WriteStringValue(AzureBlobStorageSasUrlSettingName);
             }
             if (Optional.IsDefined(BlobContainerUri))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            string sasUrlSettingName = default;
+            string azureBlobStorageSasUrlSettingName = default;
             string blobContainerUri = default;
             string clientId = default;
             string managedIdentityResourceId = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 if (prop.NameEquals("sasUrlSettingName"u8))
                 {
-                    sasUrlSettingName = prop.Value.GetString();
+                    azureBlobStorageSasUrlSettingName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("blobContainerUri"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BlobStorageTokenStore(sasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, additionalBinaryDataProperties);
+            return new BlobStorageTokenStore(azureBlobStorageSasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, additionalBinaryDataProperties);
         }
     }
 }

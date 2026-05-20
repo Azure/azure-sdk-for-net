@@ -1,4 +1,4 @@
 directory: specification/app/resource-manager/Microsoft.App/ContainerApps
-commit: 009c7b8d2b8192b893912b1f749dd82741b9c13c
+commit: eda4d7eaa2a7c44e58c685b206ce090a067b99c1
 repo: live1206/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
