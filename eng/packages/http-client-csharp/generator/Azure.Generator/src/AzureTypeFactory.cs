@@ -147,6 +147,22 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
         {
+            // Resolve types from the Azure.Core.Expressions.DataFactory assembly. These types are
+            // commonly referenced via @@alternateType(...) identity aliases (for example, the
+            // Azure.ResourceManager.DataFactory client.tsp aliases SecretBase to DataFactorySecret).
+            // Without this, base.CreateFrameworkType uses Type.GetType, which cannot find types in
+            // assemblies that aren't already loaded by full assembly-qualified name, causing the
+            // generator's CreateExternalType to fail and any property typed with such an aliased
+            // model to be silently dropped from the generated client.
+            if (fullyQualifiedTypeName.StartsWith("Azure.Core.Expressions.DataFactory.", StringComparison.Ordinal))
+            {
+                var dataFactoryType = typeof(DataFactoryElement<>).Assembly.GetType(fullyQualifiedTypeName);
+                if (dataFactoryType != null)
+                {
+                    return dataFactoryType;
+                }
+            }
+
             return fullyQualifiedTypeName switch
             {
                 "Azure.Core.ResourceIdentifier" => typeof(ResourceIdentifier),
