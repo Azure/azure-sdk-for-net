@@ -15,29 +15,29 @@ namespace Azure.AI.Projects.Evaluation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/>. </summary>
-        /// <param name="dimensionId"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
+        /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dimensionId"/> or <paramref name="description"/> is null. </exception>
-        public EvaluationsDimension(string dimensionId, string description, int weight)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="description"/> is null. </exception>
+        public EvaluationsDimension(string id, string description, int weight)
         {
-            Argument.AssertNotNull(dimensionId, nameof(dimensionId));
+            Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(description, nameof(description));
 
-            DimensionId = dimensionId;
+            Id = id;
             Description = description;
             Weight = weight;
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/>. </summary>
-        /// <param name="dimensionId"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
+        /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
         /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationsDimension(string dimensionId, string description, int weight, bool? alwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationsDimension(string id, string description, int weight, bool? alwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DimensionId = dimensionId;
+            Id = id;
             Description = description;
             Weight = weight;
             AlwaysApplicable = alwaysApplicable;
@@ -45,7 +45,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </summary>
-        public string DimensionId { get; set; }
+        public string Id { get; set; }
 
         /// <summary> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </summary>
         public string Description { get; set; }

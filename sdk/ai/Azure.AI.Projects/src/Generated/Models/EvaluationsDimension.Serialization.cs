@@ -76,8 +76,8 @@ namespace Azure.AI.Projects.Evaluation
             {
                 throw new FormatException($"The model {nameof(EvaluationsDimension)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("dimension_id"u8);
-            writer.WriteStringValue(DimensionId);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("weight"u8);
@@ -129,16 +129,16 @@ namespace Azure.AI.Projects.Evaluation
             {
                 return null;
             }
-            string dimensionId = default;
+            string id = default;
             string description = default;
             int weight = default;
             bool? alwaysApplicable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("dimension_id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    dimensionId = prop.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -165,7 +165,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EvaluationsDimension(dimensionId, description, weight, alwaysApplicable, additionalBinaryDataProperties);
+            return new EvaluationsDimension(id, description, weight, alwaysApplicable, additionalBinaryDataProperties);
         }
     }
 }

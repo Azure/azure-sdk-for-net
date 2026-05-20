@@ -421,7 +421,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         List<string> hostedAgents = [..agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
         foreach (string agentName in hostedAgents)
         {
-            await agentsClient.DeleteAgentAsync(agentName);
+            await agentsClient.DeleteAgentAsync(agentName, force: true);
         }
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         foreach (string name in new string[] { "mcp", "mcp1", "mcp2" })

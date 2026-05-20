@@ -419,7 +419,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -436,6 +436,10 @@ namespace Azure.AI.Projects.Agents
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -443,7 +447,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -461,12 +465,16 @@ namespace Azure.AI.Projects.Agents
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -484,11 +492,15 @@ namespace Azure.AI.Projects.Agents
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionsRequest(string agentName, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetSessionsRequest(string agentName, string foundryFeatures, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -520,6 +532,10 @@ namespace Azure.AI.Projects.Agents
             if (foundryFeatures != null)
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);

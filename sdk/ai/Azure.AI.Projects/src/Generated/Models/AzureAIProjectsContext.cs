@@ -256,6 +256,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(InvokeAgentResponsesApiRoutineAction))]
     [ModelReaderWriterBuildable(typeof(ItemReferenceParam))]
     [ModelReaderWriterBuildable(typeof(KeyPressAction))]
+    [ModelReaderWriterBuildable(typeof(ListMemoriesRequest))]
     [ModelReaderWriterBuildable(typeof(LocalShellToolParam))]
     [ModelReaderWriterBuildable(typeof(LocalSkillParam))]
     [ModelReaderWriterBuildable(typeof(LoraConfig))]
