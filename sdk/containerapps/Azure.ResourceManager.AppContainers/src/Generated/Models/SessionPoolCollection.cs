@@ -12,8 +12,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Session pool collection Azure resource. </summary>
-    public partial class SessionPoolCollection
+    internal partial class SessionPoolCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

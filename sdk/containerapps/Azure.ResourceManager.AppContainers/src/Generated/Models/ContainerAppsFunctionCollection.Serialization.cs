@@ -14,8 +14,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Container App Functions collection ARM resource. </summary>
-    public partial class ContainerAppsFunctionCollection : IJsonModel<ContainerAppsFunctionCollection>
+    internal partial class ContainerAppsFunctionCollection : IJsonModel<ContainerAppsFunctionCollection>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerAppsFunctionCollection"/> for deserialization. </summary>
         internal ContainerAppsFunctionCollection()
