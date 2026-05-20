@@ -7,145 +7,114 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary>
-    /// A class representing the HealthcareApisIotFhirDestination data model.
-    /// IoT Connector FHIR destination definition.
-    /// </summary>
+    /// <summary> IoT Connector FHIR destination definition. </summary>
     public partial class HealthcareApisIotFhirDestinationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisIotFhirDestinationData"/>. </summary>
         /// <param name="resourceIdentityResolutionType"> Determines how resource identity is resolved on the destination. </param>
         /// <param name="fhirServiceResourceId"> Fully qualified resource id of the FHIR service to connect to. </param>
-        /// <param name="fhirMapping"> FHIR Mappings. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceResourceId"/> or <paramref name="fhirMapping"/> is null. </exception>
-        public HealthcareApisIotFhirDestinationData(HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping)
+        /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceResourceId"/> is null. </exception>
+        public HealthcareApisIotFhirDestinationData(HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId)
         {
             Argument.AssertNotNull(fhirServiceResourceId, nameof(fhirServiceResourceId));
-            Argument.AssertNotNull(fhirMapping, nameof(fhirMapping));
 
-            ResourceIdentityResolutionType = resourceIdentityResolutionType;
-            FhirServiceResourceId = fhirServiceResourceId;
-            FhirMapping = fhirMapping;
+            Properties = new HealthcareApisIotFhirDestinationProperties(resourceIdentityResolutionType, fhirServiceResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisIotFhirDestinationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="resourceIdentityResolutionType"> Determines how resource identity is resolved on the destination. </param>
-        /// <param name="fhirServiceResourceId"> Fully qualified resource id of the FHIR service to connect to. </param>
-        /// <param name="fhirMapping"> FHIR Mappings. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> IoT FHIR Destination settings. </param>
+        /// <param name="eTag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="location"> The resource location. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping, AzureLocation? location, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthcareApisIotFhirDestinationProperties properties, ETag? eTag, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            ResourceIdentityResolutionType = resourceIdentityResolutionType;
-            FhirServiceResourceId = fhirServiceResourceId;
-            FhirMapping = fhirMapping;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             Location = location;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotFhirDestinationData"/> for deserialization. </summary>
-        internal HealthcareApisIotFhirDestinationData()
-        {
-        }
+        /// <summary> IoT FHIR Destination settings. </summary>
+        internal HealthcareApisIotFhirDestinationProperties Properties { get; set; }
 
-        /// <summary> The provisioning state. </summary>
-        public HealthcareApisProvisioningState? ProvisioningState { get; }
-        /// <summary> Determines how resource identity is resolved on the destination. </summary>
-        public HealthcareApisIotIdentityResolutionType ResourceIdentityResolutionType { get; set; }
-        /// <summary> Fully qualified resource id of the FHIR service to connect to. </summary>
-        public ResourceIdentifier FhirServiceResourceId { get; set; }
-        /// <summary> FHIR Mappings. </summary>
-        internal HealthcareApisIotMappingProperties FhirMapping { get; set; }
-        /// <summary>
-        /// The mapping.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData FhirMappingContent
-        {
-            get => FhirMapping is null ? default : FhirMapping.Content;
-            set
-            {
-                if (FhirMapping is null)
-                    FhirMapping = new HealthcareApisIotMappingProperties();
-                FhirMapping.Content = value;
-            }
-        }
+        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
+        public ETag? ETag { get; set; }
 
         /// <summary> The resource location. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
-        public ETag? ETag { get; set; }
+
+        /// <summary> The provisioning state. </summary>
+        public HealthcareApisProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Determines how resource identity is resolved on the destination. </summary>
+        public HealthcareApisIotIdentityResolutionType ResourceIdentityResolutionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceIdentityResolutionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthcareApisIotFhirDestinationProperties();
+                }
+                Properties.ResourceIdentityResolutionType = value;
+            }
+        }
+
+        /// <summary> Fully qualified resource id of the FHIR service to connect to. </summary>
+        public ResourceIdentifier FhirServiceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FhirServiceResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthcareApisIotFhirDestinationProperties();
+                }
+                Properties.FhirServiceResourceId = value;
+            }
+        }
+
+        /// <summary> The mapping. </summary>
+        public BinaryData FhirMappingContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FhirMappingContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HealthcareApisIotFhirDestinationProperties();
+                }
+                Properties.FhirMappingContent = value;
+            }
+        }
     }
 }
