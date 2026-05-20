@@ -27,12 +27,6 @@ namespace Azure.ResourceManager.Reservations
     {
         private readonly ClientDiagnostics _reservationOrderClientDiagnostics;
         private readonly ReservationOrder _reservationOrderRestClient;
-        private readonly ClientDiagnostics _reservationClientDiagnostics;
-        private readonly Reservation _reservationRestClient;
-        private readonly ClientDiagnostics _calculateRefundClientDiagnostics;
-        private readonly CalculateRefund _calculateRefundRestClient;
-        private readonly ClientDiagnostics _returnClientDiagnostics;
-        private readonly Return _returnRestClient;
 
         /// <summary> Initializes a new instance of ReservationOrderCollection for mocking. </summary>
         protected ReservationOrderCollection()
@@ -47,12 +41,6 @@ namespace Azure.ResourceManager.Reservations
             TryGetApiVersion(ReservationOrderResource.ResourceType, out string reservationOrderApiVersion);
             _reservationOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResource.ResourceType.Namespace, Diagnostics);
             _reservationOrderRestClient = new ReservationOrder(_reservationOrderClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
-            _reservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResource.ResourceType.Namespace, Diagnostics);
-            _reservationRestClient = new Reservation(_reservationClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
-            _calculateRefundClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResource.ResourceType.Namespace, Diagnostics);
-            _calculateRefundRestClient = new CalculateRefund(_calculateRefundClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
-            _returnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResource.ResourceType.Namespace, Diagnostics);
-            _returnRestClient = new Return(_returnClientDiagnostics, Pipeline, Endpoint, reservationOrderApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 

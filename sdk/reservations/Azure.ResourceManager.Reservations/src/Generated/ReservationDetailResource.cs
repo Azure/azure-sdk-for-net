@@ -298,70 +298,6 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// List of all the revisions for the `Reservation`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ReservationResponses_ListRevisions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationDetailResource> GetRevisionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetRevisionsAsyncCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "ReservationDetailResource.GetRevisions"), data => new ReservationDetailResource(Client, data));
-        }
-
-        /// <summary>
-        /// List of all the revisions for the `Reservation`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ReservationResponses_ListRevisions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationDetailResource> GetRevisions(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetRevisionsCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "ReservationDetailResource.GetRevisions"), data => new ReservationDetailResource(Client, data));
-        }
-
-        /// <summary>
         /// Archiving a `Reservation` moves it to `Archived` state.
         /// <list type="bullet">
         /// <item>
@@ -563,6 +499,70 @@ namespace Azure.ResourceManager.Reservations
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List of all the revisions for the `Reservation`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationResponses_ListRevisions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReservationDetailResource> GetRevisionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetRevisionsAsyncCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "ReservationDetailResource.GetRevisions"), data => new ReservationDetailResource(Client, data));
+        }
+
+        /// <summary>
+        /// List of all the revisions for the `Reservation`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/revisions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationResponses_ListRevisions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReservationDetailResource> GetRevisions(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetRevisionsCollectionResultOfT(_reservationRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "ReservationDetailResource.GetRevisions"), data => new ReservationDetailResource(Client, data));
         }
 
         /// <summary>

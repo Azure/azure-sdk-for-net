@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Reservations
         ExchangeResult IOperationSource<ExchangeResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ExchangeResult result = ExchangeResult.DeserializeExchangeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ExchangeResult.DeserializeExchangeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Reservations
         async ValueTask<ExchangeResult> IOperationSource<ExchangeResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ExchangeResult result = ExchangeResult.DeserializeExchangeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ExchangeResult.DeserializeExchangeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
