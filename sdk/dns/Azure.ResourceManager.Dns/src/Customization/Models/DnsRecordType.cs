@@ -11,40 +11,43 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> A. </summary>
         A = 0,
         /// <summary> AAAA. </summary>
-        AAAA = 1,
+        Aaaa = 1,
         /// <summary> CAA. </summary>
-        CAA = 2,
+        Caa = 2,
         /// <summary> CNAME. </summary>
-        CNAME = 3,
+        Cname = 3,
         /// <summary> MX. </summary>
         MX = 4,
         /// <summary> NS. </summary>
         NS = 5,
         /// <summary> PTR. </summary>
-        PTR = 6,
+        Ptr = 6,
         /// <summary> SOA. </summary>
-        SOA = 7,
+        Soa = 7,
         /// <summary> SRV. </summary>
-        SRV = 8,
+        Srv = 8,
         /// <summary> TXT. </summary>
-        TXT = 9,
+        Txt = 9,
         /// <summary> TLSA. </summary>
-        TLSA = 10,
+        Tlsa = 10,
         /// <summary> DS. </summary>
         DS = 11,
         /// <summary> NAPTR. </summary>
-        NAPTR = 12,
-        /// <summary> AAAA. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        Aaaa = 1,
-        /// <summary> CNAME. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        Cname = 3,
-        /// <summary> TLSA. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        Tlsa = 10,
-        /// <summary> NAPTR. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         Naptr = 12,
+        /// <summary> CAA. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        CAA = 2,
+        /// <summary> PTR. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        PTR = 6,
+        /// <summary> SOA. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        SOA = 7,
+        /// <summary> SRV. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        SRV = 8,
+        /// <summary> TXT. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        TXT = 9,
     }
 }
