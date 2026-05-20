@@ -42,7 +42,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// Builds the iteration state. When <paramref name="continuation"/> is non-null, the
         /// snapshot context is recovered from the cursor envelope and the inner change-feed
-        /// reader is resumed from its embedded position; otherwise both snapshot
+        /// reader is resumed from its embedded typed cursor; otherwise both snapshot
         /// <c>meta.json</c> blobs are downloaded and validated.
         /// </summary>
         public static async Task<ShareChangeFeedSnapshotIteration> CreateAsync(
@@ -59,7 +59,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string effectiveEnd;
             long beginCvId;
             long endCvId;
-            string innerContinuation;
+            ChangeFeedCursor innerCursor;
             DateTimeOffset? startTime = null;
             DateTimeOffset? endTime = null;
 
@@ -94,9 +94,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 effectiveEnd = cursor.EndSnapshot;
                 beginCvId = cursor.BeginCvId;
                 endCvId = cursor.EndCvId;
-                innerContinuation = cursor.InnerContinuation;
-                // startTime/endTime stay null: the inner cursor encodes its own position and
-                // ChangeFeedFactoryBase.BuildChangeFeed will overwrite both from the cursor.
+                innerCursor = cursor.InnerCursor;
+                // startTime/endTime stay null: the inner cursor encodes its own position and the
+                // typed BuildChangeFeed overload derives both from it.
             }
             else
             {
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 effectiveEnd = endSnapshot;
                 beginCvId = beginMeta.CvId;
                 endCvId = endMeta.CvId;
-                innerContinuation = null;
+                innerCursor = null;
 
                 // The log-window times bound only which Avro segments are read. Rows inside those
                 // segments are filtered solely by container version id (see SnapshotEventFilter):
@@ -136,14 +136,25 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 maxTransferSize,
                 config);
 
-            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
-                startTime,
-                endTime,
-                continuation: innerContinuation,
-                async: async,
-                cancellationToken: cancellationToken,
-                disableEventTimeFilter: true)
-                .ConfigureAwait(false);
+            // On resume, hand common the typed cursor directly via the typed BuildChangeFeed
+            // overload so the cursor does not have to be re-serialized to a string only to be
+            // re-deserialized inside the factory. On a fresh enumeration, fall through to the
+            // string overload with a null continuation and the derived log-window times.
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = innerCursor != null
+                ? await factory.BuildChangeFeed(
+                    innerCursor,
+                    async: async,
+                    cancellationToken: cancellationToken,
+                    disableEventTimeFilter: true)
+                    .ConfigureAwait(false)
+                : await factory.BuildChangeFeed(
+                    startTime,
+                    endTime,
+                    continuation: null,
+                    async: async,
+                    cancellationToken: cancellationToken,
+                    disableEventTimeFilter: true)
+                    .ConfigureAwait(false);
 
             return new ShareChangeFeedSnapshotIteration(
                 changeFeed,
@@ -154,14 +165,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         }
 
         /// <summary>
-        /// Wraps the raw inner continuation token from a <see cref="ChangeFeedBase{TEvent}"/>
-        /// page in a <see cref="ShareChangeFeedSnapshotCursor"/> envelope carrying the snapshot
-        /// context, then serializes it for use as the outer page's continuation token.
-        /// Returns <c>null</c> when the inner reader did not emit a token (terminal page).
+        /// Wraps the inner change-feed cursor from a <see cref="ChangeFeedBase{TEvent}"/> page in
+        /// a <see cref="ShareChangeFeedSnapshotCursor"/> envelope carrying the snapshot context,
+        /// then serializes it for use as the outer page's continuation token. Returns <c>null</c>
+        /// when <paramref name="innerCursor"/> is null (terminal page).
         /// </summary>
-        public string WrapInnerContinuation(BlobContainerClient containerClient, string innerContinuation)
+        public string WrapInnerCursor(BlobContainerClient containerClient, ChangeFeedCursor innerCursor)
         {
-            if (innerContinuation == null)
+            if (innerCursor == null)
                 return null;
 
             ShareChangeFeedSnapshotCursor envelope = new ShareChangeFeedSnapshotCursor(
@@ -170,7 +181,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 endSnapshot: EndSnapshot,
                 beginCvId: BeginCvId,
                 endCvId: EndCvId,
-                innerContinuation: innerContinuation);
+                innerCursor: innerCursor);
 
             return SnapshotCursorSerializer.Serialize(envelope);
         }

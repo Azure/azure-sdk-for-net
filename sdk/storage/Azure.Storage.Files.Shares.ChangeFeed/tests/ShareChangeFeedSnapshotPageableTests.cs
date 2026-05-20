@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Storage.Blobs;
+using Azure.Storage.ChangeFeed.Common;
 using Azure.Storage.Files.Shares;
 using Moq;
 using NUnit.Framework;
@@ -193,13 +194,26 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public void ContinuationToken_RoundTrips()
         {
+            ChangeFeedCursor innerCursor = new ChangeFeedCursor
+            {
+                CursorVersion = 1,
+                UrlHost = "account.blob.core.windows.net",
+                EndTime = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero),
+                CurrentSegmentCursor = new SegmentCursor
+                {
+                    SegmentPath = "idx/segments/2024/01/15/0800/meta.json",
+                    CurrentShardPath = "idx/segments/2024/01/15/0800/log/00/",
+                    ShardCursors = new List<ShardCursor>(),
+                },
+            };
+
             ShareChangeFeedSnapshotCursor original = new ShareChangeFeedSnapshotCursor(
                 urlHost: "account.blob.core.windows.net",
                 beginSnapshot: "2024-01-15T08:00:00.000Z",
                 endSnapshot: "2024-01-15T12:00:00.000Z",
                 beginCvId: 50,
                 endCvId: 200,
-                innerContinuation: @"{""CursorVersion"":1,""UrlHost"":""account.blob.core.windows.net""}");
+                innerCursor: innerCursor);
 
             string serialized = SnapshotCursorSerializer.Serialize(original);
             ShareChangeFeedSnapshotCursor roundTripped = SnapshotCursorSerializer.Deserialize(serialized);
@@ -210,7 +224,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(original.EndSnapshot, roundTripped.EndSnapshot);
             Assert.AreEqual(original.BeginCvId, roundTripped.BeginCvId);
             Assert.AreEqual(original.EndCvId, roundTripped.EndCvId);
-            Assert.AreEqual(original.InnerContinuation, roundTripped.InnerContinuation);
+            Assert.IsNotNull(roundTripped.InnerCursor);
+            Assert.AreEqual(original.InnerCursor.CursorVersion, roundTripped.InnerCursor.CursorVersion);
+            Assert.AreEqual(original.InnerCursor.UrlHost, roundTripped.InnerCursor.UrlHost);
+            Assert.AreEqual(original.InnerCursor.EndTime, roundTripped.InnerCursor.EndTime);
+            Assert.AreEqual(
+                original.InnerCursor.CurrentSegmentCursor.SegmentPath,
+                roundTripped.InnerCursor.CurrentSegmentCursor.SegmentPath);
         }
 
         /// <summary>
@@ -249,7 +269,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 endSnapshot: "2024-01-15T12:00:00.000Z",
                 beginCvId: 50,
                 endCvId: 200,
-                innerContinuation: "{}");
+                innerCursor: null);
 
             Mock<BlobContainerClient> container = new Mock<BlobContainerClient>();
             container.Setup(c => c.Uri).Returns(new Uri("https://second.blob.core.windows.net/$changefeed"));
@@ -272,7 +292,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 endSnapshot: "2024-01-15T12:00:00.000Z",
                 beginCvId: 50,
                 endCvId: 200,
-                innerContinuation: "{}");
+                innerCursor: null);
             cursor.CursorVersion = 99;
 
             Mock<BlobContainerClient> container = new Mock<BlobContainerClient>();

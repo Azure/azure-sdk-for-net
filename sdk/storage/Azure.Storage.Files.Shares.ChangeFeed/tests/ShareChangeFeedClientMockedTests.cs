@@ -194,7 +194,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 endSnapshot: endSnap,
                 beginCvId: 50,
                 endCvId: 200,
-                innerContinuation: null);
+                innerCursor: null);
             string token = SnapshotCursorSerializer.Serialize(cursor);
 
             List<ShareChangeFeedEvent> collected = new List<ShareChangeFeedEvent>();
@@ -234,7 +234,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 endSnapshot: "2024-01-15T12:00:00.000Z",
                 beginCvId: 50,
                 endCvId: 200,
-                innerContinuation: null);
+                innerCursor: null);
             string token = SnapshotCursorSerializer.Serialize(cursor);
 
             if (IsAsync)

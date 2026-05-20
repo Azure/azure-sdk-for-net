@@ -86,7 +86,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
                 if (filtered.Count > 0)
                 {
-                    string outerToken = iter.WrapInnerContinuation(containerClient, rawPage.ContinuationToken);
+                    string outerToken = iter.WrapInnerCursor(containerClient, iter.ChangeFeed.GetCursor());
                     yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(filtered, outerToken);
                 }
             }

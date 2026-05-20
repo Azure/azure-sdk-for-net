@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.ChangeFeed.Common;
+
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
     /// <summary>
     /// Resume envelope produced by <see cref="ShareChangeFeedSnapshotPageable"/> and
     /// <see cref="ShareChangeFeedSnapshotAsyncPageable"/>. Wraps the underlying change-feed
-    /// continuation token plus the snapshot context (snapshot identifiers and container
-    /// version range) needed to keep applying the cvId filter when resuming after a
-    /// page boundary.
+    /// cursor plus the snapshot context (snapshot identifiers and container version range)
+    /// needed to keep applying the cvId filter when resuming after a page boundary.
     /// </summary>
     /// <remarks>
     /// Persisted as the JSON-serialized <see cref="Page{T}.ContinuationToken"/> string on
@@ -56,11 +57,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public long EndCvId { get; set; }
 
         /// <summary>
-        /// The serialized <c>ChangeFeedCursor</c> string from the underlying change-feed
-        /// reader, captured on the raw page that produced the events in this envelope.
-        /// Forwarded back into <c>ChangeFeedFactoryBase.BuildChangeFeed</c> on resume.
+        /// Typed inner cursor from the underlying change-feed reader, captured on the raw
+        /// page that produced the events in this envelope. Forwarded back into
+        /// <see cref="ChangeFeedFactoryBase{TEvent}.BuildChangeFeed(ChangeFeedCursor, bool, System.Threading.CancellationToken, bool)"/>
+        /// on resume so the cursor crosses the layer boundary as an object instead of being
+        /// re-serialized to a string only to be re-parsed inside common.
         /// </summary>
-        public string InnerContinuation { get; set; }
+        public ChangeFeedCursor InnerCursor { get; set; }
 
         /// <summary>
         /// Parameterless constructor for <c>JsonSerializer</c>.
@@ -68,7 +71,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public ShareChangeFeedSnapshotCursor() { }
 
         /// <summary>
-        /// Initializes a new envelope with the snapshot context and inner continuation token.
+        /// Initializes a new envelope with the snapshot context and typed inner cursor.
         /// </summary>
         internal ShareChangeFeedSnapshotCursor(
             string urlHost,
@@ -76,7 +79,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string endSnapshot,
             long beginCvId,
             long endCvId,
-            string innerContinuation)
+            ChangeFeedCursor innerCursor)
         {
             CursorVersion = 1;
             UrlHost = urlHost;
@@ -84,7 +87,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             EndSnapshot = endSnapshot;
             BeginCvId = beginCvId;
             EndCvId = endCvId;
-            InnerContinuation = innerContinuation;
+            InnerCursor = innerCursor;
         }
     }
 }

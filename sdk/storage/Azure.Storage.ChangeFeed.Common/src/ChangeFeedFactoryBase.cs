@@ -79,7 +79,7 @@ namespace Azure.Storage.ChangeFeed.Common
         }
 
         /// <summary>
-        /// Builds a change feed reader, either from scratch with a time window or by resuming from a continuation token.
+        /// Builds a change feed reader, either from scratch with a time window or by resuming from a serialized continuation token.
         /// </summary>
         /// <param name="startTime">Optional inclusive start time (ignored when resuming from a cursor).</param>
         /// <param name="endTime">Optional exclusive end time (ignored when resuming from a cursor).</param>
@@ -95,7 +95,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <c>GetChanges(start, end)</c> is unchanged).
         /// </param>
         /// <returns>A <see cref="ChangeFeedBase{TEvent}"/> positioned and ready to produce events.</returns>
-        public async Task<ChangeFeedBase<TEvent>> BuildChangeFeed(
+        public Task<ChangeFeedBase<TEvent>> BuildChangeFeed(
             DateTimeOffset? startTime,
             DateTimeOffset? endTime,
             string continuation,
@@ -103,9 +103,6 @@ namespace Azure.Storage.ChangeFeed.Common
             CancellationToken cancellationToken,
             bool disableEventTimeFilter = false)
         {
-            DateTimeOffset lastConsumable;
-            Queue<string> years = new Queue<string>();
-            Queue<string> segments = new Queue<string>();
             ChangeFeedCursor cursor = null;
 
             // Resume path: deserialize the cursor and extract the start/end times from it.
@@ -116,6 +113,56 @@ namespace Azure.Storage.ChangeFeed.Common
                 startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
                 endTime = cursor.EndTime;
             }
+
+            return BuildChangeFeedCore(cursor, startTime, endTime, async, cancellationToken, disableEventTimeFilter);
+        }
+
+        /// <summary>
+        /// Builds a change feed reader resuming from a typed <see cref="ChangeFeedCursor"/>. The
+        /// cursor's <see cref="ChangeFeedCursor.EndTime"/> and current segment path supply the
+        /// time window, so callers do not pass <c>startTime</c>/<c>endTime</c> separately. This is
+        /// the resume-only counterpart to the string-based overload and is used when the caller
+        /// already holds a typed cursor (e.g. a snapshot envelope that nests one directly), so
+        /// the cursor is not round-tripped through JSON on the way back in.
+        /// </summary>
+        /// <param name="cursor">Typed cursor captured from a previous page. Must not be null.</param>
+        /// <param name="async">Whether to use async APIs.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="disableEventTimeFilter">See the string-based overload.</param>
+        /// <returns>A <see cref="ChangeFeedBase{TEvent}"/> positioned and ready to produce events.</returns>
+        public Task<ChangeFeedBase<TEvent>> BuildChangeFeed(
+            ChangeFeedCursor cursor,
+            bool async,
+            CancellationToken cancellationToken,
+            bool disableEventTimeFilter = false)
+        {
+            if (cursor == null)
+                throw new ArgumentNullException(nameof(cursor));
+
+            ValidateCursor(_containerClient, cursor);
+            DateTimeOffset? startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
+            DateTimeOffset? endTime = cursor.EndTime;
+
+            return BuildChangeFeedCore(cursor, startTime, endTime, async, cancellationToken, disableEventTimeFilter);
+        }
+
+        /// <summary>
+        /// Shared body for the string-based and typed-cursor <c>BuildChangeFeed</c> overloads.
+        /// Runs the container existence check, derives the year/segment queues from the time
+        /// window, and positions the first segment using the supplied cursor (if any).
+        /// </summary>
+        private async Task<ChangeFeedBase<TEvent>> BuildChangeFeedCore(
+            ChangeFeedCursor cursor,
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime,
+            bool async,
+            CancellationToken cancellationToken,
+            bool disableEventTimeFilter)
+        {
+            DateTimeOffset lastConsumable;
+            Queue<string> years = new Queue<string>();
+            Queue<string> segments = new Queue<string>();
+
             // No rounding is applied — raw user-provided times are passed directly to the
             // segment filter, which supports variable-length segments.
 
