@@ -35,6 +35,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string FabricOntologyValue = "fabricOntology";
         /// <summary> MCP server retrieval activity. </summary>
         private const string McpServerValue = "mcpServer";
+        /// <summary> File retrieval activity. </summary>
+        private const string FileValue = "file";
+        /// <summary> Indexed SQL retrieval activity. </summary>
+        private const string IndexedSqlValue = "indexedSql";
         /// <summary> LLM query planning activity. </summary>
         private const string ModelQueryPlanningValue = "modelQueryPlanning";
         /// <summary> LLM answer synthesis activity. </summary>
@@ -83,6 +87,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> MCP server retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType McpServer { get; } = new KnowledgeBaseActivityRecordType(McpServerValue);
+
+        /// <summary> File retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType File { get; } = new KnowledgeBaseActivityRecordType(FileValue);
+
+        /// <summary> Indexed SQL retrieval activity. </summary>
+        public static KnowledgeBaseActivityRecordType IndexedSql { get; } = new KnowledgeBaseActivityRecordType(IndexedSqlValue);
 
         /// <summary> LLM query planning activity. </summary>
         public static KnowledgeBaseActivityRecordType ModelQueryPlanning { get; } = new KnowledgeBaseActivityRecordType(ModelQueryPlanningValue);

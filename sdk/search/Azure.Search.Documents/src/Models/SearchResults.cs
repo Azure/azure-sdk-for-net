@@ -15,7 +15,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.Search.Documents.Utilities;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -58,6 +57,17 @@ namespace Azure.Search.Documents.Models
         /// Gets the semantic search result.
         /// </summary>
         public SemanticSearchResults SemanticSearch { get; internal set; }
+
+#if AZURE_SEARCH_PREVIEW
+        /// <summary>
+        /// Debug information that applies to the search results as a whole, such as the
+        /// query rewrites the service generated when
+        /// <see cref="SemanticSearchOptions.QueryRewrites"/> and
+        /// <see cref="SearchOptions.Debug"/> are set.
+        /// Only populated when the request enabled debug diagnostics.
+        /// </summary>
+        public DebugInfo DebugInfo { get; internal set; }
+#endif
 
         /// <summary>
         /// Gets the first (server side) page of search result values.
@@ -276,6 +286,13 @@ namespace Azure.Search.Documents.Models
                     }
                     results.SemanticSearch.Answers = answerResults;
                 }
+#if AZURE_SEARCH_PREVIEW
+                else if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value, ModelReaderWriterOptions.Json);
+                }
+#endif
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
                     foreach (JsonElement element in prop.Value.EnumerateArray())
@@ -360,6 +377,14 @@ namespace Azure.Search.Documents.Models
         /// Semantic search results from an index.
         /// </summary>
         public SemanticSearchResults SemanticSearch => _results.SemanticSearch;
+
+#if AZURE_SEARCH_PREVIEW
+        /// <summary>
+        /// Debug information that applies to the search results as a whole, when the request
+        /// enabled debug diagnostics. See <see cref="SearchResults{T}.DebugInfo"/>.
+        /// </summary>
+        public DebugInfo DebugInfo => _results.DebugInfo;
+#endif
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>

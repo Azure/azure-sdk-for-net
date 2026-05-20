@@ -35,6 +35,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string FabricOntologyValue = "fabricOntology";
         /// <summary> MCP server document reference. </summary>
         private const string McpServerValue = "mcpServer";
+        /// <summary> File document reference. </summary>
+        private const string FileValue = "file";
+        /// <summary> Indexed SQL document reference. </summary>
+        private const string IndexedSqlValue = "indexedSql";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReferenceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -75,6 +79,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> MCP server document reference. </summary>
         public static KnowledgeBaseReferenceType McpServer { get; } = new KnowledgeBaseReferenceType(McpServerValue);
+
+        /// <summary> File document reference. </summary>
+        public static KnowledgeBaseReferenceType File { get; } = new KnowledgeBaseReferenceType(FileValue);
+
+        /// <summary> Indexed SQL document reference. </summary>
+        public static KnowledgeBaseReferenceType IndexedSql { get; } = new KnowledgeBaseReferenceType(IndexedSqlValue);
 
         /// <summary> Determines if two <see cref="KnowledgeBaseReferenceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

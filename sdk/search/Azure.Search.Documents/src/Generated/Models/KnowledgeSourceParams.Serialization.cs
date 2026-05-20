@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for knowledge source runtime parameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, and <see cref="McpServerKnowledgeSourceParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, and <see cref="IndexedSqlKnowledgeSourceParams"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSourceParams))]
     public abstract partial class KnowledgeSourceParams : IJsonModel<KnowledgeSourceParams>
@@ -187,6 +187,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return FabricOntologyKnowledgeSourceParams.DeserializeFabricOntologyKnowledgeSourceParams(element, options);
                     case "mcpServer":
                         return McpServerKnowledgeSourceParams.DeserializeMcpServerKnowledgeSourceParams(element, options);
+                    case "file":
+                        return FileKnowledgeSourceParams.DeserializeFileKnowledgeSourceParams(element, options);
+                    case "indexedSql":
+                        return IndexedSqlKnowledgeSourceParams.DeserializeIndexedSqlKnowledgeSourceParams(element, options);
                 }
             }
             return UnknownKnowledgeSourceParams.DeserializeUnknownKnowledgeSourceParams(element, options);
