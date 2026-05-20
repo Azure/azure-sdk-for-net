@@ -43,7 +43,7 @@ These methods eliminate the need to manually construct and populate `ClientEvent
 ## Prerequisites
 
 - .NET 10.0 or later
-- Azure VoiceLive API key or Azure credential
+- Azure VoiceLive API key or Azure Core credential (`DefaultAzureCredential` in the `Azure.Identity` namespace)
 - Microphone and speakers/headphones
 - Audio drivers properly installed
 
@@ -100,6 +100,13 @@ Available options:
 - `--instructions <text>`: System instructions for the AI
 - `--use-token-credential`: Use Azure authentication instead of API key
 - `--verbose`: Enable detailed logging
+- `--show-traces`: Print VoiceLive telemetry spans to console
+
+You can also enable tracing with environment variable:
+
+```bash
+VOICELIVE_ENABLE_CONSOLE_TRACING=true
+```
 
 ### Example Commands
 
@@ -220,6 +227,37 @@ The sample uses a multi-threaded architecture for optimal performance:
 - Check system resources (CPU, memory)
 - Close unnecessary applications
 - Update audio drivers
+
+
+## Telemetry and Tracing
+
+The Azure VoiceLive SDK for .NET includes built-in OpenTelemetry tracing support. When an OpenTelemetry provider is present (such as via the OpenTelemetry .NET SDK or Azure Monitor), the SDK will automatically emit spans for all major operations (connect, send, receive, close, etc.) with GenAI and VoiceLive-specific attributes. No explicit code changes are required in your sample to enable tracing.
+
+**To enable tracing:**
+
+- Add an OpenTelemetry exporter (such as Azure Monitor or Console) to your application _before_ building the VoiceLive client, or run with an OpenTelemetry agent.
+- By default, if no OpenTelemetry provider is present, tracing is a no-op with zero overhead.
+
+
+Content recording guidance is intentionally omitted from this sample for now.
+
+**Sample output:**
+
+When tracing is enabled, you will see spans for each operation, e.g.:
+
+```
+'send session.update' : {gen_ai.operation.name=send, gen_ai.voice.event_type=session.update, ...}
+'recv session.created' : {gen_ai.operation.name=recv, gen_ai.voice.event_type=session.created, ...}
+'recv response.done' : {gen_ai.usage.input_tokens=100, gen_ai.usage.output_tokens=50, ...}
+'close' : {gen_ai.operation.name=close, ...}
+'connect gpt-realtime' : {gen_ai.voice.session_id=..., gen_ai.voice.turn_count=1, ...}
+```
+
+For advanced tracing scenarios, see the [Azure SDK .NET Telemetry documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=dotnet).
+
+For a runnable end-to-end telemetry walkthrough, see the [Telemetry Tracing Sample](../telemetry-tracing/README.md).
+
+---
 
 ## Advanced Configuration
 
