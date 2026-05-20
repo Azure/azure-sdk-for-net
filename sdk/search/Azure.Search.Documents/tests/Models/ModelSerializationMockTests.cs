@@ -108,6 +108,7 @@ namespace Azure.Search.Documents.Tests.Models
                 @"{""allowedOrigins"":[""https://example.com""],""maxAgeInSeconds"":300}")
                 .SetName("Roundtrip_CorsOptions");
 
+#if AZURE_SEARCH_PREVIEW
             // --- 2026-05-01-preview: new knowledge source polymorphic subtypes ---
             // Each carries the discriminator ("kind") and a nested parameters object; roundtrip exercises
             // the polymorphic dispatch in the KnowledgeSource base type plus the subtype's own serializer.
@@ -167,6 +168,7 @@ namespace Azure.Search.Documents.Tests.Models
                 typeof(SearchIndexKnowledgeSourceParams),
                 @"{""knowledgeSourceName"":""idx-ks"",""kind"":""searchIndex"",""failOnError"":true,""maxOutputDocuments"":25,""enableImageServing"":true}")
                 .SetName("Roundtrip_KnowledgeSourceParams_NewProperties");
+#endif
         }
 
         /// <summary>
