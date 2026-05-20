@@ -534,6 +534,112 @@ interface ContainerApps {
     );
   });
 
+  it("legacy single-page raw array list is assigned to the listed resource", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A parent resource */
+model ParentResource is TrackedResource<ParentResourceProperties> {
+  ...ResourceNameParameter<ParentResource>;
+}
+
+model ParentResourceProperties {
+  description?: string;
+}
+
+/** A child resource under the parent */
+@parentResource(ParentResource)
+model ChildResource is ProxyResource<ChildResourceProperties, false> {
+  ...ResourceNameParameter<
+    Resource = ChildResource,
+    KeyName = "childResourceName",
+    SegmentName = "childResources",
+    NamePattern = ""
+  >;
+}
+
+model ChildResourceProperties {
+  description?: string;
+}
+
+model ChildResourceList is ChildResource[];
+
+alias ChildResourceOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+
+    @path
+    @segment("parentResources")
+    parentResourceName: string;
+  },
+  {
+    @path
+    @segment("childResources")
+    childResourceName: string;
+  }
+>;
+
+@armResourceOperations
+interface ParentResources {
+  get is ArmResourceRead<ParentResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<ParentResource>;
+}
+
+@armResourceOperations
+interface ChildResources {
+  get is ChildResourceOps.Read<ChildResource>;
+  list is ChildResourceOps.ListSinglePage<
+    ChildResource,
+    Response = ArmResponse<ChildResourceList>
+  >;
+}
+`,
+      runner
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+
+    const childResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/parentResources/childResources"
+    );
+    ok(childResource);
+
+    const listMethod = childResource.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(listMethod);
+    strictEqual(
+      listMethod.operationPath.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/parentResources/{parentResourceName}/childResources"
+    );
+    strictEqual(
+      listMethod.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/parentResources/{parentResourceName}"
+    );
+
+    const parentResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/parentResources"
+    );
+    ok(parentResource);
+    strictEqual(
+      parentResource.metadata.methods.some(
+        (m: any) =>
+          m.kind === "Action" &&
+          m.operationPath.path.endsWith("/childResources")
+      ),
+      false
+    );
+  });
+
   it("resource with grand parent under a resource group", async () => {
     const program = await typeSpecCompile(
       `
